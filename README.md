@@ -1,2 +1,2 @@
-# plugin_framework
+# devhunters framework
 The framework used in my plugins

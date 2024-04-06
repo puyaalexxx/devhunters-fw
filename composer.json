@@ -1,7 +1,6 @@
 {
   "name": "devhunters/devhunters_framework",
   "description": "The framework used in our plugins",
-  "minimum-stability": "stable",
   "version" : "1.0.0",
   "license": "GPL-2.0-or-later",
   "authors": [

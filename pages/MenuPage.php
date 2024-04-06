@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace DHT\Pages;
 
-use function DHT\Helpers\{dht_print_r, dht_is_array_empty};
+use function DHT\Helpers\{dht_load_view, dht_print_r, dht_is_array_empty};
 
 /**
  *
@@ -59,10 +59,13 @@ class MenuPage
             'page_title' => $page_title, 'menu_title' => $menu_title,
             'capability' => $capability, 'menu_slug' => $menu_slug,
             'callback' => $callback, 'icon_url' => $icon_url,
-            'position' => $position
+            'position' => $position, 'template_path' => $template_path,
+            'additional_options' => $additional_options
         ] = $menu_values;
         
-        add_menu_page( $page_title, $menu_title, $capability, $menu_slug, array( $this, $callback), $icon_url, $position );
+        $callback_func = $this->merge_callback_arguments( $callback, $template_path, $additional_options);
+        
+        add_menu_page( $page_title, $menu_title, $capability, $menu_slug, $callback_func, $icon_url, $position );
     }
     
     /**
@@ -78,10 +81,14 @@ class MenuPage
         [
             'parent_slug' => $parent_slug, 'page_title' => $page_title,
             'menu_title' => $menu_title, 'capability' => $capability,
-            'menu_slug' => $menu_slug, 'callback' => $callback
+            'menu_slug' => $menu_slug, 'callback' => $callback,
+            'template_path' => $template_path, 'additional_options' => $additional_options
         ] = $menu_values;
         
-        add_submenu_page( $parent_slug, $page_title, $menu_title, $capability, $menu_slug, array( $this, $callback) );
+        
+        $callback_func = $this->merge_callback_arguments( $callback, $template_path, $additional_options);
+        
+        add_submenu_page( $parent_slug, $page_title, $menu_title, $capability, $menu_slug, $callback_func );
     }
     
     /**
@@ -89,11 +96,18 @@ class MenuPage
      * dynamically create menu callbacks passed to add_menu_page and add_submenu_page hooks
      *
      * @param string $func_name - function name to be created
-     * @param array $arguments - function arguments to be used
+     * @param array $args - function arguments to be used
      * @return void
      */
-    public function __call(string $func_name, array $arguments)
+    public function __call(string $func_name, array $args)
     {
-        require_once(DHT_TEMPLATES_DIR . "dashboard-menus/template.php");
+        echo dht_load_view( $args[0]['template_path'], $func_name . '.php' , $args[0]['additional_options']);
+    }
+    
+    private function merge_callback_arguments(string $callback, string $template_path, array $additional_options) : callable {
+        
+        $func_args = ['template_path' => $template_path, 'additional_options' => $additional_options];
+        
+        return function() use($callback, $func_args) { $this->$callback($func_args); };
     }
 }

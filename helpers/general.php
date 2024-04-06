@@ -127,13 +127,16 @@ function dht_fix_path( string $path ) : string {
  * @return string
  */
 function dht_load_view(string $path, string $file, array $args = [], bool $return = true) : string {
+    $file_path = $path . $file;
     
-    if ( ! is_file( $path . $file) ) {
+    if ( ! is_file( $file_path) && ! file_exists( $file_path) ) {
+        require_once(DHT_TEMPLATES_DIR . "template.php");
+        
         return '';
     }
     
-    extract( $args, EXTR_REFS );
-    unset( $args );
+    //extract( $args, EXTR_REFS );
+    //unset( $args );
     
     if ( $return ) {
         ob_start();

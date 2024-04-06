@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace DHT;
 
-use DHT\pages\MenuPage;
+use DHT\Pages\MenuPage;
 use function DHT\Helpers\{dht_is_array_empty};
 
 /**

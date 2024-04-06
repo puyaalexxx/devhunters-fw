@@ -1,7 +1,6 @@
 {
   "name": "devhunters/devhunters_framework",
   "description": "The framework used in our plugins",
-  "version" : "1.0.0",
   "license": "GPL-2.0-or-later",
   "authors": [
     {
@@ -19,9 +18,7 @@
     ],
     "psr-4" : {
 
-      "DHT\\Helpers\\" : "helpers/",
-      "DHT\\Helpers\\Classes\\" : "helpers/classes/",
-      "DHT\\Pages\\" : "./pages/"
+    
 
     }
 

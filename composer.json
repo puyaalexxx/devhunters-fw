@@ -13,8 +13,7 @@
   },
   "autoload" : {
     "files": [
-      "constants.php",
-      "helpers/general.php"
+
     ],
     "psr-4" : {
 

@@ -1,0 +1,30 @@
+{
+  "name": "devhunters/devhunters_framework",
+  "description": "The framework used in our plugins",
+  "minimum-stability": "stable",
+  "version" : "1.0.0",
+  "license": "GPL-2.0-or-later",
+  "authors": [
+    {
+      "name": "DevHunters",
+      "email": "devhuntersmain@gmail.com"
+    }
+  ],
+  "require": {
+
+  },
+  "autoload" : {
+    "files": [
+      "constants.php",
+      "helpers/general.php"
+    ],
+    "psr-4" : {
+
+      "DHT\\Helpers\\" : "helpers/",
+      "DHT\\Helpers\\Classes\\" : "helpers/classes/",
+      "DHT\\Pages\\" : "./pages/"
+
+    }
+
+  }
+}

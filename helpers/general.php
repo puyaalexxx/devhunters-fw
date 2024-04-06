@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace DHT\Helpers;
 
-use DHT\Core\Helpers\Classes\Dumper;
+use DHT\helpers\Classes\Dumper;
 
 /**
  *
@@ -152,9 +152,8 @@ function dht_load_view(string $path, string $file, array $args = [], bool $retur
  * Use this function to not include files directly and to not give access to current context variables (like $this)
  *
  * @param string $file_path
- * @param array $_extract_variables Extract these from file array('variable_name' => 'default_value')
- * @param array $_set_variables Set these to be available in file (like variables in view)
- *
+ * @param string $extract_variable Extract these from file array('variable_name' => 'default_value')
+ * @param array $set_variables Set these to be available in file (like variables in view)
  * @return array
  */
 function dht_get_variables_from_file( string $file_path, string $extract_variable, array $set_variables = [] ) : array {

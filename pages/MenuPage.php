@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace DHT\Core\Pages;
+namespace DHT\Pages;
 
 use function DHT\Helpers\{dht_print_r, dht_is_array_empty};
 

@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace RHT\Src\Core;
+namespace DHT\Core;
 
-use RHT\Src\Core\Pages\MenuPage;
-use function RHT\Src\Helpers\{rht_is_array_empty, rht_print_r};
+use DHT\Core\Pages\MenuPage;
+use function DHT\Helpers\{dht_is_array_empty, dht_print_r};
 
 /**
  *
@@ -25,7 +25,7 @@ class InitFramework
      */
     public static function init(array $configurations) : void {
         //create dashboard menu pages
-        if(!rht_is_array_empty($configurations, 'menu_pages')){
+        if(!dht_is_array_empty($configurations, 'menu_pages')){
             new MenuPage($configurations['menu_pages']);
         }
         

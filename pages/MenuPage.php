@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace RHT\Src\Core\Pages;
+namespace DHT\Core\Pages;
 
-use function RHT\Src\Helpers\{rht_print_r, rht_is_array_empty};
+use function DHT\Helpers\{dht_print_r, dht_is_array_empty};
 
 /**
  *
@@ -15,11 +15,12 @@ class MenuPage
     
     public function __construct(array $dashboard_menus_values)
     {
+       // dht_print_r($dashboard_menus_values);
         //initialize variable with dashboard menu configurations
         $this->dashboard_menus_values = $dashboard_menus_values;
         
         //add dashboard pages hook
-        add_action( 'admin_menu', array( $this, "create_menu_pages" ) );
+        add_action( 'admin_menu', array( $this, "create_menu_pages" ), 99 );
     }
     
     /**
@@ -31,12 +32,12 @@ class MenuPage
     public function create_menu_pages(): void{
         
         //create main dashboard page
-        if(!rht_is_array_empty($this->dashboard_menus_values, 'main_menu_values')){
+        if(!dht_is_array_empty($this->dashboard_menus_values, 'main_menu_values')){
             $this->create_main_menu_page($this->dashboard_menus_values['main_menu_values']);
         }
         
         //create submenu dashboard pages
-        if(!rht_is_array_empty($this->dashboard_menus_values, 'submenu_values')){
+        if(!dht_is_array_empty($this->dashboard_menus_values, 'submenu_values')){
             
             foreach ($this->dashboard_menus_values['submenu_values'] as $submenu_values) {
                 $this->create_submenu_page($submenu_values);
@@ -93,6 +94,6 @@ class MenuPage
      */
     public function __call(string $func_name, array $arguments)
     {
-        require_once(RHT_TEMPLATES_DIR . "dashboard-menus/{$func_name}.php");
+        require_once(DHT_TEMPLATES_DIR . "dashboard-menus/template.php");
     }
 }

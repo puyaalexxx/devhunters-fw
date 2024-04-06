@@ -18,9 +18,7 @@
     ],
     "psr-4" : {
 
-      "DHT\\Helpers\\" : "helpers/",
-      "DHT\\Helpers\\Classes\\" : "helpers/classes/",
-      "DHT\\Pages\\" : "pages/"
+      
 
     }
 

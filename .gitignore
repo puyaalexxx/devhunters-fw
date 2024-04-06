@@ -223,3 +223,8 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+/.idea/.gitignore
+/.idea/devhunters_framework.iml
+/.idea/modules.xml
+/.idea/php.xml
+/.idea/vcs.xml

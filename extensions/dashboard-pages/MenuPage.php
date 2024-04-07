@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace DHT\Pages;
+namespace DHT\Extensions\DashPages;
 
-use function DHT\Helpers\{dht_load_view, dht_print_r, dht_is_array_empty};
+use function DHT\Helpers\{dht_is_array_empty, dht_load_view};
 
 /**
  *

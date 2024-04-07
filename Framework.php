@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace DHT;
 
-use DHT\Pages\MenuPage;
+use DHT\Extensions\DashPages\MenuPage;
 use function DHT\Helpers\{dht_is_array_empty};
 
 /**
@@ -20,6 +20,11 @@ final class Framework
      * @return void
      */
     public static function init() : void {
+        
+        //include the test file to test different things quickly
+        require_once (plugin_dir_path(__FILE__)  . "test.php");
+        
+        
         //some initialization settings
     }
     
@@ -45,7 +50,7 @@ final class Framework
      * @param mixed $configurations plugin configurations
      * @return void
      */
-    public static function create_dashboard_options(array $configurations) : void{
+    public static function create_fw_options(array $configurations) : void{
         //TODO - create framework options
     }
 }

@@ -1,5 +1,5 @@
 {
-  "name": "devhunters/devhunters_framework",
+  "name": "devhunters/devhunters-fw",
   "description": "The framework used in our plugins",
   "license": "GPL-2.0-or-later",
   "authors": [
@@ -20,7 +20,10 @@
 
       "DHT\\Helpers\\" : "helpers/",
       "DHT\\Helpers\\Classes\\" : "helpers/classes/",
-      "DHT\\Pages\\" : "pages/"
+
+      "DHT\\Extensions\\" : "extensions/",
+      "DHT\\Extensions\\DashPages\\" : "extensions/dashboard-pages/",
+      "DHT\\Extensions\\CPT\\" : "extensions/cpt/"
 
     }
   }

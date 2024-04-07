@@ -6,10 +6,10 @@
 
 1. git clone the framework inside the plugin
 2. add this line in composer.json psr4 object from the plugin folder 
-   `"DHT\\" : "devhunters_framework/"`
+   `"DHT\\" : "devhunters-fw/"`
 3. run `composer update` in the framework folder to include the vendor folder
 4. add this line in the **_plugin folder > plugin.php_** file somewhere on top <br>
-`   require_once (plugin_dir_path(__FILE__)  . "devhunters_framework/vendor/autoload.php");`
+`   require_once (plugin_dir_path(__FILE__)  . "devhunters-fw/vendor/autoload.php");`
 
 #### **->Steps to do when used as a composer package**
 
@@ -19,11 +19,11 @@
    "repositories": [
       {
          "type": "vcs",
-         "url": "https://github.com/puyaalexxx/devhunters_framework"
+         "url": "https://github.com/puyaalexxx/devhunters-fw"
       }
    ],
    "require": {
-      "devhunters/devhunters_framework"   : "dev-main"
+      "devhunters/devhunters-fw"   : "dev-main"
    },
    "autoload" : {
       "files": [
@@ -32,7 +32,7 @@
       ],
       "psr-4" : {
 
-         "DHT\\" : "vendor/devhunters/devhunters_framework/",
+         "DHT\\" : "vendor/devhunters/devhunters-fw/",
 
          "RHT\\Src\\" : "src/"
 
@@ -43,5 +43,5 @@
 2. don't forget the auth json file with the git token
 3. run `compose update` to load the package
 4. comment this line from the plugin.php file if exist <br />
-`   require_once (plugin_dir_path(__FILE__)  . "devhunters_framework/vendor/autoload.php");
+`   require_once (plugin_dir_path(__FILE__)  . "devhunters-fw/vendor/autoload.php");
 `

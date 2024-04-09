@@ -16,11 +16,15 @@ class DashMenuPage implements IDashMenuPage
     
     public function __construct(array $dash_menus_config)
     {
-        //get DI injected dashboard menu configurations from plugin
-        $this->_dashMenusConfig = $dash_menus_config;
+        do_action('dht_before_dashboard_menus_init');
         
-        //add dashboard pages hook
-        add_action( 'admin_menu', array( $this, "registerMenuPages" ), 99 );
+        //get DI injected dashboard menu configurations from plugin
+        $this->_dashMenusConfig = apply_filters('dash_menus_configurations', $dash_menus_config);
+        
+        if ( is_admin() ) {
+            //add dashboard pages hook
+            add_action('admin_menu', array($this, "registerMenuPages"), 99);
+        }
     }
     
     /**
@@ -30,6 +34,7 @@ class DashMenuPage implements IDashMenuPage
      * @return void
      */
     public function registerMenuPages(): void {
+        
         //create main dashboard page
         if(!dht_array_key_exists($this->_dashMenusConfig, 'main_menu_values')){
             $this->_createMainMenuPage($this->_dashMenusConfig['main_menu_values']);
@@ -42,6 +47,8 @@ class DashMenuPage implements IDashMenuPage
                 $this->_createSubmenuPage($submenu_values);
             }
         }
+        
+        do_action('dht_after_dashboard_menus_init');
     }
     
     /**

@@ -22,8 +22,14 @@ final class Extensions
     
     protected function __construct(ClassInstantiation $diContainer)
     {
+        do_action('dht_before_extensions_init');
+        
         $this->_diContainer = $diContainer;
+        
+        //register the after extensions initialisation hook
+        add_action('admin_init', array($this, 'registerAfterExtensionsInitHook'));
     }
+
     
     /**
      *
@@ -36,10 +42,12 @@ final class Extensions
     public function createDashboardMenus(array $dash_menus_config): ?IDashMenuPage
     {
         if(!empty($dash_menus_config['menu_pages'])) {
+            
             return $this->_diContainer->getDashMenuPageInstance($dash_menus_config['menu_pages']);
         }
         
         return null;
+        
     }
     
     /**
@@ -59,6 +67,14 @@ final class Extensions
         //return null;
     }
     
+    /**
+     * register the after extensions initialisation hook
+     *
+     * @return void
+     */
+    public function registerAfterExtensionsInitHook() : void {
+        do_action('dht_after_extensions_init');
+    }
     
     /**
      * This is the static method that controls the access to the singleton

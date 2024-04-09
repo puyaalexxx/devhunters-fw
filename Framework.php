@@ -27,9 +27,11 @@ final class Framework
     
     protected function __construct()
     {
+        do_action('dht_before_fw_init');
+        
         //di registration
         $this->_initDI();
-        
+
         //instantiate framework Extensions
         $this->extensions = Extensions::init($this->_diContainer);
         
@@ -44,7 +46,11 @@ final class Framework
      */
     private function _initDI(): void
     {
+        do_action('dht_before_di_init');
+        
         $this->_diContainer = new ClassInstantiation();
+        
+        do_action('dht_after_di_init');
     }
     
     /**

@@ -9,17 +9,22 @@
     }
   ],
   "require": {
-    "php": ">=8.0"
+    "php": ">=8.0",
+    "php-di/php-di": "^7.0"
   },
   "autoload" : {
     "files": [
       "constants.php",
-      "helpers/general.php"
+      "helpers/general.php",
+      "helpers/validations.php"
     ],
     "psr-4" : {
 
       "DHT\\Helpers\\" : "helpers/",
       "DHT\\Helpers\\Classes\\" : "helpers/classes/",
+      "DHT\\Helpers\\Exceptions\\" : "helpers/exceptions/",
+
+      "DHT\\DI\\" : "di/",
 
       "DHT\\Extensions\\" : "extensions/",
       "DHT\\Extensions\\DashPages\\" : "extensions/dashboard-pages/",

@@ -76,23 +76,6 @@ function dht_print_r(mixed $value) : void{
 
 /**
  *
- * check if array key exist and if it is empty
- *
- * @param array $array - array to be checked
- * @param string $array_key - array key
- * @return void
- */
-function dht_is_array_empty(array $array, string $array_key) : bool{
-    if(array_key_exists($array_key, $array) && !empty($array[$array_key]))
-    {
-        return false;
-    }
-    
-    return true;
-}
-
-/**
- *
  * Convert to Unix style directory separators
  *
  * @param string $path - dir path

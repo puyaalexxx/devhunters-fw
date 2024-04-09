@@ -60,7 +60,7 @@ function dht_register_my_post_types() {
         //The taxonomies argument names an array of registered taxonomies to attach to the custom post type.
         //For example, you can pass in category and post_tag to attach the default Categories and Tags
         //taxonomies to your post type. By default, there are no taxonomies attached to a custom post type
-        'taxonomies' => array( 'category' ),
+        'taxonomies' => array( 'bloghunter_taxonomy' ),
         //The menu_position argument enables you to set the position in which the custom post type menu
         //shows in the admin menu. By default, new post types are displayed after the Comments menu.
         //To work, $show_in_menu must be true. Default null (at the bottom).
@@ -143,4 +143,29 @@ function dht_register_my_post_types() {
         'supports' => array( 'title', 'editor', 'author', 'thumbnail', 'comments' )
     );
     register_post_type( 'bloghunter', $args );
+}
+
+add_action( 'init', 'prowp_define_product_type_taxonomy' );
+function prowp_define_product_type_taxonomy() {
+    register_taxonomy(
+        'bloghunter_taxonomy',
+        'bloghunter',
+        array(
+            //can contain subcategories
+            'hierarchical' => true,
+            'label' => 'Blog Categories',
+            // If the query_var argument is set to
+            //false, then no queries can be made against the taxonomy; if true, then the taxonomy name (with
+            //dashes replacing spaces) is used as a query variable in URL strings. Specifying a string value for the
+            //query _ var overrides the default. For example, query_var => 'strength' would permit URL
+            //strings of the form example.com/?strength=weapons to be used to select content from the custom
+            //taxonomy.
+            'query_var' => true,
+            //This tells WordPress whether or not
+            //you want a pretty permalink when viewing your custom taxonomy. By setting this to true, you
+            //can access your custom taxonomy posts such as example.com/type/weapons rather than the ugly
+            //method of example.com/?type=weapons.
+            'rewrite' => true
+        )
+    );
 }

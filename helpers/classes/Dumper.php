@@ -25,9 +25,9 @@ namespace DHT\Helpers\Classes;
  */
 class Dumper
 {
-    private static $_objects;
-    private static $_output;
-    private static $_depth;
+    private static array $_objects;
+    private static string $_output;
+    private static int $_depth;
     
     /**
      * Converts a variable into a string representation.
@@ -39,14 +39,14 @@ class Dumper
      */
     public static function dump(mixed $var, int $depth=10) : string
     {
-        self::reset_internals();
+        self::_resetInternals();
         
         self::$_depth=$depth;
-        self::dump_internal($var,0);
+        self::_dumpInternal($var,0);
         
         $output = self::$_output;
         
-        self::reset_internals();
+        self::_resetInternals();
         
         return $output;
     }
@@ -56,7 +56,7 @@ class Dumper
      *
      * @return void
      */
-    private static function reset_internals() : void
+    private static function _resetInternals() : void
     {
         self::$_output='';
         self::$_objects=array();
@@ -70,7 +70,7 @@ class Dumper
      * @param integer $level depth level
      * @return void
      */
-    private static function dump_internal(mixed $var, int $level) : void
+    private static function _dumpInternal(mixed $var, int $level) : void
     {
         switch(gettype($var)) {
             case 'boolean':
@@ -116,7 +116,7 @@ class Dumper
                     foreach($keys as $key)
                     {
                         self::$_output.= "\n".$spaces."    [$key] => ";
-                        self::$_output.= self::dump_internal($var[$key],$level+1);
+                        self::$_output.= self::_dumpInternal($var[$key],$level+1);
                     }
                     self::$_output.="\n".$spaces.')';
                 }
@@ -140,7 +140,7 @@ class Dumper
                     {
                         $key_display = strtr( trim($key),array("\0"=>':') );
                         self::$_output.= "\n".$spaces."    [$key_display] => ";
-                        self::$_output.= self::dump_internal( $members[$key],$level+1 );
+                        self::$_output.= self::_dumpInternal( $members[$key],$level+1 );
                     }
                     self::$_output.="\n".$spaces.')';
                 }

@@ -3,54 +3,71 @@ declare(strict_types=1);
 
 namespace DHT;
 
-use DHT\Extensions\DashPages\MenuPage;
-use function DHT\Helpers\{dht_is_array_empty};
+use DHT\Di\ClassInstantiation;
+use DHT\Extensions\Extensions;
+use DHT\Helpers\Exceptions\{DIContainerException, DIDashMenuException};
+use function DHT\Helpers\{dht_print_r, dht_validate_container};
 
 /**
  *
- * Static Class that is used to include the core devhunters_framework functionality that should be used further up
+ * Singleton Class that is used to include the core devhunters-fw functionality that should be used further up
  * (in a custom plugin)
+ * Instantiate all DI containers
  */
 final class Framework
 {
-    /**
-     *
-     * add some initialization settings here
-     *
-     * @return void
-     */
-    public static function init() : void {
-        
-        //include the test file to test different things quickly
-        require_once (plugin_dir_path(__FILE__)  . "test.php");
-        
-        
-        //some initialization settings
-    }
+    //class instances for Singleton Pattern
+    private static array $_instances = [];
     
-    /**
-     *
-     * create dashboard menus with received plugin configurations
-     *
-     * @param mixed $configurations plugin configurations
-     * @return void
-     */
-    public static function create_dashboard_menus(array $configurations): void
+    //DI container reference
+    private ClassInstantiation $_diContainer;
+    
+    //dash menu class reference
+    public Extensions $extensions;
+    
+    protected function __construct()
     {
-        //create dashboard menu pages
-        if(!dht_is_array_empty($configurations, 'menu_pages')){
-            new MenuPage($configurations['menu_pages']);
-        }
+        //di registration
+        $this->_initDI();
+        
+        //instantiate framework Extensions
+        $this->extensions = Extensions::init($this->_diContainer);
+        
+        //other initializations
+        //include the test file to test different things quickly (remove at the end)
+        require_once (plugin_dir_path(__FILE__)  . "test.php");
+    }
+
+    
+    /**
+     * Register the PHP-DI containers
+     */
+    private function _initDI(): void
+    {
+        $this->_diContainer = new ClassInstantiation();
     }
     
     /**
+     * This is the static method that controls the access to the singleton
+     * instance. On the first run, it creates a singleton object and places it
+     * into the static field. On subsequent runs, it returns the client existing
+     * object stored in the static field.
+     * @return Framework - current class
+     */
+    public static function init(): self
+    {
+        $cls = static::class;
+        if (!isset(self::$_instances[$cls])) {
+            self::$_instances[$cls] = new static();
+        }
+        
+        return self::$_instances[$cls];
+    }
+    
+    /**
+     * no possibility to clone this class
      *
-     * create plugin options with received plugin configurations
-     *
-     * @param mixed $configurations plugin configurations
      * @return void
      */
-    public static function create_fw_options(array $configurations) : void{
-        //TODO - create framework options
-    }
+    protected function __clone() : void { }
 }

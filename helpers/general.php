@@ -12,10 +12,11 @@ use DHT\helpers\Classes\Dumper;
  * @param mixed $value the value to be printed
  * @return void
  */
-function dht_print_r(mixed $value) : void{
+function dht_print_r(mixed $value): void
+{
     static $first_time = true;
     
-    if ( $first_time ) {
+    if ($first_time) {
         ob_start();
         echo '<style type="text/css">
 		div.dht_print_r {
@@ -56,19 +57,19 @@ function dht_print_r(mixed $value) : void{
 			border-width: 0;
 		}
 		</style>';
-        echo str_replace( array( '  ', "\n" ), '', ob_get_clean() );
+        echo str_replace(array('  ', "\n"), '', ob_get_clean());
         
         $first_time = false;
     }
     
-    if ( func_num_args() == 1 ) {
+    if (func_num_args() == 1) {
         echo '<div class="dht_print_r"><pre>';
-        echo htmlspecialchars( Dumper::dump( $value ), ENT_QUOTES, 'UTF-8' );
+        echo htmlspecialchars(Dumper::dump($value), ENT_QUOTES, 'UTF-8');
         echo '</pre></div>';
     } else {
         echo '<div class="dht_print_r_group">';
-        foreach ( func_get_args() as $param ) {
-            fw_print( $param );
+        foreach (func_get_args() as $param) {
+            fw_print($param);
         }
         echo '</div>';
     }
@@ -81,18 +82,19 @@ function dht_print_r(mixed $value) : void{
  * @param string $path - dir path
  * @return string
  */
-function dht_fix_path( string $path ) : string {
-    $windows_network_path = isset( $_SERVER['windir'] ) && in_array( substr( $path, 0, 2 ),
-            array( '//', '\\\\' ),
-            true );
-    $fixed_path           = untrailingslashit( str_replace( array( '//', '\\' ), array( '/', '/' ), $path ) );
+function dht_fix_path(string $path): string
+{
+    $windows_network_path = isset($_SERVER['windir']) && in_array(substr($path, 0, 2),
+            array('//', '\\\\'),
+            true);
+    $fixed_path = untrailingslashit(str_replace(array('//', '\\'), array('/', '/'), $path));
     
-    if ( empty( $fixed_path ) && ! empty( $path ) ) {
+    if (empty($fixed_path) && !empty($path)) {
         $fixed_path = '/';
     }
     
-    if ( $windows_network_path ) {
-        $fixed_path = '//' . ltrim( $fixed_path, '/' );
+    if ($windows_network_path) {
+        $fixed_path = '//' . ltrim($fixed_path, '/');
     }
     
     return $fixed_path;
@@ -109,10 +111,11 @@ function dht_fix_path( string $path ) : string {
  * @param bool $return - return the file content or display it
  * @return string
  */
-function dht_load_view(string $path, string $file, array $args = [], bool $return = true) : string {
+function dht_load_view(string $path, string $file, array $args = [], bool $return = true): string
+{
     $file_path = $path . $file;
     
-    if ( ! is_file( $file_path) && ! file_exists( $file_path) ) {
+    if (!is_file($file_path) && !file_exists($file_path)) {
         require_once(DHT_TEMPLATES_DIR . "template.php");
         
         return '';
@@ -121,7 +124,7 @@ function dht_load_view(string $path, string $file, array $args = [], bool $retur
     //extract( $args, EXTR_REFS );
     //unset( $args );
     
-    if ( $return ) {
+    if ($return) {
         ob_start();
         require $file_path;
         
@@ -140,19 +143,28 @@ function dht_load_view(string $path, string $file, array $args = [], bool $retur
  * @param string $file_path
  * @param string $extract_variable Extract these from file array('variable_name' => 'default_value')
  * @param array $set_variables Set these to be available in file (like variables in view)
+ * @param bool $return_array return array or only the value
  * @return array
  */
-function dht_get_variables_from_file( string $file_path, string $extract_variable, array $set_variables = [] ) : array {
-    extract( $set_variables, EXTR_REFS );
-    unset( $set_variables );
+function dht_get_variables_from_file(string $file_path, string $extract_variable, array $set_variables = [], bool $return_array = true): array
+{
+    extract($set_variables, EXTR_REFS);
+    unset($set_variables);
     
     require $file_path;
     
-    foreach ( $$extract_variable as $variable_name => $default_value ) {
-        if ( isset( $$variable_name ) ) {
-            $$extract_variable[ $variable_name ] = $$variable_name;
+    if ($return_array) {
+        foreach ($$extract_variable as $variable_name => $default_value) {
+            if (isset($$variable_name)) {
+                $$extract_variable[$variable_name] = $$variable_name;
+            }
         }
+        
+        $option = (array)$$extract_variable;
+    } else {
+        $option = $$extract_variable;
     }
     
-    return (array)$$extract_variable;
+    
+    return $option;
 }

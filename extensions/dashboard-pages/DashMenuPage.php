@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace DHT\Extensions\DashPages;
 
-use function DHT\Helpers\{dht_array_key_exists, dht_load_view, dht_print_r};
+use function DHT\Helpers\{dht_array_key_exists, dht_load_view};
 
 /**
  *
@@ -14,6 +14,9 @@ class DashMenuPage implements IDashMenuPage
     //config array passed from the plugin
     private array $_dashMenusConfig;
     
+    /**
+     * @param array $dash_menus_config - injected config values from DI container
+     */
     public function __construct(array $dash_menus_config)
     {
         do_action('dht_before_dashboard_menus_init');
@@ -21,7 +24,7 @@ class DashMenuPage implements IDashMenuPage
         //get DI injected dashboard menu configurations from plugin
         $this->_dashMenusConfig = apply_filters('dash_menus_configurations', $dash_menus_config);
         
-        if ( is_admin() ) {
+        if (is_admin()) {
             //add dashboard pages hook
             add_action('admin_menu', array($this, "registerMenuPages"), 99);
         }
@@ -33,15 +36,16 @@ class DashMenuPage implements IDashMenuPage
      *
      * @return void
      */
-    public function registerMenuPages(): void {
+    public function registerMenuPages(): void
+    {
         
         //create main dashboard page
-        if(!dht_array_key_exists($this->_dashMenusConfig, 'main_menu_values')){
+        if (!dht_array_key_exists($this->_dashMenusConfig, 'main_menu_values')) {
             $this->_createMainMenuPage($this->_dashMenusConfig['main_menu_values']);
         }
         
         //create submenu dashboard pages
-        if(!dht_array_key_exists($this->_dashMenusConfig, 'submenu_values')){
+        if (!dht_array_key_exists($this->_dashMenusConfig, 'submenu_values')) {
             
             foreach ($this->_dashMenusConfig['submenu_values'] as $submenu_values) {
                 $this->_createSubmenuPage($submenu_values);
@@ -58,7 +62,8 @@ class DashMenuPage implements IDashMenuPage
      * @param array $main_menu_values
      * @return void
      */
-    private function _createMainMenuPage( array $main_menu_values): void {
+    private function _createMainMenuPage(array $main_menu_values): void
+    {
         
         //destructuring the $menu_values array
         [
@@ -69,9 +74,28 @@ class DashMenuPage implements IDashMenuPage
             'additional_options' => $additional_options
         ] = $main_menu_values;
         
-        $callback_func = $this->_mergeCallbackArguments( $callback, $template_path, $additional_options);
+        $callback_func = $this->_mergeCallbackArguments($callback, $template_path, $additional_options);
         
-        add_menu_page( $page_title, $menu_title, $capability, $menu_slug, $callback_func, $icon_url, $position );
+        add_menu_page($page_title, $menu_title, $capability, $menu_slug, $callback_func, $icon_url, $position);
+    }
+    
+    /**
+     *
+     * utility method to build the menu callback function with passed arguments
+     *
+     * @param string $callback
+     * @param string $template_path
+     * @param array $additional_options
+     * @return callable
+     */
+    private function _mergeCallbackArguments(string $callback, string $template_path, array $additional_options): callable
+    {
+        
+        $func_args = ['template_path' => $template_path, 'additional_options' => $additional_options];
+        
+        return function () use ($callback, $func_args) {
+            $this->$callback($func_args);
+        };
     }
     
     /**
@@ -81,7 +105,8 @@ class DashMenuPage implements IDashMenuPage
      * @param array $submenu_values
      * @return void
      */
-    private  function _createSubmenuPage( array $submenu_values ): void{
+    private function _createSubmenuPage(array $submenu_values): void
+    {
         
         //destructuring the $menu_values array
         [
@@ -92,23 +117,9 @@ class DashMenuPage implements IDashMenuPage
         ] = $submenu_values;
         
         
-        $callback_func = $this->_mergeCallbackArguments( $callback, $template_path, $additional_options);
+        $callback_func = $this->_mergeCallbackArguments($callback, $template_path, $additional_options);
         
-        add_submenu_page( $parent_slug, $page_title, $menu_title, $capability, $menu_slug, $callback_func );
-    }
-    
-    /**
-     *
-     * get needed menu template
-     *
-     * @param string $template_path
-     * @param string $file
-     * @param array $args
-     * @return string
-     */
-    private function _getMenuTemplate( string $template_path, string $file, array $args ): string
-    {
-        return dht_load_view( $template_path, $file , $args);
+        add_submenu_page($parent_slug, $page_title, $menu_title, $capability, $menu_slug, $callback_func);
     }
     
     /**
@@ -121,22 +132,20 @@ class DashMenuPage implements IDashMenuPage
      */
     public function __call(string $func_name, array $args)
     {
-        echo $this->_getMenuTemplate($args[0]['template_path'], $func_name . '.php', $args[0]['additional_options'] );
+        echo $this->_getMenuTemplate($args[0]['template_path'], $func_name . '.php', $args[0]['additional_options']);
     }
     
     /**
      *
-     * utility method to build the menu callback function with passed arguments
+     * get needed menu template
      *
-     * @param string $callback
      * @param string $template_path
-     * @param array $additional_options
-     * @return callable
+     * @param string $file
+     * @param array $args
+     * @return string
      */
-    private function _mergeCallbackArguments(string $callback, string $template_path, array $additional_options) : callable {
-        
-        $func_args = ['template_path' => $template_path, 'additional_options' => $additional_options];
-        
-        return function() use($callback, $func_args) { $this->$callback($func_args); };
+    private function _getMenuTemplate(string $template_path, string $file, array $args): string
+    {
+        return dht_load_view($template_path, $file, $args);
     }
 }

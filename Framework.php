@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace DHT;
 
-use DHT\Di\ClassInstantiation;
+use DHT\DI\ClassInstance;
+use DHT\DI\ClassInstantiation;
 use DHT\Extensions\Extensions;
-use DHT\Helpers\Exceptions\{DIContainerException, DIDashMenuException};
-use function DHT\Helpers\{dht_print_r, dht_validate_container};
 
 /**
  *
@@ -20,7 +19,7 @@ final class Framework
     private static array $_instances = [];
     
     //DI container reference
-    private ClassInstantiation $_diContainer;
+    private ClassInstance $_diContainer;
     
     //dash menu class reference
     public Extensions $extensions;
@@ -31,15 +30,15 @@ final class Framework
         
         //di registration
         $this->_initDI();
-
+        
         //instantiate framework Extensions
-        $this->extensions = Extensions::init($this->_diContainer);
+        $this->extensions = Extensions::get($this->_diContainer);
         
         //other initializations
         //include the test file to test different things quickly (remove at the end)
-        require_once (plugin_dir_path(__FILE__)  . "test.php");
+        require_once(plugin_dir_path(__FILE__) . "test.php");
     }
-
+    
     
     /**
      * Register the PHP-DI containers
@@ -48,7 +47,7 @@ final class Framework
     {
         do_action('dht_before_di_init');
         
-        $this->_diContainer = new ClassInstantiation();
+        $this->_diContainer = new ClassInstance();
         
         do_action('dht_after_di_init');
     }
@@ -75,5 +74,7 @@ final class Framework
      *
      * @return void
      */
-    protected function __clone() : void { }
+    protected function __clone(): void
+    {
+    }
 }

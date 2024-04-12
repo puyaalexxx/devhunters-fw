@@ -1,17 +1,16 @@
 <?php
 declare(strict_types=1);
 
-namespace DHT\Helpers\Exceptions;
+namespace DHT\Helpers\Exceptions\DIExceptions;
 
-use Exception;
+use DHT\Helpers\Exceptions\BaseException;
 use Throwable;
 
 /**
  *
- * Custom class exception for Options class container instantiation
+ * Custom class exception for DasMenuPage class container instantiation
  */
-
-class DIOptionsException extends BaseException
+class DICPTException extends BaseException
 {
     public function __construct($message, $code = 0, Throwable $previous = null)
     {

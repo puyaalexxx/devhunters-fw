@@ -6,7 +6,9 @@ namespace DHT\DI;
 use DHT\Extensions\CPT\{CPT, ICPT};
 use DHT\Extensions\DashPages\{DashMenuPage, IDashMenuPage};
 use DHT\Extensions\Options\{IOptions, Options};
-use DHT\Helpers\Exceptions\{DICPTException, DIDashMenuException, DIOptionsException};
+use DHT\Helpers\Exceptions\{DIExceptions\DICPTException,
+    DIExceptions\DIDashMenuException,
+    DIExceptions\DIOptionsException};
 
 /**
  * Class to get instances of Extension classes

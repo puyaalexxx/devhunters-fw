@@ -1,15 +1,16 @@
 <?php
 declare(strict_types=1);
 
-namespace DHT\Helpers\Exceptions;
+namespace DHT\Helpers\Exceptions\DIExceptions;
 
+use DHT\Helpers\Exceptions\BaseException;
 use Throwable;
 
 /**
  *
- * Custom class exception thrown when the options configuration array is empty
+ * Custom class exception for DasMenuPage class container instantiation
  */
-class EmptyOptionsConfigurationsException extends BaseException
+class DIDashMenuException extends BaseException
 {
     public function __construct($message, $code = 0, Throwable $previous = null)
     {

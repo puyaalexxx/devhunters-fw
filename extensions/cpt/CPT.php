@@ -9,48 +9,65 @@ namespace DHT\Extensions\CPT;
  */
 class CPT implements ICPT
 {
-    private array $_cptConfig;
-    
     /**
      * @param array $cpt_config - injected config values from DI container
      */
     public function __construct(array $cpt_config)
     {
+        $config_args = apply_filters('cpt_configurations', $cpt_config);
         
-        $this->_cptConfig = apply_filters('cpt_configurations', $cpt_config);
+        //register posts types if exist
+        if (isset($config_args['post_types'])) {
+            add_action('init', function () use ($config_args) {
+                $this->registerPostTypes($config_args['post_types']);
+            });
+        }
         
-        //dht_print_r($this->_cptConfig);
-        
-        // add_action('init', 'registerTaxonomy');
-        
-        //add_action('init', 'registerPostTypes');
+        //register taxonomies if exist
+        if (isset($config_args['taxonomies'])) {
+            add_action('init', function () use ($config_args) {
+                $this->registerTaxonomy($config_args['taxonomies']);
+            });
+        }
     }
     
     /**
      *
-     * Interface  that is used for the DashMenuPage.
-     * Marker Interface - used for return types to not couple the code to the actual class
+     * Register the post type
+     *
+     * @param array $post_types_args - post type arguments to register
+     * @return void
      */
-    public function registerPostTypes(): void
+    public function registerPostTypes(array $post_types_args): void
     {
+        if (empty($post_types_args)) return;
         
-        register_post_type('bloghunter', []);
+        foreach ($post_types_args as $post_type => $post_type_args) {
+            
+            if (!isset($post_type_args['args'])) break;
+            
+            register_post_type($post_type, $post_type_args['args']);
+        }
     }
     
     
     /**
      *
-     * Interface  that is used for the DashMenuPage.
-     * Marker Interface - used for return types to not couple the code to the actual class
+     * Register Taxonomy
+     *
+     * @param array $taxonomies_args - taxonomy arguments to register
+     * @return void
      */
-    public function registerTaxonomy(): void
+    public function registerTaxonomy(array $taxonomies_args): void
     {
+        if (empty($taxonomies_args)) return;
         
-        
-        register_taxonomy(
-            'bloghunter_taxonomy',
-            'bloghunter',
-            []
-        );
+        foreach ($taxonomies_args as $post_type => $taxonomies) {
+            
+            foreach ($taxonomies as $taxonomy_name => $taxonomy_args) {
+                
+                register_taxonomy($taxonomy_name, $post_type, $taxonomy_args);
+            }
+        }
     }
 }

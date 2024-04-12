@@ -7,9 +7,9 @@ use DHT\DI\DIInit;
 use DHT\DI\ExtensionClassInstance;
 use DHT\Extensions\CPT\ICPT;
 use DHT\Extensions\DashPages\IDashMenuPage;
-use DHT\Helpers\Exceptions\{EmptyCPTConfigurationsException,
-    EmptyMenuConfigurationsException,
-    EmptyOptionsConfigurationsException};
+use DHT\Helpers\Exceptions\{ConfigExceptions\EmptyCPTConfigurationsException,
+    ConfigExceptions\EmptyMenuConfigurationsException,
+    ConfigExceptions\EmptyOptionsConfigurationsException};
 
 /**
  *

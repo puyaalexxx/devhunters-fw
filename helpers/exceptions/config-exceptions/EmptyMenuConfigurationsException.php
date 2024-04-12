@@ -1,15 +1,16 @@
 <?php
 declare(strict_types=1);
 
-namespace DHT\Helpers\Exceptions;
+namespace DHT\Helpers\Exceptions\ConfigExceptions;
 
+use DHT\Helpers\Exceptions\BaseException;
 use Throwable;
 
 /**
  *
- * Custom class exception thrown when the custom post types configuration array is empty
+ * Custom class exception thrown when the menu configuration array is empty
  */
-class EmptyCPTConfigurationsException extends BaseException
+class EmptyMenuConfigurationsException extends BaseException
 {
     public function __construct($message, $code = 0, Throwable $previous = null)
     {

@@ -7,6 +7,9 @@ use DHT\DI\DIInit;
 use DHT\DI\ExtensionClassInstance;
 use DHT\Extensions\CPT\ICPT;
 use DHT\Extensions\DashPages\IDashMenuPage;
+use DHT\Helpers\Exceptions\{EmptyCPTConfigurationsException,
+    EmptyMenuConfigurationsException,
+    EmptyOptionsConfigurationsException};
 
 /**
  *
@@ -35,16 +38,17 @@ final class Extensions
      * create dashboard menus with received plugin configurations
      *
      * @param mixed $dash_menus_config - dashboard menus configurations
-     * @return IDashMenuPage|null - menu instance
+     * @return IDashMenuPage - menu instance
+     * @throws EmptyMenuConfigurationsException
      */
-    public function createDashboardMenus(array $dash_menus_config): ?IDashMenuPage
+    public function createDashboardMenus(array $dash_menus_config): IDashMenuPage
     {
         if (!empty($dash_menus_config['menu_pages'])) {
             
             return $this->_extensionClassInstance->getDashMenuPageInstance($dash_menus_config['menu_pages']);
         }
         
-        return null;
+        throw new EmptyMenuConfigurationsException(_x('Empty configurations array passed to Dashboard Menu class', 'exceptions', 'dht'));
     }
     
     /**
@@ -52,16 +56,17 @@ final class Extensions
      * create custom post types with received plugin configurations
      *
      * @param mixed $cpt_config - cpt configurations
-     * @return ICPT|null - menu instance
+     * @return ICPT - cpt instance
+     * @throws EmptyCPTConfigurationsException
      */
-    public function createCPT(array $cpt_config): ?ICPT
+    public function createCPT(array $cpt_config): ICPT
     {
         if (!empty($cpt_config['cpt'])) {
             
             return $this->_extensionClassInstance->getCPTInstance($cpt_config['cpt']);
         }
         
-        return null;
+        throw new EmptyCPTConfigurationsException(_x('Empty configurations array passed to CPT class', 'exceptions', 'dht'));
     }
     
     /**
@@ -69,7 +74,8 @@ final class Extensions
      * create dashboard menus with received plugin configurations
      *
      * @param mixed $options_config - options configurations
-     * @return void
+     * @return void - options instance
+     * @throws EmptyOptionsConfigurationsException
      */
     public function createOptions(array $options_config): void
     {
@@ -78,7 +84,7 @@ final class Extensions
         //return $this->_extensionClassInstance->getOptions($dash_menus_config['options']);
         // }
         
-        //return null;
+        // throw new EmptyOptionsConfigurationsException(_x('Empty configurations array passed to Options class', 'exceptions', 'dht'));
     }
     
     /**

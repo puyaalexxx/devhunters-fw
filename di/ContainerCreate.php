@@ -7,12 +7,16 @@ use DI\DependencyException;
 use DI\NotFoundException;
 use function DI\create;
 
-class ContainerCreate
+/**
+ * Class to create the class container and used further
+ */
+final class ContainerCreate
 {
     private Container $_container;
     
     public function __construct()
     {
+        //it is based on container initialization
         $this->_container = (new ContainerInit())->getContainer();
     }
     

@@ -3,7 +3,8 @@ declare(strict_types=1);
 
 namespace DHT\Extensions;
 
-use DHT\DI\ClassInstance;
+use DHT\DI\DIInit;
+use DHT\DI\ExtensionClassInstance;
 use DHT\Extensions\CPT\ICPT;
 use DHT\Extensions\DashPages\IDashMenuPage;
 
@@ -16,13 +17,14 @@ final class Extensions
     //class instances for Singleton Pattern
     private static array $_instances = [];
     
-    private ClassInstance $_classInstance;
+    private ExtensionClassInstance $_extensionClassInstance;
     
-    protected function __construct(ClassInstance $classInstance)
+    protected function __construct(DIInit $diInit)
     {
         do_action('dht_before_extensions_init');
         
-        $this->_classInstance = $classInstance;
+        //initialize Extension classes DI Container
+        $this->_extensionClassInstance = $diInit->extensionClassInstance;
         
         //register the after extensions initialisation hook
         add_action('admin_init', array($this, 'registerAfterExtensionsInitHook'));
@@ -39,7 +41,7 @@ final class Extensions
     {
         if (!empty($dash_menus_config['menu_pages'])) {
             
-            return $this->_classInstance->getDashMenuPageInstance($dash_menus_config['menu_pages']);
+            return $this->_extensionClassInstance->getDashMenuPageInstance($dash_menus_config['menu_pages']);
         }
         
         return null;
@@ -56,7 +58,7 @@ final class Extensions
     {
         if (!empty($cpt_config['cpt'])) {
             
-            return $this->_classInstance->getCPTInstance($cpt_config['cpt']);
+            return $this->_extensionClassInstance->getCPTInstance($cpt_config['cpt']);
         }
         
         return null;
@@ -73,7 +75,7 @@ final class Extensions
     {
         // TODO - to implement the framework options
         // if(!empty($dash_menus_config['options'])) {
-        //return $this->_classInstance->getOptions($dash_menus_config['options']);
+        //return $this->_extensionClassInstance->getOptions($dash_menus_config['options']);
         // }
         
         //return null;
@@ -98,7 +100,7 @@ final class Extensions
      * @param $classInstance - ClassInstance object
      * @return Extensions - current class
      */
-    public static function get(ClassInstance $classInstance): self
+    public static function get(DIInit $classInstance): self
     {
         $cls = static::class;
         if (!isset(self::$_instances[$cls])) {

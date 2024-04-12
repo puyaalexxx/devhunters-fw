@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace DHT;
 
-use DHT\DI\ClassInstance;
 use DHT\DI\ClassInstantiation;
+use DHT\DI\DIInit;
 use DHT\Extensions\Extensions;
 
 /**
@@ -19,7 +19,7 @@ final class Framework
     private static array $_instances = [];
     
     //DI container reference
-    private ClassInstance $_diContainer;
+    private DIInit $_diInit;
     
     //dash menu class reference
     public Extensions $extensions;
@@ -32,7 +32,7 @@ final class Framework
         $this->_initDI();
         
         //instantiate framework Extensions
-        $this->extensions = Extensions::get($this->_diContainer);
+        $this->extensions = Extensions::get($this->_diInit);
         
         //other initializations
         //include the test file to test different things quickly (remove at the end)
@@ -47,7 +47,7 @@ final class Framework
     {
         do_action('dht_before_di_init');
         
-        $this->_diContainer = new ClassInstance();
+        $this->_diInit = new DIInit();
         
         do_action('dht_after_di_init');
     }

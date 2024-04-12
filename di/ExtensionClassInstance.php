@@ -7,15 +7,17 @@ use DHT\Extensions\CPT\{CPT, ICPT};
 use DHT\Extensions\DashPages\{DashMenuPage, IDashMenuPage};
 use DHT\Extensions\Options\{IOptions, Options};
 use DHT\Helpers\Exceptions\{DICPTException, DIDashMenuException, DIOptionsException};
-use function DHT\Helpers\dht_print_r;
 
-class ClassInstance
+/**
+ * Class to get instances of Extension classes
+ */
+final class ExtensionClassInstance
 {
     private ContainerCreate $_containerCreate;
     
-    public function __construct()
+    public function __construct(ContainerCreate $_containerCreate)
     {
-        $this->_containerCreate = new ContainerCreate();
+        $this->_containerCreate = $_containerCreate;
     }
     
     /**
@@ -27,7 +29,6 @@ class ClassInstance
      */
     public function getDashMenuPageInstance(array $dash_menus_config): IDashMenuPage
     {
-        dht_print_r('sssss');
         //build class instance with the passed parameters
         return $this->_containerCreate->buildClassInstance(DashMenuPage::class, $dash_menus_config, DIDashMenuException::class);
     }

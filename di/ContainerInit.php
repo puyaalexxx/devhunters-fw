@@ -5,7 +5,10 @@ namespace DHT\DI;
 
 use DI\{Container};
 
-class ContainerInit
+/**
+ * Class to initialise the main container from php-di package
+ */
+final class ContainerInit
 {
     private Container $_container;
     

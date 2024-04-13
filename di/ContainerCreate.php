@@ -2,6 +2,8 @@
 
 namespace DHT\DI;
 
+if (!defined('DHT_MAIN')) die('Forbidden');
+
 use DI\Container;
 use DI\DependencyException;
 use DI\NotFoundException;

@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace DHT\DI;
 
+if (!defined('DHT_MAIN')) die('Forbidden');
+
 use DHT\Extensions\CPT\{CPT, ICPT};
 use DHT\Extensions\DashPages\{DashMenuPage, IDashMenuPage};
 use DHT\Extensions\Options\{IOptions, Options};

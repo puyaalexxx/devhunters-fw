@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace DHT\Extensions\DashPages;
 
+if (!defined('DHT_MAIN')) die('Forbidden');
+
 use function DHT\Helpers\{dht_array_key_exists, dht_load_view};
 
 /**

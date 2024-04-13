@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace DHT\Extensions\CPT;
 
+if (!defined('DHT_MAIN')) die('Forbidden');
+
 /**
  *
  * Class that is used to register custom post types and taxonomies

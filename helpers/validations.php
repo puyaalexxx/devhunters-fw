@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace DHT\Helpers;
 
+if (!defined('DHT_MAIN')) die('Forbidden');
+
 use DI\Container;
 
 /**

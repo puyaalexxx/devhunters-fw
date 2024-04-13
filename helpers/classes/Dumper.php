@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace DHT\Helpers\Classes;
 
+if (!defined('DHT_MAIN')) die('Forbidden');
+
 // original source: https://code.google.com/p/prado3/source/browse/trunk/framework/Util/TVar_dumper.php
 
 /**

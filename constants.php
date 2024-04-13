@@ -3,10 +3,14 @@ declare(strict_types=1);
 
 namespace DHT;
 
+if (!defined('ABSPATH')) die('Forbidden');
+
 /*
  * Directory PATHs
  *
  * */
+
+define( 'DHT_MAIN', true );
 
 //core folder
 define( 'DHT_DIR', plugin_dir_path( __FILE__ ) );

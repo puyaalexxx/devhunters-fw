@@ -2,6 +2,8 @@
 
 namespace DHT\Extensions\CPT;
 
+if (!defined('DHT_MAIN')) die('Forbidden');
+
 /**
  *
  * Interface  that is used for the CPT.

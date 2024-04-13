@@ -1,8 +1,9 @@
 <?php
 declare(strict_types=1);
 
-
 namespace DHT\Helpers\Exceptions;
+
+if (!defined('DHT_MAIN')) die('Forbidden');
 
 use Exception;
 use Throwable;

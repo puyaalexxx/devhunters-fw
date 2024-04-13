@@ -2,6 +2,8 @@
 
 namespace DHT\DI;
 
+if (!defined('DHT_MAIN')) die('Forbidden');
+
 /**
  * Class to initialise all the Classes that requires dependecy injections
  */

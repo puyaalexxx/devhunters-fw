@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace DHT\Extensions;
 
+if (!defined('DHT_MAIN')) die('Forbidden');
+
 use DHT\DI\DIInit;
 use DHT\DI\ExtensionClassInstance;
 use DHT\Extensions\CPT\ICPT;

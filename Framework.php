@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace DHT;
 
+if (!defined('DHT_MAIN')) die('Forbidden');
+
 use DHT\DI\ClassInstantiation;
 use DHT\DI\DIInit;
 use DHT\Extensions\Extensions;

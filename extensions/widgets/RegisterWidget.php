@@ -7,6 +7,10 @@ use function DHT\Helpers\dht_print_r;
 
 if (!defined('DHT_MAIN')) die('Forbidden');
 
+/**
+ *
+ * Class that is used to register plugin widgets
+ */
 class RegisterWidget implements IRegisterWidget
 {
     /**

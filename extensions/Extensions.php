@@ -9,8 +9,12 @@ use DHT\DI\DIInit;
 use DHT\DI\ExtensionClassInstance;
 use DHT\Extensions\CPT\ICPT;
 use DHT\Extensions\DashPages\IDashMenuPage;
-use DHT\Helpers\Exceptions\ConfigExceptions\{EmptyCPTConfigurationsException, EmptyMenuConfigurationsException,
-    EmptyOptionsConfigurationsException, EmptyWidgetNamesException};
+use DHT\Extensions\Sidebars\IRegisterSidebar;
+use DHT\Helpers\Exceptions\ConfigExceptions\{EmptyCPTConfigurationsException,
+    EmptyMenuConfigurationsException,
+    EmptyOptionsConfigurationsException,
+    EmptySidebarConfigurationsException,
+    EmptyWidgetNamesException};
 use DHT\Extensions\Widgets\IRegisterWidget;
 
 /**
@@ -50,7 +54,7 @@ final class Extensions
             return $this->_extensionClassInstance->getDashMenuPageInstance($dash_menus_config['menu_pages']);
         }
         
-        throw new EmptyMenuConfigurationsException(_x('Empty configurations array passed to Dashboard Menu class', 'exceptions', 'dht'));
+        throw new EmptyMenuConfigurationsException(_x('Empty configurations array', 'exceptions', 'dht'));
     }
     
     /**
@@ -68,7 +72,7 @@ final class Extensions
             return $this->_extensionClassInstance->getCPTInstance($cpt_config['cpt']);
         }
         
-        throw new EmptyCPTConfigurationsException(_x('Empty configurations array passed to CPT class', 'exceptions', 'dht'));
+        throw new EmptyCPTConfigurationsException(_x('Empty configurations array', 'exceptions', 'dht'));
     }
     
     /**
@@ -101,10 +105,28 @@ final class Extensions
     {
         if (!empty($widgets)) {
             
-            return $this->_extensionClassInstance->getRegisterWidgetsInstance($widgets);
+            return $this->_extensionClassInstance->getRegisterWidgetInstance($widgets);
         }
         
         throw new EmptyWidgetNamesException(_x('Empty widgets array', 'exceptions', 'dht'));
+    }
+    
+    /**
+     *
+     * register the plugin sidebars
+     *
+     * @param mixed $sidebar_config - array of sidebars
+     * @return IRegisterSidebar - register sidebar class instance
+     * @throws EmptySidebarConfigurationsException
+     */
+    public function registerSidebars(array $sidebar_config): IRegisterSidebar
+    {
+        if (!empty($sidebar_config['sidebars'])) {
+            
+            return $this->_extensionClassInstance->getRegisterSidebarInstance($sidebar_config['sidebars']);
+        }
+        
+        throw new EmptySidebarConfigurationsException(_x('Empty configurations array', 'exceptions', 'dht'));
     }
     
     /**

@@ -7,6 +7,8 @@ if (!defined('DHT_MAIN')) die('Forbidden');
 
 use DHT\Extensions\CPT\{CPT, ICPT};
 use DHT\Extensions\DashPages\{DashMenuPage, IDashMenuPage};
+use DHT\Extensions\Sidebars\IRegisterSidebar;
+use DHT\Extensions\Sidebars\RegisterSidebar;
 use DHT\Extensions\Widgets\IRegisterWidget;
 use DHT\Extensions\Widgets\RegisterWidget;
 use DHT\Extensions\Options\{IOptions, Options};
@@ -68,11 +70,24 @@ final class ExtensionClassInstance
      * return the RegisterWidgets class instance
      *
      * @param array $widgets - widget names
-     * @return IRegisterWidget - RegisterWidgets instance
+     * @return IRegisterWidget - RegisterWidget instance
      */
-    public function getRegisterWidgetsInstance(array $widgets): IRegisterWidget
+    public function getRegisterWidgetInstance(array $widgets): IRegisterWidget
     {
         //build class instance with the passed parameters
         return $this->_containerCreate->buildClassInstance(RegisterWidget::class, $widgets, DIException::class);
+    }
+    
+    /**
+     *
+     * return the RegisterWidget class instance
+     *
+     * @param array $sidebar_config - sidebars config
+     * @return IRegisterSidebar - RegisterSidebar instance
+     */
+    public function getRegisterSidebarInstance(array $sidebar_config): IRegisterSidebar
+    {
+        //build class instance with the passed parameters
+        return $this->_containerCreate->buildClassInstance(RegisterSidebar::class, $sidebar_config, DIException::class);
     }
 }

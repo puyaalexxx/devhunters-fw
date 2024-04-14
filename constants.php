@@ -29,4 +29,6 @@ define( 'DHT_TEMPLATES_DIR', DHT_DIR . 'templates/' );
  * URL PATHs
  *
  * */
-define( 'DHT_PATH', plugin_dir_url( __FILE__ ) );
+define( 'DHT_URI', plugin_dir_url( __FILE__ ) );
+
+define( 'DHT_ASSETS_URI', DHT_URI . 'assets/' );

@@ -76,28 +76,9 @@ class DashMenuPage implements IDashMenuPage
             'additional_options' => $additional_options
         ] = $main_menu_values;
         
-        $callback_func = $this->_mergeCallbackArguments($callback, $template_path, $additional_options);
+        $callback_func = $callback ? $this->_mergeCallbackArguments($callback, $template_path, $additional_options) : '';
         
         add_menu_page($page_title, $menu_title, $capability, $menu_slug, $callback_func, $icon_url, $position);
-    }
-    
-    /**
-     *
-     * utility method to build the menu callback function with passed arguments
-     *
-     * @param string $callback
-     * @param string $template_path
-     * @param array $additional_options
-     * @return callable
-     */
-    private function _mergeCallbackArguments(string $callback, string $template_path, array $additional_options): callable
-    {
-        
-        $func_args = ['template_path' => $template_path, 'additional_options' => $additional_options];
-        
-        return function () use ($callback, $func_args) {
-            $this->$callback($func_args);
-        };
     }
     
     /**
@@ -119,9 +100,28 @@ class DashMenuPage implements IDashMenuPage
         ] = $submenu_values;
         
         
-        $callback_func = $this->_mergeCallbackArguments($callback, $template_path, $additional_options);
+        $callback_func = $callback ? $this->_mergeCallbackArguments($callback, $template_path, $additional_options) : '';
         
         add_submenu_page($parent_slug, $page_title, $menu_title, $capability, $menu_slug, $callback_func);
+    }
+    
+    /**
+     *
+     * utility method to build the menu callback function with passed arguments
+     *
+     * @param string $callback
+     * @param string $template_path
+     * @param array $additional_options
+     * @return callable
+     */
+    private function _mergeCallbackArguments(string $callback, string $template_path, array $additional_options): callable
+    {
+        
+        $func_args = ['template_path' => $template_path, 'additional_options' => $additional_options];
+        
+        return function () use ($callback, $func_args) {
+            $this->$callback($func_args);
+        };
     }
     
     /**

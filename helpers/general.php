@@ -5,7 +5,7 @@ namespace DHT\Helpers;
 
 if (!defined('DHT_MAIN')) die('Forbidden');
 
-use DHT\helpers\Classes\Dumper;
+use DHT\Helpers\Classes\Dumper;
 
 /**
  *

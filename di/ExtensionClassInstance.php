@@ -7,10 +7,10 @@ if (!defined('DHT_MAIN')) die('Forbidden');
 
 use DHT\Extensions\CPT\{CPT, ICPT};
 use DHT\Extensions\DashPages\{DashMenuPage, IDashMenuPage};
+use DHT\Extensions\Widgets\IRegisterWidget;
+use DHT\Extensions\Widgets\RegisterWidget;
 use DHT\Extensions\Options\{IOptions, Options};
-use DHT\Helpers\Exceptions\{DIExceptions\DICPTException,
-    DIExceptions\DIDashMenuException,
-    DIExceptions\DIOptionsException};
+use DHT\Helpers\Exceptions\{DIExceptions\DIException};
 
 /**
  * Class to get instances of Extension classes
@@ -34,7 +34,7 @@ final class ExtensionClassInstance
     public function getDashMenuPageInstance(array $dash_menus_config): IDashMenuPage
     {
         //build class instance with the passed parameters
-        return $this->_containerCreate->buildClassInstance(DashMenuPage::class, $dash_menus_config, DIDashMenuException::class);
+        return $this->_containerCreate->buildClassInstance(DashMenuPage::class, $dash_menus_config, DIException::class);
     }
     
     /**
@@ -47,9 +47,9 @@ final class ExtensionClassInstance
     public function getCPTInstance(array $cpt_config): ICPT
     {
         //build class instance with the passed parameters
-        return $this->_containerCreate->buildClassInstance(CPT::class, $cpt_config, DICPTException::class);
+        return $this->_containerCreate->buildClassInstance(CPT::class, $cpt_config, DIException::class);
     }
-    
+
     /**
      *
      * return the Options class instance
@@ -60,6 +60,19 @@ final class ExtensionClassInstance
     public function getOptionsInstance(array $options_config): IOptions
     {
         //build class instance with the passed parameters
-        return $this->_containerCreate->buildClassInstance(Options::class, $options_config, DIOptionsException::class);
+        return $this->_containerCreate->buildClassInstance(Options::class, $options_config, DIException::class);
+    }
+    
+    /**
+     *
+     * return the RegisterWidgets class instance
+     *
+     * @param array $widgets - widget names
+     * @return IRegisterWidget - RegisterWidgets instance
+     */
+    public function getRegisterWidgetsInstance(array $widgets): IRegisterWidget
+    {
+        //build class instance with the passed parameters
+        return $this->_containerCreate->buildClassInstance(RegisterWidget::class, $widgets, DIException::class);
     }
 }

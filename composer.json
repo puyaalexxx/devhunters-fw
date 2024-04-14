@@ -23,12 +23,14 @@
       "DHT\\Helpers\\" : "helpers/",
       "DHT\\Helpers\\Classes\\" : "helpers/classes/",
       "DHT\\Helpers\\Exceptions\\" : "helpers/exceptions/",
+      "DHT\\Helpers\\Exceptions\\ConfigExceptions\\" : "helpers/exceptions/config-exceptions/",
 
       "DHT\\DI\\" : "di/",
 
       "DHT\\Extensions\\" : "extensions/",
       "DHT\\Extensions\\DashPages\\" : "extensions/dashboard-pages/",
-      "DHT\\Extensions\\CPT\\" : "extensions/cpt/"
+      "DHT\\Extensions\\CPT\\" : "extensions/cpt/",
+      "DHT\\Extensions\\Widgets\\" : "extensions/widgets/"
 
     }
   }

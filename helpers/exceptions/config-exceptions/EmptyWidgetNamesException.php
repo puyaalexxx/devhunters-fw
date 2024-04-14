@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace DHT\Helpers\Exceptions\DIExceptions;
+namespace DHT\Helpers\Exceptions\ConfigExceptions;
 
 if (!defined('DHT_MAIN')) die('Forbidden');
 
@@ -10,9 +10,9 @@ use Throwable;
 
 /**
  *
- * Custom class exception for Options class container instantiation
+ * Custom class exception thrown when the custom post types configuration array is empty
  */
-class DIOptionsException extends BaseException
+class EmptyWidgetNamesException extends BaseException
 {
     public function __construct($message, $code = 0, Throwable $previous = null)
     {

@@ -9,9 +9,9 @@ use DHT\DI\DIInit;
 use DHT\DI\ExtensionClassInstance;
 use DHT\Extensions\CPT\ICPT;
 use DHT\Extensions\DashPages\IDashMenuPage;
-use DHT\Helpers\Exceptions\{ConfigExceptions\EmptyCPTConfigurationsException,
-    ConfigExceptions\EmptyMenuConfigurationsException,
-    ConfigExceptions\EmptyOptionsConfigurationsException};
+use DHT\Helpers\Exceptions\ConfigExceptions\{EmptyCPTConfigurationsException, EmptyMenuConfigurationsException,
+    EmptyOptionsConfigurationsException, EmptyWidgetNamesException};
+use DHT\Extensions\Widgets\IRegisterWidget;
 
 /**
  *
@@ -87,6 +87,24 @@ final class Extensions
         // }
         
         // throw new EmptyOptionsConfigurationsException(_x('Empty configurations array passed to Options class', 'exceptions', 'dht'));
+    }
+    
+    /**
+     *
+     * register the plugin widgets
+     *
+     * @param mixed $widgets - array of widget names
+     * @return IRegisterWidget - register widgets class instance
+     * @throws EmptyWidgetNamesException
+     */
+    public function registerWidgets(array $widgets): IRegisterWidget
+    {
+        if (!empty($widgets)) {
+            
+            return $this->_extensionClassInstance->getRegisterWidgetsInstance($widgets);
+        }
+        
+        throw new EmptyWidgetNamesException(_x('Empty widgets array', 'exceptions', 'dht'));
     }
     
     /**

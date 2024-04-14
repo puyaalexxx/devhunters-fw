@@ -12,7 +12,7 @@ use Throwable;
  *
  * Custom class exception for DasMenuPage class container instantiation
  */
-class DICPTException extends BaseException
+class DIException extends BaseException
 {
     public function __construct($message, $code = 0, Throwable $previous = null)
     {

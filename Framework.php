@@ -1,9 +1,9 @@
 <?php
-declare(strict_types=1);
+declare( strict_types = 1 );
 
 namespace DHT;
 
-if (!defined('DHT_MAIN')) die('Forbidden');
+if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 use DHT\DI\ClassInstantiation;
 use DHT\DI\DIInit;
@@ -15,8 +15,8 @@ use DHT\Extensions\Extensions;
  * (in a custom plugin)
  * Instantiate all DI containers
  */
-final class Framework
-{
+final class Framework {
+    
     //TODO work around with the enqueue file versions
     
     //class instances for Singleton Pattern
@@ -31,19 +31,19 @@ final class Framework
     /**
      * @since     1.0.0
      */
-    protected function __construct()
-    {
-        do_action('dht_before_fw_init');
+    protected function __construct() {
+        
+        do_action( 'dht_before_fw_init' );
         
         //di registration
         $this->_initDI();
         
         //instantiate framework Extensions
-        $this->extensions = Extensions::get($this->_diInit);
+        $this->extensions = Extensions::get( $this->_diInit );
         
         //other initializations
         //include the test file to test different things quickly (remove at the end)
-        require_once(plugin_dir_path(__FILE__) . "test.php");
+        require_once( plugin_dir_path( __FILE__ ) . "test.php" );
     }
     
     
@@ -53,13 +53,13 @@ final class Framework
      * @return void
      * @since     1.0.0
      */
-    private function _initDI(): void
-    {
-        do_action('dht_before_di_init');
+    private function _initDI() : void {
+        
+        do_action( 'dht_before_di_init' );
         
         $this->_diInit = new DIInit();
         
-        do_action('dht_after_di_init');
+        do_action( 'dht_after_di_init' );
     }
     
     /**
@@ -67,17 +67,18 @@ final class Framework
      * instance. On the first run, it creates a singleton object and places it
      * into the static field. On subsequent runs, it returns the client existing
      * object stored in the static field.
+     *
      * @return Framework - current class
      * @since     1.0.0
      */
-    public static function init(): self
-    {
+    public static function init() : self {
+        
         $cls = static::class;
-        if (!isset(self::$_instances[$cls])) {
-            self::$_instances[$cls] = new static();
+        if ( !isset( self::$_instances[ $cls ] ) ) {
+            self::$_instances[ $cls ] = new static();
         }
         
-        return self::$_instances[$cls];
+        return self::$_instances[ $cls ];
     }
     
     /**
@@ -86,7 +87,6 @@ final class Framework
      * @return void
      * @since     1.0.0
      */
-    protected function __clone(): void
-    {
-    }
+    protected function __clone() : void {}
+    
 }

@@ -1,20 +1,22 @@
 <?php
-declare(strict_types=1);
+declare( strict_types = 1 );
 
 namespace DHT\DI;
 
-if (!defined('DHT_MAIN')) die('Forbidden');
+if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
-class OtherClassInstance
-{
+class OtherClassInstance {
+    
     private ContainerCreate $_containerCreate;
     
     /**
      * @param ContainerCreate $_containerCreate
+     *
      * @since     1.0.0
      */
-    public function __construct(ContainerCreate $_containerCreate)
-    {
+    public function __construct( ContainerCreate $_containerCreate ) {
+        
         $this->_containerCreate = $_containerCreate;
     }
+    
 }

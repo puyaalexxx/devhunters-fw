@@ -2,7 +2,7 @@
 module.exports = {
     plugins: [
         require('postcss-preset-env')({
-            stage : 1
+            stage: 1,
         }),
         require('autoprefixer')(),
         require('postcss-import')(),
@@ -13,5 +13,5 @@ module.exports = {
             preset: 'default'
         }),*/
         require('precss'),
-    ]
+    ],
 }

@@ -1,4 +1,4 @@
-const path = require('path');
+const path = require('path')
 
 module.exports = {
     mode: 'development', // or 'production'
@@ -26,17 +26,17 @@ module.exports = {
                 use: [
                     'style-loader',
                     'css-loader',
-                    'postcss-loader' // Add PostCSS loader
-                ]
-            }
+                    'postcss-loader', // Add PostCSS loader
+                ],
+            },
         ],
     },
     resolve: {
         extensions: ['.ts', '.tsx', '.js', '.css'], // Resolve TypeScript and JavaScript extensions,
-        modules: [path.resolve(__dirname, 'node_modules')]
+        modules: [path.resolve(__dirname, 'node_modules')],
     },
     externals: {
         jquery: 'jQuery',
-    }
+    },
     // Other webpack configuration options...
-};
+}

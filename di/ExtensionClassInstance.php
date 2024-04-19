@@ -7,10 +7,8 @@ if (!defined('DHT_MAIN')) die('Forbidden');
 
 use DHT\Extensions\CPT\{CPT, ICPT};
 use DHT\Extensions\DashPages\{DashMenuPage, IDashMenuPage};
-use DHT\Extensions\Sidebars\IRegisterSidebar;
-use DHT\Extensions\Sidebars\RegisterSidebar;
-use DHT\Extensions\Widgets\IRegisterWidget;
-use DHT\Extensions\Widgets\RegisterWidget;
+use DHT\Extensions\Sidebars\{CreateDynamicSidebars, RegisterSidebar, IRegisterSidebar, ICreateDynamicSidebars};
+use DHT\Extensions\Widgets\{IRegisterWidget, RegisterWidget};
 use DHT\Extensions\Options\{IOptions, Options};
 use DHT\Helpers\Exceptions\{DIExceptions\DIException};
 
@@ -21,6 +19,10 @@ final class ExtensionClassInstance
 {
     private ContainerCreate $_containerCreate;
     
+    /**
+     * @param ContainerCreate $_containerCreate
+     * @since     1.0.0
+     */
     public function __construct(ContainerCreate $_containerCreate)
     {
         $this->_containerCreate = $_containerCreate;
@@ -32,6 +34,7 @@ final class ExtensionClassInstance
      *
      * @param array $dash_menus_config - dashboard menus configurations
      * @return IDashMenuPage - dashboard menu class instance
+     * @since     1.0.0
      */
     public function getDashMenuPageInstance(array $dash_menus_config): IDashMenuPage
     {
@@ -45,6 +48,7 @@ final class ExtensionClassInstance
      *
      * @param array $cpt_config - cpt configurations
      * @return ICPT - CPT class instance
+     * @since     1.0.0
      */
     public function getCPTInstance(array $cpt_config): ICPT
     {
@@ -58,6 +62,7 @@ final class ExtensionClassInstance
      *
      * @param array $options_config - plugin configurations
      * @return IOptions - Options class instance
+     * @since     1.0.0
      */
     public function getOptionsInstance(array $options_config): IOptions
     {
@@ -71,6 +76,7 @@ final class ExtensionClassInstance
      *
      * @param array $widgets - widget names
      * @return IRegisterWidget - RegisterWidget instance
+     * @since     1.0.0
      */
     public function getRegisterWidgetInstance(array $widgets): IRegisterWidget
     {
@@ -80,14 +86,28 @@ final class ExtensionClassInstance
     
     /**
      *
-     * return the RegisterWidget class instance
+     * return the RegisterSidebar class instance
      *
      * @param array $sidebar_config - sidebars config
      * @return IRegisterSidebar - RegisterSidebar instance
+     * @since     1.0.0
      */
     public function getRegisterSidebarInstance(array $sidebar_config): IRegisterSidebar
     {
         //build class instance with the passed parameters
         return $this->_containerCreate->buildClassInstance(RegisterSidebar::class, $sidebar_config, DIException::class);
+    }
+    
+    /**
+     *
+     * return the CreateSidebar class instance
+     *
+     * @return ICreateDynamicSidebars - CreateDynamicSidebar instance
+     * @since     1.0.0
+     */
+    public function getCreateDynamicSidebarsInstance(): ICreateDynamicSidebars
+    {
+        //build class instance with the passed parameters
+        return $this->_containerCreate->buildClassInstance(CreateDynamicSidebars::class, [], DIException::class);
     }
 }

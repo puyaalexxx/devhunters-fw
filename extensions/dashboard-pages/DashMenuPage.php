@@ -18,6 +18,7 @@ class DashMenuPage implements IDashMenuPage
     
     /**
      * @param array $dash_menus_config - injected config values from DI container
+     * @since     1.0.0
      */
     public function __construct(array $dash_menus_config)
     {
@@ -37,6 +38,7 @@ class DashMenuPage implements IDashMenuPage
      * create the dashboard menu items  and submenu items
      *
      * @return void
+     * @since     1.0.0
      */
     public function registerMenuPages(): void
     {
@@ -63,6 +65,7 @@ class DashMenuPage implements IDashMenuPage
      *
      * @param array $main_menu_values
      * @return void
+     * @since     1.0.0
      */
     private function _createMainMenuPage(array $main_menu_values): void
     {
@@ -87,6 +90,7 @@ class DashMenuPage implements IDashMenuPage
      *
      * @param array $submenu_values
      * @return void
+     * @since     1.0.0
      */
     private function _createSubmenuPage(array $submenu_values): void
     {
@@ -113,6 +117,7 @@ class DashMenuPage implements IDashMenuPage
      * @param string $template_path
      * @param array $additional_options
      * @return callable
+     * @since     1.0.0
      */
     private function _mergeCallbackArguments(string $callback, string $template_path, array $additional_options): callable
     {
@@ -131,6 +136,7 @@ class DashMenuPage implements IDashMenuPage
      * @param string $func_name - function name to be created
      * @param array $args - function arguments to be used
      * @return void
+     * @since     1.0.0
      */
     public function __call(string $func_name, array $args)
     {
@@ -145,6 +151,7 @@ class DashMenuPage implements IDashMenuPage
      * @param string $file
      * @param array $args
      * @return string
+     * @since     1.0.0
      */
     private function _getMenuTemplate(string $template_path, string $file, array $args): string
     {

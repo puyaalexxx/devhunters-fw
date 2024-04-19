@@ -15,6 +15,7 @@ class RegisterWidget implements IRegisterWidget
 {
     /**
      * @param array $widgets - array of widgets to be registered
+     * @since     1.0.0
      */
     public function __construct(array $widgets)
     {
@@ -29,6 +30,7 @@ class RegisterWidget implements IRegisterWidget
      *
      * @param array $widgets - array of widgets names to register
      * @return void
+     * @since     1.0.0
      */
     public function registerWidgets(array $widgets) : void {
         

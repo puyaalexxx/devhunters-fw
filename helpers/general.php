@@ -13,6 +13,7 @@ use DHT\Helpers\Classes\Dumper;
  *
  * @param mixed $value the value to be printed
  * @return void
+ * @since     1.0.0
  */
 function dht_print_r(mixed $value): void
 {
@@ -83,6 +84,7 @@ function dht_print_r(mixed $value): void
  *
  * @param string $path - dir path
  * @return string
+ * @since     1.0.0
  */
 function dht_fix_path(string $path): string
 {
@@ -112,6 +114,7 @@ function dht_fix_path(string $path): string
  * @param array $args - arguments to be passed into the view
  * @param bool $return - return the file content or display it
  * @return string
+ * @since     1.0.0
  */
 function dht_load_view(string $path, string $file, array $args = [], bool $return = true): string
 {
@@ -147,6 +150,7 @@ function dht_load_view(string $path, string $file, array $args = [], bool $retur
  * @param array $set_variables Set these to be available in file (like variables in view)
  * @param bool $return_array return array or only the value
  * @return array
+ * @since     1.0.0
  */
 function dht_get_variables_from_file(string $file_path, string $extract_variable, array $set_variables = [], bool $return_array = true): array
 {

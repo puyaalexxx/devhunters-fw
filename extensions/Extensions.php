@@ -9,7 +9,7 @@ use DHT\DI\DIInit;
 use DHT\DI\ExtensionClassInstance;
 use DHT\Extensions\CPT\ICPT;
 use DHT\Extensions\DashPages\IDashMenuPage;
-use DHT\Extensions\Sidebars\IRegisterSidebar;
+use DHT\Extensions\Sidebars\{IRegisterSidebar, ICreateDynamicSidebars};
 use DHT\Helpers\Exceptions\ConfigExceptions\{EmptyCPTConfigurationsException,
     EmptyMenuConfigurationsException,
     EmptyOptionsConfigurationsException,
@@ -28,6 +28,10 @@ final class Extensions
     
     private ExtensionClassInstance $_extensionClassInstance;
     
+    /**
+     * @param DIInit $diInit
+     * @since     1.0.0
+     */
     protected function __construct(DIInit $diInit)
     {
         do_action('dht_before_extensions_init');
@@ -46,6 +50,7 @@ final class Extensions
      * @param mixed $dash_menus_config - dashboard menus configurations
      * @return IDashMenuPage - menu instance
      * @throws EmptyMenuConfigurationsException
+     * @since     1.0.0
      */
     public function createDashboardMenus(array $dash_menus_config): IDashMenuPage
     {
@@ -64,6 +69,7 @@ final class Extensions
      * @param mixed $cpt_config - cpt configurations
      * @return ICPT - cpt instance
      * @throws EmptyCPTConfigurationsException
+     * @since     1.0.0
      */
     public function createCPT(array $cpt_config): ICPT
     {
@@ -82,6 +88,7 @@ final class Extensions
      * @param mixed $options_config - options configurations
      * @return void - options instance
      * @throws EmptyOptionsConfigurationsException
+     * @since     1.0.0
      */
     public function createOptions(array $options_config): void
     {
@@ -100,6 +107,7 @@ final class Extensions
      * @param mixed $widgets - array of widget names
      * @return IRegisterWidget - register widgets class instance
      * @throws EmptyWidgetNamesException
+     * @since     1.0.0
      */
     public function registerWidgets(array $widgets): IRegisterWidget
     {
@@ -118,6 +126,7 @@ final class Extensions
      * @param mixed $sidebar_config - array of sidebars
      * @return IRegisterSidebar - register sidebar class instance
      * @throws EmptySidebarConfigurationsException
+     * @since     1.0.0
      */
     public function registerSidebars(array $sidebar_config): IRegisterSidebar
     {
@@ -130,9 +139,28 @@ final class Extensions
     }
     
     /**
+     *
+     * create dynamic sidebars
+     *
+     * @param bool $createDynamicSidebars - create sidebars or not
+     * @return ICreateDynamicSidebars | bool - create sidebar class instance or nothing
+     * @since     1.0.0
+     */
+    public function createDynamicSidebars(bool $createDynamicSidebars): ICreateDynamicSidebars | bool
+    {
+        if ($createDynamicSidebars) {
+            
+            return $this->_extensionClassInstance->getCreateDynamicSidebarsInstance();
+        }
+        
+        return false;
+    }
+    
+    /**
      * register the after extensions initialisation hook
      *
      * @return void
+     * @since     1.0.0
      */
     public function registerAfterExtensionsInitHook(): void
     {
@@ -147,6 +175,7 @@ final class Extensions
      *
      * @param $classInstance - ClassInstance object
      * @return Extensions - current class
+     * @since     1.0.0
      */
     public static function get(DIInit $classInstance): self
     {
@@ -162,6 +191,7 @@ final class Extensions
      * no possibility to clone this class
      *
      * @return void
+     * @since     1.0.0
      */
     protected function __clone(): void
     {

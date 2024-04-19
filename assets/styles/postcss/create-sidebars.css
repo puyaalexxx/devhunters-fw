@@ -1,0 +1,57 @@
+$margin_buttons : 11px 8px 0 0;
+$float_buttons : right;
+
+@mixin button_css{
+    float: $float_buttons;
+    margin: $margin_buttons !important;
+}
+
+div#widgets-right .sidebar-dht-custom .widgets-sortables {
+    padding-bottom: 45px;
+}
+
+div#widgets-right .sidebar-dht-custom.closed .widgets-sortables {
+    padding-bottom: 0;
+}
+
+.dht-wrap-delete {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 40px;
+    line-height: 40px;
+    width: 100%;
+    border-top: 1px solid #eee;
+}
+div#widgets-right .sidebar-dht-custom.closed .widgets-sortables .dht-wrap-delete {
+    display: none !important;
+}
+.dht-wrap-delete .dht-widget-area-delete {
+    @include button_css;
+}
+.dht-wrap-delete .dht-widget-area-delete-cancel {
+    @include button_css;
+}
+.dht-wrap-delete .dht-widget-area-delete-confirm {
+    @include button_css;
+}
+div#dht-wrap {
+    background-color: #fff;
+    max-width: 96%;
+    margin-right: 0;
+    margin-top: 10px;
+    border-radius: 0;
+    border: 1px solid #ddd;
+    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+    box-shadow: 0 1px 2px rgba(0,0,0,.05);
+    margin-left: 0;
+    padding: 4%;
+}
+div#dht-wrap h3 {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+input#dht_sidebar_name {
+    width: 75%;
+    margin: 15px 0;
+}

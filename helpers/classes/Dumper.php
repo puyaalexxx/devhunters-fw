@@ -38,6 +38,7 @@ class Dumper
      * @param mixed $var     Variable to be dumped
      * @param integer $depth Maximum depth that the dumper should go into the variable. Defaults to 10.
      * @return string the string representation of the variable
+     * @since     1.0.0
      */
     public static function dump(mixed $var, int $depth=10) : string
     {
@@ -57,6 +58,7 @@ class Dumper
      * reset values
      *
      * @return void
+     * @since     1.0.0
      */
     private static function _resetInternals() : void
     {
@@ -71,6 +73,7 @@ class Dumper
      * @param mixed $var Variable to be dumped
      * @param integer $level depth level
      * @return void
+     * @since     1.0.0
      */
     private static function _dumpInternal(mixed $var, int $level) : void
     {

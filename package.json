@@ -1,0 +1,35 @@
+{
+  "name": "devhunters-fw",
+  "version": "1.0.0",
+  "description": "**The framework used in my plugins**",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "wp-scripts start --config ./webpack.config.js",
+    "build": "wp-scripts build --config ./webpack.config.js",
+    "build:css": "postcss assets/styles/postcss/*.css -d assets/styles/css",
+    "watch:css": "postcss assets/styles/postcss/*.css -d assets/styles/css --watch",
+    "lint:css": "wp-scripts lint-style",
+    "format:js": "wp-scripts format-js",
+    "check-types": "tsc --noEmit"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jquery": "^3.5.29",
+    "@wordpress/scripts": "^27.6.0",
+    "autoprefixer": "^10.4.19",
+    "css-loader": "^7.1.1",
+    "cssnano": "^6.1.2",
+    "postcss": "^8.4.38",
+    "postcss-cli": "^11.0.0",
+    "postcss-import": "^16.1.0",
+    "postcss-loader": "^8.1.1",
+    "postcss-preset-env": "^9.5.5",
+    "precss": "^4.0.0",
+    "style-loader": "^4.0.0",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.4.5"
+  }
+}

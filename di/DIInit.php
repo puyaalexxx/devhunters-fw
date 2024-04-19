@@ -13,6 +13,9 @@ final class DIInit
     public ExtensionClassInstance $extensionClassInstance;
     public OtherClassInstance $otherClassInstance;
     
+    /**
+     * @since     1.0.0
+     */
     public function __construct()
     {
         $this->_containerCreate = new ContainerCreate();

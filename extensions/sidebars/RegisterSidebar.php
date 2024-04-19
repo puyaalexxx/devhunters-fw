@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace DHT\Extensions\Sidebars;
 
-use function DHT\Helpers\dht_print_r;
-
 if (!defined('DHT_MAIN')) die('Forbidden');
 
 /**
@@ -15,6 +13,7 @@ class RegisterSidebar implements IRegisterSidebar
 {
     /**
      * @param array $sidebar_config - array of sidebars to be registered
+     * @since     1.0.0
      */
     public function __construct(array $sidebar_config)
     {
@@ -29,6 +28,7 @@ class RegisterSidebar implements IRegisterSidebar
      *
      * @param array $sidebar_config - array of sidebar config
      * @return void
+     * @since     1.0.0
      */
     public function registerSidebars(array $sidebar_config) : void {
     

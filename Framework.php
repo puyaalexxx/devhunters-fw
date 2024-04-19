@@ -17,6 +17,8 @@ use DHT\Extensions\Extensions;
  */
 final class Framework
 {
+    //TODO work around with the enqueue file versions
+    
     //class instances for Singleton Pattern
     private static array $_instances = [];
     
@@ -26,6 +28,9 @@ final class Framework
     //dash menu class reference
     public Extensions $extensions;
     
+    /**
+     * @since     1.0.0
+     */
     protected function __construct()
     {
         do_action('dht_before_fw_init');
@@ -44,6 +49,9 @@ final class Framework
     
     /**
      * Register the PHP-DI containers
+     *
+     * @return void
+     * @since     1.0.0
      */
     private function _initDI(): void
     {
@@ -60,6 +68,7 @@ final class Framework
      * into the static field. On subsequent runs, it returns the client existing
      * object stored in the static field.
      * @return Framework - current class
+     * @since     1.0.0
      */
     public static function init(): self
     {
@@ -75,6 +84,7 @@ final class Framework
      * no possibility to clone this class
      *
      * @return void
+     * @since     1.0.0
      */
     protected function __clone(): void
     {

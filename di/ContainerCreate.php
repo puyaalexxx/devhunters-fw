@@ -16,6 +16,9 @@ final class ContainerCreate
 {
     private Container $_container;
     
+    /**
+     * @since     1.0.0
+     */
     public function __construct()
     {
         //it is based on container initialization
@@ -29,17 +32,24 @@ final class ContainerCreate
      * @param array $configurations - plugin configurations
      * @param string $exception_thrown - exception to be thrown
      * @return object - class instance upcasted to object
+     * @since     1.0.0
      */
     public function buildClassInstance(string $class_name, array $configurations, string $exception_thrown): object
     {
         try {
             
-            $this->_container->set($class_name, create($class_name)->constructor($configurations));
-            
+            if(empty($configurations)) {
+                $this->_container->set($class_name, create($class_name)->constructor());
+            }
+            else{
+                $this->_container->set($class_name, create($class_name)->constructor($configurations));
+            }
+
             //return class instance
             return $this->_container->get($class_name);
             
         } catch (DependencyException|NotFoundException $e) {
+            
             throw new $exception_thrown(sprintf(_x('%s class instance could not be retrieved: %s', 'exceptions', 'dht'), $class_name, $e->getMessage()));
         }
     }

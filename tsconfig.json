@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "esnext",
+    "jsx": "preserve",
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "sourceMap" : true,
+    "strictNullChecks" : true,
+    "noImplicitAny": true,
+    "outDir" : "assets/scripts/js",
+
+  },
+  "include": ["assets/scripts/ts/*.ts", "assets/scripts/ts/*.tsx"],
+  "exclude": ["node_modules"]
+}

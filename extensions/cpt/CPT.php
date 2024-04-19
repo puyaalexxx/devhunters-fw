@@ -13,6 +13,7 @@ class CPT implements ICPT
 {
     /**
      * @param array $cpt_config - injected config values from DI container
+     * @since     1.0.0
      */
     public function __construct(array $cpt_config)
     {
@@ -39,6 +40,7 @@ class CPT implements ICPT
      *
      * @param array $post_types_args - post type arguments to register
      * @return void
+     * @since     1.0.0
      */
     public function registerPostTypes(array $post_types_args): void
     {
@@ -59,6 +61,7 @@ class CPT implements ICPT
      *
      * @param array $taxonomies_args - taxonomy arguments to register
      * @return void
+     * @since     1.0.0
      */
     public function registerTaxonomy(array $taxonomies_args): void
     {

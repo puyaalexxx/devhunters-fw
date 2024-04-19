@@ -9,6 +9,10 @@ class OtherClassInstance
 {
     private ContainerCreate $_containerCreate;
     
+    /**
+     * @param ContainerCreate $_containerCreate
+     * @since     1.0.0
+     */
     public function __construct(ContainerCreate $_containerCreate)
     {
         $this->_containerCreate = $_containerCreate;

@@ -24,6 +24,7 @@ final class ContainerInit
      * register container settings
      *
      * @return void
+     * @since     1.0.0
      */
     private function _initializeContainer(): void
     {
@@ -34,6 +35,7 @@ final class ContainerInit
      * get Container instance
      *
      * @return Container - instance of this class
+     * @since     1.0.0
      */
     public function getContainer(): Container
     {

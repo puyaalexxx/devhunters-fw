@@ -15,7 +15,7 @@ use DHT\Extensions\Extensions;
  * (in a custom plugin)
  * Instantiate all DI containers
  */
-final class Framework {
+final class FW {
     
     //TODO work around with the enqueue file versions
     
@@ -31,7 +31,7 @@ final class Framework {
     /**
      * @since     1.0.0
      */
-    protected function __construct() {
+    public function __construct() {
         
         do_action( 'dht_before_fw_init' );
         
@@ -39,7 +39,7 @@ final class Framework {
         $this->_initDI();
         
         //instantiate framework Extensions
-        $this->extensions = Extensions::get( $this->_diInit );
+        $this->extensions = Extensions::init( $this->_diInit );
         
         //other initializations
         //include the test file to test different things quickly (remove at the end)
@@ -61,32 +61,20 @@ final class Framework {
         
         do_action( 'dht_after_di_init' );
     }
+}
+
+/**
+ * @return FW Framework instance
+ */
+function fw() : FW {
+    static $FW = null; // cache
     
-    /**
-     * This is the static method that controls the access to the singleton
-     * instance. On the first run, it creates a singleton object and places it
-     * into the static field. On subsequent runs, it returns the client existing
-     * object stored in the static field.
-     *
-     * @return Framework - current class
-     * @since     1.0.0
-     */
-    public static function init() : self {
+    if ($FW === null) {
+        $FW = new Fw();
         
-        $cls = static::class;
-        if ( !isset( self::$_instances[ $cls ] ) ) {
-            self::$_instances[ $cls ] = new static();
-        }
-        
-        return self::$_instances[ $cls ];
+        //framework is loaded
+        do_action( 'dht_fw_init' );
     }
     
-    /**
-     * no possibility to clone this class
-     *
-     * @return void
-     * @since     1.0.0
-     */
-    protected function __clone() : void {}
-    
+    return $FW;
 }

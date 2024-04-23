@@ -23,8 +23,6 @@ class DashMenuPage implements IDashMenuPage {
      */
     public function __construct( array $dash_menus_config ) {
         
-        do_action( 'dht_before_dashboard_menus_init' );
-        
         //get DI injected dashboard menu configurations from plugin
         $this->_dashMenusConfig = apply_filters( 'dash_menus_configurations', $dash_menus_config );
         
@@ -55,8 +53,6 @@ class DashMenuPage implements IDashMenuPage {
                 $this->_createSubmenuPage( $submenu_values );
             }
         }
-        
-        do_action( 'dht_after_dashboard_menus_init' );
     }
     
     /**
@@ -151,7 +147,7 @@ class DashMenuPage implements IDashMenuPage {
      *
      * @param string $template_path
      * @param string $file
-     * @param array  $args
+     * @param array  $args - additional options to pass to the view options
      *
      * @return string
      * @since     1.0.0

@@ -16,6 +16,7 @@ use DHT\Helpers\Exceptions\ConfigExceptions\{EmptyCPTConfigurationsException,
     EmptyOptionsConfigurationsException,
     EmptySidebarConfigurationsException,
     EmptyWidgetNamesException};
+use function DHT\Helpers\dht_print_r;
 
 /**
  *
@@ -28,6 +29,8 @@ final class Extensions {
     
     private ExtensionClassInstance $_extensionClassInstance;
     
+    public ICPT $cpt;
+    
     /**
      * @param DIInit $diInit
      *
@@ -39,9 +42,6 @@ final class Extensions {
         
         //initialize Extension classes DI Container
         $this->_extensionClassInstance = $diInit->extensionClassInstance;
-        
-        //register the after extensions initialisation hook
-        add_action( 'admin_init', array( $this, 'registerAfterExtensionsInitHook' ) );
     }
     
     /**
@@ -164,17 +164,6 @@ final class Extensions {
     }
     
     /**
-     * register the after extensions initialisation hook
-     *
-     * @return void
-     * @since     1.0.0
-     */
-    public function registerAfterExtensionsInitHook() : void {
-        
-        do_action( 'dht_after_extensions_init' );
-    }
-    
-    /**
      * This is the static method that controls the access to the singleton
      * instance. On the first run, it creates a singleton object and places it
      * into the static field. On subsequent runs, it returns the client existing
@@ -185,7 +174,7 @@ final class Extensions {
      * @return Extensions - current class
      * @since     1.0.0
      */
-    public static function get( DIInit $classInstance ) : self {
+    public static function init( DIInit $classInstance ) : self {
         
         $cls = static::class;
         if ( !isset( self::$_instances[ $cls ] ) ) {

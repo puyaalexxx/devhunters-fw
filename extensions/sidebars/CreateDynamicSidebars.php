@@ -28,7 +28,7 @@ class CreateDynamicSidebars implements ICreateDynamicSidebars {
             add_action( 'admin_enqueue_scripts', [ $this, 'enqueueSidebarScripts' ] );
         }
 
-        //ajac actions to remove sidebars
+        //ajax actions to remove sidebars
         add_action( 'wp_ajax_deleteWidgetArea', [ $this, 'deleteWidgetArea' ] );
         add_action( 'wp_ajax_nopriv_deleteWidgetArea', [ $this, 'deleteWidgetArea' ] ); // For non-logged in users
     }

@@ -15,15 +15,16 @@ define( 'DHT_MAIN', true );
 //core folder
 define( 'DHT_DIR', plugin_dir_path( __FILE__ ) );
 
+define( 'DHT_ASSETS_DIR', DHT_DIR . 'assets/' );
+
 define( 'DHT_HELPERS_DIR', DHT_DIR . 'helpers/' );
 
-define( 'DHT_INTERFACES_DIR', DHT_DIR . 'interfaces/' );
-
-define( 'DHT_OPTIONS_DIR', DHT_DIR . 'options/' );
-
-define( 'DHT_PAGES_DIR', DHT_DIR . 'pages/' );
+//extensions folder
+define( 'DHT_EXTENSIONS_DIR', DHT_DIR . 'extensions/' );
+define( 'DHT_OPTIONS_DIR', DHT_EXTENSIONS_DIR . 'options/' );
 
 define( 'DHT_TEMPLATES_DIR', DHT_DIR . 'templates/' );
+
 
 /*
  * URL PATHs

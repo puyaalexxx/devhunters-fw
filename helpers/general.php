@@ -174,3 +174,30 @@ function dht_get_variables_from_file(string $file_path, string $extract_variable
     
     return $option;
 }
+
+/**
+ * Parse CSS icons classes and content codes to a PHP array with key value pairs
+ *
+ * @param string $css
+ * @param string $before_delimiter :before pseudo css delimiter
+ * @return array
+ * @since     1.0.0
+ */
+function dht_parse_css_classes_into_array(string $css, string $before_delimiter = ':') : array {
+    // Regular expression pattern to extract class name and content
+    $pattern = '/\.([a-zA-Z0-9_-]+)'.$before_delimiter.'before\s*{\s*content:\s*"([^"]+)"/';
+    
+    // Initialize an array to store class names and content values
+    $classContentArray = array();
+    
+    // Perform the regular expression match
+    preg_match_all($pattern, $css, $matches, PREG_SET_ORDER);
+    
+    // Loop through matches and store in the array
+    foreach ($matches as $match) {
+        // $match[1] contains class name, $match[2] contains content
+        $classContentArray[$match[1]] = $match[2];
+    }
+    
+    return $classContentArray;
+}

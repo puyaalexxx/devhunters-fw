@@ -87,3 +87,32 @@ function multioptions_ajax_values(){
 //ajax actions to remove sidebars
 add_action( 'wp_ajax_multioptions_ajax_values', 'multioptions_ajax_values' );
 add_action( 'wp_ajax_nopriv_multioptions_ajax_values', 'multioptions_ajax_values' ); // For non-logged in users
+
+//icons
+function icons() {
+    // Enqueue Thickbox script
+    wp_enqueue_script('thickbox');
+    
+    // Enqueue Thickbox stylesheet
+    wp_enqueue_style('thickbox');
+    
+    wp_register_style( 'dht-font-awesome-css', DHT_ASSETS_URI . 'styles/libraries/fontawesome-icons.min.css', array(), '1.0' );
+    wp_enqueue_style( 'dht-font-awesome-css' );
+    
+    wp_register_style( 'dht-divi-icons-css', DHT_ASSETS_URI . 'styles/libraries/divi-icons.min.css', array(), '1.0' );
+    wp_enqueue_style( 'dht-divi-icons-css' );
+    
+    wp_register_style( 'dht-elusive-icons-css', DHT_ASSETS_URI . 'styles/libraries/elusive-icons.min.css', array(), '1.0' );
+    wp_enqueue_style( 'dht-elusive-icons-css' );
+    
+    wp_register_style( 'dht-line-icons-css', DHT_ASSETS_URI . 'styles/libraries/line-icons.min.css', array(), '1.0' );
+    wp_enqueue_style( 'dht-line-icons-css' );
+    
+    wp_register_style( 'dht-devicon-icons-css', DHT_ASSETS_URI . 'styles/libraries/devicon-icons.min.css', array(), '1.0' );
+    wp_enqueue_style( 'dht-devicon-icons-css' );
+    
+    wp_register_style( 'dht-bootstrap-icons-css', DHT_ASSETS_URI . 'styles/libraries/bootstrap-icons.min.css', array(), '1.0' );
+    wp_enqueue_style( 'dht-bootstrap-icons-css' );
+
+}
+add_action('admin_enqueue_scripts', 'icons');

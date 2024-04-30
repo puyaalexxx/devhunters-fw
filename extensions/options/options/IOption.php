@@ -5,7 +5,7 @@ namespace DHT\Extensions\Options\Options;
 
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
-interface IOptionBluePrint {
+interface IOption {
     
     public function getOption( $option );
     

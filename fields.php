@@ -92,26 +92,29 @@
 
 <style>
     /*checkbox styles*/
-    .dht-field-child-wrapper .dht-checkbox:first-child {
+    .dht-wrapper .dht-field-child-wrapper .dht-field-child-checkbox .dht-checkbox:first-child {
         margin-top: 0px;
     }
-    .dht-field-child-wrapper .dht-checkbox {
+    .dht-wrapper .dht-field-child-wrapper .dht-field-child-checkbox .dht-checkbox {
         margin-top: 10px;
     }
-    .dht-field-child-wrapper .dht-checkbox-wrapper .dht-checkbox {
+    .dht-wrapper .dht-field-child-wrapper .dht-field-child-checkbox .dht-checkbox-wrapper .dht-checkbox {
         float: left;
     }
-    .dht-field-child-wrapper .dht-checkbox-wrapper label {
+    .dht-wrapper .dht-field-child-wrapper .dht-field-child-checkbox .dht-checkbox-wrapper label {
         display: block;
     }
-    .dht-checkbox-wrapper {
+    .dht-wrapper.dht-field-child-checkbox  .dht-checkbox-wrapper {
         clear: both;
     }
-    .dht-checkbox-wrapper {
+    .dht-wrapper .dht-field-child-checkbox  .dht-checkbox-wrapper {
         margin-bottom: 10px;
     }
-    .dht-checkbox-wrapper:last-child {
+    .dht-wrapper .dht-field-child-checkbox .dht-checkbox-wrapper:last-child {
         margin-bottom: 0px;
+    }
+    .dht-wrapper .dht-field-child-checkbox  .dht-checkbox {
+        width: auto;
     }
 </style>
 
@@ -150,32 +153,35 @@
 
 <style>
     /*radio styles*/
-    .dht-field-child-wrapper .dht-radio:first-child {
+    .dht-wrapper .dht-field-child-radio .dht-radio:first-child {
         margin-top: 0px;
     }
     
-    .dht-field-child-wrapper .dht-radio {
+    .dht-wrapper .dht-field-child-radio  .dht-radio {
         margin-top: 10px;
     }
     
-    .dht-field-child-wrapper .dht-radio-wrapper .dht-radio {
+    .dht-wrapper .dht-field-child-radio  .dht-radio-wrapper .dht-radio {
         float: left;
     }
     
-    .dht-field-child-wrapper .dht-radio-wrapper label {
+    .dht-wrapper .dht-field-child-radio  .dht-radio-wrapper label {
         display: block;
     }
     
-    .dht-radio-wrapper {
+    .dht-wrapper .dht-field-child-radio  .dht-radio-wrapper {
         clear: both;
     }
     
-    .dht-radio-wrapper {
+    .dht-wrapper .dht-field-child-radio  .dht-radio-wrapper {
         margin-bottom: 10px;
     }
     
-    .dht-radio-wrapper:last-child {
+    .dht-wrapper  .dht-field-child-radio  .dht-radio-wrapper:last-child {
         margin-bottom: 0px;
+    }
+    .dht-wrapper .dht-field-child-radio .dht-radio {
+        width: auto;
     }
 </style>
 
@@ -253,24 +259,24 @@
 
 <style>
     /* switch button styles*/
-    label.dht-switch {
+    .dht-wrapper .dht-field-child-switch label.dht-switch {
         display: block;
     }
-    .dht-switch {
+    .dht-wrapper .dht-field-child-switch .dht-switch {
         position: relative;
         display: inline-block;
         width: 125px;
         height: 34px;
     }
     
-    .dht-switch input {
+    .dht-wrapper .dht-field-child-switch .dht-switch input {
         opacity: 0;
         width: 0;
         height: 0;
         border-radius: 3px;
     }
     
-    .dht-switch .dht-slider {
+    .dht-wrapper .dht-field-child-switch .dht-switch .dht-slider {
         position: absolute;
         cursor: pointer;
         top: 0;
@@ -283,7 +289,7 @@
         border-radius: 3px;
     }
     
-    .dht-switch .dht-slider:before {
+    .dht-wrapper .dht-field-child-switch .dht-switch .dht-slider:before {
         position: absolute;
         content: "";
         height: 26px;
@@ -296,39 +302,39 @@
         z-index: 9;
     }
     
-    .dht-switch input:checked + .dht-slider  {
+    .dht-wrapper .dht-field-child-switch .dht-switch input:checked + .dht-slider  {
         background-color: rgb(99, 91, 255);
     }
     
-    .dht-switch input:focus +  .dht-slider  {
+    .dht-wrapper .dht-field-child-switch .dht-switch input:focus +  .dht-slider  {
         box-shadow: 0 0 1px rgb(99, 91, 255);
     }
     
-    .dht-switch input:checked + .dht-slider:before {
+    .dht-wrapper .dht-field-child-switch .dht-switch input:checked + .dht-slider:before {
         -webkit-transform: translateX(85px);
         -ms-transform: translateX(85px);
         transform: translateX(85px);
     }
-    .dht-switch input + .dht-slider:before {
+    .dht-wrapper .dht-field-child-switch .dht-switch input + .dht-slider:before {
         -webkit-transform: translateX(30px);
         -ms-transform: translateX(30px);
         transform: translateX(30px);
     }
-    .dht-switch .dht-slider span {
+    .dht-wrapper .dht-field-child-switch .dht-switch .dht-slider span {
         color: #fff;
         position: relative;
         top: 7px;
         font-weight: 600;
         font-size: 15px;
     }
-    span.dht-slider-yes {
+    .dht-wrapper .dht-field-child-switch span.dht-slider-yes {
         left: 7px;
     }
-    span.dht-slider-no {
+    .dht-wrapper .dht-field-child-switch  span.dht-slider-no {
         right: -20px;
     }
     @media (max-width: 980px) {
-        label.dht-switch {
+        .dht-wrapper .dht-field-child-switch label.dht-switch {
             margin: auto;
         }
     }
@@ -426,7 +432,7 @@
 
 <style>
     /* dropdown styles*/
-    .dht-dropdown.dht-field {
+    .dht-wrapper .dht-field-child-dropdown .dht-dropdown.dht-field {
         max-width: 100%;
     }
 </style>
@@ -459,21 +465,21 @@
 
 <style>
     /* multiinput styles*/
-    .dht-multiinput-child-wrapper {
+    .dht-wrapper .dht-field-child-multiinput .dht-multiinput-child-wrapper {
         margin-bottom: 10px;
     }
-    a.dht-multiinput-remove {
+    .dht-wrapper .dht-field-child-multiinput a.dht-multiinput-remove {
         text-align: right;
         display: block;
         color: rgb(99, 91, 255);
     }
-    .dht-multiinput-child-wrapper + .dht-button + .dht-description {
+    .dht-wrapper .dht-field-child-multiinput .dht-multiinput-child-wrapper + .dht-button + .dht-description {
         margin-top: 12px;
     }
-    .dht-multiinput-remove-text{
+    .dht-wrapper .dht-field-child-multiinput .dht-multiinput-remove-text{
         display:none;
     }
-    .dht-multi-input {
+    .dht-wrapper .dht-field-child-multiinput .dht-multi-input {
         margin-bottom: 5px;
     }
 </style>
@@ -482,7 +488,7 @@
     /* multiinput field */
     jQuery(document).ready(function() {
         
-        jQuery('.dht-multiinput-add').on('click', function() {
+        jQuery('.dht-field-child-multiinput .dht-multiinput-add').on('click', function() {
             let $this =  jQuery(this);
             
             let $field = $this.prev('.dht-multiinput-child-wrapper').clone();
@@ -490,7 +496,7 @@
             $field.insertBefore($this);
         });
         
-        jQuery('body').on('click', '.dht-multiinput-remove', function() {
+        jQuery('.dht-wrapper').on('click', '.dht-field-child-multiinput .dht-multiinput-remove', function() {
             let $this =  jQuery(this);
             
             if($this.parents('.dht-field-child-wrapper').children('.dht-multiinput-child-wrapper').length === 1)
@@ -545,14 +551,14 @@
 
 <style>
     /* sortable styles*/
-    .dht-sortable-field {
+    .dht-wrapper .dht-field-child-sortable .dht-sortable-field {
         margin-bottom: 10px;
     }
-    .dht-sortable-field {
+    .dht-wrapper .dht-field-child-sortable .dht-sortable-field {
         display: flex;
         align-items: center;
     }
-    span.dht-drag {
+    .dht-wrapper .dht-field-child-sortable span.dht-drag {
         margin-left: 10px;
         cursor: pointer;
     }
@@ -561,7 +567,7 @@
 <script>
     //sortable field
     jQuery(document).ready(function() {
-        jQuery( ".dht-sortable-fields" ).sortable();
+        jQuery( ".dht-wrapper .dht-field-child-sortable .dht-sortable-fields" ).sortable();
     });
 </script>
 
@@ -595,7 +601,7 @@ function timepicker() {
 <script>
     jQuery(document).ready(function($){
         
-        jQuery( ".dht-alphacolorpicker" ).wpColorPicker({ });
+        jQuery( ".dht-field-child-colorpicker .dht-alphacolorpicker" ).wpColorPicker({ });
         
         let $delete_btn = jQuery('#dht-default-color-btn11');
         
@@ -626,21 +632,21 @@ function timepicker() {
 
 <style>
     /* wp-color-picker-alpha.css */
-    .dht-field-child-wrapper .wp-picker-input-wrap label {
+    .dht-wrapper .dht-field-child-colorpicker .wp-picker-input-wrap label {
         display: block;
     }
-    .wp-core-ui .dht-field-child-wrapper .wp-picker-active .button.hidden {
+    .wp-core-ui .dht-field-child-colorpicker .wp-picker-active .button.hidden {
         display: block;
     }
-    .dht-field-child-wrapper .wp-picker-open + span.wp-picker-input-wrap {
+    .dht-wrapper .dht-field-child-colorpicker .wp-picker-open + span.wp-picker-input-wrap {
         width: 210px;
         display: flex !important;
     }
-    .dht-default-color-btn{
+    .dht-wrapper .dht-field-child-colorpicker .dht-default-color-btn{
         display:none !important;
         margin-left: 6px !important;
     }
-    .wp-picker-container.wp-picker-active .dht-default-color-btn {
+    .dht-wrapper .dht-field-child-colorpicker .wp-picker-container.wp-picker-active .dht-default-color-btn {
         display:block !important;
     }
 </style>
@@ -706,7 +712,7 @@ function alpha_picker(){
 
 <script>
     jQuery(document).ready(function(){
-        let textarea = jQuery('.dht-ace-editor');
+        let textarea = jQuery('.dht-field-child-code-editor .dht-ace-editor');
         
         //init ace editor
         let editor = ace.edit("dht-editor1");
@@ -746,7 +752,7 @@ function alpha_picker(){
 <!-- field - datepicker -->
 <script>
     jQuery(document).ready(function(){
-        jQuery( ".dht-datepicker" ).datepicker({
+        jQuery( ".dht-field-child-datepicker .dht-datepicker" ).datepicker({
             dateFormat: "yy-mm-dd"
         });
     });
@@ -793,7 +799,7 @@ function alpha_picker(){
 <!-- field - timepicker -->
 <script>
     jQuery(document).ready(function(){
-        jQuery( ".dht-timepicker" ).timepicker({
+        jQuery( ".dht-field-child-datepicker .dht-timepicker" ).timepicker({
             timeFormat: 'HH:mm:ss',
             interval: 15,
             /* minTime: '10:00am',
@@ -847,7 +853,7 @@ function alpha_picker(){
 <!-- field - datetimepicker -->
 <script>
     jQuery(document).ready(function(){
-        jQuery( ".dht-datetimepicker" ).datetimepicker({
+        jQuery( ".dht-field-child-datepicker .dht-datetimepicker" ).datetimepicker({
             dateFormat: "yy-mm-dd",
             timeFormat: 'HH:mm:ss',
             interval: 15,
@@ -922,7 +928,7 @@ function timepicker(){
 
 <style>
     /* disabled field */
-    .dht-disabled {
+    .dht-wrapper .dht-field-child-wrapper.dht-disabled {
         pointer-events: none;
         background: rgba(0, 0, 0, 0.25);
         opacity: 0.45;
@@ -934,7 +940,7 @@ function timepicker(){
         padding: 20px 10px !important;
         position: relative;
     }
-    .dht-disabled::before {
+    .dht-wrapper .dht-field-child-wrapper.dht-disabled::before {
         color: #fff;
         font-family: dashicons;
         content: "\f160";
@@ -995,7 +1001,7 @@ function timepicker(){
 
 <style>
     /* group options fields */
-    .dht-field-child-group {
+    .dht-wrapper .dht-field-child-groups .dht-field-child-group {
         margin-bottom: 20px;
     }
 </style>
@@ -1077,35 +1083,35 @@ function timepicker(){
 
 <style>
     /* slider field */
-    .dht-slider-group {
+    .dht-wrapper .dht-field-child-rangeslider .dht-slider-group {
         display: flex;
         align-items: center;
     }
-    .dht-slider-group .dht-range-slider {
+    .dht-wrapper .dht-field-child-rangeslider .dht-slider-group .dht-range-slider {
         width: 200px;
     }
-    .dht-slider-group .dht-range-slider:last-child {
+    .dht-wrapper .dht-field-child-rangeslider .dht-slider-group .dht-range-slider:last-child {
         margin-right: 0;
         margin-left: 10px;
     }
-    .dht-slider-group .dht-range-slider {
+    .dht-wrapper .dht-field-child-rangeslider .dht-slider-group .dht-range-slider {
         margin-right: 10px;
     }
-    .dht-slider {
+    .dht-wrapper .dht-field-child-rangeslider .dht-slider {
         width: 200px !important;
     }
-    .dht-slider-slider {
+    .dht-wrapper .dht-field-child-rangeslider .dht-slider-slider {
         margin-top: 20px;
         height: 15px;
     }
-    .dht-slider-slider span.ui-slider-handle {
+    .dht-wrapper .dht-field-child-rangeslider .dht-slider-slider span.ui-slider-handle {
         height: 25px;
         width: 25px;
         top: -6px;
         border: 1px solid #c5c5c5;
         background: #ffff;
     }
-    .dht-slider-slider .ui-slider-range.ui-corner-all {
+    .dht-wrapper .dht-field-child-rangeslider  .dht-slider-slider .ui-slider-range.ui-corner-all {
         background: rgb(99, 91, 255);
     }
 </style>
@@ -1115,7 +1121,7 @@ function timepicker(){
 <!-- field - upload gallery -->
 <script>
     jQuery(document).ready(function($){
-        $('.dht-upload-gallery-button').click(function() {
+        $('.dht-field-child-upload .dht-upload-gallery-button').click(function() {
             const $this = jQuery(this);
             const $hidden_input = $('.dht-upload-gallery-hidden');
             
@@ -1171,7 +1177,7 @@ function timepicker(){
         });
         
         //remove image from gallery and from the hidden input
-        $('body').on('click', '.dht-gallery-group .dht-img-remove-icon', function() {
+        $('.dht-wrapper').on('click', '.dht-field-child-upload .dht-gallery-group .dht-img-remove-icon', function() {
             //get the removed image id
             const $hidden_input = $(this).parents('.dht-gallery-group').siblings('.dht-upload-gallery-hidden');
             const image_id = $(this).siblings('img').attr('data-id');
@@ -1213,7 +1219,7 @@ function timepicker(){
 <!-- field - upload video -->
 <script>
     jQuery(document).ready(function($){
-        $('.dht-upload-video-button').click(function() {
+        $('.dht-field-child-upload .dht-upload-video-button').click(function() {
             const $this = jQuery(this);
             const $hidden_input = jQuery('.dht-upload-video-hidden');
             
@@ -1244,7 +1250,7 @@ function timepicker(){
             }
         });
         //remove video if when input is cleared
-        $('.dht-upload-video').on('input', function() {
+        $('.dht-field-child-upload .dht-upload-video').on('input', function() {
             
             // Check if the input field is empty and remove the vide id
             if ($(this).val() === '') {
@@ -1275,7 +1281,7 @@ function timepicker(){
 <!-- field - upload image -->
 <script>
     jQuery(document).ready(function($){
-        $('.dht-upload-image-button').click(function() {
+        $('.dht-field-child-upload .dht-upload-image-button').click(function() {
             const $this = jQuery(this);
             const $hidden_input = jQuery('.dht-upload-hidden');
             
@@ -1314,7 +1320,7 @@ function timepicker(){
             }
         });
         //remove image when input is cleared
-        $('.dht-upload').on('input', function() {
+        $('.dht-field-child-upload .dht-upload').on('input', function() {
             
             // Check if the input field is empty and remove the image id and URL
             if ($(this).val() === '') {
@@ -1351,13 +1357,13 @@ function timepicker(){
 
 <style>
     /* upload gallery */
-    .dht-gallery-group {
+    .dht-wrapper .dht-field-child-upload .dht-gallery-group {
         margin-bottom: 10px;
     }
-    .dht-gallery-group img {
+    .dht-wrapper .dht-field-child-upload .dht-gallery-group img {
         margin-right: 5px;
     }
-    .dht-gallery-group span.dht-img-remove-icon {
+    .dht-wrapper .dht-field-child-upload .dht-gallery-group span.dht-img-remove-icon {
         border-radius: 50%;
         width: 15px;
         height: 15px;
@@ -1367,24 +1373,24 @@ function timepicker(){
         padding-left: 2px;
         padding-bottom: 2px;
     }
-    .dht-gallery-group span.dht-img-remove-icon:before {
+    .dht-wrapper .dht-field-child-upload .dht-gallery-group span.dht-img-remove-icon:before {
         color: red;
         content: "\f158";
         font-family: dashicons;
     }
     
     /* upload video */
-    .dht-upload-video {
+    .dht-wrapper .dht-field-child-upload .dht-upload-video {
         margin-bottom: 10px;
     }
     
     /* upload field */
-    .dht-upload {
+    .dht-wrapper .dht-field-child-upload .dht-upload {
         margin-bottom: 10px;
     }
     
     /* upload field */
-    .dht-upload {
+    .dht-wrapper .dht-field-child-upload .dht-upload {
         margin-bottom: 10px;
     }
 </style>
@@ -1394,7 +1400,7 @@ function timepicker(){
 <!-- field - radio image -->
 <script>
     jQuery(document).ready(function($){
-        $('.dht-field-child-image-select .dht-img-select-wrapper').on('click', function() {
+        $('.dht-wrapper .dht-field-child-image-select .dht-img-select-wrapper').on('click', function() {
             //remove selected class and border
             $(this).siblings().removeClass('dht-img-select-wrapper-selected');
             $(this).siblings().children('.dht-image-select').removeAttr('checked');
@@ -1441,22 +1447,22 @@ function timepicker(){
 
 <style>
     /* image select field */
-    .dht-field-child-image-select .dht-image-select {
+    .dht-wrapper .dht-field-child-image-select .dht-image-select {
         display: none;
     }
-    .dht-field-child-image-select-container {
+    .dht-wrapper .dht-field-child-image-select .dht-field-child-image-select-container {
         display: flex;
         justify-content: flex-start;
     }
-    .dht-field-child-image-select .dht-img-select-wrapper {
+    .dht-wrapper .dht-field-child-image-select .dht-img-select-wrapper {
         margin-right: 10px;
     }
-    .dht-field-child-image-select .dht-img-select-wrapper {
+    .dht-wrapper .dht-field-child-image-select .dht-img-select-wrapper {
         margin-right: 0px;
         border: 3px solid transparent;
         display: inline-flex;
     }
-    .dht-field-child-image-select .dht-img-select-wrapper.dht-img-select-wrapper-selected{
+    .dht-wrapper .dht-field-child-image-select .dht-img-select-wrapper.dht-img-select-wrapper-selected{
         border-color: rgb(99, 91, 255);
     }
 </style>
@@ -1467,7 +1473,7 @@ function timepicker(){
 <script>
     jQuery(document).ready(function($){
         
-        let $inputField = $('.dht-multioptions-ajax');
+        let $inputField = $('.dht-field-child-multioption .dht-multioptions-ajax');
         
         // Initialize Select2 without AJAX
         $inputField.select2({
@@ -1520,7 +1526,7 @@ function timepicker(){
 <!-- field - multioptions -->
 <script>
     jQuery(document).ready(function($){
-        $('.dht-multioptions').select2();
+        $('.dht-field-child-multioption .dht-multioptions').select2();
     });
 </script>
 
@@ -1545,16 +1551,16 @@ function timepicker(){
 
 <style>
     /* multioptions field */
-    .dht-field-child-multioptions span.select2.select2-container {
+    .dht-wrapper .dht-field-child-multioptions span.select2.select2-container {
         width: 100% !important;
     }
-    .dht-field-child-multioptions .select2-container .select2-selection--multiple .select2-selection__rendered {
+    .dht-wrapper .dht-field-child-multioptions .select2-container .select2-selection--multiple .select2-selection__rendered {
         display: block;
     }
-    .dht-field-child-multioptions li.select2-search.select2-search--inline {
+    .dht-wrapper .dht-field-child-multioptions li.select2-search.select2-search--inline {
         margin-bottom: 0;
     }
-    .dht-field-child-multioptions .select2-container .select2-search--inline .select2-search__field {
+    .dht-wrapper .dht-field-child-multioptions .select2-container .select2-search--inline .select2-search__field {
         margin-top: 0;
     }
 </style>
@@ -1607,15 +1613,15 @@ function timepicker(){
         <div class="dht-field-borders-group-colorpicker">
             <script>
                 jQuery(document).ready(function($){
-                    jQuery( ".dht-borders-colorpicker" ).wpColorPicker({ });
+                    jQuery( ".dht-wrapper .dht-field-child-borders .dht-borders-colorpicker" ).wpColorPicker({ });
                     
-                    let $delete_btn = jQuery('.dht-default-borders-color-btn');
+                    let $delete_btn = jQuery('.dht-field-child-borders .dht-default-borders-color-btn');
                     
                     $delete_btn.insertAfter(jQuery('.dht-borders-colorpicker').parent('label'));
                     
                     $delete_btn.on('click', function() {
                         let defaultColor = 'rgb(238, 238, 34, 0.5)'; // Set your default color here
-                        jQuery('.dht-borders-colorpicker').wpColorPicker('color', defaultColor);
+                        jQuery('.dht-field-child-borders .dht-borders-colorpicker').wpColorPicker('color', defaultColor);
                     });
                 });
             </script>
@@ -1628,46 +1634,46 @@ function timepicker(){
             
             <style>
                 /* wp-color-picker-alpha.css */
-                .dht-field-child-borders .wp-picker-input-wrap label {
+                .dht-wrapper .dht-field-child-borders .wp-picker-input-wrap label {
                     display: block;
                 }
-                .dht-field-child-borders .wp-picker-open + span.wp-picker-input-wrap {
+                .dht-wrapper .dht-field-child-borders .wp-picker-open + span.wp-picker-input-wrap {
                     width: 210px;
                     display: flex !important;
                 }
-                .dht-field-child-borders.wp-picker-active .dht-default-color-btn {
+                .dht-wrapper .dht-field-child-borders.wp-picker-active .dht-default-color-btn {
                     display:block !important;
                 }
                 .wp-core-ui .dht-field-child-borders .dht-field-borders-group-colorpicker .wp-picker-active .button.hidden {
                     display: block !important;
                 }
-                .dht-field-child-borders .dht-default-borders-color-btn {
+                .dht-wrapper .dht-field-child-borders .dht-default-borders-color-btn {
                     margin-left: 5px !important;
                 }
-                .dht-field-child-borders .dht-field-borders-group {
+                .dht-wrapper .dht-field-child-borders .dht-field-borders-group {
                     display: grid;
                     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
                     grid-gap: 15px;
                     margin-bottom: 10px;
                 }
-                .dht-field-child-borders .dht-field-borders-group span:before
+                .dht-wrapper .dht-field-child-borders .dht-field-borders-group span:before
                 {
                     font-family: dashicons;
                     color: #000;
                 }
-                .dht-field-child-borders .dht-field-borders-group span.dht-borders-top:before {
+                .dht-wrapper .dht-field-child-borders .dht-field-borders-group span.dht-borders-top:before {
                     content: "\f342";
                 }
-                .dht-field-child-borders .dht-field-borders-group span.dht-borders-right:before {
+                .dht-wrapper .dht-field-child-borders .dht-field-borders-group span.dht-borders-right:before {
                     content: "\f344";
                 }
-                .dht-field-child-borders .dht-field-borders-group span.dht-borders-bottom:before {
+                .dht-wrapper .dht-field-child-borders .dht-field-borders-group span.dht-borders-bottom:before {
                     content: "\f346";
                 }
-                .dht-field-child-borders .dht-field-borders-group span.dht-borders-left:before {
+                .dht-wrapper .dht-field-child-borders .dht-field-borders-group span.dht-borders-left:before {
                     content: "\f340";
                 }
-                .dht-field-child-borders .dht-field-borders-group span {
+                .dht-wrapper .dht-field-child-borders .dht-field-borders-group span {
                     position: absolute;
                     background: #c0c0c0;
                     background-color: #eee;
@@ -1676,30 +1682,30 @@ function timepicker(){
                     padding: 5px;
                     border-radius: 4px 0 0 4px;
                 }
-                .dht-field-child-borders .dht-field-borders-input{
+                .dht-wrapper .dht-field-child-borders .dht-field-borders-input{
                     position:relative;
                 }
-                .dht-field-child-borders .dht-borders {
+                .dht-wrapper .dht-field-child-borders .dht-borders {
                     padding-left: 30px !important;
                 }
                 
                 @media (max-width: 980px) {
-                    .dht-field-child-borders .dht-field-borders-group {
+                    .dht-wrapper .dht-field-child-borders .dht-field-borders-group {
                         display: block;
                     }
-                    .dht-field-child-borders .dht-field-borders-group .dht-field-borders-input {
+                    .dht-wrapper .dht-field-child-borders .dht-field-borders-group .dht-field-borders-input {
                         margin-bottom: 10px;
                     }
-                    .dht-field-child-borders .dht-field-borders-input select {
+                    .dht-wrapper .dht-field-child-borders .dht-field-borders-input select {
                         max-width: 100%;
                     }
                 }
                 
                 @media (max-width: 767px) {
-                    .dht-field-child-borders .dht-field-borders-group span {
+                    .dht-wrapper .dht-field-child-borders .dht-field-borders-group span {
                         padding: 10px;
                     }
-                    .dht-field-child-borders .dht-borders {
+                    .dht-wrapper .dht-field-child-borders .dht-borders {
                         padding-left: 40px !important;
                     }
                 }
@@ -1774,29 +1780,29 @@ function timepicker(){
 
 <style>
     /*spacing styles*/
-    .dht-field-child-spacing .dht-field-spacing-group {
+    .dht-wrapper .dht-field-child-spacing .dht-field-spacing-group {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
         grid-gap: 15px;
     }
-    .dht-field-child-spacing .dht-field-spacing-group span:before
+    .dht-wrapper .dht-field-child-spacing .dht-field-spacing-group span:before
     {
         font-family: dashicons;
         color: #000;
     }
-    .dht-field-child-spacing .dht-field-spacing-group span.dht-spacing-top:before {
+    .dht-wrapper .dht-field-child-spacing .dht-field-spacing-group span.dht-spacing-top:before {
         content: "\f342";
     }
-    .dht-field-child-spacing .dht-field-spacing-group span.dht-spacing-right:before {
+    .dht-wrapper .dht-field-child-spacing .dht-field-spacing-group span.dht-spacing-right:before {
         content: "\f344";
     }
-    .dht-field-child-spacing .dht-field-spacing-group span.dht-spacing-bottom:before {
+    .dht-wrapper .dht-field-child-spacing .dht-field-spacing-group span.dht-spacing-bottom:before {
         content: "\f346";
     }
-    .dht-field-child-spacing .dht-field-spacing-group span.dht-spacing-left:before {
+    .dht-wrapper .dht-field-child-spacing .dht-field-spacing-group span.dht-spacing-left:before {
         content: "\f340";
     }
-    .dht-field-child-spacing .dht-field-spacing-group span {
+    .dht-wrapper .dht-field-child-spacing .dht-field-spacing-group span {
         position: absolute;
         background: #c0c0c0;
         background-color: #eee;
@@ -1805,21 +1811,21 @@ function timepicker(){
         padding: 5px;
         border-radius: 4px 0 0 4px;
     }
-    .dht-field-child-spacing .dht-field-spacing-input{
+    .dht-wrapper .dht-field-child-spacing .dht-field-spacing-input{
         position:relative;
     }
-    .dht-field-child-spacing .dht-spacing {
+    .dht-wrapper .dht-field-child-spacing .dht-spacing {
         padding-left: 30px !important;
     }
     
     @media (max-width: 980px) {
-        .dht-field-child-spacing .dht-field-spacing-group {
+        .dht-wrapper .dht-field-child-spacing .dht-field-spacing-group {
             display: block;
         }
-        .dht-field-child-spacing .dht-field-spacing-group .dht-field-spacing-input {
+        .dht-wrapper .dht-field-child-spacing .dht-field-spacing-group .dht-field-spacing-input {
             margin-bottom: 10px;
         }
-        .dht-field-child-spacing .dht-field-spacing-input select {
+        .dht-wrapper .dht-field-child-spacing .dht-field-spacing-input select {
             max-width: 100%;
         }
     }
@@ -1833,3 +1839,712 @@ function timepicker(){
         }
     }
 </style>
+
+<!-------------------------------------------------------------------------------------->
+
+<!-- field - tabs -->
+<script>
+    jQuery(document).ready(function($) {
+        $('.dht-field-tabs .dht-tab-links a').click(function(e) {
+            e.preventDefault(); // Prevent default anchor behavior
+            
+            // Get the target tab ID from the href attribute
+            let tabId = $(this).attr('href');
+            
+            // Hide all tab contents and remove 'active' class from all tabs
+            $('.dht-tab-content').removeClass('active');
+            $('.dht-tab-links li').removeClass('active');
+            
+            // Show the target tab content and add 'active' class to the clicked tab
+            $(tabId).addClass('active');
+            $(this).parent().addClass('active');
+        });
+    });
+</script>
+
+<div class="dht-field-wrapper">
+    <div class="dht-title">Tabs</div>
+    <div class="dht-field-child-wrapper dht-field-child-tabs">
+        
+        <div class="dht-field-tabs">
+            <ul class="dht-tab-links">
+                <li class="active"><a href="#tab1">Tab 1</a></li>
+                <li><a href="#tab2">Tab 2</a></li>
+                <li><a href="#tab3">Tab 3</a></li>
+            </ul>
+            
+            <div class="dht-tab-content active" id="tab1">
+                <div class="dht-field-wrapper">
+                    <div class="dht-field-child-wrapper dht-field-child-textarea">
+                        <label for="textarea">Textarea</label>
+                        <textarea class="dht-textarea dht-field" id="textarea" name="textarea" placeholder="Textarea"
+                                  rows="6"></textarea>
+                        <div class="dht-description">Field description</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dht-tab-content" id="tab2">
+                <div class="dht-field-wrapper">
+                    <div class="dht-field-child-wrapper dht-field-child-textarea">
+                        <label for="textarea">Textarea</label>
+                        <textarea class="dht-textarea dht-field" id="textarea" name="textarea" placeholder="Textarea"
+                                  rows="6"></textarea>
+                        <div class="dht-description">Field description</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dht-tab-content" id="tab3">Tab 3 content</div>
+        </div>
+        
+        
+        <div class="dht-description">Field description</div>
+    </div>
+</div>
+
+<div class="dht-divider"></div>
+
+<style>
+    .dht-wrapper .dht-field-child-tabs .dht-tab-content {
+        display: none;
+    }
+    
+    .dht-wrapper .dht-field-child-tabs .dht-tab-content.active {
+        display: block;
+    }
+    .dht-wrapper .dht-field-child-tabs .dht-tab-links li a
+    {
+        display: inline-block;
+        padding: 12px 15px;
+        margin-top: 1px;
+        margin-right: 5px;
+        margin-bottom: -1px;
+        position: relative;
+        text-decoration: none;
+        color: #444;
+        font-weight: 600;
+        border: 1px solid #ccd0d4;
+        background-color: #f3f3f3;
+        -webkit-transition: all .2s;
+        transition: all .2s;
+    }
+    
+    .dht-wrapper .dht-field-child-tabs .dht-tab-links li.active a
+    {
+        background-color: #fff;
+        border-bottom-color: #fff;
+    }
+    .dht-wrapper .dht-field-child-tabs .dht-field-tabs .dht-tab-content
+    {
+        border: 1px solid #ccd0d4;
+        background-color: #fff;
+        -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+    }
+    .dht-wrapper .dht-field-child-tabs ul.dht-tab-links {
+        display: flex;
+        margin-bottom: 0;
+    }
+    .dht-wrapper .dht-field-child-tabs .dht-field-tabs .dht-tab-content {
+        padding: 20px;
+    }
+    .dht-wrapper .dht-field-child-tabs .dht-tab-links li {
+        margin-bottom: 0;
+    }
+    .dht-wrapper .dht-field-child-tabs .dht-field-wrapper {
+        display: block;
+        padding: 0;
+    }
+</style>
+
+<!-------------------------------------------------------------------------------------->
+
+<!-- field - accordion -->
+
+<script>
+    
+    jQuery(document).ready(function($) {
+        //create accordion
+        $(".dht-wrapper").on("click", ".dht-field-child-accordion .dht-accordion .dht-accordion-title", function(e) {
+            e.preventDefault();
+            
+            const $this = $(this);
+            
+            if($this.hasClass('dht-accordion-active')) return;
+            
+            const $parent = $this.parents('.dht-accordion');
+            
+            if (!$this.hasClass("dht-accordion-active")) {
+                $parent.find(".dht-accordion-content").slideUp(400);
+                $parent.find(".dht-accordion-title").removeClass("dht-accordion-active");
+                $parent.find('.dht-accordion-arrow').removeClass('dht-accordion-icon-change');
+            }
+            
+            $this.toggleClass("dht-accordion-active");
+            $this.next().slideToggle();
+            $('.dht-accordion-arrow', this).toggleClass('dht-accordion-icon-change');
+        });
+        
+        //add new toggle in your accordion
+        $(".dht-field-child-accordion .dht-accordion-repeater .dht-add-toggle").on("click", function(e) {
+            e.preventDefault();
+            
+            const $this = $(this);
+            
+            let $toggle = $this.prev('.dht-accordion-item').clone();
+            
+            //if toggle opened, close it
+            $toggle.children('.dht-accordion-title').removeClass('dht-accordion-active');
+            $toggle.children('.dht-accordion-title').children('.dht-accordion-arrow').removeClass('dht-accordion-icon-change');
+            $toggle.children('.dht-accordion-content').hide();
+            
+            //clear inout values
+            dhtClearFormInputs($toggle);
+            
+            $toggle.insertBefore($this);
+        });
+        
+        //remove toggle item
+        $('.dht-wrapper').on("click", ".dht-field-child-accordion .dht-accordion-repeater .dht-btn-remove", function(e) {
+            e.preventDefault();
+            
+            const $this = $(this);
+            const $main_parent = $this.parents('.dht-accordion-repeater');
+            
+            if($main_parent.children('.dht-accordion-item').length === 1)
+            {
+                confirm($main_parent.find('.dht-toggle-remove-text').text());
+                
+                return;
+            }
+            
+            $this.parents('.dht-accordion-item').remove();
+            
+            return false;
+        });
+        
+        // Function to clear form inputs
+        function dhtClearFormInputs(content) {
+            content.find('input[type="text"], input[type="email"], textarea').val('');
+            content.find('input[type="checkbox"], input[type="radio"]').prop('checked', false);
+        }
+    });
+</script>
+
+<!-- field - accordion -> type - repeater -->
+
+<div class="dht-field-wrapper">
+    <div class="dht-title">Repeater</div>
+    <div class="dht-field-child-wrapper dht-field-child-accordion">
+        
+        <div class="dht-accordion dht-accordion-repeater">
+            <div class="dht-accordion-item">
+                <div class="dht-accordion-title">
+                    <div class="dht-accordion-arrow">
+                        <span class="dht-accordion-arrow-item dashicons dashicons-plus-alt"></span>
+                        <span class="dht-accordion-arrow-item-close dashicons dashicons-dismiss"></span>
+                    </div>
+                    <span class="dht-accordion-title-text">Title 1</span>
+                </div>
+                <div class="dht-accordion-content">
+                    
+                    <div class="dht-field-wrapper">
+                        <div class="dht-title">Textarea</div>
+                        <div class="dht-field-child-wrapper dht-field-child-textarea">
+                            <label for="textarea">Textarea</label>
+                            <textarea class="dht-textarea dht-field" id="textarea" name="textarea" placeholder="Textarea"
+                                      rows="6"></textarea>
+                            <div class="dht-description">Field description</div>
+                        </div>
+                    </div>
+                    
+                    <div class="dht-divider"></div>
+                    
+                    <div class="dht-field-wrapper">
+                        <div class="dht-title">Radio Boxes</div>
+                        <div class="dht-field-child-wrapper dht-field-child-radio">
+                            
+                            <div class="dht-radio-wrapper">
+                                <input class="dht-radio dht-field" type="radio" name="radio[]" id="radio-1" value="1"
+                                       checked="checked" />
+                                <label for="radio-1">Option 1</label>
+                            </div>
+                            
+                            <div class="dht-radio-wrapper">
+                                <input class="dht-radio dht-field" type="radio" name="radio[]" id="radio-2" value="2" />
+                                <label for="radio-2">Option 2</label>
+                            </div>
+                            
+                            <div class="dht-radio-wrapper">
+                                <input class="dht-radio dht-field" type="radio" name="radio[]" id="radio-3" value="3" />
+                                <label for="radio-3">Option 3</label>
+                            </div>
+                            
+                            <div class="dht-description">Field description</div>
+                        </div>
+                    
+                    </div>
+                    
+                    <div class="dht-remove-toggle">
+                        <div class="dht-divider"></div>
+                        
+                        <a href="" class="button button-primary dht-btn-remove">Remove Icon</a>
+                    </div>
+                
+                </div>
+            </div>
+            
+            <a href="" class="button button-primary dht-add-toggle">Add</a>
+            <div class="dht-toggle-remove-text">Can't remove the only item</div>
+        </div>
+        
+        <div class="dht-description">Field description</div>
+    </div>
+    <div class="dht-info-help dashicons dashicons-info"
+         data-tooltips="A little box to something to make it longer"
+         data-position="OnLeft">
+    </div>
+</div>
+<div class="dht-divider"></div>
+
+<!-- field - accordion -->
+
+<div class="dht-field-wrapper">
+    <div class="dht-title">Accordion</div>
+    <div class="dht-field-child-wrapper dht-field-child-accordion">
+        
+        <div class="dht-accordion">
+            <div class="dht-accordion-item">
+                <div class="dht-accordion-title">
+                    <div class="dht-accordion-arrow">
+                        <span class="dht-accordion-arrow-item dashicons dashicons-plus-alt"></span>
+                        <span class="dht-accordion-arrow-item-close dashicons dashicons-dismiss"></span>
+                    </div>
+                    <span class="dht-accordion-title-text">Title 1</span>
+                </div>
+                <div class="dht-accordion-content">
+                    
+                    <div class="dht-field-wrapper">
+                        <div class="dht-title">Textarea</div>
+                        <div class="dht-field-child-wrapper dht-field-child-textarea">
+                            <label for="textarea">Textarea</label>
+                            <textarea class="dht-textarea dht-field" id="textarea" name="textarea" placeholder="Textarea"
+                                      rows="6"></textarea>
+                            <div class="dht-description">Field description</div>
+                        </div>
+                    </div>
+                    
+                    <div class="dht-divider"></div>
+                    
+                    <div class="dht-field-wrapper">
+                        <div class="dht-title">Radio Boxes</div>
+                        <div class="dht-field-child-wrapper dht-field-child-radio">
+                            
+                            <div class="dht-radio-wrapper">
+                                <input class="dht-radio dht-field" type="radio" name="radio[]" id="radio-1" value="1"
+                                       checked="checked" />
+                                <label for="radio-1">Option 1</label>
+                            </div>
+                            
+                            <div class="dht-radio-wrapper">
+                                <input class="dht-radio dht-field" type="radio" name="radio[]" id="radio-2" value="2" />
+                                <label for="radio-2">Option 2</label>
+                            </div>
+                            
+                            <div class="dht-radio-wrapper">
+                                <input class="dht-radio dht-field" type="radio" name="radio[]" id="radio-3" value="3" />
+                                <label for="radio-3">Option 3</label>
+                            </div>
+                            
+                            <div class="dht-description">Field description</div>
+                        </div>
+                    
+                    </div>
+                    
+                    <style>
+                        /*radio styles*/
+                        .dht-wrapper .dht-field-child-radio .dht-radio:first-child {
+                            margin-top: 0px;
+                        }
+                        
+                        .dht-wrapper  .dht-field-child-radio .dht-radio {
+                            margin-top: 10px;
+                        }
+                        
+                        .dht-wrapper .dht-field-child-radio .dht-radio-wrapper .dht-radio {
+                            float: left;
+                        }
+                        
+                        .dht-wrapper .dht-field-child-radio .dht-radio-wrapper label {
+                            display: block;
+                        }
+                        
+                        .dht-wrapper .dht-field-child-radio .dht-radio-wrapper {
+                            clear: both;
+                        }
+                        
+                        .dht-wrapper .dht-field-child-radio .dht-radio-wrapper {
+                            margin-bottom: 10px;
+                        }
+                        
+                        .dht-wrapper .dht-field-child-radio .dht-radio-wrapper:last-child {
+                            margin-bottom: 0px;
+                        }
+                        .dht-wrapper .dht-field-child-radio .dht-radio {
+                            width: auto;
+                        }
+                    </style>
+                
+                </div>
+            </div>
+            <div class="dht-accordion-item">
+                <div class="dht-accordion-title">
+                    <div class="dht-accordion-arrow">
+                        <span class="dht-accordion-arrow-item dashicons dashicons-plus-alt"></span>
+                        <span class="dht-accordion-arrow-item-close dashicons dashicons-dismiss"></span>
+                    </div>
+                    <span class="dht-accordion-title-text">Title 2</span>
+                </div>
+                <div class="dht-accordion-content">
+                    Content
+                </div>
+            </div>
+        
+        </div>
+        
+        <div class="dht-description">Field description</div>
+    </div>
+    <div class="dht-info-help dashicons dashicons-info"
+         data-tooltips="A little box to something to make it longer"
+         data-position="OnLeft">
+    </div>
+</div>
+<div class="dht-divider"></div>
+
+<style>
+    .dht-wrapper .dht-field-child-accordion .dht-accordion-item {
+        margin: 5px auto;
+    }
+    .dht-wrapper .dht-field-child-accordion .dht-accordion-item .dht-accordion-title {
+        position: relative;
+        display: block;
+        padding: 20px 60px 15px 20px;
+        margin-bottom: 2px;
+        color: #202020;
+        font-size: 20px;
+        text-decoration: none;
+        background-color: #eaeaea;
+        border-radius: 3px;
+        -webkit-transition: background-color 0.2s;
+        transition: background-color 0.2s;
+        cursor: pointer;
+        text-transform: uppercase;
+    }
+    .dht-wrapper  .dht-field-child-accordion.dht-accordion-item .dht-accordion-title:hover {
+        background-color: #e5e4e4;
+        transition: all 0.5s ease-out;
+    }
+    .dht-wrapper .dht-field-child-accordion .dht-accordion-item .dht-accordion-active {
+        background-color: #e5e4e4;
+    }
+    .dht-wrapper .dht-field-child-accordion .dht-accordion-item .dht-accordion-title .dht-accordion-arrow {
+        position: absolute;
+        top: 13px;
+        right: 15px;
+        display: inline-block;
+        vertical-align: middle;
+        text-align: center;
+        -webkit-transition: all 0.2s ease-out;
+        transition: all 0.2s ease-out;
+    }
+    .dht-wrapper .dht-field-child-accordion .dht-accordion-item .dht-accordion-content {
+        padding: 30px;
+        margin-bottom: 2px;
+        font-size: 14px;
+        display: none;
+        background-color: #f3f3f3;
+    }
+    .dht-wrapper .dht-field-child-accordion .dht-accordion-item .dht-accordion-arrow-item,
+    .dht-wrapper .dht-field-child-accordion .dht-accordion-item .dht-accordion-arrow-item-close{
+        top: 3px;
+        position: relative;
+        font-size: 25px !important;
+    }
+    .dht-wrapper  .dht-field-child-accordion .dht-accordion-arrow .dht-accordion-arrow-item-close,
+    .dht-wrapper .dht-field-child-accordion .dht-accordion-arrow.dht-accordion-icon-change .dht-accordion-arrow-item{
+        display:none;
+    }
+    .dht-wrapper .dht-field-child-accordion .dht-accordion-arrow.dht-accordion-icon-change .dht-accordion-arrow-item-close{
+        display:block;
+    }
+    .dht-wrapper .dht-field-child-accordion .dht-accordion .dht-field-wrapper {
+        display: block;
+        padding: 0;
+    }
+    .dht-wrapper .dht-field-child-accordion .dht-accordion .dht-divider {
+        margin: 20px 0;
+    }
+    .dht-wrapper .dht-field-child-accordion .dht-accordion .dht-field-wrapper .dht-title {
+        margin-bottom: 10px;
+    }
+    
+    .dht-wrapper .dht-field-child-accordion .dht-add-toggle{
+        margin-top: 5px;
+        float: right;
+    }
+    .dht-wrapper .dht-field-child-accordion .dht-accordion-content:after {
+        content: "";
+        clear: both;
+        display: table;
+    }
+    .dht-wrapper .dht-field-child-accordion .button.button-primary.dht-btn-remove {
+        background: red;
+        border-color: red;
+        float: right;
+    }
+    .dht-wrapper .dht-field-child-accordion .dht-toggle-remove-text{
+        display:none;
+    }
+</style>
+
+<!-------------------------------------------------------------------------------------->
+
+<!-- field - icons-->
+<script>
+    jQuery(document).ready(function($) {
+        
+        function dht_get_ajax_icons(icon_type, $dht_icons_type_group){
+            $.ajax({
+                url: '<?php echo admin_url( 'admin-ajax.php' ); ?>',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    action: 'getIcons', // The name of your AJAX action
+                    data: { icon_type: icon_type },
+                },
+                beforeSend: function() {
+                    //show loading spinner
+                    $dht_icons_type_group.siblings('.spinner').css('visibility', 'visible');
+                    
+                    // clear popup
+                    $dht_icons_type_group.siblings('.dht-icons-preview').empty();
+                },
+                success: function(response) {
+                    //hide loading spinner
+                    $dht_icons_type_group.siblings('.spinner').css('visibility', 'hidden');
+                    
+                    if (response.success) {
+                        
+                        $dht_icons_type_group.siblings('.dht-icons-preview').append(response.data);
+                    } else {
+                        
+                        console.log('Ajax Response', response)
+                    }
+                },
+                error: function(error) {
+                    
+                    console.error('AJAX error:', error)
+                }
+            });
+        }
+        
+        //call ajax with default icons loaded (in our case - dashicons)
+        $('.dht-field-child-icons .dht-thickbox').on('click', function(){
+            
+            const $dht_icons_type_group = $(this).siblings('.dht-modal-icons').find('.dht-icons-type-group');
+            //clear search inout
+            $dht_icons_type_group.children('.dht-search-for-icon').val('');
+            
+            dht_get_ajax_icons('dashicons', $dht_icons_type_group);
+            
+            return false;
+        });
+        
+        // call ajax with icon type selected
+        $('.dht-field-child-icons .dht-icons-type').on('change', function() {
+            
+            const $this = $('.dht-icons-type');
+            
+            const icon_type = $this.val();
+            
+            if(icon_type.length === 0) return;
+            
+            dht_get_ajax_icons(icon_type, $this.parent('.dht-icons-type-group'));
+        });
+        
+        //add selected icon on preview area
+        $('body').on('click', '#TB_window .dht-icons-preview i', function(){
+            const icon_class = $(this).attr('class');
+            const icon_code = $(this).attr('data-code');
+            //get the popup id
+            const popup_id = $(this).parents('.dht-icons-preview-group').attr('data-popup-id');
+            
+            //add selected icon on preview area and display it
+            const popup = $('#'+popup_id);
+            popup.siblings('.dht-icon-select-preview').children('i').removeAttr('class').addClass(icon_class).parent().show();
+            //add selected icon to the hidden inout to save it
+            popup.siblings('.dht-icon-select-value').val(JSON.stringify({icon_class : icon_code}));
+            
+            //show remove button
+            popup.siblings('.dht-btn-remove').addClass('dht-btn-show');
+            
+            self.parent.tb_remove();
+        });
+        
+        //remove selected icon
+        $('.dht-field-child-icons .dht-btn-remove').on('click', function(){
+            $(this).siblings('.dht-icon-select-preview').children('i').removeAttr('class').parent().hide();
+            $(this).siblings('.dht-icon-select-value').val('');
+            $(this).removeClass('dht-btn-show');
+            
+            return false;
+        });
+        
+        //search icons
+        $('body').on('keyup', '.dht-icons-preview-group .dht-search-for-icon', function(){
+            const $popup = $(this).parents('.dht-icons-preview-group');
+            
+            const searchText = $(this).val().toLowerCase();
+            
+            // Filter list of icons based on search text
+            $popup.children('.dht-icons-preview').children('i').each(function(){
+                const icon_class = $(this).attr('class').toLowerCase();
+                
+                if(icon_class.indexOf(searchText) === -1){
+                    $(this).hide();
+                } else {
+                    $(this).show();
+                }
+            });
+        });
+    });
+</script>
+
+<div class="dht-field-wrapper">
+    <div class="dht-title">Icons</div>
+    <div class="dht-field-child-wrapper dht-field-child-icons">
+        
+        <span class="dht-icon-select-preview"><i class=""></i></span>
+        <a href="#TB_inline?width=600&height=400&inlineId=dht-modal-icons111" class="button button-primary dht-thickbox thickbox">Add Icon</a>
+        <a href="" class="button button-primary dht-btn-remove">Remove Icon</a>
+        <input class="dht-icon-select-value" type="hidden" value="" title="title"  />
+        
+        <div id="dht-modal-icons111" class="dht-modal-icons" style="display:none">
+            
+            <div class="dht-icons-preview-group" data-popup-id="dht-modal-icons111">
+                
+                <label for="cars">Choose an icon:</label>
+                
+                <span class="spinner"></span>
+                
+                <div class="dht-icons-type-group">
+                    <select class="dht-icons-type dht-field" name="icon_type" id="cars">
+                        <option value="dashicons">DashIcons</option>
+                        <option value="fontawesome">Font Awesome</option>
+                        <option value="divi">Divi</option>
+                        <option value="elusive">Elusive</option>
+                        <option value="line">Line Icons</option>
+                        <option value="dev">Dev Icons</option>
+                        <<!--option value="material">Material Icons</option>-->
+                        <option value="bootstrap">Bootstrap</option>
+                    </select>
+                    
+                    <input class="dht-input dht-field dht-search-for-icon" type="text" value="" title="title" placeholder="Search Icon" />
+                </div>
+                
+                <div class="dht-icons-preview">
+                    <!--Ajax content loaded here-->
+                </div>
+            
+            </div>
+        
+        </div>
+        
+        <div class="dht-description">Field description</div>
+    </div>
+    
+    <div class="dht-info-help dashicons dashicons-info"
+         data-tooltips="A little box to something to make it longer"
+         data-position="OnLeft">
+    
+    </div>
+</div>
+
+<div class="dht-divider"></div>
+
+
+<style>
+    #TB_window #TB_ajaxContent label,
+    .dht-field-child-icons .dht-icon-select-preview,
+    .dht-field-child-icons .dht-btn-remove
+    {
+        display:none;
+    }
+    .dht-wrapper .dht-field-child-icons .dht-btn-remove.dht-btn-show {
+        display:inline-block;
+    }
+    #TB_window #TB_ajaxContent .dht-icons-type-group {
+        padding-top: 20px;
+        padding-bottom: 15px;
+        margin-right: 40px;
+    }
+    #TB_window #TB_ajaxContent .dht-icons-preview {
+        background-color: #f5f5f5;
+        border: 1px solid #ddd;
+        padding: 1px;
+        height: 300px;
+        overflow-y: auto;
+    }
+    #TB_window #TB_ajaxContent .dht-icons-preview i {
+        cursor: pointer;
+        display: inline-block;
+        margin: 3px;
+        width: 35px;
+        height: 35px;
+        line-height: 35px;
+        font-size: 20px;
+        color: #555;
+        text-align: center;
+        border: 1px solid #ccc;
+        background-color: #f7f7f7;
+        border-radius: 2px;
+        -webkit-box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.05);
+        box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.05);
+    }
+    #TB_window #TB_ajaxContent .dht-icons-preview i:hover{
+        color: #fff;
+        border-color: #222;
+        background-color: #222;
+    }
+    #TB_window #TB_ajaxContent span.spinner {
+        float: left;
+        margin-top: 25px;
+    }
+    #TB_window #TB_ajaxContent .dht-icons-type-group {
+        display: grid;
+        grid-template-columns: auto auto;
+        grid-gap: 10px;
+    }
+    .dht-wrapper .dht-field-child-icons a.button.button-primary.dht-btn-remove {
+        background: red;
+        border-color: red;
+    }
+    .dht-wrapper .dht-field-child-icons span.dht-icon-select-preview {
+        font-size: 14px;
+        text-align: center;
+        vertical-align: top;
+        color: #555;
+        border: 1px solid #ccc;
+        background-color: #f7f7f7;
+        border-radius: 3px;
+        -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08);
+        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08);
+        padding: 5px;
+        margin-right: 5px;
+        position: relative;
+        top: 7px;
+    }
+</style>
+
+<!-------------------------------------------------------------------------------------->

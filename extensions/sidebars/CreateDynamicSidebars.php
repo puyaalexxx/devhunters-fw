@@ -17,21 +17,36 @@ class CreateDynamicSidebars implements ICreateDynamicSidebars {
      * @since     1.0.0
      */
     public function __construct() {
-
-        global $pagenow;
-
-        // Check if we are on the Widgets page
-        if ( 'widgets.php' === $pagenow ) {
-            add_action( 'widgets_init', [ $this, 'registerCustomWidgetAreas' ], 1000 );
-            add_action( 'admin_print_scripts', [ $this, 'widgetAreaFormTemplate' ] );
-            add_action( 'load-widgets.php', [ $this, 'addWidgetArea' ], 100 );
-            add_action( 'admin_enqueue_scripts', [ $this, 'enqueueSidebarScripts' ] );
-        }
-
-        //ajax actions to remove sidebars
-        add_action( 'wp_ajax_deleteWidgetArea', [ $this, 'deleteWidgetArea' ] );
-        add_action( 'wp_ajax_nopriv_deleteWidgetArea', [ $this, 'deleteWidgetArea' ] ); // For non-logged in users
     }
+
+    /**
+     * External Method
+     * enable dynamic sidebars feature
+     *
+     * @param bool $createDynamicSidebars
+     *
+     * @return void
+     * @since     1.0.0
+     */
+    public function enableDynamicSidebars( bool $createDynamicSidebars ) : void {
+        
+        if($createDynamicSidebars){
+            global $pagenow;
+            
+            // Check if we are on the Widgets page
+            if ( 'widgets.php' === $pagenow ) {
+                add_action( 'widgets_init', [ $this, 'registerCustomWidgetAreas' ], 1000 );
+                add_action( 'admin_print_scripts', [ $this, 'widgetAreaFormTemplate' ] );
+                add_action( 'load-widgets.php', [ $this, 'addWidgetArea' ], 100 );
+                add_action( 'admin_enqueue_scripts', [ $this, 'enqueueSidebarScripts' ] );
+            }
+            
+            //ajax actions to remove sidebars
+            add_action( 'wp_ajax_deleteWidgetArea', [ $this, 'deleteWidgetArea' ] );
+            add_action( 'wp_ajax_nopriv_deleteWidgetArea', [ $this, 'deleteWidgetArea' ] ); // For non-logged in users
+        }
+    }
+
 
     /**
      * add the widgets area HTML form below the list of existing sidebars
@@ -46,21 +61,21 @@ class CreateDynamicSidebars implements ICreateDynamicSidebars {
             <form method="post" action="<?php echo esc_url( admin_url( 'widgets.php' ) ); ?>">
                 <?php wp_nonce_field( 'dht_create_sidebar_action', 'dht_create_sidebar_action' ); ?>
 
-                <h3><?php _ex( 'Create Widget Area', 'widgets', 'dht' ); ?></h3>
+                <h3><?php _ex( 'Create Widget Area', 'widgets', DHT_PREFIX ); ?></h3>
                 <input type="text" id="dht_sidebar_name" name="dht_sidebar_name" required
-                       placeholder="<?php echo esc_attr_x( 'Sidebar Name', 'widgets', 'dht' ); ?>">
+                       placeholder="<?php echo esc_attr_x( 'Sidebar Name', 'widgets', DHT_PREFIX ); ?>">
                 <button type="submit" name="create_sidebar"
-                        class="button-primary"><?php _ex( 'Create', 'widgets', 'dht' ); ?></button>
+                        class="button-primary"><?php _ex( 'Create', 'widgets', DHT_PREFIX ); ?></button>
             </form>
         </div>
 
         <div class="dht-wrap-delete" style="display:none;">
             <a href="#" style="display:none;"
-               class="dht-widget-area-delete-confirm button-primary"><?php _ex( 'Confirm', 'widgets', 'dht' ); ?></a>
+               class="dht-widget-area-delete-confirm button-primary"><?php _ex( 'Confirm', 'widgets', DHT_PREFIX ); ?></a>
             <a href="#" style="display:none;"
-               class="dht-widget-area-delete-cancel button-secondary"><?php _ex( 'Cancel', 'widgets', 'dht' ); ?></a>
+               class="dht-widget-area-delete-cancel button-secondary"><?php _ex( 'Cancel', 'widgets', DHT_PREFIX ); ?></a>
             <a href="#" style=""
-               class="dht-widget-area-delete button-primary"><?php _ex( 'Delete', 'widgets', 'dht' ); ?></a>
+               class="dht-widget-area-delete button-primary"><?php _ex( 'Delete', 'widgets', DHT_PREFIX ); ?></a>
         </div>
         <?php
     }
@@ -75,11 +90,11 @@ class CreateDynamicSidebars implements ICreateDynamicSidebars {
      */
     public function enqueueSidebarScripts( string $hook ) : void {
 
-        wp_enqueue_script( 'create-sidebars', DHT_ASSETS_URI . 'scripts/js/create-sidebars.js', array( 'jquery' ), '1.0', true );
+        wp_enqueue_script( 'create-sidebars', DHT_ASSETS_URI . 'scripts/js/create-sidebars.js', array( 'jquery' ), DHT_VERSION, true );
         wp_localize_script( 'create-sidebars', 'dht_remove_sidebar_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
 
         // Register the style
-        wp_register_style( 'create-sidebars', DHT_ASSETS_URI . 'styles/css/create-sidebars.css', array(), '1.0' );
+        wp_register_style( 'create-sidebars', DHT_ASSETS_URI . 'styles/css/create-sidebars.css', array(), DHT_VERSION );
         // Enqueue the style
         wp_enqueue_style( 'create-sidebars' );
     }
@@ -158,7 +173,7 @@ class CreateDynamicSidebars implements ICreateDynamicSidebars {
 
                 if ( empty( $sidebar_id ) ) {
 
-                    wp_send_json_error( _x( 'No sidebar name provided', 'widgets', 'dht' ) );
+                    wp_send_json_error( _x( 'No sidebar name provided', 'widgets', DHT_PREFIX ) );
 
                     die();
                 }

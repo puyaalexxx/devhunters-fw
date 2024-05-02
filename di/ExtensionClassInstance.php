@@ -38,7 +38,7 @@ final class ExtensionClassInstance {
      * @return IDashMenuPage - dashboard menu class instance
      * @since     1.0.0
      */
-    public function getDashMenuPageInstance( array $dash_menus_config ) : IDashMenuPage {
+    public function getDashMenuPageInstance( array $dash_menus_config = [] ) : IDashMenuPage {
         
         //build class instance with the passed parameters
         return $this->_containerCreate->buildClassInstance( DashMenuPage::class, $dash_menus_config, DIException::class );
@@ -53,7 +53,7 @@ final class ExtensionClassInstance {
      * @return ICPT - CPT class instance
      * @since     1.0.0
      */
-    public function getCPTInstance( array $cpt_config ) : ICPT {
+    public function getCPTInstance( array $cpt_config = []) : ICPT {
         
         //build class instance with the passed parameters
         return $this->_containerCreate->buildClassInstance( CPT::class, $cpt_config, DIException::class );
@@ -68,7 +68,7 @@ final class ExtensionClassInstance {
      * @return IOptions - Options class instance
      * @since     1.0.0
      */
-    public function getOptionsInstance( array $options_config ) : IOptions {
+    public function getOptionsInstance( array $options_config = [] ) : IOptions {
         
         //build class instance with the passed parameters
         return $this->_containerCreate->buildClassInstance( Options::class, $options_config, DIException::class );
@@ -83,7 +83,7 @@ final class ExtensionClassInstance {
      * @return IRegisterWidget - RegisterWidget instance
      * @since     1.0.0
      */
-    public function getRegisterWidgetInstance( array $widgets ) : IRegisterWidget {
+    public function getRegisterWidgetInstance( array $widgets = []) : IRegisterWidget {
         
         //build class instance with the passed parameters
         return $this->_containerCreate->buildClassInstance( RegisterWidget::class, $widgets, DIException::class );
@@ -98,7 +98,7 @@ final class ExtensionClassInstance {
      * @return IRegisterSidebar - RegisterSidebar instance
      * @since     1.0.0
      */
-    public function getRegisterSidebarInstance( array $sidebar_config ) : IRegisterSidebar {
+    public function getRegisterSidebarInstance( array $sidebar_config = [] ) : IRegisterSidebar {
         
         //build class instance with the passed parameters
         return $this->_containerCreate->buildClassInstance( RegisterSidebar::class, $sidebar_config, DIException::class );

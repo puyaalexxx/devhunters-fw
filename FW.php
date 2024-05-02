@@ -17,7 +17,8 @@ use DHT\Extensions\Extensions;
  */
 final class FW {
     
-    //TODO work around with the enqueue file versions
+    //framework version
+    public static string $version;
     
     //class instances for Singleton Pattern
     private static array $_instances = [];

@@ -7,6 +7,7 @@ if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 use DI\Container;
 use DI\DependencyException;
 use DI\NotFoundException;
+use function DHT\Helpers\dht_print_r;
 use function DI\create;
 
 /**
@@ -50,7 +51,7 @@ final class ContainerCreate {
             
         } catch ( DependencyException|NotFoundException $e ) {
             
-            throw new $exception_thrown( sprintf( _x( '%s class instance could not be retrieved: %s', 'exceptions', 'dht' ), $class_name, $e->getMessage() ) );
+            throw new $exception_thrown( sprintf( _x( '%s class instance could not be retrieved: %s', 'exceptions', DHT_PREFIX ), $class_name, $e->getMessage() ) );
         }
     }
     

@@ -2,22 +2,7 @@
 
 ?>
 
-<!-- field - input -->
-<div class="dht-field-wrapper">
-    <div class="dht-title">Text Input</div>
-    <div class="dht-field-child-wrapper dht-field-child-input">
-        <label for="test-input">Input</label>
-        <input class="dht-input dht-field" id="test-input" type="text" name="test-input" value="" title="title" />
-        <div class="dht-description">Field description</div>
-    </div>
-    <div class="dht-info-help dashicons dashicons-info"
-         data-tooltips="A little box to something to make it longer"
-         data-position="OnLeft">
-    </div>
-</div>
-<div class="dht-divider"></div>
 
-<!-- https://www.w3schools.com/html/html_form_input_types.asp-->
 
 <!-------------------------------------------------------------------------------------->
 
@@ -577,20 +562,20 @@
 add_action( 'admin_enqueue_scripts', 'datepicker_sortable' );
 function datepicker_sortable() {
     
-    wp_register_style( 'dht-jquery-ui-css', DHT_ASSETS_URI . 'styles/libraries/jquery-ui.min.css', array(), '1.0' );
+    wp_register_style( 'dht-jquery-ui-css', DHT_ASSETS_URI . 'styles/libraries/jquery-ui.min.css', array(), DHT_VERSION );
     wp_enqueue_style( 'dht-jquery-ui-css' );
     
-    wp_enqueue_script( 'dht-jquery-ui', DHT_ASSETS_URI . 'scripts/libraries/jquery-ui.min.js', array(), '1.0', true );
+    wp_enqueue_script( 'dht-jquery-ui', DHT_ASSETS_URI . 'scripts/libraries/jquery-ui.min.js', array(), DHT_VERSION, true );
 }
 
 // field - timepicker_sortable
 add_action( 'admin_enqueue_scripts', 'timepicker' );
 function timepicker() {
     
-    wp_register_style( 'dht-jquery-ui-timepicker-css', DHT_ASSETS_URI . 'styles/libraries/jquery-ui-timepicker-addon.min.css', array(), '1.0' );
+    wp_register_style( 'dht-jquery-ui-timepicker-css', DHT_ASSETS_URI . 'styles/libraries/jquery-ui-timepicker-addon.min.css', array(), DHT_VERSION );
     wp_enqueue_style( 'dht-jquery-ui-timepicker-css' );
     
-    wp_enqueue_script( 'dht-jquery-ui-timepicker', DHT_ASSETS_URI . 'scripts/libraries/jquery-ui-timepicker-addon.min.js', array( 'dht-jquery-ui' ), '1.0', true );
+    wp_enqueue_script( 'dht-jquery-ui-timepicker', DHT_ASSETS_URI . 'scripts/libraries/jquery-ui-timepicker-addon.min.js', array( 'dht-jquery-ui' ), DHT_VERSION, true );
 }
 
 ?>
@@ -885,19 +870,19 @@ function alpha_picker(){
 // field - datepicker_sortable
 add_action( 'admin_enqueue_scripts', 'datepicker_sortable' );
 function datepicker_sortable(){
-    wp_register_style( 'dht-jquery-ui-css', DHT_ASSETS_URI . 'styles/libraries/jquery-ui.min.css', array(), '1.0' );
+    wp_register_style( 'dht-jquery-ui-css', DHT_ASSETS_URI . 'styles/libraries/jquery-ui.min.css', array(), DHT_VERSION );
     wp_enqueue_style( 'dht-jquery-ui-css' );
     
-    wp_enqueue_script( 'dht-jquery-ui',DHT_ASSETS_URI . 'scripts/libraries/jquery-ui.min.js', array(), '1.0', true);
+    wp_enqueue_script( 'dht-jquery-ui',DHT_ASSETS_URI . 'scripts/libraries/jquery-ui.min.js', array(), DHT_VERSION, true);
 }
 
 // field - timepicker_sortable
 add_action( 'admin_enqueue_scripts', 'timepicker' );
 function timepicker(){
-    wp_register_style( 'dht-jquery-ui-timepicker-css', DHT_ASSETS_URI . 'styles/libraries/jquery-ui-timepicker-addon.min.css', array(), '1.0' );
+    wp_register_style( 'dht-jquery-ui-timepicker-css', DHT_ASSETS_URI . 'styles/libraries/jquery-ui-timepicker-addon.min.css', array(), DHT_VERSION );
     wp_enqueue_style( 'dht-jquery-ui-timepicker-css' );
     
-    wp_enqueue_script( 'dht-jquery-ui-timepicker',DHT_ASSETS_URI . 'scripts/libraries/jquery-ui-timepicker-addon.min.js', array( 'dht-jquery-ui' ), '1.0', true);
+    wp_enqueue_script( 'dht-jquery-ui-timepicker',DHT_ASSETS_URI . 'scripts/libraries/jquery-ui-timepicker-addon.min.js', array( 'dht-jquery-ui' ), DHT_VERSION, true);
 }
 ?>
 
@@ -2548,3 +2533,236 @@ function timepicker(){
 </style>
 
 <!-------------------------------------------------------------------------------------->
+
+<!-- field - typography -->
+<script>
+    jQuery(document).ready(function($){
+        
+        //preview area div
+        const $preview_area = $('.dht-field-child-typography .dht-field-child-typography-preview');
+        
+        //fonts dropdown
+        const $fonts_dropdown = $('.dht-field-child-typography .dht-typography');
+        //font weights dropdown
+        const $font_weight_dropdown = $('.dht-field-child-typography .dht-typography-weight');
+        //font styles dropdown
+        const $font_style_dropdown = $('.dht-field-child-typography .dht-typography-style');
+        //font subsets
+        const $font_subsets_dropdown = $('.dht-field-child-typography .dht-typography-subsets');
+        
+        //fonts dropdown
+        $fonts_dropdown.select2({
+            allowClear: true
+        });
+        $fonts_dropdown.on('change', function() {
+            const $selected_font = $(this);
+            
+            //check if it is a Google font
+            const isGoogleFont = $selected_font.find('option:selected').attr('data-google-font');
+            
+            //get the selected font family
+            const font_family = $selected_font.val();
+            
+            $preview_area.css('font-family', font_family);
+            
+            //if Google font
+            if(isGoogleFont === 'yes'){
+                var fontWeights = {}; // Object to store font weights
+                
+                //include the font link for preview
+                //const fontLink = 'https://fonts.googleapis.com/css?family=' + font_family.replace(/\s+/g, '+');
+                var fontLink = 'https://fonts.gstatic.com/s/abeezee/v22/esDT31xSG-6AGleN2tCklZUCGpG-GQ.ttf'
+                $('<link href="' + fontLink + '" rel="stylesheet">').appendTo('head');
+                
+                //add Google font - font weights
+                $font_weight_dropdown.empty();
+                // Filter font weights for selected font
+                $.each(fontWeights[font_family], function(index, weight) {
+                    console.log(weight);
+                    
+                    $font_weight_dropdown.append('<option value="' + weight + '">' + weight + '</option>');
+                });
+                
+                // Trigger change event to update Select2
+                $font_weight_dropdown.trigger('change');
+            }
+        });
+        
+        //font weights dropdown
+        $font_weight_dropdown.select2({
+            allowClear: true
+        });
+        $font_weight_dropdown.on('change', function() {
+            const font_weight = $(this).val();
+            
+            $preview_area.css('font-weight', font_weight);
+        });
+        
+        //font styles dropdown
+        $font_style_dropdown.select2({
+            allowClear: true
+        });
+        $font_style_dropdown.on('change', function() {
+            const font_style = $(this).val();
+            
+            $preview_area.css('font-style', font_style);
+        });
+        
+        //font subsets dropdown
+        $font_subsets_dropdown.select2({
+            allowClear: true
+        });
+    });
+</script>
+
+<?php
+// Function to fetch Google Fonts
+function getGoogleFonts() {
+    $data = file_get_contents(DHT_ASSETS_DIR . 'fonts/google-fonts/google-fonts.json');
+    $fonts = json_decode($data, true);
+    return $fonts['items'];
+}
+
+// Get Google Fonts
+$google_fonts = getGoogleFonts();
+
+\DHT\Helpers\dht_print_r($google_fonts);
+
+
+
+//font weights
+$standard_font_weight = [
+    '300' => 'Light',
+    '400' => 'Regular',
+    '600' => 'Semi Bold',
+    '700' => 'Bold',
+    '800' => 'Ultra Bold'
+];
+
+//prepopulated from Google Fonts
+$font_weight = [];
+
+$font_weight = empty($font_weight) ? $standard_font_weight : $font_weight;
+
+//fonts styles
+$standard_font_style = [
+    'normal' => 'Normal',
+    'italic' => 'Italic',
+    'oblique' => 'Oblique'
+];
+
+//prepopulated from Google Fonts
+$font_style = [];
+
+$font_style = empty($font_style) ? $standard_font_style : $font_style;
+?>
+
+<div class="dht-field-wrapper">
+    <div class="dht-title">Typography</div>
+    <div class="dht-field-child-wrapper dht-field-child-typography">
+        
+        <p class="dht-field-child-typography-preview">
+            1 2 3 4 5 6 7 8 9 0 A B C D E F G H I J K L M N O P Q R S T U V W X Y Z a b c d e f g h i j k l m n o p q r s t u v w x y z
+        </p>
+        
+        <div class="dht-field-child-typography-group">
+            
+            <div class="dht-field-child-typography-dropdown">
+                <label for="cars3">Font Family</label>
+                <select class="dht-typography dht-field" name="fonts" id="cars3" data-placeholder="Font family">
+                    <option></option>
+                    
+                    <optgroup label="Custom Fonts">
+                    
+                    </optgroup>
+                    
+                    <optgroup label="Standard Fonts">
+                        <option value="Arial, Helvetica, sans-serif" data-google-font="no">Arial, Helvetica, sans-serif</option>
+                        <option value="'Arial Black', Gadget, sans-serif"  data-google-font="no">'Arial Black', Gadget, sans-serif</option>
+                        <option value="'Bookman Old Style', serif"  data-google-font="no">'Bookman Old Style', serif</option>
+                        <option value="'Comic Sans MS', cursive"  data-google-font="no">'Comic Sans MS', cursive</option>
+                        <option value="Courier, monospace"  data-google-font="no">Courier, monospace</option>
+                        <option value="Garamond, serif"  data-google-font="no">Garamond, serif</option>
+                        <option value="Georgia, serif"  data-google-font="no">Georgia, serif</option>
+                        <option value="Impact, Charcoal, sans-serif"  data-google-font="no">Impact, Charcoal, sans-serif</option>
+                        <option value="'Lucida Console', Monaco, monospace"  data-google-font="no">'Lucida Console', Monaco, monospace</option>
+                        <option value="'Lucida Sans Unicode', 'Lucida Grande', sans-serif"  data-google-font="no">'Lucida Sans Unicode', 'Lucida Grande', sans-serif</option>
+                        <option value="'MS Sans Serif', Geneva, sans-serif"  data-google-font="no">'MS Sans Serif', Geneva, sans-serif</option>
+                        <option value="'MS Serif', 'New York', sans-serif"  data-google-font="no">'MS Serif', 'New York', sans-serif</option>
+                        <option value="'Palatino Linotype', 'Book Antiqua', Palatino, serif"  data-google-font="no">'Palatino Linotype', 'Book Antiqua', Palatino, serif</option>
+                        <option value="Tahoma,Geneva, sans-serif"  data-google-font="no">Tahoma,Geneva, sans-serif</option>
+                        <option value="'Times New Roman', Times,serif" data-google-font="no">'Times New Roman', Times,serif</option>
+                        <option value="'Trebuchet MS', Helvetica, sans-serif" data-google-font="no">'Trebuchet MS', Helvetica, sans-serif</option>
+                        <option value="Verdana, Geneva, sans-serif" data-google-font="no">Verdana, Geneva, sans-serif</option>
+                    </optgroup>
+                    
+                    <optgroup label="Google Fonts" data-google-font="yes">
+                        <?php foreach ($google_fonts as $font): ?>
+                            <option value='<?php echo esc_attr($font['family']); ?>' data-google-font="yes"><?php echo esc_html($font['family']); ?></option>
+                        <?php endforeach; ?>
+                    </optgroup>
+                </select>
+            </div>
+            
+            <div class="dht-field-child-typography-dropdown">
+                <label for="aaaa">Font Weight</label>
+                <select class="dht-typography-weight dht-field" name="cars" id="aaaa" data-placeholder="Font Weight">
+                    <option></option>
+                    
+                    <?php foreach ($font_weight as $font_weight_value => $font_weight_name):?>
+                        <option value="<?php echo esc_attr($font_weight_value); ?>"><?php echo esc_html($font_weight_name); ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            
+            <div class="dht-field-child-typography-dropdown">
+                <label for="ccc">Font Style</label>
+                <select class="dht-typography-style dht-field" name="cars" id="ccc" data-placeholder="Font Style">
+                    <option></option>
+                    
+                    <?php foreach ($font_style as $font_style_value => $font_style_name):?>
+                        <option value="<?php echo esc_attr($font_style_value); ?>"><?php echo esc_html($font_style_name); ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            
+            <div class="dht-field-child-typography-dropdown">
+                <label for="bbbb">Font Subsets</label>
+                <select class="dht-typography-subsets dht-field" name="cars" id="bbbb" data-placeholder="Font Subsets">
+                    <option></option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="dht-description">Field description</div>
+    </div>
+    <div class="dht-info-help dashicons dashicons-info"
+         data-tooltips="A little box to something to make it longer"
+         data-position="OnLeft">
+    </div>
+</div>
+<div class="dht-divider"></div>
+
+<style>
+    .dht-wrapper .dht-field-child-typography .dht-field-child-typography-group {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 15px;
+    }
+    .dht-wrapper .dht-field-child-typography label {
+        display: block !important;
+    }
+    .dht-wrapper .dht-field-child-typography .dht-field-child-typography-preview {
+        width: 100%;
+        border: 1px dotted #d3d3d3;
+        max-width: 850px;
+        padding: 10px;
+        font-size: 10pt;
+        height: auto;
+        margin: 5px 0 10px;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        overflow: hidden;
+        margin-bottom: 20px;
+    }
+</style>

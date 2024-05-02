@@ -1,4 +1,6 @@
 # devhunters framework
+**Version 1.0.0**
+
 **The framework used in my plugins**
 
 

@@ -5,6 +5,7 @@ namespace DHT\Extensions\DashPages;
 
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
+use DHT\Helpers\Exceptions\ConfigExceptions\EmptyMenuConfigurationsException;
 use function DHT\Helpers\{dht_array_key_exists, dht_load_view};
 
 /**
@@ -14,32 +15,42 @@ use function DHT\Helpers\{dht_array_key_exists, dht_load_view};
 class DashMenuPage implements IDashMenuPage {
     
     //config array passed from the plugin
-    private array $_dashMenusConfig;
+    private array $_dashMenusConfig = [];
     
     /**
-     * @param array $dash_menus_config - injected config values from DI container
-     *
      * @since     1.0.0
      */
-    public function __construct( array $dash_menus_config ) {
-        
-        //get DI injected dashboard menu configurations from plugin
-        $this->_dashMenusConfig = apply_filters( 'dash_menus_configurations', $dash_menus_config );
+    public function __construct() {
         
         if ( is_admin() ) {
             //add dashboard pages hook
-            add_action( 'admin_menu', array( $this, "registerMenuPages" ), 99 );
+            add_action( 'admin_menu', array( $this, "registerMenuPagesAction" ), 99 );
         }
     }
     
     /**
+     * External Method
+     * create the dashboard menu items and submenu items by receiving the plugin configurations
      *
-     * create the dashboard menu items  and submenu items
+     * @param array $dash_menus_config
+     *
+     * @return void
+     * @throws EmptyMenuConfigurationsException
+     * @since     1.0.0
+     */
+    public function registerDashboardMenuPages( array $dash_menus_config ) : void {
+         
+         $this->_dashMenusConfig = $this->_validateDashMenusConfigurations($dash_menus_config);
+    }
+    
+    /**
+     *
+     * create the dashboard menu items  and submenu items hook
      *
      * @return void
      * @since     1.0.0
      */
-    public function registerMenuPages() : void {
+    public function registerMenuPagesAction() : void {
         
         //create main dashboard page
         if ( !dht_array_key_exists( $this->_dashMenusConfig, 'main_menu_values' ) ) {
@@ -157,4 +168,24 @@ class DashMenuPage implements IDashMenuPage {
         return dht_load_view( $template_path, $file, $args );
     }
     
+    /**
+     *
+     * validate the dashboard menu configurations received from plugin
+     *
+     * @param array $dash_menus_config
+     *
+     * @return array
+     * @throws EmptyMenuConfigurationsException
+     * @since     1.0.0
+     */
+    private function _validateDashMenusConfigurations( array $dash_menus_config ) : array {
+        
+        if ( !empty( $dash_menus_config[ 'menu_pages' ] ) ) {
+            
+            return apply_filters( 'dash_menus_configurations', $dash_menus_config[ 'menu_pages' ] );
+        } else {
+            
+            throw new EmptyMenuConfigurationsException( _x( 'Empty dashboard menu configurations array provided', 'exceptions', DHT_PREFIX ) );
+        }
+    }
 }

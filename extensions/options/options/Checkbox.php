@@ -75,14 +75,14 @@ final class Checkbox extends BaseOption {
         //if saved value exists
         if ( isset( $saved_values[ $option[ 'id' ] ] ) ) {
             
-            foreach ($option['checkboxes'] as $key => $checkbox) {
+            foreach ($option['choices'] as $key => $checkbox) {
                 
                 //if checkbox id exists in saved_values array, make it checked
                 if(array_key_exists($checkbox['id'], $saved_values[ $option[ 'id' ] ])) {
-                    $option['checkboxes'][$key]['checked'] = true;
+                    $option['choices'][$key]['checked'] = true;
                 }
                 else{
-                    $option['checkboxes'][$key]['checked'] = false;
+                    $option['choices'][$key]['checked'] = false;
                 }
             }
         }

@@ -6,11 +6,9 @@ namespace DHT\Extensions\Options;
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 use DHT\Extensions\Options\Options\BaseOption;
-use DHT\Extensions\Options\Options\Checkbox;
-use DHT\Extensions\Options\Options\Input;
-use DHT\Extensions\Options\Options\Option;
-use DHT\Extensions\Options\Options\Textarea;
+use DHT\Extensions\Options\Options\{Checkbox, Input, Radio, Text, Textarea};
 use DHT\Helpers\Exceptions\ConfigExceptions\EmptyOptionsConfigurationsException;
+use function DHT\fw;
 use function DHT\Helpers\dht_load_view;
 
 //TODO: at the end to add CSS styles in post css folder as sass
@@ -25,8 +23,28 @@ final class Options implements IOptions {
      */
     public function __construct() {
         
+        add_action( 'admin_enqueue_scripts', [ $this, 'enqueueMainAreaScripts' ] );
+        
         //register framework Option Types
         $this->_registerFWOptionTypes();
+    }
+    
+    /**
+     * Enqueue main wrapper area styles and scripts
+     *
+     * @param string $hook
+     *
+     * @return void
+     * @since     1.0.0
+     */
+    public function enqueueMainAreaScripts( string $hook ) : void {
+        
+        wp_enqueue_script( 'dht-wrapper-area', DHT_ASSETS_URI . 'scripts/js/options/dht-wrapper-area-script.js', array( 'jquery' ), fw()->manifest->get('version'), true );
+        
+        // Register the style
+        wp_register_style( 'dht-wrapper-area', DHT_ASSETS_URI . 'styles/css/options/dht-wrapper-area-style.css', array(), fw()->manifest->get('version') );
+        // Enqueue the style
+        wp_enqueue_style( 'dht-wrapper-area' );
     }
     
     /**
@@ -42,7 +60,6 @@ final class Options implements IOptions {
         
         $this->_options[ $optionClass::init()->getField() ] = $optionClass::init();
     }
-    
     
     /**
      *
@@ -93,6 +110,8 @@ final class Options implements IOptions {
         $this->_options[ Input::init()->getField() ] = Input::init();
         $this->_options[ Textarea::init()->getField() ] = Textarea::init();
         $this->_options[ Checkbox::init()->getField() ] = Checkbox::init();
+        $this->_options[ Radio::init()->getField() ] = Radio::init();
+        $this->_options[ Text::init()->getField() ] = Text::init();
     }
     
     /**

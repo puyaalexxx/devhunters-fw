@@ -1,110 +1,7 @@
 <?php
 
 ?>
-
-
-
 <!-------------------------------------------------------------------------------------->
-
-<!-- field - textarea -->
-<div class="dht-field-wrapper">
-    <div class="dht-title">Textarea</div>
-    <div class="dht-field-child-wrapper dht-field-child-textarea">
-        <label for="textarea">Textarea</label>
-        <textarea class="dht-textarea dht-field" id="textarea" name="textarea" placeholder="Textarea"
-                  rows="6"></textarea>
-        <div class="dht-description">Field description</div>
-    </div>
-    <div class="dht-info-help dashicons dashicons-info"
-         data-tooltips="A little box to something to make it longer"
-         data-position="OnLeft">
-    </div>
-</div>
-<div class="dht-divider"></div>
-
-<!-------------------------------------------------------------------------------------->
-
-<!-- field - checkbox -->
-<div class="dht-field-wrapper">
-    <div class="dht-title">Checkbox</div>
-    <div class="dht-field-child-wrapper dht-field-child-checkbox">
-        
-        <div class="dht-checkbox-wrapper">
-            <input class="dht-checkbox dht-field" type="checkbox" name="checkbox[]" id="checkbox-1"
-                   value="1" checked="checked" />
-            <label for="checkbox-1">Option 1</label>
-        </div>
-        
-        <div class="dht-description">Field description</div>
-    </div>
-    <div class="dht-info-help dashicons dashicons-info"
-         data-tooltips="A little box to something to make it longer"
-         data-position="OnLeft">
-    </div>
-</div>
-<div class="dht-divider"></div>
-
-<div class="dht-field-wrapper">
-    <div class="dht-title">Checkboxes</div>
-    <div class="dht-field-child-wrapper dht-field-child-checkbox">
-        
-        <div class="dht-checkbox-wrapper">
-            <input class="dht-checkbox dht-field" type="checkbox" name="checkbox[]" id="checkbox-1"
-                   value="1" checked="checked" />
-            <label for="checkbox-1">Option 1</label>
-        </div>
-        
-        <div class="dht-checkbox-wrapper">
-            <input class="dht-checkbox dht-field" type="checkbox" name="checkbox[]" id="checkbox-2"
-                   value="2" />
-            <label for="checkbox-2">Option 2</label>
-        </div>
-        
-        <div class="dht-checkbox-wrapper">
-            <input class="dht-checkbox dht-field" type="checkbox" name="checkbox[]" id="checkbox-3"
-                   value="3" />
-            <label for="checkbox-3">Option 3</label>
-        </div>
-        
-        <div class="dht-description">Field description</div>
-    </div>
-    <div class="dht-info-help dashicons dashicons-info"
-         data-tooltips="A little box to something to make it longer"
-         data-position="OnLeft">
-    </div>
-</div>
-<div class="dht-divider"></div>
-
-<style>
-    /*checkbox styles*/
-    .dht-wrapper .dht-field-child-wrapper .dht-field-child-checkbox .dht-checkbox:first-child {
-        margin-top: 0px;
-    }
-    .dht-wrapper .dht-field-child-wrapper .dht-field-child-checkbox .dht-checkbox {
-        margin-top: 10px;
-    }
-    .dht-wrapper .dht-field-child-wrapper .dht-field-child-checkbox .dht-checkbox-wrapper .dht-checkbox {
-        float: left;
-    }
-    .dht-wrapper .dht-field-child-wrapper .dht-field-child-checkbox .dht-checkbox-wrapper label {
-        display: block;
-    }
-    .dht-wrapper.dht-field-child-checkbox  .dht-checkbox-wrapper {
-        clear: both;
-    }
-    .dht-wrapper .dht-field-child-checkbox  .dht-checkbox-wrapper {
-        margin-bottom: 10px;
-    }
-    .dht-wrapper .dht-field-child-checkbox .dht-checkbox-wrapper:last-child {
-        margin-bottom: 0px;
-    }
-    .dht-wrapper .dht-field-child-checkbox  .dht-checkbox {
-        width: auto;
-    }
-</style>
-
-<!-------------------------------------------------------------------------------------->
-
 
 <!-- field - radio -->
 <div class="dht-field-wrapper">
@@ -562,20 +459,20 @@
 add_action( 'admin_enqueue_scripts', 'datepicker_sortable' );
 function datepicker_sortable() {
     
-    wp_register_style( 'dht-jquery-ui-css', DHT_ASSETS_URI . 'styles/libraries/jquery-ui.min.css', array(), DHT_VERSION );
+    wp_register_style( 'dht-jquery-ui-css', DHT_ASSETS_URI . 'styles/libraries/jquery-ui.min.css', array(), fw()->manifest->get('version') );
     wp_enqueue_style( 'dht-jquery-ui-css' );
     
-    wp_enqueue_script( 'dht-jquery-ui', DHT_ASSETS_URI . 'scripts/libraries/jquery-ui.min.js', array(), DHT_VERSION, true );
+    wp_enqueue_script( 'dht-jquery-ui', DHT_ASSETS_URI . 'scripts/libraries/jquery-ui.min.js', array(), fw()->manifest->get('version'), true );
 }
 
 // field - timepicker_sortable
 add_action( 'admin_enqueue_scripts', 'timepicker' );
 function timepicker() {
     
-    wp_register_style( 'dht-jquery-ui-timepicker-css', DHT_ASSETS_URI . 'styles/libraries/jquery-ui-timepicker-addon.min.css', array(), DHT_VERSION );
+    wp_register_style( 'dht-jquery-ui-timepicker-css', DHT_ASSETS_URI . 'styles/libraries/jquery-ui-timepicker-addon.min.css', array(), fw()->manifest->get('version') );
     wp_enqueue_style( 'dht-jquery-ui-timepicker-css' );
     
-    wp_enqueue_script( 'dht-jquery-ui-timepicker', DHT_ASSETS_URI . 'scripts/libraries/jquery-ui-timepicker-addon.min.js', array( 'dht-jquery-ui' ), DHT_VERSION, true );
+    wp_enqueue_script( 'dht-jquery-ui-timepicker', DHT_ASSETS_URI . 'scripts/libraries/jquery-ui-timepicker-addon.min.js', array( 'dht-jquery-ui' ), fw()->manifest->get('version'), true );
 }
 
 ?>
@@ -870,19 +767,19 @@ function alpha_picker(){
 // field - datepicker_sortable
 add_action( 'admin_enqueue_scripts', 'datepicker_sortable' );
 function datepicker_sortable(){
-    wp_register_style( 'dht-jquery-ui-css', DHT_ASSETS_URI . 'styles/libraries/jquery-ui.min.css', array(), DHT_VERSION );
+    wp_register_style( 'dht-jquery-ui-css', DHT_ASSETS_URI . 'styles/libraries/jquery-ui.min.css', array(), fw()->manifest->get('version') );
     wp_enqueue_style( 'dht-jquery-ui-css' );
     
-    wp_enqueue_script( 'dht-jquery-ui',DHT_ASSETS_URI . 'scripts/libraries/jquery-ui.min.js', array(), DHT_VERSION, true);
+    wp_enqueue_script( 'dht-jquery-ui',DHT_ASSETS_URI . 'scripts/libraries/jquery-ui.min.js', array(), fw()->manifest->get('version'), true);
 }
 
 // field - timepicker_sortable
 add_action( 'admin_enqueue_scripts', 'timepicker' );
 function timepicker(){
-    wp_register_style( 'dht-jquery-ui-timepicker-css', DHT_ASSETS_URI . 'styles/libraries/jquery-ui-timepicker-addon.min.css', array(), DHT_VERSION );
+    wp_register_style( 'dht-jquery-ui-timepicker-css', DHT_ASSETS_URI . 'styles/libraries/jquery-ui-timepicker-addon.min.css', array(), fw()->manifest->get('version') );
     wp_enqueue_style( 'dht-jquery-ui-timepicker-css' );
     
-    wp_enqueue_script( 'dht-jquery-ui-timepicker',DHT_ASSETS_URI . 'scripts/libraries/jquery-ui-timepicker-addon.min.js', array( 'dht-jquery-ui' ), DHT_VERSION, true);
+    wp_enqueue_script( 'dht-jquery-ui-timepicker',DHT_ASSETS_URI . 'scripts/libraries/jquery-ui-timepicker-addon.min.js', array( 'dht-jquery-ui' ), fw()->manifest->get('version'), true);
 }
 ?>
 

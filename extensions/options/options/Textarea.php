@@ -5,10 +5,12 @@ namespace DHT\Extensions\Options\Options;
 
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
-final class Input extends BaseOption {
+use function DHT\Helpers\dht_load_view;
+
+final class Textarea extends BaseOption {
     
     //field type
-    protected string $_field = 'input';
+    protected string $_field = 'textarea';
     
     /**
      * @since     1.0.0
@@ -18,9 +20,8 @@ final class Input extends BaseOption {
         parent::__construct();
     }
     
-    
     /**
-     * Enqueue input scripts and styles
+     * Enqueue textarea scripts and styles
      *
      * @param string $hook
      *
@@ -28,16 +29,4 @@ final class Input extends BaseOption {
      * @since     1.0.0
      */
     public function enqueueOptionScripts( string $hook ) : void {}
-    
-    /**
-     *
-     * return field type
-     *
-     * @return string
-     * @since     1.0.0
-     */
-    public function getField() : string {
-        
-        return parent::getField();
-    }
 }

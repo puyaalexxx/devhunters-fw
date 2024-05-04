@@ -7,8 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "wp-scripts start --config ./webpack.config.js",
     "build": "wp-scripts build --config ./webpack.config.js",
-    "build:css": "postcss assets/styles/postcss/*.css -d assets/styles/css",
-    "watch:css": "postcss assets/styles/postcss/*.css -d assets/styles/css --watch",
+    "build:assets": "webpack --config webpack.config.js",
+    "watch:assets": "webpack --config webpack.config.js --watch",
     "lint:css": "wp-scripts lint-style",
     "format:js": "wp-scripts format-js",
     "check-types": "tsc --noEmit"
@@ -22,6 +22,7 @@
     "autoprefixer": "^10.4.19",
     "css-loader": "^7.1.1",
     "cssnano": "^6.1.2",
+    "mini-css-extract-plugin": "^2.9.0",
     "postcss": "^8.4.38",
     "postcss-cli": "^11.0.0",
     "postcss-import": "^16.1.0",
@@ -31,6 +32,7 @@
     "prettier": "3.2.5",
     "style-loader": "^4.0.0",
     "ts-loader": "^9.5.1",
+    "webpack-remove-empty-scripts": "^1.0.4",
     "typescript": "^5.4.5"
   }
 }

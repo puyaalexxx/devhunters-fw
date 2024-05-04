@@ -3,6 +3,8 @@ declare( strict_types = 1 );
 
 namespace DHT\Extensions\Sidebars;
 
+use function DHT\fw;
+
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 /**
@@ -90,11 +92,11 @@ class CreateDynamicSidebars implements ICreateDynamicSidebars {
      */
     public function enqueueSidebarScripts( string $hook ) : void {
 
-        wp_enqueue_script( 'create-sidebars', DHT_ASSETS_URI . 'scripts/js/create-sidebars.js', array( 'jquery' ), DHT_VERSION, true );
+        wp_enqueue_script( 'create-sidebars', DHT_ASSETS_URI . 'scripts/js/create-sidebars-script.js', array( 'jquery' ), fw()->manifest->get('version'), true );
         wp_localize_script( 'create-sidebars', 'dht_remove_sidebar_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
 
         // Register the style
-        wp_register_style( 'create-sidebars', DHT_ASSETS_URI . 'styles/css/create-sidebars.css', array(), DHT_VERSION );
+        wp_register_style( 'create-sidebars', DHT_ASSETS_URI . 'styles/css/create-sidebars-styles.css', array(), fw()->manifest->get('version') );
         // Enqueue the style
         wp_enqueue_style( 'create-sidebars' );
     }

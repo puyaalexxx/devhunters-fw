@@ -1,0 +1,37 @@
+/*checkbox styles*/
+.dht-wrapper {
+
+    .dht-field-child-checkbox {
+
+        .dht-checkbox-wrapper{
+            clear: both;
+            margin-bottom: 10px;
+
+            &:last-child {
+                margin-bottom: 0px;
+            }
+
+            .dht-checkbox {
+                float: left;
+            }
+
+            label {
+                display: block;
+            }
+        }
+
+        .dht-checkbox:first-child {
+            margin-top: 0px;
+        }
+
+        .dht-checkbox {
+            margin-top: 10px;
+            width: auto;
+        }
+
+        input[type=checkbox]:checked::before {
+            margin-right: -2px;
+        }
+    }
+
+}

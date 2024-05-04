@@ -2,6 +2,7 @@
 declare( strict_types = 1 );
 
 // Enqueue scripts and styles for the media uploader
+use function DHT\fw;
 use function DHT\Helpers\dht_get_variables_from_file;
 
 function enqueue_media_uploader() {
@@ -30,30 +31,30 @@ function alpha_picker() {
 add_action( 'admin_enqueue_scripts', 'datepicker_sortable' );
 function datepicker_sortable() {
     
-    wp_register_style( 'dht-jquery-ui-css', DHT_ASSETS_URI . 'styles/libraries/jquery-ui.min.css', array(), DHT_VERSION );
+    wp_register_style( 'dht-jquery-ui-css', DHT_ASSETS_URI . 'styles/libraries/jquery-ui.min.css', array(), fw()->manifest->get('version') );
     wp_enqueue_style( 'dht-jquery-ui-css' );
     
-    wp_enqueue_script( 'dht-jquery-ui', DHT_ASSETS_URI . 'scripts/libraries/jquery-ui.min.js', array(), DHT_VERSION, true );
+    wp_enqueue_script( 'dht-jquery-ui', DHT_ASSETS_URI . 'scripts/libraries/jquery-ui.min.js', array(), fw()->manifest->get('version'), true );
 }
 
 // field - timepicker_sortable
 add_action( 'admin_enqueue_scripts', 'timepicker' );
 function timepicker() {
     
-    wp_register_style( 'dht-jquery-ui-timepicker-css', DHT_ASSETS_URI . 'styles/libraries/jquery-ui-timepicker-addon.min.css', array(), DHT_VERSION );
+    wp_register_style( 'dht-jquery-ui-timepicker-css', DHT_ASSETS_URI . 'styles/libraries/jquery-ui-timepicker-addon.min.css', array(), fw()->manifest->get('version') );
     wp_enqueue_style( 'dht-jquery-ui-timepicker-css' );
     
-    wp_enqueue_script( 'dht-jquery-ui-timepicker', DHT_ASSETS_URI . 'scripts/libraries/jquery-ui-timepicker-addon.min.js', array( 'dht-jquery-ui' ), DHT_VERSION, true );
+    wp_enqueue_script( 'dht-jquery-ui-timepicker', DHT_ASSETS_URI . 'scripts/libraries/jquery-ui-timepicker-addon.min.js', array( 'dht-jquery-ui' ), fw()->manifest->get('version'), true );
 }
 
 // field - multioptions
 add_action( 'admin_enqueue_scripts', 'multioptions' );
 function multioptions() {
     
-    wp_register_style( 'dht-select2-css', DHT_ASSETS_URI . 'styles/libraries/select2.min.css', array(), DHT_VERSION );
+    wp_register_style( 'dht-select2-css', DHT_ASSETS_URI . 'styles/libraries/select2.min.css', array(), fw()->manifest->get('version') );
     wp_enqueue_style( 'dht-select2-css' );
     
-    wp_enqueue_script( 'dht-select2-script', DHT_ASSETS_URI . 'scripts/libraries/select2.min.js', array(), DHT_VERSION, true );
+    wp_enqueue_script( 'dht-select2-script', DHT_ASSETS_URI . 'scripts/libraries/select2.min.js', array(), fw()->manifest->get('version'), true );
     
     //wp_localize_script( 'dht-select2-ajax', 'dht_select2_ajax', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
     
@@ -103,22 +104,22 @@ function icons() {
     // Enqueue Thickbox stylesheet
     wp_enqueue_style('thickbox');
     
-    wp_register_style( 'dht-font-awesome-css', DHT_ASSETS_URI . 'styles/libraries/fontawesome-icons.min.css', array(), DHT_VERSION );
+    wp_register_style( 'dht-font-awesome-css', DHT_ASSETS_URI . 'styles/libraries/fontawesome-icons.min.css', array(), fw()->manifest->get('version') );
     wp_enqueue_style( 'dht-font-awesome-css' );
     
-    wp_register_style( 'dht-divi-icons-css', DHT_ASSETS_URI . 'styles/libraries/divi-icons.min.css', array(), DHT_VERSION );
+    wp_register_style( 'dht-divi-icons-css', DHT_ASSETS_URI . 'styles/libraries/divi-icons.min.css', array(), fw()->manifest->get('version') );
     wp_enqueue_style( 'dht-divi-icons-css' );
     
-    wp_register_style( 'dht-elusive-icons-css', DHT_ASSETS_URI . 'styles/libraries/elusive-icons.min.css', array(), DHT_VERSION );
+    wp_register_style( 'dht-elusive-icons-css', DHT_ASSETS_URI . 'styles/libraries/elusive-icons.min.css', array(), fw()->manifest->get('version') );
     wp_enqueue_style( 'dht-elusive-icons-css' );
     
-    wp_register_style( 'dht-line-icons-css', DHT_ASSETS_URI . 'styles/libraries/line-icons.min.css', array(), DHT_VERSION );
+    wp_register_style( 'dht-line-icons-css', DHT_ASSETS_URI . 'styles/libraries/line-icons.min.css', array(), fw()->manifest->get('version') );
     wp_enqueue_style( 'dht-line-icons-css' );
     
-    wp_register_style( 'dht-devicon-icons-css', DHT_ASSETS_URI . 'styles/libraries/devicon-icons.min.css', array(), DHT_VERSION );
+    wp_register_style( 'dht-devicon-icons-css', DHT_ASSETS_URI . 'styles/libraries/devicon-icons.min.css', array(), fw()->manifest->get('version') );
     wp_enqueue_style( 'dht-devicon-icons-css' );
     
-    wp_register_style( 'dht-bootstrap-icons-css', DHT_ASSETS_URI . 'styles/libraries/bootstrap-icons.min.css', array(), DHT_VERSION );
+    wp_register_style( 'dht-bootstrap-icons-css', DHT_ASSETS_URI . 'styles/libraries/bootstrap-icons.min.css', array(), fw()->manifest->get('version') );
     wp_enqueue_style( 'dht-bootstrap-icons-css' );
 
 }

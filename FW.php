@@ -5,9 +5,9 @@ namespace DHT;
 
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
-use DHT\DI\ClassInstantiation;
 use DHT\DI\DIInit;
 use DHT\Extensions\Extensions;
+use DHT\Helpers\Classes\Manifest;
 
 /**
  *
@@ -29,6 +29,9 @@ final class FW {
     //dash menu class reference
     public Extensions $extensions;
     
+    //framework manifest info
+    public Manifest $manifest;
+    
     /**
      * @since     1.0.0
      */
@@ -41,6 +44,9 @@ final class FW {
         
         //instantiate framework Extensions
         $this->extensions = Extensions::init( $this->_diInit );
+        
+        //instantiate framework manifest info
+        $this->manifest = Manifest::init();
         
         //other initializations
         //include the test file to test different things quickly (remove at the end)

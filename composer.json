@@ -16,6 +16,7 @@
     "files": [
       "constants.php",
       "helpers/general.php",
+      "helpers/options.php",
       "helpers/validations.php"
     ],
     "psr-4" : {

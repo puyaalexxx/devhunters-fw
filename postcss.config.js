@@ -9,9 +9,9 @@ module.exports = {
         /*require('postcss-assets')({
             loadPath  : ['dist/img']
         }),*/
-        /*require('cssnano')({
-            preset: 'default'
-        }),*/
+        require('cssnano')({
+            preset: 'default',
+        }),
         require('precss'),
     ],
 }

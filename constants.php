@@ -12,9 +12,6 @@ if ( !defined( 'ABSPATH' ) ) die( 'Forbidden' );
 
 define( 'DHT_MAIN', true );
 
-//framework version (used in enqueued files)
-define( 'DHT_VERSION', '1.0.0' );
-
 //framework prefix used as translation text domain, enqueue scripts
 define( 'DHT_PREFIX', 'dht' );
 

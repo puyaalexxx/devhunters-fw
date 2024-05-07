@@ -1,7 +1,7 @@
 <?php
 declare( strict_types = 1 );
 
-namespace DHT\DI;
+namespace DHT\Core\DI;
 
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 

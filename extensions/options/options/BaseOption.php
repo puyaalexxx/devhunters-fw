@@ -3,12 +3,12 @@ declare( strict_types = 1 );
 
 namespace DHT\Extensions\Options\Options;
 
-use function DHT\fw;
 use function DHT\Helpers\dht_load_view;
+use function DHT\Helpers\dht_print_r;
 
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
- abstract class BaseOption {
+abstract class BaseOption {
     
     //class instances for Singleton Pattern
     private static array $_instances = [];
@@ -18,9 +18,6 @@ if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
     
     //field type
     protected string $_field = 'unknown';
-    
-    //field option array
-    protected array $_options = [];
     
     /**
      *
@@ -32,16 +29,16 @@ if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
         
         add_action( 'admin_enqueue_scripts', [ $this, 'enqueueOptionScripts' ] );
     }
-     
-     /**
-      * Enqueue the checkbox css file
-      *
-      * @param string $hook
-      *
-      * @return void
-      * @since     1.0.0
-      */
-     public abstract function enqueueOptionScripts( string $hook ) : void;
+    
+    /**
+     * Enqueue the checkbox css file
+     *
+     * @param string $hook
+     *
+     * @return void
+     * @since     1.0.0
+     */
+    public abstract function enqueueOptionScripts( string $hook ) : void;
     
     /**
      *
@@ -57,69 +54,34 @@ if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
     
     /**
      *
-     * get field options args
-     *
-     * @param array  $option
-     * @param array  $saved_values - page saved values
-     * @param string $prefix_id
-     *
-     * @return void
-     * @since     1.0.0
-     */
-    public function getFieldOptions( array $option, array $saved_values, string $prefix_id = '' ) : void {
-        
-        $this->_options = $this->_setOptionArgs( $option, $saved_values, $prefix_id );
-    }
-    
-    /**
-     *
      * return option template
      *
+     * @param array $option
      *
      * @return string
      * @since     1.0.0
      */
-    public function render() : string {
+    public function render(array $option) : string {
         
-        return dht_load_view( $this->template_dir, $this->getField() . '.php', $this->_options );
+        return dht_load_view( $this->template_dir, $this->getField() . '.php', $option );
     }
-    
-    /**
-     *
-     * add prefix id and saved value if exists on the existent option array
-     *
-     * @param array  $option
-     * @param array  $saved_values
-     * @param string $prefix_id
-     *
-     * @return array
-     * @since     1.0.0
-     */
-    private function _setOptionArgs( array $option, array $saved_values, string $prefix_id = '' ) : array {
-        
-        //if saved value exists, merge it with the default
-        $option = $this->_mergeOptionValues( $option, $saved_values );
-        
-        //change option field prefix id
-        return $this->_addOptionIDPrefix( $option, $prefix_id );
-    }
-    
+   
     /**
      *
      * add prefix id for option id to display it in the form as array values
      * (used to retrieve the $_POST['prefix_id'] values)
      *
      * @param array  $option
-     * @param string $prefix_id
+     * @param string $option_prefix_id
      *
      * @return array
      * @since     1.0.0
      */
-    protected function _addOptionIDPrefix( array $option, string $prefix_id ) : array {
+    public function addIDPrefix( array $option, string $option_prefix_id ) : array {
         
-        if ( empty( $prefix_id ) ) return $option;
+        if ( empty( $option_prefix_id ) ) return $option;
         
-        $option[ 'id' ] = $prefix_id . '[' . $option[ 'id' ] . ']';
+        $option[ 'id' ] = $option_prefix_id . '[' . $option[ 'id' ] . ']';
         
         return $option;
     }
@@ -128,21 +90,42 @@ if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
      *
      * merge the field value with the saved value if exists
      *
-     * @param array $option       - option field
-     * @param array $saved_values - saved values
+     * @param array $option      - option field
+     * @param mixed $saved_value - saved values
      *
      * @return mixed
      * @since     1.0.0
      */
-    protected function _mergeOptionValues( array $option, array $saved_values ) : array {
+    public function mergeValues( array $option, mixed $saved_value ) : array {
         
-        //if saved value exists
-        if ( isset( $saved_values[ $option[ 'id' ] ] ) ) {
-            
-            $option['value'] = $saved_values[ $option[ 'id' ] ];
-        }
+        if($saved_value == 'no') return $option;
+        
+        $option[ 'value' ] = empty( $saved_value ) ? $option[ 'value' ] : $saved_value;
         
         return $option;
+    }
+    
+    /**
+     *
+     *  In this method you receive $option_value (from form submit or whatever)
+     *  and must return correct and safe value that will be stored in database.
+     *
+     *  $option_value can be null.
+     *  In this case you should return default value from $option['value']
+     *
+     * @param array $option - option field
+     * @param mixed $option_value  - saved option value
+     *
+     * @return mixed - changed option value
+     * @since     1.0.0
+     */
+    public function saveValue( array $option, mixed $option_value ) : mixed {
+        
+        if ( empty( $option_value ) ) {
+            return $option['value'];
+        }
+        
+        return $option_value;
     }
     
     /**

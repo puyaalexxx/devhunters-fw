@@ -10,28 +10,33 @@ if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
     <div class="dht-title"><?php echo esc_html( $args[ 'title' ] ); ?></div>
 
-    <div class="dht-field-child-wrapper dht-field-child-radio">
+    <div
+        class="dht-field-child-wrapper dht-field-child-radio <?php echo isset( $args[ 'attr' ][ 'class' ] ) ? esc_attr( $args[ 'attr' ][ 'class' ] ) : ''; ?>"
+        <?php echo dht_parse_option_attributes( $args[ 'attr' ] ); ?>>
 
         <?php if ( !empty( $args[ 'choices' ] ) ): ?>
 
-            <?php foreach ( $args[ 'choices' ] as $key => $radio ): ?>
+            <?php $cnt = 0;
+            foreach ( $args[ 'choices' ] as $value => $label ): ?>
+
+                <?php $radio_id = esc_attr( $args[ 'id' ] ) . '-' . $cnt; ?>
                 <div
-                    class="dht-radio-wrapper <?php echo isset( $args[ 'attr' ][ 'class' ] ) ? esc_attr( $args[ 'attr' ][ 'class' ] ) : ''; ?>" <?php echo dht_parse_option_attributes( $args[ 'attr' ] ); ?>>
+                    class="dht-radio-wrapper">
 
                     <input
                         class="dht-radio dht-field"
                         type="radio"
                         name="<?php echo esc_attr( $args[ 'id' ] ); ?>"
-                        id="<?php echo esc_attr( $args[ 'id' ] ) . $key; ?>"
-                        value="<?php echo esc_attr( $radio[ 'value' ] ); ?>"
-                        <?php echo ( $args[ 'value' ] == $radio[ 'value' ] ) ? 'checked="checked"' : ''; ?>
+                        id="<?php echo $radio_id; ?>"
+                        value="<?php echo esc_attr( $value ); ?>"
+                        <?php echo ( $args[ 'value' ] == $value ) ? 'checked="checked"' : ''; ?>
                     />
 
                     <label
-                        for="<?php echo esc_attr( $args[ 'id' ] ) . $key; ?>"><?php echo esc_html( $radio[ 'label' ] ); ?></label>
+                        for="<?php echo $radio_id; ?>"><?php echo esc_html( $label ); ?></label>
 
                 </div>
-            <?php endforeach; ?>
+                <?php $cnt++; endforeach; ?>
 
         <?php endif; ?>
 

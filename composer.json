@@ -26,7 +26,8 @@
       "DHT\\Helpers\\Exceptions\\" : "helpers/exceptions/",
       "DHT\\Helpers\\Exceptions\\ConfigExceptions\\" : "helpers/exceptions/config-exceptions/",
 
-      "DHT\\DI\\" : "di/",
+      "DHT\\Core\\" : "core/",
+      "DHT\\Core\\DI\\" : "core/di/",
 
       "DHT\\Extensions\\" : "extensions/",
       "DHT\\Extensions\\DashPages\\" : "extensions/dashboard-pages/",

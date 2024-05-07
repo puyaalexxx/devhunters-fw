@@ -4,12 +4,12 @@ declare( strict_types = 1 );
 // Enqueue scripts and styles for the media uploader
 use function DHT\fw;
 use function DHT\Helpers\dht_get_variables_from_file;
-
+/*
 function enqueue_media_uploader() {
     // Enqueue the media uploader script
     wp_enqueue_media();
 }
-add_action('admin_enqueue_scripts', 'enqueue_media_uploader');
+add_action('admin_enqueue_scripts', 'enqueue_media_uploader');*/
 
 
 // field - colorpicker - opacity

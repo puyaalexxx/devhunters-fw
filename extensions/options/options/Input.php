@@ -29,15 +29,4 @@ final class Input extends BaseOption {
      */
     public function enqueueOptionScripts( string $hook ) : void {}
     
-    /**
-     *
-     * return field type
-     *
-     * @return string
-     * @since     1.0.0
-     */
-    public function getField() : string {
-        
-        return parent::getField();
-    }
 }

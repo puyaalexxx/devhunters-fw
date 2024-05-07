@@ -1,10 +1,9 @@
 <?php
 declare( strict_types = 1 );
 
-namespace DHT\Helpers\Classes;
+namespace DHT\Core;
 
 use function DHT\Helpers\dht_get_variables_from_file;
-use function DHT\Helpers\dht_print_r;
 
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 

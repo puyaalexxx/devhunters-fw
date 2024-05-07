@@ -1,6 +1,6 @@
 <?php
 
-namespace DHT\DI;
+namespace DHT\Core\DI;
 
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 

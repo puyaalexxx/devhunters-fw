@@ -10,14 +10,14 @@ if (!defined('DHT_MAIN')) die('Forbidden');
  * get option or options fields from db
  *
  * @param string     $option_id
- * @param mixed|null $default_value
+ * @param array $default_value
  *
  * @return mixed
  * @since     1.0.0
  */
-function dht_get_db_settings_option( string $option_id, mixed $default_value = null  ) : mixed {
+function dht_get_db_settings_option( string $option_id, mixed $default_value = []  ) : array {
     
-    if(empty($option_id)) return false;
+    if(empty($option_id)) return [];
     
     return get_option( $option_id, $default_value );
 }
@@ -26,17 +26,17 @@ function dht_get_db_settings_option( string $option_id, mixed $default_value = n
  *
  * save option field or fields in database
  *
- * @param string $option_name
+ * @param string $option_id
  * @param mixed $value - value to be saved
  *
  * @return bool
  * @since     1.0.0
  */
-function dht_set_db_settings_option( string $option_name, mixed $value ) : bool  {
+function dht_set_db_settings_option( string $option_id, mixed $value ) : bool  {
     
-    if(empty($option_name) or empty($value)) return false;
+    if(empty($option_id) || empty($value)) return false;
     
-    return update_option( $option_name, $value );
+    return update_option( $option_id, $value );
 }
 
 /**
@@ -67,3 +67,23 @@ function dht_parse_option_attributes( array $attr ) : string  {
     return $attributes;
 }
 
+/**
+ *
+ * add allowed HTML tags to the wp editor value
+ *
+ * @param string $value
+ *
+ * @return string
+ * @since     1.0.0
+ */
+function dht_sanitize_wpeditor_value( string $value ) : string  {
+    
+    // Get the list of allowed HTML tags and attributes
+    $allowed_html = wp_kses_allowed_html( 'post' );
+
+    // Remove the <script> tag from the list of allowed tags
+    unset( $allowed_html[ 'script' ] );
+
+    // Sanitize content with allowed HTML tags and excluding <script> tag
+    return wp_kses( $value, $allowed_html );
+}

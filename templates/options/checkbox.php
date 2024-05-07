@@ -14,25 +14,27 @@ if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
     <div class="dht-title"><?php echo esc_html( $args[ 'title' ] ); ?></div>
 
-    <div class="dht-field-child-wrapper dht-field-child-checkbox">
+    <div class="dht-field-child-wrapper dht-field-child-checkbox <?php echo isset( $args[ 'attr' ][ 'class' ] ) ? esc_attr( $args[ 'attr' ][ 'class' ] ) : ''; ?>"
+        <?php echo dht_parse_option_attributes( $args[ 'attr' ] ); ?>>
 
         <?php if ( !empty( $args[ 'choices' ] ) ): ?>
 
             <?php foreach ( $args[ 'choices' ] as $key => $checkbox ): ?>
+                
                 <div
-                    class="dht-checkbox-wrapper <?php echo isset( $args[ 'attr' ][ 'class' ] ) ? esc_attr( $args[ 'attr' ][ 'class' ] ) : ''; ?>" <?php echo dht_parse_option_attributes( $args[ 'attr' ] ); ?>>
+                    class="dht-checkbox-wrapper">
 
                     <input
                         class="dht-checkbox dht-field"
                         type="checkbox"
-                        name="<?php echo esc_attr( $args[ 'id' ] ); ?>[<?php echo esc_attr( $checkbox[ 'id' ] ); ?>]"
-                        id="<?php echo esc_attr( $args[ 'id' ] ) . $key; ?>"
-                        value="<?php echo esc_attr( $checkbox[ 'value' ] ); ?>"
-                        <?php echo $checkbox[ 'checked' ] ? 'checked="checked"' : ''; ?>
+                        name="<?php echo esc_attr( $args[ 'id' ] ); ?>[<?php echo esc_attr($checkbox['id']); ?>]"
+                        id="<?php echo esc_attr($checkbox['id']); ?>"
+                        value="<?php echo esc_attr( esc_attr($checkbox['value']) ); ?>"
+                        <?php echo in_array($checkbox['id'], $args['value']) ? 'checked="checked"' : ''; ?>
                     />
 
                     <label
-                        for="<?php echo esc_attr( $args[ 'id' ] ) . $key; ?>"><?php echo esc_html( $checkbox[ 'label' ] ); ?></label>
+                        for="<?php echo esc_attr($checkbox['id']); ?>"><?php echo esc_html( $checkbox['label'] ); ?></label>
 
                 </div>
             <?php endforeach; ?>

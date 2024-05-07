@@ -31,62 +31,42 @@ final class Checkbox extends BaseOption {
     public function enqueueOptionScripts( string $hook ) : void {
         
         // Register the style
-        wp_register_style( 'dht-checkbox-option', DHT_ASSETS_URI . 'styles/css/options/checkbox-style.css', array(), fw()->manifest->get('version') );
+        wp_register_style( 'dht-checkbox-option', DHT_ASSETS_URI . 'styles/css/options/checkbox-style.css', array(), fw()->manifest->get( 'version' ) );
         // Enqueue the style
         wp_enqueue_style( 'dht-checkbox-option' );
     }
     
     /**
      *
-     * return field type
+     * merge the field value with the saved value if exists
      *
-     * @return string
-     * @since     1.0.0
-     */
-    public function getField() : string {
-        
-        return $this->_field;
-    }
-    
-    /**
-     *
-     * return field template
-     *
-     * @return string
-     * @since     1.0.0
-     */
-    public function render() : string {
-        
-        return parent::render();
-    }
-    
-    /**
-     *
-     * merge the field value with the saved value if exists for the checkboxes
-     *
-     * @param array $option       - option field
-     * @param array $saved_values - saved values
+     * @param array $option      - option field
+     * @param       $saved_value $saved_value - saved values
      *
      * @return array
      * @since     1.0.0
      */
-    protected function _mergeOptionValues( array $option, array $saved_values ) : array {
+    public function mergeValues( array $option, mixed $saved_value ) : array {
         
         //if saved value exists
-        if ( isset( $saved_values[ $option[ 'id' ] ] ) ) {
+        if ( !empty( $saved_value ) ) {
             
-            foreach ($option['choices'] as $key => $checkbox) {
+            $values = [];
+            foreach ( $option[ 'choices' ] as $checkbox ) {
                 
-                //if checkbox id exists in saved_values array, make it checked
-                if(array_key_exists($checkbox['id'], $saved_values[ $option[ 'id' ] ])) {
-                    $option['choices'][$key]['checked'] = true;
-                }
-                else{
-                    $option['choices'][$key]['checked'] = false;
+                //if checkbox id exists in saved_values array, save it as checked value
+                if ( array_key_exists( $checkbox[ 'id' ], $saved_value ) ) {
+                    $values[] = $checkbox[ 'id' ];
                 }
             }
-        }
+            
+            $option[ 'value' ] = $values;
+            
+        } /*elseif ( empty($saved_value) && $option['id'] ) {
+            $option[ 'value' ] = [];
+        }*/
         
         return $option;
     }
+    
 }

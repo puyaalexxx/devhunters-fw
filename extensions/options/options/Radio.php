@@ -8,8 +8,6 @@ use function DHT\Helpers\dht_print_r;
 
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
-//TODO:  if I set a radio to be checked by default and then uncheck it and send via POSt it will always be checked
-// need to find a fix for this.
 final class Radio extends BaseOption {
     
     //field type
@@ -46,17 +44,5 @@ final class Radio extends BaseOption {
     public function getField() : string {
         
         return $this->_field;
-    }
-    
-    /**
-     *
-     * return field template
-     *
-     * @return string
-     * @since     1.0.0
-     */
-    public function render() : string {
-        
-        return parent::render();
     }
 }

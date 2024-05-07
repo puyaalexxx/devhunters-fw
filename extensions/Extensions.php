@@ -5,14 +5,13 @@ namespace DHT\Extensions;
 
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
-use DHT\DI\DIInit;
-use DHT\DI\ExtensionClassInstance;
+use DHT\Core\DI\DIInit;
+use DHT\Core\DI\ExtensionClassInstance;
 use DHT\Extensions\CPT\ICPT;
 use DHT\Extensions\DashPages\IDashMenuPage;
 use DHT\Extensions\Options\IOptions;
 use DHT\Extensions\Sidebars\{ICreateDynamicSidebars, IRegisterSidebar};
 use DHT\Extensions\Widgets\IRegisterWidget;
-use function DHT\Helpers\dht_print_r;
 
 /**
  *

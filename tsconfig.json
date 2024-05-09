@@ -10,8 +10,12 @@
     "strictNullChecks" : true,
     "noImplicitAny": true,
     "outDir" : "assets/scripts/js",
-
+    "moduleResolution": "node",
+    "allowJs": true
   },
-  "include": ["assets/scripts/ts/*.ts", "assets/scripts/ts/*.tsx"],
+  "include": [
+    "assets/scripts/ts/",
+    "assets/scripts/ts/*.tsx"
+  ],
   "exclude": ["node_modules"]
 }

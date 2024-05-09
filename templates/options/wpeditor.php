@@ -3,6 +3,8 @@ if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 use function DHT\Helpers\dht_parse_option_attributes;
 
+$args = $args ?? [];
+
 $rows = !empty( $args[ 'row' ] ) ? esc_attr( $args[ 'row' ] ) : 10;
 ?>
 
@@ -25,6 +27,7 @@ $rows = !empty( $args[ 'row' ] ) ? esc_attr( $args[ 'row' ] ) : 10;
             <?php if ( !empty( $args[ 'description' ] ) ): ?>
                 <div class="dht-description"><?php echo esc_html( $args[ 'description' ] ); ?></div>
             <?php endif; ?>
+            
         </div>
 
         <?php if ( !empty( $args[ 'tooltip' ] ) ): ?>

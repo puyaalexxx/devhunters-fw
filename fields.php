@@ -1,361 +1,9 @@
-<?php
 
-?>
-<!-- field - switch  -->
-<div class="dht-field-wrapper">
-    <div class="dht-title">Switch Buttons</div>
-    <div class="dht-field-child-wrapper dht-field-child-switch">
-
-        <label class="dht-switch">
-            <input type="checkbox" name="switch" value="newsletter">
-            <span class="dht-slider">
-                            <span class="dht-slider-yes">Enable</span>
-                            <span class="dht-slider-no">Disable</span>
-                        </span>
-        </label>
-
-        <div class="dht-description">Field description</div>
-    </div>
-
-    <div class="dht-info-help dashicons dashicons-info"
-         data-tooltips="A little box to something to make it longer"
-         data-position="OnLeft">
-    </div>
-</div>
-<div class="dht-divider"></div>
-
-<style>
-    /* switch button styles*/
-    .dht-wrapper .dht-field-child-switch label.dht-switch {
-        display: block;
-    }
-
-    .dht-wrapper .dht-field-child-switch .dht-switch {
-        position: relative;
-        display: inline-block;
-        width: 125px;
-        height: 34px;
-    }
-
-    .dht-wrapper .dht-field-child-switch .dht-switch input {
-        opacity: 0;
-        width: 0;
-        height: 0;
-        border-radius: 3px;
-    }
-
-    .dht-wrapper .dht-field-child-switch .dht-switch .dht-slider {
-        position: absolute;
-        cursor: pointer;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: #ccc;
-        -webkit-transition: .4s;
-        transition: .4s;
-        border-radius: 3px;
-    }
-
-    .dht-wrapper .dht-field-child-switch .dht-switch .dht-slider:before {
-        position: absolute;
-        content: "";
-        height: 26px;
-        width: 60px;
-        left: -25px;
-        bottom: 4px;
-        background-color: white;
-        -webkit-transition: .4s;
-        transition: .4s;
-        z-index: 9;
-    }
-
-    .dht-wrapper .dht-field-child-switch .dht-switch input:checked + .dht-slider {
-        background-color: rgb(99, 91, 255);
-    }
-
-    .dht-wrapper .dht-field-child-switch .dht-switch input:focus + .dht-slider {
-        box-shadow: 0 0 1px rgb(99, 91, 255);
-    }
-
-    .dht-wrapper .dht-field-child-switch .dht-switch input:checked + .dht-slider:before {
-        -webkit-transform: translateX(85px);
-        -ms-transform: translateX(85px);
-        transform: translateX(85px);
-    }
-
-    .dht-wrapper .dht-field-child-switch .dht-switch input + .dht-slider:before {
-        -webkit-transform: translateX(30px);
-        -ms-transform: translateX(30px);
-        transform: translateX(30px);
-    }
-
-    .dht-wrapper .dht-field-child-switch .dht-switch .dht-slider span {
-        color: #fff;
-        position: relative;
-        top: 7px;
-        font-weight: 600;
-        font-size: 15px;
-    }
-
-    .dht-wrapper .dht-field-child-switch span.dht-slider-yes {
-        left: 7px;
-    }
-
-    .dht-wrapper .dht-field-child-switch span.dht-slider-no {
-        right: -20px;
-    }
-
-    @media (max-width: 980px) {
-        .dht-wrapper .dht-field-child-switch label.dht-switch {
-            margin: auto;
-        }
-    }
-</style>
-
-<!-------------------------------------------------------------------------------------->
-
-<!-- field - dropdown - type-> group-->
-<div class="dht-field-wrapper">
-    <div class="dht-title">Dropdown Group Multiple</div>
-    <div class="dht-field-child-wrapper dht-field-child-dropdown">
-        <label for="cars4">Choose cars:</label>
-        <select class="dht-dropdown dht-field" name="cars4" id="cars4" multiple size="6">
-            <optgroup label="Swedish Cars">
-                <option value="volvo">Volvo</option>
-                <option value="saab">Saab</option>
-            </optgroup>
-            <optgroup label="German Cars">
-                <option value="mercedes">Mercedes</option>
-                <option value="audi">Audi</option>
-            </optgroup>
-        </select>
-        <div class="dht-description">Field description</div>
-    </div>
-    <div class="dht-info-help dashicons dashicons-info"
-         data-tooltips="A little box to something to make it longer"
-         data-position="OnLeft">
-    </div>
-</div>
-<div class="dht-divider"></div>
-
-<!-- field - dropdown - type-> group-->
-<div class="dht-field-wrapper">
-    <div class="dht-title">Dropdown Group</div>
-    <div class="dht-field-child-wrapper dht-field-child-dropdown">
-        <label for="cars3">Choose a car:</label>
-        <select class="dht-dropdown dht-field" name="cars3" id="cars3">
-            <optgroup label="Swedish Cars">
-                <option value="volvo">Volvo</option>
-                <option value="saab">Saab</option>
-            </optgroup>
-            <optgroup label="German Cars">
-                <option value="mercedes">Mercedes</option>
-                <option value="audi">Audi</option>
-            </optgroup>
-        </select>
-        <div class="dht-description">Field description</div>
-    </div>
-    <div class="dht-info-help dashicons dashicons-info"
-         data-tooltips="A little box to something to make it longer"
-         data-position="OnLeft">
-    </div>
-</div>
-<div class="dht-divider"></div>
-
-<!-- field - dropdown - type-> multipleselect-->
-<div class="dht-field-wrapper">
-    <div class="dht-title">Dropdown Multiple</div>
-    <div class="dht-field-child-wrapper dht-field-child-dropdown">
-        <label for="cars2">Choose cars:</label>
-        <select class="dht-dropdown dht-field" name="cars2" id="cars2" multiple size="6">
-            <option value="volvo">Volvo</option>
-            <option value="saab">Saab</option>
-            <option value="mercedes">Mercedes</option>
-            <option value="audi">Audi</option>
-        </select>
-        <div class="dht-description">Field description</div>
-    </div>
-    <div class="dht-info-help dashicons dashicons-info"
-         data-tooltips="A little box to something to make it longer"
-         data-position="OnLeft">
-    </div>
-</div>
-<div class="dht-divider"></div>
-
-<!-- field - dropdown -->
-<div class="dht-field-wrapper">
-    <div class="dht-title">Dropdown</div>
-    <div class="dht-field-child-wrapper dht-field-child-dropdown">
-        <label for="cars">Choose a car:</label>
-        <select class="dht-dropdown dht-field" name="cars" id="cars">
-            <option value="volvo">Volvo</option>
-            <option value="saab">Saab</option>
-            <option value="mercedes">Mercedes</option>
-            <option value="audi">Audi</option>
-        </select>
-        <div class="dht-description">Field description</div>
-    </div>
-    <div class="dht-info-help dashicons dashicons-info"
-         data-tooltips="A little box to something to make it longer"
-         data-position="OnLeft">
-    </div>
-</div>
-<div class="dht-divider"></div>
-
-<style>
-    /* dropdown styles*/
-    .dht-wrapper .dht-field-child-dropdown .dht-dropdown.dht-field {
-        max-width: 100%;
-    }
-</style>
-
-<!-------------------------------------------------------------------------------------->
-
-<!-- field - multiinput -->
-<div class="dht-field-wrapper">
-    <div class="dht-title">MultiText Input</div>
-    <div class="dht-field-child-wrapper dht-field-child-multiinput">
-        <label for="multi-input">Label</label>
-
-        <div class="dht-multiinput-child-wrapper">
-            <input class="dht-multi-input dht-field" id="multi-input" type="text" name="multi-input[optionid][]"
-                   title="title" value="" />
-            <a href="javascript:void(0);" class="dht-multiinput-remove">Remove</a>
-        </div>
-
-        <a href="javascript:void(0);" class="dht-button dht-btn-small dht-multiinput-add">Add More</a>
-
-        <div class="dht-description">Field description</div>
-
-        <div class="dht-multiinput-remove-text">Can't remove the only field</div>
-    </div>
-    <div class="dht-info-help dashicons dashicons-info"
-         data-tooltips="A little box to something to make it longer"
-         data-position="OnLeft">
-    </div>
-</div>
-<div class="dht-divider"></div>
-
-<style>
-    /* multiinput styles*/
-    .dht-wrapper .dht-field-child-multiinput .dht-multiinput-child-wrapper {
-        margin-bottom: 10px;
-    }
-
-    .dht-wrapper .dht-field-child-multiinput a.dht-multiinput-remove {
-        text-align: right;
-        display: block;
-        color: rgb(99, 91, 255);
-    }
-
-    .dht-wrapper .dht-field-child-multiinput .dht-multiinput-child-wrapper + .dht-button + .dht-description {
-        margin-top: 12px;
-    }
-
-    .dht-wrapper .dht-field-child-multiinput .dht-multiinput-remove-text {
-        display: none;
-    }
-
-    .dht-wrapper .dht-field-child-multiinput .dht-multi-input {
-        margin-bottom: 5px;
-    }
-</style>
-
-<script>
-    /* multiinput field */
-    jQuery(document).ready(function() {
-
-        jQuery('.dht-field-child-multiinput .dht-multiinput-add').on('click', function() {
-            let $this = jQuery(this)
-
-            let $field = $this.prev('.dht-multiinput-child-wrapper').clone()
-
-            $field.insertBefore($this)
-        })
-
-        jQuery('.dht-wrapper').on('click', '.dht-field-child-multiinput .dht-multiinput-remove', function() {
-            let $this = jQuery(this)
-
-            if ($this.parents('.dht-field-child-wrapper').children('.dht-multiinput-child-wrapper').length === 1) {
-                confirm(jQuery(this).parents('.dht-field-multiinput-child-wrapper').find('.dht-multiinput-remove-text').text())
-
-                return
-            }
-
-            $this.parent('.dht-multiinput-child-wrapper').remove()
-        })
-    })
-</script>
-
-<!-------------------------------------------------------------------------------------->
-
-<!-- field - sortable -->
-<div class="dht-field-wrapper">
-    <div class="dht-title">Sortable</div>
-    <div class="dht-field-child-wrapper dht-field-child-sortable">
-
-        <div class="dht-sortable-fields">
-
-            <div class="dht-sortable-field">
-                <label for="sortable-input">Sortable</label>
-                <input class="dht-sortable dht-field" id="sortable-input" type="text" name="sortable-input" value=""
-                       title="title" placeholder="text 1" />
-                <span class="dht-drag"><i class="dashicons dashicons-menu icon-large"></i></span>
-            </div>
-
-            <div class="dht-sortable-field">
-                <label for="sortable2-input">Sortable 2</label>
-                <input class="dht-sortable dht-field" id="sortable2-input" type="text" name="sortable2-input" value=""
-                       placeholder="text 2" title="title" />
-                <span class="dht-drag"><i class="dashicons dashicons-menu icon-large"></i></span>
-            </div>
-
-            <div class="dht-sortable-field">
-                <label for="textarea-sortable">Textarea</label>
-                <textarea class="dht-textarea dht-field" id="textarea-sortable" name="textarea" placeholder="Textarea"
-                          rows="6"></textarea>
-                <span class="dht-drag"><i class="dashicons dashicons-menu icon-large"></i></span>
-            </div>
-        </div>
-
-        <div class="dht-description">Field description</div>
-    </div>
-    <div class="dht-info-help dashicons dashicons-info"
-         data-tooltips="A little box to something to make it longer"
-         data-position="OnLeft">
-    </div>
-</div>
-<div class="dht-divider"></div>
-
-<style>
-    /* sortable styles*/
-    .dht-wrapper .dht-field-child-sortable .dht-sortable-field {
-        margin-bottom: 10px;
-    }
-
-    .dht-wrapper .dht-field-child-sortable .dht-sortable-field {
-        display: flex;
-        align-items: center;
-    }
-
-    .dht-wrapper .dht-field-child-sortable span.dht-drag {
-        margin-left: 10px;
-        cursor: pointer;
-    }
-</style>
-
-<script>
-    //sortable field
-    jQuery(document).ready(function() {
-        jQuery('.dht-wrapper .dht-field-child-sortable .dht-sortable-fields').sortable()
-    })
-</script>
 
 <?php
 
 // field - datepicker_sortable
-add_action( 'admin_enqueue_scripts', 'datepicker_sortable' );
+/*add_action( 'admin_enqueue_scripts', 'datepicker_sortable' );
 function datepicker_sortable() {
 
     wp_register_style( 'dht-jquery-ui-css', DHT_ASSETS_URI . 'styles/libraries/jquery-ui.min.css', array(), fw()->manifest->get( 'version' ) );
@@ -372,7 +20,7 @@ function timepicker() {
     wp_enqueue_style( 'dht-jquery-ui-timepicker-css' );
 
     wp_enqueue_script( 'dht-jquery-ui-timepicker', DHT_ASSETS_URI . 'scripts/libraries/jquery-ui-timepicker-addon.min.js', array( 'dht-jquery-ui' ), fw()->manifest->get( 'version' ), true );
-}
+}*/
 
 ?>
 
@@ -454,86 +102,6 @@ function alpha_picker() {
 }
 
 ?>
-
-<!-------------------------------------------------------------------------------------->
-
-<!-- field - aceeditor - type -> css / js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js" type="text/javascript" charset="utf-8"></script>
-
-<script>
-    jQuery(document).ready(function() {
-        let textarea = jQuery('#ace-editor2')
-
-        //init ace editor
-        let editor = ace.edit('dht-editor2')
-
-        //set option value to ace editor
-        editor.session.setValue(textarea.val())
-
-        editor.setTheme('ace/theme/monokai')
-        editor.session.setMode('ace/mode/javascript')
-
-        // Sync changes from Ace Editor back to textarea
-        editor.getSession().on('change', function() {
-            textarea.val(editor.session.getValue())
-        })
-    })
-</script>
-
-<div class="dht-field-wrapper">
-    <div class="dht-title">Ace Javascript editor</div>
-    <div class="dht-field-child-wrapper dht-field-child-code-editor">
-
-        <label for="ace-editor2"></label>
-        <textarea class="dht-ace-editor dht-field" id="ace-editor2" name="aceeditor2" style="display:none;"></textarea>
-        <div id="dht-editor2" style="height: 300px;"></div>
-
-        <div class="dht-description">Field description</div>
-    </div>
-    <div class="dht-info-help dashicons dashicons-info"
-         data-tooltips="A little box to something to make it longer"
-         data-position="OnLeft">
-    </div>
-</div>
-<div class="dht-divider"></div>
-
-<script>
-    jQuery(document).ready(function() {
-        let textarea = jQuery('.dht-field-child-code-editor .dht-ace-editor')
-
-        //init ace editor
-        let editor = ace.edit('dht-editor1')
-
-        //set option value to ace editor
-        editor.session.setValue(textarea.val())
-
-        editor.setTheme('ace/theme/monokai')
-        editor.session.setMode('ace/mode/css')
-
-        // Sync changes from Ace Editor back to textarea
-        editor.getSession().on('change', function() {
-            textarea.val(editor.session.getValue())
-        })
-    })
-</script>
-
-<div class="dht-field-wrapper">
-    <div class="dht-title">Ace CSS editor</div>
-    <div class="dht-field-child-wrapper dht-field-child-code-editor">
-
-        <label for="ace-editor"></label>
-        <textarea class="dht-ace-editor dht-field" id="ace-editor" name="aceeditor" style="display:none;"></textarea>
-        <div id="dht-editor1" style="height: 300px;"></div>
-
-        <div class="dht-description">Field description</div>
-    </div>
-    <div class="dht-info-help dashicons dashicons-info"
-         data-tooltips="A little box to something to make it longer"
-         data-position="OnLeft">
-    </div>
-</div>
-<div class="dht-divider"></div>
-
 <!-------------------------------------------------------------------------------------->
 
 <!-- field - datepicker -->
@@ -754,59 +322,6 @@ function timepicker() {
         top: 50%;
         margin-left: -25px;
         transform: translate(-50%, -50%);
-    }
-</style>
-
-<!-------------------------------------------------------------------------------------->
-
-<!-- field - group -->
-<div class="dht-field-wrapper">
-    <div class="dht-title">Group Fields</div>
-    <div class="dht-field-child-wrapper dht-field-child-groups">
-
-        <div class="dht-field-child-group">
-            <label for="test-input">Group Fields</label>
-            <input class="dht-input dht-field" id="test-input111" type="text" name="group[group_name][]" value=""
-                   title="title" />
-            <div class="dht-description">Field description</div>
-        </div>
-
-        <div class="dht-field-child-group">
-            <label for="test-input">Disabled</label>
-            <input class="dht-input dht-field" id="test-input111" type="text" name="group[group_name][]" value=""
-                   title="title" />
-            <div class="dht-description">Field description</div>
-        </div>
-
-        <div class="dht-field-child-group">
-            <label for="cars4">Choose cars:</label>
-            <select class="dht-dropdown dht-field" name="group[group_name][]" id="cars4" multiple size="6">
-                <optgroup label="Swedish Cars">
-                    <option value="volvo">Volvo</option>
-                    <option value="saab">Saab</option>
-                </optgroup>
-                <optgroup label="German Cars">
-                    <option value="mercedes">Mercedes</option>
-                    <option value="audi">Audi</option>
-                </optgroup>
-            </select>
-            <div class="dht-description">Field description</div>
-        </div>
-
-        <div class="dht-description">Group description</div>
-    </div>
-
-    <div class="dht-info-help dashicons dashicons-info"
-         data-tooltips="A little box to something to make it longer"
-         data-position="OnLeft">
-    </div>
-</div>
-<div class="dht-divider"></div>
-
-<style>
-    /* group options fields */
-    .dht-wrapper .dht-field-child-groups .dht-field-child-group {
-        margin-bottom: 20px;
     }
 </style>
 
@@ -1703,493 +1218,6 @@ function timepicker() {
 
 <!-------------------------------------------------------------------------------------->
 
-<!-- field - tabs -->
-<script>
-    jQuery(document).ready(function($) {
-        $('.dht-field-tabs .dht-tab-links a').click(function(e) {
-            e.preventDefault() // Prevent default anchor behavior
-
-            // Get the target tab ID from the href attribute
-            let tabId = $(this).attr('href')
-
-            // Hide all tab contents and remove 'active' class from all tabs
-            $('.dht-tab-content').removeClass('active')
-            $('.dht-tab-links li').removeClass('active')
-
-            // Show the target tab content and add 'active' class to the clicked tab
-            $(tabId).addClass('active')
-            $(this).parent().addClass('active')
-        })
-    })
-</script>
-
-<div class="dht-field-wrapper">
-    <div class="dht-title">Tabs</div>
-    <div class="dht-field-child-wrapper dht-field-child-tabs">
-
-        <div class="dht-field-tabs">
-            <ul class="dht-tab-links">
-                <li class="active"><a href="#tab1">Tab 1</a></li>
-                <li><a href="#tab2">Tab 2</a></li>
-                <li><a href="#tab3">Tab 3</a></li>
-            </ul>
-
-            <div class="dht-tab-content active" id="tab1">
-                <div class="dht-field-wrapper">
-                    <div class="dht-field-child-wrapper dht-field-child-textarea">
-                        <label for="textarea">Textarea</label>
-                        <textarea class="dht-textarea dht-field" id="textarea" name="textarea" placeholder="Textarea"
-                                  rows="6"></textarea>
-                        <div class="dht-description">Field description</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="dht-tab-content" id="tab2">
-                <div class="dht-field-wrapper">
-                    <div class="dht-field-child-wrapper dht-field-child-textarea">
-                        <label for="textarea">Textarea</label>
-                        <textarea class="dht-textarea dht-field" id="textarea" name="textarea" placeholder="Textarea"
-                                  rows="6"></textarea>
-                        <div class="dht-description">Field description</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="dht-tab-content" id="tab3">Tab 3 content</div>
-        </div>
-
-
-        <div class="dht-description">Field description</div>
-    </div>
-</div>
-
-<div class="dht-divider"></div>
-
-<style>
-    .dht-wrapper .dht-field-child-tabs .dht-tab-content {
-        display: none;
-    }
-
-    .dht-wrapper .dht-field-child-tabs .dht-tab-content.active {
-        display: block;
-    }
-
-    .dht-wrapper .dht-field-child-tabs .dht-tab-links li a {
-        display: inline-block;
-        padding: 12px 15px;
-        margin-top: 1px;
-        margin-right: 5px;
-        margin-bottom: -1px;
-        position: relative;
-        text-decoration: none;
-        color: #444;
-        font-weight: 600;
-        border: 1px solid #ccd0d4;
-        background-color: #f3f3f3;
-        -webkit-transition: all .2s;
-        transition: all .2s;
-    }
-
-    .dht-wrapper .dht-field-child-tabs .dht-tab-links li.active a {
-        background-color: #fff;
-        border-bottom-color: #fff;
-    }
-
-    .dht-wrapper .dht-field-child-tabs .dht-field-tabs .dht-tab-content {
-        border: 1px solid #ccd0d4;
-        background-color: #fff;
-        -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
-        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
-    }
-
-    .dht-wrapper .dht-field-child-tabs ul.dht-tab-links {
-        display: flex;
-        margin-bottom: 0;
-    }
-
-    .dht-wrapper .dht-field-child-tabs .dht-field-tabs .dht-tab-content {
-        padding: 20px;
-    }
-
-    .dht-wrapper .dht-field-child-tabs .dht-tab-links li {
-        margin-bottom: 0;
-    }
-
-    .dht-wrapper .dht-field-child-tabs .dht-field-wrapper {
-        display: block;
-        padding: 0;
-    }
-</style>
-
-<!-------------------------------------------------------------------------------------->
-
-<!-- field - accordion -->
-
-<script>
-
-    jQuery(document).ready(function($) {
-        //create accordion
-        $('.dht-wrapper').on('click', '.dht-field-child-accordion .dht-accordion .dht-accordion-title', function(e) {
-            e.preventDefault()
-
-            const $this = $(this)
-
-            if ($this.hasClass('dht-accordion-active')) return
-
-            const $parent = $this.parents('.dht-accordion')
-
-            if (!$this.hasClass('dht-accordion-active')) {
-                $parent.find('.dht-accordion-content').slideUp(400)
-                $parent.find('.dht-accordion-title').removeClass('dht-accordion-active')
-                $parent.find('.dht-accordion-arrow').removeClass('dht-accordion-icon-change')
-            }
-
-            $this.toggleClass('dht-accordion-active')
-            $this.next().slideToggle()
-            $('.dht-accordion-arrow', this).toggleClass('dht-accordion-icon-change')
-        })
-
-        //add new toggle in your accordion
-        $('.dht-field-child-accordion .dht-accordion-repeater .dht-add-toggle').on('click', function(e) {
-            e.preventDefault()
-
-            const $this = $(this)
-
-            let $toggle = $this.prev('.dht-accordion-item').clone()
-
-            //if toggle opened, close it
-            $toggle.children('.dht-accordion-title').removeClass('dht-accordion-active')
-            $toggle.children('.dht-accordion-title').children('.dht-accordion-arrow').removeClass('dht-accordion-icon-change')
-            $toggle.children('.dht-accordion-content').hide()
-
-            //clear inout values
-            dhtClearFormInputs($toggle)
-
-            $toggle.insertBefore($this)
-        })
-
-        //remove toggle item
-        $('.dht-wrapper').on('click', '.dht-field-child-accordion .dht-accordion-repeater .dht-btn-remove', function(e) {
-            e.preventDefault()
-
-            const $this = $(this)
-            const $main_parent = $this.parents('.dht-accordion-repeater')
-
-            if ($main_parent.children('.dht-accordion-item').length === 1) {
-                confirm($main_parent.find('.dht-toggle-remove-text').text())
-
-                return
-            }
-
-            $this.parents('.dht-accordion-item').remove()
-
-            return false
-        })
-
-        // Function to clear form inputs
-        function dhtClearFormInputs(content) {
-            content.find('input[type="text"], input[type="email"], textarea').val('')
-            content.find('input[type="checkbox"], input[type="radio"]').prop('checked', false)
-        }
-    })
-</script>
-
-<!-- field - accordion -> type - repeater -->
-
-<div class="dht-field-wrapper">
-    <div class="dht-title">Repeater</div>
-    <div class="dht-field-child-wrapper dht-field-child-accordion">
-
-        <div class="dht-accordion dht-accordion-repeater">
-            <div class="dht-accordion-item">
-                <div class="dht-accordion-title">
-                    <div class="dht-accordion-arrow">
-                        <span class="dht-accordion-arrow-item dashicons dashicons-plus-alt"></span>
-                        <span class="dht-accordion-arrow-item-close dashicons dashicons-dismiss"></span>
-                    </div>
-                    <span class="dht-accordion-title-text">Title 1</span>
-                </div>
-                <div class="dht-accordion-content">
-
-                    <div class="dht-field-wrapper">
-                        <div class="dht-title">Textarea</div>
-                        <div class="dht-field-child-wrapper dht-field-child-textarea">
-                            <label for="textarea">Textarea</label>
-                            <textarea class="dht-textarea dht-field" id="textarea" name="textarea"
-                                      placeholder="Textarea"
-                                      rows="6"></textarea>
-                            <div class="dht-description">Field description</div>
-                        </div>
-                    </div>
-
-                    <div class="dht-divider"></div>
-
-                    <div class="dht-field-wrapper">
-                        <div class="dht-title">Radio Boxes</div>
-                        <div class="dht-field-child-wrapper dht-field-child-radio">
-
-                            <div class="dht-radio-wrapper">
-                                <input class="dht-radio dht-field" type="radio" name="radio[]" id="radio-1" value="1"
-                                       checked="checked" />
-                                <label for="radio-1">Option 1</label>
-                            </div>
-
-                            <div class="dht-radio-wrapper">
-                                <input class="dht-radio dht-field" type="radio" name="radio[]" id="radio-2" value="2" />
-                                <label for="radio-2">Option 2</label>
-                            </div>
-
-                            <div class="dht-radio-wrapper">
-                                <input class="dht-radio dht-field" type="radio" name="radio[]" id="radio-3" value="3" />
-                                <label for="radio-3">Option 3</label>
-                            </div>
-
-                            <div class="dht-description">Field description</div>
-                        </div>
-
-                    </div>
-
-                    <div class="dht-remove-toggle">
-                        <div class="dht-divider"></div>
-
-                        <a href="" class="button button-primary dht-btn-remove">Remove Icon</a>
-                    </div>
-
-                </div>
-            </div>
-
-            <a href="" class="button button-primary dht-add-toggle">Add</a>
-            <div class="dht-toggle-remove-text">Can't remove the only item</div>
-        </div>
-
-        <div class="dht-description">Field description</div>
-    </div>
-    <div class="dht-info-help dashicons dashicons-info"
-         data-tooltips="A little box to something to make it longer"
-         data-position="OnLeft">
-    </div>
-</div>
-<div class="dht-divider"></div>
-
-<!-- field - accordion -->
-
-<div class="dht-field-wrapper">
-    <div class="dht-title">Accordion</div>
-    <div class="dht-field-child-wrapper dht-field-child-accordion">
-
-        <div class="dht-accordion">
-            <div class="dht-accordion-item">
-                <div class="dht-accordion-title">
-                    <div class="dht-accordion-arrow">
-                        <span class="dht-accordion-arrow-item dashicons dashicons-plus-alt"></span>
-                        <span class="dht-accordion-arrow-item-close dashicons dashicons-dismiss"></span>
-                    </div>
-                    <span class="dht-accordion-title-text">Title 1</span>
-                </div>
-                <div class="dht-accordion-content">
-
-                    <div class="dht-field-wrapper">
-                        <div class="dht-title">Textarea</div>
-                        <div class="dht-field-child-wrapper dht-field-child-textarea">
-                            <label for="textarea">Textarea</label>
-                            <textarea class="dht-textarea dht-field" id="textarea" name="textarea"
-                                      placeholder="Textarea"
-                                      rows="6"></textarea>
-                            <div class="dht-description">Field description</div>
-                        </div>
-                    </div>
-
-                    <div class="dht-divider"></div>
-
-                    <div class="dht-field-wrapper">
-                        <div class="dht-title">Radio Boxes</div>
-                        <div class="dht-field-child-wrapper dht-field-child-radio">
-
-                            <div class="dht-radio-wrapper">
-                                <input class="dht-radio dht-field" type="radio" name="radio[]" id="radio-1" value="1"
-                                       checked="checked" />
-                                <label for="radio-1">Option 1</label>
-                            </div>
-
-                            <div class="dht-radio-wrapper">
-                                <input class="dht-radio dht-field" type="radio" name="radio[]" id="radio-2" value="2" />
-                                <label for="radio-2">Option 2</label>
-                            </div>
-
-                            <div class="dht-radio-wrapper">
-                                <input class="dht-radio dht-field" type="radio" name="radio[]" id="radio-3" value="3" />
-                                <label for="radio-3">Option 3</label>
-                            </div>
-
-                            <div class="dht-description">Field description</div>
-                        </div>
-
-                    </div>
-
-                    <style>
-                        /*radio styles*/
-                        .dht-wrapper .dht-field-child-radio .dht-radio:first-child {
-                            margin-top: 0px;
-                        }
-
-                        .dht-wrapper .dht-field-child-radio .dht-radio {
-                            margin-top: 10px;
-                        }
-
-                        .dht-wrapper .dht-field-child-radio .dht-radio-wrapper .dht-radio {
-                            float: left;
-                        }
-
-                        .dht-wrapper .dht-field-child-radio .dht-radio-wrapper label {
-                            display: block;
-                        }
-
-                        .dht-wrapper .dht-field-child-radio .dht-radio-wrapper {
-                            clear: both;
-                        }
-
-                        .dht-wrapper .dht-field-child-radio .dht-radio-wrapper {
-                            margin-bottom: 10px;
-                        }
-
-                        .dht-wrapper .dht-field-child-radio .dht-radio-wrapper:last-child {
-                            margin-bottom: 0px;
-                        }
-
-                        .dht-wrapper .dht-field-child-radio .dht-radio {
-                            width: auto;
-                        }
-                    </style>
-
-                </div>
-            </div>
-            <div class="dht-accordion-item">
-                <div class="dht-accordion-title">
-                    <div class="dht-accordion-arrow">
-                        <span class="dht-accordion-arrow-item dashicons dashicons-plus-alt"></span>
-                        <span class="dht-accordion-arrow-item-close dashicons dashicons-dismiss"></span>
-                    </div>
-                    <span class="dht-accordion-title-text">Title 2</span>
-                </div>
-                <div class="dht-accordion-content">
-                    Content
-                </div>
-            </div>
-
-        </div>
-
-        <div class="dht-description">Field description</div>
-    </div>
-    <div class="dht-info-help dashicons dashicons-info"
-         data-tooltips="A little box to something to make it longer"
-         data-position="OnLeft">
-    </div>
-</div>
-<div class="dht-divider"></div>
-
-<style>
-    .dht-wrapper .dht-field-child-accordion .dht-accordion-item {
-        margin: 5px auto;
-    }
-
-    .dht-wrapper .dht-field-child-accordion .dht-accordion-item .dht-accordion-title {
-        position: relative;
-        display: block;
-        padding: 20px 60px 15px 20px;
-        margin-bottom: 2px;
-        color: #202020;
-        font-size: 20px;
-        text-decoration: none;
-        background-color: #eaeaea;
-        border-radius: 3px;
-        -webkit-transition: background-color 0.2s;
-        transition: background-color 0.2s;
-        cursor: pointer;
-        text-transform: uppercase;
-    }
-
-    .dht-wrapper .dht-field-child-accordion.dht-accordion-item .dht-accordion-title:hover {
-        background-color: #e5e4e4;
-        transition: all 0.5s ease-out;
-    }
-
-    .dht-wrapper .dht-field-child-accordion .dht-accordion-item .dht-accordion-active {
-        background-color: #e5e4e4;
-    }
-
-    .dht-wrapper .dht-field-child-accordion .dht-accordion-item .dht-accordion-title .dht-accordion-arrow {
-        position: absolute;
-        top: 13px;
-        right: 15px;
-        display: inline-block;
-        vertical-align: middle;
-        text-align: center;
-        -webkit-transition: all 0.2s ease-out;
-        transition: all 0.2s ease-out;
-    }
-
-    .dht-wrapper .dht-field-child-accordion .dht-accordion-item .dht-accordion-content {
-        padding: 30px;
-        margin-bottom: 2px;
-        font-size: 14px;
-        display: none;
-        background-color: #f3f3f3;
-    }
-
-    .dht-wrapper .dht-field-child-accordion .dht-accordion-item .dht-accordion-arrow-item,
-    .dht-wrapper .dht-field-child-accordion .dht-accordion-item .dht-accordion-arrow-item-close {
-        top: 3px;
-        position: relative;
-        font-size: 25px !important;
-    }
-
-    .dht-wrapper .dht-field-child-accordion .dht-accordion-arrow .dht-accordion-arrow-item-close,
-    .dht-wrapper .dht-field-child-accordion .dht-accordion-arrow.dht-accordion-icon-change .dht-accordion-arrow-item {
-        display: none;
-    }
-
-    .dht-wrapper .dht-field-child-accordion .dht-accordion-arrow.dht-accordion-icon-change .dht-accordion-arrow-item-close {
-        display: block;
-    }
-
-    .dht-wrapper .dht-field-child-accordion .dht-accordion .dht-field-wrapper {
-        display: block;
-        padding: 0;
-    }
-
-    .dht-wrapper .dht-field-child-accordion .dht-accordion .dht-divider {
-        margin: 20px 0;
-    }
-
-    .dht-wrapper .dht-field-child-accordion .dht-accordion .dht-field-wrapper .dht-title {
-        margin-bottom: 10px;
-    }
-
-    .dht-wrapper .dht-field-child-accordion .dht-add-toggle {
-        margin-top: 5px;
-        float: right;
-    }
-
-    .dht-wrapper .dht-field-child-accordion .dht-accordion-content:after {
-        content: "";
-        clear: both;
-        display: table;
-    }
-
-    .dht-wrapper .dht-field-child-accordion .button.button-primary.dht-btn-remove {
-        background: red;
-        border-color: red;
-        float: right;
-    }
-
-    .dht-wrapper .dht-field-child-accordion .dht-toggle-remove-text {
-        display: none;
-    }
-</style>
-
-<!-------------------------------------------------------------------------------------->
-
 <!-- field - icons-->
 <script>
     jQuery(document).ready(function($) {
@@ -2701,3 +1729,562 @@ $font_style = empty( $font_style ) ? $standard_font_style : $font_style;
         margin-bottom: 20px;
     }
 </style>
+
+
+
+
+
+<!-------------------------------------------------------------------------------------->
+<!-------------------------------------------------------------------------------------->
+<!-------------------------------------------------------------------------------------->
+<!-------------------------------------------------------------------------------------->
+<!-------------------------------------------------------------------------------------->
+<!-------------------------------------------------------------------------------------->
+<!-------------------------------------------------------------------------------------->
+
+
+
+<!-- field - group -->
+<div class="dht-field-wrapper">
+    <div class="dht-title">Group Fields</div>
+    <div class="dht-field-child-wrapper dht-field-child-groups">
+        
+        <div class="dht-field-child-group">
+            <label for="test-input">Group Fields</label>
+            <input class="dht-input dht-field" id="test-input111" type="text" name="group[group_name][]" value=""
+                   title="title" />
+            <div class="dht-description">Field description</div>
+        </div>
+        
+        <div class="dht-field-child-group">
+            <label for="test-input">Disabled</label>
+            <input class="dht-input dht-field" id="test-input111" type="text" name="group[group_name][]" value=""
+                   title="title" />
+            <div class="dht-description">Field description</div>
+        </div>
+        
+        <div class="dht-field-child-group">
+            <label for="cars4">Choose cars:</label>
+            <select class="dht-dropdown dht-field" name="group[group_name][]" id="cars4" multiple size="6">
+                <optgroup label="Swedish Cars">
+                    <option value="volvo">Volvo</option>
+                    <option value="saab">Saab</option>
+                </optgroup>
+                <optgroup label="German Cars">
+                    <option value="mercedes">Mercedes</option>
+                    <option value="audi">Audi</option>
+                </optgroup>
+            </select>
+            <div class="dht-description">Field description</div>
+        </div>
+        
+        <div class="dht-description">Group description</div>
+    </div>
+    
+    <div class="dht-info-help dashicons dashicons-info"
+         data-tooltips="A little box to something to make it longer"
+         data-position="OnLeft">
+    </div>
+</div>
+<div class="dht-divider"></div>
+
+<style>
+    /* group options fields */
+    .dht-wrapper .dht-field-child-groups .dht-field-child-group {
+        margin-bottom: 20px;
+    }
+</style>
+
+<!-------------------------------------------------------------------------------------->
+
+<!-- field - tabs -->
+<script>
+    jQuery(document).ready(function($) {
+        $('.dht-field-tabs .dht-tab-links a').click(function(e) {
+            e.preventDefault() // Prevent default anchor behavior
+            
+            // Get the target tab ID from the href attribute
+            let tabId = $(this).attr('href')
+            
+            // Hide all tab contents and remove 'active' class from all tabs
+            $('.dht-tab-content').removeClass('active')
+            $('.dht-tab-links li').removeClass('active')
+            
+            // Show the target tab content and add 'active' class to the clicked tab
+            $(tabId).addClass('active')
+            $(this).parent().addClass('active')
+        })
+    })
+</script>
+
+<div class="dht-field-wrapper">
+    <div class="dht-title">Tabs</div>
+    <div class="dht-field-child-wrapper dht-field-child-tabs">
+        
+        <div class="dht-field-tabs">
+            <ul class="dht-tab-links">
+                <li class="active"><a href="#tab1">Tab 1</a></li>
+                <li><a href="#tab2">Tab 2</a></li>
+                <li><a href="#tab3">Tab 3</a></li>
+            </ul>
+            
+            <div class="dht-tab-content active" id="tab1">
+                <div class="dht-field-wrapper">
+                    <div class="dht-field-child-wrapper dht-field-child-textarea">
+                        <label for="textarea">Textarea</label>
+                        <textarea class="dht-textarea dht-field" id="textarea" name="textarea" placeholder="Textarea"
+                                  rows="6"></textarea>
+                        <div class="dht-description">Field description</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dht-tab-content" id="tab2">
+                <div class="dht-field-wrapper">
+                    <div class="dht-field-child-wrapper dht-field-child-textarea">
+                        <label for="textarea">Textarea</label>
+                        <textarea class="dht-textarea dht-field" id="textarea" name="textarea" placeholder="Textarea"
+                                  rows="6"></textarea>
+                        <div class="dht-description">Field description</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dht-tab-content" id="tab3">Tab 3 content</div>
+        </div>
+        
+        
+        <div class="dht-description">Field description</div>
+    </div>
+</div>
+
+<div class="dht-divider"></div>
+
+<style>
+    .dht-wrapper .dht-field-child-tabs .dht-tab-content {
+        display: none;
+    }
+    
+    .dht-wrapper .dht-field-child-tabs .dht-tab-content.active {
+        display: block;
+    }
+    
+    .dht-wrapper .dht-field-child-tabs .dht-tab-links li a {
+        display: inline-block;
+        padding: 12px 15px;
+        margin-top: 1px;
+        margin-right: 5px;
+        margin-bottom: -1px;
+        position: relative;
+        text-decoration: none;
+        color: #444;
+        font-weight: 600;
+        border: 1px solid #ccd0d4;
+        background-color: #f3f3f3;
+        -webkit-transition: all .2s;
+        transition: all .2s;
+    }
+    
+    .dht-wrapper .dht-field-child-tabs .dht-tab-links li.active a {
+        background-color: #fff;
+        border-bottom-color: #fff;
+    }
+    
+    .dht-wrapper .dht-field-child-tabs .dht-field-tabs .dht-tab-content {
+        border: 1px solid #ccd0d4;
+        background-color: #fff;
+        -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+    }
+    
+    .dht-wrapper .dht-field-child-tabs ul.dht-tab-links {
+        display: flex;
+        margin-bottom: 0;
+    }
+    
+    .dht-wrapper .dht-field-child-tabs .dht-field-tabs .dht-tab-content {
+        padding: 20px;
+    }
+    
+    .dht-wrapper .dht-field-child-tabs .dht-tab-links li {
+        margin-bottom: 0;
+    }
+    
+    .dht-wrapper .dht-field-child-tabs .dht-field-wrapper {
+        display: block;
+        padding: 0;
+    }
+</style>
+
+<!-------------------------------------------------------------------------------------->
+
+<!-- field - accordion -->
+
+<script>
+    
+    jQuery(document).ready(function($) {
+        //create accordion
+        $('.dht-wrapper').on('click', '.dht-field-child-accordion .dht-accordion .dht-accordion-title', function(e) {
+            e.preventDefault()
+            
+            const $this = $(this)
+            
+            if ($this.hasClass('dht-accordion-active')) return
+            
+            const $parent = $this.parents('.dht-accordion')
+            
+            if (!$this.hasClass('dht-accordion-active')) {
+                $parent.find('.dht-accordion-content').slideUp(400)
+                $parent.find('.dht-accordion-title').removeClass('dht-accordion-active')
+                $parent.find('.dht-accordion-arrow').removeClass('dht-accordion-icon-change')
+            }
+            
+            $this.toggleClass('dht-accordion-active')
+            $this.next().slideToggle()
+            $('.dht-accordion-arrow', this).toggleClass('dht-accordion-icon-change')
+        })
+        
+        //add new toggle in your accordion
+        $('.dht-field-child-accordion .dht-accordion-repeater .dht-add-toggle').on('click', function(e) {
+            e.preventDefault()
+            
+            const $this = $(this)
+            
+            let $toggle = $this.prev('.dht-accordion-item').clone()
+            
+            //if toggle opened, close it
+            $toggle.children('.dht-accordion-title').removeClass('dht-accordion-active')
+            $toggle.children('.dht-accordion-title').children('.dht-accordion-arrow').removeClass('dht-accordion-icon-change')
+            $toggle.children('.dht-accordion-content').hide()
+            
+            //clear inout values
+            dhtClearFormInputs($toggle)
+            
+            $toggle.insertBefore($this)
+        })
+        
+        //remove toggle item
+        $('.dht-wrapper').on('click', '.dht-field-child-accordion .dht-accordion-repeater .dht-btn-remove', function(e) {
+            e.preventDefault()
+            
+            const $this = $(this)
+            const $main_parent = $this.parents('.dht-accordion-repeater')
+            
+            if ($main_parent.children('.dht-accordion-item').length === 1) {
+                confirm($main_parent.find('.dht-toggle-remove-text').text())
+                
+                return
+            }
+            
+            $this.parents('.dht-accordion-item').remove()
+            
+            return false
+        })
+        
+        // Function to clear form inputs
+        function dhtClearFormInputs(content) {
+            content.find('input[type="text"], input[type="email"], textarea').val('')
+            content.find('input[type="checkbox"], input[type="radio"]').prop('checked', false)
+        }
+    })
+</script>
+
+<!-- field - accordion -> type - repeater -->
+
+<div class="dht-field-wrapper">
+    <div class="dht-title">Repeater</div>
+    <div class="dht-field-child-wrapper dht-field-child-accordion">
+        
+        <div class="dht-accordion dht-accordion-repeater">
+            <div class="dht-accordion-item">
+                <div class="dht-accordion-title">
+                    <div class="dht-accordion-arrow">
+                        <span class="dht-accordion-arrow-item dashicons dashicons-plus-alt"></span>
+                        <span class="dht-accordion-arrow-item-close dashicons dashicons-dismiss"></span>
+                    </div>
+                    <span class="dht-accordion-title-text">Title 1</span>
+                </div>
+                <div class="dht-accordion-content">
+                    
+                    <div class="dht-field-wrapper">
+                        <div class="dht-title">Textarea</div>
+                        <div class="dht-field-child-wrapper dht-field-child-textarea">
+                            <label for="textarea">Textarea</label>
+                            <textarea class="dht-textarea dht-field" id="textarea" name="textarea"
+                                      placeholder="Textarea"
+                                      rows="6"></textarea>
+                            <div class="dht-description">Field description</div>
+                        </div>
+                    </div>
+                    
+                    <div class="dht-divider"></div>
+                    
+                    <div class="dht-field-wrapper">
+                        <div class="dht-title">Radio Boxes</div>
+                        <div class="dht-field-child-wrapper dht-field-child-radio">
+                            
+                            <div class="dht-radio-wrapper">
+                                <input class="dht-radio dht-field" type="radio" name="radio[]" id="radio-1" value="1"
+                                       checked="checked" />
+                                <label for="radio-1">Option 1</label>
+                            </div>
+                            
+                            <div class="dht-radio-wrapper">
+                                <input class="dht-radio dht-field" type="radio" name="radio[]" id="radio-2" value="2" />
+                                <label for="radio-2">Option 2</label>
+                            </div>
+                            
+                            <div class="dht-radio-wrapper">
+                                <input class="dht-radio dht-field" type="radio" name="radio[]" id="radio-3" value="3" />
+                                <label for="radio-3">Option 3</label>
+                            </div>
+                            
+                            <div class="dht-description">Field description</div>
+                        </div>
+                    
+                    </div>
+                    
+                    <div class="dht-remove-toggle">
+                        <div class="dht-divider"></div>
+                        
+                        <a href="" class="button button-primary dht-btn-remove">Remove Icon</a>
+                    </div>
+                
+                </div>
+            </div>
+            
+            <a href="" class="button button-primary dht-add-toggle">Add</a>
+            <div class="dht-toggle-remove-text">Can't remove the only item</div>
+        </div>
+        
+        <div class="dht-description">Field description</div>
+    </div>
+    <div class="dht-info-help dashicons dashicons-info"
+         data-tooltips="A little box to something to make it longer"
+         data-position="OnLeft">
+    </div>
+</div>
+<div class="dht-divider"></div>
+
+<!-- field - accordion -->
+
+<div class="dht-field-wrapper">
+    <div class="dht-title">Accordion</div>
+    <div class="dht-field-child-wrapper dht-field-child-accordion">
+        
+        <div class="dht-accordion">
+            <div class="dht-accordion-item">
+                <div class="dht-accordion-title">
+                    <div class="dht-accordion-arrow">
+                        <span class="dht-accordion-arrow-item dashicons dashicons-plus-alt"></span>
+                        <span class="dht-accordion-arrow-item-close dashicons dashicons-dismiss"></span>
+                    </div>
+                    <span class="dht-accordion-title-text">Title 1</span>
+                </div>
+                <div class="dht-accordion-content">
+                    
+                    <div class="dht-field-wrapper">
+                        <div class="dht-title">Textarea</div>
+                        <div class="dht-field-child-wrapper dht-field-child-textarea">
+                            <label for="textarea">Textarea</label>
+                            <textarea class="dht-textarea dht-field" id="textarea" name="textarea"
+                                      placeholder="Textarea"
+                                      rows="6"></textarea>
+                            <div class="dht-description">Field description</div>
+                        </div>
+                    </div>
+                    
+                    <div class="dht-divider"></div>
+                    
+                    <div class="dht-field-wrapper">
+                        <div class="dht-title">Radio Boxes</div>
+                        <div class="dht-field-child-wrapper dht-field-child-radio">
+                            
+                            <div class="dht-radio-wrapper">
+                                <input class="dht-radio dht-field" type="radio" name="radio[]" id="radio-1" value="1"
+                                       checked="checked" />
+                                <label for="radio-1">Option 1</label>
+                            </div>
+                            
+                            <div class="dht-radio-wrapper">
+                                <input class="dht-radio dht-field" type="radio" name="radio[]" id="radio-2" value="2" />
+                                <label for="radio-2">Option 2</label>
+                            </div>
+                            
+                            <div class="dht-radio-wrapper">
+                                <input class="dht-radio dht-field" type="radio" name="radio[]" id="radio-3" value="3" />
+                                <label for="radio-3">Option 3</label>
+                            </div>
+                            
+                            <div class="dht-description">Field description</div>
+                        </div>
+                    
+                    </div>
+                    
+                    <style>
+                        /*radio styles*/
+                        .dht-wrapper .dht-field-child-radio .dht-radio:first-child {
+                            margin-top: 0px;
+                        }
+                        
+                        .dht-wrapper .dht-field-child-radio .dht-radio {
+                            margin-top: 10px;
+                        }
+                        
+                        .dht-wrapper .dht-field-child-radio .dht-radio-wrapper .dht-radio {
+                            float: left;
+                        }
+                        
+                        .dht-wrapper .dht-field-child-radio .dht-radio-wrapper label {
+                            display: block;
+                        }
+                        
+                        .dht-wrapper .dht-field-child-radio .dht-radio-wrapper {
+                            clear: both;
+                        }
+                        
+                        .dht-wrapper .dht-field-child-radio .dht-radio-wrapper {
+                            margin-bottom: 10px;
+                        }
+                        
+                        .dht-wrapper .dht-field-child-radio .dht-radio-wrapper:last-child {
+                            margin-bottom: 0px;
+                        }
+                        
+                        .dht-wrapper .dht-field-child-radio .dht-radio {
+                            width: auto;
+                        }
+                    </style>
+                
+                </div>
+            </div>
+            <div class="dht-accordion-item">
+                <div class="dht-accordion-title">
+                    <div class="dht-accordion-arrow">
+                        <span class="dht-accordion-arrow-item dashicons dashicons-plus-alt"></span>
+                        <span class="dht-accordion-arrow-item-close dashicons dashicons-dismiss"></span>
+                    </div>
+                    <span class="dht-accordion-title-text">Title 2</span>
+                </div>
+                <div class="dht-accordion-content">
+                    Content
+                </div>
+            </div>
+        
+        </div>
+        
+        <div class="dht-description">Field description</div>
+    </div>
+    <div class="dht-info-help dashicons dashicons-info"
+         data-tooltips="A little box to something to make it longer"
+         data-position="OnLeft">
+    </div>
+</div>
+<div class="dht-divider"></div>
+
+<style>
+    .dht-wrapper .dht-field-child-accordion .dht-accordion-item {
+        margin: 5px auto;
+    }
+    
+    .dht-wrapper .dht-field-child-accordion .dht-accordion-item .dht-accordion-title {
+        position: relative;
+        display: block;
+        padding: 20px 60px 15px 20px;
+        margin-bottom: 2px;
+        color: #202020;
+        font-size: 20px;
+        text-decoration: none;
+        background-color: #eaeaea;
+        border-radius: 3px;
+        -webkit-transition: background-color 0.2s;
+        transition: background-color 0.2s;
+        cursor: pointer;
+        text-transform: uppercase;
+    }
+    
+    .dht-wrapper .dht-field-child-accordion.dht-accordion-item .dht-accordion-title:hover {
+        background-color: #e5e4e4;
+        transition: all 0.5s ease-out;
+    }
+    
+    .dht-wrapper .dht-field-child-accordion .dht-accordion-item .dht-accordion-active {
+        background-color: #e5e4e4;
+    }
+    
+    .dht-wrapper .dht-field-child-accordion .dht-accordion-item .dht-accordion-title .dht-accordion-arrow {
+        position: absolute;
+        top: 13px;
+        right: 15px;
+        display: inline-block;
+        vertical-align: middle;
+        text-align: center;
+        -webkit-transition: all 0.2s ease-out;
+        transition: all 0.2s ease-out;
+    }
+    
+    .dht-wrapper .dht-field-child-accordion .dht-accordion-item .dht-accordion-content {
+        padding: 30px;
+        margin-bottom: 2px;
+        font-size: 14px;
+        display: none;
+        background-color: #f3f3f3;
+    }
+    
+    .dht-wrapper .dht-field-child-accordion .dht-accordion-item .dht-accordion-arrow-item,
+    .dht-wrapper .dht-field-child-accordion .dht-accordion-item .dht-accordion-arrow-item-close {
+        top: 3px;
+        position: relative;
+        font-size: 25px !important;
+    }
+    
+    .dht-wrapper .dht-field-child-accordion .dht-accordion-arrow .dht-accordion-arrow-item-close,
+    .dht-wrapper .dht-field-child-accordion .dht-accordion-arrow.dht-accordion-icon-change .dht-accordion-arrow-item {
+        display: none;
+    }
+    
+    .dht-wrapper .dht-field-child-accordion .dht-accordion-arrow.dht-accordion-icon-change .dht-accordion-arrow-item-close {
+        display: block;
+    }
+    
+    .dht-wrapper .dht-field-child-accordion .dht-accordion .dht-field-wrapper {
+        display: block;
+        padding: 0;
+    }
+    
+    .dht-wrapper .dht-field-child-accordion .dht-accordion .dht-divider {
+        margin: 20px 0;
+    }
+    
+    .dht-wrapper .dht-field-child-accordion .dht-accordion .dht-field-wrapper .dht-title {
+        margin-bottom: 10px;
+    }
+    
+    .dht-wrapper .dht-field-child-accordion .dht-add-toggle {
+        margin-top: 5px;
+        float: right;
+    }
+    
+    .dht-wrapper .dht-field-child-accordion .dht-accordion-content:after {
+        content: "";
+        clear: both;
+        display: table;
+    }
+    
+    .dht-wrapper .dht-field-child-accordion .button.button-primary.dht-btn-remove {
+        background: red;
+        border-color: red;
+        float: right;
+    }
+    
+    .dht-wrapper .dht-field-child-accordion .dht-toggle-remove-text {
+        display: none;
+    }
+</style>
+
+
+<!-------------------------------------------------------------------------------------->
+
+<!----conditional option type----------------->
+
+<!----addable popup option type----------------->

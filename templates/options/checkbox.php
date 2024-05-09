@@ -1,8 +1,11 @@
 <?php
+if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 use function DHT\Helpers\dht_parse_option_attributes;
 
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
+
+$args = $args ?? [];
 ?>
 
 <style>
@@ -44,6 +47,7 @@ if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
         <?php if ( !empty( $args[ 'description' ] ) ): ?>
             <div class="dht-description"><?php echo esc_html( $args[ 'description' ] ); ?></div>
         <?php endif; ?>
+        
     </div>
 
     <?php if ( !empty( $args[ 'tooltip' ] ) ): ?>

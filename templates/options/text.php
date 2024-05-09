@@ -2,6 +2,8 @@
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 use function DHT\Helpers\dht_parse_option_attributes;
+
+$args = $args ?? [];
 ?>
 <!-- field - simple text -->
 <div class="dht-field-wrapper">
@@ -13,6 +15,7 @@ use function DHT\Helpers\dht_parse_option_attributes;
         <div class="dht-text-value <?php echo isset( $args[ 'attr' ][ 'class' ] ) ? esc_attr( $args[ 'attr' ][ 'class' ] ) : ''; ?>"
             <?php echo dht_parse_option_attributes( $args[ 'attr' ] ); ?>
         >
+            
             <?php echo esc_attr( $args[ 'value' ] ); ?>
             
         </div>

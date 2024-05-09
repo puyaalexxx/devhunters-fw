@@ -27,27 +27,32 @@ function alpha_picker() {
 }
 
 
+//remove sortable from the jquery ui as it comes from wordpress already
+
 // field - datepicker_sortable
-add_action( 'admin_enqueue_scripts', 'datepicker_sortable' );
+
+/*add_action( 'admin_enqueue_scripts', 'datepicker_sortable' );
 function datepicker_sortable() {
     
     wp_register_style( 'dht-jquery-ui-css', DHT_ASSETS_URI . 'styles/libraries/jquery-ui.min.css', array(), fw()->manifest->get('version') );
     wp_enqueue_style( 'dht-jquery-ui-css' );
     
     wp_enqueue_script( 'dht-jquery-ui', DHT_ASSETS_URI . 'scripts/libraries/jquery-ui.min.js', array(), fw()->manifest->get('version'), true );
-}
+}*/
 
 // field - timepicker_sortable
-add_action( 'admin_enqueue_scripts', 'timepicker' );
+
+/*add_action( 'admin_enqueue_scripts', 'timepicker' );
 function timepicker() {
     
     wp_register_style( 'dht-jquery-ui-timepicker-css', DHT_ASSETS_URI . 'styles/libraries/jquery-ui-timepicker-addon.min.css', array(), fw()->manifest->get('version') );
     wp_enqueue_style( 'dht-jquery-ui-timepicker-css' );
     
     wp_enqueue_script( 'dht-jquery-ui-timepicker', DHT_ASSETS_URI . 'scripts/libraries/jquery-ui-timepicker-addon.min.js', array( 'dht-jquery-ui' ), fw()->manifest->get('version'), true );
-}
+}*/
 
 // field - multioptions
+/*
 add_action( 'admin_enqueue_scripts', 'multioptions' );
 function multioptions() {
     
@@ -58,7 +63,7 @@ function multioptions() {
     
     //wp_localize_script( 'dht-select2-ajax', 'dht_select2_ajax', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
     
-}
+}*/
 
 function multioptions_ajax_values(){
     

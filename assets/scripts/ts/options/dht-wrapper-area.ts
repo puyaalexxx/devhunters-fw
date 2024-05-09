@@ -1,5 +1,6 @@
 // @ts-ignore
 import jQuery from 'jquery'
+
 ;(function ($: JQueryStatic): void {
     'use strict'
 

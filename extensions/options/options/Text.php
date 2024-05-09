@@ -3,6 +3,8 @@ declare( strict_types = 1 );
 
 namespace DHT\Extensions\Options\Options;
 
+use function DHT\Helpers\dht_print_r;
+
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 final class Text extends BaseOption {
@@ -17,7 +19,6 @@ final class Text extends BaseOption {
         
         parent::__construct();
     }
-    
     
     /**
      * Enqueue input scripts and styles

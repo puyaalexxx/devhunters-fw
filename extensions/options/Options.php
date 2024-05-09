@@ -5,15 +5,26 @@ namespace DHT\Extensions\Options;
 
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
-use DHT\Extensions\Options\Options\{Checkbox, Input, Radio, Text, Textarea, WpEditor};
-use DHT\Extensions\Options\Options\BaseOption;
+use DHT\Extensions\Options\Options\{AceEditor,
+    BaseOption,
+    Checkbox,
+    Dropdown,
+    DropdownMultiple,
+    Input,
+    MultiInput,
+    Radio,
+    SwitchField,
+    Text,
+    Textarea,
+    WpEditor};
 use DHT\Helpers\Exceptions\ConfigExceptions\EmptyOptionsConfigurationsException;
 use function DHT\fw;
-use function DHT\Helpers\{dht_get_db_settings_option, dht_load_view, dht_print_r, dht_set_db_settings_option};
+use function DHT\Helpers\{dht_get_db_settings_option, dht_load_view, dht_set_db_settings_option};
 
 //TODO: at the end to add CSS styles in post css folder as sass
 //TODO: at the end to add js as typescript code
 //TODO: for performance reason to merge CSS and Js code somehow for options used in one file
+//TODO: display option css and js only on pages where they are used and not across entire admin area
 final class Options implements IOptions {
     
     //passed options
@@ -155,6 +166,8 @@ final class Options implements IOptions {
                     }
                 }
                 
+                \DHT\Helpers\dht_print_r( $post_values );
+                
                 dht_set_db_settings_option( $settings_id, $post_values );
             }
         }
@@ -191,6 +204,11 @@ final class Options implements IOptions {
         $this->_options[ Radio::init()->getField() ] = Radio::init();
         $this->_options[ Text::init()->getField() ] = Text::init();
         $this->_options[ WpEditor::init()->getField() ] = WpEditor::init();
+        $this->_options[ SwitchField::init()->getField() ] = SwitchField::init();
+        $this->_options[ Dropdown::init()->getField() ] = Dropdown::init();
+        $this->_options[ DropdownMultiple::init()->getField() ] = DropdownMultiple::init();
+        $this->_options[ MultiInput::init()->getField() ] = MultiInput::init();
+        $this->_options[ AceEditor::init()->getField() ] = AceEditor::init();
     }
     
     /**

@@ -98,8 +98,6 @@ abstract class BaseOption {
      */
     public function mergeValues( array $option, mixed $saved_value ) : array {
         
-        if($saved_value == 'no') return $option;
-        
         $option[ 'value' ] = empty( $saved_value ) ? $option[ 'value' ] : $saved_value;
         
         return $option;

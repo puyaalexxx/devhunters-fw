@@ -5,25 +5,47 @@ const RemoveEmptyScriptsPlugin = require('webpack-remove-empty-scripts')
 ////////////////////////files
 //ts files
 const dht_wrapper_area_script = 'dht-wrapper-area-script'
+const switch_script = 'switch-script'
+const multiinput_script = 'multiinput-script'
+const ace_editor_script = 'ace-editor-script'
+
 const create_sidebars_script = 'create-sidebars-script'
 
 //css files
 const dht_wrapper_area_style = 'dht-wrapper-area-style'
 const checkbox_style = 'checkbox-style'
 const radio_style = 'radio-style'
+const switch_style = 'switch-style'
+const multiinput_style = 'multiinput-style'
+
 const create_sidebars_style = 'create-sidebars-style'
 
 module.exports = {
     mode: 'development', // or 'production'
     entry: {
         // TypeScript files entries
-        [create_sidebars_script]:
-            './assets/scripts/ts/' +
-            create_sidebars_script.replace('-script', '') +
-            '.ts',
+        //options scripts
         [dht_wrapper_area_script]:
             './assets/scripts/ts/options/' +
             dht_wrapper_area_script.replace('-script', '') +
+            '.ts',
+        [switch_script]:
+            './assets/scripts/ts/options/' +
+            switch_script.replace('-script', '') +
+            '.ts',
+        [multiinput_script]:
+            './assets/scripts/ts/options/' +
+            multiinput_script.replace('-script', '') +
+            '.ts',
+        [ace_editor_script]:
+            './assets/scripts/ts/options/' +
+            ace_editor_script.replace('-script', '') +
+            '.ts',
+
+        //other scripts
+        [create_sidebars_script]:
+            './assets/scripts/ts/' +
+            create_sidebars_script.replace('-script', '') +
             '.ts',
 
         //CSS entries
@@ -32,6 +54,8 @@ module.exports = {
             './assets/styles/postcss/create-sidebars.pcss',
             './assets/styles/postcss/options/checkbox.pcss',
         ],*/
+
+        //options styles
         [dht_wrapper_area_style]:
             './assets/styles/postcss/options/' +
             dht_wrapper_area_style.replace('-style', '') +
@@ -44,7 +68,16 @@ module.exports = {
             './assets/styles/postcss/options/' +
             radio_style.replace('-style', '') +
             '.pcss', // radio CSS entry point
+        [switch_style]:
+            './assets/styles/postcss/options/' +
+            switch_style.replace('-style', '') +
+            '.pcss', // switch CSS entry point
+        [multiinput_style]:
+            './assets/styles/postcss/options/' +
+            multiinput_style.replace('-style', '') +
+            '.pcss', // multiinput CSS entry point
 
+        //other styles
         [create_sidebars_style]:
             './assets/styles/postcss/' +
             create_sidebars_style.replace('-style', '') +
@@ -59,6 +92,16 @@ module.exports = {
             if (chunkData.chunk.name === dht_wrapper_area_script) {
                 return 'scripts/js/options/' + dht_wrapper_area_script + '.js'
             }
+            if (chunkData.chunk.name === switch_script) {
+                return 'scripts/js/options/' + switch_script + '.js'
+            }
+            if (chunkData.chunk.name === multiinput_script) {
+                return 'scripts/js/options/' + multiinput_script + '.js'
+            }
+            if (chunkData.chunk.name === ace_editor_script) {
+                return 'scripts/js/options/' + ace_editor_script + '.js'
+            }
+
             // output to the js folder
             return 'scripts/js/[name].js'
         },
@@ -77,7 +120,7 @@ module.exports = {
                         ],
                     },
                     {
-                        test: /\.tsx?$/, // Match TypeScript files
+                        test: /\.ts?$/, // Match TypeScript files
                         use: 'ts-loader', // Use ts-loader for compilation
                         exclude: /node_modules/, // Exclude node_modules directory
                     },
@@ -87,7 +130,13 @@ module.exports = {
     },
     resolve: {
         extensions: ['.ts', '.tsx', '.js', '.css', '.pcss'], // Resolve TypeScript and JavaScript extensions,
-        modules: [path.resolve(__dirname, 'node_modules')],
+        modules: [
+            path.resolve(__dirname, 'node_modules'),
+            path.resolve(__dirname, 'node_modules/ace-builds'),
+        ],
+        alias: {
+            'ace-builds': path.resolve(__dirname, 'node_modules/ace-builds'),
+        },
     },
     plugins: [
         // MiniCssExtractPlugin instance for 'options-checkbox' entry
@@ -106,6 +155,14 @@ module.exports = {
                 //radio option file
                 if (chunkData.chunk.name === radio_style) {
                     return 'styles/css/options/' + radio_style + '.css'
+                }
+                //radio option file
+                if (chunkData.chunk.name === switch_style) {
+                    return 'styles/css/options/' + switch_style + '.css'
+                }
+                //multiinput option file
+                if (chunkData.chunk.name === multiinput_style) {
+                    return 'styles/css/options/' + multiinput_style + '.css'
                 }
 
                 // For other entry points, output to root 'css' folder

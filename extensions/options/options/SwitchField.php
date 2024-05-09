@@ -4,7 +4,6 @@ declare( strict_types = 1 );
 namespace DHT\Extensions\Options\Options;
 
 use function DHT\fw;
-use function DHT\Helpers\dht_print_r;
 
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
@@ -14,22 +13,25 @@ final class SwitchField extends BaseOption {
     protected string $_field = 'switch';
     
     /**
+     * @param array $option - option array
+     *
      * @since     1.0.0
      */
-    protected function __construct() {
+    protected function __construct( array $option ) {
         
-        parent::__construct();
+        parent::__construct( $option );
     }
     
     /**
      * Enqueue input scripts and styles
      *
      * @param string $hook
+     * @param array  $option
      *
      * @return void
      * @since     1.0.0
      */
-    public function enqueueOptionScripts( string $hook ) : void {
+    public function enqueueOptionScripts( string $hook, array $option ) : void {
         
         wp_enqueue_script( 'dht-switch-option', DHT_ASSETS_URI . 'scripts/js/options/switch-script.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
         
@@ -38,4 +40,5 @@ final class SwitchField extends BaseOption {
         // Enqueue the style
         wp_enqueue_style( 'dht-switch-option' );
     }
+    
 }

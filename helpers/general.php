@@ -1,9 +1,9 @@
 <?php
-declare(strict_types=1);
+declare( strict_types = 1 );
 
 namespace DHT\Helpers;
 
-if (!defined('DHT_MAIN')) die('Forbidden');
+if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 use DHT\Helpers\Classes\Dumper;
 
@@ -12,14 +12,15 @@ use DHT\Helpers\Classes\Dumper;
  * print_r alternative with styling
  *
  * @param mixed $value the value to be printed
+ *
  * @return void
  * @since     1.0.0
  */
-function dht_print_r(mixed $value): void
-{
+function dht_print_r( mixed $value ) : void {
+    
     static $first_time = true;
     
-    if ($first_time) {
+    if ( $first_time ) {
         ob_start();
         echo '<style type="text/css">
 		div.dht_print_r {
@@ -60,19 +61,19 @@ function dht_print_r(mixed $value): void
 			border-width: 0;
 		}
 		</style>';
-        echo str_replace(array('  ', "\n"), '', ob_get_clean());
+        echo str_replace( array( '  ', "\n" ), '', ob_get_clean() );
         
         $first_time = false;
     }
     
-    if (func_num_args() == 1) {
+    if ( func_num_args() == 1 ) {
         echo '<div class="dht_print_r"><pre>';
-        echo htmlspecialchars(Dumper::dump($value), ENT_QUOTES, 'UTF-8');
+        echo htmlspecialchars( Dumper::dump( $value ), ENT_QUOTES, 'UTF-8' );
         echo '</pre></div>';
     } else {
         echo '<div class="dht_print_r_group">';
-        foreach (func_get_args() as $param) {
-            fw_print($param);
+        foreach ( func_get_args() as $param ) {
+            fw_print( $param );
         }
         echo '</div>';
     }
@@ -83,22 +84,23 @@ function dht_print_r(mixed $value): void
  * Convert to Unix style directory separators
  *
  * @param string $path - dir path
+ *
  * @return string
  * @since     1.0.0
  */
-function dht_fix_path(string $path): string
-{
-    $windows_network_path = isset($_SERVER['windir']) && in_array(substr($path, 0, 2),
-            array('//', '\\\\'),
-            true);
-    $fixed_path = untrailingslashit(str_replace(array('//', '\\'), array('/', '/'), $path));
+function dht_fix_path( string $path ) : string {
     
-    if (empty($fixed_path) && !empty($path)) {
+    $windows_network_path = isset( $_SERVER[ 'windir' ] ) && in_array( substr( $path, 0, 2 ),
+            array( '//', '\\\\' ),
+            true );
+    $fixed_path = untrailingslashit( str_replace( array( '//', '\\' ), array( '/', '/' ), $path ) );
+    
+    if ( empty( $fixed_path ) && !empty( $path ) ) {
         $fixed_path = '/';
     }
     
-    if ($windows_network_path) {
-        $fixed_path = '//' . ltrim($fixed_path, '/');
+    if ( $windows_network_path ) {
+        $fixed_path = '//' . ltrim( $fixed_path, '/' );
     }
     
     return $fixed_path;
@@ -109,19 +111,20 @@ function dht_fix_path(string $path): string
  *
  * load file with arguments and display it or return its content
  *
- * @param string $path - dir path]
- * @param string $file - file name
- * @param array $args - arguments to be passed into the view
- * @param bool $return - return the file content or display it
+ * @param string $path   - dir path]
+ * @param string $file   - file name
+ * @param array  $args   - arguments to be passed into the view
+ * @param bool   $return - return the file content or display it
+ *
  * @return string
  * @since     1.0.0
  */
-function dht_load_view(string $path, string $file, array $args = [], bool $return = true): string
-{
+function dht_load_view( string $path, string $file, array $args = [], bool $return = true ) : string {
+    
     $file_path = $path . $file;
     
-    if (!is_file($file_path) && !file_exists($file_path)) {
-        require_once(DHT_TEMPLATES_DIR . "template.php");
+    if ( !is_file( $file_path ) && !file_exists( $file_path ) ) {
+        require_once( DHT_TEMPLATES_DIR . "template.php" );
         
         return '';
     }
@@ -129,7 +132,7 @@ function dht_load_view(string $path, string $file, array $args = [], bool $retur
     //extract( $args, EXTR_REFS );
     //unset( $args );
     
-    if ($return) {
+    if ( $return ) {
         ob_start();
         require $file_path;
         
@@ -147,22 +150,23 @@ function dht_load_view(string $path, string $file, array $args = [], bool $retur
  *
  * @param string $file_path
  * @param string $extract_variable Extract these from file array('variable_name' => 'default_value')
- * @param array $set_variables Set these to be available in file (like variables in view)
- * @param bool $return_array return array or only the value
+ * @param array  $set_variables    Set these to be available in file (like variables in view)
+ * @param bool   $return_array     return array or only the value
+ *
  * @return array
  * @since     1.0.0
  */
-function dht_get_variables_from_file(string $file_path, string $extract_variable, array $set_variables = [], bool $return_array = true): array
-{
-    extract($set_variables, EXTR_REFS);
-    unset($set_variables);
+function dht_get_variables_from_file( string $file_path, string $extract_variable, array $set_variables = [], bool $return_array = true ) : array {
+    
+    extract( $set_variables, EXTR_REFS );
+    unset( $set_variables );
     
     require $file_path;
     
-    if ($return_array) {
-        foreach ($$extract_variable as $variable_name => $default_value) {
-            if (isset($$variable_name)) {
-                $$extract_variable[$variable_name] = $$variable_name;
+    if ( $return_array ) {
+        foreach ( $$extract_variable as $variable_name => $default_value ) {
+            if ( isset( $$variable_name ) ) {
+                $$extract_variable[ $variable_name ] = $$variable_name;
             }
         }
         
@@ -170,7 +174,6 @@ function dht_get_variables_from_file(string $file_path, string $extract_variable
     } else {
         $option = $$extract_variable;
     }
-    
     
     return $option;
 }
@@ -180,23 +183,25 @@ function dht_get_variables_from_file(string $file_path, string $extract_variable
  *
  * @param string $css
  * @param string $before_delimiter :before pseudo css delimiter
+ *
  * @return array
  * @since     1.0.0
  */
-function dht_parse_css_classes_into_array(string $css, string $before_delimiter = ':') : array {
+function dht_parse_css_classes_into_array( string $css, string $before_delimiter = ':' ) : array {
+    
     // Regular expression pattern to extract class name and content
-    $pattern = '/\.([a-zA-Z0-9_-]+)'.$before_delimiter.'before\s*{\s*content:\s*"([^"]+)"/';
+    $pattern = '/\.([a-zA-Z0-9_-]+)' . $before_delimiter . 'before\s*{\s*content:\s*"([^"]+)"/';
     
     // Initialize an array to store class names and content values
     $classContentArray = array();
     
     // Perform the regular expression match
-    preg_match_all($pattern, $css, $matches, PREG_SET_ORDER);
+    preg_match_all( $pattern, $css, $matches, PREG_SET_ORDER );
     
     // Loop through matches and store in the array
-    foreach ($matches as $match) {
+    foreach ( $matches as $match ) {
         // $match[1] contains class name, $match[2] contains content
-        $classContentArray[$match[1]] = $match[2];
+        $classContentArray[ $match[ 1 ] ] = $match[ 2 ];
     }
     
     return $classContentArray;

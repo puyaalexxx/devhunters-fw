@@ -8,6 +8,7 @@ if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 use DHT\Extensions\Options\Options\{AceEditor,
     BaseOption,
     Checkbox,
+    ColorPicker,
     Dropdown,
     DropdownMultiple,
     Input,
@@ -27,21 +28,22 @@ use function DHT\Helpers\{dht_get_db_settings_option, dht_load_view, dht_set_db_
 //TODO: display option css and js only on pages where they are used and not across entire admin area
 final class Options implements IOptions {
     
-    //passed options
+    //option configurations (received from config/options folder area)
     private array $_options = [];
+    
+    //option type Classes
+    private array $_optionClasses = [];
     
     //nonce fields (name and action)
     private array $_nonce;
     
     /**
+     *
      * @since     1.0.0
      */
     public function __construct() {
         
         add_action( 'admin_enqueue_scripts', [ $this, 'enqueueMainAreaScripts' ] );
-        
-        //register framework Option Types
-        $this->_registerFWOptionTypes();
         
         //generate nonce field
         $this->_nonce = $this->_generateNonce();
@@ -66,38 +68,52 @@ final class Options implements IOptions {
     }
     
     /**
+     * !!!NOTE - run this method before calling render to initialize the option types
+     * register framework option types with passed option settings
      *
-     * create custom option types located outside the framework
-     *
-     * @param BaseOption $optionClass
+     * @param array $options
      *
      * @return void
      * @since     1.0.0
      */
-    public function registerCustomOptionType( BaseOption $optionClass ) : void {
+    public function registerOptionTypes( array $options ) : void {
         
-        $this->_options[ $optionClass::init()->getField() ] = $optionClass::init();
+        // set class options array with passed plugin configurations
+        $this->_options = $options;
+        
+        //register the Framework options classes
+        $this->_registerOptionTypes();
+    }
+    
+    /**
+     *
+     * create custom option types located outside the framework
+     *
+     * @param BaseOption $optionClass
+     * @param array      $option
+     *
+     * @return void
+     * @since     1.0.0
+     */
+    public function registerCustomOptionType( BaseOption $optionClass, array $option ) : void {
+        
+        $this->_optionClasses[ $option[ 'type' ] ] = $optionClass::init( $option );
     }
     
     /**
      *
      * render options passed from the plugin
      *
-     * @param array  $options           - option fields
      * @param string $settings_id       - the id passed to update_option() function
      * @param string $options_prefix_id - options prefix id
      *
      * @return void
-     * @throws EmptyOptionsConfigurationsException
      * @since     1.0.0
      */
-    public function renderOptions( array $options, string $settings_id, string $options_prefix_id = '' ) : void {
-        
-        //validate options passed from plugin
-        $options = $this->_validateOptionsConfigurations( $options );
+    public function renderOptions( string $settings_id, string $options_prefix_id = '' ) : void {
         
         //save options
-        $this->_saveOptions( $options, $settings_id, $options_prefix_id );
+        $this->_saveOptions( $settings_id, $options_prefix_id );
         
         //get saved options
         $saved_values = $this->_getSavedOptions( $settings_id );
@@ -109,21 +125,21 @@ final class Options implements IOptions {
         wp_nonce_field( $this->_nonce[ 'action' ], $this->_nonce[ 'name' ] );
         
         //render the passed option types
-        foreach ( $options as $option ) {
+        foreach ( $this->_options as $option ) {
             
-            if ( array_key_exists( $option[ 'type' ], $this->_options ) ) {
+            if ( array_key_exists( $option[ 'type' ], $this->_optionClasses ) ) {
                 
                 //if this option id has a saved value
                 $saved_value = $saved_values[ $option[ 'id' ] ] ?? [];
                 
                 //merge default values with saved ones to display the saved ones
-                $option = $this->_options[ $option[ 'type' ] ]->mergeValues( $option, $saved_value );
+                $option = $this->_optionClasses[ $option[ 'type' ] ]->mergeValues( $option, $saved_value );
                 
                 //add option prefix id
-                $option = $this->_options[ $option[ 'type' ] ]->addIDPrefix( $option, $options_prefix_id );
+                $option = $this->_optionClasses[ $option[ 'type' ] ]->addIDPrefix( $option, $options_prefix_id );
                 
                 //render the respective option type class
-                echo $this->_options[ $option[ 'type' ] ]->render( $option );
+                echo $this->_optionClasses[ $option[ 'type' ] ]->render( $option );
                 
             } else {
                 
@@ -139,14 +155,13 @@ final class Options implements IOptions {
      *
      * save options
      *
-     * @param array  $options
      * @param string $settings_id       - save the options under this settings id
      * @param string $options_prefix_id - all options are saved under this array key
      *
      * @return void
      * @since     1.0.0
      */
-    private function _saveOptions( array $options, string $settings_id, string $options_prefix_id ) : void {
+    private function _saveOptions( string $settings_id, string $options_prefix_id ) : void {
         
         if ( isset( $_POST ) && isset( $_POST[ $this->_nonce[ 'name' ] ] )
             && wp_verify_nonce( sanitize_key( wp_unslash( $_POST[ $this->_nonce[ 'name' ] ] ) ), $this->_nonce[ 'action' ] ) ) {
@@ -158,11 +173,11 @@ final class Options implements IOptions {
                 //pre save option values
                 //(each option class has a save method used to change the POST value as needed and then save it)
                 //you can change the saved value entirely, sanitize it or replace if you want
-                foreach ( $options as $option ) {
+                foreach ( $this->_options as $option ) {
                     
                     if ( array_key_exists( $option[ 'id' ], $post_values ) ) {
                         
-                        $post_values[ $option[ 'id' ] ] = $this->_options[ $option[ 'type' ] ]->saveValue( $option, $post_values[ $option[ 'id' ] ] );
+                        $post_values[ $option[ 'id' ] ] = $this->_optionClasses[ $option[ 'type' ] ]->saveValue( $option, $post_values[ $option[ 'id' ] ] );
                     }
                 }
                 
@@ -190,25 +205,32 @@ final class Options implements IOptions {
     /**----------------------------- helper methods -------------------------------*/
     
     /**
-     *
-     * register framework option types
+     * register option types from the options config array
      *
      * @return void
      * @since     1.0.0
      */
-    private function _registerFWOptionTypes() : void {
+    private function _registerOptionTypes() : void {
         
-        $this->_options[ Input::init()->getField() ] = Input::init();
-        $this->_options[ Textarea::init()->getField() ] = Textarea::init();
-        $this->_options[ Checkbox::init()->getField() ] = Checkbox::init();
-        $this->_options[ Radio::init()->getField() ] = Radio::init();
-        $this->_options[ Text::init()->getField() ] = Text::init();
-        $this->_options[ WpEditor::init()->getField() ] = WpEditor::init();
-        $this->_options[ SwitchField::init()->getField() ] = SwitchField::init();
-        $this->_options[ Dropdown::init()->getField() ] = Dropdown::init();
-        $this->_options[ DropdownMultiple::init()->getField() ] = DropdownMultiple::init();
-        $this->_options[ MultiInput::init()->getField() ] = MultiInput::init();
-        $this->_options[ AceEditor::init()->getField() ] = AceEditor::init();
+        foreach ( $this->_options as $option ) {
+            
+            //initialize option type classes that are required by the option configurations
+            $this->_optionClasses [ $option[ 'type' ] ] = match ( $option[ 'type' ] ) {
+                
+                Input::init( $option )->getField() => Input::init( $option ),
+                Textarea::init( $option )->getField() => Textarea::init( $option ),
+                Checkbox::init( $option )->getField() => Checkbox::init( $option ),
+                Radio::init( $option )->getField() => Radio::init( $option ),
+                Text::init( $option )->getField() => Text::init( $option ),
+                WpEditor::init( $option )->getField() => WpEditor::init( $option ),
+                SwitchField::init( $option )->getField() => SwitchField::init( $option ),
+                Dropdown::init( $option )->getField() => Dropdown::init( $option ),
+                DropdownMultiple::init( $option )->getField() => DropdownMultiple::init( $option ),
+                MultiInput::init( $option )->getField() => MultiInput::init( $option ),
+                AceEditor::init( $option )->getField() => AceEditor::init( $option ),
+                ColorPicker::init( $option )->getField() => ColorPicker::init( $option )
+            };
+        }
     }
     
     /**

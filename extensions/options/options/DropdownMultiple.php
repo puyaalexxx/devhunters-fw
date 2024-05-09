@@ -3,8 +3,6 @@ declare( strict_types = 1 );
 
 namespace DHT\Extensions\Options\Options;
 
-use function DHT\Helpers\dht_print_r;
-
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 final class DropdownMultiple extends BaseOption {
@@ -13,20 +11,24 @@ final class DropdownMultiple extends BaseOption {
     protected string $_field = 'dropdown-multiple';
     
     /**
+     * @param array $option - option array
+     *
      * @since     1.0.0
      */
-    protected function __construct() {
+    protected function __construct( array $option ) {
         
-        parent::__construct();
+        parent::__construct( $option );
     }
     
     /**
      * Enqueue input scripts and styles
      *
      * @param string $hook
+     * @param array  $option
      *
      * @return void
      * @since     1.0.0
      */
-    public function enqueueOptionScripts( string $hook ) : void {}
+    public function enqueueOptionScripts( string $hook, array $option ) : void {}
+    
 }

@@ -4,7 +4,6 @@ declare( strict_types = 1 );
 namespace DHT\Extensions\Options\Options;
 
 use function DHT\Helpers\dht_load_view;
-use function DHT\Helpers\dht_print_r;
 
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
@@ -20,25 +19,32 @@ abstract class BaseOption {
     protected string $_field = 'unknown';
     
     /**
+     * @param array $option - option array
      *
-     * receive the option array, saved options values and prefix_id
+     * receive the option array for current field type
      *
      * @since     1.0.0
      */
-    protected function __construct() {
+    protected function __construct( array $option ) {
         
-        add_action( 'admin_enqueue_scripts', [ $this, 'enqueueOptionScripts' ] );
+        add_action( 'admin_enqueue_scripts', function ( $hook ) use ( $option ) {
+            
+            $this->enqueueOptionScripts( $hook, $option );
+            
+        } );
+        
     }
     
     /**
      * Enqueue the checkbox css file
      *
      * @param string $hook
+     * @param array  $option
      *
      * @return void
      * @since     1.0.0
      */
-    public abstract function enqueueOptionScripts( string $hook ) : void;
+    public abstract function enqueueOptionScripts( string $hook, array $option ) : void;
     
     /**
      *
@@ -61,11 +67,11 @@ abstract class BaseOption {
      * @return string
      * @since     1.0.0
      */
-    public function render(array $option) : string {
+    public function render( array $option ) : string {
         
         return dht_load_view( $this->template_dir, $this->getField() . '.php', $option );
     }
-   
+    
     /**
      *
      * add prefix id for option id to display it in the form as array values
@@ -111,8 +117,8 @@ abstract class BaseOption {
      *  $option_value can be null.
      *  In this case you should return default value from $option['value']
      *
-     * @param array $option - option field
-     * @param mixed $option_value  - saved option value
+     * @param array $option       - option field
+     * @param mixed $option_value - saved option value
      *
      * @return mixed - changed option value
      * @since     1.0.0
@@ -120,7 +126,7 @@ abstract class BaseOption {
     public function saveValue( array $option, mixed $option_value ) : mixed {
         
         if ( empty( $option_value ) ) {
-            return $option['value'];
+            return $option[ 'value' ];
         }
         
         return $option_value;
@@ -131,16 +137,17 @@ abstract class BaseOption {
      * instance. On the first run, it creates a singleton object and places it
      * into the static field. On subsequent runs, it returns the client existing
      * object stored in the static field.
-     **
      *
-     * @return Input - current class
+     * @param array $option - option array
+     *
+     * @return self - current class
      * @since     1.0.0
      */
-    public static function init() : self {
+    public static function init( array $option ) : self {
         
         $cls = static::class;
         if ( !isset( self::$_instances[ $cls ] ) ) {
-            self::$_instances[ $cls ] = new static();
+            self::$_instances[ $cls ] = new static( $option );
         }
         
         return self::$_instances[ $cls ];

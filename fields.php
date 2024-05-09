@@ -24,82 +24,6 @@ function timepicker() {
 
 ?>
 
-<!-------------------------------------------------------------------------------------->
-
-<!-- field - colorpicker -->
-<script>
-    jQuery(document).ready(function($) {
-
-        jQuery('.dht-field-child-colorpicker .dht-alphacolorpicker').wpColorPicker({})
-
-        let $delete_btn = jQuery('#dht-default-color-btn11')
-
-        $delete_btn.insertAfter(jQuery('.dht-alphacolorpicker').parent('label'))
-
-        $delete_btn.on('click', function() {
-            let defaultColor = 'rgb(238, 238, 34, 0.5)' // Set your default color here
-            jQuery('.dht-alphacolorpicker').wpColorPicker('color', defaultColor)
-        })
-    })
-</script>
-<div class="dht-field-wrapper">
-    <div class="dht-title">Alpha Colorpicker</div>
-    <div class="dht-field-child-wrapper dht-field-child-colorpicker">
-        <label for="colorpicker-input"></label>
-        <input class="dht-alphacolorpicker dht-field" id="alphacolorpicker-input" type="text"
-               data-alpha="true" data-reset="true"
-               name="alphacolorpicker-input" value="rgb(238, 238, 34, 0.5)" title="title" />
-        <input type="button" id="dht-default-color-btn11" class="dht-default-color-btn button button-small"
-               value="Default">
-        <div class="dht-description">Field description</div>
-    </div>
-    <div class="dht-info-help dashicons dashicons-info"
-         data-tooltips="A little box to something to make it longer"
-         data-position="OnLeft">
-    </div>
-</div>
-<div class="dht-divider"></div>
-
-<style>
-    /* wp-color-picker-alpha.css */
-    .dht-wrapper .dht-field-child-colorpicker .wp-picker-input-wrap label {
-        display: block;
-    }
-
-    .wp-core-ui .dht-field-child-colorpicker .wp-picker-active .button.hidden {
-        display: block;
-    }
-
-    .dht-wrapper .dht-field-child-colorpicker .wp-picker-open + span.wp-picker-input-wrap {
-        width: 210px;
-        display: flex !important;
-    }
-
-    .dht-wrapper .dht-field-child-colorpicker .dht-default-color-btn {
-        display: none !important;
-        margin-left: 6px !important;
-    }
-
-    .dht-wrapper .dht-field-child-colorpicker .wp-picker-container.wp-picker-active .dht-default-color-btn {
-        display: block !important;
-    }
-</style>
-
-<?php
-// field - colorpicker - opacity
-add_action( 'admin_enqueue_scripts', 'alpha_picker' );
-function alpha_picker() {
-
-    wp_enqueue_style( 'wp-color-picker' );
-    wp_enqueue_script( 'wp-color-picker' );
-
-    wp_enqueue_script( 'wp-color-picker-alpha', DHT_ASSETS_URI . 'scripts/libraries/wp-color-picker-alpha.min.js', array( 'wp-color-picker' ) );
-    /*wp_add_inline_script(
-        'wp-color-picker-alpha',
-        'jQuery( function() { jQuery( ".dht-alphacolorpicker" ).wpColorPicker(); } );'
-    );*/
-
-}
 
 ?>
 <!-------------------------------------------------------------------------------------->
@@ -1032,8 +956,7 @@ function timepicker() {
 
                 .dht-wrapper .dht-field-child-borders .dht-field-borders-group span {
                     position: absolute;
-                    background: #c0c0c0;
-                    background-color: #eee;
+                    background: #eee;
                     border: 1px solid #7e8993;
                     height: 18px;
                     padding: 5px;
@@ -1175,8 +1098,7 @@ function timepicker() {
 
     .dht-wrapper .dht-field-child-spacing .dht-field-spacing-group span {
         position: absolute;
-        background: #c0c0c0;
-        background-color: #eee;
+        background: #eee;
         border: 1px solid #7e8993;
         height: 18px;
         padding: 5px;
@@ -1722,11 +1644,10 @@ $font_style = empty( $font_style ) ? $standard_font_style : $font_style;
         padding: 10px;
         font-size: 10pt;
         height: auto;
-        margin: 5px 0 10px;
         -webkit-box-sizing: border-box;
         box-sizing: border-box;
         overflow: hidden;
-        margin-bottom: 20px;
+        margin: 5px 0 20px;
     }
 </style>
 

@@ -1,24 +1,6 @@
-/*
- * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
- * This devtool is neither made for production nor for readable output files.
- * It uses "eval()" calls to create a separate source file in the browser devtools.
- * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
- * or disable the default devtool with "devtool: false".
- * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
- */
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
-
-/***/ "./assets/scripts/ts/options/switch.ts":
-/*!*********************************************!*\
-  !*** ./assets/scripts/ts/options/switch.ts ***!
-  \*********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ \"jquery\");\n/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);\n\n(function ($) {\n    'use strict';\n    jquery__WEBPACK_IMPORTED_MODULE_0___default()('.dht-field-child-switch .dht-switch').on('click', function () {\n        var $this = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this);\n        var $input = $this.children('input');\n        if ($this.hasClass('dht-slider-on')) {\n            $this.removeClass('dht-slider-on').addClass('dht-slider-off');\n            //get off value\n            var value = $this\n                .children('.dht-slider')\n                .children('.dht-slider-no')\n                .attr('data-value');\n            $input.val(value);\n        }\n        else {\n            $this.removeClass('dht-slider-off').addClass('dht-slider-on');\n            //get on value\n            var value = $this\n                .children('.dht-slider')\n                .children('.dht-slider-yes')\n                .attr('data-value');\n            $input.val(value);\n        }\n    });\n})((jquery__WEBPACK_IMPORTED_MODULE_0___default()));\n\n\n//# sourceURL=webpack://devhunters-fw/./assets/scripts/ts/options/switch.ts?");
-
-/***/ }),
 
 /***/ "jquery":
 /*!*************************!*\
@@ -98,11 +80,44 @@ module.exports = jQuery;
 /******/ 	})();
 /******/ 	
 /************************************************************************/
-/******/ 	
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	// This entry module can't be inlined because the eval devtool is used.
-/******/ 	var __webpack_exports__ = __webpack_require__("./assets/scripts/ts/options/switch.ts");
-/******/ 	
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+(() => {
+/*!*********************************************!*\
+  !*** ./assets/scripts/ts/options/switch.ts ***!
+  \*********************************************/
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "jquery");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
+
+(function ($) {
+    'use strict';
+    $('.dht-field-child-switch .dht-switch').on('click', function () {
+        var $this = $(this);
+        var $input = $this.children('input');
+        if ($this.hasClass('dht-slider-on')) {
+            $this.removeClass('dht-slider-on').addClass('dht-slider-off');
+            //get off value
+            var value = $this
+                .children('.dht-slider')
+                .children('.dht-slider-no')
+                .attr('data-value');
+            $input.val(value);
+        }
+        else {
+            $this.removeClass('dht-slider-off').addClass('dht-slider-on');
+            //get on value
+            var value = $this
+                .children('.dht-slider')
+                .children('.dht-slider-yes')
+                .attr('data-value');
+            $input.val(value);
+        }
+    });
+})((jquery__WEBPACK_IMPORTED_MODULE_0___default()));
+
+})();
+
 /******/ })()
 ;
+//# sourceMappingURL=switch-script.js.map

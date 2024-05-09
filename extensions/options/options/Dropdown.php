@@ -13,19 +13,20 @@ final class Dropdown extends BaseOption {
     /**
      * @since     1.0.0
      */
-    protected function __construct() {
+    protected function __construct( array $option ) {
         
-        parent::__construct();
+        parent::__construct( $option );
     }
     
     /**
      * Enqueue input scripts and styles
      *
      * @param string $hook
+     * @param array  $option
      *
      * @return void
      * @since     1.0.0
      */
-    public function enqueueOptionScripts( string $hook ) : void {}
+    public function enqueueOptionScripts( string $hook, array $option ) : void {}
     
 }

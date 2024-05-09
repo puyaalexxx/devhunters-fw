@@ -3,12 +3,9 @@ declare( strict_types = 1 );
 
 namespace DHT;
 
-if ( !defined( 'ABSPATH' ) ) die( 'Forbidden' );
+use function DHT\Helpers\dht_print_r;
 
-/*
- * Directory PATHs
- *
- * */
+if ( !defined( 'ABSPATH' ) ) die( 'Forbidden' );
 
 define( 'DHT_MAIN', true );
 
@@ -21,6 +18,9 @@ define( 'DHT_DIR', plugin_dir_path( __FILE__ ) );
 define( 'DHT_ASSETS_DIR', DHT_DIR . 'assets/' );
 
 define( 'DHT_HELPERS_DIR', DHT_DIR . 'helpers/' );
+
+//plugin config dir to grab options
+define( 'DHT_PLUGIN_CONFIG_DIR', dirname( plugin_dir_path( __FILE__ ) ) . '/src/config/' );
 
 //extensions folder
 define( 'DHT_EXTENSIONS_DIR', DHT_DIR . 'extensions/' );

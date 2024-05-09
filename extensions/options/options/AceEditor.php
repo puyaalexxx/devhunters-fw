@@ -4,8 +4,6 @@ declare( strict_types = 1 );
 namespace DHT\Extensions\Options\Options;
 
 use function DHT\fw;
-use function DHT\Helpers\dht_print_r;
-use function DHT\Helpers\dht_sanitize_wpeditor_value;
 
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
@@ -17,26 +15,27 @@ final class AceEditor extends BaseOption {
     /**
      * @since     1.0.0
      */
-    protected function __construct() {
+    protected function __construct( array $option ) {
         
-        parent::__construct();
+        parent::__construct( $option );
     }
     
     /**
      * Enqueue input scripts and styles
      *
      * @param string $hook
+     * @param array  $option
      *
      * @return void
      * @since     1.0.0
      */
-    public function enqueueOptionScripts( string $hook ) : void {
+    public function enqueueOptionScripts( string $hook, array $option ) : void {
         
         wp_enqueue_script( 'dht-ace-editor-option', DHT_ASSETS_URI . 'scripts/js/options/ace-editor-script.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
         
-        wp_localize_script('dht-ace-editor-option', 'dht_ace_editor_path', array(
+        wp_localize_script( 'dht-ace-editor-option', 'dht_ace_editor_path', array(
             'path' => DHT_URI . 'node_modules/ace-builds/'
-        ));
+        ) );
     }
     
     /**
@@ -51,7 +50,7 @@ final class AceEditor extends BaseOption {
      */
     public function mergeValues( array $option, mixed $saved_value ) : array {
         
-        $option[ 'value' ] = empty( $saved_value ) ? $option[ 'value' ] : stripslashes($saved_value);
+        $option[ 'value' ] = empty( $saved_value ) ? $option[ 'value' ] : stripslashes( $saved_value );
         
         return $option;
     }
@@ -64,8 +63,8 @@ final class AceEditor extends BaseOption {
      *  $option_value can be null.
      *  In this case you should return default value from $option['value']
      *
-     * @param array $option - option field
-     * @param mixed $option_value  - saved option value
+     * @param array $option       - option field
+     * @param mixed $option_value - saved option value
      *
      * @return mixed - changed option value
      * @since     1.0.0
@@ -73,9 +72,10 @@ final class AceEditor extends BaseOption {
     public function saveValue( array $option, mixed $option_value ) : mixed {
         
         if ( empty( $option_value ) ) {
-            return $option['value'];
+            return $option[ 'value' ];
         }
         
-        return sanitize_textarea_field($option_value);
+        return sanitize_textarea_field( $option_value );
     }
+    
 }

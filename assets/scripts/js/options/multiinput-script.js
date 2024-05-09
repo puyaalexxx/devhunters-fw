@@ -1,24 +1,6 @@
-/*
- * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
- * This devtool is neither made for production nor for readable output files.
- * It uses "eval()" calls to create a separate source file in the browser devtools.
- * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
- * or disable the default devtool with "devtool: false".
- * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
- */
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
-
-/***/ "./assets/scripts/ts/options/multiinput.ts":
-/*!*************************************************!*\
-  !*** ./assets/scripts/ts/options/multiinput.ts ***!
-  \*************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ \"jquery\");\n/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);\n\n(function ($) {\n    'use strict';\n    var $field_wrapper = jquery__WEBPACK_IMPORTED_MODULE_0___default()('.dht-field-wrapper');\n    $field_wrapper.on('click', '.dht-field-child-multiinput .dht-multiinput-add', function () {\n        var $this = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this);\n        var limit = +$this.attr('data-limit');\n        if ($this\n            .parents('.dht-field-child-multiinput')\n            .children('.dht-multiinput-child-wrapper').length >= limit) {\n            confirm(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('data-add-text'));\n            return false;\n        }\n        var $field = $this.prev('.dht-multiinput-child-wrapper').clone();\n        $field.children('input').val('');\n        $field.insertBefore($this);\n    });\n    $field_wrapper.on('click', '.dht-field-child-multiinput .dht-multiinput-remove', function () {\n        var $this = jquery__WEBPACK_IMPORTED_MODULE_0___default()(this);\n        if ($this\n            .parents('.dht-field-child-wrapper')\n            .children('.dht-multiinput-child-wrapper').length === 1) {\n            confirm(jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).attr('data-remove-text'));\n            return;\n        }\n        $this.parent('.dht-multiinput-child-wrapper').remove();\n    });\n})((jquery__WEBPACK_IMPORTED_MODULE_0___default()));\n\n\n//# sourceURL=webpack://devhunters-fw/./assets/scripts/ts/options/multiinput.ts?");
-
-/***/ }),
 
 /***/ "jquery":
 /*!*************************!*\
@@ -98,11 +80,46 @@ module.exports = jQuery;
 /******/ 	})();
 /******/ 	
 /************************************************************************/
-/******/ 	
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	// This entry module can't be inlined because the eval devtool is used.
-/******/ 	var __webpack_exports__ = __webpack_require__("./assets/scripts/ts/options/multiinput.ts");
-/******/ 	
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+(() => {
+/*!*************************************************!*\
+  !*** ./assets/scripts/ts/options/multiinput.ts ***!
+  \*************************************************/
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "jquery");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
+
+(function ($) {
+    'use strict';
+    var $field_wrapper = $('.dht-field-wrapper');
+    $field_wrapper.on('click', '.dht-field-child-multiinput .dht-multiinput-add', function () {
+        var $this = $(this);
+        var limit = +$this.attr('data-limit');
+        if ($this
+            .parents('.dht-field-child-multiinput')
+            .children('.dht-multiinput-child-wrapper').length >= limit) {
+            confirm($(this).attr('data-add-text'));
+            return false;
+        }
+        var $field = $this.prev('.dht-multiinput-child-wrapper').clone();
+        $field.children('input').val('');
+        $field.insertBefore($this);
+    });
+    $field_wrapper.on('click', '.dht-field-child-multiinput .dht-multiinput-remove', function () {
+        var $this = $(this);
+        if ($this
+            .parents('.dht-field-child-wrapper')
+            .children('.dht-multiinput-child-wrapper').length === 1) {
+            confirm($(this).attr('data-remove-text'));
+            return;
+        }
+        $this.parent('.dht-multiinput-child-wrapper').remove();
+    });
+})((jquery__WEBPACK_IMPORTED_MODULE_0___default()));
+
+})();
+
 /******/ })()
 ;
+//# sourceMappingURL=multiinput-script.js.map

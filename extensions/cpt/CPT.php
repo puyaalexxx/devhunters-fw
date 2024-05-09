@@ -70,7 +70,6 @@ class CPT implements ICPT {
         }
     }
     
-    
     /**
      *
      * Register Taxonomy
@@ -113,4 +112,5 @@ class CPT implements ICPT {
             throw new EmptyCPTConfigurationsException( _x( 'Empty cpt configurations array provided', 'exceptions', DHT_PREFIX ) );
         }
     }
+    
 }

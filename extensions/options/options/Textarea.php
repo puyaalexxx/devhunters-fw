@@ -5,30 +5,31 @@ namespace DHT\Extensions\Options\Options;
 
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
-use function DHT\Helpers\dht_load_view;
-
 final class Textarea extends BaseOption {
     
     //field type
     protected string $_field = 'textarea';
     
     /**
+     * @param array $option - option array
+     *
      * @since     1.0.0
      */
-    protected function __construct() {
+    protected function __construct( array $option ) {
         
-        parent::__construct();
+        parent::__construct( $option );
     }
     
     /**
-     * Enqueue textarea scripts and styles
+     * Enqueue input scripts and styles
      *
      * @param string $hook
+     * @param array  $option
      *
      * @return void
      * @since     1.0.0
      */
-    public function enqueueOptionScripts( string $hook ) : void {}
+    public function enqueueOptionScripts( string $hook, array $option ) : void {}
     
     /**
      *
@@ -38,8 +39,8 @@ final class Textarea extends BaseOption {
      *  $option_value can be null.
      *  In this case you should return default value from $option['value']
      *
-     * @param array $option - option field
-     * @param mixed $option_value  - saved option value
+     * @param array $option       - option field
+     * @param mixed $option_value - saved option value
      *
      * @return mixed - changed option value
      * @since     1.0.0
@@ -47,9 +48,10 @@ final class Textarea extends BaseOption {
     public function saveValue( array $option, mixed $option_value ) : mixed {
         
         if ( empty( $option_value ) ) {
-            return $option['value'];
+            return $option[ 'value' ];
         }
         
-        return sanitize_textarea_field($option_value);
+        return sanitize_textarea_field( $option_value );
     }
+    
 }

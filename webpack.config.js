@@ -1,4 +1,5 @@
 const path = require('path')
+const webpack = require('webpack')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const RemoveEmptyScriptsPlugin = require('webpack-remove-empty-scripts')
 
@@ -8,6 +9,7 @@ const dht_wrapper_area_script = 'dht-wrapper-area-script'
 const switch_script = 'switch-script'
 const multiinput_script = 'multiinput-script'
 const ace_editor_script = 'ace-editor-script'
+const colorpicker_script = 'colorpicker-script'
 
 const create_sidebars_script = 'create-sidebars-script'
 
@@ -17,6 +19,7 @@ const checkbox_style = 'checkbox-style'
 const radio_style = 'radio-style'
 const switch_style = 'switch-style'
 const multiinput_style = 'multiinput-style'
+const colorpicker_style = 'colorpicker-style'
 
 const create_sidebars_style = 'create-sidebars-style'
 
@@ -40,6 +43,10 @@ module.exports = {
         [ace_editor_script]:
             './assets/scripts/ts/options/' +
             ace_editor_script.replace('-script', '') +
+            '.ts',
+        [colorpicker_script]:
+            './assets/scripts/ts/options/' +
+            colorpicker_script.replace('-script', '') +
             '.ts',
 
         //other scripts
@@ -76,6 +83,10 @@ module.exports = {
             './assets/styles/postcss/options/' +
             multiinput_style.replace('-style', '') +
             '.pcss', // multiinput CSS entry point
+        [colorpicker_style]:
+            './assets/styles/postcss/options/' +
+            colorpicker_style.replace('-style', '') +
+            '.pcss', // colorpicker CSS entry point
 
         //other styles
         [create_sidebars_style]:
@@ -100,6 +111,9 @@ module.exports = {
             }
             if (chunkData.chunk.name === ace_editor_script) {
                 return 'scripts/js/options/' + ace_editor_script + '.js'
+            }
+            if (chunkData.chunk.name === colorpicker_script) {
+                return 'scripts/js/options/' + colorpicker_script + '.js'
             }
 
             // output to the js folder
@@ -128,6 +142,7 @@ module.exports = {
             },
         ],
     },
+    devtool: 'source-map', // Enable source maps
     resolve: {
         extensions: ['.ts', '.tsx', '.js', '.css', '.pcss'], // Resolve TypeScript and JavaScript extensions,
         modules: [
@@ -139,6 +154,10 @@ module.exports = {
         },
     },
     plugins: [
+        new webpack.SourceMapDevToolPlugin({
+            test: /\.(ts|js|css|mjs)$/, // Match JavaScript, CSS, and module files
+            filename: '[file].map', // Output source map file names
+        }),
         // MiniCssExtractPlugin instance for 'options-checkbox' entry
         new MiniCssExtractPlugin({
             filename: (chunkData) => {
@@ -163,6 +182,10 @@ module.exports = {
                 //multiinput option file
                 if (chunkData.chunk.name === multiinput_style) {
                     return 'styles/css/options/' + multiinput_style + '.css'
+                }
+                //colorpicker option file
+                if (chunkData.chunk.name === colorpicker_style) {
+                    return 'styles/css/options/' + colorpicker_style + '.css'
                 }
 
                 // For other entry points, output to root 'css' folder

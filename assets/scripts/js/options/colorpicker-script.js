@@ -83,33 +83,39 @@ module.exports = jQuery;
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-/*!*******************************************************!*\
-  !*** ./assets/scripts/ts/options/dht-wrapper-area.ts ***!
-  \*******************************************************/
+/*!**************************************************!*\
+  !*** ./assets/scripts/ts/options/colorpicker.ts ***!
+  \**************************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "jquery");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
-// @ts-ignore
 
 (function ($) {
     'use strict';
-    var tooltips = $('.dht-wrapper .dht-info-help');
-    jquery__WEBPACK_IMPORTED_MODULE_0___default()(tooltips).each(function () {
-        var $tooltip = $(this);
-        $tooltip.on('mouseenter', function () {
-            var $this = $(this);
-            $this.css('position', 'relative');
-            $this.html($this.html() +
-                "<div class='dh-tooltips'><p class='" +
-                $this.attr('data-position') +
-                "'>" +
-                $this.attr('data-tooltips') +
-                '</p>');
-        });
-        $tooltip.on('mouseleave', function () {
-            var $this = $(this);
-            $this.removeAttr('style');
-            $this.html($this.html().replace(/<div[^]*?<\/div>/, ''));
+    $('.dht-field-child-colorpicker .dht-alphacolorpicker').each(function () {
+        var $colorpicker = $(this);
+        var wpColorPickerArgs = {};
+        //get default palette of colors
+        var palette = $colorpicker.attr('data-palette');
+        //set the default colorpicker args
+        if (palette.length !== 0) {
+            wpColorPickerArgs = {
+                palettes: JSON.parse(palette),
+            };
+        }
+        //set default color picker args
+        ;
+        $colorpicker.wpColorPicker(wpColorPickerArgs);
+        //default button to reset the color picker color to its default value
+        var $default_btn = $colorpicker
+            .parents('.dht-field-child-colorpicker')
+            .find('.dht-default-color-btn');
+        $default_btn.insertAfter($colorpicker.parent('label'));
+        //reset the color picker color to its default value
+        $default_btn.on('click', function () {
+            var defaultColor = $colorpicker.val() // Set your default color here
+            ;
+            $colorpicker.wpColorPicker('color', defaultColor);
         });
     });
 })((jquery__WEBPACK_IMPORTED_MODULE_0___default()));
@@ -118,4 +124,4 @@ __webpack_require__.r(__webpack_exports__);
 
 /******/ })()
 ;
-//# sourceMappingURL=dht-wrapper-area-script.js.map
+//# sourceMappingURL=colorpicker-script.js.map

@@ -4,28 +4,6 @@ declare( strict_types = 1 );
 // Enqueue scripts and styles for the media uploader
 use function DHT\fw;
 use function DHT\Helpers\dht_get_variables_from_file;
-/*
-function enqueue_media_uploader() {
-    // Enqueue the media uploader script
-    wp_enqueue_media();
-}
-add_action('admin_enqueue_scripts', 'enqueue_media_uploader');*/
-
-
-// field - colorpicker - opacity
-add_action( 'admin_enqueue_scripts', 'alpha_picker' );
-function alpha_picker() {
-    wp_enqueue_style( 'wp-color-picker' );
-    wp_enqueue_script( 'wp-color-picker' );
-    
-    wp_enqueue_script( 'wp-color-picker-alpha', DHT_ASSETS_URI . 'scripts/libraries/wp-color-picker-alpha.min.js', array( 'wp-color-picker' ) );
-    /*wp_add_inline_script(
-        'wp-color-picker-alpha',
-        'jQuery( function() { jQuery( ".dht-alphacolorpicker" ).wpColorPicker(); } );'
-    );*/
-    
-}
-
 
 //remove sortable from the jquery ui as it comes from wordpress already
 

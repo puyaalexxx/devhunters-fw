@@ -63,7 +63,7 @@ final class ExtensionClassInstance {
      *
      * return the Options class instance
      *
-     * @param array $options_config - plugin configurations
+     * @param array $options_config - options configurations
      *
      * @return IOptions - Options class instance
      * @since     1.0.0

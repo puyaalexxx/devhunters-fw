@@ -3,8 +3,6 @@ declare( strict_types = 1 );
 
 namespace DHT\Extensions\Options\Options;
 
-use function DHT\Helpers\dht_print_r;
-
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 final class Text extends BaseOption {
@@ -13,22 +11,25 @@ final class Text extends BaseOption {
     protected string $_field = 'text';
     
     /**
+     * @param array $option - option array
+     *
      * @since     1.0.0
      */
-    protected function __construct() {
+    protected function __construct( array $option ) {
         
-        parent::__construct();
+        parent::__construct( $option );
     }
     
     /**
      * Enqueue input scripts and styles
      *
      * @param string $hook
+     * @param array  $option
      *
      * @return void
      * @since     1.0.0
      */
-    public function enqueueOptionScripts( string $hook ) : void {}
+    public function enqueueOptionScripts( string $hook, array $option ) : void {}
     
     /**
      *
@@ -41,4 +42,5 @@ final class Text extends BaseOption {
         
         return parent::getField();
     }
+    
 }

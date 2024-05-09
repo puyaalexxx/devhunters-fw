@@ -1,10 +1,9 @@
 import jQuery from 'jquery'
-
 ;(function ($: JQueryStatic): void {
     'use strict'
 
-    jQuery('.dht-field-child-switch .dht-switch').on('click', function () {
-        let $this = jQuery(this)
+    $('.dht-field-child-switch .dht-switch').on('click', function () {
+        let $this = $(this)
         let $input = $this.children('input')
 
         if ($this.hasClass('dht-slider-on')) {

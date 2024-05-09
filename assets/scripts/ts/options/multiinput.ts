@@ -2,13 +2,13 @@ import jQuery from 'jquery'
 ;(function ($: JQueryStatic): void {
     'use strict'
 
-    const $field_wrapper = jQuery('.dht-field-wrapper')
+    const $field_wrapper = $('.dht-field-wrapper')
 
     $field_wrapper.on(
         'click',
         '.dht-field-child-multiinput .dht-multiinput-add',
         function () {
-            let $this = jQuery(this)
+            let $this = $(this)
             let limit: number = +$this.attr('data-limit')!
 
             if (
@@ -16,7 +16,7 @@ import jQuery from 'jquery'
                     .parents('.dht-field-child-multiinput')
                     .children('.dht-multiinput-child-wrapper').length >= limit
             ) {
-                confirm(jQuery(this).attr('data-add-text'))
+                confirm($(this).attr('data-add-text'))
 
                 return false
             }
@@ -32,14 +32,14 @@ import jQuery from 'jquery'
         'click',
         '.dht-field-child-multiinput .dht-multiinput-remove',
         function () {
-            let $this = jQuery(this)
+            let $this = $(this)
 
             if (
                 $this
                     .parents('.dht-field-child-wrapper')
                     .children('.dht-multiinput-child-wrapper').length === 1
             ) {
-                confirm(jQuery(this).attr('data-remove-text'))
+                confirm($(this).attr('data-remove-text'))
 
                 return
             }

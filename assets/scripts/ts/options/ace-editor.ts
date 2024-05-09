@@ -11,8 +11,8 @@ import 'ace-builds/src-min-noconflict/mode-css'
     //variable is passed from wp_localize_script AceEditor class
     const dht_ace_files_path = dht_ace_editor_path.path
 
-    jQuery('.dht-field-child-code-editor').each(function () {
-        const $ace_editor_container = jQuery(this)
+    $('.dht-field-child-code-editor').each(function () {
+        const $ace_editor_container = $(this)
 
         //because the ace editor does not find this files correctly, we need to set them explicitly
         ace.config.setModuleUrl(

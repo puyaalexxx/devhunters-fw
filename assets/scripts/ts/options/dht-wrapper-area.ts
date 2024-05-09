@@ -1,16 +1,15 @@
 // @ts-ignore
 import jQuery from 'jquery'
-
 ;(function ($: JQueryStatic): void {
     'use strict'
 
-    let tooltips = jQuery('.dht-wrapper .dht-info-help')
+    let tooltips = $('.dht-wrapper .dht-info-help')
 
     jQuery(tooltips).each(function () {
-        let $tooltip = jQuery(this)
+        let $tooltip = $(this)
 
         $tooltip.on('mouseenter', function () {
-            let $this = jQuery(this)
+            let $this = $(this)
 
             $this.css('position', 'relative')
             $this.html(
@@ -24,7 +23,7 @@ import jQuery from 'jquery'
         })
 
         $tooltip.on('mouseleave', function () {
-            let $this = jQuery(this)
+            let $this = $(this)
 
             $this.removeAttr('style')
             $this.html($this.html().replace(/<div[^]*?<\/div>/, ''))

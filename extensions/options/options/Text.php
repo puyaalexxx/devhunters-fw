@@ -11,36 +11,21 @@ final class Text extends BaseOption {
     protected string $_field = 'text';
     
     /**
-     * @param array $option - option array
-     *
      * @since     1.0.0
      */
-    protected function __construct( array $option ) {
+    public function __construct() {
         
-        parent::__construct( $option );
+        parent::__construct();
     }
     
     /**
      * Enqueue input scripts and styles
      *
-     * @param string $hook
-     * @param array  $option
+     * @param array $option
      *
      * @return void
      * @since     1.0.0
      */
-    public function enqueueOptionScripts( string $hook, array $option ) : void {}
-    
-    /**
-     *
-     * return field type
-     *
-     * @return string
-     * @since     1.0.0
-     */
-    public function getField() : string {
-        
-        return parent::getField();
-    }
+    public function enqueueOptionScripts( array $option ) : void {}
     
 }

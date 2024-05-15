@@ -9,23 +9,26 @@ use DHT\Extensions\Options\Options\{AceEditor,
     BaseOption,
     Checkbox,
     ColorPicker,
+    DatePicker,
+    DateTimePicker,
     Dropdown,
     DropdownMultiple,
     Input,
     MultiInput,
     Radio,
+    RangeSlider,
+    Spacing,
     SwitchField,
     Text,
     Textarea,
+    TimePicker,
     WpEditor};
-use DHT\Helpers\Exceptions\ConfigExceptions\EmptyOptionsConfigurationsException;
 use function DHT\fw;
-use function DHT\Helpers\{dht_get_db_settings_option, dht_load_view, dht_set_db_settings_option};
+use function DHT\Helpers\{dht_get_db_settings_option, dht_load_view, dht_print_r, dht_set_db_settings_option};
 
-//TODO: at the end to add CSS styles in post css folder as sass
-//TODO: at the end to add js as typescript code
 //TODO: for performance reason to merge CSS and Js code somehow for options used in one file
 //TODO: display option css and js only on pages where they are used and not across entire admin area
+//TODO: minify js files at the end
 final class Options implements IOptions {
     
     //option configurations (received from config/options folder area)
@@ -68,25 +71,37 @@ final class Options implements IOptions {
     }
     
     /**
-     * !!!NOTE - run this method before calling render to initialize the option types
-     * register framework option types with passed option settings
+     * !!!NOTE - run this method before calling render to initialize the option types from passed option settings
      *
      * @param array $options
      *
      * @return void
      * @since     1.0.0
      */
-    public function registerOptionTypes( array $options ) : void {
+    public function initOptions( array $options ) : void {
+        
+        //if no options passed, don't init the options
+        if ( empty( $options ) ) return;
         
         // set class options array with passed plugin configurations
-        $this->_options = $options;
+        $this->_options = apply_filters( 'options_configurations', $options );
         
         //register the Framework options classes
-        $this->_registerOptionTypes();
+        $this->_registerFWOptionTypes();
+        
+        //pass option array to enqueue scripts method (this is needed to enqueue specific script for specific subtype option)
+        foreach ( $this->_options as $option ) {
+            
+            //pass the option array to the enqueue method
+            if ( isset( $this->_optionClasses[ $option[ 'type' ] ] ) ) {
+                
+                $this->_optionClasses[ $option[ 'type' ] ]->enqueueOptionScriptsHook( $option );
+            }
+        }
     }
     
     /**
-     *
+     * TODO: finish this method registerCustomOptionType
      * create custom option types located outside the framework
      *
      * @param BaseOption $optionClass
@@ -97,7 +112,7 @@ final class Options implements IOptions {
      */
     public function registerCustomOptionType( BaseOption $optionClass, array $option ) : void {
         
-        $this->_optionClasses[ $option[ 'type' ] ] = $optionClass::init( $option );
+        $this->_optionClasses[ $option[ 'type' ] ] = $optionClass;
     }
     
     /**
@@ -181,7 +196,7 @@ final class Options implements IOptions {
                     }
                 }
                 
-                \DHT\Helpers\dht_print_r( $post_values );
+                dht_print_r( $post_values );
                 
                 dht_set_db_settings_option( $settings_id, $post_values );
             }
@@ -205,32 +220,50 @@ final class Options implements IOptions {
     /**----------------------------- helper methods -------------------------------*/
     
     /**
-     * register option types from the options config array
+     * register framework option types
      *
      * @return void
      * @since     1.0.0
      */
-    private function _registerOptionTypes() : void {
+    private function _registerFWOptionTypes() : void {
         
-        foreach ( $this->_options as $option ) {
-            
-            //initialize option type classes that are required by the option configurations
-            $this->_optionClasses [ $option[ 'type' ] ] = match ( $option[ 'type' ] ) {
-                
-                Input::init( $option )->getField() => Input::init( $option ),
-                Textarea::init( $option )->getField() => Textarea::init( $option ),
-                Checkbox::init( $option )->getField() => Checkbox::init( $option ),
-                Radio::init( $option )->getField() => Radio::init( $option ),
-                Text::init( $option )->getField() => Text::init( $option ),
-                WpEditor::init( $option )->getField() => WpEditor::init( $option ),
-                SwitchField::init( $option )->getField() => SwitchField::init( $option ),
-                Dropdown::init( $option )->getField() => Dropdown::init( $option ),
-                DropdownMultiple::init( $option )->getField() => DropdownMultiple::init( $option ),
-                MultiInput::init( $option )->getField() => MultiInput::init( $option ),
-                AceEditor::init( $option )->getField() => AceEditor::init( $option ),
-                ColorPicker::init( $option )->getField() => ColorPicker::init( $option )
-            };
-        }
+        //instanciate the option type classes
+        $input = new Input();
+        $textarea = new Textarea();
+        $checkbox = new Checkbox();
+        $radio = new Radio();
+        $text = new Text();
+        $wpeditor = new WpEditor();
+        $switchfield = new SwitchField();
+        $dropdown = new Dropdown();
+        $dropdown_multple = new DropdownMultiple();
+        $multiinput = new MultiInput();
+        $ace_editor = new AceEditor();
+        $colorpicker = new ColorPicker();
+        $datepicker = new DatePicker();
+        $timepicker = new TimePicker();
+        $datetimepicker = new DateTimePicker();
+        $rangeslider = new RangeSlider();
+        $spacing = new Spacing();
+        
+        //add class instance to the _optionClasses array to use throughout the Option class methods
+        $this->_optionClasses[ $input->getField() ] = $input;
+        $this->_optionClasses[ $textarea->getField() ] = $textarea;
+        $this->_optionClasses[ $checkbox->getField() ] = $checkbox;
+        $this->_optionClasses[ $radio->getField() ] = $radio;
+        $this->_optionClasses[ $text->getField() ] = $text;
+        $this->_optionClasses[ $wpeditor->getField() ] = $wpeditor;
+        $this->_optionClasses[ $switchfield->getField() ] = $switchfield;
+        $this->_optionClasses[ $dropdown->getField() ] = $dropdown;
+        $this->_optionClasses[ $dropdown_multple->getField() ] = $dropdown_multple;
+        $this->_optionClasses[ $multiinput->getField() ] = $multiinput;
+        $this->_optionClasses[ $ace_editor->getField() ] = $ace_editor;
+        $this->_optionClasses[ $colorpicker->getField() ] = $colorpicker;
+        $this->_optionClasses[ $datepicker->getField() ] = $datepicker;
+        $this->_optionClasses[ $timepicker->getField() ] = $timepicker;
+        $this->_optionClasses[ $datetimepicker->getField() ] = $datetimepicker;
+        $this->_optionClasses[ $rangeslider->getField() ] = $rangeslider;
+        $this->_optionClasses[ $spacing->getField() ] = $spacing;
     }
     
     /**
@@ -256,27 +289,6 @@ final class Options implements IOptions {
         $nonce = empty( $nonce ) ? 'dht_' . md5( uniqid( (string)mt_rand(), true ) ) . '_dht_fw_nonce' : $nonce;
         
         return [ 'name' => $nonce . '_name', 'action' => $nonce . '_action' ];
-    }
-    
-    /**
-     *
-     * validate the options configurations received from plugin
-     *
-     * @param array $options_config
-     *
-     * @return array
-     * @throws EmptyOptionsConfigurationsException
-     * @since     1.0.0
-     */
-    private function _validateOptionsConfigurations( array $options_config ) : array {
-        
-        if ( !empty( $options_config ) ) {
-            
-            return apply_filters( 'options_configurations', $options_config );
-        } else {
-            
-            throw new EmptyOptionsConfigurationsException( _x( 'Empty options configurations array', 'exceptions', DHT_PREFIX ) );
-        }
     }
     
 }

@@ -15,25 +15,24 @@ final class AceEditor extends BaseOption {
     /**
      * @since     1.0.0
      */
-    protected function __construct( array $option ) {
+    public function __construct() {
         
-        parent::__construct( $option );
+        parent::__construct();
     }
     
     /**
      * Enqueue input scripts and styles
      *
-     * @param string $hook
-     * @param array  $option
+     * @param array $option
      *
      * @return void
      * @since     1.0.0
      */
-    public function enqueueOptionScripts( string $hook, array $option ) : void {
+    public function enqueueOptionScripts( array $option ) : void {
         
-        wp_enqueue_script( 'dht-ace-editor-option', DHT_ASSETS_URI . 'scripts/js/options/ace-editor-script.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
+        wp_enqueue_script( DHT_PREFIX . '-ace-editor-option', DHT_ASSETS_URI . 'scripts/js/options/ace-editor-script.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
         
-        wp_localize_script( 'dht-ace-editor-option', 'dht_ace_editor_path', array(
+        wp_localize_script( DHT_PREFIX . '-ace-editor-option', 'dht_ace_editor_path', array(
             'path' => DHT_URI . 'node_modules/ace-builds/'
         ) );
     }

@@ -91,30 +91,30 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
 
 (function ($) {
-    'use strict';
-    var $field_wrapper = $('.dht-field-wrapper');
-    $field_wrapper.on('click', '.dht-field-child-multiinput .dht-multiinput-add', function () {
+    "use strict";
+    var $field_wrapper = $(".dht-field-wrapper");
+    $field_wrapper.on("click", ".dht-field-child-multiinput .dht-multiinput-add", function () {
         var $this = $(this);
-        var limit = +$this.attr('data-limit');
+        var limit = +$this.attr("data-limit");
         if ($this
-            .parents('.dht-field-child-multiinput')
-            .children('.dht-multiinput-child-wrapper').length >= limit) {
-            confirm($(this).attr('data-add-text'));
+            .parents(".dht-field-child-multiinput")
+            .children(".dht-multiinput-child-wrapper").length >= limit) {
+            confirm($(this).attr("data-add-text"));
             return false;
         }
-        var $field = $this.prev('.dht-multiinput-child-wrapper').clone();
-        $field.children('input').val('');
+        var $field = $this.prev(".dht-multiinput-child-wrapper").clone();
+        $field.children("input").val("");
         $field.insertBefore($this);
     });
-    $field_wrapper.on('click', '.dht-field-child-multiinput .dht-multiinput-remove', function () {
+    $field_wrapper.on("click", ".dht-field-child-multiinput .dht-multiinput-remove", function () {
         var $this = $(this);
         if ($this
-            .parents('.dht-field-child-wrapper')
-            .children('.dht-multiinput-child-wrapper').length === 1) {
-            confirm($(this).attr('data-remove-text'));
+            .parents(".dht-field-child-wrapper")
+            .children(".dht-multiinput-child-wrapper").length === 1) {
+            confirm($(this).attr("data-remove-text"));
             return;
         }
-        $this.parent('.dht-multiinput-child-wrapper').remove();
+        $this.parent(".dht-multiinput-child-wrapper").remove();
     });
 })((jquery__WEBPACK_IMPORTED_MODULE_0___default()));
 

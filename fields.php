@@ -1,375 +1,3 @@
-
-
-<?php
-
-// field - datepicker_sortable
-/*add_action( 'admin_enqueue_scripts', 'datepicker_sortable' );
-function datepicker_sortable() {
-
-    wp_register_style( 'dht-jquery-ui-css', DHT_ASSETS_URI . 'styles/libraries/jquery-ui.min.css', array(), fw()->manifest->get( 'version' ) );
-    wp_enqueue_style( 'dht-jquery-ui-css' );
-
-    wp_enqueue_script( 'dht-jquery-ui', DHT_ASSETS_URI . 'scripts/libraries/jquery-ui.min.js', array(), fw()->manifest->get( 'version' ), true );
-}
-
-// field - timepicker_sortable
-add_action( 'admin_enqueue_scripts', 'timepicker' );
-function timepicker() {
-
-    wp_register_style( 'dht-jquery-ui-timepicker-css', DHT_ASSETS_URI . 'styles/libraries/jquery-ui-timepicker-addon.min.css', array(), fw()->manifest->get( 'version' ) );
-    wp_enqueue_style( 'dht-jquery-ui-timepicker-css' );
-
-    wp_enqueue_script( 'dht-jquery-ui-timepicker', DHT_ASSETS_URI . 'scripts/libraries/jquery-ui-timepicker-addon.min.js', array( 'dht-jquery-ui' ), fw()->manifest->get( 'version' ), true );
-}*/
-
-?>
-
-
-?>
-<!-------------------------------------------------------------------------------------->
-
-<!-- field - datepicker -->
-<script>
-    jQuery(document).ready(function() {
-        jQuery('.dht-field-child-datepicker .dht-datepicker').datepicker({
-            dateFormat: 'yy-mm-dd',
-        })
-    })
-</script>
-
-<div class="dht-field-wrapper">
-    <div class="dht-title">Datepicker Input</div>
-    <div class="dht-field-child-wrapper dht-field-child-datepicker">
-        <label for="test-input">Datepicker</label>
-        <input class="dht-datepicker dht-field" id="datepicker-input" type="text" name="datepicker-input" value=""
-               title="title" />
-        <div class="dht-description">Field description</div>
-    </div>
-    <div class="dht-info-help dashicons dashicons-info"
-         data-tooltips="A little box to something to make it longer"
-         data-position="OnLeft">
-    </div>
-</div>
-<div class="dht-divider"></div>
-
-<style>
-    /* datepicker field */
-    div#ui-datepicker-div {
-        z-index: 99 !important;
-    }
-
-    .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active,
-    a.ui-button:active, .ui-button:active, .ui-button.ui-state-active:hover {
-        border: 1px solid rgb(99, 91, 255);
-        background: rgb(99, 91, 255);
-        color: #fff;
-    }
-
-    .ui-datepicker .ui-datepicker-header {
-        background: rgb(99, 91, 255);
-        color: #fff;
-    }
-
-    .ui-datepicker .ui-datepicker-prev, .ui-datepicker .ui-datepicker-next {
-        background: #fff;
-    }
-
-    .ui-widget-header .ui-icon {
-        background-image: url(<?php echo DHT_ASSETS_URI . 'images/ui-icons_454545_256x240.png'; ?>);
-    }
-</style>
-
-
-<!-- field - timepicker -->
-<script>
-    jQuery(document).ready(function() {
-        jQuery('.dht-field-child-datepicker .dht-timepicker').timepicker({
-            timeFormat: 'HH:mm:ss',
-            interval: 15,
-            /* minTime: '10:00am',
-            maxTime: '6:00pm',
-            startTime: '10:00am',*/
-            dynamic: false,
-            dropdown: true,
-            scrollbar: true,
-        })
-    })
-</script>
-
-<div class="dht-field-wrapper">
-    <div class="dht-title">Timepicker</div>
-    <div class="dht-field-child-wrapper dht-field-child-datepicker">
-        <label for="test-input">Timepicker</label>
-        <input class="dht-timepicker dht-field" id="timepicker-input" type="text" name="timepicker-input" value=""
-               title="title" />
-        <div class="dht-description">Field description</div>
-    </div>
-    <div class="dht-info-help dashicons dashicons-info"
-         data-tooltips="A little box to something to make it longer"
-         data-position="OnLeft">
-    </div>
-</div>
-<div class="dht-divider"></div>
-
-<style>
-    /* timepicker field */
-    .ui-timepicker-div .ui-widget-header {
-        background: rgb(99, 91, 255);
-        color: #fff;
-    }
-
-    .ui-timepicker-div span.ui-slider-handle.ui-corner-all.ui-state-default {
-        position: absolute;
-        z-index: 2;
-        width: 1.2em;
-        height: 1.2em;
-        cursor: default;
-        -ms-touch-action: none;
-        touch-action: none;
-        top: -6px;
-    }
-
-    .ui-timepicker-div .ui-slider-horizontal.ui-widget.ui-widget-content {
-        height: 0.5em;
-        position: relative;
-        top: 5px;
-        margin-bottom: 25px;
-    }
-</style>
-
-<!-- field - datetimepicker -->
-<script>
-    jQuery(document).ready(function() {
-        jQuery('.dht-field-child-datepicker .dht-datetimepicker').datetimepicker({
-            dateFormat: 'yy-mm-dd',
-            timeFormat: 'HH:mm:ss',
-            interval: 15,
-            /* minTime: '10:00am',
-            maxTime: '6:00pm',
-            startTime: '10:00am',*/
-            dynamic: false,
-            dropdown: true,
-            scrollbar: true,
-        })
-    })
-</script>
-
-<div class="dht-field-wrapper">
-    <div class="dht-title">DateTimepicker</div>
-    <div class="dht-field-child-wrapper dht-field-child-datepicker">
-        <label for="test-input">DateTimepicker</label>
-        <input class="dht-datetimepicker dht-field" id="datetimepicker-input" type="text" name="datetimepicker-input"
-               value="" title="title" />
-        <div class="dht-description">Field description</div>
-    </div>
-    <div class="dht-info-help dashicons dashicons-info"
-         data-tooltips="A little box to something to make it longer"
-         data-position="OnLeft">
-    </div>
-</div>
-<div class="dht-divider"></div>
-
-<?php
-// field - datepicker_sortable
-add_action( 'admin_enqueue_scripts', 'datepicker_sortable' );
-function datepicker_sortable() {
-
-    wp_register_style( 'dht-jquery-ui-css', DHT_ASSETS_URI . 'styles/libraries/jquery-ui.min.css', array(), fw()->manifest->get( 'version' ) );
-    wp_enqueue_style( 'dht-jquery-ui-css' );
-
-    wp_enqueue_script( 'dht-jquery-ui', DHT_ASSETS_URI . 'scripts/libraries/jquery-ui.min.js', array(), fw()->manifest->get( 'version' ), true );
-}
-
-// field - timepicker_sortable
-add_action( 'admin_enqueue_scripts', 'timepicker' );
-function timepicker() {
-
-    wp_register_style( 'dht-jquery-ui-timepicker-css', DHT_ASSETS_URI . 'styles/libraries/jquery-ui-timepicker-addon.min.css', array(), fw()->manifest->get( 'version' ) );
-    wp_enqueue_style( 'dht-jquery-ui-timepicker-css' );
-
-    wp_enqueue_script( 'dht-jquery-ui-timepicker', DHT_ASSETS_URI . 'scripts/libraries/jquery-ui-timepicker-addon.min.js', array( 'dht-jquery-ui' ), fw()->manifest->get( 'version' ), true );
-}
-
-?>
-
-<!-------------------------------------------------------------------------------------->
-
-<!-- field - disabled -->
-<div class="dht-field-wrapper">
-    <div class="dht-title">Disabled Input</div>
-    <div class="dht-field-child-wrapper dht-disabled">
-
-        <div class="dht-field-child-group">
-            <label for="test-input">Disabled</label>
-            <input class="dht-input dht-field" id="test-input111" type="text" name="test-input11" value=""
-                   title="title" />
-        </div>
-
-        <div class="dht-field-child-group">
-            <label for="test-input">Disabled</label>
-            <input class="dht-input dht-field" id="test-input111" type="text" name="test-input11" value=""
-                   title="title" />
-        </div>
-        <div class="dht-description">Field description</div>
-    </div>
-    <div class="dht-info-help dashicons dashicons-info"
-         data-tooltips="A little box to something to make it longer"
-         data-position="OnLeft">
-    </div>
-</div>
-<div class="dht-divider"></div>
-
-<style>
-    /* disabled field */
-    .dht-wrapper .dht-field-child-wrapper.dht-disabled {
-        pointer-events: none;
-        background: rgba(0, 0, 0, 0.25);
-        opacity: 0.45;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-        padding: 20px 10px !important;
-        position: relative;
-    }
-
-    .dht-wrapper .dht-field-child-wrapper.dht-disabled::before {
-        color: #fff;
-        font-family: dashicons;
-        content: "\f160";
-        font-size: 60px;
-        position: absolute;
-        z-index: 1000;
-        text-shadow: 2px 2px #0e0e0e;
-        left: 50%;
-        top: 50%;
-        margin-left: -25px;
-        transform: translate(-50%, -50%);
-    }
-</style>
-
-<!-------------------------------------------------------------------------------------->
-
-<!-- field - rangeslider -->
-<script>
-    jQuery(document).ready(function($) {
-        jQuery('#dht-rangeslider11').slider({
-            range: true,
-            value: 5,
-            min: 1,
-            max: 200,
-            values: [25, 100],
-            slide: function(event, ui) {
-                jQuery('#test-000000').val(ui.values[0])
-                jQuery('#test-111111').val(ui.values[1])
-            },
-        })
-        jQuery('#test-000000').val(jQuery('#dht-rangeslider11').slider('values', 0))
-        jQuery('#test-111111').val(jQuery('#dht-rangeslider11').slider('values', 1))
-    })
-</script>
-<div class="dht-field-wrapper">
-    <div class="dht-title">Range Slider field</div>
-    <div class="dht-field-child-wrapper dht-field-child-rangeslider">
-
-        <div class="dht-slider-group">
-            <label for="test-input">Range Sldier field</label>
-            <input class="dht-range-slider dht-field" id="test-000000" type="text" name="rangeslider[]" value=""
-                   title="title" />
-            -
-            <label for="test-input">Range Sldier field</label>
-            <input class="dht-range-slider dht-field" id="test-111111" type="text" name="rangeslider" value=""
-                   title="title" />
-        </div>
-        <div id="dht-rangeslider11" class="dht-slider-slider"></div>
-
-        <div class="dht-description">Field description</div>
-    </div>
-
-    <div class="dht-info-help dashicons dashicons-info"
-         data-tooltips="A little box to something to make it longer"
-         data-position="OnLeft">
-    </div>
-</div>
-<div class="dht-divider"></div>
-
-<!-- field - slider -->
-<script>
-    jQuery(document).ready(function($) {
-        jQuery('#dht-slider11').slider({
-            range: 'min',
-            value: 5,
-            min: 1,
-            max: 20,
-            slide: function(event, ui) {
-                jQuery('#test-345').val(ui.value)
-            },
-        })
-        jQuery('#test-345').val(jQuery('#dht-slider11').slider('value'))
-    })
-</script>
-<div class="dht-field-wrapper">
-    <div class="dht-title">Slider field</div>
-    <div class="dht-field-child-wrapper dht-field-child-rangeslider">
-
-        <label for="test-input">Slider field</label>
-        <input class="dht-slider dht-field" id="test-345" type="text" name="slider" value="" title="title" />
-        <div id="dht-slider11" class="dht-slider-slider"></div>
-        <div class="dht-description">Field description</div>
-    </div>
-
-    <div class="dht-info-help dashicons dashicons-info"
-         data-tooltips="A little box to something to make it longer"
-         data-position="OnLeft">
-    </div>
-</div>
-<div class="dht-divider"></div>
-
-<style>
-    /* slider field */
-    .dht-wrapper .dht-field-child-rangeslider .dht-slider-group {
-        display: flex;
-        align-items: center;
-    }
-
-    .dht-wrapper .dht-field-child-rangeslider .dht-slider-group .dht-range-slider {
-        width: 200px;
-    }
-
-    .dht-wrapper .dht-field-child-rangeslider .dht-slider-group .dht-range-slider:last-child {
-        margin-right: 0;
-        margin-left: 10px;
-    }
-
-    .dht-wrapper .dht-field-child-rangeslider .dht-slider-group .dht-range-slider {
-        margin-right: 10px;
-    }
-
-    .dht-wrapper .dht-field-child-rangeslider .dht-slider {
-        width: 200px !important;
-    }
-
-    .dht-wrapper .dht-field-child-rangeslider .dht-slider-slider {
-        margin-top: 20px;
-        height: 15px;
-    }
-
-    .dht-wrapper .dht-field-child-rangeslider .dht-slider-slider span.ui-slider-handle {
-        height: 25px;
-        width: 25px;
-        top: -6px;
-        border: 1px solid #c5c5c5;
-        background: #ffff;
-    }
-
-    .dht-wrapper .dht-field-child-rangeslider .dht-slider-slider .ui-slider-range.ui-corner-all {
-        background: rgb(99, 91, 255);
-    }
-</style>
-
-<!-------------------------------------------------------------------------------------->
-
 <!-- field - upload gallery -->
 <script>
     jQuery(document).ready(function($) {
@@ -1006,138 +634,6 @@ function timepicker() {
     </div>
 </div>
 <div class="dht-divider"></div>
-
-<!-------------------------------------------------------------------------------------->
-
-<!-- field - spacing -->
-<div class="dht-field-wrapper">
-    <div class="dht-title">Spacing</div>
-    <div class="dht-field-child-wrapper dht-field-child-spacing">
-
-        <div class="dht-field-spacing-group">
-
-            <div class="dht-field-spacing-input">
-                <label for="test-input">Top</label>
-                <span class="dht-spacing-top"></span>
-                <input class="dht-spacing dht-field" id="top" type="number" name="spacing[top]" value=""
-                       title="title" />
-            </div>
-
-            <div class="dht-field-spacing-input">
-                <label for="test-input">Right</label>
-                <span class="dht-spacing-right"></span>
-                <input class="dht-spacing dht-field" id="left" type="number" name="spacing[right]" value=""
-                       title="title" />
-            </div>
-
-            <div class="dht-field-spacing-input">
-                <label for="test-input">Bottom</label>
-                <span class="dht-spacing-bottom"></span>
-                <input class="dht-spacing dht-field" id="bottom" type="number" name="spacing[bottom]" value=""
-                       title="title" />
-            </div>
-
-            <div class="dht-field-spacing-input">
-                <label for="test-input">Left</label>
-                <span class="dht-spacing-left"></span>
-                <input class="dht-spacing dht-field" id="right" type="number" name="spacing[left]" value=""
-                       title="title" />
-            </div>
-
-            <div class="dht-field-spacing-input">
-                <label for="test-input">Sizes</label>
-                <select class="dht-spacing-dropdown dht-field" name="cars" id="cars">
-                    <option value="px" selected>px</option>
-                    <option value="percentage">%</option>
-                    <option value="em">em</option>
-                    <option value="rem">rem</option>
-                    <option value="vw">vw</option>
-                    <option value="vh">vh</option>
-                </select>
-            </div>
-        </div>
-
-
-        <div class="dht-description">Field description</div>
-    </div>
-    <div class="dht-info-help dashicons dashicons-info"
-         data-tooltips="A little box to something to make it longer"
-         data-position="OnLeft">
-    </div>
-</div>
-<div class="dht-divider"></div>
-
-<style>
-    /*spacing styles*/
-    .dht-wrapper .dht-field-child-spacing .dht-field-spacing-group {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-        grid-gap: 15px;
-    }
-
-    .dht-wrapper .dht-field-child-spacing .dht-field-spacing-group span:before {
-        font-family: dashicons;
-        color: #000;
-    }
-
-    .dht-wrapper .dht-field-child-spacing .dht-field-spacing-group span.dht-spacing-top:before {
-        content: "\f342";
-    }
-
-    .dht-wrapper .dht-field-child-spacing .dht-field-spacing-group span.dht-spacing-right:before {
-        content: "\f344";
-    }
-
-    .dht-wrapper .dht-field-child-spacing .dht-field-spacing-group span.dht-spacing-bottom:before {
-        content: "\f346";
-    }
-
-    .dht-wrapper .dht-field-child-spacing .dht-field-spacing-group span.dht-spacing-left:before {
-        content: "\f340";
-    }
-
-    .dht-wrapper .dht-field-child-spacing .dht-field-spacing-group span {
-        position: absolute;
-        background: #eee;
-        border: 1px solid #7e8993;
-        height: 18px;
-        padding: 5px;
-        border-radius: 4px 0 0 4px;
-    }
-
-    .dht-wrapper .dht-field-child-spacing .dht-field-spacing-input {
-        position: relative;
-    }
-
-    .dht-wrapper .dht-field-child-spacing .dht-spacing {
-        padding-left: 30px !important;
-    }
-
-    @media (max-width: 980px) {
-        .dht-wrapper .dht-field-child-spacing .dht-field-spacing-group {
-            display: block;
-        }
-
-        .dht-wrapper .dht-field-child-spacing .dht-field-spacing-group .dht-field-spacing-input {
-            margin-bottom: 10px;
-        }
-
-        .dht-wrapper .dht-field-child-spacing .dht-field-spacing-input select {
-            max-width: 100%;
-        }
-    }
-
-    @media (max-width: 767px) {
-        .dht-field-child-spacing .dht-field-spacing-group span {
-            padding: 10px;
-        }
-
-        .dht-field-child-spacing .dht-spacing {
-            padding-left: 40px !important;
-        }
-    }
-</style>
-
 <!-------------------------------------------------------------------------------------->
 
 <!-- field - icons-->
@@ -1483,7 +979,7 @@ function getGoogleFonts() {
 // Get Google Fonts
 $google_fonts = getGoogleFonts();
 
-\DHT\Helpers\dht_print_r( $google_fonts );
+dht_print_r( $google_fonts );
 
 
 //font weights
@@ -1652,9 +1148,6 @@ $font_style = empty( $font_style ) ? $standard_font_style : $font_style;
 </style>
 
 
-
-
-
 <!-------------------------------------------------------------------------------------->
 <!-------------------------------------------------------------------------------------->
 <!-------------------------------------------------------------------------------------->
@@ -1662,28 +1155,27 @@ $font_style = empty( $font_style ) ? $standard_font_style : $font_style;
 <!-------------------------------------------------------------------------------------->
 <!-------------------------------------------------------------------------------------->
 <!-------------------------------------------------------------------------------------->
-
 
 
 <!-- field - group -->
 <div class="dht-field-wrapper">
     <div class="dht-title">Group Fields</div>
     <div class="dht-field-child-wrapper dht-field-child-groups">
-        
+
         <div class="dht-field-child-group">
             <label for="test-input">Group Fields</label>
             <input class="dht-input dht-field" id="test-input111" type="text" name="group[group_name][]" value=""
                    title="title" />
             <div class="dht-description">Field description</div>
         </div>
-        
+
         <div class="dht-field-child-group">
             <label for="test-input">Disabled</label>
             <input class="dht-input dht-field" id="test-input111" type="text" name="group[group_name][]" value=""
                    title="title" />
             <div class="dht-description">Field description</div>
         </div>
-        
+
         <div class="dht-field-child-group">
             <label for="cars4">Choose cars:</label>
             <select class="dht-dropdown dht-field" name="group[group_name][]" id="cars4" multiple size="6">
@@ -1698,10 +1190,10 @@ $font_style = empty( $font_style ) ? $standard_font_style : $font_style;
             </select>
             <div class="dht-description">Field description</div>
         </div>
-        
+
         <div class="dht-description">Group description</div>
     </div>
-    
+
     <div class="dht-info-help dashicons dashicons-info"
          data-tooltips="A little box to something to make it longer"
          data-position="OnLeft">
@@ -1723,14 +1215,14 @@ $font_style = empty( $font_style ) ? $standard_font_style : $font_style;
     jQuery(document).ready(function($) {
         $('.dht-field-tabs .dht-tab-links a').click(function(e) {
             e.preventDefault() // Prevent default anchor behavior
-            
+
             // Get the target tab ID from the href attribute
             let tabId = $(this).attr('href')
-            
+
             // Hide all tab contents and remove 'active' class from all tabs
             $('.dht-tab-content').removeClass('active')
             $('.dht-tab-links li').removeClass('active')
-            
+
             // Show the target tab content and add 'active' class to the clicked tab
             $(tabId).addClass('active')
             $(this).parent().addClass('active')
@@ -1741,14 +1233,14 @@ $font_style = empty( $font_style ) ? $standard_font_style : $font_style;
 <div class="dht-field-wrapper">
     <div class="dht-title">Tabs</div>
     <div class="dht-field-child-wrapper dht-field-child-tabs">
-        
+
         <div class="dht-field-tabs">
             <ul class="dht-tab-links">
                 <li class="active"><a href="#tab1">Tab 1</a></li>
                 <li><a href="#tab2">Tab 2</a></li>
                 <li><a href="#tab3">Tab 3</a></li>
             </ul>
-            
+
             <div class="dht-tab-content active" id="tab1">
                 <div class="dht-field-wrapper">
                     <div class="dht-field-child-wrapper dht-field-child-textarea">
@@ -1759,7 +1251,7 @@ $font_style = empty( $font_style ) ? $standard_font_style : $font_style;
                     </div>
                 </div>
             </div>
-            
+
             <div class="dht-tab-content" id="tab2">
                 <div class="dht-field-wrapper">
                     <div class="dht-field-child-wrapper dht-field-child-textarea">
@@ -1770,11 +1262,11 @@ $font_style = empty( $font_style ) ? $standard_font_style : $font_style;
                     </div>
                 </div>
             </div>
-            
+
             <div class="dht-tab-content" id="tab3">Tab 3 content</div>
         </div>
-        
-        
+
+
         <div class="dht-description">Field description</div>
     </div>
 </div>
@@ -1785,11 +1277,11 @@ $font_style = empty( $font_style ) ? $standard_font_style : $font_style;
     .dht-wrapper .dht-field-child-tabs .dht-tab-content {
         display: none;
     }
-    
+
     .dht-wrapper .dht-field-child-tabs .dht-tab-content.active {
         display: block;
     }
-    
+
     .dht-wrapper .dht-field-child-tabs .dht-tab-links li a {
         display: inline-block;
         padding: 12px 15px;
@@ -1805,32 +1297,32 @@ $font_style = empty( $font_style ) ? $standard_font_style : $font_style;
         -webkit-transition: all .2s;
         transition: all .2s;
     }
-    
+
     .dht-wrapper .dht-field-child-tabs .dht-tab-links li.active a {
         background-color: #fff;
         border-bottom-color: #fff;
     }
-    
+
     .dht-wrapper .dht-field-child-tabs .dht-field-tabs .dht-tab-content {
         border: 1px solid #ccd0d4;
         background-color: #fff;
         -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
         box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
     }
-    
+
     .dht-wrapper .dht-field-child-tabs ul.dht-tab-links {
         display: flex;
         margin-bottom: 0;
     }
-    
+
     .dht-wrapper .dht-field-child-tabs .dht-field-tabs .dht-tab-content {
         padding: 20px;
     }
-    
+
     .dht-wrapper .dht-field-child-tabs .dht-tab-links li {
         margin-bottom: 0;
     }
-    
+
     .dht-wrapper .dht-field-child-tabs .dht-field-wrapper {
         display: block;
         padding: 0;
@@ -1842,66 +1334,66 @@ $font_style = empty( $font_style ) ? $standard_font_style : $font_style;
 <!-- field - accordion -->
 
 <script>
-    
+
     jQuery(document).ready(function($) {
         //create accordion
         $('.dht-wrapper').on('click', '.dht-field-child-accordion .dht-accordion .dht-accordion-title', function(e) {
             e.preventDefault()
-            
+
             const $this = $(this)
-            
+
             if ($this.hasClass('dht-accordion-active')) return
-            
+
             const $parent = $this.parents('.dht-accordion')
-            
+
             if (!$this.hasClass('dht-accordion-active')) {
                 $parent.find('.dht-accordion-content').slideUp(400)
                 $parent.find('.dht-accordion-title').removeClass('dht-accordion-active')
                 $parent.find('.dht-accordion-arrow').removeClass('dht-accordion-icon-change')
             }
-            
+
             $this.toggleClass('dht-accordion-active')
             $this.next().slideToggle()
             $('.dht-accordion-arrow', this).toggleClass('dht-accordion-icon-change')
         })
-        
+
         //add new toggle in your accordion
         $('.dht-field-child-accordion .dht-accordion-repeater .dht-add-toggle').on('click', function(e) {
             e.preventDefault()
-            
+
             const $this = $(this)
-            
+
             let $toggle = $this.prev('.dht-accordion-item').clone()
-            
+
             //if toggle opened, close it
             $toggle.children('.dht-accordion-title').removeClass('dht-accordion-active')
             $toggle.children('.dht-accordion-title').children('.dht-accordion-arrow').removeClass('dht-accordion-icon-change')
             $toggle.children('.dht-accordion-content').hide()
-            
+
             //clear inout values
             dhtClearFormInputs($toggle)
-            
+
             $toggle.insertBefore($this)
         })
-        
+
         //remove toggle item
         $('.dht-wrapper').on('click', '.dht-field-child-accordion .dht-accordion-repeater .dht-btn-remove', function(e) {
             e.preventDefault()
-            
+
             const $this = $(this)
             const $main_parent = $this.parents('.dht-accordion-repeater')
-            
+
             if ($main_parent.children('.dht-accordion-item').length === 1) {
                 confirm($main_parent.find('.dht-toggle-remove-text').text())
-                
+
                 return
             }
-            
+
             $this.parents('.dht-accordion-item').remove()
-            
+
             return false
         })
-        
+
         // Function to clear form inputs
         function dhtClearFormInputs(content) {
             content.find('input[type="text"], input[type="email"], textarea').val('')
@@ -1915,7 +1407,7 @@ $font_style = empty( $font_style ) ? $standard_font_style : $font_style;
 <div class="dht-field-wrapper">
     <div class="dht-title">Repeater</div>
     <div class="dht-field-child-wrapper dht-field-child-accordion">
-        
+
         <div class="dht-accordion dht-accordion-repeater">
             <div class="dht-accordion-item">
                 <div class="dht-accordion-title">
@@ -1926,7 +1418,7 @@ $font_style = empty( $font_style ) ? $standard_font_style : $font_style;
                     <span class="dht-accordion-title-text">Title 1</span>
                 </div>
                 <div class="dht-accordion-content">
-                    
+
                     <div class="dht-field-wrapper">
                         <div class="dht-title">Textarea</div>
                         <div class="dht-field-child-wrapper dht-field-child-textarea">
@@ -1937,47 +1429,47 @@ $font_style = empty( $font_style ) ? $standard_font_style : $font_style;
                             <div class="dht-description">Field description</div>
                         </div>
                     </div>
-                    
+
                     <div class="dht-divider"></div>
-                    
+
                     <div class="dht-field-wrapper">
                         <div class="dht-title">Radio Boxes</div>
                         <div class="dht-field-child-wrapper dht-field-child-radio">
-                            
+
                             <div class="dht-radio-wrapper">
                                 <input class="dht-radio dht-field" type="radio" name="radio[]" id="radio-1" value="1"
                                        checked="checked" />
                                 <label for="radio-1">Option 1</label>
                             </div>
-                            
+
                             <div class="dht-radio-wrapper">
                                 <input class="dht-radio dht-field" type="radio" name="radio[]" id="radio-2" value="2" />
                                 <label for="radio-2">Option 2</label>
                             </div>
-                            
+
                             <div class="dht-radio-wrapper">
                                 <input class="dht-radio dht-field" type="radio" name="radio[]" id="radio-3" value="3" />
                                 <label for="radio-3">Option 3</label>
                             </div>
-                            
+
                             <div class="dht-description">Field description</div>
                         </div>
-                    
+
                     </div>
-                    
+
                     <div class="dht-remove-toggle">
                         <div class="dht-divider"></div>
-                        
+
                         <a href="" class="button button-primary dht-btn-remove">Remove Icon</a>
                     </div>
-                
+
                 </div>
             </div>
-            
+
             <a href="" class="button button-primary dht-add-toggle">Add</a>
             <div class="dht-toggle-remove-text">Can't remove the only item</div>
         </div>
-        
+
         <div class="dht-description">Field description</div>
     </div>
     <div class="dht-info-help dashicons dashicons-info"
@@ -1992,7 +1484,7 @@ $font_style = empty( $font_style ) ? $standard_font_style : $font_style;
 <div class="dht-field-wrapper">
     <div class="dht-title">Accordion</div>
     <div class="dht-field-child-wrapper dht-field-child-accordion">
-        
+
         <div class="dht-accordion">
             <div class="dht-accordion-item">
                 <div class="dht-accordion-title">
@@ -2003,7 +1495,7 @@ $font_style = empty( $font_style ) ? $standard_font_style : $font_style;
                     <span class="dht-accordion-title-text">Title 1</span>
                 </div>
                 <div class="dht-accordion-content">
-                    
+
                     <div class="dht-field-wrapper">
                         <div class="dht-title">Textarea</div>
                         <div class="dht-field-child-wrapper dht-field-child-textarea">
@@ -2014,69 +1506,69 @@ $font_style = empty( $font_style ) ? $standard_font_style : $font_style;
                             <div class="dht-description">Field description</div>
                         </div>
                     </div>
-                    
+
                     <div class="dht-divider"></div>
-                    
+
                     <div class="dht-field-wrapper">
                         <div class="dht-title">Radio Boxes</div>
                         <div class="dht-field-child-wrapper dht-field-child-radio">
-                            
+
                             <div class="dht-radio-wrapper">
                                 <input class="dht-radio dht-field" type="radio" name="radio[]" id="radio-1" value="1"
                                        checked="checked" />
                                 <label for="radio-1">Option 1</label>
                             </div>
-                            
+
                             <div class="dht-radio-wrapper">
                                 <input class="dht-radio dht-field" type="radio" name="radio[]" id="radio-2" value="2" />
                                 <label for="radio-2">Option 2</label>
                             </div>
-                            
+
                             <div class="dht-radio-wrapper">
                                 <input class="dht-radio dht-field" type="radio" name="radio[]" id="radio-3" value="3" />
                                 <label for="radio-3">Option 3</label>
                             </div>
-                            
+
                             <div class="dht-description">Field description</div>
                         </div>
-                    
+
                     </div>
-                    
+
                     <style>
                         /*radio styles*/
                         .dht-wrapper .dht-field-child-radio .dht-radio:first-child {
                             margin-top: 0px;
                         }
-                        
+
                         .dht-wrapper .dht-field-child-radio .dht-radio {
                             margin-top: 10px;
                         }
-                        
+
                         .dht-wrapper .dht-field-child-radio .dht-radio-wrapper .dht-radio {
                             float: left;
                         }
-                        
+
                         .dht-wrapper .dht-field-child-radio .dht-radio-wrapper label {
                             display: block;
                         }
-                        
+
                         .dht-wrapper .dht-field-child-radio .dht-radio-wrapper {
                             clear: both;
                         }
-                        
+
                         .dht-wrapper .dht-field-child-radio .dht-radio-wrapper {
                             margin-bottom: 10px;
                         }
-                        
+
                         .dht-wrapper .dht-field-child-radio .dht-radio-wrapper:last-child {
                             margin-bottom: 0px;
                         }
-                        
+
                         .dht-wrapper .dht-field-child-radio .dht-radio {
                             width: auto;
                         }
                     </style>
-                
+
                 </div>
             </div>
             <div class="dht-accordion-item">
@@ -2091,9 +1583,9 @@ $font_style = empty( $font_style ) ? $standard_font_style : $font_style;
                     Content
                 </div>
             </div>
-        
+
         </div>
-        
+
         <div class="dht-description">Field description</div>
     </div>
     <div class="dht-info-help dashicons dashicons-info"
@@ -2107,7 +1599,7 @@ $font_style = empty( $font_style ) ? $standard_font_style : $font_style;
     .dht-wrapper .dht-field-child-accordion .dht-accordion-item {
         margin: 5px auto;
     }
-    
+
     .dht-wrapper .dht-field-child-accordion .dht-accordion-item .dht-accordion-title {
         position: relative;
         display: block;
@@ -2123,16 +1615,16 @@ $font_style = empty( $font_style ) ? $standard_font_style : $font_style;
         cursor: pointer;
         text-transform: uppercase;
     }
-    
+
     .dht-wrapper .dht-field-child-accordion.dht-accordion-item .dht-accordion-title:hover {
         background-color: #e5e4e4;
         transition: all 0.5s ease-out;
     }
-    
+
     .dht-wrapper .dht-field-child-accordion .dht-accordion-item .dht-accordion-active {
         background-color: #e5e4e4;
     }
-    
+
     .dht-wrapper .dht-field-child-accordion .dht-accordion-item .dht-accordion-title .dht-accordion-arrow {
         position: absolute;
         top: 13px;
@@ -2143,7 +1635,7 @@ $font_style = empty( $font_style ) ? $standard_font_style : $font_style;
         -webkit-transition: all 0.2s ease-out;
         transition: all 0.2s ease-out;
     }
-    
+
     .dht-wrapper .dht-field-child-accordion .dht-accordion-item .dht-accordion-content {
         padding: 30px;
         margin-bottom: 2px;
@@ -2151,53 +1643,53 @@ $font_style = empty( $font_style ) ? $standard_font_style : $font_style;
         display: none;
         background-color: #f3f3f3;
     }
-    
+
     .dht-wrapper .dht-field-child-accordion .dht-accordion-item .dht-accordion-arrow-item,
     .dht-wrapper .dht-field-child-accordion .dht-accordion-item .dht-accordion-arrow-item-close {
         top: 3px;
         position: relative;
         font-size: 25px !important;
     }
-    
+
     .dht-wrapper .dht-field-child-accordion .dht-accordion-arrow .dht-accordion-arrow-item-close,
     .dht-wrapper .dht-field-child-accordion .dht-accordion-arrow.dht-accordion-icon-change .dht-accordion-arrow-item {
         display: none;
     }
-    
+
     .dht-wrapper .dht-field-child-accordion .dht-accordion-arrow.dht-accordion-icon-change .dht-accordion-arrow-item-close {
         display: block;
     }
-    
+
     .dht-wrapper .dht-field-child-accordion .dht-accordion .dht-field-wrapper {
         display: block;
         padding: 0;
     }
-    
+
     .dht-wrapper .dht-field-child-accordion .dht-accordion .dht-divider {
         margin: 20px 0;
     }
-    
+
     .dht-wrapper .dht-field-child-accordion .dht-accordion .dht-field-wrapper .dht-title {
         margin-bottom: 10px;
     }
-    
+
     .dht-wrapper .dht-field-child-accordion .dht-add-toggle {
         margin-top: 5px;
         float: right;
     }
-    
+
     .dht-wrapper .dht-field-child-accordion .dht-accordion-content:after {
         content: "";
         clear: both;
         display: table;
     }
-    
+
     .dht-wrapper .dht-field-child-accordion .button.button-primary.dht-btn-remove {
         background: red;
         border-color: red;
         float: right;
     }
-    
+
     .dht-wrapper .dht-field-child-accordion .dht-toggle-remove-text {
         display: none;
     }

@@ -9,9 +9,6 @@ if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 abstract class BaseOption {
     
-    //class instances for Singleton Pattern
-    private static array $_instances = [];
-    
     //options templates directory
     protected string $template_dir = DHT_TEMPLATES_DIR . 'options/';
     
@@ -19,44 +16,36 @@ abstract class BaseOption {
     protected string $_field = 'unknown';
     
     /**
-     * @param array $option - option array
-     *
-     * receive the option array for current field type
-     *
      * @since     1.0.0
      */
-    protected function __construct( array $option ) {
-        
-        add_action( 'admin_enqueue_scripts', function ( $hook ) use ( $option ) {
-            
-            $this->enqueueOptionScripts( $hook, $option );
-            
-        } );
-        
-    }
+    public function __construct() {}
     
     /**
-     * Enqueue the checkbox css file
+     * Enqueue the option scripts and css files hook
      *
-     * @param string $hook
-     * @param array  $option
+     * @param array $option
      *
      * @return void
      * @since     1.0.0
      */
-    public abstract function enqueueOptionScripts( string $hook, array $option ) : void;
+    public function enqueueOptionScriptsHook( array $option ) : void {
+        
+        add_action( 'admin_enqueue_scripts', function () use ( $option ) {
+            
+            $this->enqueueOptionScripts( $option );
+            
+        } );
+    }
     
     /**
+     * Enqueue the option scripts and css files
      *
-     * return field type
+     * @param array $option
      *
-     * @return string
+     * @return void
      * @since     1.0.0
      */
-    public function getField() : string {
-        
-        return $this->_field;
-    }
+    protected abstract function enqueueOptionScripts( array $option ) : void;
     
     /**
      *
@@ -70,6 +59,18 @@ abstract class BaseOption {
     public function render( array $option ) : string {
         
         return dht_load_view( $this->template_dir, $this->getField() . '.php', $option );
+    }
+    
+    /**
+     *
+     * return field type
+     *
+     * @return string
+     * @since     1.0.0
+     */
+    public function getField() : string {
+        
+        return $this->_field;
     }
     
     /**
@@ -131,34 +132,5 @@ abstract class BaseOption {
         
         return $option_value;
     }
-    
-    /**
-     * This is the static method that controls the access to the singleton
-     * instance. On the first run, it creates a singleton object and places it
-     * into the static field. On subsequent runs, it returns the client existing
-     * object stored in the static field.
-     *
-     * @param array $option - option array
-     *
-     * @return self - current class
-     * @since     1.0.0
-     */
-    public static function init( array $option ) : self {
-        
-        $cls = static::class;
-        if ( !isset( self::$_instances[ $cls ] ) ) {
-            self::$_instances[ $cls ] = new static( $option );
-        }
-        
-        return self::$_instances[ $cls ];
-    }
-    
-    /**
-     * no possibility to clone this class
-     *
-     * @return void
-     * @since     1.0.0
-     */
-    protected function __clone() : void {}
     
 }

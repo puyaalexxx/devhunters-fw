@@ -92,24 +92,24 @@ __webpack_require__.r(__webpack_exports__);
 // @ts-ignore
 
 (function ($) {
-    'use strict';
-    var tooltips = $('.dht-wrapper .dht-info-help');
+    "use strict";
+    var tooltips = $(".dht-wrapper .dht-info-help");
     jquery__WEBPACK_IMPORTED_MODULE_0___default()(tooltips).each(function () {
         var $tooltip = $(this);
-        $tooltip.on('mouseenter', function () {
+        $tooltip.on("mouseenter", function () {
             var $this = $(this);
-            $this.css('position', 'relative');
+            $this.css("position", "relative");
             $this.html($this.html() +
                 "<div class='dh-tooltips'><p class='" +
-                $this.attr('data-position') +
+                $this.attr("data-position") +
                 "'>" +
-                $this.attr('data-tooltips') +
-                '</p>');
+                $this.attr("data-tooltips") +
+                "</p>");
         });
-        $tooltip.on('mouseleave', function () {
+        $tooltip.on("mouseleave", function () {
             var $this = $(this);
-            $this.removeAttr('style');
-            $this.html($this.html().replace(/<div[^]*?<\/div>/, ''));
+            $this.removeAttr("style");
+            $this.html($this.html().replace(/<div[^]*?<\/div>/, ""));
         });
     });
 })((jquery__WEBPACK_IMPORTED_MODULE_0___default()));

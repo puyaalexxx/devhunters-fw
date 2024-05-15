@@ -91,26 +91,26 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
 
 (function ($) {
-    'use strict';
-    $('.dht-field-child-switch .dht-switch').on('click', function () {
+    "use strict";
+    $(".dht-field-child-switch .dht-switch").on("click", function () {
         var $this = $(this);
-        var $input = $this.children('input');
-        if ($this.hasClass('dht-slider-on')) {
-            $this.removeClass('dht-slider-on').addClass('dht-slider-off');
+        var $input = $this.children("input");
+        if ($this.hasClass("dht-slider-on")) {
+            $this.removeClass("dht-slider-on").addClass("dht-slider-off");
             //get off value
             var value = $this
-                .children('.dht-slider')
-                .children('.dht-slider-no')
-                .attr('data-value');
+                .children(".dht-slider")
+                .children(".dht-slider-no")
+                .attr("data-value");
             $input.val(value);
         }
         else {
-            $this.removeClass('dht-slider-off').addClass('dht-slider-on');
+            $this.removeClass("dht-slider-off").addClass("dht-slider-on");
             //get on value
             var value = $this
-                .children('.dht-slider')
-                .children('.dht-slider-yes')
-                .attr('data-value');
+                .children(".dht-slider")
+                .children(".dht-slider-yes")
+                .attr("data-value");
             $input.val(value);
         }
     });

@@ -3,7 +3,6 @@ declare( strict_types = 1 );
 
 namespace DHT\Extensions\Options;
 
-use DHT\Extensions\Options\Options;
 use DHT\Extensions\Options\Options\BaseOption;
 
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
@@ -31,12 +30,12 @@ interface IOptions {
      *
      * register framework option types with passed option settings
      *
-     * @param array  $options
+     * @param array $options
      *
      * @return void
      * @since     1.0.0
      */
-    public function registerOptionTypes(array $options) : void;
+    public function initOptions( array $options ) : void;
     
     /**
      *
@@ -48,5 +47,6 @@ interface IOptions {
      * @return void
      * @since     1.0.0
      */
-    public function registerCustomOptionType(BaseOption $optionClass, array $option) : void;
+    public function registerCustomOptionType( BaseOption $optionClass, array $option ) : void;
+    
 }

@@ -92,7 +92,7 @@ __webpack_require__.r(__webpack_exports__);
 
 (function ($) {
     "use strict";
-    $(".dht-field-child-colorpicker .dht-alphacolorpicker").each(function () {
+    $(".dht-field-child-wrapper .dht-alphacolorpicker").each(function () {
         var $colorpicker = $(this);
         var wpColorPickerArgs = {};
         //get default palette of colors
@@ -106,9 +106,7 @@ __webpack_require__.r(__webpack_exports__);
         //set default color picker args
         $colorpicker.wpColorPicker(wpColorPickerArgs);
         //default button to reset the color picker color to its default value
-        var $default_btn = $colorpicker
-            .parents(".dht-field-child-colorpicker")
-            .find(".dht-default-color-btn");
+        var $default_btn = $colorpicker.parents(".dht-field-child-wrapper").find(".dht-default-color-btn");
         $default_btn.insertAfter($colorpicker.parent("label"));
         //reset the color picker color to its default value
         $default_btn.on("click", function () {

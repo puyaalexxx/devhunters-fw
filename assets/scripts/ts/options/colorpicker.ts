@@ -3,7 +3,7 @@ import jQuery from "jquery";
 (function ($: JQueryStatic): void {
     "use strict";
 
-    $(".dht-field-child-colorpicker .dht-alphacolorpicker").each(function () {
+    $(".dht-field-child-wrapper .dht-alphacolorpicker").each(function () {
         const $colorpicker = $(this);
         let wpColorPickerArgs = {};
 
@@ -21,9 +21,7 @@ import jQuery from "jquery";
         ($colorpicker as any).wpColorPicker(wpColorPickerArgs);
 
         //default button to reset the color picker color to its default value
-        const $default_btn = $colorpicker
-            .parents(".dht-field-child-colorpicker")
-            .find(".dht-default-color-btn");
+        const $default_btn = $colorpicker.parents(".dht-field-child-wrapper").find(".dht-default-color-btn");
         $default_btn.insertAfter($colorpicker.parent("label"));
 
         //reset the color picker color to its default value

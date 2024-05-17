@@ -10,7 +10,7 @@ if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 final class MultiInput extends BaseOption {
     
     //field type
-    protected string $_field = 'multiinput';
+    protected string $_field = 'multi-input';
     
     /**
      * @since     1.0.0

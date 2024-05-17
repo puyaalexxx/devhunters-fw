@@ -4,6 +4,7 @@ declare( strict_types = 1 );
 namespace DHT\Extensions\Widgets;
 
 use DHT\Helpers\Exceptions\ConfigExceptions\EmptyWidgetNamesException;
+use DHT\Helpers\Traits\ValidateConfigurations;
 
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
@@ -12,6 +13,8 @@ if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
  * Class that is used to register plugin widgets
  */
 class RegisterWidget implements IRegisterWidget {
+    
+    use ValidateConfigurations;
     
     /**
      * @since     1.0.0
@@ -25,12 +28,13 @@ class RegisterWidget implements IRegisterWidget {
      * @param array $widgets
      *
      * @return void
-     * @throws EmptyWidgetNamesException
      * @since     1.0.0
      */
     public function registerWidgets( array $widgets ) : void {
         
-        $widgets_conf = $this->_validateWidgetsConfigurations( $widgets );
+        $widgets_conf = $this->_validateConfigurations( $widgets, '',
+            'widgets_configurations', EmptyWidgetNamesException::class,
+            'Empty widgets configurations array provided' );
         
         add_action( 'widgets_init', function () use ( $widgets_conf ) {
             
@@ -51,27 +55,6 @@ class RegisterWidget implements IRegisterWidget {
         
         foreach ( $widgets as $widget ) {
             register_widget( $widget );
-        }
-    }
-    
-    /**
-     *
-     * validate the widgets configurations received from plugin
-     *
-     * @param array $widgets
-     *
-     * @return array
-     * @throws EmptyWidgetNamesException
-     * @since     1.0.0
-     */
-    private function _validateWidgetsConfigurations( array $widgets ) : array {
-        
-        if ( !empty( $widgets ) ) {
-            
-            return apply_filters( 'widgets_configurations', $widgets );
-        } else {
-            
-            throw new EmptyWidgetNamesException( _x( 'Empty widgets configurations array provided', 'exceptions', DHT_PREFIX ) );
         }
     }
     

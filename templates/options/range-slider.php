@@ -24,8 +24,7 @@ $args = $args ?? [];
                            id="<?php echo esc_attr( $args[ 'id' ] ); ?>-1"
                            type="text"
                            name="<?php echo esc_attr( $args[ 'id' ] ); ?>[]"
-                           value="<?php echo !empty( $args[ 'value' ] ) ? $args[ 'value' ][ 0 ] : ''; ?>"
-                    />
+                           value="<?php echo !empty( $args[ 'value' ] ) ? $args[ 'value' ][ 0 ] : ''; ?>" />
                     -
                     <label
                         for="<?php echo esc_attr( $args[ 'id' ] ); ?>-2"><?php echo esc_html( $args[ 'label' ] ); ?></label>
@@ -33,8 +32,7 @@ $args = $args ?? [];
                            id="<?php echo esc_attr( $args[ 'id' ] ); ?>-2"
                            type="text"
                            name="<?php echo esc_attr( $args[ 'id' ] ); ?>[]"
-                           value="<?php echo !empty( $args[ 'value' ] ) ? $args[ 'value' ][ 1 ] : ''; ?>"
-                    />
+                           value="<?php echo !empty( $args[ 'value' ] ) ? $args[ 'value' ][ 1 ] : ''; ?>" />
                 </div>
 
                 <!--range slider -->

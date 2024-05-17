@@ -99,12 +99,8 @@ __webpack_require__.r(__webpack_exports__);
         var max = $this.attr("data-max");
         var values = $this.attr("data-values");
         if (is_range === "yes") {
-            var $input1_1 = $this
-                .siblings(".dht-slider-group")
-                .children(".dht-range-slider-1");
-            var $input2_1 = $this
-                .siblings(".dht-slider-group")
-                .children(".dht-range-slider-2");
+            var $input1_1 = $this.siblings(".dht-slider-group").children(".dht-range-slider-1");
+            var $input2_1 = $this.siblings(".dht-slider-group").children(".dht-range-slider-2");
             var range_values = values.length > 0 ? values.split(",").map(Number) : [];
             $this.slider({
                 range: true,

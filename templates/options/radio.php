@@ -20,8 +20,7 @@ $args = $args ?? [];
             foreach ( $args[ 'choices' ] as $value => $label ): ?>
 
                 <?php $radio_id = esc_attr( $args[ 'id' ] ) . '-' . $cnt; ?>
-                <div
-                    class="dht-radio-wrapper">
+                <div class="dht-radio-wrapper">
 
                     <input
                         class="dht-radio dht-field"
@@ -29,8 +28,7 @@ $args = $args ?? [];
                         name="<?php echo esc_attr( $args[ 'id' ] ); ?>"
                         id="<?php echo $radio_id; ?>"
                         value="<?php echo esc_attr( $value ); ?>"
-                        <?php echo ( $args[ 'value' ] == $value ) ? 'checked="checked"' : ''; ?>
-                    />
+                        <?php echo ( $args[ 'value' ] == $value ) ? 'checked="checked"' : ''; ?>/>
 
                     <label
                         for="<?php echo $radio_id; ?>"><?php echo esc_html( $label ); ?></label>
@@ -43,7 +41,7 @@ $args = $args ?? [];
         <?php if ( !empty( $args[ 'description' ] ) ): ?>
             <div class="dht-description"><?php echo esc_html( $args[ 'description' ] ); ?></div>
         <?php endif; ?>
-        
+
     </div>
 
     <?php if ( !empty( $args[ 'tooltip' ] ) ): ?>

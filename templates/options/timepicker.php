@@ -21,8 +21,7 @@ $args = $args ?? [];
                type="text"
                name="<?php echo esc_attr( $args[ 'id' ] ); ?>"
                value="<?php echo esc_html( $args[ 'value' ] ); ?>"
-               data-format="<?php echo esc_attr( $args[ 'format' ] ); ?>"
-        />
+               data-format="<?php echo esc_attr( $args[ 'format' ] ); ?>" />
 
         <?php if ( !empty( $args[ 'description' ] ) ): ?>
             <div class="dht-description"><?php echo esc_html( $args[ 'description' ] ); ?></div>

@@ -139,19 +139,13 @@ __webpack_require__.r(__webpack_exports__);
          */
         DhtWidgetAreas.prototype._bindEvents = function () {
             //display confirm / cancel buttons
-            this._customSidebar
-                .find(".dht-widget-area-delete")
-                .on("click", function () {
+            this._customSidebar.find(".dht-widget-area-delete").on("click", function () {
                 var parent = $(this).parents(".dht-wrap-delete");
-                parent
-                    .find(".dht-widget-area-delete-cancel, .dht-widget-area-delete-confirm")
-                    .show();
+                parent.find(".dht-widget-area-delete-cancel, .dht-widget-area-delete-confirm").show();
                 $(this).hide();
             });
             //display delete button
-            this._customSidebar
-                .find(".dht-widget-area-delete-cancel")
-                .on("click", function () {
+            this._customSidebar.find(".dht-widget-area-delete-cancel").on("click", function () {
                 var parent = $(this).parents(".dht-wrap-delete");
                 parent.find(".dht-widget-area-delete").show();
                 $(this).hide();
@@ -160,15 +154,11 @@ __webpack_require__.r(__webpack_exports__);
         };
         DhtWidgetAreas.prototype.deleteSidebarAjax = function () {
             //delete sidebar on clicking confirm button
-            this._customSidebar
-                .find(".dht-widget-area-delete-confirm")
-                .on("click", function () {
+            this._customSidebar.find(".dht-widget-area-delete-confirm").on("click", function () {
                 var sidebar_container = $(this).parents(".sidebar-dht-custom");
                 var spinner = sidebar_container.find(".sidebar-name .spinner");
                 //get sidebar id
-                var sidebar_id = sidebar_container
-                    .children(".widgets-sortables")
-                    .attr("id");
+                var sidebar_id = sidebar_container.children(".widgets-sortables").attr("id");
                 $.ajax({
                     //@ts-ignore
                     url: dht_remove_sidebar_object.ajax_url,

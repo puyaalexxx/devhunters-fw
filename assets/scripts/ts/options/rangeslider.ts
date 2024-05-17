@@ -12,15 +12,10 @@ import jQuery from "jquery";
         let values = $this.attr("data-values")!;
 
         if (is_range === "yes") {
-            const $input1 = $this
-                .siblings(".dht-slider-group")
-                .children(".dht-range-slider-1");
-            const $input2 = $this
-                .siblings(".dht-slider-group")
-                .children(".dht-range-slider-2");
+            const $input1 = $this.siblings(".dht-slider-group").children(".dht-range-slider-1");
+            const $input2 = $this.siblings(".dht-slider-group").children(".dht-range-slider-2");
 
-            const range_values: number[] =
-                values.length > 0 ? values.split(",").map(Number) : [];
+            const range_values: number[] = values.length > 0 ? values.split(",").map(Number) : [];
 
             $this.slider({
                 range: true,

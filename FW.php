@@ -8,7 +8,6 @@ if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 use DHT\Core\DI\DIInit;
 use DHT\Core\Manifest;
 use DHT\Extensions\Extensions;
-use function DHT\Helpers\dht_print_r;
 
 /**
  *
@@ -54,7 +53,6 @@ final class FW {
         require_once( plugin_dir_path( __FILE__ ) . "test.php" );
     }
     
-    
     /**
      * Register the PHP-DI containers
      *
@@ -69,15 +67,17 @@ final class FW {
         
         do_action( 'dht_after_di_init' );
     }
+    
 }
 
 /**
  * @return FW Framework instance
  */
 function fw() : FW {
+    
     static $FW = null; // cache
     
-    if ($FW === null) {
+    if ( $FW === null ) {
         $FW = new Fw();
         
         //framework is loaded

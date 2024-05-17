@@ -10,7 +10,7 @@ if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 final class RangeSlider extends BaseOption {
     
     //field type
-    protected string $_field = 'rangeslider';
+    protected string $_field = 'range-slider';
     
     /**
      * @since     1.0.0

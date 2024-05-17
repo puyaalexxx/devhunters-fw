@@ -22,13 +22,12 @@ $args = $args ?? [];
                 <?php echo ( $args[ 'subtype' ] == 'rgba' ) ? 'data-alpha="true" data-alpha-enabled="true"' : 'data-alpha="false" data-alpha-enabled="false"'; ?>
                    name="<?php echo esc_attr( $args[ 'id' ] ); ?>"
                    value="<?php echo esc_html( $args[ 'value' ] ); ?>"
-                   data-palette='<?php echo !empty( $args[ 'palettes' ] ) ? json_encode( $args[ 'palettes' ] ) : ''; ?>'
-            />
+                   data-palette='<?php echo !empty( $args[ 'palettes' ] ) ? json_encode( $args[ 'palettes' ] ) : ''; ?>' />
 
             <input type="button" id="<?php echo esc_attr( $args[ 'id' ] ) . '-btn'; ?>"
                    class="dht-default-color-btn button button-small"
                    data-default-value="<?php echo esc_html( $args[ 'value' ] ); ?>"
-                   value="Default">
+                   value="<?php echo _x( 'Default', 'options', DHT_PREFIX ) ?>">
 
             <?php if ( !empty( $args[ 'description' ] ) ): ?>
                 <div class="dht-description"><?php echo esc_html( $args[ 'description' ] ); ?></div>

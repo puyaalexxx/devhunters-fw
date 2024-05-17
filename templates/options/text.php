@@ -11,15 +11,15 @@ $args = $args ?? [];
     <div class="dht-title"><?php echo esc_html( $args[ 'title' ] ); ?></div>
 
     <div class="dht-field-child-wrapper dht-field-child-text">
-        
-        <div class="dht-text-value <?php echo isset( $args[ 'attr' ][ 'class' ] ) ? esc_attr( $args[ 'attr' ][ 'class' ] ) : ''; ?>"
-            <?php echo dht_parse_option_attributes( $args[ 'attr' ] ); ?>
-        >
-            
+
+        <div
+            class="dht-text-value <?php echo isset( $args[ 'attr' ][ 'class' ] ) ? esc_attr( $args[ 'attr' ][ 'class' ] ) : ''; ?>"
+            <?php echo dht_parse_option_attributes( $args[ 'attr' ] ); ?>>
+
             <?php echo esc_attr( $args[ 'value' ] ); ?>
-            
+
         </div>
-        
+
     </div>
 
     <?php if ( !empty( $args[ 'tooltip' ] ) ): ?>

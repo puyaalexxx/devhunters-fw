@@ -34,8 +34,7 @@ $args = $args ?? [];
 
                                 <?php foreach ( $group[ 'choices' ] as $group_value => $group_label ): ?>
                                     <option
-                                        value="<?php echo esc_attr( $group_value ); ?>" <?php echo ( in_array( $group_value, $args[ 'value' ] ) ) ? 'selected' : ''; ?>
-                                    >
+                                        value="<?php echo esc_attr( $group_value ); ?>" <?php echo ( in_array( $group_value, $args[ 'value' ] ) ) ? 'selected' : ''; ?>>
                                         <?php echo esc_html( $group_label ); ?>
                                     </option>
                                 <?php endforeach; ?>
@@ -48,8 +47,7 @@ $args = $args ?? [];
                     <?php else: ?>
 
                         <option
-                            value="<?php echo esc_attr( $key ); ?>" <?php echo ( in_array( $key, $args[ 'value' ] ) ) ? 'selected' : ''; ?>
-                        >
+                            value="<?php echo esc_attr( $key ); ?>" <?php echo ( in_array( $key, $args[ 'value' ] ) ) ? 'selected' : ''; ?>>
                             <?php echo esc_html( $val ); ?>
                         </option>
 
@@ -64,7 +62,7 @@ $args = $args ?? [];
         <?php if ( !empty( $args[ 'description' ] ) ): ?>
             <div class="dht-description"><?php echo esc_html( $args[ 'description' ] ); ?></div>
         <?php endif; ?>
-        
+
     </div>
 
     <?php if ( !empty( $args[ 'tooltip' ] ) ): ?>

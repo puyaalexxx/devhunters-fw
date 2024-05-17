@@ -13,14 +13,7 @@ import jQuery from "jquery";
             let $this = $(this);
 
             $this.css("position", "relative");
-            $this.html(
-                $this.html() +
-                    "<div class='dh-tooltips'><p class='" +
-                    $this.attr("data-position") +
-                    "'>" +
-                    $this.attr("data-tooltips") +
-                    "</p>"
-            );
+            $this.html($this.html() + "<div class='dh-tooltips'><p class='" + $this.attr("data-position") + "'>" + $this.attr("data-tooltips") + "</p>");
         });
 
         $tooltip.on("mouseleave", function () {

@@ -24,13 +24,14 @@ $sizes = [ "px" => 'px', "percentage" => '%', "em" => 'em', "rem" => 'rem', "vw"
 
                     <label
                         for="<?php echo esc_attr( $args[ 'id' ] ); ?>-top"><?php echo _x( 'Top', 'options', DHT_PREFIX ) ?></label>
+
                     <span class="dht-spacing-top"></span>
+
                     <input class="dht-spacing dht-field"
                            id="<?php echo esc_attr( $args[ 'id' ] ); ?>-top"
                            type="number"
                            name="<?php echo esc_attr( $args[ 'id' ] ); ?>[top]"
-                           value="<?php echo esc_attr( $args[ 'value' ][ 'top' ] ); ?>"
-                    />
+                           value="<?php echo esc_attr( $args[ 'value' ][ 'top' ] ); ?>" />
 
                 </div>
 
@@ -38,13 +39,14 @@ $sizes = [ "px" => 'px', "percentage" => '%', "em" => 'em', "rem" => 'rem', "vw"
 
                     <label
                         for="<?php echo esc_attr( $args[ 'id' ] ); ?>-right"><?php echo _x( 'Right', 'options', DHT_PREFIX ) ?></label>
+
                     <span class="dht-spacing-right"></span>
+
                     <input class="dht-spacing dht-field"
                            id="<?php echo esc_attr( $args[ 'id' ] ); ?>-right"
                            type="number"
                            name="<?php echo esc_attr( $args[ 'id' ] ); ?>[right]"
-                           value="<?php echo esc_attr( $args[ 'value' ][ 'right' ] ); ?>"
-                    />
+                           value="<?php echo esc_attr( $args[ 'value' ][ 'right' ] ); ?>" />
 
                 </div>
 
@@ -52,13 +54,14 @@ $sizes = [ "px" => 'px', "percentage" => '%', "em" => 'em', "rem" => 'rem', "vw"
 
                     <label
                         for="<?php echo esc_attr( $args[ 'id' ] ); ?>-bottom"><?php echo _x( 'Bottom', 'options', DHT_PREFIX ) ?></label>
+
                     <span class="dht-spacing-bottom"></span>
+
                     <input class="dht-spacing dht-field"
                            id="<?php echo esc_attr( $args[ 'id' ] ); ?>-bottom"
                            type="number"
                            name="<?php echo esc_attr( $args[ 'id' ] ); ?>[bottom]"
-                           value="<?php echo esc_attr( $args[ 'value' ][ 'bottom' ] ); ?>"
-                    />
+                           value="<?php echo esc_attr( $args[ 'value' ][ 'bottom' ] ); ?>" />
 
                 </div>
 
@@ -66,13 +69,14 @@ $sizes = [ "px" => 'px', "percentage" => '%', "em" => 'em', "rem" => 'rem', "vw"
 
                     <label
                         for="<?php echo esc_attr( $args[ 'id' ] ); ?>-left"><?php echo _x( 'Left', 'options', DHT_PREFIX ) ?></label>
+
                     <span class="dht-spacing-left"></span>
+
                     <input class="dht-spacing dht-field"
                            id="<?php echo esc_attr( $args[ 'id' ] ); ?>-left"
                            type="number"
                            name="<?php echo esc_attr( $args[ 'id' ] ); ?>[left]"
-                           value="<?php echo esc_attr( $args[ 'value' ][ 'left' ] ); ?>"
-                    />
+                           value="<?php echo esc_attr( $args[ 'value' ][ 'left' ] ); ?>" />
 
                 </div>
 
@@ -80,14 +84,16 @@ $sizes = [ "px" => 'px', "percentage" => '%', "em" => 'em', "rem" => 'rem', "vw"
 
                     <label
                         for="<?php echo esc_attr( $args[ 'id' ] ); ?>-sizes"><?php echo _x( 'Sizes', 'options', DHT_PREFIX ) ?></label>
+
                     <select class="dht-spacing-dropdown dht-field"
                             name="<?php echo esc_attr( $args[ 'id' ] ); ?>[size]"
-                            id="<?php echo esc_attr( $args[ 'id' ] ); ?>-sizes"
-                    >
+                            id="<?php echo esc_attr( $args[ 'id' ] ); ?>-sizes">
+
                         <?php foreach ( $sizes as $key => $size ): ?>
                             <option
                                 value="<?php echo esc_attr( $key ); ?>" <?php echo $args[ 'value' ][ 'size' ] == $key ? 'selected' : ''; ?>><?php echo esc_html( $size ); ?></option>
                         <?php endforeach; ?>
+
                     </select>
 
                 </div>

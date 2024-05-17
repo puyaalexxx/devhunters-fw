@@ -34,8 +34,7 @@ $args = $args ?? [];
                                 <?php foreach ( $group[ 'choices' ] as $group_value => $group_label ): ?>
 
                                     <option
-                                        value="<?php echo esc_attr( $group_value ); ?>" <?php echo ( $args[ 'value' ] == $group_value ) ? 'selected' : ''; ?>
-                                    >
+                                        value="<?php echo esc_attr( $group_value ); ?>" <?php echo ( $args[ 'value' ] == $group_value ) ? 'selected' : ''; ?>>
                                         <?php echo esc_html( $group_label ); ?>
                                     </option>
 
@@ -49,8 +48,7 @@ $args = $args ?? [];
                     <?php else: ?>
 
                         <option
-                            value="<?php echo esc_attr( $key ); ?>" <?php echo ( $args[ 'value' ] == $key ) ? 'selected' : ''; ?>
-                        >
+                            value="<?php echo esc_attr( $key ); ?>" <?php echo ( $args[ 'value' ] == $key ) ? 'selected' : ''; ?>>
                             <?php echo esc_html( $val ); ?>
                         </option>
 

@@ -96,9 +96,7 @@ __webpack_require__.r(__webpack_exports__);
     $field_wrapper.on("click", ".dht-field-child-multiinput .dht-multiinput-add", function () {
         var $this = $(this);
         var limit = +$this.attr("data-limit");
-        if ($this
-            .parents(".dht-field-child-multiinput")
-            .children(".dht-multiinput-child-wrapper").length >= limit) {
+        if ($this.parents(".dht-field-child-multiinput").children(".dht-multiinput-child-wrapper").length >= limit) {
             confirm($(this).attr("data-add-text"));
             return false;
         }
@@ -108,9 +106,7 @@ __webpack_require__.r(__webpack_exports__);
     });
     $field_wrapper.on("click", ".dht-field-child-multiinput .dht-multiinput-remove", function () {
         var $this = $(this);
-        if ($this
-            .parents(".dht-field-child-wrapper")
-            .children(".dht-multiinput-child-wrapper").length === 1) {
+        if ($this.parents(".dht-field-child-wrapper").children(".dht-multiinput-child-wrapper").length === 1) {
             confirm($(this).attr("data-remove-text"));
             return;
         }

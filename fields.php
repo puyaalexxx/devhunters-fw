@@ -1,83 +1,83 @@
 <!-- field - upload gallery -->
 <script>
     jQuery(document).ready(function($) {
-        $('.dht-field-child-upload .dht-upload-gallery-button').click(function() {
-            const $this = jQuery(this)
-            const $hidden_input = $('.dht-upload-gallery-hidden')
+        $(".dht-field-child-upload .dht-upload-gallery-button").click(function() {
+            const $this = jQuery(this);
+            const $hidden_input = $(".dht-upload-gallery-hidden");
 
             //open WP media popup
             const custom_uploader = wp.media({
-                title: 'Choose Images',
+                title: "Choose Images",
                 button: {
-                    text: 'Choose Images',
+                    text: "Choose Images",
                 },
-                library: { type: 'image' },
+                library: { type: "image" },
                 multiple: true,
-            })
+            });
 
             //do manipulations after inserting the images
-            custom_uploader.on('select', function() {
-                let $gallery_div = $this.siblings('.dht-gallery-group')
-                $gallery_div.empty()
+            custom_uploader.on("select", function() {
+                let $gallery_div = $this.siblings(".dht-gallery-group");
+                $gallery_div.empty();
 
-                const attachments = custom_uploader.state().get('selection').toJSON()
+                const attachments = custom_uploader.state().get("selection").toJSON();
 
-                const image_ids = []
-                let gallery = []
+                const image_ids = [];
+                let gallery = [];
                 for (let i = 0; i < attachments.length; i++) {
-                    image_ids.push(attachments[i].id)
+                    image_ids.push(attachments[i].id);
 
-                    gallery.push({ 'id': attachments[i].id, 'url': attachments[i].url })
+                    gallery.push({ "id": attachments[i].id, "url": attachments[i].url });
                 }
                 //add attachment ids to the hidden input
-                $hidden_input.val(image_ids.join(', '))
+                $hidden_input.val(image_ids.join(", "));
 
                 //insert selected images - create a gallery view
                 gallery.forEach(function(image) {
-                    $gallery_div.append('<span class="dht-img-remove">' +
-                        '<span class="dht-img-remove-icon"></span>' +
-                        '<img data-id="' + image.id + '" src="' + image.url + '" alt="" width="100" height="100" />' +
-                        '</span>')
-                })
-            })
+                    $gallery_div.append("<span class=\"dht-img-remove\">" +
+                        "<span class=\"dht-img-remove-icon\"></span>" +
+                        "<img data-id=\"" + image.id + "\" src=\"" + image.url + "\" alt=\"\" width=\"100\" height=\"100\" />" +
+                        "</span>");
+                });
+            });
 
-            custom_uploader.open()
+            custom_uploader.open();
 
             //open the WP media popup with a preselected attachment ids if exist
             if ($hidden_input.val().length > 0) {
 
-                const gallery_ids = $hidden_input.val().split(', ')
+                const gallery_ids = $hidden_input.val().split(", ");
 
-                const selection = custom_uploader.state().get('selection')
+                const selection = custom_uploader.state().get("selection");
                 gallery_ids.forEach(function(id) {
-                    let attachment = wp.media.attachment(id)
-                    attachment.fetch()
-                    selection.add(attachment ? [attachment] : [])
-                })
+                    let attachment = wp.media.attachment(id);
+                    attachment.fetch();
+                    selection.add(attachment ? [attachment] : []);
+                });
             }
-        })
+        });
 
         //remove image from gallery and from the hidden input
-        $('.dht-wrapper').on('click', '.dht-field-child-upload .dht-gallery-group .dht-img-remove-icon', function() {
+        $(".dht-wrapper").on("click", ".dht-field-child-upload .dht-gallery-group .dht-img-remove-icon", function() {
             //get the removed image id
-            const $hidden_input = $(this).parents('.dht-gallery-group').siblings('.dht-upload-gallery-hidden')
-            const image_id = $(this).siblings('img').attr('data-id')
+            const $hidden_input = $(this).parents(".dht-gallery-group").siblings(".dht-upload-gallery-hidden");
+            const image_id = $(this).siblings("img").attr("data-id");
 
             //get input hidden ids
-            let saved_ids = $hidden_input.val()
-            saved_ids = saved_ids.split(', ')
+            let saved_ids = $hidden_input.val();
+            saved_ids = saved_ids.split(", ");
 
             //remove id from saved ids array and add the new array to the hidden input
             if (saved_ids.indexOf(image_id) > -1) {
-                saved_ids.splice(saved_ids.indexOf(image_id), 1)
+                saved_ids.splice(saved_ids.indexOf(image_id), 1);
 
                 //$hidden_input
-                $hidden_input.val(saved_ids.join(', '))
+                $hidden_input.val(saved_ids.join(", "));
             }
             //remove the image container
-            $(this).parent('.dht-img-remove').remove()
-        })
-    })
+            $(this).parent(".dht-img-remove").remove();
+        });
+    });
 </script>
 <div class="dht-field-wrapper">
     <div class="dht-title">Upload gallery field</div>
@@ -100,45 +100,45 @@
 <!-- field - upload video -->
 <script>
     jQuery(document).ready(function($) {
-        $('.dht-field-child-upload .dht-upload-video-button').click(function() {
-            const $this = jQuery(this)
-            const $hidden_input = jQuery('.dht-upload-video-hidden')
+        $(".dht-field-child-upload .dht-upload-video-button").click(function() {
+            const $this = jQuery(this);
+            const $hidden_input = jQuery(".dht-upload-video-hidden");
 
             //open WP media popup
             const custom_uploader = wp.media({
-                title: 'Choose Video',
+                title: "Choose Video",
                 button: {
-                    text: 'Choose Video',
+                    text: "Choose Video",
                 },
-                library: { type: 'video' },
+                library: { type: "video" },
                 multiple: false,
-            })
+            });
 
-            custom_uploader.on('select', function() {
+            custom_uploader.on("select", function() {
 
-                const attachment = custom_uploader.state().get('selection').first().toJSON()
-                $this.siblings('.dht-upload-video').val(attachment.url)
+                const attachment = custom_uploader.state().get("selection").first().toJSON();
+                $this.siblings(".dht-upload-video").val(attachment.url);
 
                 //add attachment id to the hidden input
-                $hidden_input.val(attachment.id)
-            })
+                $hidden_input.val(attachment.id);
+            });
 
-            custom_uploader.open()
+            custom_uploader.open();
 
             //open the WP media popup with a preselected attachment id if exist
             if ($hidden_input.val().length > 0) {
-                custom_uploader.state().get('selection').add(wp.media.attachment($hidden_input.val()))
+                custom_uploader.state().get("selection").add(wp.media.attachment($hidden_input.val()));
             }
-        })
+        });
         //remove video if when input is cleared
-        $('.dht-field-child-upload .dht-upload-video').on('input', function() {
+        $(".dht-field-child-upload .dht-upload-video").on("input", function() {
 
             // Check if the input field is empty and remove the vide id
-            if ($(this).val() === '') {
-                jQuery('.dht-upload-video-hidden').val('')
+            if ($(this).val() === "") {
+                jQuery(".dht-upload-video-hidden").val("");
             }
-        })
-    })
+        });
+    });
 </script>
 <div class="dht-field-wrapper">
     <div class="dht-title">Upload video field</div>
@@ -163,60 +163,60 @@
 <!-- field - upload image -->
 <script>
     jQuery(document).ready(function($) {
-        $('.dht-field-child-upload .dht-upload-image-button').click(function() {
-            const $this = jQuery(this)
-            const $hidden_input = jQuery('.dht-upload-hidden')
+        $(".dht-field-child-upload .dht-upload-image-button").click(function() {
+            const $this = jQuery(this);
+            const $hidden_input = jQuery(".dht-upload-hidden");
 
             //open WP media popup
             const custom_uploader = wp.media({
-                title: 'Choose Image',
+                title: "Choose Image",
                 button: {
-                    text: 'Choose Image',
+                    text: "Choose Image",
                 },
-                library: { type: 'image' },
+                library: { type: "image" },
                 multiple: false,
-            })
+            });
 
-            custom_uploader.on('select', function() {
-                const $image_input = $this.siblings('.dht-upload')
+            custom_uploader.on("select", function() {
+                const $image_input = $this.siblings(".dht-upload");
                 //remove image preview before proceeding
-                $image_input.siblings('img').remove()
+                $image_input.siblings("img").remove();
 
-                const attachment = custom_uploader.state().get('selection').first().toJSON()
+                const attachment = custom_uploader.state().get("selection").first().toJSON();
 
                 //add image URL
-                $image_input.val(attachment.url)
+                $image_input.val(attachment.url);
 
                 //add attachment ids to the hidden input
-                $hidden_input.val(attachment.id)
+                $hidden_input.val(attachment.id);
 
                 //display a preview image with the selected image url
-                $image_input.before('<img src="' + attachment.url + '" alt="" width="100" height="100" />')
-            })
+                $image_input.before("<img src=\"" + attachment.url + "\" alt=\"\" width=\"100\" height=\"100\" />");
+            });
 
-            custom_uploader.open()
+            custom_uploader.open();
 
             //open the WP media popup with a preselected attachment id if exist
             if ($hidden_input.val().length > 0) {
-                custom_uploader.state().get('selection').add(wp.media.attachment($hidden_input.val()))
+                custom_uploader.state().get("selection").add(wp.media.attachment($hidden_input.val()));
             }
-        })
+        });
         //remove image when input is cleared
-        $('.dht-field-child-upload .dht-upload').on('input', function() {
+        $(".dht-field-child-upload .dht-upload").on("input", function() {
 
             // Check if the input field is empty and remove the image id and URL
-            if ($(this).val() === '') {
-                $(this).siblings('img').remove()
-                jQuery('.dht-upload-hidden').val('')
+            if ($(this).val() === "") {
+                $(this).siblings("img").remove();
+                jQuery(".dht-upload-hidden").val("");
             }
 
             //change image when adding a new link
             if ($(this).val().length > 0) {
-                $(this).siblings('img').remove()
-                $(this).before('<img src="' + $(this).val() + '" alt="" width="100" height="100" />')
+                $(this).siblings("img").remove();
+                $(this).before("<img src=\"" + $(this).val() + "\" alt=\"\" width=\"100\" height=\"100\" />");
             }
-        })
-    })
+        });
+    });
 </script>
 <div class="dht-field-wrapper">
     <div class="dht-title">Upload field</div>
@@ -280,360 +280,6 @@
         margin-bottom: 10px;
     }
 </style>
-
-<!-------------------------------------------------------------------------------------->
-
-<!-- field - radio image -->
-<script>
-    jQuery(document).ready(function($) {
-        $('.dht-wrapper .dht-field-child-image-select .dht-img-select-wrapper').on('click', function() {
-            //remove selected class and border
-            $(this).siblings().removeClass('dht-img-select-wrapper-selected')
-            $(this).siblings().children('.dht-image-select').removeAttr('checked')
-
-            //add selected class and border
-            $(this).addClass('dht-img-select-wrapper-selected')
-            $(this).children('.dht-image-select').attr('checked', 'checked')
-        })
-    })
-</script>
-
-<div class="dht-field-wrapper">
-    <div class="dht-title">Image select</div>
-    <div class="dht-field-child-wrapper dht-field-child-image-select">
-
-        <div class="dht-field-child-image-select-container">
-            <div class="dht-img-select-wrapper dht-img-select-wrapper-selected">
-                <input class="dht-image-select dht-field" type="radio" name="radio[img]" id="radio-1" value="1"
-                       checked="checked" />
-                <img src="<?php echo PPHT_ASSETS_URI . "images/demo.png" ?>" alt="title" title="title" />
-                <label for="radio-1">Option 1</label>
-            </div>
-
-            <div class="dht-img-select-wrapper">
-                <input class="dht-image-select dht-field" type="radio" name="radio[img]" id="radio-2" value="2" />
-                <img src="<?php echo PPHT_ASSETS_URI . "images/demo.png" ?>" alt="title" title="title" />
-                <label for="radio-2">Option 2</label>
-            </div>
-
-            <div class="dht-img-select-wrapper">
-                <input class="dht-image-select dht-field" type="radio" name="radio[img]" id="radio-3" value="3" />
-                <img src="<?php echo PPHT_ASSETS_URI . "images/demo.png" ?>" alt="title" title="title" />
-                <label for="radio-3">Option 3</label>
-            </div>
-        </div>
-
-        <div class="dht-description">Field description</div>
-    </div>
-    <div class="dht-info-help dashicons dashicons-info"
-         data-tooltips="A little box to something to make it longer"
-         data-position="OnLeft">
-    </div>
-</div>
-<div class="dht-divider"></div>
-
-<style>
-    /* image select field */
-    .dht-wrapper .dht-field-child-image-select .dht-image-select {
-        display: none;
-    }
-
-    .dht-wrapper .dht-field-child-image-select .dht-field-child-image-select-container {
-        display: flex;
-        justify-content: flex-start;
-    }
-
-    .dht-wrapper .dht-field-child-image-select .dht-img-select-wrapper {
-        margin-right: 10px;
-    }
-
-    .dht-wrapper .dht-field-child-image-select .dht-img-select-wrapper {
-        margin-right: 0px;
-        border: 3px solid transparent;
-        display: inline-flex;
-    }
-
-    .dht-wrapper .dht-field-child-image-select .dht-img-select-wrapper.dht-img-select-wrapper-selected {
-        border-color: rgb(99, 91, 255);
-    }
-</style>
-
-<!-------------------------------------------------------------------------------------->
-
-<!-- field - multioptions -> type - ajax -->
-<script>
-    jQuery(document).ready(function($) {
-
-        let $inputField = $('.dht-field-child-multioption .dht-multioptions-ajax')
-
-        // Initialize Select2 without AJAX
-        $inputField.select2({
-            minimumInputLength: 2, // Set minimum input length to 1 to trigger AJAX after typing
-            placeholder: 'Type to search...', // Placeholder text
-            allowClear: true, // Allow clearing the selection
-            ajax: {
-                url: '<?php echo admin_url( 'admin-ajax.php' ); ?>',
-                dataType: 'json',
-                delay: 250,
-                type: 'POST',
-                data: function(params) {
-                    return {
-                        action: 'multioptions_ajax_values',
-                        term: params.term,
-                    }
-                },
-                processResults: function(data) {
-                    return {
-                        results: data,
-                    }
-                },
-                cache: true,
-            },
-        })
-
-        // Bind focus event to input field
-        $inputField.on('focus', function() {
-            // Reset the input field value
-            $(this).val('')
-        })
-    })
-</script>
-
-<div class="dht-field-wrapper">
-    <div class="dht-title">MultiOptions Ajax</div>
-    <div class="dht-field-child-wrapper dht-field-child-multioptions">
-        <label for="aaaa">Choose a car:</label>
-        <select class="dht-multioptions-ajax dht-field" name="cars" id="aaaa" multiple="multiple">
-        </select>
-        <div class="dht-description">Field description</div>
-    </div>
-    <div class="dht-info-help dashicons dashicons-info"
-         data-tooltips="A little box to something to make it longer"
-         data-position="OnLeft">
-    </div>
-</div>
-<div class="dht-divider"></div>
-
-<!-- field - multioptions -->
-<script>
-    jQuery(document).ready(function($) {
-        $('.dht-field-child-multioption .dht-multioptions').select2()
-    })
-</script>
-
-<div class="dht-field-wrapper">
-    <div class="dht-title">MultiOptions</div>
-    <div class="dht-field-child-wrapper dht-field-child-multioptions">
-        <label for="cars">Choose a car:</label>
-        <select class="dht-multioptions dht-field" name="cars" id="cars" multiple="multiple">
-            <option value="volvo">Volvo</option>
-            <option value="saab">Saab</option>
-            <option value="mercedes">Mercedes</option>
-            <option value="audi">Audi</option>
-        </select>
-        <div class="dht-description">Field description</div>
-    </div>
-    <div class="dht-info-help dashicons dashicons-info"
-         data-tooltips="A little box to something to make it longer"
-         data-position="OnLeft">
-    </div>
-</div>
-<div class="dht-divider"></div>
-
-<style>
-    /* multioptions field */
-    .dht-wrapper .dht-field-child-multioptions span.select2.select2-container {
-        width: 100% !important;
-    }
-
-    .dht-wrapper .dht-field-child-multioptions .select2-container .select2-selection--multiple .select2-selection__rendered {
-        display: block;
-    }
-
-    .dht-wrapper .dht-field-child-multioptions li.select2-search.select2-search--inline {
-        margin-bottom: 0;
-    }
-
-    .dht-wrapper .dht-field-child-multioptions .select2-container .select2-search--inline .select2-search__field {
-        margin-top: 0;
-    }
-</style>
-
-<!-------------------------------------------------------------------------------------->
-
-<!-- field - borders -->
-<div class="dht-field-wrapper">
-    <div class="dht-title">Borders</div>
-    <div class="dht-field-child-wrapper dht-field-child-borders">
-
-        <div class="dht-field-borders-group">
-
-            <div class="dht-field-borders-input">
-                <label for="test-input">Top</label>
-                <span class="dht-borders-top"></span>
-                <input class="dht-borders dht-field" id="top" type="number" name="borders[top]" value=""
-                       title="title" />
-            </div>
-
-            <div class="dht-field-borders-input">
-                <label for="test-input">Right</label>
-                <span class="dht-borders-right"></span>
-                <input class="dht-borders dht-field" id="left" type="number" name="borders[right]" value=""
-                       title="title" />
-            </div>
-
-            <div class="dht-field-borders-input">
-                <label for="test-input">Bottom</label>
-                <span class="dht-borders-bottom"></span>
-                <input class="dht-borders dht-field" id="bottom" type="number" name="borders[bottom]" value=""
-                       title="title" />
-            </div>
-
-            <div class="dht-field-borders-input">
-                <label for="test-borders">Left</label>
-                <span class="dht-borders-left"></span>
-                <input class="dht-borders dht-field" id="right" type="number" name="borders[left]" value=""
-                       title="title" />
-            </div>
-
-            <div class="dht-field-borders-input">
-                <label for="test-input">Sizes</label>
-                <select class="dht-borders-dropdown dht-field" name="cars" id="cars">
-                    <option value="solid" selected>Solid</option>
-                    <option value="dashed">Dashed</option>
-                    <option value="dotted">Dotted</option>
-                    <option value="double">Double</option>
-                    <option value="none">None</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="dht-field-borders-group-colorpicker">
-            <script>
-                jQuery(document).ready(function($) {
-                    jQuery('.dht-wrapper .dht-field-child-borders .dht-borders-colorpicker').wpColorPicker({})
-
-                    let $delete_btn = jQuery('.dht-field-child-borders .dht-default-borders-color-btn')
-
-                    $delete_btn.insertAfter(jQuery('.dht-borders-colorpicker').parent('label'))
-
-                    $delete_btn.on('click', function() {
-                        let defaultColor = 'rgb(238, 238, 34, 0.5)' // Set your default color here
-                        jQuery('.dht-field-child-borders .dht-borders-colorpicker').wpColorPicker('color', defaultColor)
-                    })
-                })
-            </script>
-
-            <label for="colorpicker-input"></label>
-            <input class="dht-borders-colorpicker dht-field" id="borders-colorpicker-input" type="text"
-                   data-alpha="true" data-reset="true"
-                   name="borders-colorpicker-input" value="rgb(238, 238, 34, 0.5)" title="title" />
-            <input type="button" id="dht-default-color-btn11" class="dht-default-borders-color-btn button button-small"
-                   value="Default">
-
-            <style>
-                /* wp-color-picker-alpha.css */
-                .dht-wrapper .dht-field-child-borders .wp-picker-input-wrap label {
-                    display: block;
-                }
-
-                .dht-wrapper .dht-field-child-borders .wp-picker-open + span.wp-picker-input-wrap {
-                    width: 210px;
-                    display: flex !important;
-                }
-
-                .dht-wrapper .dht-field-child-borders.wp-picker-active .dht-default-color-btn {
-                    display: block !important;
-                }
-
-                .wp-core-ui .dht-field-child-borders .dht-field-borders-group-colorpicker .wp-picker-active .button.hidden {
-                    display: block !important;
-                }
-
-                .dht-wrapper .dht-field-child-borders .dht-default-borders-color-btn {
-                    margin-left: 5px !important;
-                }
-
-                .dht-wrapper .dht-field-child-borders .dht-field-borders-group {
-                    display: grid;
-                    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-                    grid-gap: 15px;
-                    margin-bottom: 10px;
-                }
-
-                .dht-wrapper .dht-field-child-borders .dht-field-borders-group span:before {
-                    font-family: dashicons;
-                    color: #000;
-                }
-
-                .dht-wrapper .dht-field-child-borders .dht-field-borders-group span.dht-borders-top:before {
-                    content: "\f342";
-                }
-
-                .dht-wrapper .dht-field-child-borders .dht-field-borders-group span.dht-borders-right:before {
-                    content: "\f344";
-                }
-
-                .dht-wrapper .dht-field-child-borders .dht-field-borders-group span.dht-borders-bottom:before {
-                    content: "\f346";
-                }
-
-                .dht-wrapper .dht-field-child-borders .dht-field-borders-group span.dht-borders-left:before {
-                    content: "\f340";
-                }
-
-                .dht-wrapper .dht-field-child-borders .dht-field-borders-group span {
-                    position: absolute;
-                    background: #eee;
-                    border: 1px solid #7e8993;
-                    height: 18px;
-                    padding: 5px;
-                    border-radius: 4px 0 0 4px;
-                }
-
-                .dht-wrapper .dht-field-child-borders .dht-field-borders-input {
-                    position: relative;
-                }
-
-                .dht-wrapper .dht-field-child-borders .dht-borders {
-                    padding-left: 30px !important;
-                }
-
-                @media (max-width: 980px) {
-                    .dht-wrapper .dht-field-child-borders .dht-field-borders-group {
-                        display: block;
-                    }
-
-                    .dht-wrapper .dht-field-child-borders .dht-field-borders-group .dht-field-borders-input {
-                        margin-bottom: 10px;
-                    }
-
-                    .dht-wrapper .dht-field-child-borders .dht-field-borders-input select {
-                        max-width: 100%;
-                    }
-                }
-
-                @media (max-width: 767px) {
-                    .dht-wrapper .dht-field-child-borders .dht-field-borders-group span {
-                        padding: 10px;
-                    }
-
-                    .dht-wrapper .dht-field-child-borders .dht-borders {
-                        padding-left: 40px !important;
-                    }
-                }
-            </style>
-        </div>
-
-
-        <div class="dht-description">Field description</div>
-    </div>
-    <div class="dht-info-help dashicons dashicons-info"
-         data-tooltips="A little box to something to make it longer"
-         data-position="OnLeft">
-    </div>
-</div>
-<div class="dht-divider"></div>
 <!-------------------------------------------------------------------------------------->
 
 <!-- field - icons-->
@@ -643,108 +289,108 @@
         function dht_get_ajax_icons(icon_type, $dht_icons_type_group) {
             $.ajax({
                 url: '<?php echo admin_url( 'admin-ajax.php' ); ?>',
-                type: 'POST',
-                dataType: 'json',
+                type: "POST",
+                dataType: "json",
                 data: {
-                    action: 'getIcons', // The name of your AJAX action
+                    action: "getIcons", // The name of your AJAX action
                     data: { icon_type: icon_type },
                 },
                 beforeSend: function() {
                     //show loading spinner
-                    $dht_icons_type_group.siblings('.spinner').css('visibility', 'visible')
+                    $dht_icons_type_group.siblings(".spinner").css("visibility", "visible");
 
                     // clear popup
-                    $dht_icons_type_group.siblings('.dht-icons-preview').empty()
+                    $dht_icons_type_group.siblings(".dht-icons-preview").empty();
                 },
                 success: function(response) {
                     //hide loading spinner
-                    $dht_icons_type_group.siblings('.spinner').css('visibility', 'hidden')
+                    $dht_icons_type_group.siblings(".spinner").css("visibility", "hidden");
 
                     if (response.success) {
 
-                        $dht_icons_type_group.siblings('.dht-icons-preview').append(response.data)
+                        $dht_icons_type_group.siblings(".dht-icons-preview").append(response.data);
                     } else {
 
-                        console.log('Ajax Response', response)
+                        console.log("Ajax Response", response);
                     }
                 },
                 error: function(error) {
 
-                    console.error('AJAX error:', error)
+                    console.error("AJAX error:", error);
                 },
-            })
+            });
         }
 
         //call ajax with default icons loaded (in our case - dashicons)
-        $('.dht-field-child-icons .dht-thickbox').on('click', function() {
+        $(".dht-field-child-icons .dht-thickbox").on("click", function() {
 
-            const $dht_icons_type_group = $(this).siblings('.dht-modal-icons').find('.dht-icons-type-group')
+            const $dht_icons_type_group = $(this).siblings(".dht-modal-icons").find(".dht-icons-type-group");
             //clear search inout
-            $dht_icons_type_group.children('.dht-search-for-icon').val('')
+            $dht_icons_type_group.children(".dht-search-for-icon").val("");
 
-            dht_get_ajax_icons('dashicons', $dht_icons_type_group)
+            dht_get_ajax_icons("dashicons", $dht_icons_type_group);
 
-            return false
-        })
+            return false;
+        });
 
         // call ajax with icon type selected
-        $('.dht-field-child-icons .dht-icons-type').on('change', function() {
+        $(".dht-field-child-icons .dht-icons-type").on("change", function() {
 
-            const $this = $('.dht-icons-type')
+            const $this = $(".dht-icons-type");
 
-            const icon_type = $this.val()
+            const icon_type = $this.val();
 
-            if (icon_type.length === 0) return
+            if (icon_type.length === 0) return;
 
-            dht_get_ajax_icons(icon_type, $this.parent('.dht-icons-type-group'))
-        })
+            dht_get_ajax_icons(icon_type, $this.parent(".dht-icons-type-group"));
+        });
 
         //add selected icon on preview area
-        $('body').on('click', '#TB_window .dht-icons-preview i', function() {
-            const icon_class = $(this).attr('class')
-            const icon_code = $(this).attr('data-code')
+        $("body").on("click", "#TB_window .dht-icons-preview i", function() {
+            const icon_class = $(this).attr("class");
+            const icon_code = $(this).attr("data-code");
             //get the popup id
-            const popup_id = $(this).parents('.dht-icons-preview-group').attr('data-popup-id')
+            const popup_id = $(this).parents(".dht-icons-preview-group").attr("data-popup-id");
 
             //add selected icon on preview area and display it
-            const popup = $('#' + popup_id)
-            popup.siblings('.dht-icon-select-preview').children('i').removeAttr('class').addClass(icon_class).parent().show()
+            const popup = $("#" + popup_id);
+            popup.siblings(".dht-icon-select-preview").children("i").removeAttr("class").addClass(icon_class).parent().show();
             //add selected icon to the hidden inout to save it
-            popup.siblings('.dht-icon-select-value').val(JSON.stringify({ icon_class: icon_code }))
+            popup.siblings(".dht-icon-select-value").val(JSON.stringify({ icon_class: icon_code }));
 
             //show remove button
-            popup.siblings('.dht-btn-remove').addClass('dht-btn-show')
+            popup.siblings(".dht-btn-remove").addClass("dht-btn-show");
 
-            self.parent.tb_remove()
-        })
+            self.parent.tb_remove();
+        });
 
         //remove selected icon
-        $('.dht-field-child-icons .dht-btn-remove').on('click', function() {
-            $(this).siblings('.dht-icon-select-preview').children('i').removeAttr('class').parent().hide()
-            $(this).siblings('.dht-icon-select-value').val('')
-            $(this).removeClass('dht-btn-show')
+        $(".dht-field-child-icons .dht-btn-remove").on("click", function() {
+            $(this).siblings(".dht-icon-select-preview").children("i").removeAttr("class").parent().hide();
+            $(this).siblings(".dht-icon-select-value").val("");
+            $(this).removeClass("dht-btn-show");
 
-            return false
-        })
+            return false;
+        });
 
         //search icons
-        $('body').on('keyup', '.dht-icons-preview-group .dht-search-for-icon', function() {
-            const $popup = $(this).parents('.dht-icons-preview-group')
+        $("body").on("keyup", ".dht-icons-preview-group .dht-search-for-icon", function() {
+            const $popup = $(this).parents(".dht-icons-preview-group");
 
-            const searchText = $(this).val().toLowerCase()
+            const searchText = $(this).val().toLowerCase();
 
             // Filter list of icons based on search text
-            $popup.children('.dht-icons-preview').children('i').each(function() {
-                const icon_class = $(this).attr('class').toLowerCase()
+            $popup.children(".dht-icons-preview").children("i").each(function() {
+                const icon_class = $(this).attr("class").toLowerCase();
 
                 if (icon_class.indexOf(searchText) === -1) {
-                    $(this).hide()
+                    $(this).hide();
                 } else {
-                    $(this).show()
+                    $(this).show();
                 }
-            })
-        })
-    })
+            });
+        });
+    });
 </script>
 
 <div class="dht-field-wrapper">
@@ -890,80 +536,80 @@
     jQuery(document).ready(function($) {
 
         //preview area div
-        const $preview_area = $('.dht-field-child-typography .dht-field-child-typography-preview')
+        const $preview_area = $(".dht-field-child-typography .dht-field-child-typography-preview");
 
         //fonts dropdown
-        const $fonts_dropdown = $('.dht-field-child-typography .dht-typography')
+        const $fonts_dropdown = $(".dht-field-child-typography .dht-typography");
         //font weights dropdown
-        const $font_weight_dropdown = $('.dht-field-child-typography .dht-typography-weight')
+        const $font_weight_dropdown = $(".dht-field-child-typography .dht-typography-weight");
         //font styles dropdown
-        const $font_style_dropdown = $('.dht-field-child-typography .dht-typography-style')
+        const $font_style_dropdown = $(".dht-field-child-typography .dht-typography-style");
         //font subsets
-        const $font_subsets_dropdown = $('.dht-field-child-typography .dht-typography-subsets')
+        const $font_subsets_dropdown = $(".dht-field-child-typography .dht-typography-subsets");
 
         //fonts dropdown
         $fonts_dropdown.select2({
             allowClear: true,
-        })
-        $fonts_dropdown.on('change', function() {
-            const $selected_font = $(this)
+        });
+        $fonts_dropdown.on("change", function() {
+            const $selected_font = $(this);
 
             //check if it is a Google font
-            const isGoogleFont = $selected_font.find('option:selected').attr('data-google-font')
+            const isGoogleFont = $selected_font.find("option:selected").attr("data-google-font");
 
             //get the selected font family
-            const font_family = $selected_font.val()
+            const font_family = $selected_font.val();
 
-            $preview_area.css('font-family', font_family)
+            $preview_area.css("font-family", font_family);
 
             //if Google font
-            if (isGoogleFont === 'yes') {
-                var fontWeights = {} // Object to store font weights
+            if (isGoogleFont === "yes") {
+                var fontWeights = {}; // Object to store font weights
 
                 //include the font link for preview
                 //const fontLink = 'https://fonts.googleapis.com/css?family=' + font_family.replace(/\s+/g, '+');
-                var fontLink = 'https://fonts.gstatic.com/s/abeezee/v22/esDT31xSG-6AGleN2tCklZUCGpG-GQ.ttf'
-                $('<link href="' + fontLink + '" rel="stylesheet">').appendTo('head')
+                var fontLink = "https://fonts.gstatic.com/s/abeezee/v22/esDT31xSG-6AGleN2tCklZUCGpG-GQ.ttf";
+                $("<link href=\"" + fontLink + "\" rel=\"stylesheet\">").appendTo("head");
 
                 //add Google font - font weights
-                $font_weight_dropdown.empty()
+                $font_weight_dropdown.empty();
                 // Filter font weights for selected font
                 $.each(fontWeights[font_family], function(index, weight) {
-                    console.log(weight)
+                    console.log(weight);
 
-                    $font_weight_dropdown.append('<option value="' + weight + '">' + weight + '</option>')
-                })
+                    $font_weight_dropdown.append("<option value=\"" + weight + "\">" + weight + "</option>");
+                });
 
                 // Trigger change event to update Select2
-                $font_weight_dropdown.trigger('change')
+                $font_weight_dropdown.trigger("change");
             }
-        })
+        });
 
         //font weights dropdown
         $font_weight_dropdown.select2({
             allowClear: true,
-        })
-        $font_weight_dropdown.on('change', function() {
-            const font_weight = $(this).val()
+        });
+        $font_weight_dropdown.on("change", function() {
+            const font_weight = $(this).val();
 
-            $preview_area.css('font-weight', font_weight)
-        })
+            $preview_area.css("font-weight", font_weight);
+        });
 
         //font styles dropdown
         $font_style_dropdown.select2({
             allowClear: true,
-        })
-        $font_style_dropdown.on('change', function() {
-            const font_style = $(this).val()
+        });
+        $font_style_dropdown.on("change", function() {
+            const font_style = $(this).val();
 
-            $preview_area.css('font-style', font_style)
-        })
+            $preview_area.css("font-style", font_style);
+        });
 
         //font subsets dropdown
         $font_subsets_dropdown.select2({
             allowClear: true,
-        })
-    })
+        });
+    });
 </script>
 
 <?php
@@ -1213,21 +859,21 @@ $font_style = empty( $font_style ) ? $standard_font_style : $font_style;
 <!-- field - tabs -->
 <script>
     jQuery(document).ready(function($) {
-        $('.dht-field-tabs .dht-tab-links a').click(function(e) {
-            e.preventDefault() // Prevent default anchor behavior
+        $(".dht-field-tabs .dht-tab-links a").click(function(e) {
+            e.preventDefault(); // Prevent default anchor behavior
 
             // Get the target tab ID from the href attribute
-            let tabId = $(this).attr('href')
+            let tabId = $(this).attr("href");
 
             // Hide all tab contents and remove 'active' class from all tabs
-            $('.dht-tab-content').removeClass('active')
-            $('.dht-tab-links li').removeClass('active')
+            $(".dht-tab-content").removeClass("active");
+            $(".dht-tab-links li").removeClass("active");
 
             // Show the target tab content and add 'active' class to the clicked tab
-            $(tabId).addClass('active')
-            $(this).parent().addClass('active')
-        })
-    })
+            $(tabId).addClass("active");
+            $(this).parent().addClass("active");
+        });
+    });
 </script>
 
 <div class="dht-field-wrapper">
@@ -1337,69 +983,69 @@ $font_style = empty( $font_style ) ? $standard_font_style : $font_style;
 
     jQuery(document).ready(function($) {
         //create accordion
-        $('.dht-wrapper').on('click', '.dht-field-child-accordion .dht-accordion .dht-accordion-title', function(e) {
-            e.preventDefault()
+        $(".dht-wrapper").on("click", ".dht-field-child-accordion .dht-accordion .dht-accordion-title", function(e) {
+            e.preventDefault();
 
-            const $this = $(this)
+            const $this = $(this);
 
-            if ($this.hasClass('dht-accordion-active')) return
+            if ($this.hasClass("dht-accordion-active")) return;
 
-            const $parent = $this.parents('.dht-accordion')
+            const $parent = $this.parents(".dht-accordion");
 
-            if (!$this.hasClass('dht-accordion-active')) {
-                $parent.find('.dht-accordion-content').slideUp(400)
-                $parent.find('.dht-accordion-title').removeClass('dht-accordion-active')
-                $parent.find('.dht-accordion-arrow').removeClass('dht-accordion-icon-change')
+            if (!$this.hasClass("dht-accordion-active")) {
+                $parent.find(".dht-accordion-content").slideUp(400);
+                $parent.find(".dht-accordion-title").removeClass("dht-accordion-active");
+                $parent.find(".dht-accordion-arrow").removeClass("dht-accordion-icon-change");
             }
 
-            $this.toggleClass('dht-accordion-active')
-            $this.next().slideToggle()
-            $('.dht-accordion-arrow', this).toggleClass('dht-accordion-icon-change')
-        })
+            $this.toggleClass("dht-accordion-active");
+            $this.next().slideToggle();
+            $(".dht-accordion-arrow", this).toggleClass("dht-accordion-icon-change");
+        });
 
         //add new toggle in your accordion
-        $('.dht-field-child-accordion .dht-accordion-repeater .dht-add-toggle').on('click', function(e) {
-            e.preventDefault()
+        $(".dht-field-child-accordion .dht-accordion-repeater .dht-add-toggle").on("click", function(e) {
+            e.preventDefault();
 
-            const $this = $(this)
+            const $this = $(this);
 
-            let $toggle = $this.prev('.dht-accordion-item').clone()
+            let $toggle = $this.prev(".dht-accordion-item").clone();
 
             //if toggle opened, close it
-            $toggle.children('.dht-accordion-title').removeClass('dht-accordion-active')
-            $toggle.children('.dht-accordion-title').children('.dht-accordion-arrow').removeClass('dht-accordion-icon-change')
-            $toggle.children('.dht-accordion-content').hide()
+            $toggle.children(".dht-accordion-title").removeClass("dht-accordion-active");
+            $toggle.children(".dht-accordion-title").children(".dht-accordion-arrow").removeClass("dht-accordion-icon-change");
+            $toggle.children(".dht-accordion-content").hide();
 
             //clear inout values
-            dhtClearFormInputs($toggle)
+            dhtClearFormInputs($toggle);
 
-            $toggle.insertBefore($this)
-        })
+            $toggle.insertBefore($this);
+        });
 
         //remove toggle item
-        $('.dht-wrapper').on('click', '.dht-field-child-accordion .dht-accordion-repeater .dht-btn-remove', function(e) {
-            e.preventDefault()
+        $(".dht-wrapper").on("click", ".dht-field-child-accordion .dht-accordion-repeater .dht-btn-remove", function(e) {
+            e.preventDefault();
 
-            const $this = $(this)
-            const $main_parent = $this.parents('.dht-accordion-repeater')
+            const $this = $(this);
+            const $main_parent = $this.parents(".dht-accordion-repeater");
 
-            if ($main_parent.children('.dht-accordion-item').length === 1) {
-                confirm($main_parent.find('.dht-toggle-remove-text').text())
+            if ($main_parent.children(".dht-accordion-item").length === 1) {
+                confirm($main_parent.find(".dht-toggle-remove-text").text());
 
-                return
+                return;
             }
 
-            $this.parents('.dht-accordion-item').remove()
+            $this.parents(".dht-accordion-item").remove();
 
-            return false
-        })
+            return false;
+        });
 
         // Function to clear form inputs
         function dhtClearFormInputs(content) {
-            content.find('input[type="text"], input[type="email"], textarea').val('')
-            content.find('input[type="checkbox"], input[type="radio"]').prop('checked', false)
+            content.find("input[type=\"text\"], input[type=\"email\"], textarea").val("");
+            content.find("input[type=\"checkbox\"], input[type=\"radio\"]").prop("checked", false);
         }
-    })
+    });
 </script>
 
 <!-- field - accordion -> type - repeater -->

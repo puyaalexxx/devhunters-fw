@@ -7,6 +7,7 @@ if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 use DHT\Extensions\Options\Options\{AceEditor,
     BaseOption,
+    Borders,
     Checkbox,
     ColorPicker,
     DatePicker,
@@ -15,7 +16,9 @@ use DHT\Extensions\Options\Options\{AceEditor,
     DropdownMultiple,
     Input,
     MultiInput,
+    MultiOptions,
     Radio,
+    RadioImage,
     RangeSlider,
     Spacing,
     SwitchField,
@@ -23,13 +26,17 @@ use DHT\Extensions\Options\Options\{AceEditor,
     Textarea,
     TimePicker,
     WpEditor};
+use DHT\Helpers\Traits\OptionsHelpers;
 use function DHT\fw;
 use function DHT\Helpers\{dht_get_db_settings_option, dht_load_view, dht_print_r, dht_set_db_settings_option};
 
 //TODO: for performance reason to merge CSS and Js code somehow for options used in one file
 //TODO: display option css and js only on pages where they are used and not across entire admin area
 //TODO: minify js files at the end
+//TODO: ajax save options instead of refresh
 final class Options implements IOptions {
+    
+    use OptionsHelpers;
     
     //option configurations (received from config/options folder area)
     private array $_options = [];
@@ -37,7 +44,7 @@ final class Options implements IOptions {
     //option type Classes
     private array $_optionClasses = [];
     
-    //nonce fields (name and action)
+    //nonce field
     private array $_nonce;
     
     /**
@@ -48,7 +55,7 @@ final class Options implements IOptions {
         
         add_action( 'admin_enqueue_scripts', [ $this, 'enqueueMainAreaScripts' ] );
         
-        //generate nonce field
+        //set form nonce field
         $this->_nonce = $this->_generateNonce();
     }
     
@@ -90,14 +97,9 @@ final class Options implements IOptions {
         $this->_registerFWOptionTypes();
         
         //pass option array to enqueue scripts method (this is needed to enqueue specific script for specific subtype option)
-        foreach ( $this->_options as $option ) {
-            
-            //pass the option array to the enqueue method
-            if ( isset( $this->_optionClasses[ $option[ 'type' ] ] ) ) {
-                
-                $this->_optionClasses[ $option[ 'type' ] ]->enqueueOptionScriptsHook( $option );
-            }
-        }
+        $this->_getEnqueueOptionArgs( $this->_options, $this->_optionClasses );
+        
+        // $this->_saveOptions( $settings_id, $options_prefix_id );
     }
     
     /**
@@ -119,19 +121,12 @@ final class Options implements IOptions {
      *
      * render options passed from the plugin
      *
-     * @param string $settings_id       - the id passed to update_option() function
-     * @param string $options_prefix_id - options prefix id
+     * @param string $settings_id - the id passed to update_option() function
      *
      * @return void
      * @since     1.0.0
      */
-    public function renderOptions( string $settings_id, string $options_prefix_id = '' ) : void {
-        
-        //save options
-        $this->_saveOptions( $settings_id, $options_prefix_id );
-        
-        //get saved options
-        $saved_values = $this->_getSavedOptions( $settings_id );
+    public function renderOptions( string $settings_id ) : void {
         
         //this wrapper will be used for ajax to load content inside
         echo '<div id="dht-form-wrapper">';
@@ -139,28 +134,43 @@ final class Options implements IOptions {
         //display nonce field
         wp_nonce_field( $this->_nonce[ 'action' ], $this->_nonce[ 'name' ] );
         
-        //render the passed option types
-        foreach ( $this->_options as $option ) {
+        if ( !empty( $this->_options ) ) {
             
-            if ( array_key_exists( $option[ 'type' ], $this->_optionClasses ) ) {
+            //get option id prefix
+            $options_prefix_id = array_key_first( $this->_options );
+            
+            //save options
+            $this->_saveOptions( $settings_id, $options_prefix_id );
+            
+            //get saved options
+            $saved_values = $this->_getSavedOptions( $settings_id );
+            
+            //render the passed option types
+            foreach ( $this->_options[ $options_prefix_id ] as $option ) {
                 
-                //if this option id has a saved value
-                $saved_value = $saved_values[ $option[ 'id' ] ] ?? [];
-                
-                //merge default values with saved ones to display the saved ones
-                $option = $this->_optionClasses[ $option[ 'type' ] ]->mergeValues( $option, $saved_value );
-                
-                //add option prefix id
-                $option = $this->_optionClasses[ $option[ 'type' ] ]->addIDPrefix( $option, $options_prefix_id );
-                
-                //render the respective option type class
-                echo $this->_optionClasses[ $option[ 'type' ] ]->render( $option );
-                
-            } else {
-                
-                //display no option template if no match
-                echo dht_load_view( DHT_TEMPLATES_DIR . 'options/', 'no-option.php' );
+                if ( array_key_exists( $option[ 'type' ], $this->_optionClasses ) ) {
+                    
+                    //if this option id has a saved value
+                    $saved_value = $saved_values[ $option[ 'id' ] ] ?? [];
+                    
+                    //merge default values with saved ones to display the saved ones
+                    $option = $this->_optionClasses[ $option[ 'type' ] ]->mergeValues( $option, $saved_value );
+                    
+                    //add option prefix id
+                    $option = $this->_optionClasses[ $option[ 'type' ] ]->addIDPrefix( $option, $options_prefix_id );
+                    
+                    //render the respective option type class
+                    echo $this->_optionClasses[ $option[ 'type' ] ]->render( $option );
+                    
+                } else {
+                    
+                    //display no option template if no match
+                    echo dht_load_view( DHT_TEMPLATES_DIR . 'options/', 'no-option.php' );
+                }
             }
+            
+        } else {
+            echo _x( 'No options provided', 'options', PPHT_PREFIX );
         }
         
         echo '</div>';
@@ -188,7 +198,7 @@ final class Options implements IOptions {
                 //pre save option values
                 //(each option class has a save method used to change the POST value as needed and then save it)
                 //you can change the saved value entirely, sanitize it or replace if you want
-                foreach ( $this->_options as $option ) {
+                foreach ( $this->_options[ $options_prefix_id ] as $option ) {
                     
                     if ( array_key_exists( $option[ 'id' ], $post_values ) ) {
                         
@@ -217,8 +227,6 @@ final class Options implements IOptions {
         return dht_get_db_settings_option( $settings_id );
     }
     
-    /**----------------------------- helper methods -------------------------------*/
-    
     /**
      * register framework option types
      *
@@ -234,17 +242,20 @@ final class Options implements IOptions {
         $radio = new Radio();
         $text = new Text();
         $wpeditor = new WpEditor();
-        $switchfield = new SwitchField();
+        $switch_field = new SwitchField();
         $dropdown = new Dropdown();
         $dropdown_multple = new DropdownMultiple();
-        $multiinput = new MultiInput();
+        $multi_input = new MultiInput();
         $ace_editor = new AceEditor();
         $colorpicker = new ColorPicker();
         $datepicker = new DatePicker();
         $timepicker = new TimePicker();
         $datetimepicker = new DateTimePicker();
-        $rangeslider = new RangeSlider();
+        $range_slider = new RangeSlider();
         $spacing = new Spacing();
+        $radio_image = new RadioImage();
+        $multi_options = new MultiOptions();
+        $borders = new Borders();
         
         //add class instance to the _optionClasses array to use throughout the Option class methods
         $this->_optionClasses[ $input->getField() ] = $input;
@@ -253,42 +264,20 @@ final class Options implements IOptions {
         $this->_optionClasses[ $radio->getField() ] = $radio;
         $this->_optionClasses[ $text->getField() ] = $text;
         $this->_optionClasses[ $wpeditor->getField() ] = $wpeditor;
-        $this->_optionClasses[ $switchfield->getField() ] = $switchfield;
+        $this->_optionClasses[ $switch_field->getField() ] = $switch_field;
         $this->_optionClasses[ $dropdown->getField() ] = $dropdown;
         $this->_optionClasses[ $dropdown_multple->getField() ] = $dropdown_multple;
-        $this->_optionClasses[ $multiinput->getField() ] = $multiinput;
+        $this->_optionClasses[ $multi_input->getField() ] = $multi_input;
         $this->_optionClasses[ $ace_editor->getField() ] = $ace_editor;
         $this->_optionClasses[ $colorpicker->getField() ] = $colorpicker;
         $this->_optionClasses[ $datepicker->getField() ] = $datepicker;
         $this->_optionClasses[ $timepicker->getField() ] = $timepicker;
         $this->_optionClasses[ $datetimepicker->getField() ] = $datetimepicker;
-        $this->_optionClasses[ $rangeslider->getField() ] = $rangeslider;
+        $this->_optionClasses[ $range_slider->getField() ] = $range_slider;
         $this->_optionClasses[ $spacing->getField() ] = $spacing;
-    }
-    
-    /**
-     *
-     * generate form nonce fields (name and action)
-     *
-     * @return array
-     * @since     1.0.0
-     */
-    private function _generateNonce() : array {
-        
-        $nonce = '';
-        
-        if ( isset( $_POST ) ) {
-            $nonce = array_filter( array_keys( $_POST ), function ( $key ) {
-                
-                return str_contains( $key, '_dht_fw_nonce' );
-            } );
-            
-            $nonce = !empty( $nonce ) ? str_replace( "_name", "", implode( "", $nonce ) ) : '';
-        }
-        
-        $nonce = empty( $nonce ) ? 'dht_' . md5( uniqid( (string)mt_rand(), true ) ) . '_dht_fw_nonce' : $nonce;
-        
-        return [ 'name' => $nonce . '_name', 'action' => $nonce . '_action' ];
+        $this->_optionClasses[ $radio_image->getField() ] = $radio_image;
+        $this->_optionClasses[ $multi_options->getField() ] = $multi_options;
+        $this->_optionClasses[ $borders->getField() ] = $borders;
     }
     
 }

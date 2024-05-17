@@ -18,6 +18,8 @@ const datepicker_script = "datepicker-script";
 const timepicker_script = "timepicker-script";
 const datetimepicker_script = "datetimepicker-script";
 const rangeslider_script = "rangeslider-script";
+const radio_image_script = "radio-image-script";
+const multi_options_script = "multi-options-script";
 
 const create_sidebars_script = "create-sidebars-script";
 
@@ -33,6 +35,9 @@ const timepicker_style = "timepicker-style";
 const datetimepicker_style = "datetimepicker-style";
 const rangeslider_style = "rangeslider-style";
 const spacing_style = "spacing-style";
+const radio_image_style = "radio-image-style";
+const multi_options_style = "multi-options-style";
+const borders_style = "borders-style";
 
 const create_sidebars_style = "create-sidebars-style";
 
@@ -41,48 +46,20 @@ module.exports = {
     entry: {
         // TypeScript files entries
         //options scripts
-        [dht_wrapper_area_script]:
-            "./assets/scripts/ts/options/" +
-            dht_wrapper_area_script.replace("-script", "") +
-            ".ts",
-        [switch_script]:
-            "./assets/scripts/ts/options/" +
-            switch_script.replace("-script", "") +
-            ".ts",
-        [multiinput_script]:
-            "./assets/scripts/ts/options/" +
-            multiinput_script.replace("-script", "") +
-            ".ts",
-        [ace_editor_script]:
-            "./assets/scripts/ts/options/" +
-            ace_editor_script.replace("-script", "") +
-            ".ts",
-        [colorpicker_script]:
-            "./assets/scripts/ts/options/" +
-            colorpicker_script.replace("-script", "") +
-            ".ts",
-        [datepicker_script]:
-            "./assets/scripts/ts/options/" +
-            datepicker_script.replace("-script", "") +
-            ".ts",
-        [timepicker_script]:
-            "./assets/scripts/ts/options/" +
-            timepicker_script.replace("-script", "") +
-            ".ts",
-        [datetimepicker_script]:
-            "./assets/scripts/ts/options/" +
-            datetimepicker_script.replace("-script", "") +
-            ".ts",
-        [rangeslider_script]:
-            "./assets/scripts/ts/options/" +
-            rangeslider_script.replace("-script", "") +
-            ".ts",
+        [dht_wrapper_area_script]: "./assets/scripts/ts/options/" + dht_wrapper_area_script.replace("-script", "") + ".ts",
+        [switch_script]: "./assets/scripts/ts/options/" + switch_script.replace("-script", "") + ".ts",
+        [multiinput_script]: "./assets/scripts/ts/options/" + multiinput_script.replace("-script", "") + ".ts",
+        [ace_editor_script]: "./assets/scripts/ts/options/" + ace_editor_script.replace("-script", "") + ".ts",
+        [colorpicker_script]: "./assets/scripts/ts/options/" + colorpicker_script.replace("-script", "") + ".ts",
+        [datepicker_script]: "./assets/scripts/ts/options/" + datepicker_script.replace("-script", "") + ".ts",
+        [timepicker_script]: "./assets/scripts/ts/options/" + timepicker_script.replace("-script", "") + ".ts",
+        [datetimepicker_script]: "./assets/scripts/ts/options/" + datetimepicker_script.replace("-script", "") + ".ts",
+        [rangeslider_script]: "./assets/scripts/ts/options/" + rangeslider_script.replace("-script", "") + ".ts",
+        [radio_image_script]: "./assets/scripts/ts/options/" + radio_image_script.replace("-script", "") + ".ts",
+        [multi_options_script]: "./assets/scripts/ts/options/" + multi_options_script.replace("-script", "") + ".ts",
 
         //other scripts
-        [create_sidebars_script]:
-            "./assets/scripts/ts/" +
-            create_sidebars_script.replace("-script", "") +
-            ".ts",
+        [create_sidebars_script]: "./assets/scripts/ts/" + create_sidebars_script.replace("-script", "") + ".ts",
 
         //CSS entries
         //many entries to one
@@ -92,59 +69,27 @@ module.exports = {
         ],*/
 
         //options styles
-        [dht_wrapper_area_style]:
-            "./assets/styles/postcss/options/" +
-            dht_wrapper_area_style.replace("-style", "") +
-            ".pcss", // dht wrapper area CSS entry point
-        [checkbox_style]:
-            "./assets/styles/postcss/options/" +
-            checkbox_style.replace("-style", "") +
-            ".pcss", // Checkbox CSS entry point
-        [radio_style]:
-            "./assets/styles/postcss/options/" +
-            radio_style.replace("-style", "") +
-            ".pcss", // radio CSS entry point
-        [switch_style]:
-            "./assets/styles/postcss/options/" +
-            switch_style.replace("-style", "") +
-            ".pcss", // switch CSS entry point
-        [multiinput_style]:
-            "./assets/styles/postcss/options/" +
-            multiinput_style.replace("-style", "") +
-            ".pcss", // multiinput CSS entry point
-        [colorpicker_style]:
-            "./assets/styles/postcss/options/" +
-            colorpicker_style.replace("-style", "") +
-            ".pcss", // colorpicker CSS entry point
-        [datepicker_style]:
-            "./assets/styles/postcss/options/" +
-            datepicker_style.replace("-style", "") +
-            ".pcss", // datepicker CSS entry point
-        [timepicker_style]:
-            "./assets/styles/postcss/options/" +
-            timepicker_style.replace("-style", "") +
-            ".pcss", // timepicker CSS entry point
-        [datetimepicker_style]:
-            "./assets/styles/postcss/options/" +
-            datetimepicker_style.replace("-style", "") +
-            ".pcss", // datetimepicker CSS entry point
-        [rangeslider_style]:
-            "./assets/styles/postcss/options/" +
-            rangeslider_style.replace("-style", "") +
-            ".pcss", // datetimepicker CSS entry point
-        [spacing_style]:
-            "./assets/styles/postcss/options/" +
-            spacing_style.replace("-style", "") +
-            ".pcss", // datetimepicker CSS entry point
+        [dht_wrapper_area_style]: "./assets/styles/postcss/options/" + dht_wrapper_area_style.replace("-style", "") + ".pcss", // dht wrapper area CSS entry point
+        [checkbox_style]: "./assets/styles/postcss/options/" + checkbox_style.replace("-style", "") + ".pcss", // Checkbox CSS entry point
+        [radio_style]: "./assets/styles/postcss/options/" + radio_style.replace("-style", "") + ".pcss", // radio CSS entry point
+        [switch_style]: "./assets/styles/postcss/options/" + switch_style.replace("-style", "") + ".pcss", // switch CSS entry point
+        [multiinput_style]: "./assets/styles/postcss/options/" + multiinput_style.replace("-style", "") + ".pcss", // multiinput CSS entry point
+        [colorpicker_style]: "./assets/styles/postcss/options/" + colorpicker_style.replace("-style", "") + ".pcss", // colorpicker CSS entry point
+        [datepicker_style]: "./assets/styles/postcss/options/" + datepicker_style.replace("-style", "") + ".pcss", // datepicker CSS entry point
+        [timepicker_style]: "./assets/styles/postcss/options/" + timepicker_style.replace("-style", "") + ".pcss", // timepicker CSS entry point
+        [datetimepicker_style]: "./assets/styles/postcss/options/" + datetimepicker_style.replace("-style", "") + ".pcss", // datetimepicker CSS entry point
+        [rangeslider_style]: "./assets/styles/postcss/options/" + rangeslider_style.replace("-style", "") + ".pcss", // range slider CSS entry point
+        [spacing_style]: "./assets/styles/postcss/options/" + spacing_style.replace("-style", "") + ".pcss", // spacing CSS entry point
+        [radio_image_style]: "./assets/styles/postcss/options/" + radio_image_style.replace("-style", "") + ".pcss", // radio images CSS entry point
+        [multi_options_style]: "./assets/styles/postcss/options/" + multi_options_style.replace("-style", "") + ".pcss", // multi options CSS entry point
+        [borders_style]: "./assets/styles/postcss/options/" + borders_style.replace("-style", "") + ".pcss", // multi options CSS entry point
 
         //other styles
-        [create_sidebars_style]:
-            "./assets/styles/postcss/" +
-            create_sidebars_style.replace("-style", "") +
-            ".pcss", // Sidebars CSS entry point
+        [create_sidebars_style]: "./assets/styles/postcss/" + create_sidebars_style.replace("-style", "") + ".pcss", // Sidebars CSS entry point
     },
     output: {
         path: path.resolve(__dirname, "assets"),
+        assetModuleFilename: "[name][ext]",
 
         //compile ts files in different folders
         filename: (chunkData) => {
@@ -176,6 +121,12 @@ module.exports = {
             if (chunkData.chunk.name === rangeslider_script) {
                 return "scripts/js/options/" + rangeslider_script + ".js";
             }
+            if (chunkData.chunk.name === radio_image_script) {
+                return "scripts/js/options/" + radio_image_script + ".js";
+            }
+            if (chunkData.chunk.name === multi_options_script) {
+                return "scripts/js/options/" + multi_options_script + ".js";
+            }
 
             // output to the js folder
             return "scripts/js/[name].js";
@@ -184,32 +135,33 @@ module.exports = {
     module: {
         rules: [
             {
-                oneOf: [
-                    {
-                        test: /\.pcss$/, // Match PostCSS files
-                        use: [
-                            MiniCssExtractPlugin.loader, // minify css files
-                            //'style-loader',
-                            "css-loader", // Resolve CSS imports
-                            "postcss-loader", // Process CSS with PostCSS
-                        ],
-                    },
-                    {
-                        test: /\.ts?$/, // Match TypeScript files
-                        use: "ts-loader", // Use ts-loader for compilation
-                        exclude: /node_modules/, // Exclude node_modules directory
-                    },
+                test: /\.pcss$/, // Match PostCSS files
+                use: [
+                    MiniCssExtractPlugin.loader, // minify css files
+                    //"style-loader",
+                    "css-loader", // Resolve CSS imports
+                    "postcss-loader",
                 ],
+            },
+            {
+                test: /\.ts?$/, // Match TypeScript files
+                use: "ts-loader", // Use ts-loader for compilation
+                exclude: /node_modules/, // Exclude node_modules directory
+            },
+            //this area is to generate the postcss images with the same name without a hash and in the images folder
+            {
+                test: /\.(png|jpe?g|gif|svg|webp)$/i,
+                type: "asset/resource", // Use asset/resource to emit the asset as a separate file
+                generator: {
+                    filename: "images/[name][ext]", // Specify output directory for images
+                },
             },
         ],
     },
     devtool: "source-map", // Enable source maps
     resolve: {
-        extensions: [".ts", ".tsx", ".js", ".css", ".pcss"], // Resolve TypeScript and JavaScript extensions,
-        modules: [
-            path.resolve(__dirname, "node_modules"),
-            path.resolve(__dirname, "node_modules/ace-builds"),
-        ],
+        extensions: [".ts", ".tsx", ".js", ".css"], // Resolve TypeScript and JavaScript extensions,
+        modules: [path.resolve(__dirname, "node_modules"), path.resolve(__dirname, "node_modules/ace-builds")],
         alias: {
             "ace-builds": path.resolve(__dirname, "node_modules/ace-builds"),
         },
@@ -224,9 +176,7 @@ module.exports = {
             filename: (chunkData) => {
                 //dht wrapper area  file
                 if (chunkData.chunk.name === dht_wrapper_area_style) {
-                    return (
-                        "styles/css/options/" + dht_wrapper_area_style + ".css"
-                    ); // Output to 'css/options' folder
+                    return "styles/css/options/" + dht_wrapper_area_style + ".css"; // Output to 'css/options' folder
                 }
                 //checkbox option file
                 if (chunkData.chunk.name === checkbox_style) {
@@ -258,9 +208,7 @@ module.exports = {
                 }
                 //datetimepicker option file
                 if (chunkData.chunk.name === datetimepicker_style) {
-                    return (
-                        "styles/css/options/" + datetimepicker_style + ".css"
-                    );
+                    return "styles/css/options/" + datetimepicker_style + ".css";
                 }
                 //rangeslider option file
                 if (chunkData.chunk.name === rangeslider_style) {
@@ -269,6 +217,18 @@ module.exports = {
                 //spacing option file
                 if (chunkData.chunk.name === spacing_style) {
                     return "styles/css/options/" + spacing_style + ".css";
+                }
+                //radio images option file
+                if (chunkData.chunk.name === radio_image_style) {
+                    return "styles/css/options/" + radio_image_style + ".css";
+                }
+                //multi options option file
+                if (chunkData.chunk.name === multi_options_style) {
+                    return "styles/css/options/" + multi_options_style + ".css";
+                }
+                //border option file
+                if (chunkData.chunk.name === borders_style) {
+                    return "styles/css/options/" + borders_style + ".css";
                 }
 
                 // For other entry points, output to root 'css' folder

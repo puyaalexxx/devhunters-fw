@@ -98,19 +98,13 @@ __webpack_require__.r(__webpack_exports__);
         if ($this.hasClass("dht-slider-on")) {
             $this.removeClass("dht-slider-on").addClass("dht-slider-off");
             //get off value
-            var value = $this
-                .children(".dht-slider")
-                .children(".dht-slider-no")
-                .attr("data-value");
+            var value = $this.children(".dht-slider").children(".dht-slider-no").attr("data-value");
             $input.val(value);
         }
         else {
             $this.removeClass("dht-slider-off").addClass("dht-slider-on");
             //get on value
-            var value = $this
-                .children(".dht-slider")
-                .children(".dht-slider-yes")
-                .attr("data-value");
+            var value = $this.children(".dht-slider").children(".dht-slider-yes").attr("data-value");
             $input.val(value);
         }
     });

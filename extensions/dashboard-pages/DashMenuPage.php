@@ -6,6 +6,7 @@ namespace DHT\Extensions\DashPages;
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 use DHT\Helpers\Exceptions\ConfigExceptions\EmptyMenuConfigurationsException;
+use DHT\Helpers\Traits\ValidateConfigurations;
 use function DHT\Helpers\{dht_array_key_exists, dht_load_view};
 
 /**
@@ -13,6 +14,8 @@ use function DHT\Helpers\{dht_array_key_exists, dht_load_view};
  * Class that is used to create dashboard menus and submenus dynamically
  */
 class DashMenuPage implements IDashMenuPage {
+    
+    use ValidateConfigurations;
     
     //config array passed from the plugin
     private array $_dashMenusConfig = [];
@@ -35,12 +38,13 @@ class DashMenuPage implements IDashMenuPage {
      * @param array $dash_menus_config
      *
      * @return void
-     * @throws EmptyMenuConfigurationsException
      * @since     1.0.0
      */
     public function registerDashboardMenuPages( array $dash_menus_config ) : void {
-         
-         $this->_dashMenusConfig = $this->_validateDashMenusConfigurations($dash_menus_config);
+        
+        $this->_dashMenusConfig = $this->_validateConfigurations( $dash_menus_config, 'menu_pages',
+            'dash_menus_configurations', EmptyMenuConfigurationsException::class,
+            'Empty dashboard menu configurations array provided' );
     }
     
     /**
@@ -168,24 +172,4 @@ class DashMenuPage implements IDashMenuPage {
         return dht_load_view( $template_path, $file, $args );
     }
     
-    /**
-     *
-     * validate the dashboard menu configurations received from plugin
-     *
-     * @param array $dash_menus_config
-     *
-     * @return array
-     * @throws EmptyMenuConfigurationsException
-     * @since     1.0.0
-     */
-    private function _validateDashMenusConfigurations( array $dash_menus_config ) : array {
-        
-        if ( !empty( $dash_menus_config[ 'menu_pages' ] ) ) {
-            
-            return apply_filters( 'dash_menus_configurations', $dash_menus_config[ 'menu_pages' ] );
-        } else {
-            
-            throw new EmptyMenuConfigurationsException( _x( 'Empty dashboard menu configurations array provided', 'exceptions', DHT_PREFIX ) );
-        }
-    }
 }

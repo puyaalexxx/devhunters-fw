@@ -20,13 +20,12 @@ $args = $args ?? [];
             type="<?php echo !empty( $args[ 'subtype' ] ) ? esc_attr( $args[ 'subtype' ] ) : esc_attr( $args[ 'type' ] ); ?>"
             name="<?php echo esc_attr( $args[ 'id' ] ); ?>"
             value="<?php echo esc_html( $args[ 'value' ] ); ?>"
-            <?php echo dht_parse_option_attributes( $args[ 'attr' ] ); ?>
-        />
+            <?php echo dht_parse_option_attributes( $args[ 'attr' ] ); ?>/>
 
         <?php if ( !empty( $args[ 'description' ] ) ): ?>
             <div class="dht-description"><?php echo esc_html( $args[ 'description' ] ); ?></div>
         <?php endif; ?>
-        
+
     </div>
 
     <?php if ( !empty( $args[ 'tooltip' ] ) ): ?>

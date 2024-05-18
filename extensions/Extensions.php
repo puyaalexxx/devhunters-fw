@@ -12,35 +12,23 @@ use DHT\Extensions\DashPages\IDashMenuPage;
 use DHT\Extensions\Options\IOptions;
 use DHT\Extensions\Sidebars\{ICreateDynamicSidebars, IRegisterSidebar};
 use DHT\Extensions\Widgets\IRegisterWidget;
+use DHT\Helpers\Exceptions\ConfigExceptions\EmptyCPTConfigurationsException;
+use DHT\Helpers\Exceptions\ConfigExceptions\EmptyMenuConfigurationsException;
+use DHT\Helpers\Exceptions\ConfigExceptions\EmptySidebarConfigurationsException;
+use DHT\Helpers\Exceptions\ConfigExceptions\EmptyWidgetNamesException;
+use DHT\Helpers\Traits\ValidateConfigurations;
 
 /**
- *
  * Singleton Class that is used to include all the framework extensions and initialise them
  */
 final class Extensions {
+    
+    use ValidateConfigurations;
     
     //class instances for Singleton Pattern
     private static array $_instances = [];
     
     private ExtensionClassInstance $_extensionClassInstance;
-    
-    //dashboard menus class instance
-    public IDashMenuPage $dashMenus;
-    
-    //cpt class instance
-    public ICPT $cpts;
-    
-    //widgets class instance
-    public IRegisterWidget $widgets;
-    
-    //sidebars class instance
-    public IRegisterSidebar $sidebars;
-    
-    //dynamic sidebars class instance
-    public ICreateDynamicSidebars|bool $dynamicSidebars;
-    
-    //options class instance
-    public IOptions $options;
     
     /**
      * @param DIInit $diInit
@@ -53,86 +41,107 @@ final class Extensions {
         
         //initialize Extension classes DI Container
         $this->_extensionClassInstance = $diInit->extensionClassInstance;
-        
-        //get all extensions class instances
-        $this->dashMenus = $this->_getDashMenusClassInstance();
-        $this->cpts = $this->_getCPTClassInstance();
-        $this->widgets = $this->_getWidgetsClassInstance();
-        $this->sidebars = $this->_getSidebarsClassInstance();
-        $this->dynamicSidebars = $this->_getDynamicSidebarsClassInstance();
-        $this->options = $this->_getOptionsClassInstance();
     }
     
     /**
-     *
      * get dashboard menus extension class instance
+     *
+     * @param array $dash_menus_config - dashboard menus configurations
      *
      * @return IDashMenuPage - menu instance
      * @since     1.0.0
      */
-    private function _getDashMenusClassInstance() : IDashMenuPage {
+    public function dashmenus( array $dash_menus_config ) : IDashMenuPage {
         
-        return $this->_extensionClassInstance->getDashMenuPageInstance();
+        $dash_menus_config = $this->_validateConfigurations( $dash_menus_config, '',
+            'dash_menus_configurations', EmptyMenuConfigurationsException::class,
+            _x( 'Empty dashboard menu configurations array provided', 'exceptions', DHT_PREFIX ) );
+        
+        return $this->_extensionClassInstance->getDashMenuPageInstance( $dash_menus_config );
     }
     
     /**
-     *
      * get custom post types extension class instance
+     *
+     * @param array $cpt_config
      *
      * @return ICPT - cpt instance
      * @since     1.0.0
      */
-    private function _getCPTClassInstance() : ICPT {
+    public function cpts( array $cpt_config ) : ICPT {
         
-        return $this->_extensionClassInstance->getCPTInstance();
+        $cpt_config = $this->_validateConfigurations( $cpt_config, '',
+            'dht_cpts_configurations', EmptyCPTConfigurationsException::class,
+            _x( 'Empty cpt configurations array provided', 'exceptions', DHT_PREFIX ) );
+        
+        return $this->_extensionClassInstance->getCPTInstance( $cpt_config );
     }
     
     /**
-     *
      * get options extension class instance
      *
-     * @return IOptions - options instance
+     * @return ?IOptions - options instance
      * @since     1.0.0
      */
-    private function _getOptionsClassInstance() : IOptions {
+    public function options() : ?IOptions {
+        
+        //init class only if on specific pages (set from the plugin)
+        if ( !apply_filters( 'dht_options_init_on_page', true ) ) return null;
         
         return $this->_extensionClassInstance->getOptionsInstance();
     }
     
     /**
-     *
      * get widgets extension class instance
+     *
+     * @param array $widgets_config
      *
      * @return IRegisterWidget - register widgets class instance
      * @since     1.0.0
      */
-    private function _getWidgetsClassInstance() : IRegisterWidget {
+    public function widgets( array $widgets_config ) : IRegisterWidget {
         
-        return $this->_extensionClassInstance->getRegisterWidgetInstance();
+        $widgets_config = $this->_validateConfigurations( $widgets_config, '',
+            'dht_widgets_configurations', EmptyWidgetNamesException::class,
+            _x( 'Empty widgets configurations array provided', 'exceptions', DHT_PREFIX ) );
+        
+        return $this->_extensionClassInstance->getRegisterWidgetInstance( $widgets_config );
     }
     
+    
     /**
-     *
      * get sidebars extension class instance
+     *
+     * @param array $sidebar_config
      *
      * @return IRegisterSidebar - register sidebar class instance
      * @since     1.0.0
      */
-    private function _getSidebarsClassInstance() : IRegisterSidebar {
+    public function sidebars( array $sidebar_config ) : IRegisterSidebar {
         
-        return $this->_extensionClassInstance->getRegisterSidebarInstance();
+        $sidebar_config = $this->_validateConfigurations( $sidebar_config, '',
+            'dht_sidebars_configurations', EmptySidebarConfigurationsException::class,
+            _x( 'Empty configurations array provided', 'exceptions', DHT_PREFIX ) );
+        
+        return $this->_extensionClassInstance->getRegisterSidebarInstance( $sidebar_config );
     }
     
     /**
-     *
      * get dynamic sidebars extension class instance
+     *
+     * @param bool $createDynamicSidebars
      *
      * @return ICreateDynamicSidebars | bool - create sidebar class instance or nothing
      * @since     1.0.0
      */
-    private function _getDynamicSidebarsClassInstance() : ICreateDynamicSidebars|bool {
+    public function dynamicSidebars( bool $createDynamicSidebars ) : ICreateDynamicSidebars|bool {
         
-        return $this->_extensionClassInstance->getCreateDynamicSidebarsInstance();
+        if ( $createDynamicSidebars ) {
+            
+            return $this->_extensionClassInstance->getCreateDynamicSidebarsInstance();
+        }
+        
+        return false;
     }
     
     /**
@@ -143,7 +152,7 @@ final class Extensions {
      *
      * @param $classInstance - ClassInstance object
      *
-     * @return Extensions - current class
+     * @return self - current class
      * @since     1.0.0
      */
     public static function init( DIInit $classInstance ) : self {

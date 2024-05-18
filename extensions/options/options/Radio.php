@@ -31,7 +31,7 @@ final class Radio extends BaseOption {
     public function enqueueOptionScripts( array $option ) : void {
         
         // Register the style
-        wp_register_style( DHT_PREFIX . '-radio-option', DHT_ASSETS_URI . 'styles/css/options/radio-style.css', array(), fw()->manifest->get( 'version' ) );
+        wp_register_style( DHT_PREFIX . '-radio-option', DHT_ASSETS_URI . 'styles/css/extensions/options/radio-style.css', array(), fw()->manifest->get( 'version' ) );
         // Enqueue the style
         wp_enqueue_style( DHT_PREFIX . '-radio-option' );
     }

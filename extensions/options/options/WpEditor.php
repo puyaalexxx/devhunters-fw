@@ -31,7 +31,6 @@ final class WpEditor extends BaseOption {
     public function enqueueOptionScripts( array $option ) : void {}
     
     /**
-     *
      * add prefix id for option id to display it in the form as array values
      * (used to retrieve the $_POST['prefix_id'] values)
      *
@@ -52,7 +51,6 @@ final class WpEditor extends BaseOption {
     }
     
     /**
-     *
      *  In this method you receive $option_value (from form submit or whatever)
      *  and must return correct and safe value that will be stored in database.
      *

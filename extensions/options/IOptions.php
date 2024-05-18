@@ -15,7 +15,6 @@ if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 interface IOptions {
     
     /**
-     *
      * render options passed from the plugin
      *
      * @param string $settings_id - the id passed to update_option() function
@@ -26,18 +25,16 @@ interface IOptions {
     public function renderOptions( string $settings_id ) : void;
     
     /**
+     * register framework options with passed option settings
      *
-     * register framework option types with passed option settings
-     *
-     * @param array $options
+     * @param array $options - options array passed from plugin
      *
      * @return void
      * @since     1.0.0
      */
-    public function initOptions( array $options ) : void;
+    public function init( array $options ) : void;
     
     /**
-     *
      * create custom option types located outside the framework
      *
      * @param BaseOption $optionClass

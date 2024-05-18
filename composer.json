@@ -29,6 +29,7 @@
       "DHT\\Core\\" : "core/",
       "DHT\\Core\\DI\\" : "core/di/",
 
+      "DHT\\Components\\" : "components/",
       "DHT\\Extensions\\" : "extensions/",
       "DHT\\Extensions\\DashPages\\" : "extensions/dashboard-pages/",
       "DHT\\Extensions\\CPT\\" : "extensions/cpt/",

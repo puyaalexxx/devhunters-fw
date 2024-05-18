@@ -31,13 +31,12 @@ final class Spacing extends BaseOption {
     public function enqueueOptionScripts( array $option ) : void {
         
         // Register the style
-        wp_register_style( DHT_PREFIX . '-spacing-option', DHT_ASSETS_URI . 'styles/css/options/spacing-style.css', array(), fw()->manifest->get( 'version' ) );
+        wp_register_style( DHT_PREFIX . '-spacing-option', DHT_ASSETS_URI . 'styles/css/extensions/options/spacing-style.css', array(), fw()->manifest->get( 'version' ) );
         // Enqueue the style
         wp_enqueue_style( DHT_PREFIX . '-spacing-option' );
     }
     
     /**
-     *
      *  In this method you receive $option_value (from form submit or whatever)
      *  and must return correct and safe value that will be stored in database.
      *

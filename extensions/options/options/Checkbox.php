@@ -33,13 +33,12 @@ final class Checkbox extends BaseOption {
     public function enqueueOptionScripts( array $option ) : void {
         
         // Register the style
-        wp_register_style( DHT_PREFIX . '-checkbox-option', DHT_ASSETS_URI . 'styles/css/options/checkbox-style.css', array(), fw()->manifest->get( 'version' ) );
+        wp_register_style( DHT_PREFIX . '-checkbox-option', DHT_ASSETS_URI . 'styles/css/extensions/options/checkbox-style.css', array(), fw()->manifest->get( 'version' ) );
         // Enqueue the style
         wp_enqueue_style( DHT_PREFIX . '-checkbox-option' );
     }
     
     /**
-     *
      * merge the field value with the saved value if exists
      *
      * @param array $option      - option field

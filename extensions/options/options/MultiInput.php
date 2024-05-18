@@ -30,16 +30,15 @@ final class MultiInput extends BaseOption {
      */
     public function enqueueOptionScripts( array $option ) : void {
         
-        wp_enqueue_script( DHT_PREFIX . '-multiinput-option', DHT_ASSETS_URI . 'scripts/js/options/multiinput-script.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
+        wp_enqueue_script( DHT_PREFIX . '-multiinput-option', DHT_ASSETS_URI . 'scripts/js/extensions/options/multiinput-script.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
         
         // Register the style
-        wp_register_style( DHT_PREFIX . '-multiinput-option', DHT_ASSETS_URI . 'styles/css/options/multiinput-style.css', array(), fw()->manifest->get( 'version' ) );
+        wp_register_style( DHT_PREFIX . '-multiinput-option', DHT_ASSETS_URI . 'styles/css/extensions/options/multiinput-style.css', array(), fw()->manifest->get( 'version' ) );
         // Enqueue the style
         wp_enqueue_style( DHT_PREFIX . '-multiinput-option' );
     }
     
     /**
-     *
      * merge the field value with the saved value if exists
      *
      * @param array $option      - option field
@@ -65,7 +64,6 @@ final class MultiInput extends BaseOption {
     }
     
     /**
-     *
      *  In this method you receive $option_value (from form submit or whatever)
      *  and must return correct and safe value that will be stored in database.
      *

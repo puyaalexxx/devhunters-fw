@@ -42,6 +42,13 @@ final class ContainerCreate {
             if ( empty( $configurations ) ) {
                 $this->_container->set( $class_name, create( $class_name )->constructor() );
             } else {
+                
+                //if class is a singleton
+                /*$this->_container->set( $class_name, function () use ( $class_name, $configurations ) {
+                    
+                    return $class_name::init( $configurations );
+                } );*/
+                
                 $this->_container->set( $class_name, create( $class_name )->constructor( $configurations ) );
             }
             

@@ -29,7 +29,6 @@ final class Input extends BaseOption {
     public function enqueueOptionScripts( array $option ) : void {}
     
     /**
-     *
      *  In this method you receive $option_value (from form submit or whatever)
      *  and must return correct and safe value that will be stored in database.
      *

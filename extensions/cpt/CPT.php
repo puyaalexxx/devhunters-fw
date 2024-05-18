@@ -3,9 +3,6 @@ declare( strict_types = 1 );
 
 namespace DHT\Extensions\CPT;
 
-use DHT\Helpers\Exceptions\ConfigExceptions\EmptyCPTConfigurationsException;
-use DHT\Helpers\Traits\ValidateConfigurations;
-
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 /**
@@ -14,27 +11,32 @@ if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
  */
 class CPT implements ICPT {
     
-    use ValidateConfigurations;
+    //extension name
+    public string $ext_name = 'cpt';
+    
+    //config array
+    private array $_cpt_config;
     
     /**
+     * @param array $cpt_config
+     *
      * @since     1.0.0
      */
-    public function __construct() {}
+    public function __construct( array $cpt_config ) {
+        
+        $this->_cpt_config = $cpt_config;
+    }
     
     /**
      * External Method
      * register custom post types by receiving the plugin configurations
      *
-     * @param array $cpt_config
-     *
      * @return void
      * @since     1.0.0
      */
-    public function registerCPT( array $cpt_config ) : void {
+    public function register() : void {
         
-        $config_args = $this->_validateConfigurations( $cpt_config, 'cpt',
-            'cpt_configurations', EmptyCPTConfigurationsException::class,
-            'Empty cpt configurations array provided' );
+        $config_args = $this->_cpt_config;
         
         //register posts types if exist
         if ( isset( $config_args[ 'post_types' ] ) ) {
@@ -54,7 +56,6 @@ class CPT implements ICPT {
     }
     
     /**
-     *
      * Register the post type
      *
      * @param array $post_types_args - post type arguments to register
@@ -75,7 +76,6 @@ class CPT implements ICPT {
     }
     
     /**
-     *
      * Register Taxonomy
      *
      * @param array $taxonomies_args - taxonomy arguments to register

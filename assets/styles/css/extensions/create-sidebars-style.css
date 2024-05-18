@@ -1,0 +1,6 @@
+/*!***************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./assets/styles/postcss/extensions/create-sidebars.pcss ***!
+  \***************************************************************************************************************************************************/
+div#widgets-right .sidebar-dht-custom .widgets-sortables{padding-bottom:45px}div#widgets-right .sidebar-dht-custom.closed .widgets-sortables{padding-bottom:0}.dht-wrap-delete{border-top:1px solid #eee;bottom:0;height:40px;left:0;line-height:40px;position:absolute;width:100%}div#widgets-right .sidebar-dht-custom.closed .widgets-sortables .dht-wrap-delete{display:none!important}.dht-wrap-delete .dht-widget-area-delete,.dht-wrap-delete .dht-widget-area-delete-cancel,.dht-wrap-delete .dht-widget-area-delete-confirm{float:right;margin:11px 8px 0 0!important}div#dht-wrap{background-color:#fff;border:1px solid #ddd;border-radius:0;box-shadow:0 1px 2px rgba(0,0,0,.05);margin-left:0;margin-right:0;margin-top:10px;max-width:96%;padding:4%}div#dht-wrap h3{margin-bottom:0;margin-top:0}input#dht_sidebar_name{margin:15px 0;width:75%}
+
+/*# sourceMappingURL=create-sidebars-style.css.map*/

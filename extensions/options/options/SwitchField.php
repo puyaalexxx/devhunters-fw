@@ -30,10 +30,10 @@ final class SwitchField extends BaseOption {
      */
     public function enqueueOptionScripts( array $option ) : void {
         
-        wp_enqueue_script( DHT_PREFIX . '-switch-option', DHT_ASSETS_URI . 'scripts/js/options/switch-script.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
+        wp_enqueue_script( DHT_PREFIX . '-switch-option', DHT_ASSETS_URI . 'scripts/js/extensions/options/switch-script.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
         
         // Register the style
-        wp_register_style( DHT_PREFIX . '-switch-option', DHT_ASSETS_URI . 'styles/css/options/switch-style.css', array(), fw()->manifest->get( 'version' ) );
+        wp_register_style( DHT_PREFIX . '-switch-option', DHT_ASSETS_URI . 'styles/css/extensions/options/switch-style.css', array(), fw()->manifest->get( 'version' ) );
         // Enqueue the style
         wp_enqueue_style( DHT_PREFIX . '-switch-option' );
     }

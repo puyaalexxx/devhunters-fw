@@ -33,18 +33,17 @@ final class RangeSlider extends BaseOption {
         wp_register_style( DHT_PREFIX . '-jquery-ui-rangeslider', DHT_ASSETS_URI . 'styles/libraries/jquery-ui-rangeslider.min.css', array(), fw()->manifest->get( 'version' ) );
         wp_enqueue_style( DHT_PREFIX . '-jquery-ui-rangeslider' );
         
-        wp_register_style( DHT_PREFIX . '-rangeslider-option', DHT_ASSETS_URI . 'styles/css/options/rangeslider-style.css', array(), fw()->manifest->get( 'version' ) );
+        wp_register_style( DHT_PREFIX . '-rangeslider-option', DHT_ASSETS_URI . 'styles/css/extensions/options/rangeslider-style.css', array(), fw()->manifest->get( 'version' ) );
         wp_enqueue_style( DHT_PREFIX . '-rangeslider-option' );
         
         //WordPress comes with the slider option
         wp_enqueue_script( 'jquery-ui-slider' );
         
-        wp_enqueue_script( DHT_PREFIX . '-rangeslider-option', DHT_ASSETS_URI . 'scripts/js/options/rangeslider-script.js', array( 'jquery-ui-slider' ), fw()->manifest->get( 'version' ), true );
+        wp_enqueue_script( DHT_PREFIX . '-rangeslider-option', DHT_ASSETS_URI . 'scripts/js/extensions/options/rangeslider-script.js', array( 'jquery-ui-slider' ), fw()->manifest->get( 'version' ), true );
         
     }
     
     /**
-     *
      *  In this method you receive $option_value (from form submit or whatever)
      *  and must return correct and safe value that will be stored in database.
      *

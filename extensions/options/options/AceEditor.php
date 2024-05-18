@@ -30,7 +30,7 @@ final class AceEditor extends BaseOption {
      */
     public function enqueueOptionScripts( array $option ) : void {
         
-        wp_enqueue_script( DHT_PREFIX . '-ace-editor-option', DHT_ASSETS_URI . 'scripts/js/options/ace-editor-script.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
+        wp_enqueue_script( DHT_PREFIX . '-ace-editor-option', DHT_ASSETS_URI . 'scripts/js/extensions/options/ace-editor-script.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
         
         wp_localize_script( DHT_PREFIX . '-ace-editor-option', 'dht_ace_editor_path', array(
             'path' => DHT_URI . 'node_modules/ace-builds/'
@@ -38,7 +38,6 @@ final class AceEditor extends BaseOption {
     }
     
     /**
-     *
      * merge the field value with the saved value if exists
      *
      * @param array $option      - option field
@@ -55,7 +54,6 @@ final class AceEditor extends BaseOption {
     }
     
     /**
-     *
      *  In this method you receive $option_value (from form submit or whatever)
      *  and must return correct and safe value that will be stored in database.
      *

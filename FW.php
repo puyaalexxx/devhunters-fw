@@ -5,12 +5,12 @@ namespace DHT;
 
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
+use DHT\Components\Components;
 use DHT\Core\DI\DIInit;
 use DHT\Core\Manifest;
 use DHT\Extensions\Extensions;
 
 /**
- *
  * Singleton Class that is used to include the core devhunters-fw functionality that should be used further up
  * (in a custom plugin)
  * Instantiate all DI containers
@@ -26,8 +26,11 @@ final class FW {
     //DI container reference
     private DIInit $_diInit;
     
-    //dash menu class reference
+    //Extensions instance
     public Extensions $extensions;
+    
+    //Components instance
+    public Components $components;
     
     //framework manifest info
     public Manifest $manifest;
@@ -42,11 +45,14 @@ final class FW {
         //di registration
         $this->_initDI();
         
+        //instantiate framework manifest info
+        $this->manifest = Manifest::init();
+        
         //instantiate framework Extensions
         $this->extensions = Extensions::init( $this->_diInit );
         
-        //instantiate framework manifest info
-        $this->manifest = Manifest::init();
+        //instantiate framework Components
+        $this->components = Components::init( $this->_diInit );
         
         //other initializations
         //include the test file to test different things quickly (remove at the end)

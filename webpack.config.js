@@ -9,6 +9,8 @@ const TerserPlugin = require("terser-webpack-plugin");
 
 ////////////////////////files
 //ts files
+
+//extensions
 const dht_wrapper_area_script = "dht-wrapper-area-script";
 const switch_script = "switch-script";
 const multiinput_script = "multiinput-script";
@@ -23,7 +25,12 @@ const multi_options_script = "multi-options-script";
 
 const create_sidebars_script = "create-sidebars-script";
 
+//components
+const preloader_script = "preloader-script";
+
 //css files
+
+//extensions
 const dht_wrapper_area_style = "dht-wrapper-area-style";
 const checkbox_style = "checkbox-style";
 const radio_style = "radio-style";
@@ -41,25 +48,33 @@ const borders_style = "borders-style";
 
 const create_sidebars_style = "create-sidebars-style";
 
+//components
+const preloader_style = "preloader-style";
+
 module.exports = {
     mode: "development", // or 'production'
     entry: {
         // TypeScript files entries
-        //options scripts
-        [dht_wrapper_area_script]: "./assets/scripts/ts/options/" + dht_wrapper_area_script.replace("-script", "") + ".ts",
-        [switch_script]: "./assets/scripts/ts/options/" + switch_script.replace("-script", "") + ".ts",
-        [multiinput_script]: "./assets/scripts/ts/options/" + multiinput_script.replace("-script", "") + ".ts",
-        [ace_editor_script]: "./assets/scripts/ts/options/" + ace_editor_script.replace("-script", "") + ".ts",
-        [colorpicker_script]: "./assets/scripts/ts/options/" + colorpicker_script.replace("-script", "") + ".ts",
-        [datepicker_script]: "./assets/scripts/ts/options/" + datepicker_script.replace("-script", "") + ".ts",
-        [timepicker_script]: "./assets/scripts/ts/options/" + timepicker_script.replace("-script", "") + ".ts",
-        [datetimepicker_script]: "./assets/scripts/ts/options/" + datetimepicker_script.replace("-script", "") + ".ts",
-        [rangeslider_script]: "./assets/scripts/ts/options/" + rangeslider_script.replace("-script", "") + ".ts",
-        [radio_image_script]: "./assets/scripts/ts/options/" + radio_image_script.replace("-script", "") + ".ts",
-        [multi_options_script]: "./assets/scripts/ts/options/" + multi_options_script.replace("-script", "") + ".ts",
 
-        //other scripts
-        [create_sidebars_script]: "./assets/scripts/ts/" + create_sidebars_script.replace("-script", "") + ".ts",
+        //extensions
+        //options
+        [dht_wrapper_area_script]: "./assets/scripts/ts/extensions/options/" + dht_wrapper_area_script.replace("-script", "") + ".ts",
+        [switch_script]: "./assets/scripts/ts/extensions/options/" + switch_script.replace("-script", "") + ".ts",
+        [multiinput_script]: "./assets/scripts/ts/extensions/options/" + multiinput_script.replace("-script", "") + ".ts",
+        [ace_editor_script]: "./assets/scripts/ts/extensions/options/" + ace_editor_script.replace("-script", "") + ".ts",
+        [colorpicker_script]: "./assets/scripts/ts/extensions/options/" + colorpicker_script.replace("-script", "") + ".ts",
+        [datepicker_script]: "./assets/scripts/ts/extensions/options/" + datepicker_script.replace("-script", "") + ".ts",
+        [timepicker_script]: "./assets/scripts/ts/extensions/options/" + timepicker_script.replace("-script", "") + ".ts",
+        [datetimepicker_script]: "./assets/scripts/ts/extensions/options/" + datetimepicker_script.replace("-script", "") + ".ts",
+        [rangeslider_script]: "./assets/scripts/ts/extensions/options/" + rangeslider_script.replace("-script", "") + ".ts",
+        [radio_image_script]: "./assets/scripts/ts/extensions/options/" + radio_image_script.replace("-script", "") + ".ts",
+        [multi_options_script]: "./assets/scripts/ts/extensions/options/" + multi_options_script.replace("-script", "") + ".ts",
+
+        //sidebars
+        [create_sidebars_script]: "./assets/scripts/ts/extensions/" + create_sidebars_script.replace("-script", "") + ".ts",
+
+        //components
+        [preloader_script]: "./assets/scripts/ts/components/" + preloader_script.replace("-script", "") + ".ts",
 
         //CSS entries
         //many entries to one
@@ -68,24 +83,28 @@ module.exports = {
             './assets/styles/postcss/options/checkbox.pcss',
         ],*/
 
+        //extensions
         //options styles
-        [dht_wrapper_area_style]: "./assets/styles/postcss/options/" + dht_wrapper_area_style.replace("-style", "") + ".pcss", // dht wrapper area CSS entry point
-        [checkbox_style]: "./assets/styles/postcss/options/" + checkbox_style.replace("-style", "") + ".pcss", // Checkbox CSS entry point
-        [radio_style]: "./assets/styles/postcss/options/" + radio_style.replace("-style", "") + ".pcss", // radio CSS entry point
-        [switch_style]: "./assets/styles/postcss/options/" + switch_style.replace("-style", "") + ".pcss", // switch CSS entry point
-        [multiinput_style]: "./assets/styles/postcss/options/" + multiinput_style.replace("-style", "") + ".pcss", // multiinput CSS entry point
-        [colorpicker_style]: "./assets/styles/postcss/options/" + colorpicker_style.replace("-style", "") + ".pcss", // colorpicker CSS entry point
-        [datepicker_style]: "./assets/styles/postcss/options/" + datepicker_style.replace("-style", "") + ".pcss", // datepicker CSS entry point
-        [timepicker_style]: "./assets/styles/postcss/options/" + timepicker_style.replace("-style", "") + ".pcss", // timepicker CSS entry point
-        [datetimepicker_style]: "./assets/styles/postcss/options/" + datetimepicker_style.replace("-style", "") + ".pcss", // datetimepicker CSS entry point
-        [rangeslider_style]: "./assets/styles/postcss/options/" + rangeslider_style.replace("-style", "") + ".pcss", // range slider CSS entry point
-        [spacing_style]: "./assets/styles/postcss/options/" + spacing_style.replace("-style", "") + ".pcss", // spacing CSS entry point
-        [radio_image_style]: "./assets/styles/postcss/options/" + radio_image_style.replace("-style", "") + ".pcss", // radio images CSS entry point
-        [multi_options_style]: "./assets/styles/postcss/options/" + multi_options_style.replace("-style", "") + ".pcss", // multi options CSS entry point
-        [borders_style]: "./assets/styles/postcss/options/" + borders_style.replace("-style", "") + ".pcss", // multi options CSS entry point
+        [dht_wrapper_area_style]: "./assets/styles/postcss/extensions/options/" + dht_wrapper_area_style.replace("-style", "") + ".pcss", // dht wrapper area CSS entry point
+        [checkbox_style]: "./assets/styles/postcss/extensions/options/" + checkbox_style.replace("-style", "") + ".pcss", // Checkbox CSS entry point
+        [radio_style]: "./assets/styles/postcss/extensions/options/" + radio_style.replace("-style", "") + ".pcss", // radio CSS entry point
+        [switch_style]: "./assets/styles/postcss/extensions/options/" + switch_style.replace("-style", "") + ".pcss", // switch CSS entry point
+        [multiinput_style]: "./assets/styles/postcss/extensions/options/" + multiinput_style.replace("-style", "") + ".pcss", // multiinput CSS entry point
+        [colorpicker_style]: "./assets/styles/postcss/extensions/options/" + colorpicker_style.replace("-style", "") + ".pcss", // colorpicker CSS entry point
+        [datepicker_style]: "./assets/styles/postcss/extensions/options/" + datepicker_style.replace("-style", "") + ".pcss", // datepicker CSS entry point
+        [timepicker_style]: "./assets/styles/postcss/extensions/options/" + timepicker_style.replace("-style", "") + ".pcss", // timepicker CSS entry point
+        [datetimepicker_style]: "./assets/styles/postcss/extensions/options/" + datetimepicker_style.replace("-style", "") + ".pcss", // datetimepicker CSS entry point
+        [rangeslider_style]: "./assets/styles/postcss/extensions/options/" + rangeslider_style.replace("-style", "") + ".pcss", // range slider CSS entry point
+        [spacing_style]: "./assets/styles/postcss/extensions/options/" + spacing_style.replace("-style", "") + ".pcss", // spacing CSS entry point
+        [radio_image_style]: "./assets/styles/postcss/extensions/options/" + radio_image_style.replace("-style", "") + ".pcss", // radio images CSS entry point
+        [multi_options_style]: "./assets/styles/postcss/extensions/options/" + multi_options_style.replace("-style", "") + ".pcss", // multi options CSS entry point
+        [borders_style]: "./assets/styles/postcss/extensions/options/" + borders_style.replace("-style", "") + ".pcss", // multi options CSS entry point
 
-        //other styles
-        [create_sidebars_style]: "./assets/styles/postcss/" + create_sidebars_style.replace("-style", "") + ".pcss", // Sidebars CSS entry point
+        //sidebars
+        [create_sidebars_style]: "./assets/styles/postcss/extensions/" + create_sidebars_style.replace("-style", "") + ".pcss", // Sidebars CSS entry point
+
+        //components
+        [preloader_style]: "./assets/styles/postcss/components/" + preloader_style.replace("-style", "") + ".pcss", // Sidebars CSS entry point
     },
     output: {
         path: path.resolve(__dirname, "assets"),
@@ -95,37 +114,47 @@ module.exports = {
         filename: (chunkData) => {
             //output to the options folder
             if (chunkData.chunk.name === dht_wrapper_area_script) {
-                return "scripts/js/options/" + dht_wrapper_area_script + ".js";
+                return "scripts/js/extensions/options/" + dht_wrapper_area_script + ".js";
             }
             if (chunkData.chunk.name === switch_script) {
-                return "scripts/js/options/" + switch_script + ".js";
+                return "scripts/js/extensions/options/" + switch_script + ".js";
             }
             if (chunkData.chunk.name === multiinput_script) {
-                return "scripts/js/options/" + multiinput_script + ".js";
+                return "scripts/js/extensions/options/" + multiinput_script + ".js";
             }
             if (chunkData.chunk.name === ace_editor_script) {
-                return "scripts/js/options/" + ace_editor_script + ".js";
+                return "scripts/js/extensions/options/" + ace_editor_script + ".js";
             }
             if (chunkData.chunk.name === colorpicker_script) {
-                return "scripts/js/options/" + colorpicker_script + ".js";
+                return "scripts/js/extensions/options/" + colorpicker_script + ".js";
             }
             if (chunkData.chunk.name === datepicker_script) {
-                return "scripts/js/options/" + datepicker_script + ".js";
+                return "scripts/js/extensions/options/" + datepicker_script + ".js";
             }
             if (chunkData.chunk.name === timepicker_script) {
-                return "scripts/js/options/" + timepicker_script + ".js";
+                return "scripts/js/extensions/options/" + timepicker_script + ".js";
             }
             if (chunkData.chunk.name === datetimepicker_script) {
-                return "scripts/js/options/" + datetimepicker_script + ".js";
+                return "scripts/js/extensions/options/" + datetimepicker_script + ".js";
             }
             if (chunkData.chunk.name === rangeslider_script) {
-                return "scripts/js/options/" + rangeslider_script + ".js";
+                return "scripts/js/extensions/options/" + rangeslider_script + ".js";
             }
             if (chunkData.chunk.name === radio_image_script) {
-                return "scripts/js/options/" + radio_image_script + ".js";
+                return "scripts/js/extensions/options/" + radio_image_script + ".js";
             }
             if (chunkData.chunk.name === multi_options_script) {
-                return "scripts/js/options/" + multi_options_script + ".js";
+                return "scripts/js/extensions/options/" + multi_options_script + ".js";
+            }
+
+            //sidebars
+            if (chunkData.chunk.name === create_sidebars_script) {
+                return "scripts/js/extensions/" + create_sidebars_script + ".js";
+            }
+
+            //components
+            if (chunkData.chunk.name === preloader_script) {
+                return "scripts/js/components/" + preloader_script + ".js";
             }
 
             // output to the js folder
@@ -176,59 +205,61 @@ module.exports = {
             filename: (chunkData) => {
                 //dht wrapper area  file
                 if (chunkData.chunk.name === dht_wrapper_area_style) {
-                    return "styles/css/options/" + dht_wrapper_area_style + ".css"; // Output to 'css/options' folder
+                    return "styles/css/extensions/options/" + dht_wrapper_area_style + ".css"; // Output to 'css/options' folder
                 }
-                //checkbox option file
+
+                //////////extensions
+                //options
                 if (chunkData.chunk.name === checkbox_style) {
-                    return "styles/css/options/" + checkbox_style + ".css"; // Output to 'css/options' folder
-                }
-                //radio option file
+                    return "styles/css/extensions/options/" + checkbox_style + ".css"; // Output to 'css/options' folder
+                } //checkbox option file
+
                 if (chunkData.chunk.name === radio_style) {
-                    return "styles/css/options/" + radio_style + ".css";
-                }
-                //radio option file
+                    return "styles/css/extensions/options/" + radio_style + ".css";
+                } //radio option file
                 if (chunkData.chunk.name === switch_style) {
-                    return "styles/css/options/" + switch_style + ".css";
-                }
-                //multiinput option file
+                    return "styles/css/extensions/options/" + switch_style + ".css";
+                } //radio option file
                 if (chunkData.chunk.name === multiinput_style) {
-                    return "styles/css/options/" + multiinput_style + ".css";
-                }
-                //colorpicker option file
+                    return "styles/css/extensions/options/" + multiinput_style + ".css";
+                } //multiinput option file
                 if (chunkData.chunk.name === colorpicker_style) {
-                    return "styles/css/options/" + colorpicker_style + ".css";
-                }
-                //datepicker option file
+                    return "styles/css/extensions/options/" + colorpicker_style + ".css";
+                } //colorpicker option file
                 if (chunkData.chunk.name === datepicker_style) {
-                    return "styles/css/options/" + datepicker_style + ".css";
-                }
-                //timepicker option file
+                    return "styles/css/extensions/options/" + datepicker_style + ".css";
+                } //datepicker option file
                 if (chunkData.chunk.name === timepicker_style) {
-                    return "styles/css/options/" + timepicker_style + ".css";
-                }
-                //datetimepicker option file
+                    return "styles/css/extensions/options/" + timepicker_style + ".css";
+                } //timepicker option file
                 if (chunkData.chunk.name === datetimepicker_style) {
-                    return "styles/css/options/" + datetimepicker_style + ".css";
-                }
-                //rangeslider option file
+                    return "styles/css/extensions/options/" + datetimepicker_style + ".css";
+                } //datetimepicker option file
                 if (chunkData.chunk.name === rangeslider_style) {
-                    return "styles/css/options/" + rangeslider_style + ".css";
-                }
-                //spacing option file
+                    return "styles/css/extensions/options/" + rangeslider_style + ".css";
+                } //rangeslider option file
                 if (chunkData.chunk.name === spacing_style) {
-                    return "styles/css/options/" + spacing_style + ".css";
-                }
-                //radio images option file
+                    return "styles/css/extensions/options/" + spacing_style + ".css";
+                } //spacing option file
                 if (chunkData.chunk.name === radio_image_style) {
-                    return "styles/css/options/" + radio_image_style + ".css";
-                }
-                //multi options option file
+                    return "styles/css/extensions/options/" + radio_image_style + ".css";
+                } //radio images option file
                 if (chunkData.chunk.name === multi_options_style) {
-                    return "styles/css/options/" + multi_options_style + ".css";
-                }
-                //border option file
+                    return "styles/css/extensions/options/" + multi_options_style + ".css";
+                } //multi options option file
                 if (chunkData.chunk.name === borders_style) {
-                    return "styles/css/options/" + borders_style + ".css";
+                    return "styles/css/extensions/options/" + borders_style + ".css";
+                } //border option file
+
+                //sidebars
+                if (chunkData.chunk.name === create_sidebars_style) {
+                    return "styles/css/extensions/" + create_sidebars_style + ".css";
+                }
+
+                //////////components
+                //preloader
+                if (chunkData.chunk.name === preloader_style) {
+                    return "styles/css/components/" + preloader_style + ".css";
                 }
 
                 // For other entry points, output to root 'css' folder

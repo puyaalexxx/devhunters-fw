@@ -30,7 +30,6 @@ final class ExtensionClassInstance {
     }
     
     /**
-     *
      * return the DashMenuPage class instance
      *
      * @param array $dash_menus_config - dashboard menus configurations
@@ -45,7 +44,6 @@ final class ExtensionClassInstance {
     }
     
     /**
-     *
      * return the CPT class instance
      *
      * @param array $cpt_config - cpt configurations
@@ -53,14 +51,13 @@ final class ExtensionClassInstance {
      * @return ICPT - CPT class instance
      * @since     1.0.0
      */
-    public function getCPTInstance( array $cpt_config = []) : ICPT {
+    public function getCPTInstance( array $cpt_config = [] ) : ICPT {
         
         //build class instance with the passed parameters
         return $this->_containerCreate->buildClassInstance( CPT::class, $cpt_config, DIException::class );
     }
     
     /**
-     *
      * return the Options class instance
      *
      * @param array $options_config - options configurations
@@ -75,7 +72,6 @@ final class ExtensionClassInstance {
     }
     
     /**
-     *
      * return the RegisterWidgets class instance
      *
      * @param array $widgets - widget names
@@ -83,14 +79,13 @@ final class ExtensionClassInstance {
      * @return IRegisterWidget - RegisterWidget instance
      * @since     1.0.0
      */
-    public function getRegisterWidgetInstance( array $widgets = []) : IRegisterWidget {
+    public function getRegisterWidgetInstance( array $widgets = [] ) : IRegisterWidget {
         
         //build class instance with the passed parameters
         return $this->_containerCreate->buildClassInstance( RegisterWidget::class, $widgets, DIException::class );
     }
     
     /**
-     *
      * return the RegisterSidebar class instance
      *
      * @param array $sidebar_config - sidebars config
@@ -105,7 +100,6 @@ final class ExtensionClassInstance {
     }
     
     /**
-     *
      * return the CreateSidebar class instance
      *
      * @return ICreateDynamicSidebars - CreateDynamicSidebar instance

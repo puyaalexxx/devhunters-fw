@@ -5,8 +5,6 @@ namespace DHT\Extensions\DashPages;
 
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
-use DHT\Helpers\Exceptions\ConfigExceptions\EmptyMenuConfigurationsException;
-use DHT\Helpers\Traits\ValidateConfigurations;
 use function DHT\Helpers\{dht_array_key_exists, dht_load_view};
 
 /**
@@ -15,15 +13,20 @@ use function DHT\Helpers\{dht_array_key_exists, dht_load_view};
  */
 class DashMenuPage implements IDashMenuPage {
     
-    use ValidateConfigurations;
+    //extension name
+    public string $ext_name = 'dashmenus';
     
-    //config array passed from the plugin
-    private array $_dashMenusConfig = [];
+    //config array
+    private array $_dashMenusConfig;
     
     /**
+     * @param array $dash_menus_config
+     *
      * @since     1.0.0
      */
-    public function __construct() {
+    public function __construct( array $dash_menus_config ) {
+        
+        $this->_dashMenusConfig = $dash_menus_config;
         
         if ( is_admin() ) {
             //add dashboard pages hook
@@ -34,21 +37,14 @@ class DashMenuPage implements IDashMenuPage {
     /**
      * External Method
      * create the dashboard menu items and submenu items by receiving the plugin configurations
-     *
-     * @param array $dash_menus_config
+     * This method does nothing, it is added for convenience
      *
      * @return void
      * @since     1.0.0
      */
-    public function registerDashboardMenuPages( array $dash_menus_config ) : void {
-        
-        $this->_dashMenusConfig = $this->_validateConfigurations( $dash_menus_config, 'menu_pages',
-            'dash_menus_configurations', EmptyMenuConfigurationsException::class,
-            'Empty dashboard menu configurations array provided' );
-    }
+    public function register() : void {}
     
     /**
-     *
      * create the dashboard menu items  and submenu items hook
      *
      * @return void
@@ -71,7 +67,6 @@ class DashMenuPage implements IDashMenuPage {
     }
     
     /**
-     *
      * create the dashboard main menu item (top level dashboard menu item)
      *
      * @param array $main_menu_values
@@ -96,7 +91,6 @@ class DashMenuPage implements IDashMenuPage {
     }
     
     /**
-     *
      * create the dashboard submenu menu item (under the main menu item)
      *
      * @param array $submenu_values
@@ -121,7 +115,6 @@ class DashMenuPage implements IDashMenuPage {
     }
     
     /**
-     *
      * utility method to build the menu callback function with passed arguments
      *
      * @param string $callback
@@ -142,7 +135,6 @@ class DashMenuPage implements IDashMenuPage {
     }
     
     /**
-     *
      * dynamically create menu callbacks passed to add_menu_page and add_submenu_page hooks
      *
      * @param string $func_name - function name to be created
@@ -157,7 +149,6 @@ class DashMenuPage implements IDashMenuPage {
     }
     
     /**
-     *
      * get needed menu template
      *
      * @param string $template_path

@@ -10,7 +10,7 @@ if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 abstract class BaseOption {
     
     //options templates directory
-    protected string $template_dir = DHT_TEMPLATES_DIR . 'options/';
+    protected string $template_dir = DHT_TEMPLATES_DIR . 'extensions/options/';
     
     //field type
     protected string $_field = 'unknown';
@@ -48,7 +48,6 @@ abstract class BaseOption {
     protected abstract function enqueueOptionScripts( array $option ) : void;
     
     /**
-     *
      * return option template
      *
      * @param array $option
@@ -74,7 +73,6 @@ abstract class BaseOption {
     }
     
     /**
-     *
      * add prefix id for option id to display it in the form as array values
      * (used to retrieve the $_POST['prefix_id'] values)
      *
@@ -94,7 +92,6 @@ abstract class BaseOption {
     }
     
     /**
-     *
      * merge the field value with the saved value if exists
      *
      * @param array $option      - option field
@@ -111,7 +108,6 @@ abstract class BaseOption {
     }
     
     /**
-     *
      *  In this method you receive $option_value (from form submit or whatever)
      *  and must return correct and safe value that will be stored in database.
      *

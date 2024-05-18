@@ -13,40 +13,38 @@ if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
  */
 class CreateDynamicSidebars implements ICreateDynamicSidebars {
 
+    //extension name
+    public string $ext_name = 'dynamicSidebars';
+
     private array $_widget_areas = array();
 
     /**
      * @since     1.0.0
      */
-    public function __construct() {
-    }
+    public function __construct() {}
 
     /**
      * External Method
      * enable dynamic sidebars feature
      *
-     * @param bool $createDynamicSidebars
-     *
      * @return void
      * @since     1.0.0
      */
-    public function enableDynamicSidebars( bool $createDynamicSidebars ) : void {
-        
-        if($createDynamicSidebars){
-            global $pagenow;
-            
-            // Check if we are on the Widgets page
-            if ( 'widgets.php' === $pagenow ) {
-                add_action( 'widgets_init', [ $this, 'registerCustomWidgetAreas' ], 1000 );
-                add_action( 'admin_print_scripts', [ $this, 'widgetAreaFormTemplate' ] );
-                add_action( 'load-widgets.php', [ $this, 'addWidgetArea' ], 100 );
-                add_action( 'admin_enqueue_scripts', [ $this, 'enqueueSidebarScripts' ] );
-            }
-            
-            //ajax actions to remove sidebars
-            add_action( 'wp_ajax_deleteWidgetArea', [ $this, 'deleteWidgetArea' ] );
-            add_action( 'wp_ajax_nopriv_deleteWidgetArea', [ $this, 'deleteWidgetArea' ] ); // For non-logged in users
+    public function enable() : void {
+
+        global $pagenow;
+
+        // Check if we are on the Widgets page
+        if ( 'widgets.php' === $pagenow ) {
+            add_action( 'widgets_init', [ $this, 'registerCustomWidgetAreas' ], 1000 );
+            add_action( 'admin_print_scripts', [ $this, 'widgetAreaFormTemplate' ] );
+            add_action( 'load-widgets.php', [ $this, 'addWidgetArea' ], 100 );
+            add_action( 'admin_enqueue_scripts', [ $this, 'enqueueSidebarScripts' ] );
         }
+
+        //ajax actions to remove sidebars
+        add_action( 'wp_ajax_deleteWidgetArea', [ $this, 'deleteWidgetArea' ] );
+        add_action( 'wp_ajax_nopriv_deleteWidgetArea', [ $this, 'deleteWidgetArea' ] ); // For non-logged in users
     }
 
 
@@ -92,13 +90,11 @@ class CreateDynamicSidebars implements ICreateDynamicSidebars {
      */
     public function enqueueSidebarScripts( string $hook ) : void {
 
-        wp_enqueue_script( 'create-sidebars', DHT_ASSETS_URI . 'scripts/js/create-sidebars-script.js', array( 'jquery' ), fw()->manifest->get('version'), true );
-        wp_localize_script( 'create-sidebars', 'dht_remove_sidebar_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
+        wp_enqueue_script( DHT_PREFIX . '-create-sidebars', DHT_ASSETS_URI . 'scripts/js/extensions/create-sidebars-script.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
+        wp_localize_script( DHT_PREFIX . '-create-sidebars', 'dht_remove_sidebar_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
 
-        // Register the style
-        wp_register_style( 'create-sidebars', DHT_ASSETS_URI . 'styles/css/create-sidebars-styles.css', array(), fw()->manifest->get('version') );
-        // Enqueue the style
-        wp_enqueue_style( 'create-sidebars' );
+        wp_register_style( DHT_PREFIX . '-create-sidebars', DHT_ASSETS_URI . 'styles/css/extensions/create-sidebars-style.css', array(), fw()->manifest->get( 'version' ) );
+        wp_enqueue_style( DHT_PREFIX . '-create-sidebars' );
     }
 
     /**

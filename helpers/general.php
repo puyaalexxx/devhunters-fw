@@ -22,7 +22,7 @@ function dht_print_r( mixed $value ) : void {
     
     if ( $first_time ) {
         ob_start();
-        echo '<style type="text/css">
+        echo '<style>
 		div.dht_print_r {
 			max-height: 500px;
 			overflow-y: scroll;
@@ -73,7 +73,7 @@ function dht_print_r( mixed $value ) : void {
     } else {
         echo '<div class="dht_print_r_group">';
         foreach ( func_get_args() as $param ) {
-            fw_print( $param );
+            dht_print_r( $param );
         }
         echo '</div>';
     }
@@ -205,4 +205,24 @@ function dht_parse_css_classes_into_array( string $css, string $before_delimiter
     }
     
     return $classContentArray;
+}
+
+/**
+ *
+ *
+ * @return string
+ * @since     1.0.0
+ */
+function dht_get_current_admin_page() : string {
+    
+    //if it is a WordPress page
+    if ( isset( $_GET[ 'page' ] ) ) {
+        
+        return $_GET[ 'page' ];
+    } elseif ( is_page() ) {
+        
+        return '';
+    }
+    
+    return '';
 }

@@ -11,7 +11,7 @@ final class DIInit {
     
     private ContainerCreate $_containerCreate;
     public ExtensionClassInstance $extensionClassInstance;
-    public OtherClassInstance $otherClassInstance;
+    public ComponentClassInstance $compoponentClassInstance;
     
     /**
      * @since     1.0.0
@@ -23,8 +23,8 @@ final class DIInit {
         //get all Extension classes instances
         $this->extensionClassInstance = new ExtensionClassInstance( $this->_containerCreate );
         
-        //a test class
-        // $this->otherClassInstance = new OtherClassInstance($this->_containerCreate);
+        //get all Component classes instances
+        $this->compoponentClassInstance = new ComponentClassInstance( $this->_containerCreate );
     }
     
 }

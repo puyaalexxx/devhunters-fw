@@ -1,0 +1,188 @@
+@import '../../variables.pcss';
+
+.dht-wrapper {
+    /*main styles*/
+    margin: 30px 30px 0 10px;
+    height: 90vh; /* Ensure body covers the full viewport */
+    overflow: hidden; /* Prevent scrolling while loading */
+    position: relative; /* Ensure body is the reference for absolute positioning */
+
+    .dht-container {
+        background: $dht-container-color;
+        border-radius: 8px;
+        box-shadow: 0 5px 30px rgba(0, 0, 0, .1);
+        transform-origin: 0 0;
+        box-sizing: border-box;
+        width: 100%;
+        overflow: auto; /* Allow scrolling within the content once preloader is hidden */
+        height: 100%; /* Ensure content fills the container */
+    }
+
+    .dht-field-wrapper-main {
+        padding: 20px 20px;
+    }
+
+    .dht-field-wrapper {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        padding: 20px 20px;
+    }
+
+    .dht-field-wrapper:after,
+    .dht-field-wrapper-main:after {
+        content: "";
+        clear: both;
+        display: table;
+    }
+
+    .dht-field-wrapper .dht-title {
+        font-weight: 600;
+        display: block;
+    }
+
+    .dht-field-child-wrapper label {
+        display: none;
+    }
+
+    .dht-field {
+        width: 100%;
+    }
+
+    .dht-description {
+        font-size: 13px;
+        margin-top: 7px;
+        clear: both;
+    }
+
+    .dht-submit {
+        text-transform: uppercase;
+        float: right;
+    }
+
+    .dht-info-help {
+        align-self: center;
+        justify-self: end;
+    }
+
+    .dht-divider {
+        border-bottom: 1px solid #e7e7e7;
+    }
+
+    .dht-dropdown.dht-field {
+        max-width: 100%;
+    }
+
+    /*button styles*/
+
+    .dht-button {
+        background-color: $main-color;
+        border: $main-color;
+        color: $btn-color !important;
+        font-weight: 600;
+        border-radius: 3px;
+        cursor: pointer;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .dht-button:hover {
+        box-shadow: 0 0.5em 0.5em -0.4em $main-color;
+        transform: translateY(-0.20em);
+    }
+
+    .dht-btn-medium {
+        padding: 8px 20px;
+        font-size: 14px;
+    }
+
+    .dht-btn-big {
+        padding: 10px 40px;
+        font-size: 15px;
+    }
+
+    .dht-btn-small {
+        padding: 5px 10px;
+        font-size: 13px;
+    }
+
+    /*tooltip styles*/
+
+    .dh-tooltips {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 5;
+
+        p.OnLeft {
+            transform: translate(-100%, -50%);
+        }
+
+        p {
+            min-width: 100px;
+            opacity: 1;
+            display: inline-block;
+            visibility: visible;
+            position: absolute;
+            text-align: left;
+            width: auto;
+            background: $tooltip-color;
+            color: #ffffff;
+            font-size: 1rem;
+            line-height: 1.2;
+            padding: 10px;
+            border-radius: 3px;
+            white-space: normal;
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+            transition: all 0.2s ease-out;
+        }
+
+        p.OnLeft {
+            left: -15px;
+            top: -5px;
+        }
+
+        p.OnLeft:before {
+            position: absolute;
+            content: "";
+            width: 0;
+            height: 0;
+            border-left: 8px solid #000;
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            top: 50%;
+            margin-top: -8px;
+            right: -8px;
+        }
+    }
+
+    @media (max-width: 980px) {
+        .dht-button {
+            float: none;
+        }
+
+        .dht-field-wrapper-main {
+            text-align: center;
+        }
+
+        .dht-field-wrapper {
+            grid-template-columns: 1fr;
+
+            .dht-title {
+                text-align: center;
+                margin-bottom: 30px;
+            }
+        }
+
+        .dht-description {
+            text-align: center;
+        }
+
+        .dht-info-help {
+            justify-self: center;
+            margin-top: 30px;
+            display: none;
+        }
+    }
+}

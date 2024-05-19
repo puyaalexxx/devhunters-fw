@@ -14,6 +14,7 @@ use DHT\Extensions\Options\Options\{AceEditor,
     DateTimePicker,
     Dropdown,
     DropdownMultiple,
+    Icon,
     Input,
     MultiInput,
     MultiOptions,
@@ -25,6 +26,9 @@ use DHT\Extensions\Options\Options\{AceEditor,
     Text,
     Textarea,
     TimePicker,
+    Upload,
+    UploadGallery,
+    UploadImage,
     WpEditor};
 use DHT\Helpers\Traits\OptionsHelpers;
 use function DHT\fw;
@@ -38,24 +42,29 @@ final class Options implements IOptions {
     
     use OptionsHelpers;
     
+    //class instances for Singleton Pattern
+    private static array $_instances = [];
+    
     //extension name
     public string $ext_name = 'options';
     
     //option configurations (received from config/options folder area on init)
-    private static array $_options = [];
+    private array $_options = [];
     
     //option type Classes
-    private static array $_optionClasses = [];
+    private array $_optionClasses = [];
     
     //nonce field
     private array $_nonce = [ 'action' => 'ppht_nonce_action', 'name' => 'ppht_nonce_action' ];
     
     /**
-     * @param array $options
-     *
      * @since     1.0.0
      */
-    public function __construct() {}
+    protected function __construct() {
+        
+        //register the Framework options classes
+        $this->_registerFWOptionTypes();
+    }
     
     /**
      * !!!NOTE - run this method before calling render to initialize the option types from passed option settings
@@ -65,12 +74,12 @@ final class Options implements IOptions {
      * @return void
      * @since     1.0.0
      */
-    public function init( array $options ) : void {
+    public function initOptions( array $options ) : void {
         
         if ( empty( $options ) ) return;
         
         //set class $options across the instances
-        self::$_options = apply_filters( 'dht_options_configurations', $options );
+        $this->_options = apply_filters( 'dht_options_configurations', $options );
         
         //enqueue the options container scripts
         add_action( 'admin_enqueue_scripts', [ $this, 'enqueueMainAreaScripts' ] );
@@ -78,11 +87,8 @@ final class Options implements IOptions {
         //set form nonce field
         $this->_nonce = $this->_generateNonce();
         
-        //register the Framework options classes
-        $this->_registerFWOptionTypes();
-        
         //pass option array to enqueue scripts method (this is needed to enqueue specific script for specific subtype option)
-        $this->_getEnqueueOptionArgs( self::$_options, self::$_optionClasses );
+        $this->_getEnqueueOptionArgs( $this->_options, $this->_optionClasses );
     }
     
     /**
@@ -115,7 +121,7 @@ final class Options implements IOptions {
      */
     public function registerCustomOptionType( BaseOption $optionClass, array $option ) : void {
         
-        self::$_optionClasses[ $option[ 'type' ] ] = $optionClass;
+        $this->_optionClasses[ $option[ 'type' ] ] = $optionClass;
     }
     
     /**
@@ -135,10 +141,10 @@ final class Options implements IOptions {
         //display nonce field
         wp_nonce_field( $this->_nonce[ 'action' ], $this->_nonce[ 'name' ] );
         
-        if ( !empty( self::$_options ) ) {
+        if ( !empty( $this->_options ) ) {
             
             //get option id prefix
-            $options_prefix_id = array_key_first( self::$_options );
+            $options_prefix_id = array_key_first( $this->_options );
             
             //save options
             $this->_saveOptions( $settings_id, $options_prefix_id );
@@ -147,21 +153,21 @@ final class Options implements IOptions {
             $saved_values = $this->_getSavedOptions( $settings_id );
             
             //render the passed option types
-            foreach ( self::$_options[ $options_prefix_id ] as $option ) {
+            foreach ( $this->_options[ $options_prefix_id ] as $option ) {
                 
-                if ( array_key_exists( $option[ 'type' ], self::$_optionClasses ) ) {
+                if ( array_key_exists( $option[ 'type' ], $this->_optionClasses ) ) {
                     
                     //if this option id has a saved value
                     $saved_value = $saved_values[ $option[ 'id' ] ] ?? [];
                     
                     //merge default values with saved ones to display the saved ones
-                    $option = self::$_optionClasses[ $option[ 'type' ] ]->mergeValues( $option, $saved_value );
+                    $option = $this->_optionClasses[ $option[ 'type' ] ]->mergeValues( $option, $saved_value );
                     
                     //add option prefix id
-                    $option = self::$_optionClasses[ $option[ 'type' ] ]->addIDPrefix( $option, $options_prefix_id );
+                    $option = $this->_optionClasses[ $option[ 'type' ] ]->addIDPrefix( $option, $options_prefix_id );
                     
                     //render the respective option type class
-                    echo self::$_optionClasses[ $option[ 'type' ] ]->render( $option );
+                    echo $this->_optionClasses[ $option[ 'type' ] ]->render( $option );
                     
                 } else {
                     
@@ -199,11 +205,11 @@ final class Options implements IOptions {
                 //pre save option values
                 //(each option class has a save method used to change the POST value as needed and then save it)
                 //you can change the saved value entirely, sanitize it or replace if you want
-                foreach ( self::$_options[ $options_prefix_id ] as $option ) {
+                foreach ( $this->_options[ $options_prefix_id ] as $option ) {
                     
                     if ( array_key_exists( $option[ 'id' ], $post_values ) ) {
                         
-                        $post_values[ $option[ 'id' ] ] = self::$_optionClasses[ $option[ 'type' ] ]->saveValue( $option, $post_values[ $option[ 'id' ] ] );
+                        $post_values[ $option[ 'id' ] ] = $this->_optionClasses[ $option[ 'type' ] ]->saveValue( $option, $post_values[ $option[ 'id' ] ] );
                     }
                 }
                 
@@ -236,7 +242,7 @@ final class Options implements IOptions {
      */
     private function _registerFWOptionTypes() : void {
         
-        //instanciate the option type classes
+        //instantiate the option type classes
         $input = new Input();
         $textarea = new Textarea();
         $checkbox = new Checkbox();
@@ -257,28 +263,64 @@ final class Options implements IOptions {
         $radio_image = new RadioImage();
         $multi_options = new MultiOptions();
         $borders = new Borders();
+        $upload_image = new UploadImage();
+        $upload = new Upload();
+        $upload_gallery = new UploadGallery();
+        $icon = new Icon();
         
         //add class instance to the _optionClasses array to use throughout the Option class methods
-        self::$_optionClasses[ $input->getField() ] = $input;
-        self::$_optionClasses[ $textarea->getField() ] = $textarea;
-        self::$_optionClasses[ $checkbox->getField() ] = $checkbox;
-        self::$_optionClasses[ $radio->getField() ] = $radio;
-        self::$_optionClasses[ $text->getField() ] = $text;
-        self::$_optionClasses[ $wpeditor->getField() ] = $wpeditor;
-        self::$_optionClasses[ $switch_field->getField() ] = $switch_field;
-        self::$_optionClasses[ $dropdown->getField() ] = $dropdown;
-        self::$_optionClasses[ $dropdown_multple->getField() ] = $dropdown_multple;
-        self::$_optionClasses[ $multi_input->getField() ] = $multi_input;
-        self::$_optionClasses[ $ace_editor->getField() ] = $ace_editor;
-        self::$_optionClasses[ $colorpicker->getField() ] = $colorpicker;
-        self::$_optionClasses[ $datepicker->getField() ] = $datepicker;
-        self::$_optionClasses[ $timepicker->getField() ] = $timepicker;
-        self::$_optionClasses[ $datetimepicker->getField() ] = $datetimepicker;
-        self::$_optionClasses[ $range_slider->getField() ] = $range_slider;
-        self::$_optionClasses[ $spacing->getField() ] = $spacing;
-        self::$_optionClasses[ $radio_image->getField() ] = $radio_image;
-        self::$_optionClasses[ $multi_options->getField() ] = $multi_options;
-        self::$_optionClasses[ $borders->getField() ] = $borders;
+        $this->_optionClasses[ $input->getField() ] = $input;
+        $this->_optionClasses[ $textarea->getField() ] = $textarea;
+        $this->_optionClasses[ $checkbox->getField() ] = $checkbox;
+        $this->_optionClasses[ $radio->getField() ] = $radio;
+        $this->_optionClasses[ $text->getField() ] = $text;
+        $this->_optionClasses[ $wpeditor->getField() ] = $wpeditor;
+        $this->_optionClasses[ $switch_field->getField() ] = $switch_field;
+        $this->_optionClasses[ $dropdown->getField() ] = $dropdown;
+        $this->_optionClasses[ $dropdown_multple->getField() ] = $dropdown_multple;
+        $this->_optionClasses[ $multi_input->getField() ] = $multi_input;
+        $this->_optionClasses[ $ace_editor->getField() ] = $ace_editor;
+        $this->_optionClasses[ $colorpicker->getField() ] = $colorpicker;
+        $this->_optionClasses[ $datepicker->getField() ] = $datepicker;
+        $this->_optionClasses[ $timepicker->getField() ] = $timepicker;
+        $this->_optionClasses[ $datetimepicker->getField() ] = $datetimepicker;
+        $this->_optionClasses[ $range_slider->getField() ] = $range_slider;
+        $this->_optionClasses[ $spacing->getField() ] = $spacing;
+        $this->_optionClasses[ $radio_image->getField() ] = $radio_image;
+        $this->_optionClasses[ $multi_options->getField() ] = $multi_options;
+        $this->_optionClasses[ $borders->getField() ] = $borders;
+        $this->_optionClasses[ $upload_image->getField() ] = $upload_image;
+        $this->_optionClasses[ $upload->getField() ] = $upload;
+        $this->_optionClasses[ $upload_gallery->getField() ] = $upload_gallery;
+        $this->_optionClasses[ $icon->getField() ] = $icon;
     }
+    
+    /**
+     * This is the static method that controls the access to the singleton
+     * instance. On the first run, it creates a singleton object and places it
+     * into the static field. On subsequent runs, it returns the client existing
+     * object stored in the static field.
+     *
+     *
+     * @return self - current class
+     * @since     1.0.0
+     */
+    public static function init() : self {
+        
+        $cls = static::class;
+        if ( !isset( self::$_instances[ $cls ] ) ) {
+            self::$_instances[ $cls ] = new static();
+        }
+        
+        return self::$_instances[ $cls ];
+    }
+    
+    /**
+     * no possibility to clone this class
+     *
+     * @return void
+     * @since     1.0.0
+     */
+    protected function __clone() : void {}
     
 }

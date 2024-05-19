@@ -106,11 +106,12 @@ $styles = [ "solid" => 'Solid', "dashed" => 'Dashed', "dotted" => 'Dotted', "dou
 
             <label for="<?php echo esc_attr( $args[ 'id' ] ); ?>-color"></label>
 
-            <input class="dht-alphacolorpicker dht-field"
+            <input class="dht-colorpicker dht-field"
                    id="<?php echo esc_attr( $args[ 'id' ] ); ?>-color"
                    type="text"
                    name="<?php echo esc_attr( $args[ 'id' ] ); ?>[color]"
                    value="<?php echo esc_html( $args[ 'value' ][ 'color' ] ); ?>"
+                   data-alpha="false" data-alpha-enabled="false"
                    data-palette='<?php echo !empty( $args[ 'palettes' ] ) ? json_encode( $args[ 'palettes' ] ) : ''; ?>' />
 
             <input type="button" id="<?php echo esc_attr( $args[ 'id' ] ) . '-btn'; ?>"

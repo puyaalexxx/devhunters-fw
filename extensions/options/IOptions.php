@@ -32,7 +32,7 @@ interface IOptions {
      * @return void
      * @since     1.0.0
      */
-    public function init( array $options ) : void;
+    public function initOptions( array $options ) : void;
     
     /**
      * create custom option types located outside the framework

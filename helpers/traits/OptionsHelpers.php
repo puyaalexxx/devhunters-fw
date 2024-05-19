@@ -8,7 +8,6 @@ if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 trait OptionsHelpers {
     
     /**
-     *
      * generate form nonce fields (name and action)
      *
      * @return array
@@ -33,7 +32,6 @@ trait OptionsHelpers {
     }
     
     /**
-     *
      * pass option array to enqueue scripts method
      * (this is needed to enqueue specific script for specific subtype option)
      *

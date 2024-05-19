@@ -16,13 +16,14 @@ $args = $args ?? [];
 
             <label for="<?php echo esc_attr( $args[ 'id' ] ); ?>"><?php echo esc_html( $args[ 'label' ] ); ?></label>
 
-            <input class="dht-alphacolorpicker dht-field"
-                   id="<?php echo esc_attr( $args[ 'id' ] ); ?>"
-                   type="text"
+            <input
+                class="dht-colorpicker dht-field"
+                id="<?php echo esc_attr( $args[ 'id' ] ); ?>"
+                type="text"
                 <?php echo ( $args[ 'subtype' ] == 'rgba' ) ? 'data-alpha="true" data-alpha-enabled="true"' : 'data-alpha="false" data-alpha-enabled="false"'; ?>
-                   name="<?php echo esc_attr( $args[ 'id' ] ); ?>"
-                   value="<?php echo esc_html( $args[ 'value' ] ); ?>"
-                   data-palette='<?php echo !empty( $args[ 'palettes' ] ) ? json_encode( $args[ 'palettes' ] ) : ''; ?>' />
+                name="<?php echo esc_attr( $args[ 'id' ] ); ?>"
+                value="<?php echo esc_html( $args[ 'value' ] ); ?>"
+                data-palette='<?php echo !empty( $args[ 'palettes' ] ) ? json_encode( $args[ 'palettes' ] ) : ''; ?>' />
 
             <input type="button" id="<?php echo esc_attr( $args[ 'id' ] ) . '-btn'; ?>"
                    class="dht-default-color-btn button button-small"

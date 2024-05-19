@@ -37,13 +37,14 @@ final class ColorPicker extends BaseOption {
         wp_register_style( DHT_PREFIX . '-wp-color-picker-option', DHT_ASSETS_URI . 'styles/css/extensions/options/colorpicker-style.css', array(), fw()->manifest->get( 'version' ) );
         wp_enqueue_style( DHT_PREFIX . '-wp-color-picker-option' );
         
+        
         //include this script only if the option type is rgba
         if ( $option[ 'subtype' ] == 'rgba' ) {
             
-            wp_enqueue_script( DHT_PREFIX . '-wp-color-picker-option-alpha', DHT_ASSETS_URI . 'scripts/libraries/wp-color-picker-alpha.min.js', array( 'wp-color-picker' ), fw()->manifest->get( 'version' ), true );
+            wp_enqueue_script( DHT_PREFIX . '-wp-color-picker-option-alpha', DHT_ASSETS_URI . 'scripts/libraries/wp-color-picker-alpha.min.js', array( 'jquery', 'wp-color-picker' ), fw()->manifest->get( 'version' ), true );
         }
         
-        wp_enqueue_script( DHT_PREFIX . '-wp-color-picker-option', DHT_ASSETS_URI . 'scripts/js/extensions/options/colorpicker-script.js', array( 'jquery', 'wp-color-picker' ), fw()->manifest->get( 'version' ), true );
+        wp_enqueue_script( DHT_PREFIX . '-wp-color-picker-option', DHT_ASSETS_URI . 'scripts/js/extensions/options/colorpicker-script.js', array( 'jquery', 'wp-color-picker', DHT_PREFIX . '-wp-color-picker-option-alpha' ), fw()->manifest->get( 'version' ), true );
     }
     
 }

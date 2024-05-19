@@ -1,0 +1,34 @@
+@import "upload.pcss";
+
+.dht-wrapper {
+    .dht-field-child-upload-gallery {
+        .dht-gallery-group {
+            margin-bottom: 10px;
+
+            img {
+                margin-right: 5px;
+            }
+
+            span.dht-img-remove-icon {
+                border-radius: 50%;
+                width: 15px;
+                height: 15px;
+                background: #fff;
+                position: absolute;
+                cursor: pointer;
+                padding-left: 2px;
+                padding-bottom: 2px;
+            }
+
+            span.dht-img-remove-icon:before {
+                color: red;
+                content: "\f158";
+                font-family: dashicons, serif;
+            }
+
+            span.dht-img-remove {
+                position: relative;
+            }
+        }
+    }
+}

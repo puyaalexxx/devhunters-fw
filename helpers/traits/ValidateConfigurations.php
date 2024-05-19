@@ -8,7 +8,6 @@ if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 trait ValidateConfigurations {
     
     /**
-     *
      * validate the configurations received from plugin
      *
      * @param array  $config

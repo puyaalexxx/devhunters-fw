@@ -3,14 +3,17 @@ declare( strict_types = 1 );
 
 namespace DHT\Extensions\Options\Options;
 
+use DHT\Helpers\Traits\UploadHelpers;
 use function DHT\fw;
 
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
-final class Borders extends BaseOption {
+final class UploadGallery extends BaseOption {
+    
+    use UploadHelpers;
     
     //field type
-    protected string $_field = 'borders';
+    protected string $_field = 'upload-gallery';
     
     /**
      * @since     1.0.0
@@ -30,14 +33,14 @@ final class Borders extends BaseOption {
      */
     public function enqueueOptionScripts( array $option ) : void {
         
-        wp_enqueue_style( 'wp-color-picker' );
-        wp_enqueue_script( 'wp-color-picker' );
+        //Enqueue the media uploader
+        wp_enqueue_media();
         
         // Register custom style
-        wp_register_style( DHT_PREFIX . '-borders-option', DHT_ASSETS_URI . 'styles/css/extensions/options/borders-style.css', array(), fw()->manifest->get( 'version' ) );
-        wp_enqueue_style( DHT_PREFIX . '-borders-option' );
+        wp_register_style( DHT_PREFIX . '-upload-gallery-option', DHT_ASSETS_URI . 'styles/css/extensions/options/upload-gallery-style.css', array(), fw()->manifest->get( 'version' ) );
+        wp_enqueue_style( DHT_PREFIX . '-upload-gallery-option' );
         
-        wp_enqueue_script( DHT_PREFIX . '-wp-color-picker-option', DHT_ASSETS_URI . 'scripts/js/extensions/options/colorpicker-script.js', array( 'jquery', 'wp-color-picker', DHT_PREFIX . '-wp-color-picker-option-alpha' ), fw()->manifest->get( 'version' ), true );
+        wp_enqueue_script( DHT_PREFIX . '-upload-gallery-option', DHT_ASSETS_URI . 'scripts/js/extensions/options/upload-gallery-script.js', array( 'jquery', 'media-editor' ), fw()->manifest->get( 'version' ), true );
     }
     
     /**
@@ -59,24 +62,13 @@ final class Borders extends BaseOption {
             return $option[ 'value' ];
         }
         
-        //for the range field
-        if ( is_array( $option_value ) ) {
+        //value is coming as a string
+        $option_value = explode( ',', $option_value );
+        
+        //make sure the values are integers
+        foreach ( $option_value as $key => $attachment_id ) {
             
-            $option_vals = [];
-            foreach ( $option_value as $key => $value ) {
-                
-                if ( $key == 'style' || $key == 'color' ) {
-                    
-                    $option_vals[ $key ] = $value;
-                    
-                    continue;
-                }
-                
-                $option_vals[ $key ] = absint( sanitize_text_field( $value ) );
-            }
-            
-            $option_value = $option_vals;
-            
+            $option_value[ $key ] = absint( $attachment_id );
         }
         
         return $option_value;

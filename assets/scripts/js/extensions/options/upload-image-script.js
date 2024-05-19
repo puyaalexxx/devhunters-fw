@@ -83,52 +83,64 @@ module.exports = jQuery;
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-/*!*************************************************************!*\
-  !*** ./assets/scripts/ts/extensions/options/rangeslider.ts ***!
-  \*************************************************************/
+/*!**************************************************************!*\
+  !*** ./assets/scripts/ts/extensions/options/upload-image.ts ***!
+  \**************************************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "jquery");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
 
 (function ($) {
     "use strict";
-    $(".dht-field-child-rangeslider").each(function () {
-        var $this = $(this).find(".dht-slider-slider");
-        var is_range = $this.attr("data-range");
-        var min = $this.attr("data-min");
-        var max = $this.attr("data-max");
-        var values = $this.attr("data-values");
-        if (is_range === "yes") {
-            var $input1_1 = $this.siblings(".dht-slider-group").children(".dht-range-slider-1");
-            var $input2_1 = $this.siblings(".dht-slider-group").children(".dht-range-slider-2");
-            var range_values = values.length > 0 ? values.split(",").map(Number) : [];
-            $this.slider({
-                range: true,
-                min: +min,
-                max: +max,
-                values: range_values,
-                slide: function (event, ui) {
-                    if (ui.values !== undefined) {
-                        $input1_1.val(ui.values[0]);
-                        $input2_1.val(ui.values[1]);
-                    }
-                },
-            });
-            $input1_1.val($this.slider("values", 0));
-            $input2_1.val($this.slider("values", 1));
+    var $dht_field_wrapper = $(".dht-field-wrapper");
+    //open media popup
+    $dht_field_wrapper.on("click", ".dht-field-child-upload .dht-upload-image-button", function () {
+        var $this = $(this);
+        var $hidden_input = $(".dht-upload-hidden");
+        var $media_text = $this.attr("data-media-text");
+        //open WP media popup
+        var custom_uploader = wp.media({
+            title: $media_text,
+            button: {
+                text: $media_text,
+            },
+            library: { type: "image" },
+            multiple: false,
+        });
+        custom_uploader.on("select", function () {
+            var $image_input = $this.siblings(".dht-upload");
+            //remove image preview before proceeding
+            $image_input.siblings("img").remove();
+            var attachment = custom_uploader.state().get("selection").first().toJSON();
+            //add image URL
+            $image_input.val(attachment.url);
+            $image_input.attr("value", attachment.url);
+            //add attachment ids to the hidden input
+            $hidden_input.val(attachment.id);
+            //display a preview image with the selected image url
+            $image_input.before('<img src="' + attachment.url + '" width="100" height="100" />');
+        });
+        custom_uploader.open();
+        //open the WP media popup with a preselected attachment id if exist
+        var $hidden_input_val = +$hidden_input.val();
+        if ($hidden_input_val > 0) {
+            custom_uploader.state().get("selection").add(wp.media.attachment($hidden_input.val()));
         }
-        else {
-            var $input_1 = $this.siblings(".dht-slider");
-            $this.slider({
-                range: "min",
-                value: +values,
-                min: +min,
-                max: +max,
-                slide: function (event, ui) {
-                    $input_1.val(ui.value);
-                },
-            });
-            $input_1.val($this.slider("value"));
+    });
+    //remove image when input is cleared
+    $dht_field_wrapper.on("input", ".dht-field-child-upload .dht-upload", function () {
+        var $this = $(this);
+        // Check if the input field is empty and remove the image id and URL
+        if ($this.val() === "") {
+            $this.siblings("img").remove();
+            $this.siblings(".dht-upload-hidden").val("");
+            $this.attr("value", "");
+        }
+        //change image when adding a new link
+        if ($this.val().length > 0) {
+            $this.siblings("img").remove();
+            $this.before('<img src="' + $this.val() + '" width="100" height="100" />');
+            $this.attr("value", $this.val());
         }
     });
 })((jquery__WEBPACK_IMPORTED_MODULE_0___default()));
@@ -137,4 +149,4 @@ __webpack_require__.r(__webpack_exports__);
 
 /******/ })()
 ;
-//# sourceMappingURL=rangeslider-script.js.map
+//# sourceMappingURL=upload-image-script.js.map

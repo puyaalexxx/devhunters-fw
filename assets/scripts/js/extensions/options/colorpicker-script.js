@@ -92,7 +92,7 @@ __webpack_require__.r(__webpack_exports__);
 
 (function ($) {
     "use strict";
-    $(".dht-field-child-wrapper .dht-alphacolorpicker").each(function () {
+    $(".dht-field-child-wrapper .dht-colorpicker").each(function () {
         var $colorpicker = $(this);
         var wpColorPickerArgs = {};
         //get default palette of colors

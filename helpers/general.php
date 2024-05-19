@@ -6,6 +6,8 @@ namespace DHT\Helpers;
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 use DHT\Helpers\Classes\Dumper;
+use ReflectionClass;
+use ReflectionException;
 
 /**
  *
@@ -208,7 +210,7 @@ function dht_parse_css_classes_into_array( string $css, string $before_delimiter
 }
 
 /**
- *
+ * not finished
  *
  * @return string
  * @since     1.0.0
@@ -225,4 +227,46 @@ function dht_get_current_admin_page() : string {
     }
     
     return '';
+}
+
+/**
+ * Check if a class is a singleton with init method
+ *
+ * @param $className
+ *
+ * @return bool
+ * @throws ReflectionException
+ */
+function dht_is_singleton( $className ) : bool {
+    
+    $reflection = new ReflectionClass( $className );
+    
+    $method_name = 'init';
+    
+    // Check if there's a static method called getInstance
+    if ( !$reflection->hasMethod( $method_name ) ) {
+        return false;
+    }
+    
+    $initMethod = $reflection->getMethod( $method_name );
+    
+    // Check if getInstance is static
+    if ( !$initMethod->isStatic() ) {
+        return false;
+    }
+    
+    // Check if $instance returns an instance of the class
+    // Here, instead of checking the return type, we can check if the instance is of the class
+    $instance = $className::init();
+    if ( !$instance instanceof $className ) {
+        return false;
+    }
+    
+    // Check for a private or protected constructor
+    $constructor = $reflection->getConstructor();
+    if ( $constructor && !$constructor->isPublic() ) {
+        return true;
+    }
+    
+    return false;
 }

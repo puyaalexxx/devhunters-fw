@@ -3,7 +3,7 @@ import jQuery from "jquery";
 (function ($: JQueryStatic): void {
     "use strict";
 
-    $(".dht-field-child-wrapper .dht-alphacolorpicker").each(function () {
+    $(".dht-field-child-wrapper .dht-colorpicker").each(function () {
         const $colorpicker = $(this);
         let wpColorPickerArgs = {};
 

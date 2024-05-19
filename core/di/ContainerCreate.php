@@ -7,6 +7,8 @@ if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 use DI\Container;
 use DI\DependencyException;
 use DI\NotFoundException;
+use ReflectionException;
+use function DHT\Helpers\dht_is_singleton;
 use function DI\create;
 
 /**
@@ -33,6 +35,7 @@ final class ContainerCreate {
      * @param string $exception_thrown - exception to be thrown
      *
      * @return object - class instance upcasted to object
+     * @throws ReflectionException
      * @since     1.0.0
      */
     public function buildClassInstance( string $class_name, array $configurations, string $exception_thrown ) : object {
@@ -40,16 +43,30 @@ final class ContainerCreate {
         try {
             
             if ( empty( $configurations ) ) {
-                $this->_container->set( $class_name, create( $class_name )->constructor() );
+                
+                if ( dht_is_singleton( $class_name ) ) {
+                    
+                    $this->_container->set( $class_name, function () use ( $class_name ) {
+                        
+                        return $class_name::init();
+                    } );
+                } else {
+                    
+                    $this->_container->set( $class_name, create( $class_name )->constructor() );
+                }
+                
             } else {
                 
-                //if class is a singleton
-                /*$this->_container->set( $class_name, function () use ( $class_name, $configurations ) {
+                if ( dht_is_singleton( $class_name ) ) {
                     
-                    return $class_name::init( $configurations );
-                } );*/
-                
-                $this->_container->set( $class_name, create( $class_name )->constructor( $configurations ) );
+                    $this->_container->set( $class_name, function () use ( $class_name, $configurations ) {
+                        
+                        return $class_name::init( $configurations );
+                    } );
+                } else {
+                    
+                    $this->_container->set( $class_name, create( $class_name )->constructor( $configurations ) );
+                }
             }
             
             //return class instance

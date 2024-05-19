@@ -3,8 +3,8 @@ import jQuery from "jquery";
 (function ($: JQueryStatic): void {
     "use strict";
 
-    jQuery(".dht-field-child-rangeslider").each(function () {
-        const $this = jQuery(this).find(".dht-slider-slider");
+    $(".dht-field-child-rangeslider").each(function () {
+        const $this = $(this).find(".dht-slider-slider");
 
         const is_range = $this.attr("data-range");
         const min = $this.attr("data-min")!;

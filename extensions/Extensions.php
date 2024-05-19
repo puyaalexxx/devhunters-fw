@@ -17,6 +17,7 @@ use DHT\Helpers\Exceptions\ConfigExceptions\EmptyMenuConfigurationsException;
 use DHT\Helpers\Exceptions\ConfigExceptions\EmptySidebarConfigurationsException;
 use DHT\Helpers\Exceptions\ConfigExceptions\EmptyWidgetNamesException;
 use DHT\Helpers\Traits\ValidateConfigurations;
+use function DHT\Helpers\dht_get_variables_from_file;
 
 /**
  * Singleton Class that is used to include all the framework extensions and initialise them
@@ -85,8 +86,8 @@ final class Extensions {
      */
     public function options() : ?IOptions {
         
-        //init class only if on specific pages (set from the plugin)
-        if ( !apply_filters( 'dht_options_init_on_page', true ) ) return null;
+        //init class only if on specific pages (set from the plugin) and not ajax request to not block it
+        if ( !wp_doing_ajax() && !apply_filters( 'dht_options_init_on_page', true ) ) return null;
         
         return $this->_extensionClassInstance->getOptionsInstance();
     }
@@ -108,6 +109,68 @@ final class Extensions {
         return $this->_extensionClassInstance->getRegisterWidgetInstance( $widgets_config );
     }
     
+    public function get_option_icons() : void {
+        
+        if ( isset( $_POST[ 'data' ][ 'icon_type' ] ) ) {
+            
+            //retrieve icon type
+            $icon_type = $_POST[ 'data' ][ 'icon_type' ];
+            $icon = !empty( $_POST[ 'data' ][ 'icon' ] ) ? $_POST[ 'data' ][ 'icon' ] : '';
+            
+            $icons = [];
+            
+            if ( $icon_type == 'dashicons' ) {
+                $icons = dht_get_variables_from_file( DHT_OPTIONS_DIR . 'options/icons/dashicons.php', 'dashicons' );
+            }
+            
+            if ( $icon_type == 'fontawesome' ) {
+                $icons = dht_get_variables_from_file( DHT_OPTIONS_DIR . 'options/icons/font-awesome.php', 'font_awesome_icons' );
+            }
+            
+            if ( $icon_type == 'divi' ) {
+                $icons = dht_get_variables_from_file( DHT_OPTIONS_DIR . 'options/icons/divi.php', 'divi_icons' );
+            }
+            
+            if ( $icon_type == 'elusive' ) {
+                $icons = dht_get_variables_from_file( DHT_OPTIONS_DIR . 'options/icons/elusive.php', 'elusive_icons' );
+            }
+            
+            if ( $icon_type == 'line' ) {
+                $icons = dht_get_variables_from_file( DHT_OPTIONS_DIR . 'options/icons/line.php', 'line_icons' );
+            }
+            
+            if ( $icon_type == 'dev' ) {
+                $icons = dht_get_variables_from_file( DHT_OPTIONS_DIR . 'options/icons/devicon.php', 'devicon_icons' );
+            }
+            
+            if ( $icon_type == 'bootstrap' ) {
+                $icons = dht_get_variables_from_file( DHT_OPTIONS_DIR . 'options/icons/bootstrap.php', 'bootstrap_icons' );
+            }
+            
+            if ( !empty( $icons ) ) {
+                
+                ob_start();
+                
+                foreach ( $icons as $icon_class => $icon_code ) {
+                    
+                    //set active icon
+                    $active_icon = $icon == $icon_class ? 'dht-active-icon="true"' : '';
+                    
+                    echo '<i class="' . $icon_class . '" data-code="' . $icon_code . '" ' . $active_icon . ' ></i>';
+                }
+                
+                $icon_templates = ob_get_clean();
+                
+            } else {
+                
+                $icon_templates = 'No icons provided';
+            }
+            
+            wp_send_json_success( $icon_templates );
+            
+            die();
+        }
+    }
     
     /**
      * get sidebars extension class instance
@@ -150,7 +213,7 @@ final class Extensions {
      * into the static field. On subsequent runs, it returns the client existing
      * object stored in the static field.
      *
-     * @param $classInstance - ClassInstance object
+     * @param DIInit $classInstance - ClassInstance object
      *
      * @return self - current class
      * @since     1.0.0

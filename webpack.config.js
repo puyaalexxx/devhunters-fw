@@ -22,6 +22,10 @@ const datetimepicker_script = "datetimepicker-script";
 const rangeslider_script = "rangeslider-script";
 const radio_image_script = "radio-image-script";
 const multi_options_script = "multi-options-script";
+const upload_image_script = "upload-image-script";
+const upload_script = "upload-script";
+const upload_gallery_script = "upload-gallery-script";
+const icon_script = "icon-script";
 
 const create_sidebars_script = "create-sidebars-script";
 
@@ -45,6 +49,10 @@ const spacing_style = "spacing-style";
 const radio_image_style = "radio-image-style";
 const multi_options_style = "multi-options-style";
 const borders_style = "borders-style";
+const upload_image_style = "upload-image-style";
+const upload_style = "upload-style";
+const upload_gallery_style = "upload-gallery-style";
+const icon_style = "icon-style";
 
 const create_sidebars_style = "create-sidebars-style";
 
@@ -69,6 +77,10 @@ module.exports = {
         [rangeslider_script]: "./assets/scripts/ts/extensions/options/" + rangeslider_script.replace("-script", "") + ".ts",
         [radio_image_script]: "./assets/scripts/ts/extensions/options/" + radio_image_script.replace("-script", "") + ".ts",
         [multi_options_script]: "./assets/scripts/ts/extensions/options/" + multi_options_script.replace("-script", "") + ".ts",
+        [upload_image_script]: "./assets/scripts/ts/extensions/options/" + upload_image_script.replace("-script", "") + ".ts",
+        [upload_script]: "./assets/scripts/ts/extensions/options/" + upload_script.replace("-script", "") + ".ts",
+        [upload_gallery_script]: "./assets/scripts/ts/extensions/options/" + upload_gallery_script.replace("-script", "") + ".ts",
+        [icon_script]: "./assets/scripts/ts/extensions/options/" + icon_script.replace("-script", "") + ".ts",
 
         //sidebars
         [create_sidebars_script]: "./assets/scripts/ts/extensions/" + create_sidebars_script.replace("-script", "") + ".ts",
@@ -99,6 +111,10 @@ module.exports = {
         [radio_image_style]: "./assets/styles/postcss/extensions/options/" + radio_image_style.replace("-style", "") + ".pcss", // radio images CSS entry point
         [multi_options_style]: "./assets/styles/postcss/extensions/options/" + multi_options_style.replace("-style", "") + ".pcss", // multi options CSS entry point
         [borders_style]: "./assets/styles/postcss/extensions/options/" + borders_style.replace("-style", "") + ".pcss", // multi options CSS entry point
+        [upload_image_style]: "./assets/styles/postcss/extensions/options/" + upload_image_style.replace("-style", "") + ".pcss", // multi options CSS entry point
+        [upload_style]: "./assets/styles/postcss/extensions/options/" + upload_style.replace("-style", "") + ".pcss", // multi options CSS entry point
+        [upload_gallery_style]: "./assets/styles/postcss/extensions/options/" + upload_gallery_style.replace("-style", "") + ".pcss", // multi options CSS entry point
+        [icon_style]: "./assets/styles/postcss/extensions/options/" + icon_style.replace("-style", "") + ".pcss", // multi options CSS entry point
 
         //sidebars
         [create_sidebars_style]: "./assets/styles/postcss/extensions/" + create_sidebars_style.replace("-style", "") + ".pcss", // Sidebars CSS entry point
@@ -145,6 +161,18 @@ module.exports = {
             }
             if (chunkData.chunk.name === multi_options_script) {
                 return "scripts/js/extensions/options/" + multi_options_script + ".js";
+            }
+            if (chunkData.chunk.name === upload_image_script) {
+                return "scripts/js/extensions/options/" + upload_image_script + ".js";
+            }
+            if (chunkData.chunk.name === upload_script) {
+                return "scripts/js/extensions/options/" + upload_script + ".js";
+            }
+            if (chunkData.chunk.name === upload_gallery_script) {
+                return "scripts/js/extensions/options/" + upload_gallery_script + ".js";
+            }
+            if (chunkData.chunk.name === icon_script) {
+                return "scripts/js/extensions/options/" + icon_script + ".js";
             }
 
             //sidebars
@@ -250,6 +278,18 @@ module.exports = {
                 if (chunkData.chunk.name === borders_style) {
                     return "styles/css/extensions/options/" + borders_style + ".css";
                 } //border option file
+                if (chunkData.chunk.name === upload_image_style) {
+                    return "styles/css/extensions/options/" + upload_image_style + ".css";
+                } //upload image option file
+                if (chunkData.chunk.name === upload_style) {
+                    return "styles/css/extensions/options/" + upload_style + ".css";
+                } //upload option file
+                if (chunkData.chunk.name === upload_gallery_style) {
+                    return "styles/css/extensions/options/" + upload_gallery_style + ".css";
+                } //upload gallery option file
+                if (chunkData.chunk.name === icon_style) {
+                    return "styles/css/extensions/options/" + icon_style + ".css";
+                } //icon option file
 
                 //sidebars
                 if (chunkData.chunk.name === create_sidebars_style) {

@@ -87,7 +87,7 @@ final class Extensions {
     public function options() : ?IOptions {
         
         //init class only if on specific pages (set from the plugin) and not ajax request to not block it
-        if ( !wp_doing_ajax() && !apply_filters( 'dht_options_init_on_page', true ) ) return null;
+        if ( !apply_filters( 'dht_options_init_on_page', true ) ) return null;
         
         return $this->_extensionClassInstance->getOptionsInstance();
     }

@@ -55,4 +55,29 @@ trait OptionsHelpers {
         }
     }
     
+    /**
+     * Get js files from assets array.
+     *
+     * @param string $file_string
+     *
+     * @return bool
+     */
+    function _filter_js_files( string $file_string ) : bool {
+        
+        return pathinfo( $file_string, PATHINFO_EXTENSION ) === 'js';
+        
+    }
+    
+    /**
+     * Get css files from assets array.
+     *
+     * @param string $file_string
+     *
+     * @return bool
+     */
+    function _filter_css_files( string $file_string ) : bool {
+        
+        return pathinfo( $file_string, PATHINFO_EXTENSION ) === 'css';
+    }
+    
 }

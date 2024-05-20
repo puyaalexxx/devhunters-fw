@@ -26,6 +26,7 @@ use DHT\Extensions\Options\Options\{AceEditor,
     Text,
     Textarea,
     TimePicker,
+    Typography,
     Upload,
     UploadGallery,
     UploadImage,
@@ -64,6 +65,8 @@ final class Options implements IOptions {
         
         //register the Framework options classes
         $this->_registerFWOptionTypes();
+        
+        //add_action( 'admin_enqueue_scripts', [ $this, 'enqueueReactAppScripts' ] );
     }
     
     /**
@@ -101,12 +104,86 @@ final class Options implements IOptions {
      */
     public function enqueueMainAreaScripts( string $hook ) : void {
         
-        wp_enqueue_script( 'dht-wrapper-area', DHT_ASSETS_URI . 'scripts/js/extensions/options/dht-wrapper-area-script.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
+        wp_enqueue_script( DHT_PREFIX . '-wrapper-area', DHT_ASSETS_URI . 'scripts/js/extensions/options/dht-wrapper-area-script.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
         
         // Register the style
-        wp_register_style( 'dht-wrapper-area', DHT_ASSETS_URI . 'styles/css/extensions/options/dht-wrapper-area-style.css', array(), fw()->manifest->get( 'version' ) );
+        wp_register_style( DHT_PREFIX . '-wrapper-area', DHT_ASSETS_URI . 'styles/css/extensions/options/dht-wrapper-area-style.css', array(), fw()->manifest->get( 'version' ) );
         // Enqueue the style
-        wp_enqueue_style( 'dht-wrapper-area' );
+        wp_enqueue_style( DHT_PREFIX . '-wrapper-area' );
+    }
+    
+    /**
+     * Enqueue react app files for options
+     *
+     * @param string $hook
+     *
+     * @return bool
+     * @since     1.0.0
+     */
+    public function enqueueReactAppScripts( string $hook ) : bool {
+        
+        /*$is_main_dashboard = $hook === 'index.php';
+        
+        // Only load react app scripts in main admin page.
+        if ( !$is_main_dashboard )
+            return false;*/
+        
+        // Setting path variables.
+        $dist_react_app_dir = DHT_REACT_APP_DIR . 'dist-react-app/';
+        $dist_react_app_uri = DHT_REACT_APP_URI . 'dist-react-app/';
+        $manifest_path = $dist_react_app_dir . '.vite/manifest.json';
+        
+        // Request manifest file.
+        $request = file_get_contents( $manifest_path );
+        
+        // If the remote request fails, wp_remote_get() will return a WP_Error, so let’s check if the $request variable is an error:
+        if ( !$request )
+            return false;
+        
+        // Convert json to php array.
+        $files_data = json_decode( $request, true );
+        if ( $files_data === null )
+            return false;
+        
+        //check if this is the entry point of the React application
+        $entry_point = isset( $files_data[ 'index.html' ] ) && $files_data[ 'index.html' ][ 'isEntry' ] ? $files_data[ 'index.html' ] : '';
+        if ( !$entry_point ) {
+            return false;
+        }
+        
+        // Get assets links.
+        //make sure the js files are always in array
+        $entry_point_js_files = is_array( $entry_point[ 'file' ] ) ? $entry_point[ 'file' ] : array( $entry_point[ 'file' ] );
+        $js_files = array_filter( $entry_point_js_files, array( $this, '_filter_js_files' ) );
+        $css_files = array_filter( $entry_point[ 'css' ], array( $this, '_filter_css_files' ) );
+        
+        // Load css files.
+        foreach ( $css_files as $index => $css_file ) {
+            wp_enqueue_style(
+                DHT_PREFIX . '-react-app-' . $index,
+                $dist_react_app_uri . $css_file,
+                array(),
+                filemtime( $dist_react_app_dir . $css_file ),
+            );
+        }
+        
+        // Load js files.
+        foreach ( $js_files as $index => $js_file ) {
+            wp_enqueue_script(
+                DHT_PREFIX . '-react-app-' . $index,
+                $dist_react_app_uri . $js_file,
+                array(),
+                filemtime( $dist_react_app_dir . $js_file ),
+                true
+            );
+        }
+        
+        // Variables for app use.
+        wp_localize_script( DHT_PREFIX . '-react-app-0', 'dht_options_selector',
+            array( 'optionsAppSelector' => 'dht-wrapper-options-render-area' )
+        );
+        
+        return true;
     }
     
     /**
@@ -267,6 +344,7 @@ final class Options implements IOptions {
         $upload = new Upload();
         $upload_gallery = new UploadGallery();
         $icon = new Icon();
+        $typography = new Typography();
         
         //add class instance to the _optionClasses array to use throughout the Option class methods
         $this->_optionClasses[ $input->getField() ] = $input;
@@ -293,6 +371,7 @@ final class Options implements IOptions {
         $this->_optionClasses[ $upload->getField() ] = $upload;
         $this->_optionClasses[ $upload_gallery->getField() ] = $upload_gallery;
         $this->_optionClasses[ $icon->getField() ] = $icon;
+        $this->_optionClasses[ $typography->getField() ] = $typography;
     }
     
     /**

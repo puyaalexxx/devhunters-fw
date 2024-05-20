@@ -1,0 +1,60 @@
+@import "../../../assets/styles/variables.pcss";
+
+.dht-wrapper {
+    .dht-container {
+        .dht-tooltips {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 5;
+
+            p.OnLeft {
+                transform: translate(-100%, -50%);
+            }
+
+            p {
+                min-width: 100px;
+                opacity: 1;
+                display: inline-block;
+                visibility: visible;
+                position: absolute;
+                text-align: left;
+                width: auto;
+                background: $tooltip-color;
+                color: #ffffff;
+                font-size: 1rem;
+                line-height: 1.2;
+                padding: 10px;
+                border-radius: 3px;
+                white-space: normal;
+                box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+                transition: all 0.2s ease-out;
+            }
+
+            p.OnLeft {
+                left: -15px;
+                top: -5px;
+            }
+
+            p.OnLeft:before {
+                position: absolute;
+                content: "";
+                width: 0;
+                height: 0;
+                border-left: 8px solid #000;
+                border-top: 8px solid transparent;
+                border-bottom: 8px solid transparent;
+                top: 50%;
+                margin-top: -8px;
+                right: -8px;
+            }
+        }
+
+        .dht-info-help {
+            align-self: center;
+            justify-self: end;
+        }
+    }
+}

@@ -1,0 +1,62 @@
+@import "../../../assets/styles/variables.pcss";
+
+.dht-wrapper {
+
+    .dht-container {
+        .dht-field-wrapper-main {
+            padding: 20px 20px;
+        }
+
+        .dht-field-wrapper-main:after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+        .dht-button {
+            background-color: $main-color;
+            border: $main-color;
+            color: $btn-color !important;
+            font-weight: 600;
+            border-radius: 3px;
+            cursor: pointer;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .dht-button:hover {
+            box-shadow: 0 0.5em 0.5em -0.4em $main-color;
+            transform: translateY(-0.20em);
+        }
+
+        .dht-btn-medium {
+            padding: 8px 20px;
+            font-size: 14px;
+        }
+
+        .dht-btn-big {
+            padding: 10px 40px;
+            font-size: 15px;
+        }
+
+        .dht-btn-small {
+            padding: 5px 10px;
+            font-size: 13px;
+        }
+
+        .dht-submit {
+            text-transform: uppercase;
+            float: right;
+        }
+    }
+
+    @media (max-width: 980px) {
+        .dht-button {
+            float: none;
+        }
+
+        .dht-field-wrapper-main {
+            text-align: center;
+        }
+    }
+}

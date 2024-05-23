@@ -65,8 +65,6 @@ final class Options implements IOptions {
         
         //register the Framework options classes
         $this->_registerFWOptionTypes();
-        
-        //add_action( 'admin_enqueue_scripts', [ $this, 'enqueueReactAppScripts' ] );
     }
     
     /**
@@ -81,11 +79,11 @@ final class Options implements IOptions {
         
         if ( empty( $options ) ) return;
         
-        //set class $options across the instances
-        $this->_options = apply_filters( 'dht_options_configurations', $options );
-        
         //enqueue the options container scripts
         add_action( 'admin_enqueue_scripts', [ $this, 'enqueueMainAreaScripts' ] );
+        
+        //set class $options across the instances
+        $this->_options = apply_filters( 'dht_options_configurations', $options );
         
         //set form nonce field
         $this->_nonce = $this->_generateNonce();

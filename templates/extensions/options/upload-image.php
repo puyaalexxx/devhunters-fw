@@ -22,7 +22,7 @@ if ( !empty( $args[ 'value' ][ 'image_id' ] ) ) {
         <div class="dht-title"><?php echo esc_html( $args[ 'title' ] ); ?></div>
 
         <div
-            class="dht-field-child-wrapper dht-field-child-upload <?php echo isset( $args[ 'attr' ][ 'class' ] ) ? esc_attr( $args[ 'attr' ][ 'class' ] ) : ''; ?>"
+            class="dht-field-child-wrapper dht-field-child-upload dht-field-child-upload-image <?php echo isset( $args[ 'attr' ][ 'class' ] ) ? esc_attr( $args[ 'attr' ][ 'class' ] ) : ''; ?>"
             <?php echo dht_parse_option_attributes( $args[ 'attr' ] ); ?>>
 
             <label

@@ -93,19 +93,37 @@ __webpack_require__.r(__webpack_exports__);
 
 (function ($) {
     "use strict";
-    var tooltips = $(".dht-wrapper .dht-info-help");
-    jquery__WEBPACK_IMPORTED_MODULE_0___default()(tooltips).each(function () {
-        var $tooltip = $(this);
-        $tooltip.on("mouseenter", function () {
-            var $this = $(this);
-            $this.css("position", "relative");
-            $this.html($this.html() + "<div class='dh-tooltips'><p class='" + $this.attr("data-position") + "'>" + $this.attr("data-tooltips") + "</p>");
-        });
-        $tooltip.on("mouseleave", function () {
-            var $this = $(this);
-            $this.removeAttr("style");
-            $this.html($this.html().replace(/<div[^]*?<\/div>/, ""));
-        });
+    var WrapperArea = /** @class */ (function () {
+        function WrapperArea() {
+            this.$_tooltip = $(".dht-wrapper .dht-info-help");
+            //init tooltips
+            this._initTooltips();
+        }
+        /**
+         * init tooltips
+         *
+         * @return void
+         */
+        WrapperArea.prototype._initTooltips = function () {
+            this.$_tooltip.each(function () {
+                var $tooltip = $(this);
+                $tooltip.on("mouseenter", function () {
+                    var $this = $(this);
+                    $this.css("position", "relative");
+                    $this.html($this.html() + "<div class='dht-tooltips'><p class='" + $this.attr("data-position") + "'>" + $this.attr("data-tooltips") + "</p>");
+                });
+                $tooltip.on("mouseleave", function () {
+                    var $this = $(this);
+                    $this.removeAttr("style");
+                    $this.html($this.html().replace(/<div[^]*?<\/div>/, ""));
+                });
+            });
+        };
+        return WrapperArea;
+    }());
+    //init main wrapper functionality
+    $(function () {
+        new WrapperArea();
     });
 })((jquery__WEBPACK_IMPORTED_MODULE_0___default()));
 

@@ -4,23 +4,46 @@ import jQuery from "jquery";
 (function ($: JQueryStatic): void {
     "use strict";
 
-    let tooltips = $(".dht-wrapper .dht-info-help");
+    class WrapperArea {
+        private $_tooltip;
 
-    jQuery(tooltips).each(function () {
-        let $tooltip = $(this);
+        constructor() {
+            this.$_tooltip = $(".dht-wrapper .dht-info-help");
 
-        $tooltip.on("mouseenter", function () {
-            let $this = $(this);
+            //init tooltips
+            this._initTooltips();
+        }
 
-            $this.css("position", "relative");
-            $this.html($this.html() + "<div class='dht-tooltips'><p class='" + $this.attr("data-position") + "'>" + $this.attr("data-tooltips") + "</p>");
-        });
+        /**
+         * init tooltips
+         *
+         * @return void
+         */
+        private _initTooltips(): void {
+            this.$_tooltip.each(function () {
+                let $tooltip = $(this);
 
-        $tooltip.on("mouseleave", function () {
-            let $this = $(this);
+                $tooltip.on("mouseenter", function () {
+                    let $this = $(this);
 
-            $this.removeAttr("style");
-            $this.html($this.html().replace(/<div[^]*?<\/div>/, ""));
-        });
+                    $this.css("position", "relative");
+                    $this.html(
+                        $this.html() + "<div class='dht-tooltips'><p class='" + $this.attr("data-position") + "'>" + $this.attr("data-tooltips") + "</p>"
+                    );
+                });
+
+                $tooltip.on("mouseleave", function () {
+                    let $this = $(this);
+
+                    $this.removeAttr("style");
+                    $this.html($this.html().replace(/<div[^]*?<\/div>/, ""));
+                });
+            });
+        }
+    }
+
+    //init main wrapper functionality
+    $(function (): void {
+        new WrapperArea();
     });
 })(jQuery);

@@ -92,21 +92,38 @@ __webpack_require__.r(__webpack_exports__);
 
 (function ($) {
     "use strict";
+    var Switch = /** @class */ (function () {
+        function Switch($switch) {
+            //switch reference
+            this.$_switch = $switch;
+            this.$_switchInput = this.$_switch.children("input");
+            //init switch button
+            this._initSwitch();
+        }
+        /**
+         * init switch button
+         *
+         * @return void
+         */
+        Switch.prototype._initSwitch = function () {
+            if (this.$_switch.hasClass("dht-slider-on")) {
+                this.$_switch.removeClass("dht-slider-on").addClass("dht-slider-off");
+                //get off value
+                var value = this.$_switch.children(".dht-slider").children(".dht-slider-no").attr("data-value");
+                this.$_switchInput.val(value);
+            }
+            else {
+                this.$_switch.removeClass("dht-slider-off").addClass("dht-slider-on");
+                //get on value
+                var value = this.$_switch.children(".dht-slider").children(".dht-slider-yes").attr("data-value");
+                this.$_switchInput.val(value);
+            }
+        };
+        return Switch;
+    }());
+    //init each switch button option
     $(".dht-field-child-switch .dht-switch").on("click", function () {
-        var $this = $(this);
-        var $input = $this.children("input");
-        if ($this.hasClass("dht-slider-on")) {
-            $this.removeClass("dht-slider-on").addClass("dht-slider-off");
-            //get off value
-            var value = $this.children(".dht-slider").children(".dht-slider-no").attr("data-value");
-            $input.val(value);
-        }
-        else {
-            $this.removeClass("dht-slider-off").addClass("dht-slider-on");
-            //get on value
-            var value = $this.children(".dht-slider").children(".dht-slider-yes").attr("data-value");
-            $input.val(value);
-        }
+        new Switch($(this));
     });
 })((jquery__WEBPACK_IMPORTED_MODULE_0___default()));
 

@@ -15,10 +15,37 @@ function getGoogleFonts() {
     return $fonts[ 'items' ];
 }
 
+function prepareFontWeight( $font_weights ) : array {
+
+    $font_weights_result = [];
+    foreach ( $font_weights as $font_weight ) {
+
+        //skip the italic ones
+        if ( str_contains( $font_weight, 'italic' ) ) continue;
+
+        //change to a number to be consistent
+        if ( $font_weight == 'regular' ) $font_weight = '400';
+
+        $font_weight_label = match ( $font_weight ) {
+            '100' => 'Thin',
+            '200' => 'Extra Light',
+            '300' => 'Light',
+            '400' => 'Regular',
+            '500' => 'Medium',
+            '600' => 'Semi Bold',
+            '700' => 'Bold',
+            '800' => 'Extra Bold',
+            '900' => 'Black'
+        };
+
+        $font_weights_result[ $font_weight ] = $font_weight_label;
+    }
+
+    return $font_weights_result;
+}
+
 // Get Google Fonts
 $google_fonts = getGoogleFonts();
-
-dht_print_r( $google_fonts );
 
 //font weights
 $font_weight = [
@@ -49,6 +76,20 @@ $text_decoration = [
     'overline' => 'Overline',
     'line-through' => 'Line Through'
 ];
+
+dht_print_r( $args[ 'value' ] );
+
+$preview_styles = '';
+if ( !empty( $args[ 'value' ] ) ) {
+    $preview_styles = !empty( $args[ 'value' ][ 'font-family' ] ) ? 'font-family:"' . $args[ 'value' ][ 'font-family' ] . '";' : '';
+    $preview_styles .= !empty( $args[ 'value' ][ 'font-weight' ] ) ? 'font-weight:' . $args[ 'value' ][ 'font-weight' ] . ';' : '';
+    $preview_styles .= !empty( $args[ 'value' ][ 'font-style' ] ) ? 'font-style:' . $args[ 'value' ][ 'font-style' ] . ';' : '';
+    $preview_styles .= !empty( $args[ 'value' ][ 'text-transform' ] ) ? 'text-transform:' . $args[ 'value' ][ 'text-transform' ] . ';' : '';
+    $preview_styles .= !empty( $args[ 'value' ][ 'text-decoration' ] ) ? 'text-decoration:' . $args[ 'value' ][ 'text-decoration' ] . ';' : '';
+}
+
+//value
+$value = $args[ 'value' ];
 ?>
 <!-- field - typography -->
 <div class="dht-field-wrapper">
@@ -59,7 +100,7 @@ $text_decoration = [
         class="dht-field-child-wrapper dht-field-child-typography <?php echo isset( $args[ 'attr' ][ 'class' ] ) ? esc_attr( $args[ 'attr' ][ 'class' ] ) : ''; ?>"
         <?php echo dht_parse_option_attributes( $args[ 'attr' ] ); ?>>
 
-        <p class="dht-field-child-typography-preview">
+        <p class="dht-field-child-typography-preview" style="<?php echo esc_attr( $preview_styles ); ?>">
             A B C D E F G H I J K L M N O P Q R S T U V W X Y Z a b c d e f g h i j k l m n o p q r
             s t u v w x y z 1 2 3 4 5 6 7 8 9 0
         </p>
@@ -129,14 +170,20 @@ $text_decoration = [
                     <optgroup label="Google Fonts" data-google-font="yes">
 
                         <?php foreach ( $google_fonts as $font ): ?>
-
-                            <!--grab google font subsets-->
-                            <?php $font_subset = isset( $font[ 'subsets' ] ) ? json_encode( $font[ 'subsets' ] ) : json_encode( [] ); ?>
+                            <?php
+                            //grab google font subsets
+                            $font_subset = isset( $font[ 'subsets' ] ) ? json_encode( $font[ 'subsets' ] ) : json_encode( [] );
+                            ?>
+                            <?php
+                            //grab google font weights
+                            $font_weights = isset( $font[ 'variants' ] ) ? json_encode( prepareFontWeight( $font[ 'variants' ] ) ) : json_encode( [] );
+                            ?>
 
                             <option value='<?php echo esc_attr( $font[ 'family' ] ); ?>'
+                                <?php echo !empty( $value[ 'font-family' ] && $value[ 'font-family' ] == $font[ 'family' ] ) ? 'selected' : ''; ?>
                                     data-google-font="yes"
                                     data-font-subsets='<?php echo esc_attr( $font_subset ); ?>'
-                                    data-font-weights='<?php //echo esc_attr( $font_subset ); ?>'>
+                                    data-font-weights='<?php echo esc_attr( $font_weights ); ?>'>
                                 <?php echo esc_html( $font[ 'family' ] ); ?>
                             </option>
 
@@ -183,7 +230,10 @@ $text_decoration = [
 
                     <?php foreach ( $font_style as $font_style_value => $font_style_name ): ?>
                         <option
-                            value="<?php echo esc_attr( $font_style_value ); ?>"><?php echo esc_html( $font_style_name ); ?></option>
+                            value="<?php echo esc_attr( $font_style_value ); ?>"
+                            <?php echo !empty( $value[ 'font-style' ] && $value[ 'font-style' ] == $font_style_value ) ? 'selected' : ''; ?>>
+                            <?php echo esc_html( $font_style_name ); ?>
+                        </option>
                     <?php endforeach; ?>
                 </select>
 
@@ -221,7 +271,9 @@ $text_decoration = [
 
                     <?php foreach ( $text_transform as $text_transform_value => $text_transform_name ): ?>
                         <option
-                            value="<?php echo esc_attr( $text_transform_value ); ?>"><?php echo esc_html( $text_transform_name ); ?></option>
+                            value="<?php echo esc_attr( $text_transform_value ); ?>"
+                            <?php echo !empty( $value[ 'text-transform' ] && $value[ 'text-transform' ] == $text_transform_value ) ? 'selected' : ''; ?>><?php echo esc_html( $text_transform_name ); ?>
+                        </option>
                     <?php endforeach; ?>
 
                 </select>
@@ -243,7 +295,10 @@ $text_decoration = [
 
                     <?php foreach ( $text_decoration as $text_decoration_value => $text_decoration_name ): ?>
                         <option
-                            value="<?php echo esc_attr( $text_decoration_value ); ?>"><?php echo esc_html( $text_decoration_name ); ?></option>
+                            value="<?php echo esc_attr( $text_decoration_value ); ?>"
+                            <?php echo !empty( $value[ 'text-decoration' ] && $value[ 'text-decoration' ] == $text_decoration_value ) ? 'selected' : ''; ?>>
+                            <?php echo esc_html( $text_decoration_name ); ?>
+                        </option>
                     <?php endforeach; ?>
 
                 </select>
@@ -274,124 +329,143 @@ $text_decoration = [
 <script>
     jQuery(document).ready(function($) {
 
-        //preview area div
-        const $preview_area = $(".dht-field-child-typography .dht-field-child-typography-preview");
+        $(".dht-field-child-typography").each(function() {
 
-        //fonts dropdown
-        const $fonts_dropdown = $(".dht-field-child-typography .dht-typography");
-        //font weights dropdown
-        const $font_weight_dropdown = $(".dht-field-child-typography .dht-typography-weight");
-        //font styles dropdown
-        const $font_style_dropdown = $(".dht-field-child-typography .dht-typography-style");
-        //font subsets
-        const $font_subsets_dropdown = $(".dht-field-child-typography .dht-typography-subsets");
-        //text transform
-        const $text_transform_dropdown = $(".dht-field-child-typography .dht-typography-transform");
-        //text decoration
-        const $text_decoration_dropdown = $(".dht-field-child-typography .dht-typography-decoration");
+            const $this = $(this);
 
-        //fonts dropdown
-        $fonts_dropdown.select2({
-            allowClear: true,
-        });
-        $fonts_dropdown.on("change", function() {
-            const $selected_font = $(this);
+            //preview area div
+            const $preview_area = $this.children(".dht-field-child-typography-preview");
 
-            //check if it is a Google font
-            const isGoogleFont = $selected_font.find("option:selected").attr("data-google-font");
+            //fonts dropdown
+            const $fonts_dropdown = $this.find(".dht-typography");
+            //font weights dropdown
+            const $font_weight_dropdown = $this.find(".dht-typography-weight");
+            //font styles dropdown
+            const $font_style_dropdown = $this.find(".dht-typography-style");
+            //font subsets
+            const $font_subsets_dropdown = $this.find(".dht-typography-subsets");
+            //text transform
+            const $text_transform_dropdown = $this.find(".dht-typography-transform");
+            //text decoration
+            const $text_decoration_dropdown = $this.find(".dht-typography-decoration");
 
-            //get the selected font family
-            const font_family = $selected_font.val();
+            //fonts dropdown
+            let selected_google_font_name = "";
+            $fonts_dropdown.select2({
+                allowClear: true,
+            });
+            $fonts_dropdown.on("change", function() {
+                const $selected_font = $(this);
 
-            $preview_area.css("font-family", font_family);
+                //check if it is a Google font
+                const isGoogleFont = $selected_font.find("option:selected").attr("data-google-font");
 
-            //if Google font
-            if (isGoogleFont === "yes") {
-                const fontWeights = {}; // Object to store font weights
-                //get the selected Google font - font subsets
-                const font_subsets = $selected_font.find("option:selected").attr("data-font-subsets");
+                //get the selected font family
+                const font_family = $selected_font.val();
 
-                //include the font link for preview
-                const fontLink = "https://fonts.googleapis.com/css?family=" + font_family.replace(/\s+/g, "+");
-                //const fontLink = "https://fonts.gstatic.com/s/abeezee/v22/esDT31xSG-6AGleN2tCklZUCGpG-GQ.ttf";
-                $("<link href=\"" + fontLink + "\" rel=\"stylesheet\">").appendTo("head");
+                $preview_area.css("font-family", font_family);
 
-                //add Google font - font weights
-                $font_weight_dropdown.empty();
-                // Filter font weights for selected font
-                $.each(fontWeights[font_family], function(index, weight) {
-                    console.log(weight);
+                //if Google font
+                if (isGoogleFont === "yes") {
 
-                    $font_weight_dropdown.append("<option value=\"" + weight + "\">" + weight + "</option>");
-                });
+                    //variable used in other dropdowns
+                    selected_google_font_name = font_family;
 
-                //add Google font - font subsets to the font subsets dropdown
-                $font_subsets_dropdown.empty();
-                if (font_subsets.length > 0) {
+                    //get the selected Google font - font subsets
+                    const font_subsets = $selected_font.find("option:selected").attr("data-font-subsets");
+                    //get the selected Google font - font weights
+                    const font_weights = $selected_font.find("option:selected").attr("data-font-weights");
 
-                    $font_subsets_dropdown.append("<option></option>");
-                    $.each(JSON.parse(font_subsets), function(index, subset) {
+                    //include the font link for preview
+                    const fontLink = "https://fonts.googleapis.com/css?family=" + font_family.replace(/\s+/g, "+");
+                    $("<link href=\"" + fontLink + "\" rel=\"stylesheet\">").appendTo("head");
 
-                        $font_subsets_dropdown.append("<option value=\"" + subset + "\">" + subset + "</option>");
-                    });
+                    //add Google font - font weights to the font weights dropdown
+                    $font_weight_dropdown.empty();
+                    if (font_weights.length > 0) {
+
+                        $font_weight_dropdown.append("<option></option>");
+                        $.each(JSON.parse(font_weights), function(weight_value, weight_value_label) {
+
+                            $font_weight_dropdown.append("<option value=\"" + weight_value + "\">" + weight_value_label + "</option>");
+                        });
+                    }
+
+                    //add Google font - font subsets to the font subsets dropdown
+                    $font_subsets_dropdown.empty();
+                    if (font_subsets.length > 0) {
+
+                        $font_subsets_dropdown.append("<option></option>");
+                        $.each(JSON.parse(font_subsets), function(index, subset) {
+
+                            $font_subsets_dropdown.append("<option value=\"" + subset + "\">" + subset + "</option>");
+                        });
+                    }
+
+                    // Trigger change event to update Select2
+                    $font_weight_dropdown.trigger("change");
+                }
+            });
+
+            //font weights dropdown
+            $font_weight_dropdown.select2({
+                allowClear: true,
+            });
+            $font_weight_dropdown.on("change", function() {
+                const font_weight = $(this).val();
+
+                //include the font link for preview + font weight
+                if (font_weight.length !== 0) {
+                    const fontLink = "https://fonts.googleapis.com/css?family=" + selected_google_font_name.replace(/\s+/g, "+") + ":" + font_weight;
+                    $("<link href=\"" + fontLink + "\" rel=\"stylesheet\">").appendTo("head");
                 }
 
-                // Trigger change event to update Select2
-                $font_weight_dropdown.trigger("change");
-            }
-        });
+                $preview_area.css("font-weight", font_weight);
+            });
 
-        //font weights dropdown
-        $font_weight_dropdown.select2({
-            allowClear: true,
-        });
-        $font_weight_dropdown.on("change", function() {
-            const font_weight = $(this).val();
+            //font styles dropdown
+            $font_style_dropdown.select2({
+                allowClear: true,
+            });
+            $font_style_dropdown.on("change", function() {
+                const font_style = $(this).val();
 
-            $preview_area.css("font-weight", font_weight);
-        });
+                $preview_area.css("font-style", font_style);
+            });
 
-        //font styles dropdown
-        $font_style_dropdown.select2({
-            allowClear: true,
-        });
-        $font_style_dropdown.on("change", function() {
-            const font_style = $(this).val();
+            //font subsets dropdown
+            $font_subsets_dropdown.select2({
+                allowClear: true,
+            });
 
-            $preview_area.css("font-style", font_style);
-        });
+            //text transform dropdown
+            $text_transform_dropdown.select2({
+                allowClear: true,
+            });
+            $text_transform_dropdown.on("change", function() {
+                const text_transform = $(this).val();
 
-        //font subsets dropdown
-        $font_subsets_dropdown.select2({
-            allowClear: true,
-        });
+                //reset css
+                $preview_area.css("font-variant", "");
+                $preview_area.css("text-transform", "");
 
-        //text transform dropdown
-        $text_transform_dropdown.select2({
-            allowClear: true,
-        });
-        $text_transform_dropdown.on("change", function() {
-            const text_transform = $(this).val();
+                if (text_transform === "small-caps") {
+                    $preview_area.css("font-variant", text_transform);
+                } else {
+                    $preview_area.css("text-transform", text_transform);
+                }
+            });
 
-            //reset css
-            $preview_area.css("font-variant", "");
-            $preview_area.css("text-transform", "");
+            //text decoration dropdown
+            $text_decoration_dropdown.select2({
+                allowClear: true,
+            });
+            $text_decoration_dropdown.on("change", function() {
+                const text_decoration = $(this).val();
 
-            if (text_transform === "small-caps") {
-                $preview_area.css("font-variant", text_transform);
-            } else {
-                $preview_area.css("text-transform", text_transform);
-            }
-        });
+                $preview_area.css("text-decoration", text_decoration);
+            });
 
-        //text decoration dropdown
-        $text_decoration_dropdown.select2({
-            allowClear: true,
-        });
-        $text_decoration_dropdown.on("change", function() {
-            const text_decoration = $(this).val();
-
-            $preview_area.css("text-decoration", text_decoration);
         });
 
     });

@@ -92,44 +92,69 @@ __webpack_require__.r(__webpack_exports__);
 
 (function ($) {
     "use strict";
-    $(".dht-field-child-rangeslider").each(function () {
-        var $this = $(this).find(".dht-slider-slider");
-        var is_range = $this.attr("data-range");
-        var min = $this.attr("data-min");
-        var max = $this.attr("data-max");
-        var values = $this.attr("data-values");
-        if (is_range === "yes") {
-            var $input1_1 = $this.siblings(".dht-slider-group").children(".dht-range-slider-1");
-            var $input2_1 = $this.siblings(".dht-slider-group").children(".dht-range-slider-2");
-            var range_values = values.length > 0 ? values.split(",").map(Number) : [];
-            $this.slider({
+    var RangeSlider = /** @class */ (function () {
+        function RangeSlider($rangeSlider) {
+            //datepicker reference
+            this.$_rangeSlider = $rangeSlider;
+            this.$_sliderInput = this.$_rangeSlider.find(".dht-slider-slider");
+            this.$_isRange = this.$_sliderInput.attr("data-range");
+            this.$_min = +this.$_sliderInput.attr("data-min");
+            this.$_max = +this.$_sliderInput.attr("data-max");
+            this.$_sliderValues = this.$_sliderInput.attr("data-values");
+            if (this.$_isRange === "yes") {
+                this._initRangeSlider();
+            }
+            else {
+                this._initSlider();
+            }
+        }
+        /**
+         * init range slider
+         *
+         * @return void
+         */
+        RangeSlider.prototype._initRangeSlider = function () {
+            var $input1 = this.$_sliderInput.siblings(".dht-slider-group").children(".dht-range-slider-1");
+            var $input2 = this.$_sliderInput.siblings(".dht-slider-group").children(".dht-range-slider-2");
+            var range_values = this.$_sliderValues.length > 0 ? this.$_sliderValues.split(",").map(Number) : [];
+            this.$_sliderInput.slider({
                 range: true,
-                min: +min,
-                max: +max,
+                min: this.$_min,
+                max: this.$_max,
                 values: range_values,
                 slide: function (event, ui) {
                     if (ui.values !== undefined) {
-                        $input1_1.val(ui.values[0]);
-                        $input2_1.val(ui.values[1]);
+                        $input1.val(ui.values[0]);
+                        $input2.val(ui.values[1]);
                     }
                 },
             });
-            $input1_1.val($this.slider("values", 0));
-            $input2_1.val($this.slider("values", 1));
-        }
-        else {
-            var $input_1 = $this.siblings(".dht-slider");
-            $this.slider({
+            $input1.val(this.$_sliderInput.slider("values", 0));
+            $input2.val(this.$_sliderInput.slider("values", 1));
+        };
+        /**
+         * init slider
+         *
+         * @return void
+         */
+        RangeSlider.prototype._initSlider = function () {
+            var $input = this.$_sliderInput.siblings(".dht-slider");
+            this.$_sliderInput.slider({
                 range: "min",
-                value: +values,
-                min: +min,
-                max: +max,
+                value: +this.$_sliderValues,
+                min: this.$_min,
+                max: this.$_max,
                 slide: function (event, ui) {
-                    $input_1.val(ui.value);
+                    $input.val(ui.value);
                 },
             });
-            $input_1.val($this.slider("value"));
-        }
+            $input.val(this.$_sliderInput.slider("value"));
+        };
+        return RangeSlider;
+    }());
+    //init each range slider option
+    $(".dht-field-child-rangeslider").each(function () {
+        new RangeSlider($(this));
     });
 })((jquery__WEBPACK_IMPORTED_MODULE_0___default()));
 

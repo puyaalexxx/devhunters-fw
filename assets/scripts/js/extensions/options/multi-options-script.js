@@ -92,67 +92,100 @@ __webpack_require__.r(__webpack_exports__);
 
 (function ($) {
     "use strict";
-    $(".dht-field-child-multioptions").each(function () {
-        var $parent = $(this);
-        var $dropdown = $parent.children(".dht-multioptions");
-        var input_text = $dropdown.attr("data-input-text");
-        var selected_values = $dropdown.attr("data-values");
-        var minimumInputLength = +$dropdown.attr("data-minimumInputLength");
-        //set selected values
-        if (selected_values.length > 0) {
-            var predefined_values = selected_values.split(",");
-            $dropdown.val(predefined_values);
+    var MultiOptions = /** @class */ (function () {
+        function MultiOptions($multioptions) {
+            //multioptions reference
+            this.$_multioptions = $multioptions;
+            this.$_dropdown = this.$_multioptions.children(".dht-multioptions");
+            this.$_input_text = this.$_dropdown.attr("data-input-text");
+            this.$_selected_values = this.$_dropdown.attr("data-values");
+            this.$_minimumInputLength = +this.$_dropdown.attr("data-minimumInputLength");
+            //set selected values
+            this._setSelectedValues();
+            //if ajax is enabled
+            this._useAjax();
+            // Bind focus event to input field
+            this._bindInputFocus();
         }
-        //if ajax is enabled
-        if ($dropdown.attr("data-ajax-enabled") === "yes") {
-            //get ajax action function to retrieve the dropdown values on search
-            var ajax_action_1 = $dropdown.attr("data-ajax-action");
-            //if no ajax action provided, skip ajax
-            if (ajax_action_1.length === 0) {
-                console.error("No ajax action function provided");
-                return false;
+        /**
+         * set selected values
+         *
+         * @return void
+         */
+        MultiOptions.prototype._setSelectedValues = function () {
+            if (this.$_selected_values.length > 0) {
+                var predefined_values = this.$_selected_values.split(",");
+                this.$_dropdown.val(predefined_values);
             }
-            // Initialize Select2 with AJAX
-            $dropdown.select2({
-                minimumInputLength: minimumInputLength, // Set minimum input length to 1 to trigger AJAX after typing
-                placeholder: input_text, // Placeholder text
-                allowClear: true, // Allow clearing the selection
-                ajax: {
-                    //@ts-ignore
-                    url: dht_multioptions_ajax.ajax_url,
-                    dataType: "json",
-                    delay: 250,
-                    type: "POST",
-                    data: function (params) {
-                        return {
-                            action: ajax_action_1,
-                            //text typed in the input field
-                            term: params.term,
-                        };
-                    },
-                    processResults: function (data) {
-                        console.log(data);
-                        return {
-                            results: data,
-                        };
-                    },
-                    cache: true,
-                },
+        };
+        /**
+         * Bind focus event to input field
+         *
+         * @return void
+         */
+        MultiOptions.prototype._bindInputFocus = function () {
+            this.$_dropdown.on("focus", function () {
+                // Reset the input field value
+                $(this).val("");
             });
-        }
-        //simple multioptions drodpwon without ajax
-        else {
-            $dropdown.select2({
-                placeholder: input_text, // Placeholder text
-                minimumInputLength: minimumInputLength,
-                allowClear: true, // Allow clearing the selection
-            });
-        }
-        // Bind focus event to input field
-        $dropdown.on("focus", function () {
-            // Reset the input field value
-            $(this).val("");
-        });
+        };
+        /**
+         * ajax functionality
+         *
+         * @return void
+         */
+        MultiOptions.prototype._useAjax = function () {
+            if (this.$_dropdown.attr("data-ajax-enabled") === "yes") {
+                //get ajax action function to retrieve the dropdown values on search
+                var ajax_action_1 = this.$_dropdown.attr("data-ajax-action");
+                //if no ajax action provided, skip ajax
+                if (ajax_action_1.length === 0) {
+                    console.error("No ajax action function provided");
+                    return false;
+                }
+                // Initialize Select2 with AJAX
+                this.$_dropdown.select2({
+                    minimumInputLength: this.$_minimumInputLength, // Set minimum input length to 1 to trigger AJAX after typing
+                    placeholder: this.$_input_text, // Placeholder text
+                    allowClear: true, // Allow clearing the selection
+                    ajax: {
+                        //@ts-ignore
+                        url: dht_multioptions_ajax.ajax_url,
+                        dataType: "json",
+                        delay: 250,
+                        type: "POST",
+                        data: function (params) {
+                            return {
+                                action: ajax_action_1,
+                                //text typed in the input field
+                                term: params.term,
+                            };
+                        },
+                        processResults: function (data) {
+                            console.log(data);
+                            return {
+                                results: data,
+                            };
+                        },
+                        cache: true,
+                    },
+                });
+            }
+            //simple multioptions drodpwon without ajax
+            else {
+                this.$_dropdown.select2({
+                    placeholder: this.$_input_text, // Placeholder text
+                    minimumInputLength: this.$_minimumInputLength,
+                    allowClear: true, // Allow clearing the selection
+                });
+            }
+            return true;
+        };
+        return MultiOptions;
+    }());
+    //init each multioptions option
+    $(".dht-field-child-multioptions").each(function () {
+        new MultiOptions($(this));
     });
 })((jquery__WEBPACK_IMPORTED_MODULE_0___default()));
 

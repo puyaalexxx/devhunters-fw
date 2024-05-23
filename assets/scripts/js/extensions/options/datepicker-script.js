@@ -92,17 +92,36 @@ __webpack_require__.r(__webpack_exports__);
 
 (function ($) {
     "use strict";
+    var DatePicker = /** @class */ (function () {
+        function DatePicker($datepicker) {
+            //datepicker reference
+            this.$_datepicker = $datepicker;
+            //date format
+            this._format = $(this).attr("data-format");
+            //init datepicker
+            this._initDatePicker();
+        }
+        /**
+         * init datepicker
+         *
+         * @return void
+         */
+        DatePicker.prototype._initDatePicker = function () {
+            this.$_datepicker.datepicker({
+                dateFormat: this._format,
+                beforeShow: function (input, instance) {
+                    // Add a custom className to the datepicker element
+                    $(instance.dpDiv).addClass("dht-datepicker-ui");
+                    // Return the DatepickerOptions object
+                    return {};
+                },
+            });
+        };
+        return DatePicker;
+    }());
+    //init each datepicker option
     $(".dht-field-child-datepicker .dht-datepicker").each(function () {
-        var format = $(this).attr("data-format");
-        $(this).datepicker({
-            dateFormat: format,
-            beforeShow: function (input, instance) {
-                // Add a custom className to the datepicker element
-                $(instance.dpDiv).addClass("dht-datepicker-ui");
-                // Return the DatepickerOptions object
-                return {};
-            },
-        });
+        new DatePicker($(this));
     });
 })((jquery__WEBPACK_IMPORTED_MODULE_0___default()));
 

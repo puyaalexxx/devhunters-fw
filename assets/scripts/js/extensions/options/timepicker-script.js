@@ -92,24 +92,42 @@ __webpack_require__.r(__webpack_exports__);
 
 (function ($) {
     "use strict";
+    var TimePicker = /** @class */ (function () {
+        function TimePicker($timePicker) {
+            //timePicker reference
+            this.$_timePicker = $timePicker;
+            this.$_format = this.$_timePicker.attr("data-format");
+            //init timePicker
+            this._initTimePicker();
+        }
+        /**
+         * init timePicker
+         *
+         * @return void
+         */
+        TimePicker.prototype._initTimePicker = function () {
+            this.$_timePicker.timepicker({
+                timeFormat: this.$_format,
+                interval: 15,
+                /* minTime: '10:00am',
+                maxTime: '6:00pm',
+                startTime: '10:00am',*/
+                dynamic: false,
+                dropdown: true,
+                scrollbar: true,
+                // @ts-ignore
+                //the timepicker types package does not provide this method with parameters like datepicker
+                beforeShow: function (input, instance) {
+                    // Add a custom className to the datepicker element
+                    $(instance.dpDiv).addClass("dht-datepicker-ui");
+                },
+            });
+        };
+        return TimePicker;
+    }());
+    //init each timePicker option
     $(".dht-field-child-timepicker .dht-timepicker").each(function () {
-        var format = $(this).attr("data-format");
-        $(this).timepicker({
-            timeFormat: format,
-            interval: 15,
-            /* minTime: '10:00am',
-            maxTime: '6:00pm',
-            startTime: '10:00am',*/
-            dynamic: false,
-            dropdown: true,
-            scrollbar: true,
-            // @ts-ignore
-            //the timepicker types package does not provide this method with parameters like datepicker
-            beforeShow: function (input, instance) {
-                // Add a custom className to the datepicker element
-                $(instance.dpDiv).addClass("dht-datepicker-ui");
-            },
-        });
+        new TimePicker($(this));
     });
 })((jquery__WEBPACK_IMPORTED_MODULE_0___default()));
 

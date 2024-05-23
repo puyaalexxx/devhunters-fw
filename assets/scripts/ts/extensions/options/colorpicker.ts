@@ -3,32 +3,68 @@ import jQuery from "jquery";
 (function ($: JQueryStatic): void {
     "use strict";
 
-    $(".dht-field-child-wrapper .dht-colorpicker").each(function () {
-        const $colorpicker = $(this);
-        let wpColorPickerArgs = {};
+    class ColorPicker {
+        private _wpColorPickerArgs = {};
+        private readonly _palette;
+        //default button to reset the color picker color to its default value
+        private $_default_btn;
+        private $_colorpicker: any;
 
-        //get default palette of colors
-        const palette = $colorpicker.attr("data-palette")!;
+        constructor($colorpicker: JQuery<HTMLElement>) {
+            //colorpicker reference
+            this.$_colorpicker = $colorpicker;
 
-        //set the default colorpicker args
-        if (palette.length !== 0) {
-            wpColorPickerArgs = {
-                palettes: JSON.parse(palette),
-            };
+            //get default palette of colors
+            this._palette = $colorpicker.attr("data-palette")!;
+
+            //get default button reference
+            this.$_default_btn = $colorpicker.parents(".dht-field-child-wrapper").find(".dht-default-color-btn");
+
+            //set the default colorpicker args
+            this._setDefaultColorPickerArgs();
+
+            //reset the color picker color to its default value
+            this._resetColoPickerValue();
         }
 
-        //set default color picker args
-        ($colorpicker as any).wpColorPicker(wpColorPickerArgs);
+        /**
+         * set the default colorpicker args
+         *
+         * @return void
+         */
+        private _setDefaultColorPickerArgs(): void {
+            if (this._palette.length !== 0) {
+                this._wpColorPickerArgs = {
+                    palettes: JSON.parse(this._palette),
+                };
+            }
 
-        //default button to reset the color picker color to its default value
-        const $default_btn = $colorpicker.parents(".dht-field-child-wrapper").find(".dht-default-color-btn");
-        $default_btn.insertAfter($colorpicker.parent("label"));
+            this.$_colorpicker.wpColorPicker(this._wpColorPickerArgs);
+        }
 
-        //reset the color picker color to its default value
-        $default_btn.on("click", function () {
-            let defaultColor = $(this).attr("data-default-value"); // Set your default color here
+        /**
+         * reset the color picker color to its default value
+         *
+         * @return void
+         */
+        private _resetColoPickerValue(): void {
+            //default button to reset the color picker color to its default value
+            this.$_default_btn.insertAfter(this.$_colorpicker.parent("label"));
 
-            ($colorpicker as any).wpColorPicker("color", defaultColor);
-        });
+            //reset the color picker color to its default value
+            this.$_default_btn.on("click", () => {
+                const $this = $(this);
+
+                //get option default color value
+                let defaultColor = this.$_default_btn.attr("data-default-value");
+
+                this.$_colorpicker.wpColorPicker("color", defaultColor);
+            });
+        }
+    }
+
+    //init each colorpicker option
+    $(".dht-field-child-wrapper .dht-colorpicker").each(function () {
+        new ColorPicker($(this));
     });
 })(jQuery);

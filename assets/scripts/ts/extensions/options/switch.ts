@@ -3,22 +3,45 @@ import jQuery from "jquery";
 (function ($: JQueryStatic): void {
     "use strict";
 
-    $(".dht-field-child-switch .dht-switch").on("click", function () {
-        let $this = $(this);
-        let $input = $this.children("input");
+    class Switch {
+        //switch reference
+        private $_switch;
+        private $_switchInput;
 
-        if ($this.hasClass("dht-slider-on")) {
-            $this.removeClass("dht-slider-on").addClass("dht-slider-off");
-            //get off value
-            let value = $this.children(".dht-slider").children(".dht-slider-no").attr("data-value")!;
+        constructor($switch: JQuery<HTMLElement>) {
+            //switch reference
+            this.$_switch = $switch;
 
-            $input.val(value);
-        } else {
-            $this.removeClass("dht-slider-off").addClass("dht-slider-on");
-            //get on value
-            let value = $this.children(".dht-slider").children(".dht-slider-yes").attr("data-value")!;
+            this.$_switchInput = this.$_switch.children("input");
 
-            $input.val(value);
+            //init switch button
+            this._initSwitch();
         }
+
+        /**
+         * init switch button
+         *
+         * @return void
+         */
+        private _initSwitch(): void {
+            if (this.$_switch.hasClass("dht-slider-on")) {
+                this.$_switch.removeClass("dht-slider-on").addClass("dht-slider-off");
+                //get off value
+                let value = this.$_switch.children(".dht-slider").children(".dht-slider-no").attr("data-value")!;
+
+                this.$_switchInput.val(value);
+            } else {
+                this.$_switch.removeClass("dht-slider-off").addClass("dht-slider-on");
+                //get on value
+                let value = this.$_switch.children(".dht-slider").children(".dht-slider-yes").attr("data-value")!;
+
+                this.$_switchInput.val(value);
+            }
+        }
+    }
+
+    //init each switch button option
+    $(".dht-field-child-switch .dht-switch").on("click", function () {
+        new Switch($(this));
     });
 })(jQuery);

@@ -92,56 +92,95 @@ __webpack_require__.r(__webpack_exports__);
 
 (function ($) {
     "use strict";
-    var $dht_field_wrapper = $(".dht-field-wrapper");
-    //open media popup
-    $dht_field_wrapper.on("click", ".dht-field-child-upload .dht-upload-image-button", function () {
-        var $this = $(this);
-        var $hidden_input = $(".dht-upload-hidden");
-        var $media_text = $this.attr("data-media-text");
-        //open WP media popup
-        var custom_uploader = wp.media({
-            title: $media_text,
-            button: {
-                text: $media_text,
-            },
-            library: { type: "image" },
-            multiple: false,
-        });
-        custom_uploader.on("select", function () {
-            var $image_input = $this.siblings(".dht-upload");
-            //remove image preview before proceeding
-            $image_input.siblings("img").remove();
-            var attachment = custom_uploader.state().get("selection").first().toJSON();
-            //add image URL
-            $image_input.val(attachment.url);
-            $image_input.attr("value", attachment.url);
-            //add attachment ids to the hidden input
-            $hidden_input.val(attachment.id);
-            //display a preview image with the selected image url
-            $image_input.before('<img src="' + attachment.url + '" width="100" height="100" />');
-        });
-        custom_uploader.open();
-        //open the WP media popup with a preselected attachment id if exist
-        var $hidden_input_val = +$hidden_input.val();
-        if ($hidden_input_val > 0) {
-            custom_uploader.state().get("selection").add(wp.media.attachment($hidden_input.val()));
+    var UploadImage = /** @class */ (function () {
+        function UploadImage($uploadImage) {
+            //upload image reference
+            this.$_uploadImage = $uploadImage;
+            //upload image on click
+            this._uploadImage();
+            //remove image when input is cleared
+            this._removeImageOnInput();
         }
-    });
-    //remove image when input is cleared
-    $dht_field_wrapper.on("input", ".dht-field-child-upload .dht-upload", function () {
-        var $this = $(this);
-        // Check if the input field is empty and remove the image id and URL
-        if ($this.val() === "") {
-            $this.siblings("img").remove();
-            $this.siblings(".dht-upload-hidden").val("");
-            $this.attr("value", "");
-        }
-        //change image when adding a new link
-        if ($this.val().length > 0) {
-            $this.siblings("img").remove();
-            $this.before('<img src="' + $this.val() + '" width="100" height="100" />');
-            $this.attr("value", $this.val());
-        }
+        /**
+         * upload image
+         *
+         * @return void
+         */
+        UploadImage.prototype._uploadImage = function () {
+            //this class reference
+            var $thisClass = this;
+            this.$_uploadImage.on("click", ".dht-upload-image-button", function () {
+                var $this = $(this);
+                var $hidden_input = $(".dht-upload-hidden");
+                var $media_text = $this.attr("data-media-text");
+                //open WP media popup
+                var custom_uploader = wp.media({
+                    title: $media_text,
+                    button: {
+                        text: $media_text,
+                    },
+                    library: { type: "image" },
+                    multiple: false,
+                });
+                custom_uploader.on("select", function () {
+                    var $image_input = $this.siblings(".dht-upload");
+                    //remove image preview before proceeding
+                    $image_input.siblings("img").remove();
+                    var attachment = custom_uploader.state().get("selection").first().toJSON();
+                    //add image URL
+                    $image_input.val(attachment.url);
+                    $image_input.attr("value", attachment.url);
+                    //add attachment ids to the hidden input
+                    $hidden_input.val(attachment.id);
+                    //display a preview image with the selected image url
+                    $image_input.before('<img src="' + attachment.url + '" width="100" height="100"  alt=""/>');
+                });
+                custom_uploader.open();
+                //open the WP media popup with a preselected attachment id if exist
+                $thisClass._preSelectImages($hidden_input, custom_uploader);
+            });
+        };
+        /**
+         * remove image when input is cleared
+         *
+         * @return void
+         */
+        UploadImage.prototype._removeImageOnInput = function () {
+            this.$_uploadImage.on("input", ".dht-upload", function () {
+                var $this = $(this);
+                // Check if the input field is empty and remove the image id and URL
+                if ($this.val() === "") {
+                    $this.siblings("img").remove();
+                    $this.siblings(".dht-upload-hidden").val("");
+                    $this.attr("value", "");
+                }
+                //change image when adding a new link
+                if ($this.val().length > 0) {
+                    $this.siblings("img").remove();
+                    $this.before('<img src="' + $this.val() + '" width="100" height="100"  alt=""/>');
+                    $this.attr("value", $this.val());
+                }
+            });
+        };
+        /**
+         * preselect selected image in Media popup
+         *
+         * @param $hidden_input : JQuery<HTMLElement>
+         * @param custom_uploader : any
+         *
+         * @return void
+         */
+        UploadImage.prototype._preSelectImages = function ($hidden_input, custom_uploader) {
+            var $hidden_input_val = +$hidden_input.val();
+            if ($hidden_input_val > 0) {
+                custom_uploader.state().get("selection").add(wp.media.attachment($hidden_input.val()));
+            }
+        };
+        return UploadImage;
+    }());
+    //init each upload image button option
+    $(".dht-field-child-upload-image").each(function () {
+        new UploadImage($(this));
     });
 })((jquery__WEBPACK_IMPORTED_MODULE_0___default()));
 

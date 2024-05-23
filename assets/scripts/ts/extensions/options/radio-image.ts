@@ -3,13 +3,36 @@ import jQuery from "jquery";
 (function ($: JQueryStatic): void {
     "use strict";
 
-    $(".dht-wrapper .dht-field-child-image-select .dht-img-select-wrapper").on("click", function () {
-        //remove selected class and border
-        $(this).siblings().removeClass("dht-img-select-wrapper-selected");
-        $(this).siblings().children(".dht-image-select").removeAttr("checked");
+    class RadioImage {
+        //radio images reference
+        private $_radioImage;
 
-        //add selected class and border
-        $(this).addClass("dht-img-select-wrapper-selected");
-        $(this).children(".dht-image-select").attr("checked", "checked");
+        constructor($radioImage: JQuery<HTMLElement>) {
+            //datepicker reference
+            this.$_radioImage = $radioImage;
+
+            //init radio images
+            this._initRadioImages();
+        }
+
+        /**
+         * init  radio images
+         *
+         * @return void
+         */
+        private _initRadioImages(): void {
+            //remove selected class and border
+            this.$_radioImage.siblings().removeClass("dht-img-select-wrapper-selected");
+            this.$_radioImage.siblings().children(".dht-image-select").removeAttr("checked");
+
+            //add selected class and border
+            this.$_radioImage.addClass("dht-img-select-wrapper-selected");
+            this.$_radioImage.children(".dht-image-select").attr("checked", "checked");
+        }
+    }
+
+    //init each radio images option
+    $(".dht-wrapper .dht-field-child-image-select .dht-img-select-wrapper").on("click", function () {
+        new RadioImage($(this));
     });
 })(jQuery);

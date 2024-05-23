@@ -92,13 +92,31 @@ __webpack_require__.r(__webpack_exports__);
 
 (function ($) {
     "use strict";
+    var RadioImage = /** @class */ (function () {
+        function RadioImage($radioImage) {
+            //datepicker reference
+            this.$_radioImage = $radioImage;
+            //init radio images
+            this._initRadioImages();
+        }
+        /**
+         * init  radio images
+         *
+         * @return void
+         */
+        RadioImage.prototype._initRadioImages = function () {
+            //remove selected class and border
+            this.$_radioImage.siblings().removeClass("dht-img-select-wrapper-selected");
+            this.$_radioImage.siblings().children(".dht-image-select").removeAttr("checked");
+            //add selected class and border
+            this.$_radioImage.addClass("dht-img-select-wrapper-selected");
+            this.$_radioImage.children(".dht-image-select").attr("checked", "checked");
+        };
+        return RadioImage;
+    }());
+    //init each radio images option
     $(".dht-wrapper .dht-field-child-image-select .dht-img-select-wrapper").on("click", function () {
-        //remove selected class and border
-        $(this).siblings().removeClass("dht-img-select-wrapper-selected");
-        $(this).siblings().children(".dht-image-select").removeAttr("checked");
-        //add selected class and border
-        $(this).addClass("dht-img-select-wrapper-selected");
-        $(this).children(".dht-image-select").attr("checked", "checked");
+        new RadioImage($(this));
     });
 })((jquery__WEBPACK_IMPORTED_MODULE_0___default()));
 

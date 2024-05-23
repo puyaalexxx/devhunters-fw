@@ -92,27 +92,55 @@ __webpack_require__.r(__webpack_exports__);
 
 (function ($) {
     "use strict";
-    $(".dht-field-child-wrapper .dht-colorpicker").each(function () {
-        var $colorpicker = $(this);
-        var wpColorPickerArgs = {};
-        //get default palette of colors
-        var palette = $colorpicker.attr("data-palette");
-        //set the default colorpicker args
-        if (palette.length !== 0) {
-            wpColorPickerArgs = {
-                palettes: JSON.parse(palette),
-            };
+    var ColorPicker = /** @class */ (function () {
+        function ColorPicker($colorpicker) {
+            this._wpColorPickerArgs = {};
+            //colorpicker reference
+            this.$_colorpicker = $colorpicker;
+            //get default palette of colors
+            this._palette = $colorpicker.attr("data-palette");
+            //get default button reference
+            this.$_default_btn = $colorpicker.parents(".dht-field-child-wrapper").find(".dht-default-color-btn");
+            //set the default colorpicker args
+            this._setDefaultColorPickerArgs();
+            //reset the color picker color to its default value
+            this._resetColoPickerValue();
         }
-        //set default color picker args
-        $colorpicker.wpColorPicker(wpColorPickerArgs);
-        //default button to reset the color picker color to its default value
-        var $default_btn = $colorpicker.parents(".dht-field-child-wrapper").find(".dht-default-color-btn");
-        $default_btn.insertAfter($colorpicker.parent("label"));
-        //reset the color picker color to its default value
-        $default_btn.on("click", function () {
-            var defaultColor = $(this).attr("data-default-value"); // Set your default color here
-            $colorpicker.wpColorPicker("color", defaultColor);
-        });
+        /**
+         * set the default colorpicker args
+         *
+         * @return void
+         */
+        ColorPicker.prototype._setDefaultColorPickerArgs = function () {
+            if (this._palette.length !== 0) {
+                this._wpColorPickerArgs = {
+                    palettes: JSON.parse(this._palette),
+                };
+            }
+            this.$_colorpicker.wpColorPicker(this._wpColorPickerArgs);
+        };
+        /**
+         * reset the color picker color to its default value
+         *
+         * @return void
+         */
+        ColorPicker.prototype._resetColoPickerValue = function () {
+            var _this = this;
+            //default button to reset the color picker color to its default value
+            this.$_default_btn.insertAfter(this.$_colorpicker.parent("label"));
+            //reset the color picker color to its default value
+            this.$_default_btn.on("click", function () {
+                var $this = $(_this);
+                //get option default color value
+                var defaultColor = _this.$_default_btn.attr("data-default-value");
+                _this.$_colorpicker.wpColorPicker("color", defaultColor);
+            });
+        };
+        return ColorPicker;
+    }());
+    //init each colorpicker option
+    $(".dht-field-child-wrapper .dht-colorpicker").each(function () {
+        new ColorPicker($(this));
     });
 })((jquery__WEBPACK_IMPORTED_MODULE_0___default()));
 

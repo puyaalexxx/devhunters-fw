@@ -92,25 +92,55 @@ __webpack_require__.r(__webpack_exports__);
 
 (function ($) {
     "use strict";
-    var $field_wrapper = $(".dht-field-wrapper");
-    $field_wrapper.on("click", ".dht-field-child-multiinput .dht-multiinput-add", function () {
-        var $this = $(this);
-        var limit = +$this.attr("data-limit");
-        if ($this.parents(".dht-field-child-multiinput").children(".dht-multiinput-child-wrapper").length >= limit) {
-            confirm($(this).attr("data-add-text"));
-            return false;
+    var MultiInput = /** @class */ (function () {
+        function MultiInput($multiinput) {
+            //multiinput reference
+            this.$_multiinput = $multiinput;
+            //add inout
+            this._addInput();
+            //add inout
+            this._removeInput();
         }
-        var $field = $this.prev(".dht-multiinput-child-wrapper").clone();
-        $field.children("input").val("");
-        $field.insertBefore($this);
-    });
-    $field_wrapper.on("click", ".dht-field-child-multiinput .dht-multiinput-remove", function () {
-        var $this = $(this);
-        if ($this.parents(".dht-field-child-wrapper").children(".dht-multiinput-child-wrapper").length === 1) {
-            confirm($(this).attr("data-remove-text"));
-            return;
-        }
-        $this.parent(".dht-multiinput-child-wrapper").remove();
+        /**
+         * add input
+         *
+         * @return void
+         */
+        MultiInput.prototype._addInput = function () {
+            this.$_multiinput.on("click", ".dht-multiinput-add", function () {
+                var $this = $(this);
+                var limit = +$this.attr("data-limit");
+                if ($this.parents(".dht-field-child-multiinput").children(".dht-multiinput-child-wrapper").length >= limit) {
+                    confirm($(this).attr("data-add-text"));
+                    return false;
+                }
+                var $field = $this.prev(".dht-multiinput-child-wrapper").clone();
+                $field.children("input").val("");
+                $field.insertBefore($this);
+            });
+        };
+        /**
+         * remove input
+         *
+         * @return void
+         */
+        MultiInput.prototype._removeInput = function () {
+            this.$_multiinput.on("click", ".dht-multiinput-remove", function () {
+                var $this = $(this);
+                if ($this.parents(".dht-field-child-wrapper").children(".dht-multiinput-child-wrapper").length === 1) {
+                    confirm($(this).attr("data-remove-text"));
+                    return;
+                }
+                $this.parent(".dht-multiinput-child-wrapper").remove();
+            });
+        };
+        return MultiInput;
+    }());
+    //init each multiinput option
+    $(".dht-field-child-multiinput").each(function () {
+        $(function () {
+            new MultiInput($(this));
+        });
     });
 })((jquery__WEBPACK_IMPORTED_MODULE_0___default()));
 

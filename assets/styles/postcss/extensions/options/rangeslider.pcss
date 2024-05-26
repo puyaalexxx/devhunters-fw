@@ -40,5 +40,42 @@
                 background: $main-color;
             }
         }
+
+        @media (min-width: 981px) and (max-width: 1024px) {
+            .dht-slider-group {
+                display: block;
+                text-align: center;
+
+                .dht-range-slider {
+                    width: 100%;
+                    margin-right: 0 !important;
+                }
+
+                .dht-range-slider:last-child {
+                    margin-left: 0;
+                    margin-right: 0;
+                }
+            }
+        }
+
+        @media (max-width: 980px) {
+            .dht-slider-group {
+                display: block;
+            }
+
+            .dht-slider {
+                width: 100% !important;
+            }
+        }
+
+        @media (max-width: 980px) {
+            .dht-slider-group {
+                .dht-range-slider {
+                    width: 100%;
+                    margin-right: 0 !important;
+                    margin-left: 0 !important;
+                }
+            }
+        }
     }
 }

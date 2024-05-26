@@ -4,6 +4,7 @@ import jQuery from "jquery";
     "use strict";
 
     class MultiOptions {
+        //multioptions reference
         private $_multioptions;
         private $_dropdown;
         private $_input_text;

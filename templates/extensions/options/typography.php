@@ -1,497 +1,349 @@
 <?php
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
-use function DHT\Helpers\dht_parse_option_attributes;
-use function DHT\Helpers\dht_print_r;
+use DHT\Helpers\Classes\TypographyHelpers;
+use function DHT\Helpers\{dht_parse_option_attributes, dht_remove_font_name_prefix};
 
 $args = $args ?? [];
 
-// Function to fetch Google Fonts
-function getGoogleFonts() {
-
-    $data = file_get_contents( DHT_ASSETS_DIR . 'fonts/google-fonts/google-fonts.json' );
-    $fonts = json_decode( $data, true );
-
-    return $fonts[ 'items' ];
-}
-
-function prepareFontWeight( $font_weights ) : array {
-
-    $font_weights_result = [];
-    foreach ( $font_weights as $font_weight ) {
-
-        //skip the italic ones
-        if ( str_contains( $font_weight, 'italic' ) ) continue;
-
-        //change to a number to be consistent
-        if ( $font_weight == 'regular' ) $font_weight = '400';
-
-        $font_weight_label = match ( $font_weight ) {
-            '100' => 'Thin',
-            '200' => 'Extra Light',
-            '300' => 'Light',
-            '400' => 'Regular',
-            '500' => 'Medium',
-            '600' => 'Semi Bold',
-            '700' => 'Bold',
-            '800' => 'Extra Bold',
-            '900' => 'Black'
-        };
-
-        $font_weights_result[ $font_weight ] = $font_weight_label;
-    }
-
-    return $font_weights_result;
-}
+//get standard typography values
+[
+    $option, $standard_fonts,
+    $standard_font_weights, $standard_font_styles,
+    $text_decoration, $text_transform
+] = $args;
 
 // Get Google Fonts
-$google_fonts = getGoogleFonts();
+[
+    'google-fonts' => $google_fonts, 'font-weights' => $google_font_weights,
+    'font-subsets' => $google_font_subsets,
+] = TypographyHelpers::getGoogleFonts();
 
-//font weights
-$font_weight = [
-    '300' => 'Light',
-    '400' => 'Regular',
-    '600' => 'Semi Bold',
-    '700' => 'Bold',
-    '800' => 'Ultra Bold'
-];
+//get Divi fonts
+$et_fonts = TypographyHelpers::getDiviFonts();
 
-//fonts styles
-$font_style = [
-    'normal' => 'Normal',
-    'italic' => 'Italic',
-];
+//get saved or default values
+[
+    $font_value, $font_type_value,
+    $font_path_value, $font_weight_value,
+    $font_subsets_value, $font_style_value,
+    $text_transform_value, $text_decoration_value
+] = TypographyHelpers::getOptionValues( $option[ 'value' ] );
 
-// text transform
-$text_transform = [
-    'capitalize' => 'Capitalize',
-    'uppercase' => 'Uppercase',
-    'lowercase' => 'Lowercase',
-    'small-caps' => 'Small Caps',
-];
+//styles used for preview area
+$preview_styles = TypographyHelpers::buildPreviewStyles( $option[ 'value' ], [
+    'font_value' => $font_value, 'font_weight_value' => $font_weight_value,
+    'font_style_value' => $font_style_value, 'text_transform_value' => $text_transform_value,
+    'text_decoration_value' => $text_decoration_value
+] );
 
-// text decoration
-$text_decoration = [
-    'underline' => 'Underline',
-    'overline' => 'Overline',
-    'line-through' => 'Line Through'
-];
 
-dht_print_r( $args[ 'value' ] );
-
-$preview_styles = '';
-if ( !empty( $args[ 'value' ] ) ) {
-    $preview_styles = !empty( $args[ 'value' ][ 'font-family' ] ) ? 'font-family:"' . $args[ 'value' ][ 'font-family' ] . '";' : '';
-    $preview_styles .= !empty( $args[ 'value' ][ 'font-weight' ] ) ? 'font-weight:' . $args[ 'value' ][ 'font-weight' ] . ';' : '';
-    $preview_styles .= !empty( $args[ 'value' ][ 'font-style' ] ) ? 'font-style:' . $args[ 'value' ][ 'font-style' ] . ';' : '';
-    $preview_styles .= !empty( $args[ 'value' ][ 'text-transform' ] ) ? 'text-transform:' . $args[ 'value' ][ 'text-transform' ] . ';' : '';
-    $preview_styles .= !empty( $args[ 'value' ][ 'text-decoration' ] ) ? 'text-decoration:' . $args[ 'value' ][ 'text-decoration' ] . ';' : '';
-}
-
-//value
-$value = $args[ 'value' ];
+$font_type = TypographyHelpers::getFontType( $font_value, $google_fonts, $et_fonts );
 ?>
-<!-- field - typography -->
-<div class="dht-field-wrapper">
+    <!-- field - typography -->
+    <div class="dht-field-wrapper">
 
-    <div class="dht-title"><?php echo esc_html( $args[ 'title' ] ); ?></div>
+        <div class="dht-title"><?php echo esc_html( $option[ 'title' ] ); ?></div>
 
-    <div
-        class="dht-field-child-wrapper dht-field-child-typography <?php echo isset( $args[ 'attr' ][ 'class' ] ) ? esc_attr( $args[ 'attr' ][ 'class' ] ) : ''; ?>"
-        <?php echo dht_parse_option_attributes( $args[ 'attr' ] ); ?>>
+        <div
+            class="dht-field-child-wrapper dht-field-child-typography <?php echo isset( $option[ 'attr' ][ 'class' ] ) ? esc_attr( $option[ 'attr' ][ 'class' ] ) : ''; ?>"
+            <?php echo dht_parse_option_attributes( $option[ 'attr' ] ); ?>>
 
-        <p class="dht-field-child-typography-preview" style="<?php echo esc_attr( $preview_styles ); ?>">
-            A B C D E F G H I J K L M N O P Q R S T U V W X Y Z a b c d e f g h i j k l m n o p q r
-            s t u v w x y z 1 2 3 4 5 6 7 8 9 0
-        </p>
+            <p class="dht-field-child-typography-preview" style="<?php echo esc_attr( $preview_styles ); ?>">
+                A B C D E F G H I J K L M N O P Q R S T U V W X Y Z a b c d e f g h i j k l m n o p q r
+                s t u v w x y z 1 2 3 4 5 6 7 8 9 0
+            </p>
+            <!-- custom fonts font face area -->
+            <div id="dht-custom-style">
+                <style>
+                    <?php if ( !empty( $font_path_value ) ): ?>
+                    @font-face {
+                        font-family: <?php echo esc_html(dht_remove_font_name_prefix(  $font_value )); ?>;
+                        src: url(<?php echo esc_url($font_path_value); ?>) format('truetype');
+                    }
 
-        <div class="dht-field-child-typography-group">
+                    <?php endif; ?>
+                </style>
+            </div>
 
-            <div class="dht-field-child-typography-dropdown">
+            <div class="dht-field-child-typography-group">
 
-                <label
-                    for="<?php echo esc_attr( $args[ 'id' ] ); ?>-font-family"><?php echo _x( 'Font Family', 'options', DHT_PREFIX ) ?></label>
+                <div class="dht-field-child-typography-dropdown">
 
-                <!--font family-->
-                <select class="dht-typography dht-field"
-                        name="<?php echo esc_attr( $args[ 'id' ] ); ?>[font-family]"
-                        id="<?php echo esc_attr( $args[ 'id' ] ); ?>-font-family"
-                        data-placeholder="Font family">
+                    <label
+                        for="<?php echo esc_attr( $option[ 'id' ] ); ?>-font-family"><?php echo _x( 'Font Family', 'options', DHT_PREFIX ) ?></label>
 
-                    <option></option>
+                    <!--font type-->
+                    <input class="dht-typography-font-type-hidden" type="hidden"
+                           name="<?php echo esc_attr( $option[ 'id' ] ); ?>[font-family][font-type]"
+                           value="<?php echo $font_type; ?>" />
+                    <!--font path-->
+                    <input class="dht-typography-path-hidden" type="hidden"
+                           name="<?php echo esc_attr( $option[ 'id' ] ); ?>[font-family][font-path]"
+                           value="<?php echo ( array_key_exists( $font_value, $et_fonts ) ) ? $font_path_value : ''; ?>" />
 
-                    <optgroup label="Custom Fonts">
+                    <!--font family-->
+                    <select class="dht-typography dht-field"
+                            name="<?php echo esc_attr( $option[ 'id' ] ); ?>[font-family][font]"
+                            id="<?php echo esc_attr( $option[ 'id' ] ); ?>-font-family"
+                            data-placeholder="Font family" data-font-prefix="<?php echo DHT_PREFIX; ?>"
+                            data-saved-values='<?php echo !empty( $font_value ) ? json_encode( array( 'font' => $font_value, 'font_type' => $font_type_value, 'weight' => $font_weight_value ) ) : ""; ?>'>
 
-                    </optgroup>
+                        <option></option>
 
-                    <optgroup label="Standard Fonts">
-                        <option value="Arial, Helvetica, sans-serif" data-google-font="no">Arial, Helvetica,
-                            sans-serif
-                        </option>
-                        <option value="'Arial Black', Gadget, sans-serif" data-google-font="no">'Arial Black', Gadget,
-                            sans-serif
-                        </option>
-                        <option value="'Bookman Old Style', serif" data-google-font="no">'Bookman Old Style', serif
-                        </option>
-                        <option value="'Comic Sans MS', cursive" data-google-font="no">'Comic Sans MS', cursive</option>
-                        <option value="Courier, monospace" data-google-font="no">Courier, monospace</option>
-                        <option value="Garamond, serif" data-google-font="no">Garamond, serif</option>
-                        <option value="Georgia, serif" data-google-font="no">Georgia, serif</option>
-                        <option value="Impact, Charcoal, sans-serif" data-google-font="no">Impact, Charcoal,
-                            sans-serif
-                        </option>
-                        <option value="'Lucida Console', Monaco, monospace" data-google-font="no">'Lucida Console',
-                            Monaco, monospace
-                        </option>
-                        <option value="'Lucida Sans Unicode', 'Lucida Grande', sans-serif" data-google-font="no">'Lucida
-                            Sans Unicode', 'Lucida Grande', sans-serif
-                        </option>
-                        <option value="'MS Sans Serif', Geneva, sans-serif" data-google-font="no">'MS Sans Serif',
-                            Geneva, sans-serif
-                        </option>
-                        <option value="'MS Serif', 'New York', sans-serif" data-google-font="no">'MS Serif', 'New York',
-                            sans-serif
-                        </option>
-                        <option value="'Palatino Linotype', 'Book Antiqua', Palatino, serif" data-google-font="no">
-                            'Palatino Linotype', 'Book Antiqua', Palatino, serif
-                        </option>
-                        <option value="Tahoma,Geneva, sans-serif" data-google-font="no">Tahoma,Geneva, sans-serif
-                        </option>
-                        <option value="'Times New Roman', Times,serif" data-google-font="no">'Times New Roman',
-                            Times,serif
-                        </option>
-                        <option value="'Trebuchet MS', Helvetica, sans-serif" data-google-font="no">'Trebuchet MS',
-                            Helvetica, sans-serif
-                        </option>
-                        <option value="Verdana, Geneva, sans-serif" data-google-font="no">Verdana, Geneva, sans-serif
-                        </option>
-                    </optgroup>
+                        <?php if ( !empty( $et_fonts ) ): ?>
 
-                    <optgroup label="Google Fonts" data-google-font="yes">
+                            <!--Divi fonts-->
+                            <optgroup label="Divi Fonts">
 
-                        <?php foreach ( $google_fonts as $font ): ?>
-                            <?php
-                            //grab google font subsets
-                            $font_subset = isset( $font[ 'subsets' ] ) ? json_encode( $font[ 'subsets' ] ) : json_encode( [] );
-                            ?>
-                            <?php
-                            //grab google font weights
-                            $font_weights = isset( $font[ 'variants' ] ) ? json_encode( prepareFontWeight( $font[ 'variants' ] ) ) : json_encode( [] );
-                            ?>
+                                <?php foreach ( $et_fonts as $et_font_key => $et_font ): ?>
 
-                            <option value='<?php echo esc_attr( $font[ 'family' ] ); ?>'
-                                <?php echo !empty( $value[ 'font-family' ] && $value[ 'font-family' ] == $font[ 'family' ] ) ? 'selected' : ''; ?>
-                                    data-google-font="yes"
-                                    data-font-subsets='<?php echo esc_attr( $font_subset ); ?>'
-                                    data-font-weights='<?php echo esc_attr( $font_weights ); ?>'>
-                                <?php echo esc_html( $font[ 'family' ] ); ?>
+                                    <option value="<?php echo esc_attr( $et_font_key ); ?>"
+                                        <?php echo $font_value == $et_font_key ? 'selected' : ''; ?>
+                                            data-font-path="<?php echo esc_url( $et_font[ 'path' ] ); ?>"
+                                            data-font-type="divi"
+                                            data-font-weights='<?php echo esc_attr( json_encode( $et_font[ 'weight' ] ) ); ?>'>
+                                        <?php echo esc_attr( $et_font[ 'name' ] ); ?>
+                                    </option>
+
+                                <?php endforeach; ?>
+
+                            </optgroup>
+
+                        <?php endif; ?>
+
+                        <!--Standard fonts-->
+                        <optgroup label="Standard Fonts">
+
+                            <?php foreach ( $standard_fonts as $standard_font_value => $standard_font ): ?>
+
+                                <option value="<?php echo esc_attr( $standard_font_value ); ?>"
+                                    <?php echo $font_value == $standard_font_value ? 'selected' : ''; ?>
+                                        data-font-type="standard">
+                                    <?php echo esc_attr( $standard_font ); ?>
+                                </option>
+
+                            <?php endforeach; ?>
+
+                        </optgroup>
+
+                        <?php if ( !empty( $google_fonts ) ): ?>
+
+                            <!--Google fonts-->
+                            <optgroup label="Google Fonts">
+
+                                <?php foreach ( $google_fonts as $font ): ?>
+                                    <?php
+                                    //grab google font subsets
+                                    $font_subset = !empty( $font[ 'subsets' ] ) ? json_encode( $font[ 'subsets' ] ) : json_encode( [] );
+                                    ?>
+                                    <?php
+                                    //grab google font weights
+                                    $font_weights = !empty( $font[ 'weights' ] ) ? json_encode( $font[ 'weights' ] ) : json_encode( [] );
+                                    ?>
+
+                                    <option value='<?php echo esc_attr( $font[ 'family' ] ); ?>'
+                                        <?php echo $font_value == $font[ 'family' ] ? 'selected' : ''; ?>
+                                            data-font-type="google"
+                                            data-font-subsets='<?php echo esc_attr( $font_subset ); ?>'
+                                            data-font-weights='<?php echo esc_attr( $font_weights ); ?>'>
+                                        <?php echo esc_html( $font[ 'family' ] ); ?>
+                                    </option>
+
+                                <?php endforeach; ?>
+
+                            </optgroup>
+
+                        <?php endif; ?>
+
+                    </select>
+                </div>
+
+                <!--font weight-->
+                <div class="dht-field-child-typography-dropdown">
+
+                    <label for="<?php echo esc_attr( $option[ 'id' ] ); ?>-font-weight">
+                        <?php echo _x( 'Font Weight', 'options', DHT_PREFIX ) ?>
+                    </label>
+
+                    <select class="dht-typography-weight dht-field"
+                            name="<?php echo esc_attr( $option[ 'id' ] ); ?>[font-weight]"
+                            id="<?php echo esc_attr( $option[ 'id' ] ); ?>-font-weight"
+                            data-placeholder="Font Weight"
+                            data-standard-font-weights='<?php echo json_encode( $standard_font_weights ); ?>'>
+
+                        <option></option>
+
+                        <!--check if the saved font is a Google font-->
+                        <?php if ( array_key_exists( $font_value, $google_font_weights ) ): ?>
+
+                            <?php foreach ( $google_font_weights[ $font_value ] as $google_font_weight_key => $google_font_weight_value ): ?>
+
+                                <option
+                                    value="<?php echo esc_attr( $google_font_weight_key ); ?>"
+                                    <?php echo $font_weight_value == $google_font_weight_key ? 'selected' : ''; ?>>
+                                    <?php echo esc_html( $google_font_weight_value ); ?>
+                                </option>
+
+                            <?php endforeach; ?>
+
+                            <!--check if the saved font is a Divi font-->
+                        <?php elseif ( array_key_exists( $font_value, $et_fonts ) ): ?>
+
+                            <?php $et_font_weight = $et_fonts[ $font_value ][ 'weight' ]; ?>
+
+                            <option
+                                value="<?php echo esc_attr( array_key_first( $et_font_weight ) ); ?>"
+                                <?php echo $font_weight_value == array_key_first( $et_font_weight ) ? 'selected' : ''; ?>>
+                                <?php echo esc_html( $et_font_weight[ array_key_first( $et_font_weight ) ] ); ?>
+                            </option>
+
+                        <?php else: ?>
+
+                            <?php foreach ( $standard_font_weights as $font_weight_val => $font_weight_name ): ?>
+
+                                <option
+                                    value="<?php echo esc_attr( $font_weight_val ); ?>"
+                                    <?php echo $font_weight_value == $font_weight_val ? 'selected' : ''; ?>>
+                                    <?php echo esc_html( $font_weight_name ); ?>
+                                </option>
+
+                            <?php endforeach; ?>
+
+                        <?php endif; ?>
+
+                    </select>
+                </div>
+
+                <!--font style-->
+                <div class="dht-field-child-typography-dropdown">
+
+                    <label
+                        for="<?php echo esc_attr( $option[ 'id' ] ); ?>-font-style"><?php echo _x( 'Font Style', 'options', DHT_PREFIX ) ?></label>
+
+                    <select class="dht-typography-style dht-field"
+                            name="<?php echo esc_attr( $option[ 'id' ] ); ?>[font-style]"
+                            id="<?php echo esc_attr( $option[ 'id' ] ); ?>-font-style"
+                            data-placeholder="Font Style">
+
+                        <option></option>
+
+                        <?php foreach ( $standard_font_styles as $font_style_val => $font_style_name ): ?>
+
+                            <option
+                                value="<?php echo esc_attr( $font_style_val ); ?>"
+                                <?php echo $font_style_value == $font_style_val ? 'selected' : ''; ?>>
+                                <?php echo esc_html( $font_style_name ); ?>
+                            </option>
+
+                        <?php endforeach; ?>
+                    </select>
+
+                </div>
+
+                <!--font subsets-->
+                <div class="dht-field-child-typography-dropdown">
+
+                    <label
+                        for="<?php echo esc_attr( $option[ 'id' ] ); ?>-font-subsets"><?php echo _x( 'Font Subsets', 'options', DHT_PREFIX ) ?></label>
+
+                    <select class="dht-typography-subsets dht-field"
+                            name="<?php echo esc_attr( $option[ 'id' ] ); ?>[font-subsets]"
+                            id="<?php echo esc_attr( $option[ 'id' ] ); ?>-font-subsets"
+                            data-placeholder="Font Subsets">
+
+                        <option></option>
+
+                        <!--check if the saved font is a Google font-->
+                        <?php if ( array_key_exists( $font_value, $google_font_subsets ) ): ?>
+
+                            <?php foreach ( $google_font_subsets[ $font_value ] as $google_font_subset_value ): ?>
+
+                                <option
+                                    value="<?php echo esc_attr( $google_font_subset_value ); ?>"
+                                    <?php echo $font_subsets_value == $google_font_subset_value ? 'selected' : ''; ?>>
+                                    <?php echo esc_html( $google_font_subset_value ); ?>
+                                </option>
+
+                            <?php endforeach; ?>
+
+                        <?php endif; ?>
+
+                    </select>
+
+                </div>
+
+                <!--text transform-->
+                <div class="dht-field-child-typography-dropdown">
+
+                    <label
+                        for="<?php echo esc_attr( $option[ 'id' ] ); ?>-text-transform"><?php echo _x( 'Text Transform', 'options', DHT_PREFIX ) ?></label>
+
+                    <select class="dht-typography-transform dht-field"
+                            name="<?php echo esc_attr( $option[ 'id' ] ); ?>[text-transform]"
+                            id="<?php echo esc_attr( $option[ 'id' ] ); ?>-text-transform"
+                            data-placeholder="Text Transform">
+
+                        <option></option>
+
+                        <?php foreach ( $text_transform as $text_transform_val => $text_transform_name ): ?>
+
+                            <option
+                                value="<?php echo esc_attr( $text_transform_val ); ?>"
+                                <?php echo $text_transform_value == $text_transform_val ? 'selected' : ''; ?>>
+                                <?php echo esc_html( $text_transform_name ); ?>
                             </option>
 
                         <?php endforeach; ?>
 
-                    </optgroup>
+                    </select>
 
-                </select>
-            </div>
+                </div>
 
-            <!--font weight-->
-            <div class="dht-field-child-typography-dropdown">
+                <!--text decoration-->
+                <div class="dht-field-child-typography-dropdown">
 
-                <label
-                    for="<?php echo esc_attr( $args[ 'id' ] ); ?>-font-weight"><?php echo _x( 'Font Weight', 'options', DHT_PREFIX ) ?></label>
+                    <label
+                        for="<?php echo esc_attr( $option[ 'id' ] ); ?>-text-decoration"><?php echo _x( 'Text Decoration', 'options', DHT_PREFIX ) ?></label>
 
-                <select class="dht-typography-weight dht-field"
-                        name="<?php echo esc_attr( $args[ 'id' ] ); ?>[font-weight]"
-                        id="<?php echo esc_attr( $args[ 'id' ] ); ?>-font-weight"
-                        data-placeholder="Font Weight">
+                    <select class="dht-typography-decoration dht-field"
+                            name="<?php echo esc_attr( $option[ 'id' ] ); ?>[text-decoration]"
+                            id="<?php echo esc_attr( $option[ 'id' ] ); ?>-text-decoration"
+                            data-placeholder="Text Decoration">
 
-                    <option></option>
+                        <option></option>
 
-                    <?php foreach ( $font_weight as $font_weight_value => $font_weight_name ): ?>
-                        <option
-                            value="<?php echo esc_attr( $font_weight_value ); ?>"><?php echo esc_html( $font_weight_name ); ?></option>
-                    <?php endforeach; ?>
+                        <?php foreach ( $text_decoration as $text_decoration_val => $text_decoration_name ): ?>
 
-                </select>
-            </div>
+                            <option
+                                value="<?php echo esc_attr( $text_decoration_val ); ?>"
+                                <?php echo $text_decoration_value == $text_decoration_val ? 'selected' : ''; ?>>
+                                <?php echo esc_html( $text_decoration_name ); ?>
+                            </option>
 
-            <!--font style-->
-            <div class="dht-field-child-typography-dropdown">
+                        <?php endforeach; ?>
 
-                <label
-                    for="<?php echo esc_attr( $args[ 'id' ] ); ?>-font-style"><?php echo _x( 'Font Style', 'options', DHT_PREFIX ) ?></label>
+                    </select>
 
-                <select class="dht-typography-style dht-field"
-                        name="<?php echo esc_attr( $args[ 'id' ] ); ?>[font-style]"
-                        id="<?php echo esc_attr( $args[ 'id' ] ); ?>-font-style"
-                        data-placeholder="Font Style">
-
-                    <option></option>
-
-                    <?php foreach ( $font_style as $font_style_value => $font_style_name ): ?>
-                        <option
-                            value="<?php echo esc_attr( $font_style_value ); ?>"
-                            <?php echo !empty( $value[ 'font-style' ] && $value[ 'font-style' ] == $font_style_value ) ? 'selected' : ''; ?>>
-                            <?php echo esc_html( $font_style_name ); ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
+                </div>
 
             </div>
 
-            <!--font subsets-->
-            <div class="dht-field-child-typography-dropdown">
-
-                <label
-                    for="<?php echo esc_attr( $args[ 'id' ] ); ?>-font-subsets"><?php echo _x( 'Font Subsets', 'options', DHT_PREFIX ) ?></label>
-
-                <select class="dht-typography-subsets dht-field"
-                        name="<?php echo esc_attr( $args[ 'id' ] ); ?>[font-subsets]"
-                        id="<?php echo esc_attr( $args[ 'id' ] ); ?>-font-subsets"
-                        data-placeholder="Font Subsets">
-
-                    <option></option>
-
-                </select>
-
-            </div>
-
-            <!--text transform-->
-            <div class="dht-field-child-typography-dropdown">
-
-                <label
-                    for="<?php echo esc_attr( $args[ 'id' ] ); ?>-text-transform"><?php echo _x( 'Text Transform', 'options', DHT_PREFIX ) ?></label>
-
-                <select class="dht-typography-transform dht-field"
-                        name="<?php echo esc_attr( $args[ 'id' ] ); ?>[text-transform]"
-                        id="<?php echo esc_attr( $args[ 'id' ] ); ?>-text-transform"
-                        data-placeholder="Text Transform">
-
-                    <option></option>
-
-                    <?php foreach ( $text_transform as $text_transform_value => $text_transform_name ): ?>
-                        <option
-                            value="<?php echo esc_attr( $text_transform_value ); ?>"
-                            <?php echo !empty( $value[ 'text-transform' ] && $value[ 'text-transform' ] == $text_transform_value ) ? 'selected' : ''; ?>><?php echo esc_html( $text_transform_name ); ?>
-                        </option>
-                    <?php endforeach; ?>
-
-                </select>
-
-            </div>
-
-            <!--text decoration-->
-            <div class="dht-field-child-typography-dropdown">
-
-                <label
-                    for="<?php echo esc_attr( $args[ 'id' ] ); ?>-text-decoration"><?php echo _x( 'Text Decoration', 'options', DHT_PREFIX ) ?></label>
-
-                <select class="dht-typography-decoration dht-field"
-                        name="<?php echo esc_attr( $args[ 'id' ] ); ?>[text-decoration]"
-                        id="<?php echo esc_attr( $args[ 'id' ] ); ?>-text-decoration"
-                        data-placeholder="Text Decoration">
-
-                    <option></option>
-
-                    <?php foreach ( $text_decoration as $text_decoration_value => $text_decoration_name ): ?>
-                        <option
-                            value="<?php echo esc_attr( $text_decoration_value ); ?>"
-                            <?php echo !empty( $value[ 'text-decoration' ] && $value[ 'text-decoration' ] == $text_decoration_value ) ? 'selected' : ''; ?>>
-                            <?php echo esc_html( $text_decoration_name ); ?>
-                        </option>
-                    <?php endforeach; ?>
-
-                </select>
-
-            </div>
+            <?php if ( !empty( $option[ 'description' ] ) ): ?>
+                <div class="dht-description"><?php echo esc_html( $option[ 'description' ] ); ?></div>
+            <?php endif; ?>
 
         </div>
 
-        <?php if ( !empty( $args[ 'description' ] ) ): ?>
-            <div class="dht-description"><?php echo esc_html( $args[ 'description' ] ); ?></div>
+        <?php if ( !empty( $option[ 'tooltip' ] ) ): ?>
+            <div class="dht-info-help dashicons dashicons-info"
+                 data-tooltips="<?php echo esc_html( $option[ 'tooltip' ] ); ?>"
+                 data-position="OnLeft">
+            </div>
         <?php endif; ?>
 
     </div>
 
-    <?php if ( !empty( $args[ 'tooltip' ] ) ): ?>
-        <div class="dht-info-help dashicons dashicons-info"
-             data-tooltips="<?php echo esc_html( $args[ 'tooltip' ] ); ?>"
-             data-position="OnLeft">
-        </div>
-    <?php endif; ?>
-
-</div>
-
-<?php if ( $args[ 'divider' ] ): ?>
+<?php if ( $option[ 'divider' ] ): ?>
     <div class="dht-divider"></div>
 <?php endif; ?>
-
-<script>
-    jQuery(document).ready(function($) {
-
-        $(".dht-field-child-typography").each(function() {
-
-            const $this = $(this);
-
-            //preview area div
-            const $preview_area = $this.children(".dht-field-child-typography-preview");
-
-            //fonts dropdown
-            const $fonts_dropdown = $this.find(".dht-typography");
-            //font weights dropdown
-            const $font_weight_dropdown = $this.find(".dht-typography-weight");
-            //font styles dropdown
-            const $font_style_dropdown = $this.find(".dht-typography-style");
-            //font subsets
-            const $font_subsets_dropdown = $this.find(".dht-typography-subsets");
-            //text transform
-            const $text_transform_dropdown = $this.find(".dht-typography-transform");
-            //text decoration
-            const $text_decoration_dropdown = $this.find(".dht-typography-decoration");
-
-            //fonts dropdown
-            let selected_google_font_name = "";
-            $fonts_dropdown.select2({
-                allowClear: true,
-            });
-            $fonts_dropdown.on("change", function() {
-                const $selected_font = $(this);
-
-                //check if it is a Google font
-                const isGoogleFont = $selected_font.find("option:selected").attr("data-google-font");
-
-                //get the selected font family
-                const font_family = $selected_font.val();
-
-                $preview_area.css("font-family", font_family);
-
-                //if Google font
-                if (isGoogleFont === "yes") {
-
-                    //variable used in other dropdowns
-                    selected_google_font_name = font_family;
-
-                    //get the selected Google font - font subsets
-                    const font_subsets = $selected_font.find("option:selected").attr("data-font-subsets");
-                    //get the selected Google font - font weights
-                    const font_weights = $selected_font.find("option:selected").attr("data-font-weights");
-
-                    //include the font link for preview
-                    const fontLink = "https://fonts.googleapis.com/css?family=" + font_family.replace(/\s+/g, "+");
-                    $("<link href=\"" + fontLink + "\" rel=\"stylesheet\">").appendTo("head");
-
-                    //add Google font - font weights to the font weights dropdown
-                    $font_weight_dropdown.empty();
-                    if (font_weights.length > 0) {
-
-                        $font_weight_dropdown.append("<option></option>");
-                        $.each(JSON.parse(font_weights), function(weight_value, weight_value_label) {
-
-                            $font_weight_dropdown.append("<option value=\"" + weight_value + "\">" + weight_value_label + "</option>");
-                        });
-                    }
-
-                    //add Google font - font subsets to the font subsets dropdown
-                    $font_subsets_dropdown.empty();
-                    if (font_subsets.length > 0) {
-
-                        $font_subsets_dropdown.append("<option></option>");
-                        $.each(JSON.parse(font_subsets), function(index, subset) {
-
-                            $font_subsets_dropdown.append("<option value=\"" + subset + "\">" + subset + "</option>");
-                        });
-                    }
-
-                    // Trigger change event to update Select2
-                    $font_weight_dropdown.trigger("change");
-                }
-            });
-
-            //font weights dropdown
-            $font_weight_dropdown.select2({
-                allowClear: true,
-            });
-            $font_weight_dropdown.on("change", function() {
-                const font_weight = $(this).val();
-
-                //include the font link for preview + font weight
-                if (font_weight.length !== 0) {
-                    const fontLink = "https://fonts.googleapis.com/css?family=" + selected_google_font_name.replace(/\s+/g, "+") + ":" + font_weight;
-                    $("<link href=\"" + fontLink + "\" rel=\"stylesheet\">").appendTo("head");
-                }
-
-                $preview_area.css("font-weight", font_weight);
-            });
-
-            //font styles dropdown
-            $font_style_dropdown.select2({
-                allowClear: true,
-            });
-            $font_style_dropdown.on("change", function() {
-                const font_style = $(this).val();
-
-                $preview_area.css("font-style", font_style);
-            });
-
-            //font subsets dropdown
-            $font_subsets_dropdown.select2({
-                allowClear: true,
-            });
-
-            //text transform dropdown
-            $text_transform_dropdown.select2({
-                allowClear: true,
-            });
-            $text_transform_dropdown.on("change", function() {
-                const text_transform = $(this).val();
-
-                //reset css
-                $preview_area.css("font-variant", "");
-                $preview_area.css("text-transform", "");
-
-                if (text_transform === "small-caps") {
-                    $preview_area.css("font-variant", text_transform);
-                } else {
-                    $preview_area.css("text-transform", text_transform);
-                }
-            });
-
-            //text decoration dropdown
-            $text_decoration_dropdown.select2({
-                allowClear: true,
-            });
-            $text_decoration_dropdown.on("change", function() {
-                const text_decoration = $(this).val();
-
-                $preview_area.css("text-decoration", text_decoration);
-            });
-
-        });
-
-    });
-</script>
-
-<style>
-    .dht-wrapper .dht-field-child-typography .dht-field-child-typography-group {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-gap: 15px;
-    }
-
-    .dht-wrapper .dht-field-child-typography label {
-        display: block !important;
-    }
-
-    .dht-wrapper .dht-field-child-typography .dht-field-child-typography-preview {
-        width: 100%;
-        border: 1px dotted #d3d3d3;
-        max-width: 850px;
-        padding: 10px;
-        font-size: 10pt;
-        height: auto;
-        -webkit-box-sizing: border-box;
-        box-sizing: border-box;
-        overflow: hidden;
-        margin: 5px 0 20px;
-    }
-</style>

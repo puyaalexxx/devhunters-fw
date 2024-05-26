@@ -4,6 +4,7 @@ import jQuery from "jquery";
     "use strict";
 
     class DateTimePicker {
+        //datetimepicker reference
         private $_datetimepicker;
         private readonly _format;
         private readonly _time_format;

@@ -1,9 +1,9 @@
 /*checkbox styles*/
 .dht-wrapper {
 
-    .dht-field-child-radio{
+    .dht-field-child-radio {
 
-        .dht-radio-wrapper{
+        .dht-radio-wrapper {
             clear: both;
             margin-bottom: 10px;
 
@@ -26,6 +26,22 @@
 
             &:last-child {
                 margin-bottom: 0;
+            }
+
+            @media (max-width: 980px) {
+                .dht-radio {
+                    float: none;
+                    width: 21px;
+                    height: 21px !important;
+                }
+
+                .dht-radio[type=radio]:checked:before {
+                    position: relative;
+                    top: -2px;
+                    left: -2px;
+                    width: .5625rem;
+                    margin: .4375rem;
+                }
             }
         }
     }

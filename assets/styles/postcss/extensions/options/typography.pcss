@@ -1,0 +1,60 @@
+/*checkbox styles*/
+.dht-wrapper {
+
+    .dht-field-child-typography {
+
+        .dht-field-child-typography-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 15px;
+        }
+
+        label {
+            display: block !important;
+        }
+
+        .dht-field-child-typography-preview {
+            width: 100%;
+            border: 1px dotted #d3d3d3;
+            max-width: 850px;
+            padding: 10px;
+            font-size: 10pt;
+            height: auto;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            overflow: hidden;
+            margin: 5px 0 20px;
+        }
+
+        span.select2-selection__clear {
+            top: -2px;
+        }
+
+        .select2-container {
+            width: 100% !important;
+        }
+
+        @media (max-width: 1024px) {
+            .dht-field-child-typography-group {
+                display: block;
+            }
+
+            .dht-field-child-typography-dropdown {
+                margin-bottom: 15px;
+            }
+        }
+
+        @media (max-width: 980px) {
+            span.select2.select2-container {
+                width: 80% !important;
+            }
+        }
+
+        @media (max-width: 600px) {
+            span.select2.select2-container {
+                width: 100% !important;
+            }
+        }
+    }
+
+}

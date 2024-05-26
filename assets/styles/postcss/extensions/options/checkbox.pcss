@@ -3,7 +3,7 @@
 
     .dht-field-child-checkbox {
 
-        .dht-checkbox-wrapper{
+        .dht-checkbox-wrapper {
             clear: both;
             margin-bottom: 10px;
 
@@ -17,6 +17,22 @@
 
             label {
                 display: block;
+            }
+
+            @media (max-width: 980px) {
+                .dht-checkbox {
+                    float: none;
+                    width: 21px;
+                    height: 21px;
+                }
+
+                .dht-checkbox[type=checkbox]:checked:before {
+                    position: relative;
+                    left: -2px;
+                    top: -2px;
+                    width: 1.875rem;
+                    margin: -.1875rem -.3125rem;
+                }
             }
         }
 

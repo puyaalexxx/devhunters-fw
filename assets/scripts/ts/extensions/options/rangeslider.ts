@@ -13,7 +13,7 @@ import jQuery from "jquery";
         private readonly $_sliderValues;
 
         constructor($rangeSlider: JQuery<HTMLElement>) {
-            //datepicker reference
+            //range slider reference
             this.$_rangeSlider = $rangeSlider;
 
             this.$_sliderInput = this.$_rangeSlider.find(".dht-slider-slider");

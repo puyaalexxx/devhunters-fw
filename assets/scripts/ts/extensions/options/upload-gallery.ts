@@ -156,13 +156,10 @@ import jQuery from "jquery";
          * @return void
          */
         private _onSortImages() {
-            //this class reference
-            const $thisClass = this;
-
             this.$_gallery
                 .children(".dht-gallery-group")
                 .sortable({
-                    axis: "x", // Ensure sorting is horizontal
+                    //  axis: "x", // Ensure sorting is horizontal
                     containment: "parent", // Keep sorting within the parent
                     //update hidden input ids
                     update: function (event, ui) {

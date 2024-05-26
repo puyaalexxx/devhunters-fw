@@ -35,16 +35,25 @@
             position: relative;
             top: 7px;
         }
+
+        @media (max-width: 600px) {
+            span.dht-icon-select-preview {
+                padding: 10px;
+                top: 12px;
+            }
+        }
     }
 
 }
 
 #TB_window {
-    width: auto !important; /* Allow custom width */
+
     height: auto !important; /* Allow custom height */
     max-height: 520px !important; /* Enforce the maximum height */
 
     #TB_ajaxContent {
+        width: 95% !important;
+
         .dht-icons-preview-group {
             label {
                 display: none;

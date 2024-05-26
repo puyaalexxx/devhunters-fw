@@ -218,12 +218,10 @@ __webpack_require__.r(__webpack_exports__);
          * @return void
          */
         UploadGallery.prototype._onSortImages = function () {
-            //this class reference
-            var $thisClass = this;
             this.$_gallery
                 .children(".dht-gallery-group")
                 .sortable({
-                axis: "x", // Ensure sorting is horizontal
+                //  axis: "x", // Ensure sorting is horizontal
                 containment: "parent", // Keep sorting within the parent
                 //update hidden input ids
                 update: function (event, ui) {

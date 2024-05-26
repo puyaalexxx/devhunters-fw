@@ -8,7 +8,7 @@ import jQuery from "jquery";
         private $_radioImage;
 
         constructor($radioImage: JQuery<HTMLElement>) {
-            //datepicker reference
+            //radio images reference
             this.$_radioImage = $radioImage;
 
             //init radio images

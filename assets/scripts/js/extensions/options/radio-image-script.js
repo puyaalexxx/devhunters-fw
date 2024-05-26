@@ -94,7 +94,7 @@ __webpack_require__.r(__webpack_exports__);
     "use strict";
     var RadioImage = /** @class */ (function () {
         function RadioImage($radioImage) {
-            //datepicker reference
+            //radio images reference
             this.$_radioImage = $radioImage;
             //init radio images
             this._initRadioImages();

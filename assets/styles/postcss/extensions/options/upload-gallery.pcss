@@ -6,7 +6,7 @@
         position: relative;
 
         .dht-gallery-group {
-            margin-bottom: 10px;
+        ] margin-bottom: 10 px;
 
             img {
                 margin-right: 5px;
@@ -29,9 +29,18 @@
                 font-family: dashicons, serif;
             }
 
-            span.dht-img-remove {
+            .dht-img-remove {
                 position: relative;
                 cursor: grab;
+                display: inline-block;
+            }
+        }
+
+        @media (max-width: 980px) {
+            .dht-gallery-group {
+                align-items: center;
+                justify-content: center;
+                grid-template-columns: 1fr 1fr;
             }
         }
     }

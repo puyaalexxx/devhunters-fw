@@ -26,6 +26,7 @@ const upload_image_script = "upload-image-script";
 const upload_script = "upload-script";
 const upload_gallery_script = "upload-gallery-script";
 const icon_script = "icon-script";
+const typography_script = "typography-script";
 
 const create_sidebars_script = "create-sidebars-script";
 
@@ -53,6 +54,7 @@ const upload_image_style = "upload-image-style";
 const upload_style = "upload-style";
 const upload_gallery_style = "upload-gallery-style";
 const icon_style = "icon-style";
+const typography_style = "typography-style";
 
 const create_sidebars_style = "create-sidebars-style";
 
@@ -81,6 +83,7 @@ module.exports = {
         [upload_script]: "./assets/scripts/ts/extensions/options/" + upload_script.replace("-script", "") + ".ts",
         [upload_gallery_script]: "./assets/scripts/ts/extensions/options/" + upload_gallery_script.replace("-script", "") + ".ts",
         [icon_script]: "./assets/scripts/ts/extensions/options/" + icon_script.replace("-script", "") + ".ts",
+        [typography_script]: "./assets/scripts/ts/extensions/options/" + typography_script.replace("-script", "") + ".ts",
 
         //sidebars
         [create_sidebars_script]: "./assets/scripts/ts/extensions/" + create_sidebars_script.replace("-script", "") + ".ts",
@@ -115,6 +118,7 @@ module.exports = {
         [upload_style]: "./assets/styles/postcss/extensions/options/" + upload_style.replace("-style", "") + ".pcss", // multi options CSS entry point
         [upload_gallery_style]: "./assets/styles/postcss/extensions/options/" + upload_gallery_style.replace("-style", "") + ".pcss", // multi options CSS entry point
         [icon_style]: "./assets/styles/postcss/extensions/options/" + icon_style.replace("-style", "") + ".pcss", // multi options CSS entry point
+        [typography_style]: "./assets/styles/postcss/extensions/options/" + typography_style.replace("-style", "") + ".pcss", // multi options CSS entry point
 
         //sidebars
         [create_sidebars_style]: "./assets/styles/postcss/extensions/" + create_sidebars_style.replace("-style", "") + ".pcss", // Sidebars CSS entry point
@@ -173,6 +177,9 @@ module.exports = {
             }
             if (chunkData.chunk.name === icon_script) {
                 return "scripts/js/extensions/options/" + icon_script + ".js";
+            }
+            if (chunkData.chunk.name === typography_script) {
+                return "scripts/js/extensions/options/" + typography_script + ".js";
             }
 
             //sidebars
@@ -290,6 +297,9 @@ module.exports = {
                 if (chunkData.chunk.name === icon_style) {
                     return "styles/css/extensions/options/" + icon_style + ".css";
                 } //icon option file
+                if (chunkData.chunk.name === typography_style) {
+                    return "styles/css/extensions/options/" + typography_style + ".css";
+                } //typography option file
 
                 //sidebars
                 if (chunkData.chunk.name === create_sidebars_style) {

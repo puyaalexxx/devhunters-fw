@@ -4,6 +4,7 @@ import jQuery from "jquery";
     "use strict";
 
     class MultiInput {
+        //multiinput reference
         private $_multiinput;
 
         constructor($multiinput: JQuery<Document>) {

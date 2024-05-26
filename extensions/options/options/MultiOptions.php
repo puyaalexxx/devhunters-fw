@@ -40,7 +40,7 @@ final class MultiOptions extends BaseOption {
         wp_enqueue_script( DHT_PREFIX . '-select2-option', DHT_ASSETS_URI . 'scripts/libraries/select2.full.min.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
         
         //custom option script
-        wp_enqueue_script( DHT_PREFIX . '-multi-options-option', DHT_ASSETS_URI . 'scripts/js/extensions/options/multi-options-script.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
+        wp_enqueue_script( DHT_PREFIX . '-multi-options-option', DHT_ASSETS_URI . 'scripts/js/extensions/options/multi-options-script.js', array( 'jquery', DHT_PREFIX . '-select2-option' ), fw()->manifest->get( 'version' ), true );
         wp_localize_script( DHT_PREFIX . '-multi-options-option', 'dht_multioptions_ajax', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
     }
     

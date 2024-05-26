@@ -94,7 +94,7 @@ __webpack_require__.r(__webpack_exports__);
     "use strict";
     var RangeSlider = /** @class */ (function () {
         function RangeSlider($rangeSlider) {
-            //datepicker reference
+            //range slider reference
             this.$_rangeSlider = $rangeSlider;
             this.$_sliderInput = this.$_rangeSlider.find(".dht-slider-slider");
             this.$_isRange = this.$_sliderInput.attr("data-range");

@@ -4,7 +4,6 @@ if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 use function DHT\Helpers\dht_parse_option_attributes;
 
 $args = $args ?? [];
-
 ?>
 <!-- field - dropdown-multiple -->
 <div class="dht-field-wrapper">

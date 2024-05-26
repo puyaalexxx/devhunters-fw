@@ -84,7 +84,26 @@
         @media (max-width: 980px) {
             label.dht-switch {
                 margin: auto;
+                width: 150px;
+
+                .dht-slider:before {
+                    left: -14px;
+                    width: 75px;
+                }
+
+                span.dht-slider-yes {
+                    left: -15px;
+                }
+
+                &.dht-slider-off .dht-slider:before {
+                    transform: translateX(20px);
+                }
+
+                span.dht-slider-no {
+                    right: -17px;
+                }
             }
+
         }
     }
 

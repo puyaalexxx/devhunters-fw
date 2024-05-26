@@ -8,6 +8,7 @@ import jQuery from "jquery";
         private readonly _palette;
         //default button to reset the color picker color to its default value
         private $_default_btn;
+        //colorpicker reference
         private $_colorpicker: any;
 
         constructor($colorpicker: JQuery<HTMLElement>) {

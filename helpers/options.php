@@ -6,7 +6,6 @@ namespace DHT\Helpers;
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 /**
- *
  * get option or options fields from db
  *
  * @param string $option_id
@@ -23,7 +22,6 @@ function dht_get_db_settings_option( string $option_id, mixed $default_value = [
 }
 
 /**
- *
  * save option field or fields in database
  *
  * @param string $option_id
@@ -52,7 +50,6 @@ function dht_set_db_settings_option( string $option_id, mixed $value, string $ar
 }
 
 /**
- *
  * parse option attributes to add them to the HTML field
  *
  * @param array $attr
@@ -80,7 +77,6 @@ function dht_parse_option_attributes( array $attr ) : string {
 }
 
 /**
- *
  * add allowed HTML tags to the wp editor value
  *
  * @param string $value
@@ -98,4 +94,41 @@ function dht_sanitize_wpeditor_value( string $value ) : string {
     
     // Sanitize content with allowed HTML tags and excluding <script> tag
     return wp_kses( $value, $allowed_html );
+}
+
+/**
+ * remove dht prefix from the font name added because it conflicts with
+ * Google font names
+ *
+ * @param string $font_name
+ *
+ * @return string
+ * @since     1.0.0
+ */
+function dht_remove_font_name_prefix( string $font_name ) : string {
+    
+    return preg_replace( '/^' . DHT_PREFIX . '-/', '', $font_name );
+}
+
+/**
+ * gent font weight label from its value (ex: 400, 500)
+ *
+ * @param int $font_weight
+ *
+ * @return string
+ * @since     1.0.0
+ */
+function dht_get_font_weight_Label( int $font_weight ) : string {
+    
+    return match ( $font_weight ) {
+        100 => 'Thin',
+        200 => 'Extra Light',
+        300 => 'Light',
+        400 => 'Regular',
+        500 => 'Medium',
+        600 => 'Semi Bold',
+        700 => 'Bold',
+        800 => 'Extra Bold',
+        900 => 'Black'
+    };
 }

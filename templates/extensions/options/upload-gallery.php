@@ -22,13 +22,13 @@ $args = $args ?? [];
 
                         <?php $attachemnt_url = wp_get_attachment_url( $attachment_id ); ?>
 
-                        <span class="dht-img-remove">
-                        <span class="dht-img-remove-icon"></span>
-                        <img data-id="<?php echo (int)$attachment_id; ?>"
-                             src="<?php echo esc_url( $attachemnt_url ); ?>"
-                             alt="" width="100"
-                             height="100" />
-                    </span>
+                        <div class="dht-img-remove">
+                            <span class="dht-img-remove-icon"></span>
+                            <img data-id="<?php echo (int)$attachment_id; ?>"
+                                 src="<?php echo esc_url( $attachemnt_url ); ?>"
+                                 alt="" width="100"
+                                 height="100" />
+                        </div>
 
                     <?php endforeach; ?>
 

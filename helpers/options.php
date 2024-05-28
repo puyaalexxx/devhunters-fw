@@ -14,7 +14,7 @@ if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
  * @return mixed
  * @since     1.0.0
  */
-function dht_get_db_settings_option( string $option_id, mixed $default_value = [] ) : array {
+function dht_get_db_settings_option( string $option_id, mixed $default_value = [] ) : mixed {
     
     if ( empty( $option_id ) ) return [];
     
@@ -131,4 +131,29 @@ function dht_get_font_weight_Label( int $font_weight ) : string {
         800 => 'Extra Bold',
         900 => 'Black'
     };
+}
+
+/**
+ * render option if it is registered (exists)
+ *
+ * @param array  $option
+ * @param mixed  $saved_value
+ * @param string $prefix_id
+ * @param array  $option_classes
+ *
+ * @return string
+ * @since     1.0.0
+ */
+function dht_render_option_if_exists( array $option, mixed $saved_value, string $prefix_id, array $option_classes ) : string {
+    
+    if ( array_key_exists( $option[ 'type' ], $option_classes ) ) {
+        
+        //render the respective option type class
+        return $option_classes[ $option[ 'type' ] ]->render( $option, $saved_value, $prefix_id );
+        
+    } else {
+        
+        //display no option template if no match
+        return dht_load_view( DHT_TEMPLATES_DIR . 'options/', 'no-option.php' );
+    }
 }

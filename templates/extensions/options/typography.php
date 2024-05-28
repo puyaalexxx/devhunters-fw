@@ -6,12 +6,15 @@ use function DHT\Helpers\{dht_parse_option_attributes, dht_remove_font_name_pref
 
 $args = $args ?? [];
 
+//get option array info
+$option = $args[ 'option' ];
+
 //get standard typography values
 [
-    $option, $standard_fonts,
+    $standard_fonts,
     $standard_font_weights, $standard_font_styles,
     $text_decoration, $text_transform
-] = $args;
+] = $args[ 'additional_args' ];
 
 // Get Google Fonts
 [
@@ -344,6 +347,6 @@ $font_type = TypographyHelpers::getFontType( $font_value, $google_fonts, $et_fon
 
     </div>
 
-<?php if ( $option[ 'divider' ] ): ?>
+<?php if ( isset( $option[ 'divider' ] ) && $option[ 'divider' ] ): ?>
     <div class="dht-divider"></div>
 <?php endif; ?>

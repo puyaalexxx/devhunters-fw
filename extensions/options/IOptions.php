@@ -17,12 +17,10 @@ interface IOptions {
     /**
      * render options passed from the plugin
      *
-     * @param string $settings_id - the id passed to update_option() function
-     *
      * @return void
      * @since     1.0.0
      */
-    public function renderOptions( string $settings_id ) : void;
+    public function renderOptions() : void;
     
     /**
      * register framework options with passed option settings

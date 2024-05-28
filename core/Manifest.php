@@ -10,6 +10,7 @@ if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 /*
  * Class used to retrieve the framework manifest array of values
  */
+
 final class Manifest {
     
     //class instances for Singleton Pattern
@@ -21,7 +22,7 @@ final class Manifest {
     /**
      * @since     1.0.0
      */
-    protected function __construct( ) {
+    protected function __construct() {
         
         //set manifest args to use them through the class
         $this->_manifest = $this->_getManifestArgs();
@@ -41,11 +42,11 @@ final class Manifest {
         
         $no_value = _x( 'Value does not exist', 'manifest', DHT_PREFIX );
         
-        if(empty($this->_manifest)) return $no_value;
+        if ( empty( $this->_manifest ) ) return $no_value;
         
-        if(array_key_exists($key, $this->_manifest)) {
+        if ( array_key_exists( $key, $this->_manifest ) ) {
             
-            return $this->_manifest[$key];
+            return $this->_manifest[ $key ];
         }
         
         return $no_value;

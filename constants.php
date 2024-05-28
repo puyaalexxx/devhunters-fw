@@ -36,4 +36,8 @@ define( 'DHT_URI', plugin_dir_url( __FILE__ ) );
 
 define( 'DHT_ASSETS_URI', DHT_URI . 'assets/' );
 
+//extensions folder
+define( 'DHT_EXTENSIONS_URI', DHT_URI . 'extensions/' );
+define( 'DHT_OPTIONS_URI', DHT_EXTENSIONS_URI . 'options/' );
+
 define( 'DHT_REACT_APP_URI', DHT_URI . 'src/' );

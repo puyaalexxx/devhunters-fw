@@ -1,0 +1,39 @@
+/* multiinput styles*/
+@import '../../../variables.pcss';
+
+.dht-wrapper {
+    .dht-field-child-multiinput {
+        .dht-multiinput-child-wrapper {
+            margin-bottom: 10px;
+        }
+
+        .dht-multiinput-child-wrapper:after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+        a.dht-multiinput-remove {
+            float: right;
+            display: inline-block;
+            color: $main-color;
+            outline: none !important;
+        }
+
+        .dht-multiinput-child-wrapper + .dht-button + .dht-description {
+            margin-top: 12px;
+        }
+
+        .dht-multiinput-remove-text {
+            display: none;
+        }
+
+        .dht-multi-input {
+            margin-bottom: 5px;
+        }
+
+        .dht-multiinput-add {
+            display: inline-block;
+        }
+    }
+}

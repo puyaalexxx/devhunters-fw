@@ -43,14 +43,47 @@ trait OptionsHelpers {
      */
     private function _getEnqueueOptionArgs( array $options, array $optionClasses ) : void {
         
-        $options_prefix_id = array_key_first( $options );
-        
-        foreach ( $options[ $options_prefix_id ] as $option ) {
+        //helper function
+        function enqueueOptionScriptsHook( $optionClasses, $option ) : void {
             
-            //pass the option array to the enqueue method
             if ( isset( $optionClasses[ $option[ 'type' ] ] ) ) {
                 
                 $optionClasses[ $option[ 'type' ] ]->enqueueOptionScriptsHook( $option );
+            }
+        }
+        
+        $options = $options[ 'options' ] ?? $options;
+        
+        foreach ( $options as $option ) {
+            
+            //if the option is a group type
+            if ( isset( $option[ 'options' ] ) ) {
+                
+                //pass the group array to the enqueue method
+                enqueueOptionScriptsHook( $optionClasses, $option );
+                
+                // pass the option array to the enqueue method for each group option type
+                foreach ( $option[ 'options' ] as $group_option ) {
+                    
+                    //if it is a group of groups
+                    if ( isset( $group_option[ 'options' ] ) ) {
+                        
+                        foreach ( $group_option[ 'options' ] as $group_group_option ) {
+                            
+                            //pass the option array to the enqueue method
+                            enqueueOptionScriptsHook( $optionClasses, $group_group_option );
+                        }
+                        
+                    } else {
+                        //if it is a simple group
+                        
+                        //pass the option array to the enqueue method
+                        enqueueOptionScriptsHook( $optionClasses, $group_option );
+                    }
+                }
+            } else {
+                //pass the option array to the enqueue method
+                enqueueOptionScriptsHook( $optionClasses, $option );
             }
         }
     }
@@ -78,6 +111,30 @@ trait OptionsHelpers {
     function _filter_css_files( string $file_string ) : bool {
         
         return pathinfo( $file_string, PATHINFO_EXTENSION ) === 'css';
+    }
+    
+    /**
+     * prepare saved values to pass to specific option
+     * some options are saved under a settings id others not
+     *
+     * @param array  $saved_values
+     * @param string $option_id
+     * @param string $settings_id
+     *
+     * @return mixed
+     * @since     1.0.0
+     */
+    private function _prepareSavedValues( array $saved_values, string $option_id, string $settings_id ) : mixed {
+        
+        if ( empty( $settings_id ) ) {
+            
+            $saved_value = $this->_getSavedOptions( $option_id );
+        } else {
+            
+            $saved_value = $saved_values[ $option_id ] ?? [];
+        }
+        
+        return $saved_value;
     }
     
 }

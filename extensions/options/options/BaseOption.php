@@ -50,14 +50,24 @@ abstract class BaseOption {
     /**
      * return option template
      *
-     * @param array $option
+     * @param array  $option
+     * @param mixed  $saved_value
+     * @param string $prefix_id
+     * @param array  $additional_args
      *
      * @return string
      * @since     1.0.0
      */
-    public function render( array $option ) : string {
+    public function render( array $option, mixed $saved_value, string $prefix_id, array $additional_args = [] ) : string {
         
-        return dht_load_view( $this->template_dir, $this->getField() . '.php', $option );
+        //merge default values with saved ones to display the saved ones
+        $option = $this->mergeValues( $option, $saved_value );
+        
+        //add option prefix id
+        $option = $this->addIDPrefix( $option, $prefix_id );
+        
+        //render the respective option type
+        return dht_load_view( $this->template_dir, $this->getField() . '.php', [ 'option' => $option, 'additional_args' => $additional_args ] );
     }
     
     /**
@@ -77,16 +87,16 @@ abstract class BaseOption {
      * (used to retrieve the $_POST['prefix_id'] values)
      *
      * @param array  $option
-     * @param string $option_prefix_id
+     * @param string $prefix_id
      *
      * @return array
      * @since     1.0.0
      */
-    public function addIDPrefix( array $option, string $option_prefix_id ) : array {
+    public function addIDPrefix( array $option, string $prefix_id ) : array {
         
-        if ( empty( $option_prefix_id ) ) return $option;
+        if ( empty( $prefix_id ) ) return $option;
         
-        $option[ 'id' ] = $option_prefix_id . '[' . $option[ 'id' ] . ']';
+        $option[ 'id' ] = $prefix_id . '[' . $option[ 'id' ] . ']';
         
         return $option;
     }

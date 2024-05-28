@@ -1,6 +1,9 @@
 <?php
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
-echo( 'default template' );
+?>
+<div class="dht-field-wrapper">
 
-echo "fallback template";
+    <?php echo _x( 'No such option type', 'options', DHT_PREFIX ); ?>
+
+</div>

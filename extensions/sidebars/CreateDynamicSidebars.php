@@ -90,10 +90,10 @@ class CreateDynamicSidebars implements ICreateDynamicSidebars {
      */
     public function enqueueSidebarScripts( string $hook ) : void {
 
-        wp_enqueue_script( DHT_PREFIX . '-create-sidebars', DHT_ASSETS_URI . 'scripts/js/extensions/create-sidebars-script.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
+        wp_enqueue_script( DHT_PREFIX . '-create-sidebars', DHT_ASSETS_URI . 'scripts/js/extensions/sidebars/create-sidebars-script.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
         wp_localize_script( DHT_PREFIX . '-create-sidebars', 'dht_remove_sidebar_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
 
-        wp_register_style( DHT_PREFIX . '-create-sidebars', DHT_ASSETS_URI . 'styles/css/extensions/create-sidebars-style.css', array(), fw()->manifest->get( 'version' ) );
+        wp_register_style( DHT_PREFIX . '-create-sidebars', DHT_ASSETS_URI . 'styles/css/extensions/sidebars/create-sidebars-style.css', array(), fw()->manifest->get( 'version' ) );
         wp_enqueue_style( DHT_PREFIX . '-create-sidebars' );
     }
 

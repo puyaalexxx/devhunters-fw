@@ -4,6 +4,7 @@ declare( strict_types = 1 );
 namespace DHT\Components\Preloader;
 
 use function DHT\fw;
+use function DHT\Helpers\dht_load_view;
 
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
@@ -33,9 +34,9 @@ class Preloader implements IPreloader {
      */
     public function enqueuePreloaderScripts() : void {
         
-        wp_enqueue_script( DHT_PREFIX . '-preloader-component', DHT_ASSETS_URI . 'scripts/js/components/preloader-script.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
+        wp_enqueue_script( DHT_PREFIX . '-preloader-component', DHT_ASSETS_URI . 'scripts/js/components/preloader/preloader-script.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
         
-        wp_register_style( DHT_PREFIX . '-preloader-component', DHT_ASSETS_URI . 'styles/css/components/preloader-style.css', array(), fw()->manifest->get( 'version' ) );
+        wp_register_style( DHT_PREFIX . '-preloader-component', DHT_ASSETS_URI . 'styles/css/components/preloader/preloader-style.css', array(), fw()->manifest->get( 'version' ) );
         wp_enqueue_style( DHT_PREFIX . '-preloader-component' );
     }
     
@@ -49,9 +50,7 @@ class Preloader implements IPreloader {
      */
     public function render( int $delay = 500 ) : void {
         
-        echo '<div id="dht-preloader" data-delay="' . esc_attr( $delay ) . '">
-                <div class="dht-spinner-loader"></div>
-            </div>';
+        echo dht_load_view( DHT_TEMPLATES_DIR . 'components/preloader/', 'preloader.php', array( 'delay' => $delay ) );
     }
     
 }

@@ -20,9 +20,11 @@ final class TypographyHelpers {
      */
     public static function getGoogleFonts() : array {
         
-        if ( !file_exists( DHT_ASSETS_DIR . 'fonts/google-fonts/google-fonts.json' ) ) return [];
+        $google_fonts_path = DHT_ASSETS_DIR . 'fonts/google-fonts/google-fonts.json';
         
-        $data = file_get_contents( DHT_ASSETS_DIR . 'fonts/google-fonts/google-fonts.json' );
+        if ( !file_exists( $google_fonts_path ) ) return [];
+        
+        $data = file_get_contents( $google_fonts_path );
         $fonts = json_decode( $data, true );
         
         $fonts_family = $font_weights = $font_subsets = [];

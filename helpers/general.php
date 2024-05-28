@@ -158,7 +158,7 @@ function dht_load_view( string $path, string $file, array $args = [], bool $retu
  * @return array
  * @since     1.0.0
  */
-function dht_get_variables_from_file( string $file_path, string $extract_variable, array $set_variables = [], bool $return_array = true ) : array {
+function dht_get_variables_from_file( string $file_path, string $extract_variable, array $set_variables = [], bool $return_array = false ) : array {
     
     extract( $set_variables, EXTR_REFS );
     unset( $set_variables );
@@ -167,6 +167,7 @@ function dht_get_variables_from_file( string $file_path, string $extract_variabl
     
     if ( $return_array ) {
         foreach ( $$extract_variable as $variable_name => $default_value ) {
+            
             if ( isset( $$variable_name ) ) {
                 $$extract_variable[ $variable_name ] = $$variable_name;
             }

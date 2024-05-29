@@ -5,7 +5,7 @@ namespace DHT\Extensions\Options;
 
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
-use DHT\Extensions\Options\Groups\Groups\{Group, Tabs};
+use DHT\Extensions\Options\Groups\Groups\{Accordion, AddableBox, Group, Tabs};
 use DHT\Extensions\Options\Options\BaseOption;
 use DHT\Extensions\Options\Options\Fields\{AceEditor,
     Borders,
@@ -121,80 +121,6 @@ final class Options implements IOptions {
     }
 
     /**
-     * Enqueue react app files for options
-     *
-     * @param string $hook
-     *
-     * @return bool
-     * @since     1.0.0
-     */
-    public function enqueueReactAppScripts( string $hook ) : bool {
-
-        /*$is_main_dashboard = $hook === 'index.php';
-        
-        // Only load react app scripts in main admin page.
-        if ( !$is_main_dashboard )
-            return false;*/
-
-        // Setting path variables.
-        $dist_react_app_dir = DHT_REACT_APP_DIR . 'dist-react-app/';
-        $dist_react_app_uri = DHT_REACT_APP_URI . 'dist-react-app/';
-        $manifest_path = $dist_react_app_dir . '.vite/manifest.json';
-
-        // Request manifest file.
-        $request = file_get_contents( $manifest_path );
-
-        // If the remote request fails, wp_remote_get() will return a WP_Error, so let’s check if the $request variable is an error:
-        if ( !$request )
-            return false;
-
-        // Convert json to php array.
-        $files_data = json_decode( $request, true );
-        if ( $files_data === null )
-            return false;
-
-        //check if this is the entry point of the React application
-        $entry_point = isset( $files_data[ 'index.html' ] ) && $files_data[ 'index.html' ][ 'isEntry' ] ? $files_data[ 'index.html' ] : '';
-        if ( !$entry_point ) {
-            return false;
-        }
-
-        // Get assets links.
-        //make sure the js files are always in array
-        $entry_point_js_files = is_array( $entry_point[ 'file' ] ) ? $entry_point[ 'file' ] : array( $entry_point[ 'file' ] );
-        $js_files = array_filter( $entry_point_js_files, array( $this, '_filter_js_files' ) );
-        $css_files = array_filter( $entry_point[ 'css' ], array( $this, '_filter_css_files' ) );
-
-        // Load css files.
-        foreach ( $css_files as $index => $css_file ) {
-            wp_enqueue_style(
-                DHT_PREFIX . '-react-app-' . $index,
-                $dist_react_app_uri . $css_file,
-                array(),
-                filemtime( $dist_react_app_dir . $css_file ),
-            );
-        }
-
-        // Load js files.
-        foreach ( $js_files as $index => $js_file ) {
-            wp_enqueue_script(
-                DHT_PREFIX . '-react-app-' . $index,
-                $dist_react_app_uri . $js_file,
-                array(),
-                filemtime( $dist_react_app_dir . $js_file ),
-                true
-            );
-        }
-
-        // Variables for app use.
-        wp_localize_script( DHT_PREFIX . '-react-app-0', 'dht_options_selector',
-            array( 'optionsAppSelector' => 'dht-wrapper-options-render-area' )
-        );
-
-        return true;
-    }
-
-    /**
      * TODO: finish this method registerCustomOptionType
      * create custom option types located outside the framework
      *
@@ -210,7 +136,6 @@ final class Options implements IOptions {
     }
 
     /**
-     *
      * render options passed from the plugin
      *
      * @return void
@@ -346,7 +271,6 @@ final class Options implements IOptions {
     }
 
     /**
-     *
      * save options
      *
      * @param string $settings_id - save the options under this settings id
@@ -382,11 +306,27 @@ final class Options implements IOptions {
 
                             foreach ( $option[ 'options' ] as $group_option ) {
 
-                                //check if the option id is present in the $_POST group values
-                                if ( !isset( $post_values[ $option[ 'id' ] ][ $group_option[ 'id' ] ] ) ) continue;
+                                //if it is a group of groups (like tabs or accordion groups)
+                                if ( !empty( $group_option[ 'options' ] ) ) {
 
-                                $values[ $option[ 'id' ] ][ $group_option[ 'id' ] ] =
-                                    $this->_optionClasses[ $group_option[ 'type' ] ]->saveValue( $group_option, $post_values[ $option[ 'id' ] ][ $group_option[ 'id' ] ] );
+                                    foreach ( $group_option[ 'options' ] as $subgroup_option ) {
+
+                                        //check if the option id is present in the $_POST group values
+                                        if ( !isset( $post_values[ $option[ 'id' ] ][ $subgroup_option[ 'id' ] ] ) ) continue;
+
+                                        $values[ $option[ 'id' ] ][ $subgroup_option[ 'id' ] ] =
+                                            $this->_optionClasses[ $subgroup_option[ 'type' ] ]->saveValue( $subgroup_option, $post_values[ $option[ 'id' ] ][ $subgroup_option[ 'id' ] ] );
+                                    }
+
+                                } else {
+                                    //if it is a simple one level group
+
+                                    //check if the option id is present in the $_POST group values
+                                    if ( !isset( $post_values[ $option[ 'id' ] ][ $group_option[ 'id' ] ] ) ) continue;
+
+                                    $values[ $option[ 'id' ] ][ $group_option[ 'id' ] ] =
+                                        $this->_optionClasses[ $group_option[ 'type' ] ]->saveValue( $group_option, $post_values[ $option[ 'id' ] ][ $group_option[ 'id' ] ] );
+                                }
                             }
                         } else {
 
@@ -418,8 +358,6 @@ final class Options implements IOptions {
     }
 
     /**
-     *
-     *
      * get saved options values
      *
      * @param string $settings_id - get saved options values with this id
@@ -443,10 +381,14 @@ final class Options implements IOptions {
         //instantiate the option group classes
         $group = new Group();
         $tabs = new Tabs();
+        $accordion = new Accordion();
+        $addable_box = new AddableBox();
 
         //add class instance to the _optionClasses array to use throughout the Option class methods
         $this->_optionGroupsClasses[ $group->getGroup() ] = $group;
         $this->_optionGroupsClasses[ $tabs->getGroup() ] = $tabs;
+        $this->_optionGroupsClasses[ $accordion->getGroup() ] = $accordion;
+        $this->_optionGroupsClasses[ $addable_box->getGroup() ] = $addable_box;
     }
 
     /**

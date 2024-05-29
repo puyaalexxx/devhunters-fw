@@ -8,10 +8,10 @@ use function DHT\fw;
 
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
-final class Tabs extends BaseGroup {
+final class Accordion extends BaseGroup {
     
     //field type
-    protected string $_group = 'tabs';
+    protected string $_group = 'accordion';
     
     /**
      * @since     1.0.0
@@ -31,10 +31,10 @@ final class Tabs extends BaseGroup {
      */
     public function enqueueOptionScripts( array $option ) : void {
         
-        wp_register_style( DHT_PREFIX . '-tabs-group', DHT_ASSETS_URI . 'styles/css/extensions/options/groups/tabs-style.css', array(), fw()->manifest->get( 'version' ) );
-        wp_enqueue_style( DHT_PREFIX . '-tabs-group' );
+        wp_register_style( DHT_PREFIX . '-accordion-group', DHT_ASSETS_URI . 'styles/css/extensions/options/groups/accordion-style.css', array(), fw()->manifest->get( 'version' ) );
+        wp_enqueue_style( DHT_PREFIX . '-accordion-group' );
         
-        wp_enqueue_script( DHT_PREFIX . '-tabs-option', DHT_ASSETS_URI . 'scripts/js/extensions/options/groups/tabs-script.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
+        wp_enqueue_script( DHT_PREFIX . '-accordion-option', DHT_ASSETS_URI . 'scripts/js/extensions/options/groups/accordion-script.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
     }
     
 }

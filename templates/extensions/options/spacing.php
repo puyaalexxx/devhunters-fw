@@ -23,7 +23,7 @@ $sizes = [ "px" => 'px', "percentage" => '%', "em" => 'em', "rem" => 'rem', "vw"
                 <div class="dht-field-spacing-input">
 
                     <label
-                        for="<?php echo esc_attr( $option[ 'id' ] ); ?>-top"><?php echo _x( 'Top', 'options', DHT_PREFIX ) ?></label>
+                        for="<?php echo esc_attr( $option[ 'id' ] ); ?>-top"><?php echo _x( 'Top', 'options', DHT_PREFIX ); ?></label>
 
                     <span class="dht-spacing-top"></span>
 
@@ -38,7 +38,7 @@ $sizes = [ "px" => 'px', "percentage" => '%', "em" => 'em', "rem" => 'rem', "vw"
                 <div class="dht-field-spacing-input">
 
                     <label
-                        for="<?php echo esc_attr( $option[ 'id' ] ); ?>-right"><?php echo _x( 'Right', 'options', DHT_PREFIX ) ?></label>
+                        for="<?php echo esc_attr( $option[ 'id' ] ); ?>-right"><?php echo _x( 'Right', 'options', DHT_PREFIX ); ?></label>
 
                     <span class="dht-spacing-right"></span>
 
@@ -53,7 +53,7 @@ $sizes = [ "px" => 'px', "percentage" => '%', "em" => 'em', "rem" => 'rem', "vw"
                 <div class="dht-field-spacing-input">
 
                     <label
-                        for="<?php echo esc_attr( $option[ 'id' ] ); ?>-bottom"><?php echo _x( 'Bottom', 'options', DHT_PREFIX ) ?></label>
+                        for="<?php echo esc_attr( $option[ 'id' ] ); ?>-bottom"><?php echo _x( 'Bottom', 'options', DHT_PREFIX ); ?></label>
 
                     <span class="dht-spacing-bottom"></span>
 
@@ -68,7 +68,7 @@ $sizes = [ "px" => 'px', "percentage" => '%', "em" => 'em', "rem" => 'rem', "vw"
                 <div class="dht-field-spacing-input">
 
                     <label
-                        for="<?php echo esc_attr( $option[ 'id' ] ); ?>-left"><?php echo _x( 'Left', 'options', DHT_PREFIX ) ?></label>
+                        for="<?php echo esc_attr( $option[ 'id' ] ); ?>-left"><?php echo _x( 'Left', 'options', DHT_PREFIX ); ?></label>
 
                     <span class="dht-spacing-left"></span>
 
@@ -83,7 +83,7 @@ $sizes = [ "px" => 'px', "percentage" => '%', "em" => 'em', "rem" => 'rem', "vw"
                 <div class="dht-field-spacing-input">
 
                     <label
-                        for="<?php echo esc_attr( $option[ 'id' ] ); ?>-sizes"><?php echo _x( 'Sizes', 'options', DHT_PREFIX ) ?></label>
+                        for="<?php echo esc_attr( $option[ 'id' ] ); ?>-sizes"><?php echo _x( 'Sizes', 'options', DHT_PREFIX ); ?></label>
 
                     <select class="dht-spacing-dropdown dht-field"
                             name="<?php echo esc_attr( $option[ 'id' ] ); ?>[size]"

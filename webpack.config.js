@@ -28,6 +28,10 @@ const upload_gallery_script = "upload-gallery-script";
 const icon_script = "icon-script";
 const typography_script = "typography-script";
 
+/////////extensions - options - groups - ts
+const tabs_script = "tabs-script";
+const accordion_script = "accordion-script";
+
 /////////extensions - sidebars - ts
 const create_sidebars_script = "create-sidebars-script";
 
@@ -58,6 +62,8 @@ const typography_style = "typography-style";
 
 /////////extensions - options - groups - pcss
 const group_style = "group-style";
+const tabs_style = "tabs-style";
+const accordion_style = "accordion-style";
 
 /////////extensions - sidebars - pcss
 const create_sidebars_style = "create-sidebars-style";
@@ -88,6 +94,10 @@ module.exports = {
         [upload_gallery_script]: "./assets/scripts/ts/extensions/options/options/" + upload_gallery_script.replace("-script", "") + ".ts",
         [icon_script]: "./assets/scripts/ts/extensions/options/options/" + icon_script.replace("-script", "") + ".ts",
         [typography_script]: "./assets/scripts/ts/extensions/options/options/" + typography_script.replace("-script", "") + ".ts",
+
+        /////////extensions - options - groups - ts
+        [tabs_script]: "./assets/scripts/ts/extensions/options/groups/" + tabs_script.replace("-script", "") + ".ts",
+        [accordion_script]: "./assets/scripts/ts/extensions/options/groups/" + accordion_script.replace("-script", "") + ".ts",
 
         /////////extensions - sidebars - ts
         [create_sidebars_script]: "./assets/scripts/ts/extensions/sidebars/" + create_sidebars_script.replace("-script", "") + ".ts",
@@ -126,6 +136,8 @@ module.exports = {
 
         /////////extensions - options - groups - css
         [group_style]: "./assets/styles/postcss/extensions/options/groups/" + group_style.replace("-style", "") + ".pcss", // multi options CSS entry point
+        [tabs_style]: "./assets/styles/postcss/extensions/options/groups/" + tabs_style.replace("-style", "") + ".pcss", // multi options CSS entry point
+        [accordion_style]: "./assets/styles/postcss/extensions/options/groups/" + accordion_style.replace("-style", "") + ".pcss", // multi options CSS entry point
 
         /////////extensions - sidebars - css
         [create_sidebars_style]: "./assets/styles/postcss/extensions/sidebars/" + create_sidebars_style.replace("-style", "") + ".pcss", // Sidebars CSS entry point
@@ -169,7 +181,7 @@ module.exports = {
             } //rangeslider option file
             if (chunkData.chunk.name === radio_image_script) {
                 return "scripts/js/extensions/options/options/" + radio_image_script + ".js";
-            }
+            } // radio image
             if (chunkData.chunk.name === multi_options_script) {
                 return "scripts/js/extensions/options/options/" + multi_options_script + ".js";
             } //multioptions option file
@@ -184,10 +196,18 @@ module.exports = {
             } //upload gallery option file
             if (chunkData.chunk.name === icon_script) {
                 return "scripts/js/extensions/options/options/" + icon_script + ".js";
-            } //typography option file
+            } //icon option file
             if (chunkData.chunk.name === typography_script) {
                 return "scripts/js/extensions/options/options/" + typography_script + ".js";
-            }
+            } //typography
+
+            /////////extensions - options - group - js
+            if (chunkData.chunk.name === tabs_script) {
+                return "scripts/js/extensions/options/groups/" + tabs_script + ".js";
+            } //tabs
+            if (chunkData.chunk.name === accordion_script) {
+                return "scripts/js/extensions/options/groups/" + accordion_script + ".js";
+            } //accordion
 
             /////////extensions - options - js
             if (chunkData.chunk.name === create_sidebars_script) {
@@ -309,6 +329,12 @@ module.exports = {
                 if (chunkData.chunk.name === group_style) {
                     return "styles/css/extensions/options/groups/" + group_style + ".css";
                 } //group option file
+                if (chunkData.chunk.name === tabs_style) {
+                    return "styles/css/extensions/options/groups/" + tabs_style + ".css";
+                } //tabs option file
+                if (chunkData.chunk.name === accordion_style) {
+                    return "styles/css/extensions/options/groups/" + accordion_style + ".css";
+                } //accordion option file
 
                 /////////extensions - sidebars - css
                 if (chunkData.chunk.name === create_sidebars_style) {

@@ -33,9 +33,7 @@ final class MultiInput extends BaseOption {
         
         wp_enqueue_script( DHT_PREFIX . '-multiinput-option', DHT_ASSETS_URI . 'scripts/js/extensions/options/options/multiinput-script.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
         
-        // Register the style
         wp_register_style( DHT_PREFIX . '-multiinput-option', DHT_ASSETS_URI . 'styles/css/extensions/options/options/multiinput-style.css', array(), fw()->manifest->get( 'version' ) );
-        // Enqueue the style
         wp_enqueue_style( DHT_PREFIX . '-multiinput-option' );
     }
     

@@ -4,14 +4,13 @@ declare( strict_types = 1 );
 namespace DHT\Extensions\Options\Groups\Groups;
 
 use DHT\Extensions\Options\Groups\BaseGroup;
-use function DHT\fw;
 
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
-final class Tabs extends BaseGroup {
+final class AddableBox extends BaseGroup {
     
     //field type
-    protected string $_group = 'tabs';
+    protected string $_group = 'addable-box';
     
     /**
      * @since     1.0.0
@@ -31,10 +30,10 @@ final class Tabs extends BaseGroup {
      */
     public function enqueueOptionScripts( array $option ) : void {
         
-        wp_register_style( DHT_PREFIX . '-tabs-group', DHT_ASSETS_URI . 'styles/css/extensions/options/groups/tabs-style.css', array(), fw()->manifest->get( 'version' ) );
-        wp_enqueue_style( DHT_PREFIX . '-tabs-group' );
+        // wp_register_style( DHT_PREFIX . '-addable-box-group', DHT_ASSETS_URI . 'styles/css/extensions/options/groups/addable-box-style.css', array(), fw()->manifest->get( 'version' ) );
+        // wp_enqueue_style( DHT_PREFIX . '-addable-box-group' );
         
-        wp_enqueue_script( DHT_PREFIX . '-tabs-option', DHT_ASSETS_URI . 'scripts/js/extensions/options/groups/tabs-script.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
+        // wp_enqueue_script( DHT_PREFIX . '-addable-box-option', DHT_ASSETS_URI . 'scripts/js/extensions/options/groups/addable-box-script.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
     }
     
 }

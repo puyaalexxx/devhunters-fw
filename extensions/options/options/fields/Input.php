@@ -49,15 +49,18 @@ final class Input extends BaseOption {
             return $option[ 'value' ];
         }
         
-        if ( $option[ 'subtype' ] == 'url' ) {
-            $option_value = esc_url_raw( $option_value );
-        } elseif ( $option[ 'subtype' ] == 'email' ) {
-            $option_value = sanitize_email( $option_value );
-        } else {
-            $option_value = sanitize_text_field( $option_value );
+        if ( isset( $option[ 'subtype' ] ) ) {
+            if ( $option[ 'subtype' ] == 'url' ) {
+                
+                $option_value = esc_url_raw( $option_value );
+                
+            } elseif ( $option[ 'subtype' ] == 'email' ) {
+                
+                $option_value = sanitize_email( $option_value );
+            }
         }
         
-        return $option_value;
+        return sanitize_text_field( $option_value );
     }
     
 }

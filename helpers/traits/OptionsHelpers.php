@@ -44,7 +44,7 @@ trait OptionsHelpers {
     private function _getEnqueueOptionArgs( array $options, array $optionClasses ) : void {
         
         //helper function
-        function enqueueOptionScriptsHook( $optionClasses, $option ) : void {
+        function enqueueOptionScriptsHook( array $optionClasses, array $option ) : void {
             
             if ( isset( $optionClasses[ $option[ 'type' ] ] ) ) {
                 

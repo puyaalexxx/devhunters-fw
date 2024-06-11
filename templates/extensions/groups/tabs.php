@@ -49,7 +49,7 @@ $registered_options = $args[ 'registered_options' ] ?? [];
 
                                     <?php
                                     //get saved value
-                                    $saved_value = $args[ 'saved_value' ][ $tab_option[ 'id' ] ] ?? [];
+                                    $saved_value = $group[ 'value' ][ $tab_option[ 'id' ] ] ?? [];
 
                                     //render the specific option type
                                     echo dht_render_option_if_exists( $tab_option, $saved_value, $group[ 'id' ], $registered_options );

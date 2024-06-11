@@ -35,4 +35,35 @@ final class Group extends BaseGroup {
         wp_enqueue_style( DHT_PREFIX . '-group-group' );
     }
     
+    /**
+     *  In this method you receive $option_value (from form submit or whatever)
+     *  and must return correct and safe value that will be stored in database.
+     *
+     *  $group_value can be null.
+     *  In this case you should return default value from $group['value']
+     *
+     * @param array $group - group field
+     * @param mixed $group_value
+     * @param array $option_classes
+     *
+     * @return mixed - changed option value
+     * @since     1.0.0
+     */
+    public function saveValue( array $group, mixed $group_value, array $option_classes ) : mixed {
+        
+        if ( empty( $group_value ) ) {
+            return $group[ 'value' ];
+        }
+        
+        //sanitize option values
+        foreach ( $group[ 'options' ] as $option ) {
+            
+            $saved_value = $group_value[ $option[ 'id' ] ] ?? [];
+            
+            $group_value[ $option[ 'id' ] ] = $option_classes[ $option[ 'type' ] ]->saveValue( $option, $saved_value );
+        }
+        
+        return $group_value;
+    }
+    
 }

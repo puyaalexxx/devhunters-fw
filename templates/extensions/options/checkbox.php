@@ -7,11 +7,6 @@ if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 $option = $args[ 'option' ] ?? [];
 ?>
-
-<style>
-
-</style>
-
 <!-- field - checkbox -->
 <div class="dht-field-wrapper">
 
@@ -31,12 +26,12 @@ $option = $args[ 'option' ] ?? [];
                         class="dht-checkbox dht-field"
                         type="checkbox"
                         name="<?php echo esc_attr( $option[ 'id' ] ); ?>[<?php echo esc_attr( $checkbox[ 'id' ] ); ?>]"
-                        id="<?php echo esc_attr( $checkbox[ 'id' ] ); ?>"
+                        id="<?php echo esc_attr( $option[ 'id' ] . $checkbox[ 'id' ] ); ?>"
                         value="<?php echo esc_attr( esc_attr( $checkbox[ 'value' ] ) ); ?>"
                         <?php echo in_array( $checkbox[ 'id' ], $option[ 'value' ] ) ? 'checked="checked"' : ''; ?>/>
 
                     <label
-                        for="<?php echo esc_attr( $checkbox[ 'id' ] ); ?>"><?php echo esc_html( $checkbox[ 'label' ] ); ?></label>
+                        for="<?php echo esc_attr( $option[ 'id' ] . $checkbox[ 'id' ] ); ?>"><?php echo esc_html( $checkbox[ 'label' ] ); ?></label>
 
                 </div>
             <?php endforeach; ?>

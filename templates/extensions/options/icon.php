@@ -23,8 +23,8 @@ $icons = [
             <!--icon preview added here-->
             <span
                 class="dht-icon-select-preview <?php echo !empty( $option[ 'value' ] ) ? 'dht-icon-select-preview-show' : ''; ?>">
-        <i class="<?php echo !empty( $option[ 'value' ] ) ? esc_attr( $option[ 'value' ][ 'icon-class' ] ) : ''; ?>"></i>
-    </span>
+                <i class="<?php echo !empty( $option[ 'value' ] ) ? esc_attr( $option[ 'value' ][ 'icon-class' ] ) : ''; ?>"></i>
+            </span>
 
             <!--button to trigger the icons popup-->
             <a href="#TB_inline?width=600&height=500&inlineId=<?php echo esc_attr( $option[ 'id' ] ); ?>"

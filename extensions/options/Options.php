@@ -292,10 +292,6 @@ final class Options implements IOptions {
                 //for convenience
                 $post_values = $_POST[ $settings_id ];
 
-                //pre save option values
-                //(each option class has a save method used to change the POST value as needed and then save it)
-                //you can change the saved value entirely, sanitize it or replace if you want
-
                 $values = [];
                 foreach ( $options as $option ) {
 
@@ -304,33 +300,11 @@ final class Options implements IOptions {
                         //if it is a group type
                         if ( isset( $this->_optionGroupsClasses[ $option[ 'type' ] ] ) ) {
 
-                            foreach ( $option[ 'options' ] as $group_option ) {
+                            $values[ $option[ 'id' ] ] = $this->_optionGroupsClasses[ $option[ 'type' ] ]->saveValue( $option, $post_values[ $option[ 'id' ] ], $this->_optionClasses );
 
-                                //if it is a group of groups (like tabs or accordion groups)
-                                if ( !empty( $group_option[ 'options' ] ) ) {
+                        } //if it is a simple option type
+                        else {
 
-                                    foreach ( $group_option[ 'options' ] as $subgroup_option ) {
-
-                                        //check if the option id is present in the $_POST group values
-                                        if ( !isset( $post_values[ $option[ 'id' ] ][ $subgroup_option[ 'id' ] ] ) ) continue;
-
-                                        $values[ $option[ 'id' ] ][ $subgroup_option[ 'id' ] ] =
-                                            $this->_optionClasses[ $subgroup_option[ 'type' ] ]->saveValue( $subgroup_option, $post_values[ $option[ 'id' ] ][ $subgroup_option[ 'id' ] ] );
-                                    }
-
-                                } else {
-                                    //if it is a simple one level group
-
-                                    //check if the option id is present in the $_POST group values
-                                    if ( !isset( $post_values[ $option[ 'id' ] ][ $group_option[ 'id' ] ] ) ) continue;
-
-                                    $values[ $option[ 'id' ] ][ $group_option[ 'id' ] ] =
-                                        $this->_optionClasses[ $group_option[ 'type' ] ]->saveValue( $group_option, $post_values[ $option[ 'id' ] ][ $group_option[ 'id' ] ] );
-                                }
-                            }
-                        } else {
-
-                            //if it is a simple option type
                             $values[ $option[ 'id' ] ] = $this->_optionClasses[ $option[ 'type' ] ]->saveValue( $option, $post_values[ $option[ 'id' ] ] );
                         }
                     }
@@ -340,7 +314,8 @@ final class Options implements IOptions {
 
                 dht_set_db_settings_option( $settings_id, $values );
 
-            } else {
+            } //if the options are not grouped under an id
+            else {
                 //pre save option values
                 //(each option class has a save method used to change the POST value as needed and then save it)
                 //you can change the saved value entirely, sanitize it or replace if you want

@@ -24,7 +24,7 @@ $registered_options = $args[ 'registered_options' ] ?? [];
                 foreach ( $group[ 'options' ] as $group_option ) {
 
                     //get saved value
-                    $saved_value = $args[ 'saved_value' ][ $group_option[ 'id' ] ] ?? [];
+                    $saved_value = $saved_value = $group[ 'value' ][ $group_option[ 'id' ] ] ?? [];
 
                     //render the specific option type
                     echo dht_render_option_if_exists( $group_option, $saved_value, $group[ 'id' ], $registered_options );

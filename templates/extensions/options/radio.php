@@ -26,12 +26,12 @@ $option = $args[ 'option' ] ?? [];
                         class="dht-radio dht-field"
                         type="radio"
                         name="<?php echo esc_attr( $option[ 'id' ] ); ?>"
-                        id="<?php echo $radio_id; ?>"
+                        id="<?php echo $option[ 'id' ] . $radio_id; ?>"
                         value="<?php echo esc_attr( $value ); ?>"
                         <?php echo ( $option[ 'value' ] == $value ) ? 'checked="checked"' : ''; ?>/>
 
                     <label
-                        for="<?php echo $radio_id; ?>"><?php echo esc_html( $label ); ?></label>
+                        for="<?php echo $option[ 'id' ] . $radio_id; ?>"><?php echo esc_html( $label ); ?></label>
 
                 </div>
                 <?php $cnt++; endforeach; ?>

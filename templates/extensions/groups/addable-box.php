@@ -1,64 +1,145 @@
 <?php
 
+use function DHT\Helpers\dht_parse_option_attributes;
+use function DHT\Helpers\dht_render_option_if_exists;
+
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 $group = $args[ 'group' ] ?? [];
 //used to call the render method on
 $registered_options = $args[ 'registered_options' ] ?? [];
+
+$saved_values = !empty( $group[ 'value' ] ) ? $group[ 'value' ] : [];
+
+//dht_print_r( $saved_values );
 ?>
 <!-- field - addable box -->
 
 <div class="dht-field-wrapper">
-    <div class="dht-title">Repeater</div>
-    <div class="dht-field-child-wrapper dht-field-child-accordion">
+
+    <div class="dht-title"><?php echo esc_html( $group[ 'title' ] ); ?></div>
+
+    <div
+        class="dht-field-child-wrapper dht-field-child-accordion <?php echo isset( $group[ 'attr' ][ 'class' ] ) ? esc_attr( $group[ 'attr' ][ 'class' ] ) : ''; ?>"
+        <?php echo dht_parse_option_attributes( $group[ 'attr' ] ); ?>>
 
         <div class="dht-accordion dht-accordion-repeater">
-            <div class="dht-accordion-item">
-                <div class="dht-accordion-title">
-                    <div class="dht-accordion-arrow">
-                        <span class="dht-accordion-arrow-item dashicons dashicons-plus-alt"></span>
-                        <span class="dht-accordion-arrow-item-close dashicons dashicons-dismiss"></span>
-                    </div>
-                    <span class="dht-accordion-title-text">Title 1</span>
-                </div>
-                <div class="dht-accordion-content">
 
-                    <div class="dht-field-wrapper">
-                        <div class="dht-title">Textarea</div>
-                        <div class="dht-field-child-wrapper dht-field-child-textarea">
-                            <label for="textarea">Textarea</label>
-                            <textarea class="dht-textarea dht-field" id="textarea" name="textarea"
-                                      placeholder="Textarea"
-                                      rows="6"></textarea>
-                            <div class="dht-description">Field description</div>
-                        </div>
-                    </div>
+            <?php if ( !empty( $group[ 'options' ] ) ): ?>
 
-                    <div class="dht-remove-toggle">
-                        <div class="dht-divider"></div>
+                <?php if ( !empty( $saved_values ) ): ?>
 
-                        <a href="" class="button button-primary dht-btn-remove">Remove Icon</a>
-                    </div>
+                    <?php foreach ( $saved_values as $key => $saved_value ): ?>
 
-                </div>
-            </div>
+                        <?php
+                        dht_display_toggle( $group, $saved_value, $registered_options, $key );
+                        ?>
 
-            <a href="" class="button button-primary dht-add-toggle">Add</a>
-            <div class="dht-toggle-remove-text">Can't remove the only item</div>
+                    <?php endforeach; ?>
+
+                <?php else: ?>
+
+                    <?php dht_display_toggle( $group, [], $registered_options ); ?>
+
+                <?php endif; ?>
+
+                <a href=""
+                   class="button button-primary dht-add-toggle"><?php echo _x( 'Add', 'options', DHT_PREFIX ); ?></a>
+                <div
+                    class="dht-toggle-remove-text"><?php echo _x( 'Can\'t remove the only item', 'options', DHT_PREFIX ); ?></div>
+
+            <?php endif; ?>
         </div>
 
-        <div class="dht-description">Field description</div>
+        <?php if ( !empty( $group[ 'description' ] ) ): ?>
+            <div class="dht-description"><?php echo esc_html( $group[ 'description' ] ); ?></div>
+        <?php endif; ?>
+
     </div>
-    <div class="dht-info-help dashicons dashicons-info"
-         data-tooltips="A little box to something to make it longer"
-         data-position="OnLeft">
-    </div>
+
+    <?php if ( !empty( $group[ 'tooltip' ] ) ): ?>
+        <div class="dht-info-help dashicons dashicons-info"
+             data-tooltips="<?php echo esc_html( $group[ 'tooltip' ] ); ?>"
+             data-position="OnLeft">
+        </div>
+    <?php endif; ?>
+
 </div>
-<div class="dht-divider"></div>
 
 <?php if ( isset( $group[ 'divider' ] ) && $group[ 'divider' ] ): ?>
     <div class="dht-divider"></div>
 <?php endif; ?>
+
+<?php
+/*
+ * added for convenience to not repeat the markup twice
+ */
+function dht_display_toggle( array $group, mixed $saved_values, array $registered_options, int $cnt = 1 ) : void {
+
+    $default_box_title = _x( 'Box Title', 'options', DHT_PREFIX );
+    ?>
+    <div class="dht-accordion-item">
+
+        <div class="dht-accordion-title">
+
+            <div class="dht-accordion-arrow">
+                <span class="dht-accordion-arrow-item dashicons dashicons-plus-alt"></span>
+                <span class="dht-accordion-arrow-item-close dashicons dashicons-dismiss"></span>
+            </div>
+
+            <span
+                class="dht-accordion-title-text" data-default-title="<?php echo esc_attr( $default_box_title ); ?>">
+                <?php echo !empty( $saved_values[ 'box-title' ] ) ? esc_html( $saved_values[ 'box-title' ] ) : $default_box_title; ?>
+            </span>
+
+        </div>
+
+        <div class="dht-accordion-content">
+
+            <!--box title field-->
+            <div class="dht-field-wrapper">
+                <div class="dht-field-box-wrapper dht-field-child-input">
+                    <label
+                        for="<?php echo esc_attr( $group[ 'id' ] ); ?>[<?php echo esc_attr( $cnt ); ?>][box-title]">
+                        <?php echo !empty( $saved_values[ 'box-title' ] ) ? esc_html( $saved_values[ 'box-title' ] ) : _x( 'Box Title', 'options', DHT_PREFIX ); ?>
+                    </label>
+                    <input
+                        class="dht-input dht-field dht-box-title"
+                        id="<?php echo esc_attr( $group[ 'id' ] ); ?>[<?php echo esc_attr( $cnt ); ?>][box-title]"
+                        type="text"
+                        name="<?php echo esc_attr( $group[ 'id' ] ); ?>[<?php echo esc_attr( $cnt ); ?>][box-title]"
+                        value="<?php echo !empty( $saved_values[ 'box-title' ] ) ? esc_html( $saved_values[ 'box-title' ] ) : ''; ?>"
+                        placeholder="<?php echo esc_attr( $default_box_title ); ?>" />
+                </div>
+            </div>
+
+            <div class="dht-divider"></div>
+
+            <!--box fields-->
+            <?php foreach ( $group[ 'options' ] as $option ) : ?>
+
+                <?php
+                //get option saved value if exists
+                $saved_value = array_key_exists( $option[ 'id' ], $saved_values ) ? $saved_values[ $option[ 'id' ] ] : '';
+
+                //render the specific option type
+                echo dht_render_option_if_exists( $option, $saved_value, $group[ 'id' ] . '[' . esc_attr( $cnt ) . ']', $registered_options );
+                ?>
+
+            <?php endforeach; ?>
+
+            <!--remove box area-->
+            <div class="dht-remove-toggle">
+                <div class="dht-divider"></div>
+
+                <a href=""
+                   class="button button-primary dht-btn-remove"><?php _ex( 'Remove Box', 'options', DHT_PREFIX ); ?></a>
+            </div>
+
+        </div>
+
+    </div>
+<?php } ?>
 
 <style>
     .dht-wrapper .dht-field-child-accordion .dht-accordion-item {
@@ -163,7 +244,7 @@ $registered_options = $args[ 'registered_options' ] ?? [];
 
     jQuery(document).ready(function($) {
         //create accordion
-        $(".dht-wrapper").on("click", ".dht-field-child-accordion .dht-accordion .dht-accordion-title", function(e) {
+        $(".dht-field-child-accordion").on("click", ".dht-accordion .dht-accordion-title", function(e) {
             e.preventDefault();
 
             const $this = $(this);
@@ -184,12 +265,35 @@ $registered_options = $args[ 'registered_options' ] ?? [];
         });
 
         //add new toggle in your accordion
-        $(".dht-field-child-accordion .dht-accordion-repeater .dht-add-toggle").on("click", function(e) {
+        $(".dht-field-child-accordion").on("click", ".dht-accordion-repeater .dht-add-toggle", function(e) {
             e.preventDefault();
 
             const $this = $(this);
 
             let $toggle = $this.prev(".dht-accordion-item").clone();
+
+            //replace the number of the name and id attributes to save them
+            $toggle.find("[name]").each(function() {
+
+                const $this = $(this);
+                const name_attribute = $this.attr("name");
+
+                let regex = /\[(\d+)\]/;
+                let match = name_attribute.match(regex);
+
+                if (match) {
+                    // Extract the current number and increment it
+                    let new_number = parseInt(match[1]) + 1;
+
+                    // Replace the old number with the new one
+                    let new_name_attr = name_attribute.replace(regex, "[" + new_number + "]");
+
+                    $this.attr("name", new_name_attr);
+                    $this.attr("id", new_name_attr);
+                    $this.siblings("label").attr("for", new_name_attr);
+                }
+
+            });
 
             //if toggle opened, close it
             $toggle.children(".dht-accordion-title").removeClass("dht-accordion-active");
@@ -203,7 +307,7 @@ $registered_options = $args[ 'registered_options' ] ?? [];
         });
 
         //remove toggle item
-        $(".dht-wrapper").on("click", ".dht-field-child-accordion .dht-accordion-repeater .dht-btn-remove", function(e) {
+        $(".dht-field-child-accordion").on("click", ".dht-accordion-repeater .dht-btn-remove", function(e) {
             e.preventDefault();
 
             const $this = $(this);
@@ -220,10 +324,23 @@ $registered_options = $args[ 'registered_options' ] ?? [];
             return false;
         });
 
+        //change box title on inout change event
+        $(".dht-field-child-accordion").on("keyup", ".dht-accordion-repeater .dht-accordion-item .dht-box-title", function(e) {
+
+            console.log("dsdsadasds");
+
+            const value = $(this).val();
+
+            $(this).parents(".dht-accordion-content").siblings(".dht-accordion-title").find(".dht-accordion-title-text").text(value);
+        });
+
         // Function to clear form inputs
         function dhtClearFormInputs(content) {
             content.find("input[type=\"text\"], input[type=\"email\"], textarea").val("");
             content.find("input[type=\"checkbox\"], input[type=\"radio\"]").prop("checked", false);
+            content.attr("value", "");
+            const $box_title = content.find(".dht-accordion-title-text");
+            $box_title.text($box_title.attr("data-default-title"));
         }
     });
 </script>

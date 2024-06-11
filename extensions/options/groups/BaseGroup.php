@@ -61,12 +61,14 @@ abstract class BaseGroup {
      */
     public function render( array $group, mixed $saved_value, string $prefix_id, array $registered_options, array $additional_args = [] ) : string {
         
+        //merge default values with saved ones to display the saved ones
+        $group = $this->mergeValues( $group, $saved_value );
+        
         //add option prefix id
         $group = $this->addIDPrefix( $group, $prefix_id );
         
         return dht_load_view( $this->template_dir, $this->getGroup() . '.php', [
             'group' => $group,
-            'saved_value' => $saved_value,
             'registered_options' => $registered_options,
             'additional_args' => []
         ] );
@@ -101,6 +103,56 @@ abstract class BaseGroup {
         $group[ 'id' ] = $prefix_id . '[' . $group[ 'id' ] . ']';
         
         return $group;
+    }
+    
+    /**
+     * merge the field value with the saved value if exists
+     *
+     * @param array $group       - group field
+     * @param mixed $saved_value - saved values
+     *
+     * @return mixed
+     * @since     1.0.0
+     */
+    public function mergeValues( array $group, mixed $saved_value ) : array {
+        
+        $group[ 'value' ] = empty( $saved_value ) ? $group[ 'value' ] : $saved_value;
+        
+        return $group;
+    }
+    
+    /**
+     *  In this method you receive $option_value (from form submit or whatever)
+     *  and must return correct and safe value that will be stored in database.
+     *
+     *  $group_value can be null.
+     *  In this case you should return default value from $group['value']
+     *
+     * @param array $group - group field
+     * @param mixed $group_value
+     * @param array $option_classes
+     *
+     * @return mixed - changed option value
+     * @since     1.0.0
+     */
+    public function saveValue( array $group, mixed $group_value, array $option_classes ) : mixed {
+        
+        if ( empty( $group_value ) ) {
+            return $group[ 'value' ];
+        }
+        
+        //sanitize option values
+        foreach ( $group[ 'options' ] as $subgroup ) {
+            
+            foreach ( $subgroup[ 'options' ] as $option ) {
+                
+                $saved_value = $group_value[ $option[ 'id' ] ] ?? [];
+                
+                $group_value[ $option[ 'id' ] ] = $option_classes[ $option[ 'type' ] ]->saveValue( $option, $saved_value );
+            }
+        }
+        
+        return $group_value;
     }
     
 }

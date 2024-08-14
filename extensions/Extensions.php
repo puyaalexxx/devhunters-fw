@@ -5,18 +5,16 @@ namespace DHT\Extensions;
 
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
-use DHT\Core\DI\DIInit;
-use DHT\Core\DI\ExtensionClassInstance;
-use DHT\Extensions\CPT\ICPT;
-use DHT\Extensions\DashPages\IDashMenuPage;
-use DHT\Extensions\Options\IOptions;
-use DHT\Extensions\Sidebars\{ICreateDynamicSidebars, IRegisterSidebar};
-use DHT\Extensions\Widgets\IRegisterWidget;
-use DHT\Helpers\Exceptions\ConfigExceptions\EmptyCPTConfigurationsException;
-use DHT\Helpers\Exceptions\ConfigExceptions\EmptyMenuConfigurationsException;
-use DHT\Helpers\Exceptions\ConfigExceptions\EmptySidebarConfigurationsException;
-use DHT\Helpers\Exceptions\ConfigExceptions\EmptyWidgetNamesException;
-use DHT\Helpers\Traits\ValidateConfigurations;
+use DHT\Extensions\CPT\{CPT, ICPT};
+use DHT\Extensions\DashPages\{DashMenuPage, IDashMenuPage};
+use DHT\Extensions\Options\{IOptions, Options};
+use DHT\Extensions\Sidebars\{CreateDynamicSidebars, ICreateDynamicSidebars, IRegisterSidebar, RegisterSidebar};
+use DHT\Extensions\Widgets\{IRegisterWidget, RegisterWidget};
+use DHT\Helpers\Exceptions\ConfigExceptions\{EmptyCPTConfigurationsException,
+    EmptyMenuConfigurationsException,
+    EmptySidebarConfigurationsException,
+    EmptyWidgetNamesException};
+use DHT\Helpers\Traits\{SingletonTrait, ValidateConfigurations};
 
 /**
  * Singleton Class that is used to include all the framework extensions and initialise them
@@ -24,23 +22,14 @@ use DHT\Helpers\Traits\ValidateConfigurations;
 final class Extensions {
     
     use ValidateConfigurations;
-    
-    //class instances for Singleton Pattern
-    private static array $_instances = [];
-    
-    private ExtensionClassInstance $_extensionClassInstance;
+    use SingletonTrait;
     
     /**
-     * @param DIInit $diInit
-     *
      * @since     1.0.0
      */
-    protected function __construct( DIInit $diInit ) {
+    protected function __construct() {
         
         do_action( 'dht_before_extensions_init' );
-        
-        //initialize Extension classes DI Container
-        $this->_extensionClassInstance = $diInit->extensionClassInstance;
     }
     
     /**
@@ -57,7 +46,7 @@ final class Extensions {
             'dash_menus_configurations', EmptyMenuConfigurationsException::class,
             _x( 'Empty dashboard menu configurations array provided', 'exceptions', DHT_PREFIX ) );
         
-        return $this->_extensionClassInstance->getDashMenuPageInstance( $dash_menus_config );
+        return new DashMenuPage( $dash_menus_config );
     }
     
     /**
@@ -74,21 +63,26 @@ final class Extensions {
             'dht_cpts_configurations', EmptyCPTConfigurationsException::class,
             _x( 'Empty cpt configurations array provided', 'exceptions', DHT_PREFIX ) );
         
-        return $this->_extensionClassInstance->getCPTInstance( $cpt_config );
+        return new CPT( $cpt_config );
     }
     
     /**
      * get options extension class instance
      *
-     * @return ?IOptions - options instance
+     * @param array $options
+     *
+     * @return IOptions|null - options instance
      * @since     1.0.0
      */
-    public function options() : ?IOptions {
+    public function options( array $options ) : ?IOptions {
         
-        //init class only if on specific pages (set from the plugin) and not ajax request to not block it
-        if ( !apply_filters( 'dht_options_init_on_page', true ) ) return null;
+        $options = $this->_validateConfigurations( $options, '',
+            'dht_options_configurations' );
         
-        return $this->_extensionClassInstance->getOptionsInstance();
+        //go further if it is an ajax request (needed for the icon option field)
+        if ( !( !empty( $options ) || wp_doing_ajax() ) ) return null;
+        
+        return new Options( $options );
     }
     
     /**
@@ -105,7 +99,7 @@ final class Extensions {
             'dht_widgets_configurations', EmptyWidgetNamesException::class,
             _x( 'Empty widgets configurations array provided', 'exceptions', DHT_PREFIX ) );
         
-        return $this->_extensionClassInstance->getRegisterWidgetInstance( $widgets_config );
+        return new RegisterWidget( $widgets_config );
     }
     
     /**
@@ -122,54 +116,18 @@ final class Extensions {
             'dht_sidebars_configurations', EmptySidebarConfigurationsException::class,
             _x( 'Empty configurations array provided', 'exceptions', DHT_PREFIX ) );
         
-        return $this->_extensionClassInstance->getRegisterSidebarInstance( $sidebar_config );
+        return new RegisterSidebar( $sidebar_config );
     }
     
     /**
      * get dynamic sidebars extension class instance
      *
-     * @param bool $createDynamicSidebars
-     *
-     * @return ICreateDynamicSidebars | bool - create sidebar class instance or nothing
+     * @return ICreateDynamicSidebars - create sidebar class instance
      * @since     1.0.0
      */
-    public function dynamicSidebars( bool $createDynamicSidebars ) : ICreateDynamicSidebars|bool {
+    public function dynamicSidebars() : ICreateDynamicSidebars {
         
-        if ( $createDynamicSidebars ) {
-            
-            return $this->_extensionClassInstance->getCreateDynamicSidebarsInstance();
-        }
-        
-        return false;
+        return new CreateDynamicSidebars();
     }
-    
-    /**
-     * This is the static method that controls the access to the singleton
-     * instance. On the first run, it creates a singleton object and places it
-     * into the static field. On subsequent runs, it returns the client existing
-     * object stored in the static field.
-     *
-     * @param DIInit $classInstance - ClassInstance object
-     *
-     * @return self - current class
-     * @since     1.0.0
-     */
-    public static function init( DIInit $classInstance ) : self {
-        
-        $cls = static::class;
-        if ( !isset( self::$_instances[ $cls ] ) ) {
-            self::$_instances[ $cls ] = new static( $classInstance );
-        }
-        
-        return self::$_instances[ $cls ];
-    }
-    
-    /**
-     * no possibility to clone this class
-     *
-     * @return void
-     * @since     1.0.0
-     */
-    protected function __clone() : void {}
     
 }

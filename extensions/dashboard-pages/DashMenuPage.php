@@ -13,12 +13,12 @@ use function DHT\Helpers\{dht_array_key_exists};
  *
  * Class that is used to create dashboard menus and submenus dynamically
  */
-class DashMenuPage implements IDashMenuPage {
+final class DashMenuPage implements IDashMenuPage {
     
     use DashMenusHelpers;
     
     //extension name
-    public string $ext_name = 'dashmenus';
+    public string $ext_name = 'dashboard-pages';
     
     /**
      * @param array $dash_menus_config
@@ -34,7 +34,7 @@ class DashMenuPage implements IDashMenuPage {
             
         }, 99 );
         
-        //register menus as rest api endpoints
+        //register menus as rest api endpoints (testing purposes)
         add_action( 'rest_api_init', function () use ( $dash_menus_config ) {
             
             API::init()->dashmenus->registerAPIEndpoints( $dash_menus_config );

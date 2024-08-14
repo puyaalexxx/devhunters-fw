@@ -8,7 +8,7 @@ if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 /**
  * Class that is used to register plugin sidebars
  */
-class RegisterSidebar implements IRegisterSidebar {
+final class RegisterSidebar implements IRegisterSidebar {
     
     //extension name
     public string $ext_name = 'sidebars';
@@ -35,11 +35,9 @@ class RegisterSidebar implements IRegisterSidebar {
      */
     public function register() : void {
         
-        $sidebar_config = $this->_sidebar_config;
-        
-        add_action( 'widgets_init', function () use ( $sidebar_config ) {
+        add_action( 'widgets_init', function () {
             
-            $this->registerSidebarsHook( $sidebar_config );
+            $this->registerSidebarsHook( $this->_sidebar_config );
         } );
     }
     

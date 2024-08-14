@@ -36,7 +36,7 @@ final class DashMenusAPI extends BaseAPI {
             $menu_args[ 'options' ] = [];
             
             //dashboard menus GET endpoint
-            register_rest_route( $this->_namespace . '/' . $this->_version . '/dashmenus/', $api_endpoint, [
+            register_rest_route( $this->_namespace . '/' . $this->_version . '/dashboard-pages/', $api_endpoint, [
                 'methods' => 'GET',
                 'callback' => function ( $request ) use ( $menu_args ) {
                     

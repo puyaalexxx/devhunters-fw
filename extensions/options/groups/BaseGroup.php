@@ -1,7 +1,7 @@
 <?php
 declare( strict_types = 1 );
 
-namespace DHT\Extensions\Options\Groups;
+namespace DHT\Extensions\Options\groups;
 
 use function DHT\Helpers\dht_load_view;
 
@@ -10,7 +10,7 @@ if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 abstract class BaseGroup {
     
     //options templates directory
-    protected string $template_dir = DHT_TEMPLATES_DIR . 'extensions/groups/';
+    protected string $template_dir = DHT_TEMPLATES_DIR . 'extensions/options/groups/';
     
     //field type
     protected string $_group = 'unknown';

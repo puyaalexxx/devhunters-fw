@@ -19,11 +19,11 @@ trait ValidateConfigurations {
      * @return array
      * @since     1.0.0
      */
-    private function _validateConfigurations( array $config, string $config_key, string $filter_name, string $exception_class, string $exception_message ) : array {
+    private function _validateConfigurations( array $config, string $config_key, string $filter_name, string $exception_class = '', string $exception_message = '' ) : array {
         
         if ( empty( $config_key ) ) {
             
-            if ( !empty( $config ) ) {
+            if ( !empty( $config ) || empty( $exception_class ) ) {
                 
                 return apply_filters( $filter_name, $config );
                 

@@ -3,6 +3,8 @@ declare( strict_types = 1 );
 
 namespace DHT\Helpers\Traits;
 
+use function DHT\Helpers\dht_get_db_settings_option;
+
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 trait OptionsHelpers {
@@ -43,7 +45,7 @@ trait OptionsHelpers {
      */
     private function _getEnqueueOptionArgs( array $options, array $optionClasses ) : void {
         
-        //helper function
+        //helper local function
         function enqueueOptionScriptsHook( array $optionClasses, array $option ) : void {
             
             if ( isset( $optionClasses[ $option[ 'type' ] ] ) ) {
@@ -89,31 +91,6 @@ trait OptionsHelpers {
     }
     
     /**
-     * Get js files from assets array.
-     *
-     * @param string $file_string
-     *
-     * @return bool
-     */
-    function _filter_js_files( string $file_string ) : bool {
-        
-        return pathinfo( $file_string, PATHINFO_EXTENSION ) === 'js';
-        
-    }
-    
-    /**
-     * Get css files from assets array.
-     *
-     * @param string $file_string
-     *
-     * @return bool
-     */
-    function _filter_css_files( string $file_string ) : bool {
-        
-        return pathinfo( $file_string, PATHINFO_EXTENSION ) === 'css';
-    }
-    
-    /**
      * prepare saved values to pass to specific option
      * some options are saved under a settings id others not
      *
@@ -135,6 +112,19 @@ trait OptionsHelpers {
         }
         
         return $saved_value;
+    }
+    
+    /**
+     * get saved options values
+     *
+     * @param string $settings_id - get saved options values with this id
+     *
+     * @return mixed
+     * @since     1.0.0
+     */
+    private function _getSavedOptions( string $settings_id ) : mixed {
+        
+        return dht_get_db_settings_option( $settings_id );
     }
     
 }

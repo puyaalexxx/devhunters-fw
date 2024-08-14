@@ -11,7 +11,7 @@ const TerserPlugin = require("terser-webpack-plugin");
 
 //////////////////////////////////////////ts files
 /////////extensions - options - ts
-const dht_wrapper_area_script = "dht-wrapper-area-script";
+const dashboard_page_template_script = "dashboard-page-template-script";
 const switch_script = "switch-script";
 const multiinput_script = "multiinput-script";
 const ace_editor_script = "ace-editor-script";
@@ -39,8 +39,9 @@ const create_sidebars_script = "create-sidebars-script";
 const preloader_script = "preloader-script";
 
 ////////////////////////////////////////css files
+
 /////////extensions - options - pcss
-const dht_wrapper_area_style = "dht-wrapper-area-style";
+const dashboard_page_template_style = "dashboard-page-template-style";
 const checkbox_style = "checkbox-style";
 const radio_style = "radio-style";
 const switch_style = "switch-style";
@@ -77,7 +78,7 @@ module.exports = {
         // TypeScript files entries
 
         /////////extensions - options - wrapper - ts
-        [dht_wrapper_area_script]: "./assets/scripts/ts/extensions/options/" + dht_wrapper_area_script.replace("-script", "") + ".ts",
+        [dashboard_page_template_script]: "./assets/scripts/ts/extensions/options/" + dashboard_page_template_script.replace("-script", "") + ".ts",
         /////////extensions - options - ts
         [switch_script]: "./assets/scripts/ts/extensions/options/options/" + switch_script.replace("-script", "") + ".ts",
         [multiinput_script]: "./assets/scripts/ts/extensions/options/options/" + multiinput_script.replace("-script", "") + ".ts",
@@ -113,7 +114,7 @@ module.exports = {
         ],*/
 
         /////////extensions - options - wrapper - css
-        [dht_wrapper_area_style]: "./assets/styles/postcss/extensions/options/" + dht_wrapper_area_style.replace("-style", "") + ".pcss", // dht wrapper area CSS entry point
+        [dashboard_page_template_style]: "./assets/styles/postcss/extensions/options/" + dashboard_page_template_style.replace("-style", "") + ".pcss", // dht wrapper area CSS entry point
         /////////extensions - options - css
         [checkbox_style]: "./assets/styles/postcss/extensions/options/options/" + checkbox_style.replace("-style", "") + ".pcss", // Checkbox CSS entry point
         [radio_style]: "./assets/styles/postcss/extensions/options/options/" + radio_style.replace("-style", "") + ".pcss", // radio CSS entry point
@@ -152,8 +153,8 @@ module.exports = {
         //compile ts files in different folders
         filename: (chunkData) => {
             /////////extensions - options - js
-            if (chunkData.chunk.name === dht_wrapper_area_script) {
-                return "scripts/js/extensions/options/" + dht_wrapper_area_script + ".js";
+            if (chunkData.chunk.name === dashboard_page_template_script) {
+                return "scripts/js/extensions/options/" + dashboard_page_template_script + ".js";
             } //dht wrapper option file
             if (chunkData.chunk.name === switch_script) {
                 return "scripts/js/extensions/options/options/" + switch_script + ".js";
@@ -266,9 +267,9 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: (chunkData) => {
                 /////////extensions - options - css
-                if (chunkData.chunk.name === dht_wrapper_area_style) {
-                    return "styles/css/extensions/options/" + dht_wrapper_area_style + ".css";
-                } //dht wrapper area  file
+                if (chunkData.chunk.name === dashboard_page_template_style) {
+                    return "styles/css/extensions/options/" + dashboard_page_template_style + ".css";
+                } // dashboard option template
                 if (chunkData.chunk.name === checkbox_style) {
                     return "styles/css/extensions/options/options/" + checkbox_style + ".css";
                 } //checkbox option file

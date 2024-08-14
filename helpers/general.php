@@ -126,6 +126,13 @@ function dht_load_view( string $path, string $file, array $args = [], bool $retu
     $file_path = $path . $file;
     
     if ( !is_file( $file_path ) && !file_exists( $file_path ) ) {
+        
+        //add default content to template via this hook
+        add_action( 'dht_render_dashboard_page_content', function () {
+            
+            echo '<div class="dht-no-content-found">' . _x( 'No Content found', 'options', DHT_PREFIX ) . '</div>';
+        }, 10 );
+        
         require_once( DHT_TEMPLATES_DIR . "template.php" );
         
         return '';

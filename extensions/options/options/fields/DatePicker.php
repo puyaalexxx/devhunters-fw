@@ -1,7 +1,7 @@
 <?php
 declare( strict_types = 1 );
 
-namespace DHT\Extensions\Options\Options\Fields;
+namespace DHT\Extensions\Options\Options\fields;
 
 use DHT\Extensions\Options\Options\BaseOption;
 use function DHT\fw;
@@ -34,12 +34,12 @@ class DatePicker extends BaseOption {
         wp_register_style( DHT_PREFIX . '-jquery-ui-datepicker', DHT_ASSETS_URI . 'styles/libraries/jquery-ui-datepicker.min.css', array(), fw()->manifest->get( 'version' ) );
         wp_enqueue_style( DHT_PREFIX . '-jquery-ui-datepicker' );
         
-        wp_register_style( DHT_PREFIX . '-datepicker-option', DHT_ASSETS_URI . 'styles/css/extensions/options/datepicker-style.css', array(), fw()->manifest->get( 'version' ) );
+        wp_register_style( DHT_PREFIX . '-datepicker-option', DHT_ASSETS_URI . 'styles/css/extensions/options/options/datepicker-style.css', array(), fw()->manifest->get( 'version' ) );
         wp_enqueue_style( DHT_PREFIX . '-datepicker-option' );
         
         wp_enqueue_script( DHT_PREFIX . '-jquery-ui-datepicker', DHT_ASSETS_URI . 'scripts/libraries/jquery-ui-datepicker.min.js', array(), fw()->manifest->get( 'version' ), true );
         
-        wp_enqueue_script( DHT_PREFIX . '-datepicker-option', DHT_ASSETS_URI . 'scripts/js/extensions/options/datepicker-script.js', array( DHT_PREFIX . '-jquery-ui-datepicker' ), fw()->manifest->get( 'version' ), true );
+        wp_enqueue_script( DHT_PREFIX . '-datepicker-option', DHT_ASSETS_URI . 'scripts/js/extensions/options/options/datepicker-script.js', array( DHT_PREFIX . '-jquery-ui-datepicker' ), fw()->manifest->get( 'version' ), true );
     }
     
 }

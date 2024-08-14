@@ -9,10 +9,10 @@ if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
  *
  * Class that is used to register custom post types and taxonomies
  */
-class CPT implements ICPT {
+final class CPT implements ICPT {
     
     //extension name
-    public string $ext_name = 'cpt';
+    public string $ext_name = 'cpts';
     
     //config array
     private array $_cpt_config;
@@ -34,23 +34,21 @@ class CPT implements ICPT {
      * @return void
      * @since     1.0.0
      */
-    public function register() : void {
-        
-        $config_args = $this->_cpt_config;
+    public function create() : void {
         
         //register posts types if exist
-        if ( isset( $config_args[ 'post_types' ] ) ) {
-            add_action( 'init', function () use ( $config_args ) {
+        if ( isset( $this->_cpt_config[ 'post_types' ] ) ) {
+            add_action( 'init', function () {
                 
-                $this->registerPostTypes( $config_args[ 'post_types' ] );
+                $this->registerPostTypes( $this->_cpt_config[ 'post_types' ] );
             } );
         }
         
         //register taxonomies if exist
-        if ( isset( $config_args[ 'taxonomies' ] ) ) {
-            add_action( 'init', function () use ( $config_args ) {
+        if ( isset( $this->_cpt_config[ 'taxonomies' ] ) ) {
+            add_action( 'init', function () {
                 
-                $this->registerTaxonomy( $config_args[ 'taxonomies' ] );
+                $this->registerTaxonomy( $this->_cpt_config[ 'taxonomies' ] );
             } );
         }
     }

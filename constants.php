@@ -15,6 +15,8 @@ define( 'DHT_DIR', plugin_dir_path( __FILE__ ) );
 
 define( 'DHT_ASSETS_DIR', DHT_DIR . 'assets/' );
 
+define( 'DHT_CONFIG_DIR', DHT_DIR . 'config/' );
+
 define( 'DHT_HELPERS_DIR', DHT_DIR . 'helpers/' );
 
 define( 'DHT_REACT_APP_DIR', DHT_DIR . 'src/' );
@@ -24,9 +26,6 @@ define( 'DHT_EXTENSIONS_DIR', DHT_DIR . 'extensions/' );
 define( 'DHT_OPTIONS_DIR', DHT_EXTENSIONS_DIR . 'options/' );
 
 define( 'DHT_TEMPLATES_DIR', DHT_DIR . 'templates/' );
-
-//plugin config dir to grab options
-define( 'DHT_PLUGIN_CONFIG_DIR', dirname( plugin_dir_path( __FILE__ ) ) . '/src/config/' );
 
 /*
  * URL PATHs

@@ -10,32 +10,26 @@
   ],
   "require": {
     "php": ">=8.0",
-    "php-di/php-di": "^7.0",
     "phenx/php-font-lib": "^1.0"
   },
-  "autoload" : {
+  "autoload": {
     "files": [
       "constants.php",
       "helpers/general.php",
       "helpers/options.php",
       "helpers/validations.php"
     ],
-    "psr-4" : {
-
-      "DHT\\Helpers\\" : "helpers/",
-      "DHT\\Helpers\\Classes\\" : "helpers/classes/",
-      "DHT\\Helpers\\Exceptions\\" : "helpers/exceptions/",
-      "DHT\\Helpers\\Exceptions\\ConfigExceptions\\" : "helpers/exceptions/config-exceptions/",
-
-      "DHT\\Core\\" : "core/",
-      "DHT\\Core\\DI\\" : "core/di/",
-
-      "DHT\\Components\\" : "components/",
-      "DHT\\Extensions\\" : "extensions/",
-      "DHT\\Extensions\\DashPages\\" : "extensions/dashboard-pages/",
-      "DHT\\Extensions\\CPT\\" : "extensions/cpt/",
-      "DHT\\Extensions\\Widgets\\" : "extensions/widgets/"
-
+    "psr-4": {
+      "DHT\\Helpers\\": "helpers/",
+      "DHT\\Helpers\\Classes\\": "helpers/classes/",
+      "DHT\\Helpers\\Exceptions\\": "helpers/exceptions/",
+      "DHT\\Helpers\\Exceptions\\ConfigExceptions\\": "helpers/exceptions/config-exceptions/",
+      "DHT\\Core\\": "core/",
+      "DHT\\Features\\": "features/",
+      "DHT\\Extensions\\": "extensions/",
+      "DHT\\Extensions\\DashPages\\": "extensions/dashboard-pages/",
+      "DHT\\Extensions\\CPT\\": "extensions/cpt/",
+      "DHT\\Extensions\\Widgets\\": "extensions/widgets/"
     }
   }
 }

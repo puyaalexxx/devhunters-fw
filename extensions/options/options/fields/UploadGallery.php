@@ -1,7 +1,7 @@
 <?php
 declare( strict_types = 1 );
 
-namespace DHT\Extensions\Options\Options\Fields;
+namespace DHT\Extensions\Options\Options\fields;
 
 use DHT\Extensions\Options\Options\BaseOption;
 use DHT\Helpers\Traits\UploadHelpers;

@@ -1,7 +1,9 @@
 <?php
 declare( strict_types = 1 );
 
-namespace DHT\Extensions\Options\Containers;
+namespace DHT\Extensions\Options\containers;
+
+use DHT\Extensions\Options\groups\BaseGroup;
 
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 

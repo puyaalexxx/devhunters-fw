@@ -16,6 +16,6 @@ interface ICPT {
      * @return void
      * @since     1.0.0
      */
-    public function register() : void;
+    public function create() : void;
     
 }

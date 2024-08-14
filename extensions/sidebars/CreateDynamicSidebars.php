@@ -11,7 +11,7 @@ if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
  *
  * Class that is used to create sidebars dynamically in widgets.php area
  */
-class CreateDynamicSidebars implements ICreateDynamicSidebars {
+final class CreateDynamicSidebars implements ICreateDynamicSidebars {
 
     //extension name
     public string $ext_name = 'dynamicSidebars';

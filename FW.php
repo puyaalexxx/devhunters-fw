@@ -5,7 +5,6 @@ namespace DHT;
 
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
-use DHT\Components\Components;
 use DHT\Core\DI\DIInit;
 use DHT\Core\Manifest;
 use DHT\Extensions\Extensions;
@@ -20,17 +19,8 @@ final class FW {
     //framework version
     public static string $version;
     
-    //class instances for Singleton Pattern
-    private static array $_instances = [];
-    
-    //DI container reference
-    private DIInit $_diInit;
-    
     //Extensions instance
     public Extensions $extensions;
-    
-    //Components instance
-    public Components $components;
     
     //framework manifest info
     public Manifest $manifest;
@@ -40,44 +30,24 @@ final class FW {
      */
     public function __construct() {
         
-        do_action( 'dht_before_fw_init' );
         
-        //di registration
-        $this->_initDI();
+        do_action( 'dht_before_fw_init' );
         
         //instantiate framework manifest info
         $this->manifest = Manifest::init();
         
         //instantiate framework Extensions
-        $this->extensions = Extensions::init( $this->_diInit );
-        
-        //instantiate framework Components
-        $this->components = Components::init( $this->_diInit );
+        $this->extensions = Extensions::init();
         
         //other initializations
         //include the test file to test different things quickly (remove at the end)
         require_once( plugin_dir_path( __FILE__ ) . "test.php" );
     }
     
-    /**
-     * Register the PHP-DI containers
-     *
-     * @return void
-     * @since     1.0.0
-     */
-    private function _initDI() : void {
-        
-        do_action( 'dht_before_di_init' );
-        
-        $this->_diInit = new DIInit();
-        
-        do_action( 'dht_after_di_init' );
-    }
-    
 }
 
 /**
- * @return FW Framework instance
+ * @return FW Framework instance (in case to expose the framework functionality to plugin)
  */
 function fw() : FW {
     

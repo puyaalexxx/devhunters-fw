@@ -10,7 +10,7 @@ if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 abstract class BaseOption {
     
     //options templates directory
-    protected string $template_dir = DHT_TEMPLATES_DIR . 'extensions/options/';
+    protected string $template_dir = DHT_TEMPLATES_DIR . 'extensions/options/options/';
     
     //field type
     protected string $_field = 'unknown';

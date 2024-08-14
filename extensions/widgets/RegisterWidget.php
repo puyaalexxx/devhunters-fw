@@ -8,7 +8,7 @@ if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 /**
  * Class that is used to register plugin widgets
  */
-class RegisterWidget implements IRegisterWidget {
+final class RegisterWidget implements IRegisterWidget {
     
     //extension name
     public string $ext_name = 'widgets';
@@ -35,11 +35,9 @@ class RegisterWidget implements IRegisterWidget {
      */
     public function register() : void {
         
-        $widgets_conf = $this->_widgets_config;
-        
-        add_action( 'widgets_init', function () use ( $widgets_conf ) {
+        add_action( 'widgets_init', function () {
             
-            $this->registerWidgetsHook( $widgets_conf );
+            $this->registerWidgetsHook( $this->_widgets_config );
         } );
     }
     

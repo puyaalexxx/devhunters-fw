@@ -15,22 +15,12 @@ if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 interface IOptions {
     
     /**
-     * render options passed from the plugin
+     * initialize framework option fields
      *
      * @return void
      * @since     1.0.0
      */
-    public function renderOptions() : void;
-    
-    /**
-     * register framework options with passed option settings
-     *
-     * @param array $options - options array passed from plugin
-     *
-     * @return void
-     * @since     1.0.0
-     */
-    public function initOptions( array $options ) : void;
+    public function init() : void;
     
     /**
      * create custom option types located outside the framework

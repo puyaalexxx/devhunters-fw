@@ -15,24 +15,13 @@ if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
  * @return bool
  * @since     1.0.0
  */
-function dht_array_key_exists( array $array, string $array_key ) : bool {
-    
-    if ( array_key_exists( $array_key, $array ) && !empty( $array[ $array_key ] ) ) {
-        return false;
+if ( !function_exists( 'dht_array_key_exists' ) ) {
+    function dht_array_key_exists( array $array, string $array_key ) : bool {
+        
+        if ( array_key_exists( $array_key, $array ) && !empty( $array[ $array_key ] ) ) {
+            return false;
+        }
+        
+        return true;
     }
-    
-    return true;
-}
-
-/**
- * Check if the current admin page is in the available array of pages
- *
- * @param array $init_on
- *
- * @return bool
- * @since     1.0.0
- */
-function dht_is_page_available( array $init_on = [] ) : bool {
-    
-    return !empty( $init_on ) && in_array( dht_get_current_admin_page(), $init_on );
 }

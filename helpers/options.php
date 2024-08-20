@@ -5,6 +5,8 @@ namespace DHT\Helpers;
 
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
+////////////////////////////////////// this area is about saving retrieving option db values
+
 /**
  * get option or options fields from db
  *
@@ -14,11 +16,13 @@ if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
  * @return mixed
  * @since     1.0.0
  */
-function dht_get_db_settings_option( string $option_id, mixed $default_value = [] ) : mixed {
-    
-    if ( empty( $option_id ) ) return [];
-    
-    return get_option( $option_id, $default_value );
+if ( !function_exists( 'dht_get_db_settings_option' ) ) {
+    function dht_get_db_settings_option( string $option_id, mixed $default_value = [] ) : mixed {
+        
+        if ( empty( $option_id ) ) return [];
+        
+        return get_option( $option_id, $default_value );
+    }
 }
 
 /**
@@ -31,23 +35,52 @@ function dht_get_db_settings_option( string $option_id, mixed $default_value = [
  * @return bool
  * @since     1.0.0
  */
-function dht_set_db_settings_option( string $option_id, mixed $value, string $array_key = '' ) : bool {
-    
-    if ( empty( $option_id ) || empty( $value ) ) return false;
-    
-    //this is useful for array of arrays of options
-    if ( !empty( $array_key ) ) {
+if ( !function_exists( 'dht_set_db_settings_option' ) ) {
+    function dht_set_db_settings_option( string $option_id, mixed $value, string $array_key = '' ) : bool {
         
-        //get saved value first to not override all the settings
-        $saved_values = dht_get_db_settings_option( $option_id );
+        if ( empty( $option_id ) || empty( $value ) ) return false;
         
-        $saved_values[ $array_key ] = $value;
+        //this is useful for array of arrays of options
+        if ( !empty( $array_key ) ) {
+            
+            //get saved value first to not override all the settings
+            $saved_values = dht_get_db_settings_option( $option_id );
+            
+            $saved_values[ $array_key ] = $value;
+            
+            return update_option( $option_id, $saved_values );
+        }
         
-        return update_option( $option_id, $saved_values );
+        return update_option( $option_id, $value );
     }
-    
-    return update_option( $option_id, $value );
 }
+
+/**
+ * get option saved value from an array of saved values
+ *
+ * @param array  $saved_values
+ * @param string $option_id
+ * @param string $settings_id
+ *
+ * @return mixed
+ * @since     1.0.0
+ */
+if ( !function_exists( 'dht_get_option_value_from_saved_values' ) ) {
+    function dht_get_option_value_from_saved_values( string $option_id, array $saved_values, string $settings_id ) : mixed {
+        
+        if ( empty( $settings_id ) ) {
+            
+            $saved_value = dht_get_db_settings_option( $option_id );
+        } else {
+            
+            $saved_value = $saved_values[ $option_id ] ?? [];
+        }
+        
+        return $saved_value;
+    }
+}
+
+////////////////////////////////////// other option help functions
 
 /**
  * parse option attributes to add them to the HTML field
@@ -57,23 +90,25 @@ function dht_set_db_settings_option( string $option_id, mixed $value, string $ar
  * @return string
  * @since     1.0.0
  */
-function dht_parse_option_attributes( array $attr ) : string {
-    
-    if ( isset( $attr[ 'class' ] ) ) unset( $attr[ 'class' ] );
-    
-    $attributes = '';
-    foreach ( $attr as $key => $value ) {
+if ( !function_exists( 'dht_parse_option_attributes' ) ) {
+    function dht_parse_option_attributes( array $attr ) : string {
         
-        // Sanitize the key and value
-        $key = htmlspecialchars( $key );
+        if ( isset( $attr[ 'class' ] ) ) unset( $attr[ 'class' ] );
         
-        $value = htmlspecialchars( $value );
+        $attributes = '';
+        foreach ( $attr as $key => $value ) {
+            
+            // Sanitize the key and value
+            $key = htmlspecialchars( $key );
+            
+            $value = htmlspecialchars( $value );
+            
+            // Concatenate the key-value pairs to form the attribute string
+            $attributes .= " $key=\"$value\"";
+        }
         
-        // Concatenate the key-value pairs to form the attribute string
-        $attributes .= " $key=\"$value\"";
+        return $attributes;
     }
-    
-    return $attributes;
 }
 
 /**
@@ -84,16 +119,18 @@ function dht_parse_option_attributes( array $attr ) : string {
  * @return string
  * @since     1.0.0
  */
-function dht_sanitize_wpeditor_value( string $value ) : string {
-    
-    // Get the list of allowed HTML tags and attributes
-    $allowed_html = wp_kses_allowed_html( 'post' );
-    
-    // Remove the <script> tag from the list of allowed tags
-    unset( $allowed_html[ 'script' ] );
-    
-    // Sanitize content with allowed HTML tags and excluding <script> tag
-    return wp_kses( $value, $allowed_html );
+if ( !function_exists( 'dht_sanitize_wpeditor_value' ) ) {
+    function dht_sanitize_wpeditor_value( string $value ) : string {
+        
+        // Get the list of allowed HTML tags and attributes
+        $allowed_html = wp_kses_allowed_html( 'post' );
+        
+        // Remove the <script> tag from the list of allowed tags
+        unset( $allowed_html[ 'script' ] );
+        
+        // Sanitize content with allowed HTML tags and excluding <script> tag
+        return wp_kses( $value, $allowed_html );
+    }
 }
 
 /**
@@ -105,9 +142,11 @@ function dht_sanitize_wpeditor_value( string $value ) : string {
  * @return string
  * @since     1.0.0
  */
-function dht_remove_font_name_prefix( string $font_name ) : string {
-    
-    return preg_replace( '/^' . DHT_PREFIX . '-/', '', $font_name );
+if ( !function_exists( 'dht_remove_font_name_prefix' ) ) {
+    function dht_remove_font_name_prefix( string $font_name ) : string {
+        
+        return preg_replace( '/^' . DHT_PREFIX . '-/', '', $font_name );
+    }
 }
 
 /**
@@ -118,19 +157,21 @@ function dht_remove_font_name_prefix( string $font_name ) : string {
  * @return string
  * @since     1.0.0
  */
-function dht_get_font_weight_Label( int $font_weight ) : string {
-    
-    return match ( $font_weight ) {
-        100 => 'Thin',
-        200 => 'Extra Light',
-        300 => 'Light',
-        400 => 'Regular',
-        500 => 'Medium',
-        600 => 'Semi Bold',
-        700 => 'Bold',
-        800 => 'Extra Bold',
-        900 => 'Black'
-    };
+if ( !function_exists( 'dht_get_font_weight_Label' ) ) {
+    function dht_get_font_weight_Label( int $font_weight ) : string {
+        
+        return match ( $font_weight ) {
+            100 => 'Thin',
+            200 => 'Extra Light',
+            300 => 'Light',
+            400 => 'Regular',
+            500 => 'Medium',
+            600 => 'Semi Bold',
+            700 => 'Bold',
+            800 => 'Extra Bold',
+            900 => 'Black'
+        };
+    }
 }
 
 /**
@@ -138,22 +179,63 @@ function dht_get_font_weight_Label( int $font_weight ) : string {
  *
  * @param array  $option
  * @param mixed  $saved_value
- * @param string $prefix_id
- * @param array  $option_classes
+ * @param string $prefix_id          - options prefix id
+ * @param array  $registered_options - registered framework option classes
  *
  * @return string
  * @since     1.0.0
  */
-function dht_render_option_if_exists( array $option, mixed $saved_value, string $prefix_id, array $option_classes ) : string {
-    
-    if ( array_key_exists( $option[ 'type' ], $option_classes ) ) {
+if ( !function_exists( 'dht_render_option_if_exists' ) ) {
+    function dht_render_option_if_exists( array $option, mixed $saved_value, string $prefix_id, array $registered_options ) : string {
         
-        //render the respective option type class
-        return $option_classes[ $option[ 'type' ] ]->render( $option, $saved_value, $prefix_id );
+        if ( array_key_exists( $option[ 'type' ], $registered_options ) ) {
+            
+            //render the respective option type class
+            return $registered_options[ $option[ 'type' ] ]->render( $option, $saved_value, $prefix_id );
+            
+        } else {
+            
+            //display no option template if no match
+            return dht_load_view( DHT_TEMPLATES_DIR . 'options/', 'no-option.php' );
+        }
+    }
+}
+
+/**
+ * render all group and option types
+ *
+ * @param array  $options            - options array
+ * @param string $prefix_id          - options prefix id
+ * @param array  $saved_values       - all options saved values
+ * @param array  $registered_groups  - registered framework group classes
+ * @param array  $registered_options - registered framework option classes
+ *
+ * @return string
+ * @since     1.0.0
+ */
+if ( !function_exists( 'dht_render_options' ) ) {
+    function dht_render_options( array $options, string $prefix_id, array $saved_values, array $registered_groups, array $registered_options ) : string {
         
-    } else {
+        ob_start();
         
-        //display no option template if no match
-        return dht_load_view( DHT_TEMPLATES_DIR . 'options/', 'no-option.php' );
+        foreach ( $options as $option ) {
+            
+            //get option saved value by its id
+            $saved_value = dht_get_option_value_from_saved_values( $option[ 'id' ], $saved_values, $prefix_id );
+            
+            //if it is a group type
+            if ( array_key_exists( $option[ 'type' ], $registered_groups ) ) {
+                
+                //render the respective option group class
+                echo $registered_groups[ $option[ 'type' ] ]->render( $option, $saved_value, $prefix_id, $registered_options );
+                
+            } else {
+                
+                //render the respective option type class
+                echo dht_render_option_if_exists( $option, $saved_value, $prefix_id, $registered_options );
+            }
+        }
+        
+        return ob_get_clean();
     }
 }

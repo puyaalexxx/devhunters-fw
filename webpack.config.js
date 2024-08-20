@@ -7,9 +7,15 @@ const RemoveEmptyScriptsPlugin = require("webpack-remove-empty-scripts");
 //minify js content
 const TerserPlugin = require("terser-webpack-plugin");
 
-////////////////////////files
-
 //////////////////////////////////////////ts files
+
+/////////extensions - options - containers - ts
+const sidemenu_script = "sidemenu-script";
+
+/////////extensions - options - groups - ts
+const tabs_script = "tabs-script";
+const accordion_script = "accordion-script";
+
 /////////extensions - options - ts
 const dashboard_page_template_script = "dashboard-page-template-script";
 const switch_script = "switch-script";
@@ -28,20 +34,26 @@ const upload_gallery_script = "upload-gallery-script";
 const icon_script = "icon-script";
 const typography_script = "typography-script";
 
-/////////extensions - options - groups - ts
-const tabs_script = "tabs-script";
-const accordion_script = "accordion-script";
-
 /////////extensions - sidebars - ts
 const create_sidebars_script = "create-sidebars-script";
 
 //components - preloader - ts
 const preloader_script = "preloader-script";
 
-////////////////////////////////////////css files
+/////////////////////////////////////////css files
+
+/////////dashboard page
+const dashboard_page_template_style = "dashboard-page-template-style";
+
+/////////extensions - options - container - pcss
+const sidemenu_style = "sidemenu-style";
+
+/////////extensions - options - groups - pcss
+const group_style = "group-style";
+const tabs_style = "tabs-style";
+const accordion_style = "accordion-style";
 
 /////////extensions - options - pcss
-const dashboard_page_template_style = "dashboard-page-template-style";
 const checkbox_style = "checkbox-style";
 const radio_style = "radio-style";
 const switch_style = "switch-style";
@@ -61,11 +73,6 @@ const upload_gallery_style = "upload-gallery-style";
 const icon_style = "icon-style";
 const typography_style = "typography-style";
 
-/////////extensions - options - groups - pcss
-const group_style = "group-style";
-const tabs_style = "tabs-style";
-const accordion_style = "accordion-style";
-
 /////////extensions - sidebars - pcss
 const create_sidebars_style = "create-sidebars-style";
 
@@ -77,8 +84,16 @@ module.exports = {
     entry: {
         // TypeScript files entries
 
-        /////////extensions - options - wrapper - ts
+        /////////dashboard page template
         [dashboard_page_template_script]: "./assets/scripts/ts/extensions/options/" + dashboard_page_template_script.replace("-script", "") + ".ts",
+
+        /////////extensions - options - containers - ts
+        [sidemenu_script]: "./assets/scripts/ts/extensions/options/containers/" + sidemenu_script.replace("-script", "") + ".ts",
+
+        /////////extensions - options - groups - ts
+        [tabs_script]: "./assets/scripts/ts/extensions/options/groups/" + tabs_script.replace("-script", "") + ".ts",
+        [accordion_script]: "./assets/scripts/ts/extensions/options/groups/" + accordion_script.replace("-script", "") + ".ts",
+
         /////////extensions - options - ts
         [switch_script]: "./assets/scripts/ts/extensions/options/options/" + switch_script.replace("-script", "") + ".ts",
         [multiinput_script]: "./assets/scripts/ts/extensions/options/options/" + multiinput_script.replace("-script", "") + ".ts",
@@ -96,10 +111,6 @@ module.exports = {
         [icon_script]: "./assets/scripts/ts/extensions/options/options/" + icon_script.replace("-script", "") + ".ts",
         [typography_script]: "./assets/scripts/ts/extensions/options/options/" + typography_script.replace("-script", "") + ".ts",
 
-        /////////extensions - options - groups - ts
-        [tabs_script]: "./assets/scripts/ts/extensions/options/groups/" + tabs_script.replace("-script", "") + ".ts",
-        [accordion_script]: "./assets/scripts/ts/extensions/options/groups/" + accordion_script.replace("-script", "") + ".ts",
-
         /////////extensions - sidebars - ts
         [create_sidebars_script]: "./assets/scripts/ts/extensions/sidebars/" + create_sidebars_script.replace("-script", "") + ".ts",
 
@@ -113,8 +124,17 @@ module.exports = {
             './assets/styles/postcss/options/checkbox.pcss',
         ],*/
 
-        /////////extensions - options - wrapper - css
+        /////////dashboard page template
         [dashboard_page_template_style]: "./assets/styles/postcss/extensions/options/" + dashboard_page_template_style.replace("-style", "") + ".pcss", // dht wrapper area CSS entry point
+
+        /////////extensions - options - container - css
+        [sidemenu_style]: "./assets/styles/postcss/extensions/options/containers/" + sidemenu_style.replace("-style", "") + ".pcss", // sidemenu container CSS entry point
+
+        /////////extensions - options - groups - css
+        [group_style]: "./assets/styles/postcss/extensions/options/groups/" + group_style.replace("-style", "") + ".pcss", // group group CSS entry point
+        [tabs_style]: "./assets/styles/postcss/extensions/options/groups/" + tabs_style.replace("-style", "") + ".pcss", // tabs group CSS entry point
+        [accordion_style]: "./assets/styles/postcss/extensions/options/groups/" + accordion_style.replace("-style", "") + ".pcss", // accordion group CSS entry point
+
         /////////extensions - options - css
         [checkbox_style]: "./assets/styles/postcss/extensions/options/options/" + checkbox_style.replace("-style", "") + ".pcss", // Checkbox CSS entry point
         [radio_style]: "./assets/styles/postcss/extensions/options/options/" + radio_style.replace("-style", "") + ".pcss", // radio CSS entry point
@@ -128,23 +148,18 @@ module.exports = {
         [spacing_style]: "./assets/styles/postcss/extensions/options/options/" + spacing_style.replace("-style", "") + ".pcss", // spacing CSS entry point
         [radio_image_style]: "./assets/styles/postcss/extensions/options/options/" + radio_image_style.replace("-style", "") + ".pcss", // radio images CSS entry point
         [multi_options_style]: "./assets/styles/postcss/extensions/options/options/" + multi_options_style.replace("-style", "") + ".pcss", // multi options CSS entry point
-        [borders_style]: "./assets/styles/postcss/extensions/options/options/" + borders_style.replace("-style", "") + ".pcss", // multi options CSS entry point
-        [upload_image_style]: "./assets/styles/postcss/extensions/options/options/" + upload_image_style.replace("-style", "") + ".pcss", // multi options CSS entry point
-        [upload_style]: "./assets/styles/postcss/extensions/options/options/" + upload_style.replace("-style", "") + ".pcss", // multi options CSS entry point
-        [upload_gallery_style]: "./assets/styles/postcss/extensions/options/options/" + upload_gallery_style.replace("-style", "") + ".pcss", // multi options CSS entry point
-        [icon_style]: "./assets/styles/postcss/extensions/options/options/" + icon_style.replace("-style", "") + ".pcss", // multi options CSS entry point
-        [typography_style]: "./assets/styles/postcss/extensions/options/options/" + typography_style.replace("-style", "") + ".pcss", // multi options CSS entry point
-
-        /////////extensions - options - groups - css
-        [group_style]: "./assets/styles/postcss/extensions/options/groups/" + group_style.replace("-style", "") + ".pcss", // multi options CSS entry point
-        [tabs_style]: "./assets/styles/postcss/extensions/options/groups/" + tabs_style.replace("-style", "") + ".pcss", // multi options CSS entry point
-        [accordion_style]: "./assets/styles/postcss/extensions/options/groups/" + accordion_style.replace("-style", "") + ".pcss", // multi options CSS entry point
+        [borders_style]: "./assets/styles/postcss/extensions/options/options/" + borders_style.replace("-style", "") + ".pcss", // borders CSS entry point
+        [upload_image_style]: "./assets/styles/postcss/extensions/options/options/" + upload_image_style.replace("-style", "") + ".pcss", // upload image CSS entry point
+        [upload_style]: "./assets/styles/postcss/extensions/options/options/" + upload_style.replace("-style", "") + ".pcss", // upload CSS entry point
+        [upload_gallery_style]: "./assets/styles/postcss/extensions/options/options/" + upload_gallery_style.replace("-style", "") + ".pcss", // upload gallery CSS entry point
+        [icon_style]: "./assets/styles/postcss/extensions/options/options/" + icon_style.replace("-style", "") + ".pcss", // icon CSS entry point
+        [typography_style]: "./assets/styles/postcss/extensions/options/options/" + typography_style.replace("-style", "") + ".pcss", // typography CSS entry point
 
         /////////extensions - sidebars - css
         [create_sidebars_style]: "./assets/styles/postcss/extensions/sidebars/" + create_sidebars_style.replace("-style", "") + ".pcss", // Sidebars CSS entry point
 
         /////////components - preloader - css
-        [preloader_style]: "./assets/styles/postcss/components/preloader/" + preloader_style.replace("-style", "") + ".pcss", // Sidebars CSS entry point
+        [preloader_style]: "./assets/styles/postcss/components/preloader/" + preloader_style.replace("-style", "") + ".pcss", // preloader entry point
     },
     output: {
         path: path.resolve(__dirname, "assets"),
@@ -152,10 +167,24 @@ module.exports = {
 
         //compile ts files in different folders
         filename: (chunkData) => {
-            /////////extensions - options - js
+            /////////dashboard page template
             if (chunkData.chunk.name === dashboard_page_template_script) {
                 return "scripts/js/extensions/options/" + dashboard_page_template_script + ".js";
-            } //dht wrapper option file
+            }
+
+            /////////extensions - options - containers - js
+            if (chunkData.chunk.name === sidemenu_script) {
+                return "scripts/js/extensions/options/containers/" + sidemenu_script + ".js";
+            } //sidemenu container
+
+            /////////extensions - options - groups - js
+            if (chunkData.chunk.name === tabs_script) {
+                return "scripts/js/extensions/options/groups/" + tabs_script + ".js";
+            } //tabs
+            if (chunkData.chunk.name === accordion_script) {
+                return "scripts/js/extensions/options/groups/" + accordion_script + ".js";
+            } //accordion
+
             if (chunkData.chunk.name === switch_script) {
                 return "scripts/js/extensions/options/options/" + switch_script + ".js";
             } //switch option file
@@ -202,15 +231,7 @@ module.exports = {
                 return "scripts/js/extensions/options/options/" + typography_script + ".js";
             } //typography
 
-            /////////extensions - options - group - js
-            if (chunkData.chunk.name === tabs_script) {
-                return "scripts/js/extensions/options/groups/" + tabs_script + ".js";
-            } //tabs
-            if (chunkData.chunk.name === accordion_script) {
-                return "scripts/js/extensions/options/groups/" + accordion_script + ".js";
-            } //accordion
-
-            /////////extensions - options - js
+            /////////extensions - sidebars - js
             if (chunkData.chunk.name === create_sidebars_script) {
                 return "scripts/js/extensions/sidebars/" + create_sidebars_script + ".js";
             }
@@ -266,14 +287,29 @@ module.exports = {
         // MiniCssExtractPlugin instance for 'options-checkbox' entry
         new MiniCssExtractPlugin({
             filename: (chunkData) => {
-                /////////extensions - options - css
+                /////////dashboard options template
                 if (chunkData.chunk.name === dashboard_page_template_style) {
                     return "styles/css/extensions/options/" + dashboard_page_template_style + ".css";
-                } // dashboard option template
+                } // dashboard options template
+
+                /////////extensions - options - containers - css
+                if (chunkData.chunk.name === sidemenu_style) {
+                    return "styles/css/extensions/options/containers/" + sidemenu_style + ".css";
+                } //sidemenu container file
+
+                /////////extensions - options - groups - css
+                if (chunkData.chunk.name === group_style) {
+                    return "styles/css/extensions/options/groups/" + group_style + ".css";
+                } //group group file
+                if (chunkData.chunk.name === tabs_style) {
+                    return "styles/css/extensions/options/groups/" + tabs_style + ".css";
+                } //tabs group file
+                if (chunkData.chunk.name === accordion_style) {
+                    return "styles/css/extensions/options/groups/" + accordion_style + ".css";
+                } //accordion group file
                 if (chunkData.chunk.name === checkbox_style) {
                     return "styles/css/extensions/options/options/" + checkbox_style + ".css";
                 } //checkbox option file
-
                 if (chunkData.chunk.name === radio_style) {
                     return "styles/css/extensions/options/options/" + radio_style + ".css";
                 } //radio option file
@@ -325,17 +361,6 @@ module.exports = {
                 if (chunkData.chunk.name === typography_style) {
                     return "styles/css/extensions/options/options/" + typography_style + ".css";
                 } //typography option file
-
-                /////////extensions - options - groups - css
-                if (chunkData.chunk.name === group_style) {
-                    return "styles/css/extensions/options/groups/" + group_style + ".css";
-                } //group option file
-                if (chunkData.chunk.name === tabs_style) {
-                    return "styles/css/extensions/options/groups/" + tabs_style + ".css";
-                } //tabs option file
-                if (chunkData.chunk.name === accordion_style) {
-                    return "styles/css/extensions/options/groups/" + accordion_style + ".css";
-                } //accordion option file
 
                 /////////extensions - sidebars - css
                 if (chunkData.chunk.name === create_sidebars_style) {

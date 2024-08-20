@@ -21,7 +21,20 @@ abstract class BaseOption {
     public function __construct() {}
     
     /**
-     * Enqueue the option scripts and css files hook
+     *
+     * return field type
+     *
+     * @return string
+     * @since     1.0.0
+     */
+    public function getField() : string {
+        
+        return $this->_field;
+    }
+    
+    /**
+     * Method used to pass the $option array option to enqueue method (enqueueOptionScripts)
+     * This is done to have access to the $option option inside the enqueue method
      *
      * @param array $option
      *
@@ -71,18 +84,6 @@ abstract class BaseOption {
     }
     
     /**
-     *
-     * return field type
-     *
-     * @return string
-     * @since     1.0.0
-     */
-    public function getField() : string {
-        
-        return $this->_field;
-    }
-    
-    /**
      * add prefix id for option id to display it in the form as array values
      * (used to retrieve the $_POST['prefix_id'] values)
      *
@@ -118,25 +119,25 @@ abstract class BaseOption {
     }
     
     /**
-     *  In this method you receive $option_value (from form submit or whatever)
+     *  In this method you receive $option_post_value (from form submit or whatever)
      *  and must return correct and safe value that will be stored in database.
      *
-     *  $option_value can be null.
+     *  $option_post_value can be null.
      *  In this case you should return default value from $option['value']
      *
-     * @param array $option       - option field
-     * @param mixed $option_value - saved option value
+     * @param array $option            - option field
+     * @param mixed $option_post_value - option $_POST value passed on save
      *
      * @return mixed - changed option value
      * @since     1.0.0
      */
-    public function saveValue( array $option, mixed $option_value ) : mixed {
+    public function saveValue( array $option, mixed $option_post_value ) : mixed {
         
-        if ( empty( $option_value ) ) {
+        if ( empty( $option_post_value ) ) {
             return $option[ 'value' ];
         }
         
-        return $option_value;
+        return $option_post_value;
     }
     
 }

@@ -21,31 +21,44 @@ abstract class BaseGroup {
     public function __construct() {}
     
     /**
-     * Enqueue the option scripts and css files hook
      *
-     * @param array $option
+     * return group type
+     *
+     * @return string
+     * @since     1.0.0
+     */
+    public function getGroup() : string {
+        
+        return $this->_group;
+    }
+    
+    /**
+     * Method used to pass the $group array option to enqueue method (enqueueOptionScripts)
+     * This is done to have access to the $group option inside the enqueue method
+     *
+     * @param array $group
      *
      * @return void
      * @since     1.0.0
      */
-    public function enqueueOptionScriptsHook( array $option ) : void {
+    public function enqueueOptionScriptsHook( array $group ) : void {
         
-        add_action( 'admin_enqueue_scripts', function () use ( $option ) {
+        add_action( 'admin_enqueue_scripts', function () use ( $group ) {
             
-            $this->enqueueOptionScripts( $option );
+            $this->enqueueOptionScripts( $group );
             
         } );
     }
     
     /**
-     * Enqueue the option scripts and css files
+     * Enqueue the group scripts and css files
      *
-     * @param array $option
+     * @param array $group
      *
      * @return void
      * @since     1.0.0
      */
-    protected abstract function enqueueOptionScripts( array $option ) : void;
+    protected abstract function enqueueOptionScripts( array $group ) : void;
     
     /**
      * return group template
@@ -70,20 +83,8 @@ abstract class BaseGroup {
         return dht_load_view( $this->template_dir, $this->getGroup() . '.php', [
             'group' => $group,
             'registered_options' => $registered_options,
-            'additional_args' => []
+            'additional_args' => $additional_args
         ] );
-    }
-    
-    /**
-     *
-     * return field type
-     *
-     * @return string
-     * @since     1.0.0
-     */
-    public function getGroup() : string {
-        
-        return $this->_group;
     }
     
     /**
@@ -106,7 +107,7 @@ abstract class BaseGroup {
     }
     
     /**
-     * merge the field value with the saved value if exists
+     * merge the group value with the saved value if exists
      *
      * @param array $group       - group field
      * @param mixed $saved_value - saved values
@@ -122,22 +123,22 @@ abstract class BaseGroup {
     }
     
     /**
-     *  In this method you receive $option_value (from form submit or whatever)
+     *  In this method you receive $group_value (from form submit or whatever)
      *  and must return correct and safe value that will be stored in database.
      *
      *  $group_value can be null.
      *  In this case you should return default value from $group['value']
      *
-     * @param array $group - group field
-     * @param mixed $group_value
+     * @param array $group             - group field
+     * @param mixed $group_post_values - $_POST values passed on save
      * @param array $option_classes
      *
-     * @return mixed - changed option value
+     * @return mixed - changed group value
      * @since     1.0.0
      */
-    public function saveValue( array $group, mixed $group_value, array $option_classes ) : mixed {
+    public function saveValue( array $group, mixed $group_post_values, array $option_classes ) : mixed {
         
-        if ( empty( $group_value ) ) {
+        if ( empty( $group_post_values ) ) {
             return $group[ 'value' ];
         }
         
@@ -146,13 +147,13 @@ abstract class BaseGroup {
             
             foreach ( $subgroup[ 'options' ] as $option ) {
                 
-                $saved_value = $group_value[ $option[ 'id' ] ] ?? [];
+                $option_post_value = $group_post_values[ $option[ 'id' ] ] ?? [];
                 
-                $group_value[ $option[ 'id' ] ] = $option_classes[ $option[ 'type' ] ]->saveValue( $option, $saved_value );
+                $group_post_values[ $option[ 'id' ] ] = $option_classes[ $option[ 'type' ] ]->saveValue( $option, $option_post_value );
             }
         }
         
-        return $group_value;
+        return $group_post_values;
     }
     
 }

@@ -42,29 +42,29 @@ final class Borders extends BaseOption {
     }
     
     /**
-     *  In this method you receive $option_value (from form submit or whatever)
+     *  In this method you receive $option_post_value (from form submit or whatever)
      *  and must return correct and safe value that will be stored in database.
      *
-     *  $option_value can be null.
+     *  $option_post_value can be null.
      *  In this case you should return default value from $option['value']
      *
-     * @param array $option       - option field
-     * @param mixed $option_value - saved option value
+     * @param array $option            - option field
+     * @param mixed $option_post_value - option $_POST value passed on save
      *
      * @return mixed - changed option value
      * @since     1.0.0
      */
-    public function saveValue( array $option, mixed $option_value ) : mixed {
+    public function saveValue( array $option, mixed $option_post_value ) : mixed {
         
-        if ( empty( $option_value ) ) {
+        if ( empty( $option_post_value ) ) {
             return $option[ 'value' ];
         }
         
         //for the range field
-        if ( is_array( $option_value ) ) {
+        if ( is_array( $option_post_value ) ) {
             
             $option_vals = [];
-            foreach ( $option_value as $key => $value ) {
+            foreach ( $option_post_value as $key => $value ) {
                 
                 if ( $key == 'style' || $key == 'color' ) {
                     
@@ -76,11 +76,11 @@ final class Borders extends BaseOption {
                 $option_vals[ $key ] = absint( sanitize_text_field( $value ) );
             }
             
-            $option_value = $option_vals;
+            $option_post_value = $option_vals;
             
         }
         
-        return $option_value;
+        return $option_post_value;
     }
     
 }

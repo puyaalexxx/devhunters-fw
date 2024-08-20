@@ -8,11 +8,21 @@ use function DHT\Helpers\dht_render_option_if_exists;
 $group = $args[ 'group' ] ?? [];
 //used to call the render method on
 $registered_options = $args[ 'registered_options' ] ?? [];
+
+//see if the tabs should be fullwidth
+$fullwidth_tabs = $group[ 'fullwidth' ] ?? false;
+
+//create unique tabs id
+$tabs_id = str_replace( [ '[', ']' ], '-', $group[ 'id' ] ) . 'tab';
 ?>
     <!-- field - tabs -->
-    <div class="dht-field-wrapper">
+    <div class="dht-field-wrapper <?php echo $fullwidth_tabs ? 'dht-field-tabs-fullwidth' : ''; ?>">
 
-        <div class="dht-title"><?php echo esc_html( $group[ 'title' ] ); ?></div>
+        <?php if ( !$fullwidth_tabs ): ?>
+
+            <div class="dht-title"><?php echo esc_html( $group[ 'title' ] ); ?></div>
+
+        <?php endif; ?>
 
         <div
             class="dht-field-child-wrapper dht-field-child-tabs <?php echo isset( $group[ 'attr' ][ 'class' ] ) ? esc_attr( $group[ 'attr' ][ 'class' ] ) : ''; ?>"
@@ -28,7 +38,7 @@ $registered_options = $args[ 'registered_options' ] ?? [];
                         foreach ( $group[ 'options' ] as $group_tabs ) : $cnt++; ?>
 
                             <li class="<?php echo $cnt == 1 ? 'active' : '' ?>">
-                                <a href="#tab<?php echo esc_attr( $cnt ); ?>">
+                                <a href="#<?php echo esc_attr( $tabs_id ); ?>-<?php echo esc_attr( $cnt ); ?>">
                                     <?php echo !empty( $group_tabs[ 'title' ] ) ? esc_html( $group_tabs[ 'title' ] ) : sprintf( _x( 'Tab %d', 'options', DHT_PREFIX ), $cnt ); ?>
                                 </a>
                             </li>
@@ -41,7 +51,7 @@ $registered_options = $args[ 'registered_options' ] ?? [];
                     foreach ( $group[ 'options' ] as $group_tabs_content ) : $count++; ?>
 
                         <div class="dht-tab-content <?php echo $count == 1 ? 'active' : '' ?>"
-                             id="tab<?php echo esc_attr( $count ); ?>">
+                             id="<?php echo esc_attr( $tabs_id ); ?>-<?php echo esc_attr( $count ); ?>">
 
                             <?php if ( !empty( $group_tabs_content[ 'options' ] ) ): ?>
 
@@ -67,13 +77,13 @@ $registered_options = $args[ 'registered_options' ] ?? [];
 
             </div>
 
-            <?php if ( !empty( $group[ 'description' ] ) ): ?>
+            <?php if ( !empty( $group[ 'description' ] ) && !$fullwidth_tabs ): ?>
                 <div class="dht-description"><?php echo esc_html( $group[ 'description' ] ); ?></div>
             <?php endif; ?>
 
         </div>
 
-        <?php if ( !empty( $group[ 'tooltip' ] ) ): ?>
+        <?php if ( !empty( $group[ 'tooltip' ] ) && !$fullwidth_tabs ): ?>
             <div class="dht-info-help dashicons dashicons-info"
                  data-tooltips="<?php echo esc_html( $group[ 'tooltip' ] ); ?>"
                  data-position="OnLeft">

@@ -34,8 +34,9 @@ $registered_options = $args[ 'registered_options' ] ?? [];
                                     <span class="dht-accordion-arrow-item-close dashicons dashicons-dismiss"></span>
                                 </div>
 
-                                <span
-                                    class="dht-accordion-title-text"><?php echo !empty( $group_toggle[ 'title' ] ) ? esc_html( $group_toggle[ 'title' ] ) : sprintf( _x( 'Toggle %d', 'options', DHT_PREFIX ), $cnt ); ?></span>
+                                <span class="dht-accordion-title-text">
+                                    <?php echo !empty( $group_toggle[ 'title' ] ) ? esc_html( $group_toggle[ 'title' ] ) : sprintf( _x( 'Toggle %d', 'options', DHT_PREFIX ), $cnt ); ?>
+                                </span>
 
                             </div>
 

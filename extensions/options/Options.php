@@ -5,6 +5,7 @@ namespace DHT\Extensions\Options;
 
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
+use DHT\Extensions\Options\Containers\Containers\SideMenu;
 use DHT\Extensions\Options\groups\groups\{Accordion, AddableBox, Group, Tabs};
 use DHT\Extensions\Options\Options\BaseOption;
 use DHT\Extensions\Options\Options\fields\{AceEditor,
@@ -32,18 +33,15 @@ use DHT\Extensions\Options\Options\fields\{AceEditor,
     UploadGallery,
     UploadImage,
     WpEditor};
-use DHT\Helpers\Traits\{OptionsHelpers, ValidateConfigurations};
+use DHT\Helpers\Traits\Options\{OptionsHelpers, RenderOptionsHelpers, SaveOptionsHelpers};
 use function DHT\fw;
-use function DHT\Helpers\{dht_load_view, dht_print_r, dht_render_option_if_exists, dht_set_db_settings_option};
+use function DHT\Helpers\{dht_get_db_settings_option, dht_load_view};
 
-//TODO: for performance reason to merge CSS and Js code somehow for options used in one file
-//TODO: display option css and js only on pages where they are used and not across entire admin area
-//TODO: minify js files at the end
-//TODO: ajax save options instead of refresh
 final class Options implements IOptions {
     
     use OptionsHelpers;
-    use ValidateConfigurations;
+    use SaveOptionsHelpers;
+    use RenderOptionsHelpers;
     
     //option configurations (received from the plugin config/options folder area)
     private array $_options;
@@ -54,14 +52,16 @@ final class Options implements IOptions {
     //option group Classes
     private array $_optionGroupsClasses = [];
     
+    //option container Classes
+    private array $_optionContainerClasses = [];
+    
     //options id prefix (from container options)
     private string $_settings_id;
     
     //nonce field
     private array $_nonce = [ 'action' => 'ppht_nonce_action', 'name' => 'ppht_nonce_action' ];
     
-    /**
-     * @param array $options
+    /**     * @param array $options
      *
      * @since     1.0.0
      */
@@ -84,11 +84,14 @@ final class Options implements IOptions {
         //register the Framework options group classes
         $this->_registerFWOptionGroups();
         
+        //register the Framework options container classes
+        $this->_registerFWOptionContainers();
+        
         //enqueue the options container scripts
         add_action( 'admin_enqueue_scripts', [ $this, 'enqueueFormScripts' ] );
         
-        //pass option array to enqueue scripts method (this is needed to enqueue specific script for specific option)
-        $this->_getEnqueueOptionArgs( $this->_options, array_merge( $this->_optionClasses, $this->_optionGroupsClasses ) );
+        //enqueue scripts for each option received from the plugin
+        $this->_getEnqueueOptionArgs( $this->_options, array_merge( $this->_optionClasses, $this->_optionGroupsClasses, $this->_optionContainerClasses ) );
         
         //generate nonce field
         $this->_nonce = $this->_generateNonce();
@@ -155,7 +158,11 @@ final class Options implements IOptions {
     }
     
     /**
-     * get options view to render further
+     * Generates the HTML view for the options.
+     *
+     * This method retrieves the saved options, determines the type of options being rendered,
+     * and generates the appropriate HTML output. It handles both container types and group/option types.
+     *
      *
      * @return string
      * @since     1.0.0
@@ -163,91 +170,63 @@ final class Options implements IOptions {
     private function _getOptionsView() : string {
         
         //get saved options if settings id present
-        $saved_values = !empty( $this->_settings_id ) ? $this->_getSavedOptions( $this->_settings_id ) : [];
+        $saved_values = !empty( $this->_settings_id ) ? dht_get_db_settings_option( $this->_settings_id ) : [];
         
-        //render the passed option types
+        // Start output buffering
         ob_start();
-        foreach ( $this->_options[ 'options' ] as $option ) {
-            
-            //get option saved value by its id
-            $saved_value = $this->_prepareSavedValues( $saved_values, $option[ 'id' ], $this->_settings_id );
-            
-            //if it is a group type
-            if ( array_key_exists( $option[ 'type' ], $this->_optionGroupsClasses ) ) {
-                
-                //render the respective option group class
-                echo $this->_optionGroupsClasses[ $option[ 'type' ] ]->render( $option, $saved_value, $this->_settings_id, $this->_optionClasses );
-                
-            } else {
-                
-                //render the respective option type class
-                echo dht_render_option_if_exists( $option, $saved_value, $this->_settings_id, $this->_optionClasses );
-            }
+        
+        // Check if the options are of container type
+        if ( isset( $this->_options[ 'pages' ] ) ) {
+            // Render container types
+            $this->_renderContainerOptions( $saved_values );
+        } else {
+            // Render group or option types
+            $this->_renderGroupOrOptionTypes( $saved_values );
         }
         
+        // Return the generated HTML view
         return ob_get_clean();
     }
     
     /**
-     * save options
+     * Saves the settings based on the provided settings ID.
      *
-     * @param string $settings_id - save the options under this settings id
+     * This method handles both grouped and ungrouped options, validates the nonce,
+     * and processes the POST data to save settings. It delegates specific processing
+     * tasks to other methods to improve readability and maintainability.
+     *
+     * @param string $settings_id The ID of the settings to be saved.
      *
      * @return void
      * @since     1.0.0
      */
     private function _save( string $settings_id ) : void {
         
-        if ( isset( $_POST ) && isset( $_POST[ $this->_nonce[ 'name' ] ] )
-            && wp_verify_nonce( sanitize_key( wp_unslash( $_POST[ $this->_nonce[ 'name' ] ] ) ), $this->_nonce[ 'action' ] ) ) {
+        if ( $this->_isValidRequest() ) {
+            $options = $this->_getOptions();
+            $post_values = $_POST[ $settings_id ] ?? null;
             
-            //get options
-            $options = $this->_options[ 'options' ] ?? $this->_options;
-            
-            //if the options are grouped under an id
-            if ( !empty( $_POST[ $settings_id ] ) ) {
-                
-                //for convenience
-                $post_values = $_POST[ $settings_id ];
-                
-                $values = [];
-                foreach ( $options as $option ) {
-                    
-                    if ( array_key_exists( $option[ 'id' ], $_POST[ $settings_id ] ) ) {
-                        
-                        //if it is a group type
-                        if ( isset( $this->_optionGroupsClasses[ $option[ 'type' ] ] ) ) {
-                            
-                            $values[ $option[ 'id' ] ] = $this->_optionGroupsClasses[ $option[ 'type' ] ]->saveValue( $option, $post_values[ $option[ 'id' ] ], $this->_optionClasses );
-                            
-                        } //if it is a simple option type
-                        else {
-                            
-                            $values[ $option[ 'id' ] ] = $this->_optionClasses[ $option[ 'type' ] ]->saveValue( $option, $post_values[ $option[ 'id' ] ] );
-                        }
-                    }
-                }
-                
-                dht_print_r( $values );
-                
-                dht_set_db_settings_option( $settings_id, $values );
-                
-            } //if the options are not grouped under an id
-            else {
-                //pre save option values
-                //(each option class has a save method used to change the POST value as needed and then save it)
-                //you can change the saved value entirely, sanitize it or replace if you want
-                foreach ( $options as $option ) {
-                    
-                    if ( array_key_exists( $option[ 'id' ], $_POST ) ) {
-                        
-                        $value = $this->_optionClasses[ $option[ 'type' ] ]->saveValue( $option, $_POST[ $option[ 'id' ] ] );
-                        
-                        dht_set_db_settings_option( $option[ 'id' ], $value );
-                    }
-                }
+            if ( $post_values ) {
+                $this->_handleGroupedOptions( $options, $post_values, $settings_id );
+            } else {
+                $this->_handleUngroupedOptions( $options );
             }
         }
+    }
+    
+    /**
+     * register framework option containers
+     *
+     * @return void
+     * @since     1.0.0
+     */
+    private function _registerFWOptionContainers() : void {
+        
+        //instantiate the option group classes
+        $sidemenu = new SideMenu();
+        
+        //add class instance to the _optionContainerClasses array to use throughout the Container class methods
+        $this->_optionContainerClasses[ $sidemenu->getContainer() ] = $sidemenu;
     }
     
     /**
@@ -264,7 +243,7 @@ final class Options implements IOptions {
         $accordion = new Accordion();
         $addable_box = new AddableBox();
         
-        //add class instance to the _optionClasses array to use throughout the Option class methods
+        //add class instance to the _optionGroupClasses array to use throughout the Group class methods
         $this->_optionGroupsClasses[ $group->getGroup() ] = $group;
         $this->_optionGroupsClasses[ $tabs->getGroup() ] = $tabs;
         $this->_optionGroupsClasses[ $accordion->getGroup() ] = $accordion;

@@ -24,46 +24,46 @@ final class Group extends BaseGroup {
     /**
      * Enqueue input scripts and styles
      *
-     * @param array $option
+     * @param array $group
      *
      * @return void
      * @since     1.0.0
      */
-    public function enqueueOptionScripts( array $option ) : void {
+    public function enqueueOptionScripts( array $group ) : void {
         
         wp_register_style( DHT_PREFIX . '-group-group', DHT_ASSETS_URI . 'styles/css/extensions/options/groups/group-style.css', array(), fw()->manifest->get( 'version' ) );
         wp_enqueue_style( DHT_PREFIX . '-group-group' );
     }
     
     /**
-     *  In this method you receive $option_value (from form submit or whatever)
+     *  In this method you receive $group_value (from form submit or whatever)
      *  and must return correct and safe value that will be stored in database.
      *
      *  $group_value can be null.
      *  In this case you should return default value from $group['value']
      *
-     * @param array $group - group field
-     * @param mixed $group_value
+     * @param array $group             - group field
+     * @param mixed $group_post_values - $_POST values passed on save
      * @param array $option_classes
      *
-     * @return mixed - changed option value
+     * @return mixed - changed group value
      * @since     1.0.0
      */
-    public function saveValue( array $group, mixed $group_value, array $option_classes ) : mixed {
+    public function saveValue( array $group, mixed $group_post_values, array $option_classes ) : mixed {
         
-        if ( empty( $group_value ) ) {
+        if ( empty( $group_post_values ) ) {
             return $group[ 'value' ];
         }
         
         //sanitize option values
         foreach ( $group[ 'options' ] as $option ) {
             
-            $saved_value = $group_value[ $option[ 'id' ] ] ?? [];
+            $option_post_value = $group_post_values[ $option[ 'id' ] ] ?? [];
             
-            $group_value[ $option[ 'id' ] ] = $option_classes[ $option[ 'type' ] ]->saveValue( $option, $saved_value );
+            $group_post_values[ $option[ 'id' ] ] = $option_classes[ $option[ 'type' ] ]->saveValue( $option, $option_post_value );
         }
         
-        return $group_value;
+        return $group_post_values;
     }
     
 }

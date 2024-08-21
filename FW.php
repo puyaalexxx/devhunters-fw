@@ -30,7 +30,6 @@ final class FW {
      */
     public function __construct() {
         
-        
         do_action( 'dht_before_fw_init' );
         
         //instantiate framework manifest info
@@ -39,9 +38,22 @@ final class FW {
         //instantiate framework Extensions
         $this->extensions = Extensions::init();
         
-        //other initializations
-        //include the test file to test different things quickly (remove at the end)
-        require_once( plugin_dir_path( __FILE__ ) . "test.php" );
+        //Enqueue framework general scripts and styles
+        add_action( 'admin_enqueue_scripts', [ $this, 'enqueueFrameworkGeneralScripts' ] );
+    }
+    
+    /**
+     * Enqueue framework general scripts and styles
+     *
+     * @return void
+     * @since     1.0.0
+     */
+    public function enqueueFrameworkGeneralScripts() : void {
+        
+        wp_enqueue_script( DHT_PREFIX . '-general-fw', DHT_ASSETS_URI . 'scripts/js/general-script.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
+        
+        wp_register_style( DHT_PREFIX . '-general-fw', DHT_ASSETS_URI . 'styles/css/general-style.css', array(), fw()->manifest->get( 'version' ) );
+        wp_enqueue_style( DHT_PREFIX . '-general-fw' );
     }
     
 }

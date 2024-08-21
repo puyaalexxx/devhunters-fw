@@ -17,7 +17,8 @@
       "constants.php",
       "helpers/general.php",
       "helpers/options.php",
-      "helpers/validations.php"
+      "helpers/validations.php",
+      "helpers/features.php"
     ],
     "psr-4": {
       "DHT\\Helpers\\": "helpers/",

@@ -9,6 +9,9 @@ const TerserPlugin = require("terser-webpack-plugin");
 
 //////////////////////////////////////////ts files
 
+/////////general ts file
+const general_script = "general-script";
+
 /////////extensions - options - containers - ts
 const sidemenu_script = "sidemenu-script";
 
@@ -38,10 +41,10 @@ const typography_script = "typography-script";
 /////////extensions - sidebars - ts
 const create_sidebars_script = "create-sidebars-script";
 
-//components - preloader - ts
-const preloader_script = "preloader-script";
-
 /////////////////////////////////////////css files
+
+/////////general css file
+const general_style = "general-style";
 
 /////////dashboard page
 const dashboard_page_template_style = "dashboard-page-template-style";
@@ -78,13 +81,13 @@ const typography_style = "typography-style";
 /////////extensions - sidebars - pcss
 const create_sidebars_style = "create-sidebars-style";
 
-/////////components - preloader - pcss
-const preloader_style = "preloader-style";
-
 module.exports = {
     mode: "development", // or 'production'
     entry: {
         // TypeScript files entries
+
+        /////////general ts file
+        [general_script]: "./assets/scripts/ts/" + general_script.replace("-script", "") + ".ts",
 
         /////////dashboard page template
         [dashboard_page_template_script]: "./assets/scripts/ts/extensions/options/" + dashboard_page_template_script.replace("-script", "") + ".ts",
@@ -117,15 +120,15 @@ module.exports = {
         /////////extensions - sidebars - ts
         [create_sidebars_script]: "./assets/scripts/ts/extensions/sidebars/" + create_sidebars_script.replace("-script", "") + ".ts",
 
-        /////////components - preloader - ts
-        [preloader_script]: "./assets/scripts/ts/components/preloader/" + preloader_script.replace("-script", "") + ".ts",
-
         //CSS entries
         //many entries to one
         /*css: [
             './assets/styles/postcss/create-sidebars.pcss',
             './assets/styles/postcss/options/checkbox.pcss',
         ],*/
+
+        /////////general pcss file
+        [general_style]: "./assets/styles/postcss/" + general_style.replace("-style", "") + ".pcss", // dht wrapper area CSS entry point
 
         /////////dashboard page template
         [dashboard_page_template_style]: "./assets/styles/postcss/extensions/options/" + dashboard_page_template_style.replace("-style", "") + ".pcss", // dht wrapper area CSS entry point
@@ -161,9 +164,6 @@ module.exports = {
 
         /////////extensions - sidebars - css
         [create_sidebars_style]: "./assets/styles/postcss/extensions/sidebars/" + create_sidebars_style.replace("-style", "") + ".pcss", // Sidebars CSS entry point
-
-        /////////components - preloader - css
-        [preloader_style]: "./assets/styles/postcss/components/preloader/" + preloader_style.replace("-style", "") + ".pcss", // preloader entry point
     },
     output: {
         path: path.resolve(__dirname, "assets"),
@@ -171,6 +171,11 @@ module.exports = {
 
         //compile ts files in different folders
         filename: (chunkData) => {
+            /////////general js file
+            if (chunkData.chunk.name === general_script) {
+                return "scripts/js/" + general_script + ".js";
+            }
+
             /////////dashboard page template
             if (chunkData.chunk.name === dashboard_page_template_script) {
                 return "scripts/js/extensions/options/" + dashboard_page_template_script + ".js";
@@ -244,11 +249,6 @@ module.exports = {
                 return "scripts/js/extensions/sidebars/" + create_sidebars_script + ".js";
             }
 
-            /////////components - preloader - js
-            if (chunkData.chunk.name === preloader_script) {
-                return "scripts/js/components/preloader/" + preloader_script + ".js";
-            }
-
             // output to the js folder
             return "scripts/js/[name].js";
         },
@@ -295,10 +295,15 @@ module.exports = {
         // MiniCssExtractPlugin instance for 'options-checkbox' entry
         new MiniCssExtractPlugin({
             filename: (chunkData) => {
+                /////////general css file
+                if (chunkData.chunk.name === general_style) {
+                    return "styles/css/" + general_style + ".css";
+                }
+
                 /////////dashboard options template
                 if (chunkData.chunk.name === dashboard_page_template_style) {
                     return "styles/css/extensions/options/" + dashboard_page_template_style + ".css";
-                } // dashboard options template
+                }
 
                 /////////extensions - options - containers - css
                 if (chunkData.chunk.name === sidemenu_style) {
@@ -378,11 +383,6 @@ module.exports = {
                 /////////extensions - sidebars - css
                 if (chunkData.chunk.name === create_sidebars_style) {
                     return "styles/css/extensions/sidebars/" + create_sidebars_style + ".css";
-                }
-
-                /////////components - preloader - css
-                if (chunkData.chunk.name === preloader_style) {
-                    return "styles/css/components/preloader/" + preloader_style + ".css";
                 }
 
                 // For other entry points, output to root 'css' folder

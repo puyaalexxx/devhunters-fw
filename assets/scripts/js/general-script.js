@@ -2,6 +2,31 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./assets/scripts/ts/features/preloader.ts":
+/*!*************************************************!*\
+  !*** ./assets/scripts/ts/features/preloader.ts ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   dhtInitializePreloader: () => (/* binding */ dhtInitializePreloader)
+/* harmony export */ });
+// Define a function to initialize the preloader
+function dhtInitializePreloader($) {
+    "use strict";
+    var $dht_preloader = $("#dht-preloader");
+    var delay = $dht_preloader.attr("data-delay");
+    // Set a timeout to hide the preloader after the specified delay
+    setTimeout(function () {
+        // Hide the preloader
+        $dht_preloader.fadeOut("slow");
+    }, +delay); // Change the value to the desired delay in milliseconds
+}
+
+
+/***/ }),
+
 /***/ "jquery":
 /*!*************************!*\
   !*** external "jQuery" ***!
@@ -83,26 +108,34 @@ module.exports = jQuery;
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-/*!*************************************************************!*\
-  !*** ./assets/scripts/ts/components/preloader/preloader.ts ***!
-  \*************************************************************/
+/*!**************************************!*\
+  !*** ./assets/scripts/ts/general.ts ***!
+  \**************************************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "jquery");
-/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _features_preloader__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./features/preloader */ "./assets/scripts/ts/features/preloader.ts");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! jquery */ "jquery");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_1__);
+
 
 (function ($) {
     "use strict";
-    var $dht_preloader = $("#dht-preloader");
-    var delay = $dht_preloader.attr("data-delay");
-    // Set a timeout to hide the preloader after 3 seconds (3000 milliseconds)
-    setTimeout(function () {
-        // Hide the preloader
-        $dht_preloader.fadeOut("slow");
-    }, +delay); // Change the value to the desired delay in milliseconds
-})((jquery__WEBPACK_IMPORTED_MODULE_0___default()));
+    /**
+     * Class used to create and delete custom sidebars
+     */
+    var GeneralScript = /** @class */ (function () {
+        function GeneralScript() {
+            // initialize the preloader
+            (0,_features_preloader__WEBPACK_IMPORTED_MODULE_0__.dhtInitializePreloader)($);
+        }
+        return GeneralScript;
+    }());
+    $(function () {
+        new GeneralScript();
+    });
+})((jquery__WEBPACK_IMPORTED_MODULE_1___default()));
 
 })();
 
 /******/ })()
 ;
-//# sourceMappingURL=preloader-script.js.map
+//# sourceMappingURL=general-script.js.map

@@ -26,6 +26,8 @@ trait EnqueueOptionsHelpers {
             
             foreach ( $option[ 'options' ] as $subOption ) {
                 
+                if ( !isset( $subOption[ 'type' ] ) ) continue;
+                
                 $this->_enqueueOptionScriptsForOption( $optionClasses, $subOption );
                 
             }
@@ -47,6 +49,30 @@ trait EnqueueOptionsHelpers {
             
             $optionClasses[ $option[ 'type' ] ]->enqueueOptionScriptsHook( $option );
         }
+    }
+    
+    /**
+     * extract option fields in one array from the plugin option configurations
+     *
+     * @param array $options
+     *
+     * @return array
+     * @since     1.0.0
+     */
+    private function _extractOptionFields( array $options ) : array {
+        
+        //if it is a container type
+        if ( isset( $options[ 'pages' ] ) ) {
+            
+            //ger group and options from the container option type
+            $option_fields = $this->_extractOptions( $options[ 'pages' ] );
+            
+        } else {
+            //ger group and options
+            $option_fields = $options[ 'options' ] ?? $options;
+        }
+        
+        return $option_fields;
     }
     
     /**
@@ -83,30 +109,6 @@ trait EnqueueOptionsHelpers {
         }
         
         return $options;
-    }
-    
-    /**
-     * extract option fields in one array from the plugin option configurations
-     *
-     * @param array $options
-     *
-     * @return array
-     * @since     1.0.0
-     */
-    private function _extractOptionFields( array $options ) : array {
-        
-        //if it is a container type
-        if ( isset( $options[ 'pages' ] ) ) {
-            
-            //ger group and options from the container option type
-            $option_fields = $this->_extractOptions( $options[ 'pages' ] );
-            
-        } else {
-            //ger group and options
-            $option_fields = $options[ 'options' ] ?? $options;
-        }
-        
-        return $option_fields;
     }
     
 }

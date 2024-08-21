@@ -1,64 +1,42 @@
 <?php
 declare( strict_types = 1 );
 
-namespace DHT\Extensions\Options\Groups;
+namespace DHT\Extensions\Options\Groups\Groups;
 
+use DHT\Extensions\Options\groups\BaseGroup;
+use function DHT\fw;
 use function DHT\Helpers\dht_load_view;
 
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
-abstract class BaseGroup {
+final class Toggle extends BaseGroup {
     
-    //options templates directory
-    protected string $template_dir = DHT_TEMPLATES_DIR . 'extensions/options/groups/';
-    
-    //field type
-    protected string $_group = 'unknown';
+    //group type
+    protected string $_group = 'toggle';
     
     /**
      * @since     1.0.0
      */
-    public function __construct() {}
-    
-    /**
-     *
-     * return group type
-     *
-     * @return string
-     * @since     1.0.0
-     */
-    public function getGroup() : string {
+    public function __construct() {
         
-        return $this->_group;
+        parent::__construct();
     }
     
     /**
-     * Method used to pass the $group array option to enqueue method (enqueueOptionScripts)
-     * This is done to have access to the $group option inside the enqueue method
+     * Enqueue input scripts and styles
      *
      * @param array $group
      *
      * @return void
      * @since     1.0.0
      */
-    public function enqueueOptionScriptsHook( array $group ) : void {
+    public function enqueueOptionScripts( array $group ) : void {
         
-        add_action( 'admin_enqueue_scripts', function () use ( $group ) {
-            
-            $this->enqueueOptionScripts( $group );
-            
-        } );
+        wp_register_style( DHT_PREFIX . '-toggle-group', DHT_ASSETS_URI . 'styles/css/extensions/options/groups/toggle-style.css', array(), fw()->manifest->get( 'version' ) );
+        wp_enqueue_style( DHT_PREFIX . '-toggle-group' );
+        
+        wp_enqueue_script( DHT_PREFIX . '-toggle-group', DHT_ASSETS_URI . 'scripts/js/extensions/options/groups/toggle-script.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
     }
-    
-    /**
-     * Enqueue the group scripts and css files
-     *
-     * @param array $group
-     *
-     * @return void
-     * @since     1.0.0
-     */
-    protected abstract function enqueueOptionScripts( array $group ) : void;
     
     /**
      * return group template
@@ -78,32 +56,15 @@ abstract class BaseGroup {
         $group = $this->mergeValues( $group, $saved_values );
         
         //add option prefix id
-        $group = $this->addIDPrefix( $group, $prefix_id );
+        $group = parent::addIDPrefix( $group, $prefix_id );
+        
         
         return dht_load_view( $this->template_dir, $this->getGroup() . '.php', [
             'group' => $group,
+            'saved_values' => $saved_values,
             'registered_options' => $registered_options,
             'additional_args' => $additional_args
         ] );
-    }
-    
-    /**
-     * add prefix id for the group id to display it in the form as array values
-     * (used to retrieve the $_POST['prefix_id'] values)
-     *
-     * @param array  $group
-     * @param string $prefix_id
-     *
-     * @return array
-     * @since     1.0.0
-     */
-    public function addIDPrefix( array $group, string $prefix_id ) : array {
-        
-        if ( empty( $prefix_id ) ) return $group;
-        
-        $group[ 'id' ] = $prefix_id . '[' . $group[ 'id' ] . ']';
-        
-        return $group;
     }
     
     /**
@@ -117,7 +78,7 @@ abstract class BaseGroup {
      */
     public function mergeValues( array $group, mixed $saved_values ) : array {
         
-        $group[ 'value' ] = empty( $saved_values ) ? $group[ 'value' ] : $saved_values;
+        $group[ 'value' ] = empty( $saved_values[ 'value' ] ) ? $group[ 'value' ] : $saved_values[ 'value' ];
         
         return $group;
     }
@@ -142,15 +103,28 @@ abstract class BaseGroup {
             return $group[ 'value' ];
         }
         
-        //sanitize option values
-        foreach ( $group[ 'options' ] as $subgroup ) {
+        //local function to avoid repetition
+        function sanitize_values( array $group, string $choice, array $group_post_values, array $option_classes ) : array {
             
-            foreach ( $subgroup[ 'options' ] as $option ) {
+            foreach ( $group[ $choice ][ 'options' ] as $option ) {
                 
-                $option_post_value = $group_post_values[ $option[ 'id' ] ] ?? [];
+                $option_post_value = $group_post_values[ $choice ][ $option[ 'id' ] ] ?? [];
                 
-                $group_post_values[ $option[ 'id' ] ] = $option_classes[ $option[ 'type' ] ]->saveValue( $option, $option_post_value );
+                $group_post_values[ $choice ][ $option[ 'id' ] ] = $option_classes[ $option[ 'type' ] ]->saveValue( $option, $option_post_value );
             }
+            
+            return $group_post_values;
+        }
+        
+        //sanitize option values
+        if ( !empty( $group[ 'left-choice' ][ 'options' ] ) ) {
+            
+            $group_post_values = sanitize_values( $group, 'left-choice', $group_post_values, $option_classes );
+        }
+        
+        if ( !empty( $group[ 'right-choice' ][ 'options' ] ) ) {
+            
+            $group_post_values = sanitize_values( $group, 'right-choice', $group_post_values, $option_classes );
         }
         
         return $group_post_values;

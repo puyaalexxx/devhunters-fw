@@ -1,9 +1,9 @@
 <?php
 declare( strict_types = 1 );
 
-namespace DHT\Extensions\Options\groups\groups;
+namespace DHT\Extensions\Options\Groups\Groups;
 
-use DHT\Extensions\Options\groups\BaseGroup;
+use DHT\Extensions\Options\Groups\BaseGroup;
 use function DHT\fw;
 
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );

@@ -15,6 +15,7 @@ const sidemenu_script = "sidemenu-script";
 /////////extensions - options - groups - ts
 const tabs_script = "tabs-script";
 const accordion_script = "accordion-script";
+const toggle_script = "toggle-script";
 
 /////////extensions - options - ts
 const dashboard_page_template_script = "dashboard-page-template-script";
@@ -52,6 +53,7 @@ const sidemenu_style = "sidemenu-style";
 const group_style = "group-style";
 const tabs_style = "tabs-style";
 const accordion_style = "accordion-style";
+const toggle_style = "toggle-style";
 
 /////////extensions - options - pcss
 const checkbox_style = "checkbox-style";
@@ -93,6 +95,7 @@ module.exports = {
         /////////extensions - options - groups - ts
         [tabs_script]: "./assets/scripts/ts/extensions/options/groups/" + tabs_script.replace("-script", "") + ".ts",
         [accordion_script]: "./assets/scripts/ts/extensions/options/groups/" + accordion_script.replace("-script", "") + ".ts",
+        [toggle_script]: "./assets/scripts/ts/extensions/options/groups/" + toggle_script.replace("-script", "") + ".ts",
 
         /////////extensions - options - ts
         [switch_script]: "./assets/scripts/ts/extensions/options/options/" + switch_script.replace("-script", "") + ".ts",
@@ -134,6 +137,7 @@ module.exports = {
         [group_style]: "./assets/styles/postcss/extensions/options/groups/" + group_style.replace("-style", "") + ".pcss", // group group CSS entry point
         [tabs_style]: "./assets/styles/postcss/extensions/options/groups/" + tabs_style.replace("-style", "") + ".pcss", // tabs group CSS entry point
         [accordion_style]: "./assets/styles/postcss/extensions/options/groups/" + accordion_style.replace("-style", "") + ".pcss", // accordion group CSS entry point
+        [toggle_style]: "./assets/styles/postcss/extensions/options/groups/" + toggle_style.replace("-style", "") + ".pcss", // toggle group CSS entry point
 
         /////////extensions - options - css
         [checkbox_style]: "./assets/styles/postcss/extensions/options/options/" + checkbox_style.replace("-style", "") + ".pcss", // Checkbox CSS entry point
@@ -184,7 +188,11 @@ module.exports = {
             if (chunkData.chunk.name === accordion_script) {
                 return "scripts/js/extensions/options/groups/" + accordion_script + ".js";
             } //accordion
+            if (chunkData.chunk.name === toggle_script) {
+                return "scripts/js/extensions/options/groups/" + toggle_script + ".js";
+            } //toggle
 
+            /////////extensions - options - js
             if (chunkData.chunk.name === switch_script) {
                 return "scripts/js/extensions/options/options/" + switch_script + ".js";
             } //switch option file
@@ -307,6 +315,11 @@ module.exports = {
                 if (chunkData.chunk.name === accordion_style) {
                     return "styles/css/extensions/options/groups/" + accordion_style + ".css";
                 } //accordion group file
+                if (chunkData.chunk.name === toggle_style) {
+                    return "styles/css/extensions/options/groups/" + toggle_style + ".css";
+                } //toggle group file
+
+                /////////extensions - options - css
                 if (chunkData.chunk.name === checkbox_style) {
                     return "styles/css/extensions/options/options/" + checkbox_style + ".css";
                 } //checkbox option file

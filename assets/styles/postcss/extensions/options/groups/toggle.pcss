@@ -2,12 +2,25 @@
 
 /* switch button styles*/
 .dht-wrapper {
-    .dht-field-child-switch {
-        label.dht-switch {
+    .dht-field-child-toggle {
+        label.dht-toggle {
             display: block;
         }
 
-        .dht-switch {
+        .dht-field-wrapper {
+            display: block;
+            padding: 20px 0;
+
+            .dht-title {
+                margin-bottom: 10px;
+            }
+
+            .dht-info-help {
+                display: none !important;
+            }
+        }
+
+        .dht-toggle {
             position: relative;
             display: inline-block;
             width: 125px;
@@ -81,8 +94,16 @@
             }
         }
 
+        .dht-toggle-content {
+            display: none;
+
+            &.dht-toggle-show {
+                display: block;
+            }
+        }
+
         @media (max-width: 980px) {
-            label.dht-switch {
+            label.dht-toggle {
                 margin: auto;
                 width: 150px;
 

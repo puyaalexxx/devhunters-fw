@@ -6,7 +6,7 @@ namespace DHT\Extensions\Options;
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 use DHT\Extensions\Options\Containers\Containers\SideMenu;
-use DHT\Extensions\Options\groups\groups\{Accordion, AddableBox, Group, Tabs};
+use DHT\Extensions\Options\Groups\Groups\{Accordion, AddableBox, Group, Tabs, Toggle};
 use DHT\Extensions\Options\Options\BaseOption;
 use DHT\Extensions\Options\Options\fields\{AceEditor,
     Borders,
@@ -242,12 +242,14 @@ final class Options implements IOptions {
         $tabs = new Tabs();
         $accordion = new Accordion();
         $addable_box = new AddableBox();
+        $toggle = new Toggle();
         
         //add class instance to the _optionGroupClasses array to use throughout the Group class methods
         $this->_optionGroupsClasses[ $group->getGroup() ] = $group;
         $this->_optionGroupsClasses[ $tabs->getGroup() ] = $tabs;
         $this->_optionGroupsClasses[ $accordion->getGroup() ] = $accordion;
         $this->_optionGroupsClasses[ $addable_box->getGroup() ] = $addable_box;
+        $this->_optionGroupsClasses[ $toggle->getGroup() ] = $toggle;
     }
     
     /**

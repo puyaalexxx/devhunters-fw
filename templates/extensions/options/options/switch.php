@@ -7,7 +7,9 @@ $on_off_class = in_array( $option[ 'value' ], $option[ 'left-choice' ] ) ? 'dht-
 ?>
     <!-- field - switch  -->
     <div class="dht-field-wrapper">
+
         <div class="dht-title"><?php echo esc_html( $option[ 'title' ] ); ?></div>
+
         <div class="dht-field-child-wrapper dht-field-child-switch">
 
             <label class="dht-switch <?php echo esc_attr( $on_off_class ); ?>"
@@ -17,11 +19,11 @@ $on_off_class = in_array( $option[ 'value' ], $option[ 'left-choice' ] ) ? 'dht-
                        value="<?php echo esc_attr( $option[ 'value' ] ); ?>" />
 
                 <span class="dht-slider">
-                <span class="dht-slider-yes"
-                      data-value="<?php echo esc_attr( $option[ 'left-choice' ][ 'value' ] ); ?>"><?php echo esc_attr( $option[ 'left-choice' ][ 'label' ] ); ?></span>
-                <span class="dht-slider-no"
-                      data-value="<?php echo esc_attr( $option[ 'right-choice' ][ 'value' ] ); ?>"><?php echo esc_attr( $option[ 'right-choice' ][ 'label' ] ); ?></span>
-            </span>
+                    <span class="dht-slider-yes"
+                          data-value="<?php echo esc_attr( $option[ 'left-choice' ][ 'value' ] ); ?>"><?php echo esc_attr( $option[ 'left-choice' ][ 'label' ] ); ?></span>
+                    <span class="dht-slider-no"
+                          data-value="<?php echo esc_attr( $option[ 'right-choice' ][ 'value' ] ); ?>"><?php echo esc_attr( $option[ 'right-choice' ][ 'label' ] ); ?></span>
+                </span>
 
             </label>
 

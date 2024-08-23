@@ -17,7 +17,7 @@ $rows = !empty( $option[ 'row' ] ) ? esc_attr( $option[ 'row' ] ) : 10;
 
         <?php
         wp_editor( $option[ 'value' ],
-            'my_custom_editor_id',
+            'my_custom_editor_id_' . esc_attr( $option[ 'id' ] ),
             [ 'textarea_name' => esc_attr( $option[ 'name' ] ), 'editor_id' => esc_attr( $option[ 'id' ] ),
                 'media_buttons' => $option[ 'media_button' ], 'textarea_rows' => $rows,
                 'tinymce' => esc_attr( (bool)$option[ 'tinymce' ] ) ]

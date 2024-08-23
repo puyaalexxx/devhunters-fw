@@ -14,11 +14,14 @@ final class SideMenu extends BaseContainer {
     protected string $_container = 'sidemenu';
     
     /**
+     * @param array $optionGroupsClasses
+     * @param array $optionClasses
+     *
      * @since     1.0.0
      */
-    public function __construct() {
+    public function __construct( array $optionGroupsClasses, array $optionClasses ) {
         
-        parent::__construct();
+        parent::__construct( $optionGroupsClasses, $optionClasses );
     }
     
     /**

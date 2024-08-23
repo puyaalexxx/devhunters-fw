@@ -57,7 +57,7 @@ trait SaveOptionsHelpers {
         if ( isset( $options[ 'type' ] ) && isset( $this->_optionContainerClasses[ $options[ 'type' ] ] ) ) {
             
             $values[ $options[ 'id' ] ] = $this->_optionContainerClasses[ $options[ 'type' ] ]
-                ->saveValue( $options, $post_values, $this->_optionGroupsClasses, $this->_optionClasses );
+                ->saveValue( $options, $post_values );
             
         } else {
             foreach ( $options as $option ) {
@@ -113,7 +113,7 @@ trait SaveOptionsHelpers {
         
         if ( isset( $this->_optionGroupsClasses[ $option[ 'type' ] ] ) ) {
             
-            return $this->_optionGroupsClasses[ $option[ 'type' ] ]->saveValue( $option, $post_value, $this->_optionClasses );
+            return $this->_optionGroupsClasses[ $option[ 'type' ] ]->saveValue( $option, $post_value );
         }
         
         return $this->_optionClasses[ $option[ 'type' ] ]->saveValue( $option, $post_value );

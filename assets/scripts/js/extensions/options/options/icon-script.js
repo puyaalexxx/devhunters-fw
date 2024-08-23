@@ -113,7 +113,7 @@ __webpack_require__.r(__webpack_exports__);
         Icon.prototype._onPopupOpen = function () {
             //this class reference
             var $thisClass = this;
-            $(".dht-field-child-icons .dht-thickbox").on("click", function () {
+            $(".dht-field-wrapper").on("click", ".dht-field-child-icons .dht-thickbox", function () {
                 var $this = $(this);
                 // icon group area from popup
                 var $dht_icons_type_group = $this.siblings(".dht-modal-icons").find(".dht-icons-type-group");
@@ -144,7 +144,7 @@ __webpack_require__.r(__webpack_exports__);
         Icon.prototype._callAjaxWithSelectedIcon = function () {
             //this class reference
             var $thisClass = this;
-            $(".dht-field-child-icons .dht-icons-type").on("change", function () {
+            $(document).on("change", ".dht-icons-preview-group .dht-icons-type", function () {
                 var $this = $(this);
                 var icon_type = $this.val();
                 if (icon_type.length === 0)
@@ -194,7 +194,7 @@ __webpack_require__.r(__webpack_exports__);
          * @return void
          */
         Icon.prototype._removeSelectedIcon = function () {
-            $(".dht-field-child-icons .dht-btn-remove").on("click", function () {
+            $(".dht-field-wrapper").on("click", ".dht-field-child-icons .dht-btn-remove", function () {
                 var $this = $(this);
                 $this.siblings(".dht-icon-select-preview").children("i").removeAttr("class").parent().removeClass("dht-icon-select-preview-show");
                 $this.siblings(".dht-icon-select-value").val("");
@@ -237,7 +237,7 @@ __webpack_require__.r(__webpack_exports__);
                 type: "POST",
                 dataType: "json",
                 data: {
-                    action: "get_option_icons", // The name of your AJAX action
+                    action: "getOptionIcons", // The name of your AJAX action
                     data: { icon_type: icon_type, icon: icon },
                 },
                 beforeSend: function () {
@@ -247,8 +247,6 @@ __webpack_require__.r(__webpack_exports__);
                     $dht_icons_type_group.siblings(".dht-icons-preview").empty();
                 },
                 success: function (response) {
-                    //hide loading spinner
-                    $dht_icons_type_group.siblings(".spinner").css("visibility", "hidden");
                     if (response.success) {
                         $dht_icons_type_group.siblings(".dht-icons-preview").append(response.data);
                     }
@@ -260,6 +258,8 @@ __webpack_require__.r(__webpack_exports__);
                     console.error("AJAX error:", error);
                 },
                 complete: function () {
+                    //hide loading spinner
+                    $dht_icons_type_group.siblings(".spinner").css("visibility", "hidden");
                     // Re-enable the dropdown after the request is complete
                     $dht_icons_type_group.children(".dht-icons-type").prop("disabled", false);
                 },

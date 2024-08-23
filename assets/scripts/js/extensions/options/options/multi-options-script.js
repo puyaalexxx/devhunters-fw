@@ -184,8 +184,18 @@ __webpack_require__.r(__webpack_exports__);
         return MultiOptions;
     }());
     //init each multioptions option
-    $(".dht-field-child-multioptions").each(function () {
-        new MultiOptions($(this));
+    function init() {
+        $(".dht-field-child-multioptions").each(function () {
+            new MultiOptions($(this));
+        });
+    }
+    // Initialize on page load
+    $(function () {
+        init();
+    });
+    // Initialize after AJAX content is loaded
+    $(document).on("dht_multiOptionsAjaxComplete", function () {
+        init();
     });
 })((jquery__WEBPACK_IMPORTED_MODULE_0___default()));
 

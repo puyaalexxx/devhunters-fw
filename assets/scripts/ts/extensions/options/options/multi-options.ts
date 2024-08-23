@@ -115,7 +115,19 @@ import jQuery from "jquery";
     }
 
     //init each multioptions option
-    $(".dht-field-child-multioptions").each(function () {
-        new MultiOptions($(this));
+    function init() {
+        $(".dht-field-child-multioptions").each(function () {
+            new MultiOptions($(this));
+        });
+    }
+
+    // Initialize on page load
+    $(function () {
+        init();
+    });
+
+    // Initialize after AJAX content is loaded
+    $(document).on("dht_multiOptionsAjaxComplete", function () {
+        init();
     });
 })(jQuery);

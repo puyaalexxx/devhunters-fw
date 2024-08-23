@@ -32,7 +32,7 @@ import jQuery from "jquery";
     }
 
     //init each radio images option
-    $(".dht-wrapper .dht-field-child-image-select .dht-img-select-wrapper").on("click", function () {
+    $(".dht-field-wrapper").on("click", ".dht-field-child-image-select .dht-img-select-wrapper", function () {
         new RadioImage($(this));
     });
 })(jQuery);

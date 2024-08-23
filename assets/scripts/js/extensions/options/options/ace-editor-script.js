@@ -281,8 +281,18 @@ __webpack_require__.r(__webpack_exports__);
         return AceEditor;
     }());
     //init each ace editor
-    $(".dht-field-child-code-editor").each(function () {
-        new AceEditor($(this));
+    function init() {
+        $(".dht-field-child-code-editor").each(function () {
+            new AceEditor($(this));
+        });
+    }
+    // Initialize on page load
+    $(function () {
+        init();
+    });
+    // Initialize after AJAX content is loaded
+    $(document).on("dht_aceEditorAjaxComplete", function () {
+        init();
     });
 })((jquery__WEBPACK_IMPORTED_MODULE_0___default()));
 

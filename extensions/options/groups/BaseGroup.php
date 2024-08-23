@@ -15,10 +15,18 @@ abstract class BaseGroup {
     //field type
     protected string $_group = 'unknown';
     
+    //registered option classes
+    protected array $_registeredOptions;
+    
     /**
+     * @param array $registered_options
+     *
      * @since     1.0.0
      */
-    public function __construct() {}
+    public function __construct( array $registered_options ) {
+        
+        $this->_registeredOptions = $registered_options;
+    }
     
     /**
      *
@@ -66,13 +74,12 @@ abstract class BaseGroup {
      * @param array  $group
      * @param mixed  $saved_values
      * @param string $prefix_id
-     * @param array  $registered_options
      * @param array  $additional_args
      *
      * @return string
      * @since     1.0.0
      */
-    public function render( array $group, mixed $saved_values, string $prefix_id, array $registered_options, array $additional_args = [] ) : string {
+    public function render( array $group, mixed $saved_values, string $prefix_id, array $additional_args = [] ) : string {
         
         //merge default values with saved ones to display the saved ones
         $group = $this->mergeValues( $group, $saved_values );
@@ -82,7 +89,7 @@ abstract class BaseGroup {
         
         return dht_load_view( $this->template_dir, $this->getGroup() . '.php', [
             'group' => $group,
-            'registered_options' => $registered_options,
+            'registered_options' => $this->_registeredOptions,
             'additional_args' => $additional_args
         ] );
     }
@@ -131,12 +138,11 @@ abstract class BaseGroup {
      *
      * @param array $group             - group field
      * @param mixed $group_post_values - $_POST values passed on save
-     * @param array $option_classes
      *
      * @return mixed - changed group value
      * @since     1.0.0
      */
-    public function saveValue( array $group, mixed $group_post_values, array $option_classes ) : mixed {
+    public function saveValue( array $group, mixed $group_post_values ) : mixed {
         
         if ( empty( $group_post_values ) ) {
             return $group[ 'value' ];
@@ -149,7 +155,7 @@ abstract class BaseGroup {
                 
                 $option_post_value = $group_post_values[ $option[ 'id' ] ] ?? [];
                 
-                $group_post_values[ $option[ 'id' ] ] = $option_classes[ $option[ 'type' ] ]->saveValue( $option, $option_post_value );
+                $group_post_values[ $option[ 'id' ] ] = $this->_registeredOptions[ $option[ 'type' ] ]->saveValue( $option, $option_post_value );
             }
         }
         

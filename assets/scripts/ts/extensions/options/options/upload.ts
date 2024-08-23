@@ -98,7 +98,19 @@ import jQuery from "jquery";
     }
 
     //init each upload button option
-    $(".dht-field-child-upload-item").each(function () {
-        new Upload($(this));
+    function init() {
+        $(".dht-field-child-upload-item").each(function () {
+            new Upload($(this));
+        });
+    }
+
+    // Initialize on page load
+    $(function () {
+        init();
+    });
+
+    // Initialize after AJAX content is loaded
+    $(document).on("dht_uploadAjaxComplete", function () {
+        init();
     });
 })(jQuery);

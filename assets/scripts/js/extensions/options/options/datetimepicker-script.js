@@ -128,8 +128,18 @@ __webpack_require__.r(__webpack_exports__);
         return DateTimePicker;
     }());
     //init each datetimepicker option
-    $(".dht-field-child-datetimepicker .dht-datetimepicker").each(function () {
-        new DateTimePicker($(this));
+    function init() {
+        $(".dht-field-child-datetimepicker .dht-datetimepicker").each(function () {
+            new DateTimePicker($(this));
+        });
+    }
+    // Initialize on page load
+    $(function () {
+        init();
+    });
+    // Initialize after AJAX content is loaded
+    $(document).on("dht_dateTimePickerAjaxComplete", function () {
+        init();
     });
 })((jquery__WEBPACK_IMPORTED_MODULE_0___default()));
 

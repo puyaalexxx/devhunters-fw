@@ -14,11 +14,13 @@ final class Group extends BaseGroup {
     protected string $_group = 'group';
     
     /**
+     * @param array $registered_options
+     *
      * @since     1.0.0
      */
-    public function __construct() {
+    public function __construct( array $registered_options ) {
         
-        parent::__construct();
+        parent::__construct( $registered_options );
     }
     
     /**
@@ -44,12 +46,11 @@ final class Group extends BaseGroup {
      *
      * @param array $group             - group field
      * @param mixed $group_post_values - $_POST values passed on save
-     * @param array $option_classes
      *
      * @return mixed - changed group value
      * @since     1.0.0
      */
-    public function saveValue( array $group, mixed $group_post_values, array $option_classes ) : mixed {
+    public function saveValue( array $group, mixed $group_post_values ) : mixed {
         
         if ( empty( $group_post_values ) ) {
             return $group[ 'value' ];
@@ -60,7 +61,7 @@ final class Group extends BaseGroup {
             
             $option_post_value = $group_post_values[ $option[ 'id' ] ] ?? [];
             
-            $group_post_values[ $option[ 'id' ] ] = $option_classes[ $option[ 'type' ] ]->saveValue( $option, $option_post_value );
+            $group_post_values[ $option[ 'id' ] ] = $this->_registeredOptions[ $option[ 'type' ] ]->saveValue( $option, $option_post_value );
         }
         
         return $group_post_values;

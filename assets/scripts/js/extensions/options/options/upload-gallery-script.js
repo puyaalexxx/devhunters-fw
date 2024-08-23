@@ -252,8 +252,18 @@ __webpack_require__.r(__webpack_exports__);
         return UploadGallery;
     }());
     //init each upload gallery button option
-    $(".dht-field-child-upload-gallery").each(function () {
-        new UploadGallery($(this));
+    function init() {
+        $(".dht-field-child-upload-gallery").each(function () {
+            new UploadGallery($(this));
+        });
+    }
+    // Initialize on page load
+    $(function () {
+        init();
+    });
+    // Initialize after AJAX content is loaded
+    $(document).on("dht_uploadGalleryAjaxComplete", function () {
+        init();
     });
 })((jquery__WEBPACK_IMPORTED_MODULE_0___default()));
 

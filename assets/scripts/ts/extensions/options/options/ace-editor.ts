@@ -96,7 +96,19 @@ import "ace-builds/src-min-noconflict/mode-css";
     }
 
     //init each ace editor
-    $(".dht-field-child-code-editor").each(function () {
-        new AceEditor($(this));
+    function init() {
+        $(".dht-field-child-code-editor").each(function () {
+            new AceEditor($(this));
+        });
+    }
+
+    // Initialize on page load
+    $(function () {
+        init();
+    });
+
+    // Initialize after AJAX content is loaded
+    $(document).on("dht_aceEditorAjaxComplete", function () {
+        init();
     });
 })(jQuery);

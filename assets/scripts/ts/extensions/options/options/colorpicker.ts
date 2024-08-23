@@ -65,7 +65,19 @@ import jQuery from "jquery";
     }
 
     //init each colorpicker option
-    $(".dht-field-child-wrapper .dht-colorpicker").each(function () {
-        new ColorPicker($(this));
+    function init() {
+        $(".dht-field-child-wrapper .dht-colorpicker").each(function () {
+            new ColorPicker($(this));
+        });
+    }
+
+    // Initialize on page load
+    $(function () {
+        init();
+    });
+
+    // Initialize after AJAX content is loaded
+    $(document).on("dht_colorPickerAjaxComplete", function () {
+        init();
     });
 })(jQuery);

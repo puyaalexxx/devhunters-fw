@@ -44,7 +44,19 @@ import jQuery from "jquery";
     }
 
     //init each timePicker option
-    $(".dht-field-child-timepicker .dht-timepicker").each(function () {
-        new TimePicker($(this));
+    function init() {
+        $(".dht-field-child-timepicker .dht-timepicker").each(function () {
+            new TimePicker($(this));
+        });
+    }
+
+    // Initialize on page load
+    $(function () {
+        init();
+    });
+
+    // Initialize after AJAX content is loaded
+    $(document).on("dht_timePickerAjaxComplete", function () {
+        init();
     });
 })(jQuery);

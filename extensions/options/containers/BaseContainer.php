@@ -15,10 +15,23 @@ abstract class BaseContainer {
     //field type
     protected string $_container = 'unknown';
     
+    //registered group classes
+    private array $_optionGroupsClasses;
+    
+    //registered option classes
+    private array $_optionClasses;
+    
     /**
+     * @param array $optionGroupsClasses
+     * @param array $optionClasses
+     *
      * @since     1.0.0
      */
-    public function __construct() {}
+    public function __construct( array $optionGroupsClasses, array $optionClasses ) {
+        
+        $this->_optionGroupsClasses = $optionGroupsClasses;
+        $this->_optionClasses = $optionClasses;
+    }
     
     /**
      *
@@ -63,15 +76,19 @@ abstract class BaseContainer {
     /**
      * return container template
      *
-     * @param array $container          - container option array
+     * @param array $container - container option array
      * @param mixed $saved_values
-     * @param array $registered_options - registered groups/option classes
      * @param array $additional_args
      *
      * @return string
      * @since     1.0.0
      */
-    public function render( array $container, mixed $saved_values, array $registered_options, array $additional_args = [] ) : string {
+    public function render( array $container, mixed $saved_values, array $additional_args = [] ) : string {
+        
+        $registered_options = [
+            'groupClasses' => $this->_optionGroupsClasses,
+            'optionClasses' => $this->_optionClasses
+        ];
         
         //get each current page options if exists
         
@@ -92,13 +109,11 @@ abstract class BaseContainer {
      *
      * @param array $container             - container field
      * @param mixed $container_post_values - container $_POST values passed on save
-     * @param array $group_classes
-     * @param array $option_classes
      *
      * @return array - changed container value
      * @since     1.0.0
      */
-    public function saveValue( array $container, mixed $container_post_values, array $group_classes, array $option_classes ) : array {
+    public function saveValue( array $container, mixed $container_post_values ) : array {
         
         // Return early if container_post_values is empty
         if ( empty( $container_post_values ) ) {
@@ -122,22 +137,22 @@ abstract class BaseContainer {
                     
                     if ( $is_tabs_subtype ) {
                         // For 'tabs' subtype, sanitize subpage values
-                        $values[ $page_id ][ $subpage_id ] = $this->_sanitizeValues( $subpage_options, $container_post_values[ $page_id ][ $subpage_id ] ?? [], $group_classes, $option_classes );
+                        $values[ $page_id ][ $subpage_id ] = $this->_sanitizeValues( $subpage_options, $container_post_values[ $page_id ][ $subpage_id ] ?? [] );
                     } else {
                         // For other subtypes, handle subpage values if options are not empty
                         if ( !empty( $subpage_options ) ) {
-                            $values = $this->_sanitizeValues( $subpage_options, $container_post_values, $group_classes, $option_classes );
+                            $values = $this->_sanitizeValues( $subpage_options, $container_post_values );
                         }
                     }
                 }
             } else {
                 if ( $is_tabs_subtype ) {
                     // For 'tabs' subtype, sanitize page values
-                    $values[ $page_id ] = $this->_sanitizeValues( $page_options, $container_post_values[ $page_id ] ?? [], $group_classes, $option_classes );
+                    $values[ $page_id ] = $this->_sanitizeValues( $page_options, $container_post_values[ $page_id ] ?? [] );
                 } else {
                     // For other subtypes, handle page values if options are not empty
                     if ( !empty( $page_options ) ) {
-                        $values = $this->_sanitizeValues( $page_options, $container_post_values, $group_classes, $option_classes );
+                        $values = $this->_sanitizeValues( $page_options, $container_post_values );
                     }
                 }
             }
@@ -151,13 +166,11 @@ abstract class BaseContainer {
      *
      * @param array $options
      * @param array $options_post_values - container options $_POST values passed on save
-     * @param array $group_classes
-     * @param array $option_classes
      *
      * @return mixed
      * @since     1.0.0
      */
-    private function _sanitizeValues( array $options, array $options_post_values, array $group_classes, array $option_classes ) : array {
+    private function _sanitizeValues( array $options, array $options_post_values ) : array {
         
         $values = [];
         foreach ( $options as $option ) {
@@ -165,14 +178,14 @@ abstract class BaseContainer {
             $option_post_value = $options_post_values[ $option[ 'id' ] ] ?? [];
             
             //if it is a group type
-            if ( isset( $group_classes[ $option[ 'type' ] ] ) ) {
+            if ( isset( $this->_optionGroupsClasses[ $option[ 'type' ] ] ) ) {
                 
-                $values[ $option[ 'id' ] ] = $group_classes[ $option[ 'type' ] ]->saveValue( $option, $option_post_value, $option_classes );
+                $values[ $option[ 'id' ] ] = $this->_optionGroupsClasses[ $option[ 'type' ] ]->saveValue( $option, $option_post_value );
                 
             } //if it is a simple option type
             else {
                 
-                $values[ $option[ 'id' ] ] = $option_classes[ $option[ 'type' ] ]->saveValue( $option, $option_post_value );
+                $values[ $option[ 'id' ] ] = $this->_optionClasses[ $option[ 'type' ] ]->saveValue( $option, $option_post_value );
             }
         }
         

@@ -29,7 +29,11 @@ final class WpEditor extends BaseOption {
      * @return void
      * @since     1.0.0
      */
-    public function enqueueOptionScripts( array $option ) : void {}
+    public function enqueueOptionScripts( array $option ) : void {
+        
+        // Enqueue the WordPress editor scripts and styles
+        wp_enqueue_editor();
+    }
     
     /**
      * add prefix id for option id to display it in the form as array values

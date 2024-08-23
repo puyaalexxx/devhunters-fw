@@ -227,7 +227,7 @@ if ( !function_exists( 'dht_render_options' ) ) {
             if ( array_key_exists( $option[ 'type' ], $registered_groups ) ) {
                 
                 //render the respective option group class
-                echo $registered_groups[ $option[ 'type' ] ]->render( $option, $saved_value, $prefix_id, $registered_options );
+                echo $registered_groups[ $option[ 'type' ] ]->render( $option, $saved_value, $prefix_id );
                 
             } else {
                 

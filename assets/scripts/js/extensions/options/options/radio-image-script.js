@@ -115,7 +115,7 @@ __webpack_require__.r(__webpack_exports__);
         return RadioImage;
     }());
     //init each radio images option
-    $(".dht-wrapper .dht-field-child-image-select .dht-img-select-wrapper").on("click", function () {
+    $(".dht-field-wrapper").on("click", ".dht-field-child-image-select .dht-img-select-wrapper", function () {
         new RadioImage($(this));
     });
 })((jquery__WEBPACK_IMPORTED_MODULE_0___default()));

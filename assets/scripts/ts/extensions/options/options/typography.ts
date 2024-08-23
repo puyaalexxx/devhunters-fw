@@ -382,7 +382,19 @@ import jQuery from "jquery";
     }
 
     //init each typography option
-    $(".dht-field-child-typography").each(function () {
-        new Typography($(this));
+    function init() {
+        $(".dht-field-child-typography").each(function () {
+            new Typography($(this));
+        });
+    }
+
+    // Initialize on page load
+    $(function () {
+        init();
+    });
+
+    // Initialize after AJAX content is loaded
+    $(document).on("dht_typographyAjaxComplete", function () {
+        init();
     });
 })(jQuery);

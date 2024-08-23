@@ -120,8 +120,18 @@ __webpack_require__.r(__webpack_exports__);
         return DatePicker;
     }());
     //init each datepicker option
-    $(".dht-field-child-datepicker .dht-datepicker").each(function () {
-        new DatePicker($(this));
+    function init() {
+        $(".dht-field-child-datepicker .dht-datepicker").each(function () {
+            new DatePicker($(this));
+        });
+    }
+    // Initialize on page load
+    $(function () {
+        init();
+    });
+    // Initialize after AJAX content is loaded
+    $(document).on("dht_datePickerAjaxComplete", function () {
+        init();
     });
 })((jquery__WEBPACK_IMPORTED_MODULE_0___default()));
 

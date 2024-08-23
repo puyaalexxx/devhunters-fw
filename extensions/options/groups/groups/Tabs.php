@@ -14,11 +14,13 @@ final class Tabs extends BaseGroup {
     protected string $_group = 'tabs';
     
     /**
+     * @param array $registered_options
+     *
      * @since     1.0.0
      */
-    public function __construct() {
+    public function __construct( array $registered_options ) {
         
-        parent::__construct();
+        parent::__construct( $registered_options );
     }
     
     /**

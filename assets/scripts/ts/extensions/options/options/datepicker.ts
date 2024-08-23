@@ -39,7 +39,19 @@ import jQuery from "jquery";
     }
 
     //init each datepicker option
-    $(".dht-field-child-datepicker .dht-datepicker").each(function () {
-        new DatePicker($(this));
+    function init() {
+        $(".dht-field-child-datepicker .dht-datepicker").each(function () {
+            new DatePicker($(this));
+        });
+    }
+
+    // Initialize on page load
+    $(function () {
+        init();
+    });
+
+    // Initialize after AJAX content is loaded
+    $(document).on("dht_datePickerAjaxComplete", function () {
+        init();
     });
 })(jQuery);

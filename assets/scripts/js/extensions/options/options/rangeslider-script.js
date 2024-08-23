@@ -153,8 +153,18 @@ __webpack_require__.r(__webpack_exports__);
         return RangeSlider;
     }());
     //init each range slider option
-    $(".dht-field-child-rangeslider").each(function () {
-        new RangeSlider($(this));
+    function init() {
+        $(".dht-field-child-rangeslider").each(function () {
+            new RangeSlider($(this));
+        });
+    }
+    // Initialize on page load
+    $(function () {
+        init();
+    });
+    // Initialize after AJAX content is loaded
+    $(document).on("dht_rangeSliderAjaxComplete", function () {
+        init();
     });
 })((jquery__WEBPACK_IMPORTED_MODULE_0___default()));
 

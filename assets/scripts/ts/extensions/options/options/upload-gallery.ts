@@ -194,7 +194,19 @@ import jQuery from "jquery";
     }
 
     //init each upload gallery button option
-    $(".dht-field-child-upload-gallery").each(function () {
-        new UploadGallery($(this));
+    function init() {
+        $(".dht-field-child-upload-gallery").each(function () {
+            new UploadGallery($(this));
+        });
+    }
+
+    // Initialize on page load
+    $(function () {
+        init();
+    });
+
+    // Initialize after AJAX content is loaded
+    $(document).on("dht_uploadGalleryAjaxComplete", function () {
+        init();
     });
 })(jQuery);

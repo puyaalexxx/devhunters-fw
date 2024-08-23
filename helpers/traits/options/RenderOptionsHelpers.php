@@ -22,10 +22,7 @@ trait RenderOptionsHelpers {
         if ( array_key_exists( $this->_options[ 'type' ], $this->_optionContainerClasses ) ) {
             // Render the respective container class
             echo $this->_optionContainerClasses[ $this->_options[ 'type' ] ]
-                ->render( $this->_options, $saved_values, [
-                    'groupClasses' => $this->_optionGroupsClasses,
-                    'optionClasses' => $this->_optionClasses
-                ] );
+                ->render( $this->_options, $saved_values );
         }
     }
     

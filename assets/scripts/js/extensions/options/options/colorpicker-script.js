@@ -139,8 +139,18 @@ __webpack_require__.r(__webpack_exports__);
         return ColorPicker;
     }());
     //init each colorpicker option
-    $(".dht-field-child-wrapper .dht-colorpicker").each(function () {
-        new ColorPicker($(this));
+    function init() {
+        $(".dht-field-child-wrapper .dht-colorpicker").each(function () {
+            new ColorPicker($(this));
+        });
+    }
+    // Initialize on page load
+    $(function () {
+        init();
+    });
+    // Initialize after AJAX content is loaded
+    $(document).on("dht_colorPickerAjaxComplete", function () {
+        init();
     });
 })((jquery__WEBPACK_IMPORTED_MODULE_0___default()));
 

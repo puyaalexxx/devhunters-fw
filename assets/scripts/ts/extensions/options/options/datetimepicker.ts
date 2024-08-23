@@ -47,7 +47,19 @@ import jQuery from "jquery";
     }
 
     //init each datetimepicker option
-    $(".dht-field-child-datetimepicker .dht-datetimepicker").each(function () {
-        new DateTimePicker($(this));
+    function init() {
+        $(".dht-field-child-datetimepicker .dht-datetimepicker").each(function () {
+            new DateTimePicker($(this));
+        });
+    }
+
+    // Initialize on page load
+    $(function () {
+        init();
+    });
+
+    // Initialize after AJAX content is loaded
+    $(document).on("dht_dateTimePickerAjaxComplete", function () {
+        init();
     });
 })(jQuery);

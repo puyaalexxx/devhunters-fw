@@ -80,7 +80,19 @@ import jQuery from "jquery";
     }
 
     //init each range slider option
-    $(".dht-field-child-rangeslider").each(function () {
-        new RangeSlider($(this));
+    function init() {
+        $(".dht-field-child-rangeslider").each(function () {
+            new RangeSlider($(this));
+        });
+    }
+
+    // Initialize on page load
+    $(function () {
+        init();
+    });
+
+    // Initialize after AJAX content is loaded
+    $(document).on("dht_rangeSliderAjaxComplete", function () {
+        init();
     });
 })(jQuery);

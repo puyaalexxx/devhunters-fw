@@ -122,7 +122,7 @@ __webpack_require__.r(__webpack_exports__);
         return Switch;
     }());
     //init each switch button option
-    $(".dht-field-child-switch .dht-switch").on("click", function () {
+    $(".dht-field-wrapper").on("click", ".dht-field-child-switch .dht-switch", function () {
         new Switch($(this));
     });
 })((jquery__WEBPACK_IMPORTED_MODULE_0___default()));

@@ -21,8 +21,8 @@ final class Icon extends BaseOption {
         
         parent::__construct();
         
-        add_action( 'wp_ajax_get_option_icons', [ $this, 'get_option_icons' ] );
-        add_action( 'wp_ajax_nopriv_get_option_icons', [ $this, 'get_option_icons' ] ); // For non-logged in users
+        add_action( 'wp_ajax_getOptionIcons', [ $this, 'getOptionIcons' ] );
+        add_action( 'wp_ajax_nopriv_getOptionIcons', [ $this, 'getOptionIcons' ] ); // For non-logged in users
     }
     
     /**
@@ -64,10 +64,16 @@ final class Icon extends BaseOption {
         
         //custom option script
         wp_enqueue_script( DHT_PREFIX . '-icon-option', DHT_ASSETS_URI . 'scripts/js/extensions/options/options/icon-script.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
-        wp_localize_script( DHT_PREFIX . '-icon-option', 'dht_icon_option_ajax', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
+        wp_localize_script( DHT_PREFIX . '-icon-option', DHT_PREFIX . '_icon_option_ajax', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
     }
     
-    public function get_option_icons() : void {
+    /**
+     * ajax action to retrieve all icons and display then in the popup
+     *
+     * @return void
+     * @since     1.0.0
+     */
+    public function getOptionIcons() : void {
         
         if ( isset( $_POST[ 'data' ][ 'icon_type' ] ) ) {
             

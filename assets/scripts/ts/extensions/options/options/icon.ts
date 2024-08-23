@@ -30,7 +30,7 @@ import jQuery from "jquery";
             //this class reference
             const $thisClass = this;
 
-            $(".dht-field-child-icons .dht-thickbox").on("click", function () {
+            $(".dht-field-wrapper").on("click", ".dht-field-child-icons .dht-thickbox", function () {
                 const $this = $(this);
 
                 // icon group area from popup
@@ -69,7 +69,7 @@ import jQuery from "jquery";
             //this class reference
             const $thisClass = this;
 
-            $(".dht-field-child-icons .dht-icons-type").on("change", function () {
+            $(document).on("change", ".dht-icons-preview-group .dht-icons-type", function () {
                 const $this = $(this);
                 const icon_type: string = $this.val()! as string;
 
@@ -128,7 +128,7 @@ import jQuery from "jquery";
          * @return void
          */
         private _removeSelectedIcon(): void {
-            $(".dht-field-child-icons .dht-btn-remove").on("click", function () {
+            $(".dht-field-wrapper").on("click", ".dht-field-child-icons .dht-btn-remove", function () {
                 const $this = $(this);
                 $this.siblings(".dht-icon-select-preview").children("i").removeAttr("class").parent().removeClass("dht-icon-select-preview-show");
                 $this.siblings(".dht-icon-select-value").val("");
@@ -178,7 +178,7 @@ import jQuery from "jquery";
                 type: "POST",
                 dataType: "json",
                 data: {
-                    action: "get_option_icons", // The name of your AJAX action
+                    action: "getOptionIcons", // The name of your AJAX action
                     data: { icon_type: icon_type, icon: icon },
                 },
                 beforeSend: function () {
@@ -189,9 +189,6 @@ import jQuery from "jquery";
                     $dht_icons_type_group.siblings(".dht-icons-preview").empty();
                 },
                 success: function (response) {
-                    //hide loading spinner
-                    $dht_icons_type_group.siblings(".spinner").css("visibility", "hidden");
-
                     if (response.success) {
                         $dht_icons_type_group.siblings(".dht-icons-preview").append(response.data);
                     } else {
@@ -202,6 +199,9 @@ import jQuery from "jquery";
                     console.error("AJAX error:", error);
                 },
                 complete: function () {
+                    //hide loading spinner
+                    $dht_icons_type_group.siblings(".spinner").css("visibility", "hidden");
+
                     // Re-enable the dropdown after the request is complete
                     $dht_icons_type_group.children(".dht-icons-type").prop("disabled", false);
                 },

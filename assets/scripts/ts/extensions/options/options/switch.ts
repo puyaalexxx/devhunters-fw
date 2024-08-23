@@ -41,7 +41,7 @@ import jQuery from "jquery";
     }
 
     //init each switch button option
-    $(".dht-field-child-switch .dht-switch").on("click", function () {
+    $(".dht-field-wrapper").on("click", ".dht-field-child-switch .dht-switch", function () {
         new Switch($(this));
     });
 })(jQuery);

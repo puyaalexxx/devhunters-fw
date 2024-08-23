@@ -4,17 +4,11 @@ import jQuery from "jquery";
     "use strict";
 
     class MultiInput {
-        //multiinput reference
-        private $_multiinput;
-
-        constructor($multiinput: JQuery<Document>) {
-            //multiinput reference
-            this.$_multiinput = $multiinput;
-
-            //add inout
+        constructor() {
+            //add input
             this._addInput();
 
-            //add inout
+            //add input
             this._removeInput();
         }
 
@@ -24,7 +18,7 @@ import jQuery from "jquery";
          * @return void
          */
         private _addInput(): void {
-            this.$_multiinput.on("click", ".dht-multiinput-add", function () {
+            $(".dht-field-wrapper").on("click", ".dht-field-child-multiinput .dht-multiinput-add", function () {
                 let $this = $(this);
                 let limit: number = +$this.attr("data-limit")!;
 
@@ -47,7 +41,7 @@ import jQuery from "jquery";
          * @return void
          */
         private _removeInput(): void {
-            this.$_multiinput.on("click", ".dht-multiinput-remove", function () {
+            $(".dht-field-wrapper").on("click", ".dht-field-child-multiinput .dht-multiinput-remove", function () {
                 let $this = $(this);
 
                 if ($this.parents(".dht-field-child-wrapper").children(".dht-multiinput-child-wrapper").length === 1) {
@@ -62,9 +56,7 @@ import jQuery from "jquery";
     }
 
     //init each multiinput option
-    $(".dht-field-child-multiinput").each(function () {
-        $(function (): void {
-            new MultiInput($(this));
-        });
+    $(function (): void {
+        new MultiInput();
     });
 })(jQuery);

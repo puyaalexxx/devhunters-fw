@@ -179,8 +179,18 @@ __webpack_require__.r(__webpack_exports__);
         return UploadImage;
     }());
     //init each upload image button option
-    $(".dht-field-child-upload-image").each(function () {
-        new UploadImage($(this));
+    function init() {
+        $(".dht-field-child-upload-image").each(function () {
+            new UploadImage($(this));
+        });
+    }
+    // Initialize on page load
+    $(function () {
+        init();
+    });
+    // Initialize after AJAX content is loaded
+    $(document).on("dht_uploadImageAjaxComplete", function () {
+        init();
     });
 })((jquery__WEBPACK_IMPORTED_MODULE_0___default()));
 

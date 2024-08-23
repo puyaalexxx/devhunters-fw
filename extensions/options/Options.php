@@ -223,7 +223,7 @@ final class Options implements IOptions {
     private function _registerFWOptionContainers() : void {
         
         //instantiate the option group classes
-        $sidemenu = new SideMenu();
+        $sidemenu = new SideMenu( $this->_optionGroupsClasses, $this->_optionClasses );
         
         //add class instance to the _optionContainerClasses array to use throughout the Container class methods
         $this->_optionContainerClasses[ $sidemenu->getContainer() ] = $sidemenu;
@@ -238,11 +238,11 @@ final class Options implements IOptions {
     private function _registerFWOptionGroups() : void {
         
         //instantiate the option group classes
-        $group = new Group();
-        $tabs = new Tabs();
-        $accordion = new Accordion();
-        $addable_box = new AddableBox();
-        $toggle = new Toggle();
+        $group = new Group( $this->_optionClasses );
+        $tabs = new Tabs( $this->_optionClasses );
+        $accordion = new Accordion( $this->_optionClasses );
+        $addable_box = new AddableBox( $this->_optionClasses );
+        $toggle = new Toggle( $this->_optionClasses );
         
         //add class instance to the _optionGroupClasses array to use throughout the Group class methods
         $this->_optionGroupsClasses[ $group->getGroup() ] = $group;

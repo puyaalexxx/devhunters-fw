@@ -1,5 +1,6 @@
 <?php
 
+use function DHT\Helpers\dht_parse_option_attributes;
 use function DHT\Helpers\dht_render_option_if_exists;
 
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
@@ -16,7 +17,8 @@ $left_choice = $group[ 'left-choice' ];
 $right_choice = $group[ 'right-choice' ];
 ?>
 <!-- field - toggle  -->
-<div class="dht-field-wrapper">
+<div
+    class="dht-field-wrapper <?php echo isset( $group[ 'attr' ][ 'class' ] ) ? esc_attr( $group[ 'attr' ][ 'class' ] ) : ''; ?>" <?php echo dht_parse_option_attributes( $group[ 'attr' ] ); ?>>
 
     <div class="dht-title"><?php echo esc_html( $group[ 'title' ] ); ?></div>
 
@@ -93,22 +95,3 @@ $right_choice = $group[ 'right-choice' ];
 <?php if ( isset( $group[ 'divider' ] ) && $group[ 'divider' ] ): ?>
     <div class="dht-divider"></div>
 <?php endif; ?>
-
-<script>
-    jQuery(document).ready(function($) {
-        $(".dht-field-child-toggle .dht-toggle").on("click", function() {
-
-            const $this = $(this);
-            const input_value = $(this).children("input").attr("value");
-
-            $this.siblings(".dht-toggle-content").each(function() {
-
-                $(this).removeClass("dht-toggle-show");
-
-                if ($(this).attr("data-toggle-value") === input_value) {
-                    $(this).addClass("dht-toggle-show");
-                }
-            });
-        });
-    });
-</script>

@@ -16,7 +16,7 @@ import jQuery from "jquery";
         }
 
         /**
-         * init tabs
+         * init accordion
          *
          * @return void
          */

@@ -1,4 +1,7 @@
 <?php
+
+use function DHT\Helpers\dht_parse_option_attributes;
+
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 $option = $args[ 'option' ] ?? [];
@@ -6,7 +9,8 @@ $option = $args[ 'option' ] ?? [];
 $on_off_class = in_array( $option[ 'value' ], $option[ 'left-choice' ] ) ? 'dht-slider-on' : 'dht-slider-off';
 ?>
     <!-- field - switch  -->
-    <div class="dht-field-wrapper">
+    <div
+        class="dht-field-wrapper <?php echo isset( $option[ 'attr' ][ 'class' ] ) ? esc_attr( $option[ 'attr' ][ 'class' ] ) : ''; ?>" <?php echo dht_parse_option_attributes( $option[ 'attr' ] ); ?>>
 
         <div class="dht-title"><?php echo esc_html( $option[ 'title' ] ); ?></div>
 

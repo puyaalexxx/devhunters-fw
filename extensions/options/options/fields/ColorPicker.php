@@ -43,9 +43,10 @@ final class ColorPicker extends BaseOption {
         if ( $option[ 'subtype' ] == 'rgba' ) {
             
             wp_enqueue_script( DHT_PREFIX . '-wp-color-picker-option-alpha', DHT_ASSETS_URI . 'scripts/libraries/wp-color-picker-alpha.min.js', array( 'jquery', 'wp-color-picker' ), fw()->manifest->get( 'version' ), true );
+            wp_enqueue_script( DHT_PREFIX . '-wp-color-picker-option', DHT_ASSETS_URI . 'scripts/js/extensions/options/options/colorpicker-script.js', array( 'jquery', 'wp-color-picker', DHT_PREFIX . '-wp-color-picker-option-alpha' ), fw()->manifest->get( 'version' ), true );
+        } else {
+            wp_enqueue_script( DHT_PREFIX . '-wp-color-picker-option', DHT_ASSETS_URI . 'scripts/js/extensions/options/options/colorpicker-script.js', array( 'jquery', 'wp-color-picker' ), fw()->manifest->get( 'version' ), true );
         }
-        
-        wp_enqueue_script( DHT_PREFIX . '-wp-color-picker-option', DHT_ASSETS_URI . 'scripts/js/extensions/options/options/colorpicker-script.js', array( 'jquery', 'wp-color-picker', DHT_PREFIX . '-wp-color-picker-option-alpha' ), fw()->manifest->get( 'version' ), true );
     }
     
 }

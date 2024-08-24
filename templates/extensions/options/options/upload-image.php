@@ -17,16 +17,15 @@ if ( !empty( $option[ 'value' ][ 'image_id' ] ) ) {
 }
 ?>
     <!--upload image field-->
-    <div class="dht-field-wrapper">
+    <div
+        class="dht-field-wrapper <?php echo isset( $option[ 'attr' ][ 'class' ] ) ? esc_attr( $option[ 'attr' ][ 'class' ] ) : ''; ?>" <?php echo dht_parse_option_attributes( $option[ 'attr' ] ); ?>>
 
         <div class="dht-title"><?php echo esc_html( $option[ 'title' ] ); ?></div>
 
-        <div
-            class="dht-field-child-wrapper dht-field-child-upload dht-field-child-upload-image <?php echo isset( $option[ 'attr' ][ 'class' ] ) ? esc_attr( $option[ 'attr' ][ 'class' ] ) : ''; ?>"
-            <?php echo dht_parse_option_attributes( $option[ 'attr' ] ); ?>>
+        <div class="dht-field-child-wrapper dht-field-child-upload dht-field-child-upload-image">
 
             <label
-                for="<?php echo esc_attr( $option[ 'id' ] ); ?>"><?php echo esc_html( $option[ 'label' ] ); ?></label><br />
+                for="<?php echo esc_attr( $option[ 'id' ] ); ?>"><?php echo esc_html( $option[ 'title' ] ); ?></label><br />
 
             <!--show image preview if image link not empty -->
             <?php if ( !empty( $image_url ) ): ?>

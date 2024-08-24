@@ -6,15 +6,14 @@ use function DHT\Helpers\dht_parse_option_attributes;
 $option = $args[ 'option' ] ?? [];
 ?>
 <!-- field - simple text -->
-<div class="dht-field-wrapper">
+<div
+    class="dht-field-wrapper <?php echo isset( $option[ 'attr' ][ 'class' ] ) ? esc_attr( $option[ 'attr' ][ 'class' ] ) : ''; ?>" <?php echo dht_parse_option_attributes( $option[ 'attr' ] ); ?>>
 
     <div class="dht-title"><?php echo esc_html( $option[ 'title' ] ); ?></div>
 
     <div class="dht-field-child-wrapper dht-field-child-text">
 
-        <div
-            class="dht-text-value <?php echo isset( $option[ 'attr' ][ 'class' ] ) ? esc_attr( $option[ 'attr' ][ 'class' ] ) : ''; ?>"
-            <?php echo dht_parse_option_attributes( $option[ 'attr' ] ); ?>>
+        <div class="dht-text-value">
 
             <?php echo esc_attr( $option[ 'value' ] ); ?>
 

@@ -8,16 +8,16 @@ $option = $args[ 'option' ] ?? [];
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js" type="text/javascript" charset="utf-8"></script>-->
 
     <!-- field - aceeditor - type -> css / js -->
-    <div class="dht-field-wrapper">
+    <div
+        class="dht-field-wrapper <?php echo isset( $option[ 'attr' ][ 'class' ] ) ? esc_attr( $option[ 'attr' ][ 'class' ] ) : ''; ?>" <?php echo dht_parse_option_attributes( $option[ 'attr' ] ); ?>>
 
         <div class="dht-title"><?php echo esc_html( $option[ 'title' ] ); ?></div>
 
         <div
-            class="dht-field-child-wrapper dht-field-child-code-editor <?php echo isset( $option[ 'attr' ][ 'class' ] ) ? esc_attr( $option[ 'attr' ][ 'class' ] ) : ''; ?>"
-            <?php echo dht_parse_option_attributes( $option[ 'attr' ] ); ?>>
+            class="dht-field-child-wrapper dht-field-child-code-editor">
 
             <label
-                for="<?php echo esc_attr( $option[ 'id' ] ); ?>"><?php echo esc_html( $option[ 'label' ] ); ?></label>
+                for="<?php echo esc_attr( $option[ 'id' ] ); ?>"><?php echo esc_html( $option[ 'title' ] ); ?></label>
 
             <textarea class="dht-ace-editor dht-field" id="<?php echo esc_attr( $option[ 'id' ] ); ?>"
                       name="<?php echo esc_attr( $option[ 'id' ] ); ?>"

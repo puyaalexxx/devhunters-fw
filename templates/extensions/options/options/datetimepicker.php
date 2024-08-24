@@ -6,16 +6,15 @@ use function DHT\Helpers\dht_parse_option_attributes;
 $option = $args[ 'option' ] ?? [];
 ?>
     <!-- field - timepicker -->
-    <div class="dht-field-wrapper">
+    <div
+        class="dht-field-wrapper <?php echo isset( $option[ 'attr' ][ 'class' ] ) ? esc_attr( $option[ 'attr' ][ 'class' ] ) : ''; ?>" <?php echo dht_parse_option_attributes( $option[ 'attr' ] ); ?>>
 
         <div class="dht-title"><?php echo esc_html( $option[ 'title' ] ); ?></div>
 
-        <div
-            class="dht-field-child-wrapper dht-field-child-datetimepicker <?php echo isset( $option[ 'attr' ][ 'class' ] ) ? esc_attr( $option[ 'attr' ][ 'class' ] ) : ''; ?>"
-            <?php echo dht_parse_option_attributes( $option[ 'attr' ] ); ?>>
+        <div class="dht-field-child-wrapper dht-field-child-datetimepicker">
 
             <label
-                for="<?php echo esc_attr( $option[ 'id' ] ); ?>"><?php echo esc_html( $option[ 'label' ] ); ?></label>
+                for="<?php echo esc_attr( $option[ 'id' ] ); ?>"><?php echo esc_html( $option[ 'title' ] ); ?></label>
 
             <input class="dht-datetimepicker dht-field"
                    id="<?php echo esc_attr( $option[ 'id' ] ); ?>"

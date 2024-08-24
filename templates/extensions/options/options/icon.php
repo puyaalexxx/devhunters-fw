@@ -12,13 +12,12 @@ $icons = [
     "bootstrap" => 'Bootstrap'
 ];
 ?>
-    <div class="dht-field-wrapper">
+    <div
+        class="dht-field-wrapper <?php echo isset( $option[ 'attr' ][ 'class' ] ) ? esc_attr( $option[ 'attr' ][ 'class' ] ) : ''; ?>" <?php echo dht_parse_option_attributes( $option[ 'attr' ] ); ?>>
 
         <div class="dht-title"><?php echo esc_html( $option[ 'title' ] ); ?></div>
 
-        <div
-            class="dht-field-child-wrapper dht-field-child-icons <?php echo isset( $option[ 'attr' ][ 'class' ] ) ? esc_attr( $option[ 'attr' ][ 'class' ] ) : ''; ?>"
-            <?php echo dht_parse_option_attributes( $option[ 'attr' ] ); ?>>
+        <div class="dht-field-child-wrapper dht-field-child-icons">
 
             <!--icon preview added here-->
             <span
@@ -48,7 +47,7 @@ $icons = [
                 <div class="dht-icons-preview-group" data-popup-id="<?php echo esc_attr( $option[ 'id' ] ); ?>">
 
                     <label
-                        for="<?php echo esc_attr( $option[ 'id' ] ); ?>"><?php echo esc_html( $option[ 'label' ] ); ?></label>
+                        for="<?php echo esc_attr( $option[ 'id' ] ); ?>"><?php echo esc_html( $option[ 'title' ] ); ?></label>
 
                     <span class="spinner"></span>
 

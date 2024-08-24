@@ -9,21 +9,21 @@ import jQuery from "jquery";
         private $_toggleInput;
 
         constructor($toggle: JQuery<HTMLElement>) {
-            //switch reference
+            //toggle reference
             this.$_toggle = $toggle;
 
             this.$_toggleInput = this.$_toggle.children("input");
 
-            //init switch button
-            this._initSwitch();
+            //init toggle button
+            this._initToggle();
         }
 
         /**
-         * init switch button
+         * init toggle button
          *
          * @return void
          */
-        private _initSwitch(): void {
+        private _initToggle(): void {
             if (this.$_toggle.hasClass("dht-slider-on")) {
                 this.$_toggle.removeClass("dht-slider-on").addClass("dht-slider-off");
                 //get off value
@@ -37,6 +37,25 @@ import jQuery from "jquery";
 
                 this.$_toggleInput.val(value);
             }
+
+            this._showHideOptions();
+        }
+
+        /**
+         * show/hide options
+         *
+         * @return void
+         */
+        private _showHideOptions(): void {
+            const input_value = this.$_toggle.children("input").attr("value");
+
+            this.$_toggle.siblings(".dht-toggle-content").each(function () {
+                $(this).removeClass("dht-toggle-show");
+
+                if ($(this).attr("data-toggle-value") === input_value) {
+                    $(this).addClass("dht-toggle-show");
+                }
+            });
         }
     }
 

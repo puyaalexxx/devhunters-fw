@@ -6,18 +6,17 @@ use function DHT\Helpers\dht_parse_option_attributes;
 $option = $args[ 'option' ] ?? [];
 ?>
 <!-- field - dropdown-multiple -->
-<div class="dht-field-wrapper">
+<div
+    class="dht-field-wrapper <?php echo isset( $option[ 'attr' ][ 'class' ] ) ? esc_attr( $option[ 'attr' ][ 'class' ] ) : ''; ?>" <?php echo dht_parse_option_attributes( $option[ 'attr' ] ); ?>>
 
     <div class="dht-title"><?php echo esc_html( $option[ 'title' ] ); ?></div>
 
-    <div
-        class="dht-field-child-wrapper dht-field-child-dropdown <?php echo isset( $option[ 'attr' ][ 'class' ] ) ? esc_attr( $option[ 'attr' ][ 'class' ] ) : ''; ?>"
-        <?php echo dht_parse_option_attributes( $option[ 'attr' ] ); ?>>
+    <div class="dht-field-child-wrapper dht-field-child-dropdown">
 
         <?php if ( !empty( $option[ 'choices' ] ) ): ?>
 
             <label
-                for="<?php echo esc_attr( $option[ 'id' ] ); ?>"><?php echo esc_attr( $option[ 'label' ] ); ?></label>
+                for="<?php echo esc_attr( $option[ 'id' ] ); ?>"><?php echo esc_attr( $option[ 'title' ] ); ?></label>
 
             <select class="dht-dropdown dht-field" name="<?php echo esc_attr( $option[ 'id' ] ); ?>[]"
                     id="<?php echo esc_attr( $option[ 'id' ] ); ?>" multiple

@@ -94,18 +94,18 @@ __webpack_require__.r(__webpack_exports__);
     "use strict";
     var Toggle = /** @class */ (function () {
         function Toggle($toggle) {
-            //switch reference
+            //toggle reference
             this.$_toggle = $toggle;
             this.$_toggleInput = this.$_toggle.children("input");
-            //init switch button
-            this._initSwitch();
+            //init toggle button
+            this._initToggle();
         }
         /**
-         * init switch button
+         * init toggle button
          *
          * @return void
          */
-        Toggle.prototype._initSwitch = function () {
+        Toggle.prototype._initToggle = function () {
             if (this.$_toggle.hasClass("dht-slider-on")) {
                 this.$_toggle.removeClass("dht-slider-on").addClass("dht-slider-off");
                 //get off value
@@ -118,6 +118,21 @@ __webpack_require__.r(__webpack_exports__);
                 var value = this.$_toggle.children(".dht-slider").children(".dht-slider-yes").attr("data-value");
                 this.$_toggleInput.val(value);
             }
+            this._showHideOptions();
+        };
+        /**
+         * show/hide options
+         *
+         * @return void
+         */
+        Toggle.prototype._showHideOptions = function () {
+            var input_value = this.$_toggle.children("input").attr("value");
+            this.$_toggle.siblings(".dht-toggle-content").each(function () {
+                $(this).removeClass("dht-toggle-show");
+                if ($(this).attr("data-toggle-value") === input_value) {
+                    $(this).addClass("dht-toggle-show");
+                }
+            });
         };
         return Toggle;
     }());

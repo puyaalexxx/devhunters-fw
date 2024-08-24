@@ -6,20 +6,19 @@ use function DHT\Helpers\dht_parse_option_attributes;
 $option = $args[ 'option' ] ?? [];
 ?>
     <!-- field - rangeslider -->
-    <div class="dht-field-wrapper">
+    <div
+        class="dht-field-wrapper <?php echo isset( $option[ 'attr' ][ 'class' ] ) ? esc_attr( $option[ 'attr' ][ 'class' ] ) : ''; ?>" <?php echo dht_parse_option_attributes( $option[ 'attr' ] ); ?>>
 
         <div class="dht-title"><?php echo esc_html( $option[ 'title' ] ); ?></div>
 
-        <div
-            class="dht-field-child-wrapper dht-field-child-rangeslider <?php echo isset( $option[ 'attr' ][ 'class' ] ) ? esc_attr( $option[ 'attr' ][ 'class' ] ) : ''; ?>"
-            <?php echo dht_parse_option_attributes( $option[ 'attr' ] ); ?>>
+        <div class="dht-field-child-wrapper dht-field-child-rangeslider">
 
             <?php if ( isset( $option[ 'range' ] ) && $option[ 'range' ] ): ?>
 
                 <div class="dht-slider-group">
 
                     <label
-                        for="<?php echo esc_attr( $option[ 'id' ] ); ?>-1"><?php echo esc_html( $option[ 'label' ] ); ?></label>
+                        for="<?php echo esc_attr( $option[ 'id' ] ); ?>-1"><?php echo esc_html( $option[ 'title' ] ); ?></label>
                     <input class="dht-range-slider dht-range-slider-1 dht-field"
                            id="<?php echo esc_attr( $option[ 'id' ] ); ?>-1"
                            type="text"
@@ -27,7 +26,7 @@ $option = $args[ 'option' ] ?? [];
                            value="<?php echo !empty( $option[ 'value' ] ) ? $option[ 'value' ][ 0 ] : ''; ?>" />
                     -
                     <label
-                        for="<?php echo esc_attr( $option[ 'id' ] ); ?>-2"><?php echo esc_html( $option[ 'label' ] ); ?></label>
+                        for="<?php echo esc_attr( $option[ 'id' ] ); ?>-2"><?php echo esc_html( $option[ 'title' ] ); ?></label>
                     <input class="dht-range-slider dht-range-slider-2 dht-field"
                            id="<?php echo esc_attr( $option[ 'id' ] ); ?>-2"
                            type="text"
@@ -47,7 +46,7 @@ $option = $args[ 'option' ] ?? [];
             <?php else: ?>
 
                 <label
-                    for="<?php echo esc_attr( $option[ 'id' ] ); ?>"><?php echo esc_html( $option[ 'label' ] ); ?></label>
+                    for="<?php echo esc_attr( $option[ 'id' ] ); ?>"><?php echo esc_html( $option[ 'title' ] ); ?></label>
                 <input class="dht-slider dht-field"
                        id="<?php echo esc_attr( $option[ 'id' ] ); ?>"
                        type="text"

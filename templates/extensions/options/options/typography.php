@@ -44,13 +44,12 @@ $preview_styles = TypographyHelpers::buildPreviewStyles( $option[ 'value' ], [
 $font_type = TypographyHelpers::getFontType( $font_value, $google_fonts, $et_fonts );
 ?>
     <!-- field - typography -->
-    <div class="dht-field-wrapper">
+    <div
+        class="dht-field-wrapper <?php echo isset( $option[ 'attr' ][ 'class' ] ) ? esc_attr( $option[ 'attr' ][ 'class' ] ) : ''; ?>" <?php echo dht_parse_option_attributes( $option[ 'attr' ] ); ?>>
 
         <div class="dht-title"><?php echo esc_html( $option[ 'title' ] ); ?></div>
 
-        <div
-            class="dht-field-child-wrapper dht-field-child-typography <?php echo isset( $option[ 'attr' ][ 'class' ] ) ? esc_attr( $option[ 'attr' ][ 'class' ] ) : ''; ?>"
-            <?php echo dht_parse_option_attributes( $option[ 'attr' ] ); ?>>
+        <div class="dht-field-child-wrapper dht-field-child-typography">
 
             <p class="dht-field-child-typography-preview" style="<?php echo esc_attr( $preview_styles ); ?>">
                 A B C D E F G H I J K L M N O P Q R S T U V W X Y Z a b c d e f g h i j k l m n o p q r

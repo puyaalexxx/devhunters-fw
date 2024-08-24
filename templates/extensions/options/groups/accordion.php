@@ -10,13 +10,12 @@ $group = $args[ 'group' ] ?? [];
 $registered_options = $args[ 'registered_options' ] ?? [];
 ?>
     <!-- field - accordion -->
-    <div class="dht-field-wrapper">
+    <div
+        class="dht-field-wrapper <?php echo isset( $group[ 'attr' ][ 'class' ] ) ? esc_attr( $group[ 'attr' ][ 'class' ] ) : ''; ?>" <?php echo dht_parse_option_attributes( $group[ 'attr' ] ); ?>>
 
         <div class="dht-title"><?php echo esc_html( $group[ 'title' ] ); ?></div>
 
-        <div
-            class="dht-field-child-wrapper dht-field-child-accordion <?php echo isset( $group[ 'attr' ][ 'class' ] ) ? esc_attr( $group[ 'attr' ][ 'class' ] ) : ''; ?>"
-            <?php echo dht_parse_option_attributes( $group[ 'attr' ] ); ?>>
+        <div class="dht-field-child-wrapper dht-field-child-accordion">
 
             <div class="dht-accordion">
 

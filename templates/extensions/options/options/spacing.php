@@ -9,14 +9,12 @@ $option = $args[ 'option' ] ?? [];
 $sizes = [ "px" => 'px', "percentage" => '%', "em" => 'em', "rem" => 'rem', "vw" => 'vw', "vh" => 'vh' ];
 ?>
     <!-- field - spacing -->
-    <div class="dht-field-wrapper">
+    <div
+        class="dht-field-wrapper <?php echo isset( $option[ 'attr' ][ 'class' ] ) ? esc_attr( $option[ 'attr' ][ 'class' ] ) : ''; ?>" <?php echo dht_parse_option_attributes( $option[ 'attr' ] ); ?>>
 
         <div class="dht-title"><?php echo esc_html( $option[ 'title' ] ); ?></div>
 
-        <div
-            class="dht-field-child-wrapper dht-field-child-spacing <?php echo isset( $option[ 'attr' ][ 'class' ] ) ? esc_attr( $option[ 'attr' ][ 'class' ] ) : ''; ?>"
-            <?php echo dht_parse_option_attributes( $option[ 'attr' ] ); ?>
-        >
+        <div class="dht-field-child-wrapper dht-field-child-spacing">
 
             <div class="dht-field-spacing-group">
 
@@ -88,7 +86,7 @@ $sizes = [ "px" => 'px', "percentage" => '%', "em" => 'em', "rem" => 'rem', "vw"
                     <select class="dht-spacing-dropdown dht-field"
                             name="<?php echo esc_attr( $option[ 'id' ] ); ?>[size]"
                             id="<?php echo esc_attr( $option[ 'id' ] ); ?>-sizes">
-
+                        
                         <?php foreach ( $sizes as $key => $size ): ?>
                             <option
                                 value="<?php echo esc_attr( $key ); ?>" <?php echo $option[ 'value' ][ 'size' ] == $key ? 'selected' : ''; ?>><?php echo esc_html( $size ); ?></option>
@@ -98,15 +96,15 @@ $sizes = [ "px" => 'px', "percentage" => '%', "em" => 'em', "rem" => 'rem', "vw"
 
                 </div>
             </div>
-
+            
             <?php //echo esc_attr( $option[ 'value' ] ); ?>
-
+            
             <?php if ( !empty( $option[ 'description' ] ) ): ?>
                 <div class="dht-description"><?php echo esc_html( $option[ 'description' ] ); ?></div>
             <?php endif; ?>
 
         </div>
-
+        
         <?php if ( !empty( $option[ 'tooltip' ] ) ): ?>
             <div class="dht-info-help dashicons dashicons-info"
                  data-tooltips="<?php echo esc_html( $option[ 'tooltip' ] ); ?>"

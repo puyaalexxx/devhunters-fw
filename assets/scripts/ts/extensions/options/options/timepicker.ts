@@ -38,6 +38,11 @@ import jQuery from "jquery";
                 beforeShow: function (input: Element, instance: any): void {
                     // Add a custom className to the datepicker element
                     $(instance.dpDiv).addClass("dht-datepicker-ui");
+
+                    // Move the datepicker to a specific container
+                    setTimeout(function () {
+                        $("#ui-datepicker-div.dht-datepicker-ui").insertAfter($(input));
+                    }, 10); // Delay to ensure the datepicker is created before moving it
                 },
             });
         }

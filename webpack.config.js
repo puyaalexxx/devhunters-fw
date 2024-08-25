@@ -79,6 +79,7 @@ const upload_style = "upload-style";
 const upload_gallery_style = "upload-gallery-style";
 const icon_style = "icon-style";
 const typography_style = "typography-style";
+const wpeditor_style = "wpeditor-style";
 
 /////////extensions - sidebars - pcss
 const create_sidebars_style = "create-sidebars-style";
@@ -165,6 +166,7 @@ module.exports = {
         [upload_gallery_style]: "./assets/styles/postcss/extensions/options/options/" + upload_gallery_style.replace("-style", "") + ".pcss", // upload gallery CSS entry point
         [icon_style]: "./assets/styles/postcss/extensions/options/options/" + icon_style.replace("-style", "") + ".pcss", // icon CSS entry point
         [typography_style]: "./assets/styles/postcss/extensions/options/options/" + typography_style.replace("-style", "") + ".pcss", // typography CSS entry point
+        [wpeditor_style]: "./assets/styles/postcss/extensions/options/options/" + wpeditor_style.replace("-style", "") + ".pcss", // wp editor CSS entry point
 
         /////////extensions - sidebars - css
         [create_sidebars_style]: "./assets/styles/postcss/extensions/sidebars/" + create_sidebars_style.replace("-style", "") + ".pcss", // Sidebars CSS entry point
@@ -389,6 +391,9 @@ module.exports = {
                 if (chunkData.chunk.name === typography_style) {
                     return "styles/css/extensions/options/options/" + typography_style + ".css";
                 } //typography option file
+                if (chunkData.chunk.name === wpeditor_style) {
+                    return "styles/css/extensions/options/options/" + wpeditor_style + ".css";
+                } //wp editor option file
 
                 /////////extensions - sidebars - css
                 if (chunkData.chunk.name === create_sidebars_style) {

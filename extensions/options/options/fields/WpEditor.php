@@ -4,6 +4,7 @@ declare( strict_types = 1 );
 namespace DHT\Extensions\Options\Options\fields;
 
 use DHT\Extensions\Options\Options\BaseOption;
+use function DHT\fw;
 use function DHT\Helpers\dht_sanitize_wpeditor_value;
 
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
@@ -33,6 +34,9 @@ final class WpEditor extends BaseOption {
         
         // Enqueue the WordPress editor scripts and styles
         wp_enqueue_editor();
+        
+        wp_register_style( DHT_PREFIX . '-wpeditor-option', DHT_ASSETS_URI . 'styles/css/extensions/options/options/wpeditor-style.css', array(), fw()->manifest->get( 'version' ) );
+        wp_enqueue_style( DHT_PREFIX . '-wpeditor-option' );
     }
     
     /**
@@ -49,8 +53,16 @@ final class WpEditor extends BaseOption {
         
         if ( empty( $prefix_id ) ) return $option;
         
+        $id = $prefix_id . '[' . $option[ 'id' ] . ']';
+        
         //wp editor does not support brackets in the id field so need to leave it withour prefix id
-        $option[ 'name' ] = $prefix_id . '[' . $option[ 'id' ] . ']';
+        $option[ 'name' ] = $id;
+        
+        if ( str_ends_with( $id, ']' ) ) {
+            // Replace the last character with an empty space
+            $id = substr( $id, 0, -1 );
+        }
+        $option[ 'id' ] = str_replace( [ '[', ']' ], '-', $id );
         
         return $option;
     }

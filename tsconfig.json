@@ -6,16 +6,18 @@
     "strict": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "sourceMap" : true,
-    "strictNullChecks" : true,
+    "sourceMap": true,
+    "strictNullChecks": true,
     "noImplicitAny": true,
-    "outDir" : "assets/scripts/js",
+    "outDir": "assets/scripts/js",
     "moduleResolution": "node",
-    "allowJs": true,
+    "allowJs": true
   },
   "include": [
     "assets/scripts/ts/",
     "assets/scripts/ts/*.tsx"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }

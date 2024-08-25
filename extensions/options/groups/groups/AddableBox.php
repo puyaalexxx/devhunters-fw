@@ -69,6 +69,8 @@ final class AddableBox extends BaseGroup {
             if ( !empty( $group ) ) {
                 
                 echo dht_render_box_item_content( $group, [], $this->_registeredOptions, _x( 'Box Title', 'options', DHT_PREFIX ), $box_number );
+                
+                
             } else {
                 
                 echo _x( 'No options available', 'options', DHT_PREFIX );

@@ -3,13 +3,13 @@ declare( strict_types = 1 );
 
 namespace DHT\Extensions\Options\Options\fields;
 
-use DHT\Extensions\Options\Options\BaseOption;
+use DHT\Extensions\Options\Options\BaseField;
 use function DHT\fw;
 use function DHT\Helpers\dht_get_variables_from_file;
 
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
-final class Icon extends BaseOption {
+final class Icon extends BaseField {
     
     //field type
     protected string $_field = 'icon';
@@ -28,12 +28,12 @@ final class Icon extends BaseOption {
     /**
      * Enqueue input scripts and styles
      *
-     * @param array $option
+     * @param array $field
      *
      * @return void
      * @since     1.0.0
      */
-    public function enqueueOptionScripts( array $option ) : void {
+    public function enqueueOptionScripts( array $field ) : void {
         
         // Enqueue Thickbox script
         wp_enqueue_script( 'thickbox' );
@@ -59,12 +59,12 @@ final class Icon extends BaseOption {
         wp_enqueue_style( DHT_PREFIX . '-bootstrap-icons-css' );
         
         // Register custom style
-        wp_register_style( DHT_PREFIX . '-icon-option', DHT_ASSETS_URI . 'styles/css/extensions/options/options/icon-style.css', array(), fw()->manifest->get( 'version' ) );
-        wp_enqueue_style( DHT_PREFIX . '-icon-option' );
+        wp_register_style( DHT_PREFIX . '-icon-field', DHT_ASSETS_URI . 'styles/css/extensions/options/fields/icon-style.css', array(), fw()->manifest->get( 'version' ) );
+        wp_enqueue_style( DHT_PREFIX . '-icon-field' );
         
         //custom option script
-        wp_enqueue_script( DHT_PREFIX . '-icon-option', DHT_ASSETS_URI . 'scripts/js/extensions/options/options/icon-script.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
-        wp_localize_script( DHT_PREFIX . '-icon-option', DHT_PREFIX . '_icon_option_ajax', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
+        wp_enqueue_script( DHT_PREFIX . '-icon-field', DHT_ASSETS_URI . 'scripts/js/extensions/options/fields/icon-script.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
+        wp_localize_script( DHT_PREFIX . '-icon-field', DHT_PREFIX . '_icon_option_ajax', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
     }
     
     /**
@@ -137,45 +137,45 @@ final class Icon extends BaseOption {
     }
     
     /**
-     * add prefix id for option id to display it in the form as array values
+     * add prefix id for field id to display it in the form as array values
      * (used to retrieve the $_POST['prefix_id'] values)
      *
-     * @param array  $option
+     * @param array  $field
      * @param string $prefix_id
      *
      * @return array
      * @since     1.0.0
      */
-    public function addIDPrefix( array $option, string $prefix_id ) : array {
+    public function addIDPrefix( array $field, string $prefix_id ) : array {
         
-        if ( empty( $prefix_id ) ) return $option;
+        if ( empty( $prefix_id ) ) return $field;
         
-        $option[ 'name' ] = $prefix_id . '[' . $option[ 'id' ] . ']';
-        $option[ 'id' ] = str_replace( [ '[', ']' ], '-', $prefix_id . '-' . $option[ 'id' ] );
+        $field[ 'name' ] = $prefix_id . '[' . $field[ 'id' ] . ']';
+        $field[ 'id' ] = str_replace( [ '[', ']' ], '-', $prefix_id . '-' . $field[ 'id' ] );
         
-        return $option;
+        return $field;
     }
     
     /**
-     *  In this method you receive $option_post_value (from form submit or whatever)
+     *  In this method you receive $field_post_value (from form submit or whatever)
      *  and must return correct and safe value that will be stored in database.
      *
-     *  $option_post_value can be null.
-     *  In this case you should return default value from $option['value']
+     *  $field_post_value can be null.
+     *  In this case you should return default value from $field['value']
      *
-     * @param array $option            - option field
-     * @param mixed $option_post_value - option $_POST value passed on save
+     * @param array $field            - field
+     * @param mixed $field_post_value - $field $_POST value passed on save
      *
-     * @return mixed - changed option value
+     * @return mixed - changed field value
      * @since     1.0.0
      */
-    public function saveValue( array $option, mixed $option_post_value ) : mixed {
+    public function saveValue( array $field, mixed $field_post_value ) : mixed {
         
-        if ( empty( $option_post_value ) ) {
-            return $option[ 'value' ];
+        if ( empty( $field_post_value ) ) {
+            return $field[ 'value' ];
         }
         
-        return (array)json_decode( stripslashes( $option_post_value ) );
+        return (array)json_decode( stripslashes( $field_post_value ) );
     }
     
 }

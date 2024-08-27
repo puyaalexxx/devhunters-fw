@@ -1,7 +1,5 @@
 <?php
 
-use function DHT\Helpers\dht_load_preloader;
-
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 $hook_name = 'dht_render_dashboard_page_content';
@@ -10,7 +8,7 @@ $hook_name = 'dht_render_dashboard_page_content';
 
     <div class="dht-container">
 
-        <?php echo dht_load_preloader(); ?>
+        <?php //echo dht_load_preloader(); ?>
 
         <?php if ( has_action( $hook_name ) ): ?>
 

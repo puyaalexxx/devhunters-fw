@@ -6,8 +6,8 @@ namespace DHT\Extensions\Options;
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 use DHT\Extensions\Options\Containers\Containers\SideMenu;
-use DHT\Extensions\Options\Groups\Groups\{Accordion, AddableBox, Group, Tabs, Toggle};
-use DHT\Extensions\Options\Options\BaseOption;
+use DHT\Extensions\Options\Groups\Groups\{Accordion, AddableBox, Group, Tabs};
+use DHT\Extensions\Options\Options\BaseField;
 use DHT\Extensions\Options\Options\fields\{AceEditor,
     Borders,
     Checkbox,
@@ -33,6 +33,7 @@ use DHT\Extensions\Options\Options\fields\{AceEditor,
     UploadGallery,
     UploadImage,
     WpEditor};
+use DHT\Extensions\Options\Toggles\Toggles\Toggle;
 use DHT\Helpers\Traits\Options\{OptionsHelpers, RenderOptionsHelpers, SaveOptionsHelpers};
 use function DHT\fw;
 use function DHT\Helpers\{dht_get_db_settings_option, dht_load_view};
@@ -47,7 +48,10 @@ final class Options implements IOptions {
     private array $_options;
     
     //option type Classes
-    private array $_optionClasses = [];
+    private array $_optionFieldsClasses = [];
+    
+    //option toggle Classes
+    private array $_optionTogglesClasses = [];
     
     //option group Classes
     private array $_optionGroupsClasses = [];
@@ -79,7 +83,10 @@ final class Options implements IOptions {
     public function init() : void {
         
         //register the Framework options classes
-        $this->_registerFWOptionTypes();
+        $this->_registerFWOptionFields();
+        
+        //register the Framework toggles classes
+        $this->_registerFWOptionToggles();
         
         //register the Framework options group classes
         $this->_registerFWOptionGroups();
@@ -91,7 +98,7 @@ final class Options implements IOptions {
         add_action( 'admin_enqueue_scripts', [ $this, 'enqueueFormScripts' ] );
         
         //enqueue scripts for each option received from the plugin
-        $this->_getEnqueueOptionArgs( $this->_options, array_merge( $this->_optionClasses, $this->_optionGroupsClasses, $this->_optionContainerClasses ) );
+        $this->_getEnqueueOptionArgs( $this->_options, array_merge( $this->_optionFieldsClasses, $this->_optionTogglesClasses, $this->_optionGroupsClasses, $this->_optionContainerClasses ) );
         
         //generate nonce field
         $this->_nonce = $this->_generateNonce();
@@ -128,15 +135,15 @@ final class Options implements IOptions {
      * TODO: finish this method registerCustomOptionType
      * create custom option types located outside the framework
      *
-     * @param BaseOption $optionClass
-     * @param array      $option
+     * @param BaseField $optionClass
+     * @param array     $option
      *
      * @return void
      * @since     1.0.0
      */
-    public function registerCustomOptionType( BaseOption $optionClass, array $option ) : void {
+    public function registerCustomOptionType( BaseField $optionClass, array $option ) : void {
         
-        $this->_optionClasses[ $option[ 'type' ] ] = $optionClass;
+        $this->_optionFieldsClasses[ $option[ 'type' ] ] = $optionClass;
     }
     
     /**
@@ -215,7 +222,7 @@ final class Options implements IOptions {
     }
     
     /**
-     * register framework option containers
+     * register framework option containers (container options can contain group, toggle options and simple options)
      *
      * @return void
      * @since     1.0.0
@@ -223,14 +230,14 @@ final class Options implements IOptions {
     private function _registerFWOptionContainers() : void {
         
         //instantiate the option group classes
-        $sidemenu = new SideMenu( $this->_optionGroupsClasses, $this->_optionClasses );
+        $sidemenu = new SideMenu( $this->_optionGroupsClasses, $this->_optionTogglesClasses, $this->_optionFieldsClasses );
         
         //add class instance to the _optionContainerClasses array to use throughout the Container class methods
         $this->_optionContainerClasses[ $sidemenu->getContainer() ] = $sidemenu;
     }
     
     /**
-     * register framework option groups
+     * register framework option groups (group options can contain toggle options and simple options)
      *
      * @return void
      * @since     1.0.0
@@ -238,18 +245,31 @@ final class Options implements IOptions {
     private function _registerFWOptionGroups() : void {
         
         //instantiate the option group classes
-        $group = new Group( $this->_optionClasses );
-        $tabs = new Tabs( $this->_optionClasses );
-        $accordion = new Accordion( $this->_optionClasses );
-        $addable_box = new AddableBox( $this->_optionClasses );
-        $toggle = new Toggle( $this->_optionClasses );
+        $group = new Group( $this->_optionTogglesClasses, $this->_optionFieldsClasses );
+        $tabs = new Tabs( $this->_optionTogglesClasses, $this->_optionFieldsClasses );
+        $accordion = new Accordion( $this->_optionTogglesClasses, $this->_optionFieldsClasses );
+        $addable_box = new AddableBox( $this->_optionTogglesClasses, $this->_optionFieldsClasses );
         
         //add class instance to the _optionGroupClasses array to use throughout the Group class methods
         $this->_optionGroupsClasses[ $group->getGroup() ] = $group;
         $this->_optionGroupsClasses[ $tabs->getGroup() ] = $tabs;
         $this->_optionGroupsClasses[ $accordion->getGroup() ] = $accordion;
         $this->_optionGroupsClasses[ $addable_box->getGroup() ] = $addable_box;
-        $this->_optionGroupsClasses[ $toggle->getGroup() ] = $toggle;
+    }
+    
+    /**
+     * register framework option toggles (toggle options can contain only simple options)
+     *
+     * @return void
+     * @since     1.0.0
+     */
+    private function _registerFWOptionToggles() : void {
+        
+        //instantiate the option toggle classes
+        $toggle = new Toggle( $this->_optionFieldsClasses );
+        
+        //add class instance to the _optionToggleClasses array to use throughout the Toggle class methods
+        $this->_optionTogglesClasses[ $toggle->getToggle() ] = $toggle;
     }
     
     /**
@@ -258,7 +278,7 @@ final class Options implements IOptions {
      * @return void
      * @since     1.0.0
      */
-    private function _registerFWOptionTypes() : void {
+    private function _registerFWOptionFields() : void {
         
         //instantiate the option type classes
         $input = new Input();
@@ -287,32 +307,32 @@ final class Options implements IOptions {
         $icon = new Icon();
         $typography = new Typography();
         
-        //add class instance to the _optionClasses array to use throughout the Option class methods
-        $this->_optionClasses[ $input->getField() ] = $input;
-        $this->_optionClasses[ $textarea->getField() ] = $textarea;
-        $this->_optionClasses[ $checkbox->getField() ] = $checkbox;
-        $this->_optionClasses[ $radio->getField() ] = $radio;
-        $this->_optionClasses[ $text->getField() ] = $text;
-        $this->_optionClasses[ $wpeditor->getField() ] = $wpeditor;
-        $this->_optionClasses[ $switch_field->getField() ] = $switch_field;
-        $this->_optionClasses[ $dropdown->getField() ] = $dropdown;
-        $this->_optionClasses[ $dropdown_multple->getField() ] = $dropdown_multple;
-        $this->_optionClasses[ $multi_input->getField() ] = $multi_input;
-        $this->_optionClasses[ $ace_editor->getField() ] = $ace_editor;
-        $this->_optionClasses[ $colorpicker->getField() ] = $colorpicker;
-        $this->_optionClasses[ $datepicker->getField() ] = $datepicker;
-        $this->_optionClasses[ $timepicker->getField() ] = $timepicker;
-        $this->_optionClasses[ $datetimepicker->getField() ] = $datetimepicker;
-        $this->_optionClasses[ $range_slider->getField() ] = $range_slider;
-        $this->_optionClasses[ $spacing->getField() ] = $spacing;
-        $this->_optionClasses[ $radio_image->getField() ] = $radio_image;
-        $this->_optionClasses[ $multi_options->getField() ] = $multi_options;
-        $this->_optionClasses[ $borders->getField() ] = $borders;
-        $this->_optionClasses[ $upload_image->getField() ] = $upload_image;
-        $this->_optionClasses[ $upload->getField() ] = $upload;
-        $this->_optionClasses[ $upload_gallery->getField() ] = $upload_gallery;
-        $this->_optionClasses[ $icon->getField() ] = $icon;
-        $this->_optionClasses[ $typography->getField() ] = $typography;
+        //add class instance to the _optionFieldsClasses array to use throughout the Option class methods
+        $this->_optionFieldsClasses[ $input->getField() ] = $input;
+        $this->_optionFieldsClasses[ $textarea->getField() ] = $textarea;
+        $this->_optionFieldsClasses[ $checkbox->getField() ] = $checkbox;
+        $this->_optionFieldsClasses[ $radio->getField() ] = $radio;
+        $this->_optionFieldsClasses[ $text->getField() ] = $text;
+        $this->_optionFieldsClasses[ $wpeditor->getField() ] = $wpeditor;
+        $this->_optionFieldsClasses[ $switch_field->getField() ] = $switch_field;
+        $this->_optionFieldsClasses[ $dropdown->getField() ] = $dropdown;
+        $this->_optionFieldsClasses[ $dropdown_multple->getField() ] = $dropdown_multple;
+        $this->_optionFieldsClasses[ $multi_input->getField() ] = $multi_input;
+        $this->_optionFieldsClasses[ $ace_editor->getField() ] = $ace_editor;
+        $this->_optionFieldsClasses[ $colorpicker->getField() ] = $colorpicker;
+        $this->_optionFieldsClasses[ $datepicker->getField() ] = $datepicker;
+        $this->_optionFieldsClasses[ $timepicker->getField() ] = $timepicker;
+        $this->_optionFieldsClasses[ $datetimepicker->getField() ] = $datetimepicker;
+        $this->_optionFieldsClasses[ $range_slider->getField() ] = $range_slider;
+        $this->_optionFieldsClasses[ $spacing->getField() ] = $spacing;
+        $this->_optionFieldsClasses[ $radio_image->getField() ] = $radio_image;
+        $this->_optionFieldsClasses[ $multi_options->getField() ] = $multi_options;
+        $this->_optionFieldsClasses[ $borders->getField() ] = $borders;
+        $this->_optionFieldsClasses[ $upload_image->getField() ] = $upload_image;
+        $this->_optionFieldsClasses[ $upload->getField() ] = $upload;
+        $this->_optionFieldsClasses[ $upload_gallery->getField() ] = $upload_gallery;
+        $this->_optionFieldsClasses[ $icon->getField() ] = $icon;
+        $this->_optionFieldsClasses[ $typography->getField() ] = $typography;
     }
     
 }

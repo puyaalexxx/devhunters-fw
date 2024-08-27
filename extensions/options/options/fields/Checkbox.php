@@ -3,14 +3,12 @@ declare( strict_types = 1 );
 
 namespace DHT\Extensions\Options\Options\fields;
 
-use DHT\Extensions\Options\Options\BaseOption;
+use DHT\Extensions\Options\Options\BaseField;
 use function DHT\fw;
 
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
-//TODO:  if I set a checkbox to be checked by default and then uncheck it and send via POSt it will always be checked
-// need to find a fix for this.
-final class Checkbox extends BaseOption {
+final class Checkbox extends BaseField {
     
     //field type
     protected string $_field = 'checkbox';
@@ -26,33 +24,33 @@ final class Checkbox extends BaseOption {
     /**
      * Enqueue input scripts and styles
      *
-     * @param array $option
+     * @param array $field
      *
      * @return void
      * @since     1.0.0
      */
-    public function enqueueOptionScripts( array $option ) : void {
+    public function enqueueOptionScripts( array $field ) : void {
         
-        wp_register_style( DHT_PREFIX . '-checkbox-option', DHT_ASSETS_URI . 'styles/css/extensions/options/options/checkbox-style.css', array(), fw()->manifest->get( 'version' ) );
-        wp_enqueue_style( DHT_PREFIX . '-checkbox-option' );
+        wp_register_style( DHT_PREFIX . '-checkbox-field', DHT_ASSETS_URI . 'styles/css/extensions/options/fields/checkbox-style.css', array(), fw()->manifest->get( 'version' ) );
+        wp_enqueue_style( DHT_PREFIX . '-checkbox-field' );
     }
     
     /**
      * merge the field value with the saved value if exists
      *
-     * @param array $option      - option field
-     * @param       $saved_value $saved_value - saved values
+     * @param array $field       - field
+     * @param mixed $saved_value $saved_value - saved values
      *
      * @return array
      * @since     1.0.0
      */
-    public function mergeValues( array $option, mixed $saved_value ) : array {
+    public function mergeValues( array $field, mixed $saved_value ) : array {
         
         //if saved value exists
         if ( !empty( $saved_value ) ) {
             
             $values = [];
-            foreach ( $option[ 'choices' ] as $checkbox ) {
+            foreach ( $field[ 'choices' ] as $checkbox ) {
                 
                 //if checkbox id exists in saved_values array, save it as checked value
                 if ( array_key_exists( $checkbox[ 'id' ], $saved_value ) ) {
@@ -60,13 +58,13 @@ final class Checkbox extends BaseOption {
                 }
             }
             
-            $option[ 'value' ] = $values;
+            $field[ 'value' ] = $values;
             
-        } /*elseif ( empty($saved_value) && $option['id'] ) {
-            $option[ 'value' ] = [];
+        } /*elseif ( empty($saved_value) && $field['id'] ) {
+            $field[ 'value' ] = [];
         }*/
         
-        return $option;
+        return $field;
     }
     
 }

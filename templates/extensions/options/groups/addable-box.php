@@ -7,7 +7,8 @@ if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 $group = $args[ 'group' ] ?? [];
 //used to call the render method on
-$registered_options = $args[ 'registered_options' ] ?? [];
+$registered_options_classes = $args[ 'registered_options_classes' ] ?? [];
+
 $saved_values = !empty( $group[ 'value' ] ) ? $group[ 'value' ] : [];
 ?>
     <!-- field - addable box -->
@@ -37,14 +38,14 @@ $saved_values = !empty( $group[ 'value' ] ) ? $group[ 'value' ] : [];
 
                                 <?php if ( $count == (int)$group[ 'limit' ] ) break; ?>
 
-                                <?php echo dht_display_box_item( $group, $saved_value, $registered_options, $key ); ?>
+                                <?php echo dht_display_box_item( $group, $saved_value, $registered_options_classes, $key ); ?>
 
                                 <?php $count++; ?>
                             <?php endforeach; ?>
 
                         <?php else: ?>
 
-                            <?php echo dht_display_box_item( $group, [], $registered_options, 1 ); ?>
+                            <?php echo dht_display_box_item( $group, [], $registered_options_classes, 1 ); ?>
 
                         <?php endif; ?>
 

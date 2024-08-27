@@ -147,7 +147,12 @@ import jQuery from "jquery";
          */
         private _enableSortableBoxes() {
             if (this.$_addable_box.hasClass("dht-field-child-addable-box-sortable")) {
-                this.$_addable_box.children(".dht-addable-box-repeater").children(".dht-addable-box-items").sortable();
+                this.$_addable_box.children(".dht-addable-box-repeater").children(".dht-addable-box-items").sortable({
+                    containment: "parent",
+                    forcePlaceholderSize: true,
+                    handle: ".dht-addable-box-title", // Selector for the handle element
+                    placeholder: "sortable-placeholder", // Optional: Adds a placeholder during sorting
+                });
             }
         }
 
@@ -259,6 +264,10 @@ import jQuery from "jquery";
         private _reinitializeOptions($content: JQuery<HTMLElement>) {
             // Trigger custom ajax events based on the presence of specific elements
             {
+                //if toggle option exists in the current content, reload its js code
+                if ($content.find(".dht-field-child-toggle")) {
+                    $(document).trigger("dht_toggleAjaxComplete");
+                }
                 //if colorpicker exists in the current content, reload its js code
                 if ($content.find(".dht-field-child-colorpicker") || $content.find(".dht-field-child-borders")) {
                     $(document).trigger("dht_colorPickerAjaxComplete");
@@ -303,6 +312,22 @@ import jQuery from "jquery";
                 if ($content.find(".dht-field-child-typography")) {
                     $(document).trigger("dht_typographyAjaxComplete");
                 }
+                //if switch exists in the current content, reload its js code
+                if ($content.find(".dht-field-child-switch")) {
+                    $(document).trigger("dht_switchtAjaxComplete");
+                }
+                //if radio image exists in the current content, reload its js code
+                if ($content.find(".dht-field-child-image-select")) {
+                    $(document).trigger("dht_radioImageAjaxComplete");
+                }
+                //if multiinput exists in the current content, reload its js code
+                if ($content.find(".dht-field-child-multiinput")) {
+                    $(document).trigger("dht_multiInputAjaxComplete");
+                }
+                //if icon exists in the current content, reload its js code
+                if ($content.find(".dht-field-child-icons")) {
+                    $(document).trigger("dht_iconAjaxComplete");
+                }
             }
 
             this._reinitializeWPEditor($content);
@@ -319,7 +344,7 @@ import jQuery from "jquery";
                 if (typeof wp === "undefined" || typeof wp.editor === "undefined") return;
 
                 //get editor if
-                const id = $(this).attr("id");
+                const id = $(this).attr("id")!;
 
                 if (typeof wp.editor !== "undefined" && typeof id !== "undefined") {
                     wp.editor.remove(id);
@@ -328,7 +353,7 @@ import jQuery from "jquery";
                             wpautop: true,
                             plugins:
                                 "charmap colorpicker compat3x directionality fullscreen hr image lists media paste tabfocus textcolor wordpress wpautoresize wpdialogs wpeditimage wpemoji wpgallery wplink wptextpattern wpview",
-                            toolbar1: "formatselect bold italic bullist numlist blockquote alignleft aligncenter alignright link wp_more fullscreen wp_adv",
+                            toolbar1: "formatselect bold italic bullist numlist blockquote alignleft aligncenter alignright link wp_more wp_adv",
                             toolbar2: "strikethrough hr forecolor pastetext removeformat charmap outdent indent undo redo wp_help",
                         },
                         quicktags: {
@@ -337,28 +362,6 @@ import jQuery from "jquery";
                         },
                         mediaButtons: true,
                     });
-
-                    /* This method did not work fully
-                    
-                    // Remove existing editors
-                    //tinymce.execCommand("mceRemoveEditor", true, id);
-
-                    // Reinitialize TinyMCE editor
-                    tinymce.execCommand("mceAddEditor", true, id);
-
-                    // Initialize Quicktags
-                    if (typeof quicktags === "function") {
-                        quicktags({ id: id });
-                    }
-
-                    //get active tab
-                    const parent_editor = $("#" + id).parents(".wp-editor-wrap");
-                    if (parent_editor.hasClass("html-active")) {
-                        //tinymce.execCommand("mceToggleEditor", true, id);
-
-                        parent_editor.removeClass("html-active").addClass("tmce-active");
-                        parent_editor.find(".switch-tmce").click();
-                    }*/
                 }
             });
         }

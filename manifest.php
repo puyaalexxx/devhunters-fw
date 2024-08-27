@@ -26,18 +26,18 @@ $manifest[ 'requirements' ] = array(
 
 $manifest[ 'extensions' ] = array(
     'cpt' => array(
-        'description' => _x( 'Creating custom post types dynamically from option configurations', DHT_PREFIX )
+        'description' => _x( 'Creating custom post types dynamically from option configurations', 'manifest', DHT_PREFIX )
     ),
     'dashboard-pages' => array(
-        'description' => _x( 'Creating dashboard menu pages and subpages dynamically from option configurations', DHT_PREFIX )
+        'description' => _x( 'Creating dashboard menu pages and subpages dynamically from option configurations', 'manifest', DHT_PREFIX )
     ),
     'sidebars' => array(
-        'description' => _x( 'Creating sidebars dynamically from option configurations also adding a dynamic form to wigets area to create sidebars on the fly', DHT_PREFIX )
+        'description' => _x( 'Creating sidebars dynamically from option configurations also adding a dynamic form to wigets area to create sidebars on the fly', 'manifest', DHT_PREFIX )
     ),
     'widgets' => array(
-        'description' => _x( 'Small extension to create widgets dynamically from an array of widget names', DHT_PREFIX )
+        'description' => _x( 'Small extension to create widgets dynamically from an array of widget names', 'manifest', DHT_PREFIX )
     ),
     'options' => array(
-        'description' => _x( 'An extension to create different options to be used on dashboard area and different post types', DHT_PREFIX )
+        'description' => _x( 'An extension to create different options to be used on dashboard area and different post types', 'manifest', DHT_PREFIX )
     ),
 );

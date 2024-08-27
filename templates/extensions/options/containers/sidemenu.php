@@ -8,7 +8,7 @@ $menu_pages = $args[ 'container' ] ?? [];
 //get sidemenu saved values
 $saved_values = $args[ 'saved_values' ] ?? [];
 //used to call the render method on
-$registered_options = $args[ 'registered_options' ] ?? [];
+$registered_options_classes = $args[ 'registered_options_classes' ] ?? [];
 //each current menu item / tab options
 $options = [];
 ?>
@@ -75,11 +75,11 @@ $options = [];
                     // Render submenu items
                     if ( isset( $page[ 'pages' ] ) ) {
                         foreach ( $page[ 'pages' ] as $subpage_id => $options ) {
-                            echo dht_render_sidebar_content( [ 'menu_id' => $menu_pages[ 'id' ], 'page_id' => $page_id, 'subpage_id' => $subpage_id ], $options, $saved_values, $registered_options, $count );
+                            echo dht_render_sidebar_content( [ 'menu_id' => $menu_pages[ 'id' ], 'page_id' => $page_id, 'subpage_id' => $subpage_id ], $options, $saved_values, $registered_options_classes, $count );
                         }
                     } else {
                         // Render parent menu item options
-                        echo dht_render_sidebar_content( [ 'menu_id' => $menu_pages[ 'id' ], 'page_id' => $page_id ], $page[ 'options' ], $saved_values, $registered_options, $count );
+                        echo dht_render_sidebar_content( [ 'menu_id' => $menu_pages[ 'id' ], 'page_id' => $page_id ], $page[ 'options' ], $saved_values, $registered_options_classes, $count );
                     }
                     ?>
 
@@ -155,7 +155,7 @@ $options = [];
             <div class="dht-cosidebar-body">
 
                 <?php
-                echo dht_render_sidebar_content( [ 'menu_id' => $menu_pages[ 'id' ] ], $options, $saved_values, $registered_options, 1 );
+                echo dht_render_sidebar_content( [ 'menu_id' => $menu_pages[ 'id' ] ], $options, $saved_values, $registered_options_classes, 1 );
                 ?>
 
             </div>
@@ -196,7 +196,7 @@ function dht_render_subpage_li_area( string $active_class, string $page_link, ar
 }
 
 // Function to render the content of the sidebar
-function dht_render_sidebar_content( $ids, $options, $saved_values, $registered_options, $count ) : string {
+function dht_render_sidebar_content( $ids, $options, $saved_values, $registered_options_classes, $count ) : string {
 
     $is_active_class = ( $count == 1 ) ? 'dht-cosidebar-active' : '';
 
@@ -223,7 +223,7 @@ function dht_render_sidebar_content( $ids, $options, $saved_values, $registered_
 
     <div id="<?php echo esc_attr( $content_id ); ?>"
          class="dht-cosidebar-content <?php echo esc_attr( $is_active_class ); ?> ">
-        <?php echo dht_render_options( $options, $prefix_id, $saved_value, $registered_options[ 'groupClasses' ], $registered_options[ 'optionClasses' ] ) ?>
+        <?php echo dht_render_options( $options, $prefix_id, $saved_value, $registered_options_classes ) ?>
     </div>
 
     <?php

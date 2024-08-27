@@ -3,12 +3,12 @@ declare( strict_types = 1 );
 
 namespace DHT\Extensions\Options\Options\fields;
 
-use DHT\Extensions\Options\Options\BaseOption;
+use DHT\Extensions\Options\Options\BaseField;
 use function DHT\fw;
 
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
-class TimePicker extends BaseOption {
+class TimePicker extends BaseField {
     
     //field type
     protected string $_field = 'timepicker';
@@ -24,12 +24,12 @@ class TimePicker extends BaseOption {
     /**
      * Enqueue input scripts and styles
      *
-     * @param array $option
+     * @param array $field
      *
      * @return void
      * @since     1.0.0
      */
-    public function enqueueOptionScripts( array $option ) : void {
+    public function enqueueOptionScripts( array $field ) : void {
         
         wp_register_style( DHT_PREFIX . '-jquery-ui-datepicker', DHT_ASSETS_URI . 'styles/libraries/jquery-ui-datepicker.min.css', array(), fw()->manifest->get( 'version' ) );
         wp_enqueue_style( DHT_PREFIX . '-jquery-ui-datepicker' );
@@ -37,14 +37,14 @@ class TimePicker extends BaseOption {
         wp_enqueue_style( DHT_PREFIX . '-jquery-ui-timepicker' );
         
         //custom css
-        wp_register_style( DHT_PREFIX . '-timepicker-option', DHT_ASSETS_URI . 'styles/css/extensions/options/options/timepicker-style.css', array(), fw()->manifest->get( 'version' ) );
-        wp_enqueue_style( DHT_PREFIX . '-timepicker-option' );
+        wp_register_style( DHT_PREFIX . '-timepicker-field', DHT_ASSETS_URI . 'styles/css/extensions/options/fields/timepicker-style.css', array(), fw()->manifest->get( 'version' ) );
+        wp_enqueue_style( DHT_PREFIX . '-timepicker-field' );
         
         wp_enqueue_script( DHT_PREFIX . '-jquery-ui-datepicker', DHT_ASSETS_URI . 'scripts/libraries/jquery-ui-datepicker.min.js', array(), fw()->manifest->get( 'version' ), true );
         wp_enqueue_script( DHT_PREFIX . '-jquery-ui-timepicker', DHT_ASSETS_URI . 'scripts/libraries/jquery-ui-timepicker-addon.min.js', array( DHT_PREFIX . '-jquery-ui-datepicker' ), fw()->manifest->get( 'version' ), true );
         
         //custom js
-        wp_enqueue_script( DHT_PREFIX . '-timepicker-option', DHT_ASSETS_URI . 'scripts/js/extensions/options/options/timepicker-script.js', array( DHT_PREFIX . '-jquery-ui-datepicker' ), fw()->manifest->get( 'version' ), true );
+        wp_enqueue_script( DHT_PREFIX . '-timepicker-field', DHT_ASSETS_URI . 'scripts/js/extensions/options/fields/timepicker-script.js', array( DHT_PREFIX . '-jquery-ui-datepicker' ), fw()->manifest->get( 'version' ), true );
     }
     
 }

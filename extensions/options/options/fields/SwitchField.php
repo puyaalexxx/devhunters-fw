@@ -3,12 +3,12 @@ declare( strict_types = 1 );
 
 namespace DHT\Extensions\Options\Options\fields;
 
-use DHT\Extensions\Options\Options\BaseOption;
+use DHT\Extensions\Options\Options\BaseField;
 use function DHT\fw;
 
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
-final class SwitchField extends BaseOption {
+final class SwitchField extends BaseField {
     
     //field type
     protected string $_field = 'switch';
@@ -24,19 +24,19 @@ final class SwitchField extends BaseOption {
     /**
      * Enqueue input scripts and styles
      *
-     * @param array $option
+     * @param array $field
      *
      * @return void
      * @since     1.0.0
      */
-    public function enqueueOptionScripts( array $option ) : void {
+    public function enqueueOptionScripts( array $field ) : void {
         
-        wp_enqueue_script( DHT_PREFIX . '-switch-option', DHT_ASSETS_URI . 'scripts/js/extensions/options/options/switch-script.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
+        wp_enqueue_script( DHT_PREFIX . '-switch-field', DHT_ASSETS_URI . 'scripts/js/extensions/options/fields/switch-script.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
         
         // Register the style
-        wp_register_style( DHT_PREFIX . '-switch-option', DHT_ASSETS_URI . 'styles/css/extensions/options/options/switch-style.css', array(), fw()->manifest->get( 'version' ) );
+        wp_register_style( DHT_PREFIX . '-switch-field', DHT_ASSETS_URI . 'styles/css/extensions/options/fields/switch-style.css', array(), fw()->manifest->get( 'version' ) );
         // Enqueue the style
-        wp_enqueue_style( DHT_PREFIX . '-switch-option' );
+        wp_enqueue_style( DHT_PREFIX . '-switch-field' );
     }
     
 }

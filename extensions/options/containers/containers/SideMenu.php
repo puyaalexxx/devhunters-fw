@@ -15,13 +15,14 @@ final class SideMenu extends BaseContainer {
     
     /**
      * @param array $optionGroupsClasses
-     * @param array $optionClasses
+     * @param array $optionTogglesClasses
+     * @param array $optionFieldsClasses
      *
      * @since     1.0.0
      */
-    public function __construct( array $optionGroupsClasses, array $optionClasses ) {
+    public function __construct( array $optionGroupsClasses, array $optionTogglesClasses, array $optionFieldsClasses ) {
         
-        parent::__construct( $optionGroupsClasses, $optionClasses );
+        parent::__construct( $optionGroupsClasses, $optionTogglesClasses, $optionFieldsClasses );
     }
     
     /**

@@ -15,22 +15,27 @@ abstract class BaseContainer {
     //field type
     protected string $_container = 'unknown';
     
-    //registered group classes
+    //registered toggles classes
     private array $_optionGroupsClasses;
     
     //registered option classes
-    private array $_optionClasses;
+    private array $_optionTogglesClasses;
+    
+    //registered field classes
+    private array $_optionFieldsClasses;
     
     /**
      * @param array $optionGroupsClasses
-     * @param array $optionClasses
+     * @param array $optionTogglesClasses
+     * @param array $optionFieldClasses
      *
      * @since     1.0.0
      */
-    public function __construct( array $optionGroupsClasses, array $optionClasses ) {
+    public function __construct( array $optionGroupsClasses, array $optionTogglesClasses, array $optionFieldClasses ) {
         
         $this->_optionGroupsClasses = $optionGroupsClasses;
-        $this->_optionClasses = $optionClasses;
+        $this->_optionTogglesClasses = $optionTogglesClasses;
+        $this->_optionFieldsClasses = $optionFieldClasses;
     }
     
     /**
@@ -85,17 +90,16 @@ abstract class BaseContainer {
      */
     public function render( array $container, mixed $saved_values, array $additional_args = [] ) : string {
         
-        $registered_options = [
-            'groupClasses' => $this->_optionGroupsClasses,
-            'optionClasses' => $this->_optionClasses
+        $registered_options_classes = [
+            'groupsClasses' => $this->_optionGroupsClasses,
+            'togglesClasses' => $this->_optionTogglesClasses,
+            'fieldsClasses' => $this->_optionFieldsClasses
         ];
-        
-        //get each current page options if exists
         
         return dht_load_view( $this->template_dir, $this->getContainer() . '.php', [
             'container' => $container,
             'saved_values' => $saved_values,
-            'registered_options' => $registered_options,
+            'registered_options_classes' => $registered_options_classes,
             'additional_args' => $additional_args
         ] );
     }
@@ -182,10 +186,15 @@ abstract class BaseContainer {
                 
                 $values[ $option[ 'id' ] ] = $this->_optionGroupsClasses[ $option[ 'type' ] ]->saveValue( $option, $option_post_value );
                 
+            } //if it is a toggle type
+            elseif ( isset( $this->_optionTogglesClasses[ $option[ 'type' ] ] ) ) {
+                
+                $values[ $option[ 'id' ] ] = $this->_optionTogglesClasses[ $option[ 'type' ] ]->saveValue( $option, $option_post_value );
+                
             } //if it is a simple option type
             else {
                 
-                $values[ $option[ 'id' ] ] = $this->_optionClasses[ $option[ 'type' ] ]->saveValue( $option, $option_post_value );
+                $values[ $option[ 'id' ] ] = $this->_optionFieldsClasses[ $option[ 'type' ] ]->saveValue( $option, $option_post_value );
             }
         }
         

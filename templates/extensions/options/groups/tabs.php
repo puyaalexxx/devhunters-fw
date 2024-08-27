@@ -3,11 +3,11 @@
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 use function DHT\Helpers\dht_parse_option_attributes;
-use function DHT\Helpers\dht_render_option_if_exists;
+use function DHT\Helpers\dht_render_group;
 
 $group = $args[ 'group' ] ?? [];
 //used to call the render method on
-$registered_options = $args[ 'registered_options' ] ?? [];
+$registered_options_classes = $args[ 'registered_options_classes' ] ?? [];
 
 //see if the tabs should be fullwidth
 $fullwidth_tabs = $group[ 'fullwidth' ] ?? false;
@@ -61,8 +61,7 @@ $tabs_id = str_replace( [ '[', ']' ], '-', $group[ 'id' ] ) . 'tab';
                                     //get saved value
                                     $saved_value = $group[ 'value' ][ $tab_option[ 'id' ] ] ?? [];
 
-                                    //render the specific option type
-                                    echo dht_render_option_if_exists( $tab_option, $saved_value, $group[ 'id' ], $registered_options );
+                                    echo dht_render_group( $group[ 'id' ], $tab_option, $saved_value, $registered_options_classes );
                                     ?>
 
                                 <?php endforeach; ?>

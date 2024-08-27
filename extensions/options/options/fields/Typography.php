@@ -3,12 +3,12 @@ declare( strict_types = 1 );
 
 namespace DHT\Extensions\Options\Options\fields;
 
-use DHT\Extensions\Options\Options\BaseOption;
+use DHT\Extensions\Options\Options\BaseField;
 use function DHT\fw;
 
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
-final class Typography extends BaseOption {
+final class Typography extends BaseField {
     
     //field type
     protected string $_field = 'typography';
@@ -24,28 +24,28 @@ final class Typography extends BaseOption {
     /**
      * Enqueue input scripts and styles
      *
-     * @param array $option
+     * @param array $field
      *
      * @return void
      * @since     1.0.0
      */
-    public function enqueueOptionScripts( array $option ) : void {
+    public function enqueueOptionScripts( array $field ) : void {
         
-        wp_register_style( DHT_PREFIX . '-select2-option', DHT_ASSETS_URI . 'styles/libraries/select2.min.css', array(), fw()->manifest->get( 'version' ) );
-        wp_enqueue_style( DHT_PREFIX . '-select2-option' );
+        wp_register_style( DHT_PREFIX . '-select2-field', DHT_ASSETS_URI . 'styles/libraries/select2.min.css', array(), fw()->manifest->get( 'version' ) );
+        wp_enqueue_style( DHT_PREFIX . '-select2-field' );
         
-        wp_register_style( DHT_PREFIX . '-typography-option', DHT_ASSETS_URI . 'styles/css/extensions/options/options/typography-style.css', array(), fw()->manifest->get( 'version' ) );
-        wp_enqueue_style( DHT_PREFIX . '-typography-option' );
+        wp_register_style( DHT_PREFIX . '-typography-field', DHT_ASSETS_URI . 'styles/css/extensions/options/fields/typography-style.css', array(), fw()->manifest->get( 'version' ) );
+        wp_enqueue_style( DHT_PREFIX . '-typography-field' );
         
-        wp_enqueue_script( DHT_PREFIX . '-select2-option', DHT_ASSETS_URI . 'scripts/libraries/select2.full.min.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
+        wp_enqueue_script( DHT_PREFIX . '-select2-field', DHT_ASSETS_URI . 'scripts/libraries/select2.full.min.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
         
-        wp_enqueue_script( DHT_PREFIX . '-typography-option', DHT_ASSETS_URI . 'scripts/js/extensions/options/options/typography-script.js', array( 'jquery', DHT_PREFIX . '-select2-option' ), fw()->manifest->get( 'version' ), true );
+        wp_enqueue_script( DHT_PREFIX . '-typography-field', DHT_ASSETS_URI . 'scripts/js/extensions/options/fields/typography-script.js', array( 'jquery', DHT_PREFIX . '-select2-field' ), fw()->manifest->get( 'version' ), true );
     }
     
     /**
-     * return option template
+     * return field template
      *
-     * @param array  $option
+     * @param array  $field
      * @param mixed  $saved_value
      * @param string $prefix_id
      * @param array  $additional_args
@@ -53,7 +53,7 @@ final class Typography extends BaseOption {
      * @return string
      * @since     1.0.0
      */
-    public function render( array $option, mixed $saved_value, string $prefix_id, array $additional_args = [] ) : string {
+    public function render( array $field, mixed $saved_value, string $prefix_id, array $additional_args = [] ) : string {
         
         $additional_args = [
             $this->_getStandardFonts(),
@@ -61,36 +61,36 @@ final class Typography extends BaseOption {
             $this->_getTextDecorationValues(), $this->_getTextTransformValues()
         ];
         
-        return parent::render( $option, $saved_value, $prefix_id, $additional_args );
+        return parent::render( $field, $saved_value, $prefix_id, $additional_args );
     }
     
     /**
-     *  In this method, you receive $option_post_value (from form submit or whatever)
-     *  and must return the correct and safe value that will be stored in a database.
+     *  In this method you receive $field_post_value (from form submit or whatever)
+     *  and must return correct and safe value that will be stored in database.
      *
-     *  $option_post_value can be null.
-     *  In this case, you should return default value from $option['value']
+     *  $field_post_value can be null.
+     *  In this case you should return default value from $field['value']
      *
-     * @param array $option            - option field
-     * @param mixed $option_post_value - option $_POST value passed on save
+     * @param array $field            - field
+     * @param mixed $field_post_value - field $_POST value passed on save
      *
-     * @return mixed - changed option value
+     * @return mixed - changed field value
      * @since     1.0.0
      */
-    public function saveValue( array $option, mixed $option_post_value ) : mixed {
+    public function saveValue( array $field, mixed $field_post_value ) : mixed {
         
-        if ( empty( $option_post_value ) ) {
-            return $option[ 'value' ];
+        if ( empty( $field_post_value ) ) {
+            return $field[ 'value' ];
         }
         
         //for the range field
-        if ( !empty( $option_post_value[ 'font-family' ] ) ) {
+        if ( !empty( $field_post_value[ 'font-family' ] ) ) {
             
-            $option_post_value[ 'font-family' ][ 'font' ] = stripslashes( $option_post_value[ 'font-family' ][ 'font' ] );
+            $field_post_value[ 'font-family' ][ 'font' ] = stripslashes( $field_post_value[ 'font-family' ][ 'font' ] );
             
         }
         
-        return $option_post_value;
+        return $field_post_value;
     }
     
     /**

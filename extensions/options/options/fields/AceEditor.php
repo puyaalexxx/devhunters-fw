@@ -3,12 +3,12 @@ declare( strict_types = 1 );
 
 namespace DHT\Extensions\Options\Options\fields;
 
-use DHT\Extensions\Options\Options\BaseOption;
+use DHT\Extensions\Options\Options\BaseField;
 use function DHT\fw;
 
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
-final class AceEditor extends BaseOption {
+final class AceEditor extends BaseField {
     
     //field type
     protected string $_field = 'ace-editor';
@@ -24,16 +24,16 @@ final class AceEditor extends BaseOption {
     /**
      * Enqueue input scripts and styles
      *
-     * @param array $option
+     * @param array $field
      *
      * @return void
      * @since     1.0.0
      */
-    public function enqueueOptionScripts( array $option ) : void {
+    public function enqueueOptionScripts( array $field ) : void {
         
-        wp_enqueue_script( DHT_PREFIX . '-ace-editor-option', DHT_ASSETS_URI . 'scripts/js/extensions/options/options/ace-editor-script.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
+        wp_enqueue_script( DHT_PREFIX . '-ace-editor-field', DHT_ASSETS_URI . 'scripts/js/extensions/options/fields/ace-editor-script.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
         
-        wp_localize_script( DHT_PREFIX . '-ace-editor-option', 'dht_ace_editor_path', array(
+        wp_localize_script( DHT_PREFIX . '-ace-editor-field', 'dht_ace_editor_path', array(
             'path' => DHT_URI . 'node_modules/ace-builds/'
         ) );
     }
@@ -41,39 +41,39 @@ final class AceEditor extends BaseOption {
     /**
      * merge the field value with the saved value if exists
      *
-     * @param array $option      - option field
+     * @param array $field       - field
      * @param mixed $saved_value - saved values
      *
      * @return mixed
      * @since     1.0.0
      */
-    public function mergeValues( array $option, mixed $saved_value ) : array {
+    public function mergeValues( array $field, mixed $saved_value ) : array {
         
-        $option[ 'value' ] = empty( $saved_value ) ? $option[ 'value' ] : stripslashes( $saved_value );
+        $field[ 'value' ] = empty( $saved_value ) ? $field[ 'value' ] : stripslashes( $saved_value );
         
-        return $option;
+        return $field;
     }
     
     /**
-     *  In this method you receive $option_post_value (from form submit or whatever)
+     *  In this method you receive $field_post_value (from form submit or whatever)
      *  and must return correct and safe value that will be stored in database.
      *
-     *  $option_post_value can be null.
-     *  In this case you should return default value from $option['value']
+     *  $field_post_value can be null.
+     *  In this case you should return default value from $field['value']
      *
-     * @param array $option            - option field
-     * @param mixed $option_post_value - option $_POST value passed on save
+     * @param array $field            - field
+     * @param mixed $field_post_value - field $_POST value passed on save
      *
-     * @return mixed - changed option value
+     * @return mixed - changed field value
      * @since     1.0.0
      */
-    public function saveValue( array $option, mixed $option_post_value ) : mixed {
+    public function saveValue( array $field, mixed $field_post_value ) : mixed {
         
-        if ( empty( $option_post_value ) ) {
-            return $option[ 'value' ];
+        if ( empty( $field_post_value ) ) {
+            return $field[ 'value' ];
         }
         
-        return sanitize_textarea_field( $option_post_value );
+        return sanitize_textarea_field( $field_post_value );
     }
     
 }

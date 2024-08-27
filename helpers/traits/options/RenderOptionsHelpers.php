@@ -27,7 +27,7 @@ trait RenderOptionsHelpers {
     }
     
     /**
-     * Renders the HTML for group or option type options.
+     * Renders the HTML for group, toggle or option type options.
      *
      * @param array $saved_values The saved values for the options.
      *
@@ -40,8 +40,11 @@ trait RenderOptionsHelpers {
             $this->_options[ 'options' ],
             $this->_settings_id,
             $saved_values,
-            $this->_optionGroupsClasses,
-            $this->_optionClasses
+            [
+                'groupsClasses' => $this->_optionGroupsClasses,
+                'togglesClasses' => $this->_optionTogglesClasses,
+                'fieldsClasses' => $this->_optionFieldsClasses,
+            ]
         );
     }
     

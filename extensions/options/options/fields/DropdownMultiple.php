@@ -3,11 +3,11 @@ declare( strict_types = 1 );
 
 namespace DHT\Extensions\Options\Options\fields;
 
-use DHT\Extensions\Options\Options\BaseOption;
+use DHT\Extensions\Options\Options\BaseField;
 
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
-final class DropdownMultiple extends BaseOption {
+final class DropdownMultiple extends BaseField {
     
     //field type
     protected string $_field = 'dropdown-multiple';
@@ -23,11 +23,11 @@ final class DropdownMultiple extends BaseOption {
     /**
      * Enqueue input scripts and styles
      *
-     * @param array $option
+     * @param array $field
      *
      * @return void
      * @since     1.0.0
      */
-    public function enqueueOptionScripts( array $option ) : void {}
+    public function enqueueOptionScripts( array $field ) : void {}
     
 }

@@ -1,1 +1,0 @@
-{"version":3,"file":"styles/css/extensions/options/options/upload-style.css","mappings":";;;AAEQ,sDACI,kBACJ,C","sources":["webpack:///./assets/styles/postcss/extensions/options/options/upload.pcss"],"sourcesContent":[".dht-wrapper {\n    .dht-field-child-upload {\n        .dht-upload-item {\n            margin-bottom: 10px;\n        }\n    }\n}"],"names":[],"sourceRoot":""}

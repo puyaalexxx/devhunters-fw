@@ -4,23 +4,30 @@ declare( strict_types = 1 );
 namespace DHT\Extensions\Options\Groups\Groups;
 
 use DHT\Extensions\Options\Groups\BaseGroup;
+use DHT\Helpers\Traits\Options\GroupHelpers;
 use function DHT\fw;
 
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 final class Group extends BaseGroup {
     
+    use GroupHelpers;
+    
     //group type
     protected string $_group = 'group';
     
     /**
-     * @param array $registered_options
+     * @param array $optionTogglesClasses
+     * @param array $optionFieldsClasses
      *
      * @since     1.0.0
      */
-    public function __construct( array $registered_options ) {
+    public function __construct( array $optionTogglesClasses, array $optionFieldsClasses ) {
         
-        parent::__construct( $registered_options );
+        $this->_optionTogglesClasses = $optionTogglesClasses;
+        $this->_optionFieldsClasses = $optionFieldsClasses;
+        
+        parent::__construct( $optionTogglesClasses, $optionFieldsClasses );
     }
     
     /**
@@ -44,10 +51,10 @@ final class Group extends BaseGroup {
      *  $group_value can be null.
      *  In this case you should return default value from $group['value']
      *
-     * @param array $group             - group field
+     * @param array $group             - group option
      * @param mixed $group_post_values - $_POST values passed on save
      *
-     * @return mixed - changed group value
+     * @return mixed - sanitized group values
      * @since     1.0.0
      */
     public function saveValue( array $group, mixed $group_post_values ) : mixed {
@@ -61,7 +68,7 @@ final class Group extends BaseGroup {
             
             $option_post_value = $group_post_values[ $option[ 'id' ] ] ?? [];
             
-            $group_post_values[ $option[ 'id' ] ] = $this->_registeredOptions[ $option[ 'type' ] ]->saveValue( $option, $option_post_value );
+            $group_post_values = $this->_saveGroupHelper( $option, $group_post_values, $option_post_value, $this->_optionTogglesClasses, $this->_optionFieldsClasses );
         }
         
         return $group_post_values;

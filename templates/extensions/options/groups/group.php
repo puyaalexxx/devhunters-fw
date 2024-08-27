@@ -3,11 +3,11 @@
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 use function DHT\Helpers\dht_parse_option_attributes;
-use function DHT\Helpers\dht_render_option_if_exists;
+use function DHT\Helpers\dht_render_group;
 
 $group = $args[ 'group' ] ?? [];
 //used to call the render method on
-$registered_options = $args[ 'registered_options' ] ?? [];
+$registered_options_classes = $args[ 'registered_options_classes' ] ?? [];
 ?>
     <!-- field - group -->
     <div
@@ -25,8 +25,7 @@ $registered_options = $args[ 'registered_options' ] ?? [];
                     //get saved value
                     $saved_value = $group[ 'value' ][ $group_option[ 'id' ] ] ?? [];
 
-                    //render the specific option type
-                    echo dht_render_option_if_exists( $group_option, $saved_value, $group[ 'id' ], $registered_options );
+                    echo dht_render_group( $group[ 'id' ], $group_option, $saved_value, $registered_options_classes );
                 }
                 ?>
 

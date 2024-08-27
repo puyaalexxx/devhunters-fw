@@ -175,46 +175,18 @@ if ( !function_exists( 'dht_get_font_weight_Label' ) ) {
 }
 
 /**
- * render option if it is registered (exists)
+ * render all group, toggle and field option types
  *
- * @param array  $option
- * @param mixed  $saved_value
- * @param string $prefix_id          - options prefix id
- * @param array  $registered_options - registered framework option classes
- *
- * @return string
- * @since     1.0.0
- */
-if ( !function_exists( 'dht_render_option_if_exists' ) ) {
-    function dht_render_option_if_exists( array $option, mixed $saved_value, string $prefix_id, array $registered_options ) : string {
-
-        if ( array_key_exists( $option[ 'type' ], $registered_options ) ) {
-
-            //render the respective option type class
-            return $registered_options[ $option[ 'type' ] ]->render( $option, $saved_value, $prefix_id );
-
-        } else {
-
-            //display no option template if no match
-            return dht_load_view( DHT_TEMPLATES_DIR . 'options/', 'no-option.php' );
-        }
-    }
-}
-
-/**
- * render all group and option types
- *
- * @param array  $options            - options array
- * @param string $prefix_id          - options prefix id
- * @param array  $saved_values       - all options saved values
- * @param array  $registered_groups  - registered framework group classes
- * @param array  $registered_options - registered framework option classes
+ * @param array  $options                 - options array
+ * @param string $prefix_id               - options prefix id
+ * @param array  $saved_values            - all options saved values
+ * @param array  $optionRegisteredClasses - registered framework groups, toggles, and field classes
  *
  * @return string
  * @since     1.0.0
  */
 if ( !function_exists( 'dht_render_options' ) ) {
-    function dht_render_options( array $options, string $prefix_id, array $saved_values, array $registered_groups, array $registered_options ) : string {
+    function dht_render_options( array $options, string $prefix_id, array $saved_values, array $registered_options_classes ) : string {
 
         ob_start();
 
@@ -224,15 +196,18 @@ if ( !function_exists( 'dht_render_options' ) ) {
             $saved_value = dht_get_option_value_from_saved_values( $option[ 'id' ], $saved_values, $prefix_id );
 
             //if it is a group type
-            if ( array_key_exists( $option[ 'type' ], $registered_groups ) ) {
-
+            if ( array_key_exists( $option[ 'type' ], $registered_options_classes[ 'groupsClasses' ] ) ) {
                 //render the respective option group class
-                echo $registered_groups[ $option[ 'type' ] ]->render( $option, $saved_value, $prefix_id );
+                echo $registered_options_classes[ 'groupsClasses' ][ $option[ 'type' ] ]->render( $option, $saved_value, $prefix_id );
+
+            } //if it is a toggle type
+            elseif ( array_key_exists( $option[ 'type' ], $registered_options_classes[ 'togglesClasses' ] ) ) {
+                //render the respective option toggle class
+                echo $registered_options_classes[ 'togglesClasses' ][ $option[ 'type' ] ]->render( $option, $saved_value, $prefix_id );
 
             } else {
-
                 //render the respective option type class
-                echo dht_render_option_if_exists( $option, $saved_value, $prefix_id, $registered_options );
+                echo dht_render_field_if_exists( $option, $saved_value, $prefix_id, $registered_options_classes[ 'fieldsClasses' ] );
             }
         }
 
@@ -241,18 +216,67 @@ if ( !function_exists( 'dht_render_options' ) ) {
 }
 
 /**
+ * render group options (toggles and field options)
+ *
+ * @param string $group_id
+ * @param array  $group_option
+ * @param mixed  $saved_value
+ * @param array  $registered_field_classes - registered framework field classes
+ *
+ * @return string
+ * @since     1.0.0
+ */
+if ( !function_exists( 'dht_render_group' ) ) {
+    function dht_render_group( string $group_id, array $group_option, mixed $saved_value, array $registered_options_classes ) : string {
+
+        //render the respective option toggle class
+        if ( array_key_exists( $group_option[ 'type' ], $registered_options_classes[ 'togglesClasses' ] ) ) {
+            return $registered_options_classes[ 'togglesClasses' ][ $group_option[ 'type' ] ]->render( $group_option, $saved_value, $group_id );
+        } //render the specific field type
+        else {
+            return dht_render_field_if_exists( $group_option, $saved_value, $group_id, $registered_options_classes[ 'fieldsClasses' ] );
+        }
+    }
+}
+
+/**
+ * render field option if it is registered (exists)
+ *
+ * @param array  $option
+ * @param mixed  $saved_value
+ * @param string $prefix_id                - options prefix id
+ * @param array  $registered_field_classes - registered framework field classes
+ *
+ * @return string
+ * @since     1.0.0
+ */
+if ( !function_exists( 'dht_render_field_if_exists' ) ) {
+    function dht_render_field_if_exists( array $option, mixed $saved_value, string $prefix_id, array $registered_field_classes ) : string {
+
+        if ( array_key_exists( $option[ 'type' ], $registered_field_classes ) ) {
+            //render the respective option type class
+            return $registered_field_classes[ $option[ 'type' ] ]->render( $option, $saved_value, $prefix_id );
+
+        } else {
+            //display no option template if no match
+            return dht_load_view( DHT_TEMPLATES_DIR . 'extensions/options/fields/', 'no-option.php' );
+        }
+    }
+}
+
+/**
  * render box item (addable group option)
  *
  * @param array $group
  * @param mixed $saved_values
- * @param array $registered_options
+ * @param array $registered_options_classes
  * @param int   $cnt
  *
  * @return string
  * @since     1.0.0
  */
 if ( !function_exists( 'dht_display_box_item' ) ) {
-    function dht_display_box_item( array $group, mixed $saved_values, array $registered_options, int $cnt ) : string {
+    function dht_display_box_item( array $group, mixed $saved_values, array $registered_options_classes, int $cnt ) : string {
 
         $default_box_title = _x( 'Box Title', 'options', DHT_PREFIX );
 
@@ -277,7 +301,7 @@ if ( !function_exists( 'dht_display_box_item' ) ) {
 
             <div class="dht-addable-box-content">
 
-                <?php echo dht_render_box_item_content( $group, $saved_values, $registered_options, $default_box_title, $cnt ); ?>
+                <?php echo dht_render_box_item_content( $group, $saved_values, $registered_options_classes, $default_box_title, $cnt ); ?>
 
             </div>
 
@@ -292,7 +316,7 @@ if ( !function_exists( 'dht_display_box_item' ) ) {
  *
  * @param array  $group
  * @param mixed  $saved_values
- * @param array  $registered_options
+ * @param array  $registered_options_classes
  * @param string $default_box_title
  * @param int    $cnt
  *
@@ -300,7 +324,7 @@ if ( !function_exists( 'dht_display_box_item' ) ) {
  * @since     1.0.0
  */
 if ( !function_exists( 'dht_render_box_item_content' ) ) {
-    function dht_render_box_item_content( array $group, mixed $saved_values, array $registered_options, string $default_box_title, int $cnt ) : string {
+    function dht_render_box_item_content( array $group, mixed $saved_values, array $registered_options_classes, string $default_box_title, int $cnt ) : string {
 
         ob_start(); ?>
         <div class="dht-field-wrapper">
@@ -325,11 +349,11 @@ if ( !function_exists( 'dht_render_box_item_content' ) ) {
         <?php foreach ( $group[ 'options' ] as $option ) : ?>
 
             <?php
+            $group_id = $group[ 'id' ] . '[' . esc_attr( $cnt ) . ']';
             //get option saved value if exists
             $saved_value = array_key_exists( $option[ 'id' ], $saved_values ) ? $saved_values[ $option[ 'id' ] ] : [];
 
-            //render the specific option type
-            echo dht_render_option_if_exists( $option, $saved_value, $group[ 'id' ] . '[' . esc_attr( $cnt ) . ']', $registered_options );
+            echo dht_render_group( $group_id, $option, $saved_value, $registered_options_classes );
             ?>
 
         <?php endforeach; ?>

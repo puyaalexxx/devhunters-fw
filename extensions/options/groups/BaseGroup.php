@@ -3,29 +3,37 @@ declare( strict_types = 1 );
 
 namespace DHT\Extensions\Options\Groups;
 
+use DHT\Helpers\Traits\Options\GroupHelpers;
 use function DHT\Helpers\dht_load_view;
 
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 abstract class BaseGroup {
     
-    //options templates directory
+    use GroupHelpers;
+    
+    //groups templates directory
     protected string $template_dir = DHT_TEMPLATES_DIR . 'extensions/options/groups/';
     
     //field type
     protected string $_group = 'unknown';
     
-    //registered option classes
-    protected array $_registeredOptions;
+    //registered toggle classes
+    protected array $_optionFieldsClasses;
+    
+    //registered field classes
+    protected array $_optionTogglesClasses;
     
     /**
-     * @param array $registered_options
+     * @param array $optionTogglesClasses
+     * @param array $optionFieldsClasses
      *
      * @since     1.0.0
      */
-    public function __construct( array $registered_options ) {
+    public function __construct( array $optionTogglesClasses, array $optionFieldsClasses ) {
         
-        $this->_registeredOptions = $registered_options;
+        $this->_optionTogglesClasses = $optionTogglesClasses;
+        $this->_optionFieldsClasses = $optionFieldsClasses;
     }
     
     /**
@@ -84,12 +92,12 @@ abstract class BaseGroup {
         //merge default values with saved ones to display the saved ones
         $group = $this->mergeValues( $group, $saved_values );
         
-        //add option prefix id
+        //add group prefix id
         $group = $this->addIDPrefix( $group, $prefix_id );
         
         return dht_load_view( $this->template_dir, $this->getGroup() . '.php', [
             'group' => $group,
-            'registered_options' => $this->_registeredOptions,
+            'registered_options_classes' => [ 'togglesClasses' => $this->_optionTogglesClasses, 'fieldsClasses' => $this->_optionFieldsClasses ],
             'additional_args' => $additional_args
         ] );
     }
@@ -136,10 +144,10 @@ abstract class BaseGroup {
      *  $group_value can be null.
      *  In this case you should return default value from $group['value']
      *
-     * @param array $group             - group field
+     * @param array $group             - group option
      * @param mixed $group_post_values - $_POST values passed on save
      *
-     * @return mixed - changed group value
+     * @return mixed - sanitized group values
      * @since     1.0.0
      */
     public function saveValue( array $group, mixed $group_post_values ) : mixed {
@@ -155,7 +163,7 @@ abstract class BaseGroup {
                 
                 $option_post_value = $group_post_values[ $option[ 'id' ] ] ?? [];
                 
-                $group_post_values[ $option[ 'id' ] ] = $this->_registeredOptions[ $option[ 'type' ] ]->saveValue( $option, $option_post_value );
+                $group_post_values = $this->_saveGroupHelper( $option, $group_post_values, $option_post_value, $this->_optionTogglesClasses, $this->_optionFieldsClasses );
             }
         }
         

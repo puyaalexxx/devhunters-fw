@@ -10,17 +10,21 @@ if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 final class Tabs extends BaseGroup {
     
-    //field type
+    //group type
     protected string $_group = 'tabs';
     
     /**
-     * @param array $registered_options
+     * @param array $optionTogglesClasses
+     * @param array $optionFieldsClasses
      *
      * @since     1.0.0
      */
-    public function __construct( array $registered_options ) {
+    public function __construct( array $optionTogglesClasses, array $optionFieldsClasses ) {
         
-        parent::__construct( $registered_options );
+        $this->_optionTogglesClasses = $optionTogglesClasses;
+        $this->_optionFieldsClasses = $optionFieldsClasses;
+        
+        parent::__construct( $optionTogglesClasses, $optionFieldsClasses );
     }
     
     /**

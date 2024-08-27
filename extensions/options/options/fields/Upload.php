@@ -3,13 +3,13 @@ declare( strict_types = 1 );
 
 namespace DHT\Extensions\Options\Options\fields;
 
-use DHT\Extensions\Options\Options\BaseOption;
+use DHT\Extensions\Options\Options\BaseField;
 use DHT\Helpers\Traits\UploadHelpers;
 use function DHT\fw;
 
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
-final class Upload extends BaseOption {
+final class Upload extends BaseField {
     
     use UploadHelpers;
     
@@ -27,43 +27,43 @@ final class Upload extends BaseOption {
     /**
      * Enqueue input scripts and styles
      *
-     * @param array $option
+     * @param array $field
      *
      * @return void
      * @since     1.0.0
      */
-    public function enqueueOptionScripts( array $option ) : void {
+    public function enqueueOptionScripts( array $field ) : void {
         
         //Enqueue the media uploader
         wp_enqueue_media();
         
         // Register custom style
-        wp_register_style( DHT_PREFIX . '-upload-option', DHT_ASSETS_URI . 'styles/css/extensions/options/options/upload-style.css', array(), fw()->manifest->get( 'version' ) );
-        wp_enqueue_style( DHT_PREFIX . '-upload-option' );
+        wp_register_style( DHT_PREFIX . '-upload-field', DHT_ASSETS_URI . 'styles/css/extensions/options/fields/upload-style.css', array(), fw()->manifest->get( 'version' ) );
+        wp_enqueue_style( DHT_PREFIX . '-upload-field' );
         
-        wp_enqueue_script( DHT_PREFIX . '-upload-option', DHT_ASSETS_URI . 'scripts/js/extensions/options/options/upload-script.js', array( 'jquery', 'media-editor' ), fw()->manifest->get( 'version' ), true );
+        wp_enqueue_script( DHT_PREFIX . '-upload-field', DHT_ASSETS_URI . 'scripts/js/extensions/options/fields/upload-script.js', array( 'jquery', 'media-editor' ), fw()->manifest->get( 'version' ), true );
     }
     
     /**
-     *  In this method you receive $option_post_value (from form submit or whatever)
+     *  In this method you receive $field_post_value (from form submit or whatever)
      *  and must return correct and safe value that will be stored in database.
      *
-     *  $option_post_value can be null.
-     *  In this case you should return default value from $option['value']
+     *  $field_post_value can be null.
+     *  In this case you should return default value from $field['value']
      *
-     * @param array $option            - option field
-     * @param mixed $option_post_value - option $_POST value passed on save
+     * @param array $field            - field
+     * @param mixed $field_post_value - field $_POST value passed on save
      *
-     * @return mixed - changed option value
+     * @return mixed - changed field value
      * @since     1.0.0
      */
-    public function saveValue( array $option, mixed $option_post_value ) : mixed {
+    public function saveValue( array $field, mixed $field_post_value ) : mixed {
         
-        if ( empty( $option_post_value ) ) {
-            return $option[ 'value' ];
+        if ( empty( $field_post_value ) ) {
+            return $field[ 'value' ];
         }
         
-        return $this->_saveUploadOptionHelper( $option, $option_post_value, 'item', 'item_id' );
+        return $this->_saveUploadFieldHelper( $field, $field_post_value, 'item', 'item_id' );
     }
     
 }

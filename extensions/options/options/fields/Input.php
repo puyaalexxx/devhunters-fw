@@ -3,11 +3,11 @@ declare( strict_types = 1 );
 
 namespace DHT\Extensions\Options\Options\fields;
 
-use DHT\Extensions\Options\Options\BaseOption;
+use DHT\Extensions\Options\Options\BaseField;
 
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
-final class Input extends BaseOption {
+final class Input extends BaseField {
     
     //field type
     protected string $_field = 'input';
@@ -23,44 +23,44 @@ final class Input extends BaseOption {
     /**
      * Enqueue input scripts and styles
      *
-     * @param array $option
+     * @param array $field
      *
      * @return void
      * @since     1.0.0
      */
-    public function enqueueOptionScripts( array $option ) : void {}
+    public function enqueueOptionScripts( array $field ) : void {}
     
     /**
-     *  In this method you receive $option_post_value (from form submit or whatever)
+     *  In this method you receive $field_post_value (from form submit or whatever)
      *  and must return correct and safe value that will be stored in database.
      *
-     *  $option_post_value can be null.
-     *  In this case you should return default value from $option['value']
+     *  $field_post_value can be null.
+     *  In this case you should return default value from $field['value']
      *
-     * @param array $option            - option field
-     * @param mixed $option_post_value - option $_POST value passed on save
+     * @param array $field            - field
+     * @param mixed $field_post_value - $field $_POST value passed on save
      *
-     * @return mixed - changed option value
+     * @return mixed - changed field value
      * @since     1.0.0
      */
-    public function saveValue( array $option, mixed $option_post_value ) : mixed {
+    public function saveValue( array $field, mixed $field_post_value ) : mixed {
         
-        if ( empty( $option_post_value ) ) {
-            return $option[ 'value' ];
+        if ( empty( $field_post_value ) ) {
+            return $field[ 'value' ];
         }
         
-        if ( isset( $option[ 'subtype' ] ) ) {
-            if ( $option[ 'subtype' ] == 'url' ) {
+        if ( isset( $field[ 'subtype' ] ) ) {
+            if ( $field[ 'subtype' ] == 'url' ) {
                 
-                $option_post_value = esc_url_raw( $option_post_value );
+                $field_post_value = esc_url_raw( $field_post_value );
                 
-            } elseif ( $option[ 'subtype' ] == 'email' ) {
+            } elseif ( $field[ 'subtype' ] == 'email' ) {
                 
-                $option_post_value = sanitize_email( $option_post_value );
+                $field_post_value = sanitize_email( $field_post_value );
             }
         }
         
-        return sanitize_text_field( $option_post_value );
+        return sanitize_text_field( $field_post_value );
     }
     
 }

@@ -3,12 +3,12 @@ declare( strict_types = 1 );
 
 namespace DHT\Extensions\Options\Options\fields;
 
-use DHT\Extensions\Options\Options\BaseOption;
+use DHT\Extensions\Options\Options\BaseField;
 use function DHT\fw;
 
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
-final class RangeSlider extends BaseOption {
+final class RangeSlider extends BaseField {
     
     //field type
     protected string $_field = 'range-slider';
@@ -24,62 +24,62 @@ final class RangeSlider extends BaseOption {
     /**
      * Enqueue input scripts and styles
      *
-     * @param array $option
+     * @param array $field
      *
      * @return void
      * @since     1.0.0
      */
-    public function enqueueOptionScripts( array $option ) : void {
+    public function enqueueOptionScripts( array $field ) : void {
         
         wp_register_style( DHT_PREFIX . '-jquery-ui-rangeslider', DHT_ASSETS_URI . 'styles/libraries/jquery-ui-rangeslider.min.css', array(), fw()->manifest->get( 'version' ) );
         wp_enqueue_style( DHT_PREFIX . '-jquery-ui-rangeslider' );
         
-        wp_register_style( DHT_PREFIX . '-rangeslider-option', DHT_ASSETS_URI . 'styles/css/extensions/options/options/rangeslider-style.css', array(), fw()->manifest->get( 'version' ) );
-        wp_enqueue_style( DHT_PREFIX . '-rangeslider-option' );
+        wp_register_style( DHT_PREFIX . '-rangeslider-field', DHT_ASSETS_URI . 'styles/css/extensions/options/fields/rangeslider-style.css', array(), fw()->manifest->get( 'version' ) );
+        wp_enqueue_style( DHT_PREFIX . '-rangeslider-field' );
         
         //WordPress comes with the slider option
         wp_enqueue_script( 'jquery-ui-slider' );
         
-        wp_enqueue_script( DHT_PREFIX . '-rangeslider-option', DHT_ASSETS_URI . 'scripts/js/extensions/options/options/rangeslider-script.js', array( 'jquery-ui-slider' ), fw()->manifest->get( 'version' ), true );
+        wp_enqueue_script( DHT_PREFIX . '-rangeslider-field', DHT_ASSETS_URI . 'scripts/js/extensions/options/fields/rangeslider-script.js', array( 'jquery-ui-slider' ), fw()->manifest->get( 'version' ), true );
         
     }
     
     /**
-     *  In this method you receive $option_post_value (from form submit or whatever)
+     *  In this method you receive $field_post_value (from form submit or whatever)
      *  and must return correct and safe value that will be stored in database.
      *
-     *  $option_post_value can be null.
-     *  In this case you should return default value from $option['value']
+     *  $field_post_value can be null.
+     *  In this case you should return default value from $field['value']
      *
-     * @param array $option            - option field
-     * @param mixed $option_post_value - option $_POST value passed on save
+     * @param array $field            - field
+     * @param mixed $field_post_value - field $_POST value passed on save
      *
-     * @return mixed - changed option value
+     * @return mixed - changed field value
      * @since     1.0.0
      */
-    public function saveValue( array $option, mixed $option_post_value ) : mixed {
+    public function saveValue( array $field, mixed $field_post_value ) : mixed {
         
-        if ( empty( $option_post_value ) ) {
-            return (int)$option[ 'value' ];
+        if ( empty( $field_post_value ) ) {
+            return (int)$field[ 'value' ];
         }
         
         //for the range field
-        if ( is_array( $option_post_value ) ) {
+        if ( is_array( $field_post_value ) ) {
             
-            $option_vals = [];
-            foreach ( $option_post_value as $value ) {
-                $option_vals[] = absint( sanitize_text_field( $value ) );
+            $field_vals = [];
+            foreach ( $field_post_value as $value ) {
+                $field_vals[] = absint( sanitize_text_field( $value ) );
             }
             
-            $option_post_value = $option_vals;
+            $field_post_value = $field_vals;
             
         } //for the slider field
         else {
             
-            $option_post_value = absint( sanitize_text_field( $option_post_value ) );
+            $field_post_value = absint( sanitize_text_field( $field_post_value ) );
         }
         
-        return $option_post_value;
+        return $field_post_value;
     }
     
 }

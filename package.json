@@ -6,10 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "wp-scripts start --config webpack.config.js",
-    "build": "wp-scripts build --config webpack.config.js",
-    "watch": "wp-scripts build --config webpack.config.js --watch",
-    "build:assets": "webpack --config webpack.config.js",
-    "watch:assets": "webpack --config webpack.config.js --watch",
+    "build:dev": "cross-env NODE_ENV=development wp-scripts build --config webpack.config.js",
+    "build:prod": "cross-env NODE_ENV=production wp-scripts build --config webpack.config.js",
+    "watch:dev": "cross-env NODE_ENV=development wp-scripts build --config webpack.config.js --watch",
+    "watch:prod": "cross-env NODE_ENV=production wp-scripts build --config webpack.config.js --watch",
     "lint:css": "wp-scripts lint-style",
     "format:js": "wp-scripts format-js",
     "check-types": "tsc --noEmit"
@@ -26,6 +26,7 @@
     "@types/select2": "^4.0.63",
     "@wordpress/scripts": "^27.6.0",
     "autoprefixer": "^10.4.19",
+    "cross-env": "^7.0.3",
     "css-loader": "^7.1.1",
     "cssnano": "^6.1.2",
     "mini-css-extract-plugin": "^2.9.0",
@@ -38,13 +39,13 @@
     "precss": "^4.0.0",
     "prettier": "3.2.5",
     "style-loader": "^4.0.0",
-    "terser-webpack-plugin": "^5.3.10",
     "ts-loader": "^9.5.1",
     "typescript": "^5.4.5",
     "webpack": "^5.91.0",
     "webpack-remove-empty-scripts": "^1.0.4"
   },
   "dependencies": {
-    "ace-builds": "^1.33.1"
+    "ace-builds": "^1.33.1",
+    "dotenv": "^16.4.5"
   }
 }

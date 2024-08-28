@@ -1,11 +1,16 @@
+//terser-webpack-plugin - suggestion
 const path = require("path");
 const webpack = require("webpack");
 //minify css files and also adds possibility to compile pcss files to specific css files
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 //webpack is creating also js files that are empty for css files, this plugin removed them
 const RemoveEmptyScriptsPlugin = require("webpack-remove-empty-scripts");
-//minify js content
-const TerserPlugin = require("terser-webpack-plugin");
+
+////////env config//////
+const dotenv = require("dotenv");
+// Load the appropriate .env file based on NODE_ENV
+const envFile = process.env.NODE_ENV === "production" ? ".env.production" : ".env.development";
+dotenv.config({ path: envFile });
 
 //load paths
 const tsPaths = require("./config/webpack/path-variables/ts-paths-variables");
@@ -23,7 +28,7 @@ const createTsEntry = require("./config/webpack/file-entries/ts-entries");
 const createCssEntry = require("./config/webpack/file-entries/pcss-entries");
 
 module.exports = {
-    mode: "development", // or 'production'
+    mode: process.env.FW_ENVIRONMENT,
     entry: {
         ...createTsEntry(scriptsFileNames, tsPaths),
         ...createCssEntry(stylesFileNames, pcssPaths),
@@ -93,10 +98,10 @@ module.exports = {
         }),
         // Add RemoveEmptyScriptsPlugin to remove empty JavaScript files
         new RemoveEmptyScriptsPlugin(),
+        new webpack.DefinePlugin({
+            "process.env.FW_ENVIRONMENT": JSON.stringify(process.env.FW_ENVIRONMENT),
+        }),
     ],
-    optimization: {
-        minimizer: [new TerserPlugin()], // Minify JavaScript using terser-webpack-plugin
-    },
     externals: {
         jquery: "jQuery",
     },

@@ -175,8 +175,16 @@
                         }
                     }
 
-                    &.dht-cosidebar-active .dht-cosidebar-sub-menu {
-                        display: block;
+                    &.dht-cosidebar-active {
+                        .dht-cosidebar-sub-menu {
+                            display: block;
+                        }
+
+                        @media (min-width: 901px) {
+                            ul.dht-cosidebar-dropdown-menu {
+                                display: none !important;
+                            }
+                        }
                     }
 
                     .dht-cosidebar-dropdown-menu {

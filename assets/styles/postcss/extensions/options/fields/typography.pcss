@@ -34,7 +34,7 @@
             width: 100% !important;
         }
 
-        @media (max-width: 1024px) {
+        @media (max-width: 1366px) {
             .dht-field-child-typography-group {
                 display: block;
             }
@@ -44,17 +44,24 @@
             }
         }
 
-        @media (max-width: 980px) {
-            span.select2.select2-container {
+        span.select2.select2-container {
+            @media (max-width: 980px) {
                 width: 80% !important;
             }
-        }
-
-        @media (max-width: 600px) {
-            span.select2.select2-container {
+            @media (max-width: 600px) {
                 width: 100% !important;
             }
         }
     }
 
+    #dht-cosidebar {
+        .dht-field-child-typography {
+
+            @media (max-width: 1250px) {
+                span.select2.select2-container {
+                    width: 100% !important;
+                }
+            }
+        }
+    }
 }

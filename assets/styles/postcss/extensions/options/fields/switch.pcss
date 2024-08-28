@@ -1,5 +1,30 @@
 @import '../../../variables.pcss';
 
+
+@mixin switch_resposnive_code() {
+    label.dht-switch {
+        margin: auto;
+        width: 150px;
+
+        .dht-slider:before {
+            left: -14px;
+            width: 75px;
+        }
+
+        span.dht-slider-yes {
+            left: -15px;
+        }
+
+        &.dht-slider-off .dht-slider:before {
+            transform: translateX(20px);
+        }
+
+        span.dht-slider-no {
+            right: -17px;
+        }
+    }
+}
+
 /* switch button styles*/
 .dht-wrapper {
     .dht-field-child-switch {
@@ -86,28 +111,17 @@
         }
 
         @media (max-width: 980px) {
-            label.dht-switch {
-                margin: auto;
-                width: 150px;
+            @include switch_resposnive_code();
+        }
+    }
 
-                .dht-slider:before {
-                    left: -14px;
-                    width: 75px;
-                }
+    #dht-cosidebar {
+        .dht-field-child-switch {
 
-                span.dht-slider-yes {
-                    left: -15px;
-                }
-
-                &.dht-slider-off .dht-slider:before {
-                    transform: translateX(20px);
-                }
-
-                span.dht-slider-no {
-                    right: -17px;
-                }
+            @media (max-width: 1250px) {
+                @include switch_resposnive_code();
             }
-
         }
     }
 }
+

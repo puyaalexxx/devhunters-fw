@@ -3,12 +3,11 @@
 if ( !defined( 'PPHT_MAIN' ) ) die( 'Forbidden' );
 
 [
-//typography field
+    //typography field
     [
-        'id' => 'typography_field1',
+        'id' => 'typography id',
         'type' => 'typography',
         'title' => _x( 'Typography field', 'options', PPHT_PREFIX ),
-        'label' => _x( 'Typography label', 'options', PPHT_PREFIX ),
         'value' => [], //['font-type' => 'divi', 'font-path' => 'font url', 'font' => 'dht-Danfo']
         'upload' => false,
         
@@ -23,7 +22,6 @@ if ( !defined( 'PPHT_MAIN' ) ) die( 'Forbidden' );
         'id' => 'icon_field',
         'type' => 'icon',
         'title' => _x( 'Icon field', 'options', PPHT_PREFIX ),
-        'label' => _x( 'Icon label', 'options', PPHT_PREFIX ),
         'value' => [
             'icon-type' => 'dashicons',
             'icon-class' => 'dashicons dashicons-universal-access-alt',
@@ -41,7 +39,6 @@ if ( !defined( 'PPHT_MAIN' ) ) die( 'Forbidden' );
         'id' => 'upload_gallery_field',
         'type' => 'upload-gallery',
         'title' => _x( 'Upload Gallery field', 'options', PPHT_PREFIX ),
-        'label' => _x( 'Upload Gallery label', 'options', PPHT_PREFIX ),
         'value' => [ 14, 12 ], //attachment ids
         
         'attr' => array( 'class' => 'custom-class', 'data-foo' => 'bar' ),
@@ -54,7 +51,6 @@ if ( !defined( 'PPHT_MAIN' ) ) die( 'Forbidden' );
         'id' => 'upload_field',
         'type' => 'upload',
         'title' => _x( 'Upload field', 'options', PPHT_PREFIX ),
-        'label' => _x( 'Upload label', 'options', PPHT_PREFIX ),
         'value' => [
             'item' => 'http://testhunters.local/wp-content/uploads/2024/05/pdf-sample.pdf',
             'item_id' => 101
@@ -77,7 +73,6 @@ if ( !defined( 'PPHT_MAIN' ) ) die( 'Forbidden' );
         'id' => 'upload_image_field',
         'type' => 'upload-image',
         'title' => _x( 'Upload Image field', 'options', PPHT_PREFIX ),
-        'label' => _x( 'Upload Image label', 'options', PPHT_PREFIX ),
         'value' => [
             'image' => 'http://testhunters.local/wp-content/uploads/2024/04/167113823-3f0757ff-c7c2-44d0-a1e9-0b006772b39a.jpeg',
             'image_id' => 12
@@ -94,7 +89,6 @@ if ( !defined( 'PPHT_MAIN' ) ) die( 'Forbidden' );
         'id' => 'borders_field',
         'type' => 'borders',
         'title' => _x( 'Borders field', 'options', PPHT_PREFIX ),
-        'label' => _x( 'Borders label', 'options', PPHT_PREFIX ),
         'value' => [
             'top' => 20,
             'right' => 30,
@@ -116,7 +110,6 @@ if ( !defined( 'PPHT_MAIN' ) ) die( 'Forbidden' );
         'id' => 'multioptions_group_no_ajax',
         'type' => 'multi-options',
         'title' => _x( 'Multi Options Get All Posts Without Ajax field', 'options', PPHT_PREFIX ),
-        'label' => _x( 'Multi Options label', 'options', PPHT_PREFIX ),
         'value' => [],
         'ajax' => false,
         'ajax-action' => '',
@@ -127,30 +120,11 @@ if ( !defined( 'PPHT_MAIN' ) ) die( 'Forbidden' );
         'tooltip' => _x( 'This field is used to add some text', 'options', PPHT_PREFIX ),
         'divider' => true
     ],
-    //multi options - type -> ajax
-    // !!! The ajax option will work when saving the settings via ajax not via refresh
-    [
-        'id' => 'multioptions_ajax_group',
-        'type' => 'multi-options',
-        'title' => _x( 'Multi Options Ajax field', 'options', PPHT_PREFIX ),
-        'label' => _x( 'Multi Options Ajax label', 'options', PPHT_PREFIX ),
-        'value' => [],
-        'ajax' => true,
-        'minimumInputLength' => 3,
-        //function name to retrieve the ajax values
-        'ajax-action' => 'ppht_multioptions_ajax_values',
-        'choices' => $posts,
-        'attr' => array( 'class' => 'custom-class', 'data-foo' => 'bar' ),
-        'description' => _x( 'Multi Options Ajax description', 'options', PPHT_PREFIX ),
-        'tooltip' => _x( 'This field is used to add some text', 'options', PPHT_PREFIX ),
-        'divider' => true
-    ],
     //multi options
     [
         'id' => 'multioptions_group',
         'type' => 'multi-options',
         'title' => _x( 'Multi Options field', 'options', PPHT_PREFIX ),
-        'label' => _x( 'Multi Options label', 'options', PPHT_PREFIX ),
         'value' => [ 'value2', 'value4' ],
         'ajax' => false,
         'ajax-action' => '',
@@ -199,7 +173,6 @@ if ( !defined( 'PPHT_MAIN' ) ) die( 'Forbidden' );
         'id' => 'spacing_field',
         'type' => 'spacing',
         'title' => _x( 'Spacing field', 'options', PPHT_PREFIX ),
-        'label' => _x( 'Spacing label', 'options', PPHT_PREFIX ),
         'value' => [
             'top' => 20,
             'right' => 30,
@@ -218,7 +191,6 @@ if ( !defined( 'PPHT_MAIN' ) ) die( 'Forbidden' );
         'id' => 'range2_field',
         'type' => 'range-slider',
         'title' => _x( 'Range Slider Range field', 'options', PPHT_PREFIX ),
-        'label' => _x( 'Range Slider Range label', 'options', PPHT_PREFIX ),
         'range' => true, //default false
         'min' => 5,
         'max' => 50,
@@ -234,7 +206,6 @@ if ( !defined( 'PPHT_MAIN' ) ) die( 'Forbidden' );
         'id' => 'range_field',
         'type' => 'range-slider',
         'title' => _x( 'Range Slider field', 'options', PPHT_PREFIX ),
-        'label' => _x( 'Range Slider label', 'options', PPHT_PREFIX ),
         'range' => false, //default false
         'min' => 5,
         'max' => 50,
@@ -250,7 +221,6 @@ if ( !defined( 'PPHT_MAIN' ) ) die( 'Forbidden' );
         'id' => 'datetimepicker_field',
         'type' => 'datetimepicker',
         'title' => _x( 'DateTimePicker field', 'options', PPHT_PREFIX ),
-        'label' => _x( 'DateTimePicker label', 'options', PPHT_PREFIX ),
         'date-format' => 'yy-mm-dd',
         'time-format' => 'HH:mm:ss',
         'value' => '2024-05-14 08:11:00',
@@ -265,7 +235,6 @@ if ( !defined( 'PPHT_MAIN' ) ) die( 'Forbidden' );
         'id' => 'timepicker_field',
         'type' => 'timepicker',
         'title' => _x( 'TimePicker field', 'options', PPHT_PREFIX ),
-        'label' => _x( 'TimePicker label', 'options', PPHT_PREFIX ),
         'format' => 'HH:mm:ss',
         'value' => '02:31:47',
         
@@ -279,7 +248,6 @@ if ( !defined( 'PPHT_MAIN' ) ) die( 'Forbidden' );
         'id' => 'datepicker_field',
         'type' => 'datepicker',
         'title' => _x( 'Datepicker field', 'options', PPHT_PREFIX ),
-        'label' => _x( 'Datepicker label', 'options', PPHT_PREFIX ),
         'format' => 'yy-mm-dd',
         'value' => '2024-05-15',
         
@@ -294,7 +262,6 @@ if ( !defined( 'PPHT_MAIN' ) ) die( 'Forbidden' );
         'id' => 'colorpicker_field',
         'type' => 'colorpicker',
         'title' => _x( 'Colorpicker', 'options', PPHT_PREFIX ),
-        'label' => _x( 'Colorpicker', 'options', PPHT_PREFIX ),
         'subtype' => 'default', //or default
         'palettes' => [ '#ba4e4e', '#0ce9ed', '#941940' ],
         'value' => '#0ce9ed',
@@ -309,7 +276,6 @@ if ( !defined( 'PPHT_MAIN' ) ) die( 'Forbidden' );
         'id' => 'colorpicker_field_rgba',
         'type' => 'colorpicker',
         'title' => _x( 'Colorpicker RGBA', 'options', PPHT_PREFIX ),
-        'label' => _x( 'Colorpicker RGBA', 'options', PPHT_PREFIX ),
         'subtype' => 'rgba', //or default
         'palettes' => [
             'rgba(0, 0, 0, 0.65)',
@@ -332,7 +298,6 @@ if ( !defined( 'PPHT_MAIN' ) ) die( 'Forbidden' );
         'id' => 'ace_editor2',
         'type' => 'ace-editor',
         'title' => _x( 'Ace Editor CSS', 'options', PPHT_PREFIX ),
-        'label' => _x( 'Ace Editor CSS', 'options', PPHT_PREFIX ),
         'value' => '.css{ display:block; }',
         'mode' => 'css', //or javascript
         'height' => 300,
@@ -347,7 +312,6 @@ if ( !defined( 'PPHT_MAIN' ) ) die( 'Forbidden' );
         'id' => 'ace_editor',
         'type' => 'ace-editor',
         'title' => _x( 'Ace Editor Javascript', 'options', PPHT_PREFIX ),
-        'label' => _x( 'Ace Editor Javascript', 'options', PPHT_PREFIX ),
         'value' => 'console.log("hello")',
         'mode' => 'javascript', //or css
         'height' => 300,
@@ -363,7 +327,6 @@ if ( !defined( 'PPHT_MAIN' ) ) die( 'Forbidden' );
         'id' => 'multiinput_field2',
         'type' => 'multi-input',
         'title' => _x( 'Multi Input field', 'options', PPHT_PREFIX ),
-        'label' => _x( 'Multi Input label', 'options', PPHT_PREFIX ),
         'value' => [ 'default value' ],
         'limit' => 5,
         
@@ -377,7 +340,6 @@ if ( !defined( 'PPHT_MAIN' ) ) die( 'Forbidden' );
         'id' => 'dropdown_field_multiple_group',
         'type' => 'dropdown-multiple',
         'title' => _x( 'Dropdown Multiple field', 'options', PPHT_PREFIX ),
-        'label' => _x( 'Drodpown Multiple label', 'options', PPHT_PREFIX ),
         'value' => [ 'value5', 'value7' ],
         'size' => 6,
         'choices' => [
@@ -409,7 +371,6 @@ if ( !defined( 'PPHT_MAIN' ) ) die( 'Forbidden' );
         'id' => 'dropdown_field_multiple',
         'type' => 'dropdown-multiple',
         'title' => _x( 'Dropdown Multiple field', 'options', PPHT_PREFIX ),
-        'label' => _x( 'Drodpown Multiple label', 'options', PPHT_PREFIX ),
         'value' => [ 'value2', 'value4' ],
         'size' => 6,
         'choices' => [
@@ -429,7 +390,6 @@ if ( !defined( 'PPHT_MAIN' ) ) die( 'Forbidden' );
         'id' => 'dropdown_field_group',
         'type' => 'dropdown',
         'title' => _x( 'Dropdown Group field', 'options', PPHT_PREFIX ),
-        'label' => _x( 'Drodpown Group label', 'options', PPHT_PREFIX ),
         'value' => 'value7',
         'choices' => [
             array( // optgroup
@@ -460,7 +420,6 @@ if ( !defined( 'PPHT_MAIN' ) ) die( 'Forbidden' );
         'id' => 'dropdown_field',
         'type' => 'dropdown',
         'title' => _x( 'Dropdown field', 'options', PPHT_PREFIX ),
-        'label' => _x( 'Drodpown label', 'options', PPHT_PREFIX ),
         'value' => 'value2',
         'choices' => [
             'value1' => _x( 'Option 1', 'options', PPHT_PREFIX ),
@@ -519,7 +478,6 @@ if ( !defined( 'PPHT_MAIN' ) ) die( 'Forbidden' );
         'value' => 'Text editor',
         'rows' => 6,
         'media_button' => true,
-        'tinymce' => true, //enable editor tabs
         'default' => 'WP Editor placeholder',
         
         'attr' => array( 'class' => 'custom-class', 'data-foo' => 'bar' ),
@@ -587,7 +545,6 @@ if ( !defined( 'PPHT_MAIN' ) ) die( 'Forbidden' );
         'id' => 'textarea_field',
         'type' => 'textarea',
         'title' => _x( 'Textarea field', 'options', PPHT_PREFIX ),
-        'label' => _x( 'textarea label', 'options', PPHT_PREFIX ),
         'value' => '',
         'rows' => 6,
         'default' => 'Textarea placeholder',
@@ -597,27 +554,11 @@ if ( !defined( 'PPHT_MAIN' ) ) die( 'Forbidden' );
         'tooltip' => _x( 'This field is used to add some text', 'options', PPHT_PREFIX ),
         'divider' => true
     ],
-    
-    //input field - subtype url
-    [
-        'id' => 'input_field_url',
-        'type' => 'input',
-        'title' => _x( 'URL field', 'options', PPHT_PREFIX ),
-        'label' => _x( 'URL label', 'options', PPHT_PREFIX ),
-        'value' => '',
-        'subtype' => 'url',
-        
-        'attr' => array( 'class' => 'custom-class', 'data-foo' => 'bar' ),
-        'description' => _x( 'Input description', 'options', PPHT_PREFIX ),
-        'tooltip' => _x( 'This field is used to add some text', 'options', PPHT_PREFIX ),
-        'divider' => true
-    ],
     //input field
     [
         'id' => 'input_field22',
         'type' => 'input',
         'title' => _x( 'Input field', 'options', PPHT_PREFIX ),
-        'label' => _x( 'Input label', 'options', PPHT_PREFIX ),
         'value' => 'default value sss',
         'subtype' => '', //(can be email, password...)
         

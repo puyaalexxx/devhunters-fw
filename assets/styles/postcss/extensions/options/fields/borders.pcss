@@ -1,5 +1,6 @@
 /* wp-color-picker-alpha.css */
 .dht-wrapper {
+
     .dht-field-child-borders {
         .wp-picker-input-wrap label {
             display: block;
@@ -75,6 +76,12 @@
             padding-left: 30px !important;
         }
 
+        @media (min-width: 1025px) and (max-width: 1366px) {
+            .dht-field-borders-group {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
         @media (min-width: 981px) and (max-width: 1024px) {
             .dht-field-borders-group {
                 display: block;
@@ -106,6 +113,26 @@
 
             .dht-borders {
                 padding-left: 40px !important;
+            }
+        }
+    }
+
+    #dht-cosidebar {
+        .dht-field-child-borders {
+
+            @media (max-width: 1366px) {
+                .dht-field-borders-group {
+                    display: block;
+                }
+
+                .dht-field-borders-input {
+                    margin-bottom: 15px;
+                }
+            }
+            @media (max-width: 1250px) {
+                .dht-field-borders-input select {
+                    max-width: 100%;
+                }
             }
         }
     }

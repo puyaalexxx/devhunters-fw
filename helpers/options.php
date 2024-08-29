@@ -199,12 +199,10 @@ if ( !function_exists( 'dht_render_options' ) ) {
             if ( array_key_exists( $option[ 'type' ], $registered_options_classes[ 'groupsClasses' ] ) ) {
                 //render the respective option group class
                 echo $registered_options_classes[ 'groupsClasses' ][ $option[ 'type' ] ]->render( $option, $saved_value, $prefix_id );
-
             } //if it is a toggle type
             elseif ( array_key_exists( $option[ 'type' ], $registered_options_classes[ 'togglesClasses' ] ) ) {
                 //render the respective option toggle class
                 echo $registered_options_classes[ 'togglesClasses' ][ $option[ 'type' ] ]->render( $option, $saved_value, $prefix_id );
-
             } else {
                 //render the respective option type class
                 echo dht_render_field_if_exists( $option, $saved_value, $prefix_id, $registered_options_classes[ 'fieldsClasses' ] );

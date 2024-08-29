@@ -3,11 +3,49 @@ declare( strict_types = 1 );
 
 namespace DHT\Helpers\Traits\Options;
 
+use function DHT\Helpers\dht_get_db_settings_option;
+
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 trait OptionsHelpers {
     
     use EnqueueOptionsHelpers;
+    
+    /**
+     * Generates the HTML view for the options.
+     *
+     * This method retrieves the saved options, determines the type of options being rendered,
+     * and generates the appropriate HTML output. It handles both container types and group/toggle/field types.
+     *
+     *
+     * @param array $options
+     *
+     * @return string
+     * @since     1.0.0
+     */
+    private function _getOptionsView( array $options ) : string {
+        
+        //check if the options have other options
+        $options = $options[ 'options' ] ?? $options;
+        
+        //get saved options if settings id present
+        $saved_values = !empty( $this->_settings_id ) ? dht_get_db_settings_option( $this->_settings_id ) : [];
+        
+        // Start output buffering
+        ob_start();
+        
+        // Check if the options are of container type
+        if ( isset( $this->_options[ 'pages' ] ) ) {
+            // Render container types
+            $this->_renderContainerOptions( $options, $saved_values );
+        } else {
+            // Render group or option types
+            $this->_renderGroupOrOptionTypes( $options, $saved_values );
+        }
+        
+        // Return the generated HTML view
+        return ob_get_clean();
+    }
     
     /**
      * generate form nonce fields (name and action)
@@ -31,36 +69,6 @@ trait OptionsHelpers {
         $nonce = empty( $nonce ) ? 'dht_' . md5( uniqid( (string)mt_rand(), true ) ) . '_dht_fw_nonce' : $nonce;
         
         return [ 'name' => $nonce . '_name', 'action' => $nonce . '_action' ];
-    }
-    
-    /**
-     * pass option array to enqueue scripts method
-     * (this is needed to enqueue specific script for specific subtype option)
-     *
-     * @param array $options       - options from the plugin configuration files
-     * @param array $optionClasses - registered option types
-     *
-     * @return void
-     * @since     1.0.0
-     */
-    private function _getEnqueueOptionArgs( array $options, array $optionClasses ) : void {
-        
-        //extract option fields in one array from the plugin option configurations
-        $option_fields = $this->_extractOptionFields( $options );
-        
-        //enqueue the scripts for the container type
-        if ( isset( $options[ 'pages' ] ) ) {
-            
-            //pass the container array to the enqueue method
-            $this->_enqueueOptionScriptsHook( $optionClasses, $options );
-            
-        }
-        
-        //enqueue the scripts for each group/option type
-        foreach ( $option_fields as $option ) {
-            
-            $this->_enqueueOptionScriptsForOption( $optionClasses, $option );
-        }
     }
     
 }

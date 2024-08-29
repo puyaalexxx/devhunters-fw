@@ -5,44 +5,17 @@ namespace DHT\Extensions\Options;
 
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
-use DHT\Extensions\Options\Containers\Containers\SideMenu;
-use DHT\Extensions\Options\Groups\Groups\{Accordion, AddableBox, Group, Tabs};
 use DHT\Extensions\Options\Options\BaseField;
-use DHT\Extensions\Options\Options\fields\{AceEditor,
-    Borders,
-    Checkbox,
-    ColorPicker,
-    DatePicker,
-    DateTimePicker,
-    Dropdown,
-    DropdownMultiple,
-    Icon,
-    Input,
-    MultiInput,
-    MultiOptions,
-    Radio,
-    RadioImage,
-    RangeSlider,
-    Spacing,
-    SwitchField,
-    Text,
-    Textarea,
-    TimePicker,
-    Typography,
-    Upload,
-    UploadGallery,
-    UploadImage,
-    WpEditor};
-use DHT\Extensions\Options\Toggles\Toggles\Toggle;
-use DHT\Helpers\Traits\Options\{OptionsHelpers, RenderOptionsHelpers, SaveOptionsHelpers};
+use DHT\Helpers\Traits\Options\{OptionsHelpers, RegisterOptionsHelpers, RenderOptionsHelpers, SaveOptionsHelpers};
 use function DHT\fw;
-use function DHT\Helpers\{dht_get_db_settings_option, dht_load_view};
+use function DHT\Helpers\{dht_load_view};
 
 final class Options implements IOptions {
     
     use OptionsHelpers;
     use SaveOptionsHelpers;
     use RenderOptionsHelpers;
+    use RegisterOptionsHelpers;
     
     //option configurations (received from the plugin config/options folder area)
     private array $_options;
@@ -82,23 +55,14 @@ final class Options implements IOptions {
      */
     public function init() : void {
         
-        //register the Framework options classes
-        $this->_registerFWOptionFields();
-        
-        //register the Framework toggles classes
-        $this->_registerFWOptionToggles();
-        
-        //register the Framework options group classes
-        $this->_registerFWOptionGroups();
-        
-        //register the Framework options container classes
-        $this->_registerFWOptionContainers();
+        //register the Framework options types
+        $this->_registerFWOptions();
         
         //enqueue the options container scripts
-        add_action( 'admin_enqueue_scripts', [ $this, 'enqueueFormScripts' ] );
+        add_action( 'admin_enqueue_scripts', [ $this, 'enqueueGeneralScripts' ] );
         
-        //enqueue scripts for each option received from the plugin
-        $this->_getEnqueueOptionArgs( $this->_options, array_merge( $this->_optionFieldsClasses, $this->_optionTogglesClasses, $this->_optionGroupsClasses, $this->_optionContainerClasses ) );
+        //enqueue styles/scripts for each option received from the plugin
+        $this->_enqueueOptionsScripts( $this->_options, array_merge( $this->_optionFieldsClasses, $this->_optionTogglesClasses, $this->_optionGroupsClasses, $this->_optionContainerClasses ) );
         
         //generate nonce field
         $this->_nonce = $this->_generateNonce();
@@ -109,8 +73,14 @@ final class Options implements IOptions {
         //save options
         $this->_save( $this->_settings_id );
         
-        //render dashboard page form HTML content hook
-        add_action( 'dht_render_dashboard_page_content', [ $this, 'renderDashBoardPageContent' ] );
+        //render dashboard page form HTML content hook with the passed options
+        add_action( 'dht_render_dashboard_page_content', function () {
+            
+            $this->renderDashBoardPageContent( $this->_options );
+        } );
+        
+        //register post types and pages meta boxes
+        add_action( 'add_meta_boxes', [ $this, 'registerPostTypesMetaboxes' ] );
     }
     
     /**
@@ -121,7 +91,7 @@ final class Options implements IOptions {
      * @return void
      * @since     1.0.0
      */
-    public function enqueueFormScripts( string $hook ) : void {
+    public function enqueueGeneralScripts( string $hook ) : void {
         
         wp_enqueue_script( DHT_PREFIX . '-dashboard-page-template', DHT_ASSETS_URI . 'scripts/js/extensions/options/dashboard-page-template-script.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
         
@@ -147,52 +117,78 @@ final class Options implements IOptions {
     }
     
     /**
-     * render dashboard page content
+     * register post types and pages meta boxes
      *
      * @return void
      * @since     1.0.0
      */
-    public function renderDashBoardPageContent() : void {
+    public function registerPostTypesMetaboxes() : void {
+        
+        //if more than one metaboxes needs to be registered
+        if ( !isset( $this->_options[ 'options' ] ) ) {
+            foreach ( $this->_options as $metabox_id => $metabox ) {
+                add_meta_box(
+                    $metabox_id, // ID of the metabox
+                    $metabox[ 'title' ], // Title of the metabox
+                    function () use ( $metabox ) {
+                        
+                        $this->renderPostTypeMetaboxContent( $metabox[ 'options' ] );
+                    },
+                    $metabox[ 'post-type' ], // Post type
+                    $metabox[ 'context' ] ?? 'normal', // Context (normal, side, advanced)
+                    $metabox[ 'priority' ] ?? 'high' // Priority (high, core, default, low)
+                );
+            }
+        } else {
+            add_meta_box(
+                $this->_options[ 'id' ], // ID of the metabox
+                $this->_options[ 'title' ], // Title of the metabox
+                function () {
+                    
+                    $this->renderPostTypeMetaboxContent( $this->_options[ 'options' ] );
+                },
+                $this->_options[ 'post-type' ], // Post type
+                $this->_options[ 'context' ] ?? 'normal', // Context (normal, side, advanced)
+                $this->_options[ 'priority' ] ?? 'high'  // Priority (high, core, default, low)
+            );
+        }
+        
+    }
+    
+    /**
+     * render dashboard page content
+     *
+     * @param array $options
+     *
+     * @return void
+     * @since     1.0.0
+     */
+    public function renderDashBoardPageContent( array $options ) : void {
         
         echo dht_load_view( DHT_TEMPLATES_DIR . 'extensions/options/', 'dashboard-page-template.php',
             [
                 'nonce' => $this->_nonce,
-                'options' => $this->_getOptionsView(),
+                'options' => $this->_getOptionsView( $options ),
             ]
         );
-        
-        echo '</div>';
     }
     
     /**
-     * Generates the HTML view for the options.
+     * render dashboard page content
      *
-     * This method retrieves the saved options, determines the type of options being rendered,
-     * and generates the appropriate HTML output. It handles both container types and group/option types.
+     * @param array $options
      *
-     *
-     * @return string
+     * @return void
      * @since     1.0.0
      */
-    private function _getOptionsView() : string {
+    public function renderPostTypeMetaboxContent( array $options ) : void {
         
-        //get saved options if settings id present
-        $saved_values = !empty( $this->_settings_id ) ? dht_get_db_settings_option( $this->_settings_id ) : [];
-        
-        // Start output buffering
-        ob_start();
-        
-        // Check if the options are of container type
-        if ( isset( $this->_options[ 'pages' ] ) ) {
-            // Render container types
-            $this->_renderContainerOptions( $saved_values );
-        } else {
-            // Render group or option types
-            $this->_renderGroupOrOptionTypes( $saved_values );
-        }
-        
-        // Return the generated HTML view
-        return ob_get_clean();
+        echo dht_load_view( DHT_TEMPLATES_DIR . 'extensions/options/', 'posts-template.php',
+            [
+                'nonce' => $this->_nonce,
+                'options' => $this->_getOptionsView( $options ),
+            ]
+        );
     }
     
     /**
@@ -210,7 +206,9 @@ final class Options implements IOptions {
     private function _save( string $settings_id ) : void {
         
         if ( $this->_isValidRequest() ) {
+            
             $options = $this->_getOptions();
+            
             $post_values = $_POST[ $settings_id ] ?? null;
             
             if ( $post_values ) {
@@ -222,117 +220,58 @@ final class Options implements IOptions {
     }
     
     /**
-     * register framework option containers (container options can contain group, toggle options and simple options)
-     *
-     * @return void
-     * @since     1.0.0
-     */
-    private function _registerFWOptionContainers() : void {
-        
-        //instantiate the option group classes
-        $sidemenu = new SideMenu( $this->_optionGroupsClasses, $this->_optionTogglesClasses, $this->_optionFieldsClasses );
-        
-        //add class instance to the _optionContainerClasses array to use throughout the Container class methods
-        $this->_optionContainerClasses[ $sidemenu->getContainer() ] = $sidemenu;
-    }
-    
-    /**
-     * register framework option groups (group options can contain toggle options and simple options)
-     *
-     * @return void
-     * @since     1.0.0
-     */
-    private function _registerFWOptionGroups() : void {
-        
-        //instantiate the option group classes
-        $group = new Group( $this->_optionTogglesClasses, $this->_optionFieldsClasses );
-        $tabs = new Tabs( $this->_optionTogglesClasses, $this->_optionFieldsClasses );
-        $accordion = new Accordion( $this->_optionTogglesClasses, $this->_optionFieldsClasses );
-        $addable_box = new AddableBox( $this->_optionTogglesClasses, $this->_optionFieldsClasses );
-        
-        //add class instance to the _optionGroupClasses array to use throughout the Group class methods
-        $this->_optionGroupsClasses[ $group->getGroup() ] = $group;
-        $this->_optionGroupsClasses[ $tabs->getGroup() ] = $tabs;
-        $this->_optionGroupsClasses[ $accordion->getGroup() ] = $accordion;
-        $this->_optionGroupsClasses[ $addable_box->getGroup() ] = $addable_box;
-    }
-    
-    /**
-     * register framework option toggles (toggle options can contain only simple options)
-     *
-     * @return void
-     * @since     1.0.0
-     */
-    private function _registerFWOptionToggles() : void {
-        
-        //instantiate the option toggle classes
-        $toggle = new Toggle( $this->_optionFieldsClasses );
-        
-        //add class instance to the _optionToggleClasses array to use throughout the Toggle class methods
-        $this->_optionTogglesClasses[ $toggle->getToggle() ] = $toggle;
-    }
-    
-    /**
      * register framework option types
      *
      * @return void
      * @since     1.0.0
      */
-    private function _registerFWOptionFields() : void {
+    private function _registerFWOptions() : void {
         
-        //instantiate the option type classes
-        $input = new Input();
-        $textarea = new Textarea();
-        $checkbox = new Checkbox();
-        $radio = new Radio();
-        $text = new Text();
-        $wpeditor = new WpEditor();
-        $switch_field = new SwitchField();
-        $dropdown = new Dropdown();
-        $dropdown_multple = new DropdownMultiple();
-        $multi_input = new MultiInput();
-        $ace_editor = new AceEditor();
-        $colorpicker = new ColorPicker();
-        $datepicker = new DatePicker();
-        $timepicker = new TimePicker();
-        $datetimepicker = new DateTimePicker();
-        $range_slider = new RangeSlider();
-        $spacing = new Spacing();
-        $radio_image = new RadioImage();
-        $multi_options = new MultiOptions();
-        $borders = new Borders();
-        $upload_image = new UploadImage();
-        $upload = new Upload();
-        $upload_gallery = new UploadGallery();
-        $icon = new Icon();
-        $typography = new Typography();
+        //register the Framework options classes
+        $this->_registerFWOptionFields();
         
-        //add class instance to the _optionFieldsClasses array to use throughout the Option class methods
-        $this->_optionFieldsClasses[ $input->getField() ] = $input;
-        $this->_optionFieldsClasses[ $textarea->getField() ] = $textarea;
-        $this->_optionFieldsClasses[ $checkbox->getField() ] = $checkbox;
-        $this->_optionFieldsClasses[ $radio->getField() ] = $radio;
-        $this->_optionFieldsClasses[ $text->getField() ] = $text;
-        $this->_optionFieldsClasses[ $wpeditor->getField() ] = $wpeditor;
-        $this->_optionFieldsClasses[ $switch_field->getField() ] = $switch_field;
-        $this->_optionFieldsClasses[ $dropdown->getField() ] = $dropdown;
-        $this->_optionFieldsClasses[ $dropdown_multple->getField() ] = $dropdown_multple;
-        $this->_optionFieldsClasses[ $multi_input->getField() ] = $multi_input;
-        $this->_optionFieldsClasses[ $ace_editor->getField() ] = $ace_editor;
-        $this->_optionFieldsClasses[ $colorpicker->getField() ] = $colorpicker;
-        $this->_optionFieldsClasses[ $datepicker->getField() ] = $datepicker;
-        $this->_optionFieldsClasses[ $timepicker->getField() ] = $timepicker;
-        $this->_optionFieldsClasses[ $datetimepicker->getField() ] = $datetimepicker;
-        $this->_optionFieldsClasses[ $range_slider->getField() ] = $range_slider;
-        $this->_optionFieldsClasses[ $spacing->getField() ] = $spacing;
-        $this->_optionFieldsClasses[ $radio_image->getField() ] = $radio_image;
-        $this->_optionFieldsClasses[ $multi_options->getField() ] = $multi_options;
-        $this->_optionFieldsClasses[ $borders->getField() ] = $borders;
-        $this->_optionFieldsClasses[ $upload_image->getField() ] = $upload_image;
-        $this->_optionFieldsClasses[ $upload->getField() ] = $upload;
-        $this->_optionFieldsClasses[ $upload_gallery->getField() ] = $upload_gallery;
-        $this->_optionFieldsClasses[ $icon->getField() ] = $icon;
-        $this->_optionFieldsClasses[ $typography->getField() ] = $typography;
+        //register the Framework toggles classes
+        $this->_registerFWOptionToggles();
+        
+        //register the Framework options group classes
+        $this->_registerFWOptionGroups();
+        
+        //register the Framework options container classes
+        $this->_registerFWOptionContainers();
     }
     
 }
+
+/*
+// Hook to save the metabox data
+add_action('save_post', 'popupht_save_metabox_data');
+function popupht_save_metabox_data($post_id) {
+    // Check if our nonce is set
+    if (!isset($_POST['popupht_meta_box_nonce_field'])) {
+        return;
+    }
+    
+    // Verify that the nonce is valid
+    if (!wp_verify_nonce($_POST['popupht_meta_box_nonce_field'], 'popupht_meta_box_nonce')) {
+        return;
+    }
+    
+    // Check if this is an autosave
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return;
+    }
+    
+    // Check the post type
+    if (isset($_POST['post_type']) && $_POST['post_type'] === 'popupht') {
+        // Check if the user has permission to save data
+        if (!current_user_can('edit_post', $post_id)) {
+            return;
+        }
+        
+        // Sanitize user input
+        $new_value = isset($_POST['popupht_field']) ? sanitize_text_field($_POST['popupht_field']) : '';
+        
+        // Update the meta field in the database
+        update_post_meta($post_id, '_popupht_meta_key', $new_value);
+    }
+}*/

@@ -3,9 +3,10 @@ declare( strict_types = 1 );
 
 namespace DHT\Helpers\Traits\Options;
 
-use function DHT\Helpers\dht_get_db_settings_option;
-
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
+
+use function DHT\Helpers\dht_get_db_settings_option;
+use function DHT\Helpers\dht_print_r;
 
 trait OptionsHelpers {
     
@@ -18,29 +19,49 @@ trait OptionsHelpers {
      * and generates the appropriate HTML output. It handles both container types and group/toggle/field types.
      *
      *
-     * @param array $options
+     * @param array  $options
+     * @param string $options_id - options prefix id
+     * @param string $location   Where to save the data - dashboard/post or term
+     * @param int    $id         post id or term id
      *
      * @return string
      * @since     1.0.0
      */
-    private function _getOptionsView( array $options ) : string {
+    private function _getOptionsView( array $options, string $options_id, string $location = 'dashboard', int $id = 0 ) : string {
         
-        //check if the options have other options
-        $options = $options[ 'options' ] ?? $options;
+        dht_print_r( $options );
         
-        //get saved options if settings id present
-        $saved_values = !empty( $this->_settings_id ) ? dht_get_db_settings_option( $this->_settings_id ) : [];
+        $saved_values = [];
+        if ( $location == 'post' ) {
+            
+            // dht_print_r( $options );
+            foreach ( $options as $option ) {
+                
+                //get option value
+                $option_value = get_post_meta( $id, $option[ 'id' ], true );
+                
+                if ( $option_value === '' ) continue; //skip non existent values
+                
+                $saved_values[ $option[ 'id' ] ] = !empty( $option_value ) ? $option_value : [];
+            }
+            
+        } else {
+            //get saved options if settings id present
+            $saved_values = !empty( $options_id ) ? dht_get_db_settings_option( $options_id ) : [];
+        }
+        
+        dht_print_r( $saved_values );
         
         // Start output buffering
         ob_start();
         
         // Check if the options are of container type
-        if ( isset( $this->_options[ 'pages' ] ) ) {
+        if ( isset( $options[ 'pages' ] ) ) {
             // Render container types
             $this->_renderContainerOptions( $options, $saved_values );
         } else {
             // Render group or option types
-            $this->_renderGroupOrOptionTypes( $options, $saved_values );
+            $this->_renderGroupOrOptionTypes( $options, $saved_values, $options_id );
         }
         
         // Return the generated HTML view

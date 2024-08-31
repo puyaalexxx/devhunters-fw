@@ -3,6 +3,8 @@ declare( strict_types = 1 );
 
 namespace DHT\Helpers\Traits\Options;
 
+if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
+
 use DHT\Extensions\Options\Containers\Containers\SideMenu;
 use DHT\Extensions\Options\Groups\Groups\Accordion;
 use DHT\Extensions\Options\Groups\Groups\AddableBox;
@@ -34,8 +36,6 @@ use DHT\Extensions\Options\Options\fields\UploadGallery;
 use DHT\Extensions\Options\Options\fields\UploadImage;
 use DHT\Extensions\Options\Options\fields\WpEditor;
 use DHT\Extensions\Options\Toggles\Toggles\Toggle;
-
-if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 trait RegisterOptionsHelpers {
     

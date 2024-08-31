@@ -44,16 +44,16 @@ final class WpEditor extends BaseField {
      * (used to retrieve the $_POST['prefix_id'] values)
      *
      * @param array  $field
-     * @param string $prefix_id
+     * @param string $options_id
      *
      * @return array
      * @since     1.0.0
      */
-    public function addIDPrefix( array $field, string $prefix_id ) : array {
+    public function addIDPrefix( array $field, string $options_id ) : array {
         
-        if ( empty( $prefix_id ) ) return $field;
+        if ( empty( $options_id ) ) return $field;
         
-        $id = $prefix_id . '[' . $field[ 'id' ] . ']';
+        $id = $options_id . '[' . $field[ 'id' ] . ']';
         
         //wp editor does not support brackets in the id field so need to leave it without prefix id
         $field[ 'name' ] = $id;

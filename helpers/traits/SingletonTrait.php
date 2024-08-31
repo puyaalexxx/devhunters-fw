@@ -29,7 +29,10 @@ trait SingletonTrait {
         
         $cls = static::class;
         if ( !isset( self::$_instances[ $cls ] ) ) {
+            error_log( "Creating new instance of {$cls}" );
             self::$_instances[ $cls ] = new static();
+        } else {
+            error_log( "Returning existing instance of {$cls}" );
         }
         
         return self::$_instances[ $cls ];

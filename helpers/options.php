@@ -60,15 +60,15 @@ if ( !function_exists( 'dht_set_db_settings_option' ) ) {
  *
  * @param array  $saved_values
  * @param string $option_id
- * @param string $settings_id
+ * @param string $options_id
  *
  * @return mixed
  * @since     1.0.0
  */
 if ( !function_exists( 'dht_get_option_value_from_saved_values' ) ) {
-    function dht_get_option_value_from_saved_values( string $option_id, array $saved_values, string $settings_id ) : mixed {
+    function dht_get_option_value_from_saved_values( string $option_id, array $saved_values, string $options_id ) : mixed {
 
-        if ( empty( $settings_id ) ) {
+        if ( empty( $options_id ) ) {
 
             $saved_value = dht_get_db_settings_option( $option_id );
         } else {
@@ -178,7 +178,7 @@ if ( !function_exists( 'dht_get_font_weight_Label' ) ) {
  * render all group, toggle and field option types
  *
  * @param array  $options                 - options array
- * @param string $prefix_id               - options prefix id
+ * @param string $options_id              - options prefix id
  * @param array  $saved_values            - all options saved values
  * @param array  $optionRegisteredClasses - registered framework groups, toggles, and field classes
  *
@@ -186,26 +186,26 @@ if ( !function_exists( 'dht_get_font_weight_Label' ) ) {
  * @since     1.0.0
  */
 if ( !function_exists( 'dht_render_options' ) ) {
-    function dht_render_options( array $options, string $prefix_id, array $saved_values, array $registered_options_classes ) : string {
+    function dht_render_options( array $options, string $options_id, array $saved_values, array $registered_options_classes ) : string {
 
         ob_start();
 
         foreach ( $options as $option ) {
 
             //get option saved value by its id
-            $saved_value = dht_get_option_value_from_saved_values( $option[ 'id' ], $saved_values, $prefix_id );
+            $saved_value = dht_get_option_value_from_saved_values( $option[ 'id' ], $saved_values, $options_id );
 
             //if it is a group type
             if ( array_key_exists( $option[ 'type' ], $registered_options_classes[ 'groupsClasses' ] ) ) {
                 //render the respective option group class
-                echo $registered_options_classes[ 'groupsClasses' ][ $option[ 'type' ] ]->render( $option, $saved_value, $prefix_id );
+                echo $registered_options_classes[ 'groupsClasses' ][ $option[ 'type' ] ]->render( $option, $saved_value, $options_id );
             } //if it is a toggle type
             elseif ( array_key_exists( $option[ 'type' ], $registered_options_classes[ 'togglesClasses' ] ) ) {
                 //render the respective option toggle class
-                echo $registered_options_classes[ 'togglesClasses' ][ $option[ 'type' ] ]->render( $option, $saved_value, $prefix_id );
+                echo $registered_options_classes[ 'togglesClasses' ][ $option[ 'type' ] ]->render( $option, $saved_value, $options_id );
             } else {
                 //render the respective option type class
-                echo dht_render_field_if_exists( $option, $saved_value, $prefix_id, $registered_options_classes[ 'fieldsClasses' ] );
+                echo dht_render_field_if_exists( $option, $saved_value, $options_id, $registered_options_classes[ 'fieldsClasses' ] );
             }
         }
 
@@ -242,18 +242,18 @@ if ( !function_exists( 'dht_render_group' ) ) {
  *
  * @param array  $option
  * @param mixed  $saved_value
- * @param string $prefix_id                - options prefix id
+ * @param string $options_id               - options prefix id
  * @param array  $registered_field_classes - registered framework field classes
  *
  * @return string
  * @since     1.0.0
  */
 if ( !function_exists( 'dht_render_field_if_exists' ) ) {
-    function dht_render_field_if_exists( array $option, mixed $saved_value, string $prefix_id, array $registered_field_classes ) : string {
+    function dht_render_field_if_exists( array $option, mixed $saved_value, string $options_id, array $registered_field_classes ) : string {
 
         if ( array_key_exists( $option[ 'type' ], $registered_field_classes ) ) {
             //render the respective option type class
-            return $registered_field_classes[ $option[ 'type' ] ]->render( $option, $saved_value, $prefix_id );
+            return $registered_field_classes[ $option[ 'type' ] ]->render( $option, $saved_value, $options_id );
 
         } else {
             //display no option template if no match

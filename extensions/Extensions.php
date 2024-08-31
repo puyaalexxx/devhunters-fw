@@ -24,12 +24,18 @@ final class Extensions {
     use ValidateConfigurations;
     use SingletonTrait;
     
+    private $id;
+    
     /**
      * @since     1.0.0
      */
-    protected function __construct() {
+    private function __construct() {
         
         do_action( 'dht_before_extensions_init' );
+        
+        $this->id = uniqid();
+        
+        error_log( 'Extensions Instance ID: ' . $this->id );
     }
     
     /**
@@ -79,7 +85,8 @@ final class Extensions {
         $options = $this->_validateConfigurations( $options, '',
             'dht_options_configurations' );
         
-        //go further if it is an ajax request (needed for the icon option field)
+        //if the options exists or if it is an ajax request
+        // (needed for the options that use ajax specifically)
         if ( !( !empty( $options ) || wp_doing_ajax() ) ) return null;
         
         return new Options( $options );

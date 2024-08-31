@@ -201,7 +201,7 @@ function dht_render_sidebar_content( $ids, $options, $saved_values, $registered_
     $is_active_class = ( $count == 1 ) ? 'dht-cosidebar-active' : '';
 
     //prefix id used int he options name attribute for saving
-    $prefix_id = !empty( $ids[ 'subpage_id' ] ) && !empty( $ids[ 'page_id' ] ) ?
+    $options_id = !empty( $ids[ 'subpage_id' ] ) && !empty( $ids[ 'page_id' ] ) ?
         ( $ids[ 'menu_id' ] . '[' . $ids[ 'page_id' ] . '][' . $ids[ 'subpage_id' ] . ']' ) :
         ( !empty( $ids[ 'page_id' ] ) ?
             ( $ids[ 'menu_id' ] . '[' . $ids[ 'page_id' ] . ']' ) :
@@ -223,7 +223,7 @@ function dht_render_sidebar_content( $ids, $options, $saved_values, $registered_
 
     <div id="<?php echo esc_attr( $content_id ); ?>"
          class="dht-cosidebar-content <?php echo esc_attr( $is_active_class ); ?> ">
-        <?php echo dht_render_options( $options, $prefix_id, $saved_value, $registered_options_classes ) ?>
+        <?php echo dht_render_options( $options, $options_id, $saved_value, $registered_options_classes ) ?>
     </div>
 
     <?php

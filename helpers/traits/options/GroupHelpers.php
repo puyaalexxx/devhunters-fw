@@ -1,6 +1,9 @@
 <?php
+declare( strict_types = 1 );
 
 namespace DHT\Helpers\Traits\Options;
+
+if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 trait GroupHelpers {
     

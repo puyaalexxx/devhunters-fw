@@ -45,19 +45,19 @@ final class Toggle extends BaseToggle {
      *
      * @param array  $toggle
      * @param mixed  $saved_values
-     * @param string $prefix_id
+     * @param string $options_id
      * @param array  $additional_args
      *
      * @return string
      * @since     1.0.0
      */
-    public function render( array $toggle, mixed $saved_values, string $prefix_id, array $additional_args = [] ) : string {
+    public function render( array $toggle, mixed $saved_values, string $options_id, array $additional_args = [] ) : string {
         
         //merge default values with saved ones to display the saved ones
         $toggle = $this->mergeValues( $toggle, $saved_values );
         
         //add toggle prefix id
-        $toggle = parent::addIDPrefix( $toggle, $prefix_id );
+        $toggle = parent::addIDPrefix( $toggle, $options_id );
         
         
         return dht_load_view( $this->template_dir, $this->getToggle() . '.php', [

@@ -3,6 +3,8 @@ declare( strict_types = 1 );
 
 namespace DHT\Helpers\Traits\Options;
 
+if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
+
 use function DHT\Helpers\dht_set_db_settings_option;
 
 trait SaveOptionsHelpers {
@@ -23,20 +25,6 @@ trait SaveOptionsHelpers {
     }
     
     /**
-     * Retrieves the options for saving.
-     *
-     * This method determines whether to use the grouped options or the default options
-     * from the class properties.
-     *
-     * @return array The options to be used for saving.
-     * @since     1.0.0
-     */
-    private function _getOptions() : array {
-        
-        return $this->_options[ 'options' ] ?? $this->_options;
-    }
-    
-    /**
      * Handles saving of grouped options.
      *
      * Processes options that are grouped under an ID, using the appropriate option
@@ -45,12 +33,14 @@ trait SaveOptionsHelpers {
      *
      * @param array  $options     The options array containing grouped settings.
      * @param array  $post_values The POST data for the settings.
-     * @param string $settings_id The ID of the settings being processed.
+     * @param string $options_id  General settings id under which to save the options
+     * @param string $location    Where to save the data - dashboard/post or term
+     * @param int    $id          post id or term id
      *
      * @return array The processed values to be saved.
      * @since     1.0.0
      */
-    private function _handleGroupedOptions( array $options, array $post_values, string $settings_id ) : array {
+    private function _handleGroupedOptions( array $options, array $post_values, string $options_id, string $location = 'dashboard', int $id = 0 ) : array {
         
         $values = [];
         
@@ -68,7 +58,8 @@ trait SaveOptionsHelpers {
             }
         }
         
-        dht_set_db_settings_option( $settings_id, $values );
+        //save the past values to DB
+        $this->_saveToDB( $values, $options_id, $location, $id );
         
         return $values;
     }
@@ -79,21 +70,56 @@ trait SaveOptionsHelpers {
      * Processes individual options that are not grouped, using the appropriate option
      * classes to save the values directly to the database.
      *
-     * @param array $options The options array containing individual settings.
+     * @param array  $options  The options array containing individual settings.
+     * @param string $location Where to save the data - dashboard/post or term
+     * @param int    $id       post id or term id
      *
      * @return void
      * @since     1.0.0
      */
-    private function _handleUngroupedOptions( array $options ) : void {
+    private function _handleUngroupedOptions( array $options, string $location = 'dashboard', int $id = 0 ) : void {
         
         foreach ( $options as $option ) {
             
             if ( array_key_exists( $option[ 'id' ], $_POST ) ) {
                 
-                $value = $this->_optionClasses[ $option[ 'type' ] ]->saveValue( $option, $_POST[ $option[ 'id' ] ] );
+                $value = $this->_optionFieldsClasses[ $option[ 'type' ] ]->saveValue( $option, $_POST[ $option[ 'id' ] ] );
                 
-                dht_set_db_settings_option( $option[ 'id' ], $value );
+                //save the past values to DB
+                $this->_saveToDB( $value, $option[ 'id' ], $location, $id );
             }
+        }
+    }
+    
+    /**
+     * save the past values to DB
+     *
+     * Save dashboard pages, posts and terms data
+     *
+     * @param array  $values     The options sanitized values.
+     * @param string $options_id Dashboard page options id
+     * @param string $location   Where to save the data - dashboard/post or term
+     * @param int    $id         post id or term id
+     *
+     * @return void
+     * @since     1.0.0
+     */
+    private function _saveToDB( mixed $values, string $options_id, string $location = 'dashboard', int $id = 0 ) : void {
+        
+        //save post data
+        if ( $location == 'post' ) {
+            foreach ( $values as $option_id => $option_value ) {
+                update_post_meta( $id, $option_id, $option_value );
+            }
+            
+        } //save term data
+        elseif ( $location == 'term' ) {
+            
+            //update_term_meta((int)$id, 'custom_field_key', $custom_field_value);
+            
+        } //save dashboard page options data
+        else {
+            dht_set_db_settings_option( $options_id, $values );
         }
     }
     
@@ -112,11 +138,12 @@ trait SaveOptionsHelpers {
     private function _saveOptionValue( array $option, mixed $post_value ) : mixed {
         
         if ( isset( $this->_optionGroupsClasses[ $option[ 'type' ] ] ) ) {
-            
             return $this->_optionGroupsClasses[ $option[ 'type' ] ]->saveValue( $option, $post_value );
+        } elseif ( isset( $this->_optionTogglesClasses[ $option[ 'type' ] ] ) ) {
+            return $this->_optionTogglesClasses[ $option[ 'type' ] ]->saveValue( $option, $post_value );
+        } else {
+            return $this->_optionFieldsClasses[ $option[ 'type' ] ]->saveValue( $option, $post_value );
         }
-        
-        return $this->_optionClasses[ $option[ 'type' ] ]->saveValue( $option, $post_value );
     }
     
 }

@@ -5,7 +5,6 @@ namespace DHT;
 
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
-use DHT\Core\DI\DIInit;
 use DHT\Core\Manifest;
 use DHT\Extensions\Extensions;
 

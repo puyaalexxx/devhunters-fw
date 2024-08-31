@@ -10,7 +10,6 @@ use ReflectionClass;
 use ReflectionException;
 
 /**
- *
  * print_r alternative with styling
  *
  * @param mixed $value the value to be printed
@@ -84,7 +83,6 @@ if ( !function_exists( 'dht_print_r' ) ) {
 }
 
 /**
- *
  * Convert to Unix style directory separators
  *
  * @param string $path - dir path
@@ -112,9 +110,7 @@ if ( !function_exists( 'dht_fix_path' ) ) {
     }
 }
 
-
 /**
- *
  * load file with arguments and display it or return its content
  *
  * @param string $path   - dir path]
@@ -230,6 +226,9 @@ if ( !function_exists( 'dht_parse_css_classes_into_array' ) ) {
  * @throws ReflectionException
  */
 if ( !function_exists( 'dht_is_singleton' ) ) {
+    /**
+     * @throws ReflectionException
+     */
     function dht_is_singleton( $className ) : bool {
         
         $reflection = new ReflectionClass( $className );
@@ -264,3 +263,4 @@ if ( !function_exists( 'dht_is_singleton' ) ) {
         return false;
     }
 }
+

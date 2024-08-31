@@ -3,9 +3,9 @@ declare( strict_types = 1 );
 
 namespace DHT\Helpers\Traits\Options;
 
-use function DHT\Helpers\dht_render_options;
-
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
+
+use function DHT\Helpers\dht_render_options;
 
 trait RenderOptionsHelpers {
     
@@ -30,17 +30,18 @@ trait RenderOptionsHelpers {
     /**
      * Renders the HTML for group, toggle or option type options.
      *
-     * @param array $options      options to be rendered
-     * @param array $saved_values The saved values for the options.
+     * @param array  $options      options to be rendered
+     * @param array  $saved_values The saved values for the options.
+     * @param string $options_id   options prefix id
      *
      * @return void
      * @since     1.0.0
      */
-    private function _renderGroupOrOptionTypes( array $options, array $saved_values ) : void {
+    private function _renderGroupOrOptionTypes( array $options, array $saved_values, string $options_id ) : void {
         
         echo dht_render_options(
             $options,
-            $this->_settings_id,
+            $options_id,
             $saved_values,
             [
                 'groupsClasses' => $this->_optionGroupsClasses,

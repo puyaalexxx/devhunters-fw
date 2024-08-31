@@ -47,13 +47,13 @@ final class Typography extends BaseField {
      *
      * @param array  $field
      * @param mixed  $saved_value
-     * @param string $prefix_id
+     * @param string $options_id
      * @param array  $additional_args
      *
      * @return string
      * @since     1.0.0
      */
-    public function render( array $field, mixed $saved_value, string $prefix_id, array $additional_args = [] ) : string {
+    public function render( array $field, mixed $saved_value, string $options_id, array $additional_args = [] ) : string {
         
         $additional_args = [
             $this->_getStandardFonts(),
@@ -61,7 +61,7 @@ final class Typography extends BaseField {
             $this->_getTextDecorationValues(), $this->_getTextTransformValues()
         ];
         
-        return parent::render( $field, $saved_value, $prefix_id, $additional_args );
+        return parent::render( $field, $saved_value, $options_id, $additional_args );
     }
     
     /**

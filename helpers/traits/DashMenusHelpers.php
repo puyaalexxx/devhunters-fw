@@ -3,9 +3,9 @@ declare( strict_types = 1 );
 
 namespace DHT\Helpers\Traits;
 
-use function DHT\Helpers\dht_load_view;
-
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
+
+use function DHT\Helpers\dht_load_view;
 
 trait DashMenusHelpers {
     

@@ -141,17 +141,17 @@ final class Icon extends BaseField {
      * (used to retrieve the $_POST['prefix_id'] values)
      *
      * @param array  $field
-     * @param string $prefix_id
+     * @param string $options_id
      *
      * @return array
      * @since     1.0.0
      */
-    public function addIDPrefix( array $field, string $prefix_id ) : array {
+    public function addIDPrefix( array $field, string $options_id ) : array {
         
-        if ( empty( $prefix_id ) ) return $field;
+        if ( empty( $options_id ) ) return $field;
         
-        $field[ 'name' ] = $prefix_id . '[' . $field[ 'id' ] . ']';
-        $field[ 'id' ] = str_replace( [ '[', ']' ], '-', $prefix_id . '-' . $field[ 'id' ] );
+        $field[ 'name' ] = $options_id . '[' . $field[ 'id' ] . ']';
+        $field[ 'id' ] = str_replace( [ '[', ']' ], '-', $options_id . '-' . $field[ 'id' ] );
         
         return $field;
     }

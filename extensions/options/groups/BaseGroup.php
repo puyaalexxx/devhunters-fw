@@ -81,19 +81,19 @@ abstract class BaseGroup {
      *
      * @param array  $group
      * @param mixed  $saved_values
-     * @param string $prefix_id
+     * @param string $options_id
      * @param array  $additional_args
      *
      * @return string
      * @since     1.0.0
      */
-    public function render( array $group, mixed $saved_values, string $prefix_id, array $additional_args = [] ) : string {
+    public function render( array $group, mixed $saved_values, string $options_id, array $additional_args = [] ) : string {
         
         //merge default values with saved ones to display the saved ones
         $group = $this->mergeValues( $group, $saved_values );
         
         //add group prefix id
-        $group = $this->addIDPrefix( $group, $prefix_id );
+        $group = $this->addIDPrefix( $group, $options_id );
         
         return dht_load_view( $this->template_dir, $this->getGroup() . '.php', [
             'group' => $group,
@@ -107,16 +107,16 @@ abstract class BaseGroup {
      * (used to retrieve the $_POST['prefix_id'] values)
      *
      * @param array  $group
-     * @param string $prefix_id
+     * @param string $options_id
      *
      * @return array
      * @since     1.0.0
      */
-    public function addIDPrefix( array $group, string $prefix_id ) : array {
+    public function addIDPrefix( array $group, string $options_id ) : array {
         
-        if ( empty( $prefix_id ) ) return $group;
+        if ( empty( $options_id ) ) return $group;
         
-        $group[ 'id' ] = $prefix_id . '[' . $group[ 'id' ] . ']';
+        $group[ 'id' ] = $options_id . '[' . $group[ 'id' ] . ']';
         
         return $group;
     }

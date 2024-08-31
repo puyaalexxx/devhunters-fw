@@ -65,19 +65,19 @@ abstract class BaseField {
      *
      * @param array  $field
      * @param mixed  $saved_value
-     * @param string $prefix_id
+     * @param string $options_id
      * @param array  $additional_args
      *
      * @return string
      * @since     1.0.0
      */
-    public function render( array $field, mixed $saved_value, string $prefix_id, array $additional_args = [] ) : string {
+    public function render( array $field, mixed $saved_value, string $options_id, array $additional_args = [] ) : string {
         
         //merge default values with saved ones to display the saved ones
         $field = $this->mergeValues( $field, $saved_value );
         
         //add option prefix id
-        $field = $this->addIDPrefix( $field, $prefix_id );
+        $field = $this->addIDPrefix( $field, $options_id );
         
         //render the respective option type
         return dht_load_view( $this->template_dir, $this->getField() . '.php', [ 'field' => $field, 'additional_args' => $additional_args ] );
@@ -88,16 +88,16 @@ abstract class BaseField {
      * (used to retrieve the $_POST['prefix_id'] values)
      *
      * @param array  $field
-     * @param string $prefix_id
+     * @param string $options_id
      *
      * @return array
      * @since     1.0.0
      */
-    public function addIDPrefix( array $field, string $prefix_id ) : array {
+    public function addIDPrefix( array $field, string $options_id ) : array {
         
-        if ( empty( $prefix_id ) ) return $field;
+        if ( empty( $options_id ) ) return $field;
         
-        $field[ 'id' ] = $prefix_id . '[' . $field[ 'id' ] . ']';
+        $field[ 'id' ] = $options_id . '[' . $field[ 'id' ] . ']';
         
         return $field;
     }

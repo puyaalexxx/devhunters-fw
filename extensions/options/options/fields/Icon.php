@@ -148,10 +148,12 @@ final class Icon extends BaseField {
      */
     public function addIDPrefix( array $field, string $options_id ) : array {
         
-        if ( empty( $options_id ) ) return $field;
-        
-        $field[ 'name' ] = $options_id . '[' . $field[ 'id' ] . ']';
-        $field[ 'id' ] = str_replace( [ '[', ']' ], '-', $options_id . '-' . $field[ 'id' ] );
+        if ( !empty( $options_id ) ) {
+            $field[ 'name' ] = $options_id . '[' . $field[ 'id' ] . ']';
+            $field[ 'id' ] = str_replace( [ '[', ']' ], '-', $options_id . '-' . $field[ 'id' ] );
+        } else {
+            $field[ 'name' ] = $field[ 'id' ];
+        }
         
         return $field;
     }

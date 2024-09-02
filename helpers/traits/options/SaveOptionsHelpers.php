@@ -5,6 +5,7 @@ namespace DHT\Helpers\Traits\Options;
 
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
+use function DHT\Helpers\dht_get_db_settings_option;
 use function DHT\Helpers\dht_set_db_settings_option;
 
 trait SaveOptionsHelpers {
@@ -25,13 +26,13 @@ trait SaveOptionsHelpers {
     }
     
     /**
-     * Handles saving of grouped options.
+     * Handles saving of container options.
      *
-     * Processes options that are grouped under an ID, using the appropriate option
-     * container or group classes to save the values. This method saves the processed
+     * Processes options that are in a container, using the appropriate option
+     * container to save the values. This method saves the processed
      * values to the database.
      *
-     * @param array  $options     The options array containing grouped settings.
+     * @param array  $options     The options array containing container settings.
      * @param array  $post_values The POST data for the settings.
      * @param string $options_id  General settings id under which to save the options
      * @param string $location    Where to save the data - dashboard/post or term
@@ -40,7 +41,7 @@ trait SaveOptionsHelpers {
      * @return array The processed values to be saved.
      * @since     1.0.0
      */
-    private function _handleGroupedOptions( array $options, array $post_values, string $options_id, string $location = 'dashboard', int $id = 0 ) : array {
+    private function _handleContainerOptions( array $options, array $post_values, string $options_id, string $location = 'dashboard', int $id = 0 ) : array {
         
         $values = [];
         
@@ -49,14 +50,14 @@ trait SaveOptionsHelpers {
             $values[ $options[ 'id' ] ] = $this->_optionContainerClasses[ $options[ 'type' ] ]
                 ->saveValue( $options, $post_values );
             
-        } else {
+        } /*else {
             foreach ( $options as $option ) {
                 
                 if ( array_key_exists( $option[ 'id' ], $post_values ) ) {
                     $values[ $option[ 'id' ] ] = $this->_saveOptionValue( $option, $post_values[ $option[ 'id' ] ] );
                 }
             }
-        }
+        }*/
         
         //save the past values to DB
         $this->_saveToDB( $values, $options_id, $location, $id );
@@ -83,7 +84,7 @@ trait SaveOptionsHelpers {
             
             if ( array_key_exists( $option[ 'id' ], $_POST ) ) {
                 
-                $value = $this->_optionFieldsClasses[ $option[ 'type' ] ]->saveValue( $option, $_POST[ $option[ 'id' ] ] );
+                $value = $this->_saveOptionValue( $option, $_POST[ $option[ 'id' ] ] );
                 
                 //save the past values to DB
                 $this->_saveToDB( $value, $option[ 'id' ], $location, $id );
@@ -144,6 +145,48 @@ trait SaveOptionsHelpers {
         } else {
             return $this->_optionFieldsClasses[ $option[ 'type' ] ]->saveValue( $option, $post_value );
         }
+    }
+    
+    /**
+     * get options saved values in one array
+     *
+     * @param array  $options
+     * @param string $location Where to save the data - dashboard/post or term
+     * @param int    $id       post id or term id
+     *
+     * @return mixed The processed value to be saved.
+     * @since     1.0.0
+     */
+    private function _getOptionsSavedValues( array $options, string $location = 'dashboard', int $id = 0 ) : array {
+        
+        $saved_values = [];
+        if ( $location == 'post' ) {
+            foreach ( $options as $option ) {
+                //get option value
+                $option_value = get_post_meta( $id, $option[ 'id' ], true );
+                
+                if ( $option_value === '' ) continue; //skip non existent values
+                
+                $saved_values[ $option[ 'id' ] ] = !empty( $option_value ) ? $option_value : [];
+            }
+            
+        } else {
+            //get saved options if settings id present
+            if ( isset( $options[ 'id' ] ) ) {
+                $saved_values = dht_get_db_settings_option( $options[ 'id' ] );
+            } else {
+                foreach ( $options as $option ) {
+                    //get option value
+                    $option_value = dht_get_db_settings_option( $option[ 'id' ] );
+                    
+                    if ( empty( $option_value ) ) continue; //skip non existent values
+                    
+                    $saved_values[ $option[ 'id' ] ] = $option_value;
+                }
+            }
+        }
+        
+        return $saved_values;
     }
     
 }

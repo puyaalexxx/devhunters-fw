@@ -4,6 +4,7 @@ if ( !defined( 'PPHT_MAIN' ) ) die( 'Forbidden' );
 
 $options = [
     'id' => PPHT_PREFIX . '-tools-settings',
+    'type' => 'simple',
     'attr' => array( 'class' => 'custom-class', 'data-foo' => 'bar' ),
     'options' => [
         //input field

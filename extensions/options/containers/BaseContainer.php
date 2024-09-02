@@ -3,11 +3,14 @@ declare( strict_types = 1 );
 
 namespace DHT\Extensions\Options\Containers;
 
+use DHT\Helpers\Traits\Options\ContainerTypeHelpers;
 use function DHT\Helpers\dht_load_view;
 
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 abstract class BaseContainer {
+    
+    use ContainerTypeHelpers;
     
     //options templates directory
     protected string $template_dir = DHT_TEMPLATES_DIR . 'extensions/options/containers/';
@@ -16,13 +19,13 @@ abstract class BaseContainer {
     protected string $_container = 'unknown';
     
     //registered toggles classes
-    private array $_optionGroupsClasses;
+    protected array $_optionGroupsClasses;
     
     //registered option classes
-    private array $_optionTogglesClasses;
+    protected array $_optionTogglesClasses;
     
     //registered field classes
-    private array $_optionFieldsClasses;
+    protected array $_optionFieldsClasses;
     
     /**
      * @param array $optionGroupsClasses
@@ -124,81 +127,7 @@ abstract class BaseContainer {
             return [];
         }
         
-        $values = [];
-        // Check the subtype of menu pages
-        $is_tabs_subtype = isset( $container[ 'subtype' ] ) && $container[ 'subtype' ] == 'tabs';
-        
-        // Sanitize option values
-        foreach ( $container[ 'pages' ] as $page ) {
-            $page_id = $page[ 'id' ];
-            $page_options = $page[ 'options' ] ?? [];
-            
-            // Handle subpages if they exist
-            if ( isset( $page[ 'pages' ] ) ) {
-                foreach ( $page[ 'pages' ] as $subpage ) {
-                    $subpage_id = $subpage[ 'id' ];
-                    $subpage_options = $subpage[ 'options' ] ?? [];
-                    
-                    if ( $is_tabs_subtype ) {
-                        // For 'tabs' subtype, sanitize subpage values
-                        $values[ $page_id ][ $subpage_id ] = $this->_sanitizeValues( $subpage_options, $container_post_values[ $page_id ][ $subpage_id ] ?? [] );
-                    } else {
-                        // For other subtypes, handle subpage values if options are not empty
-                        if ( !empty( $subpage_options ) ) {
-                            $values = $this->_sanitizeValues( $subpage_options, $container_post_values );
-                        }
-                    }
-                }
-            } else {
-                if ( $is_tabs_subtype ) {
-                    // For 'tabs' subtype, sanitize page values
-                    $values[ $page_id ] = $this->_sanitizeValues( $page_options, $container_post_values[ $page_id ] ?? [] );
-                } else {
-                    // For other subtypes, handle page values if options are not empty
-                    if ( !empty( $page_options ) ) {
-                        $values = $this->_sanitizeValues( $page_options, $container_post_values );
-                    }
-                }
-            }
-        }
-        
-        return $values;
-    }
-    
-    /**
-     * sanitize each option value passed from the $_POST array
-     *
-     * @param array $options
-     * @param array $options_post_values - container options $_POST values passed on save
-     *
-     * @return mixed
-     * @since     1.0.0
-     */
-    private function _sanitizeValues( array $options, array $options_post_values ) : array {
-        
-        $values = [];
-        foreach ( $options as $option ) {
-            
-            $option_post_value = $options_post_values[ $option[ 'id' ] ] ?? [];
-            
-            //if it is a group type
-            if ( isset( $this->_optionGroupsClasses[ $option[ 'type' ] ] ) ) {
-                
-                $values[ $option[ 'id' ] ] = $this->_optionGroupsClasses[ $option[ 'type' ] ]->saveValue( $option, $option_post_value );
-                
-            } //if it is a toggle type
-            elseif ( isset( $this->_optionTogglesClasses[ $option[ 'type' ] ] ) ) {
-                
-                $values[ $option[ 'id' ] ] = $this->_optionTogglesClasses[ $option[ 'type' ] ]->saveValue( $option, $option_post_value );
-                
-            } //if it is a simple option type
-            else {
-                
-                $values[ $option[ 'id' ] ] = $this->_optionFieldsClasses[ $option[ 'type' ] ]->saveValue( $option, $option_post_value );
-            }
-        }
-        
-        return $values;
+        return $this->_sanitizeValues( $container[ 'options' ], $container_post_values );
     }
     
 }

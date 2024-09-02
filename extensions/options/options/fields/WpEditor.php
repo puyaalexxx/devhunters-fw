@@ -51,18 +51,22 @@ final class WpEditor extends BaseField {
      */
     public function addIDPrefix( array $field, string $options_id ) : array {
         
-        if ( empty( $options_id ) ) return $field;
-        
-        $id = $options_id . '[' . $field[ 'id' ] . ']';
-        
-        //wp editor does not support brackets in the id field so need to leave it without prefix id
-        $field[ 'name' ] = $id;
-        
-        if ( str_ends_with( $id, ']' ) ) {
-            // Replace the last character with an empty space
-            $id = substr( $id, 0, -1 );
+        if ( !empty( $options_id ) ) {
+            $id = $options_id . '[' . $field[ 'id' ] . ']';
+            
+            //wp editor does not support brackets in the id field so need to leave it without prefix id
+            $field[ 'name' ] = $id;
+            
+            if ( str_ends_with( $id, ']' ) ) {
+                // Replace the last character with an empty space
+                $id = substr( $id, 0, -1 );
+            }
+            $field[ 'id' ] = str_replace( [ '[', ']' ], '-', $id );
+        } else {
+            
+            //wp editor does not support brackets in the id field so need to leave it without prefix id
+            $field[ 'name' ] = $field[ 'id' ];
         }
-        $field[ 'id' ] = str_replace( [ '[', ']' ], '-', $id );
         
         return $field;
     }

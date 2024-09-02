@@ -10,45 +10,45 @@ use function DHT\Helpers\dht_render_options;
 trait RenderOptionsHelpers {
     
     /**
-     * Renders the HTML for container type options.
+     * Generates the HTML view for the options.
      *
-     * @param array $options      options to be rendered
-     * @param array $saved_values The saved values for the options.
+     * This method retrieves the saved options, determines the type of options being rendered,
+     * and generates the appropriate HTML output. It handles both container types and group/toggle/field types.
      *
-     * @return void
+     *
+     * @param array  $options
+     * @param string $location Where to save the data - dashboard/post or term
+     * @param int    $id       post id or term id
+     *
+     * @return string
      * @since     1.0.0
      */
-    private function _renderContainerOptions( array $options, array $saved_values ) : void {
+    private function _getOptionsView( array $options, string $location = 'dashboard', int $id = 0 ) : string {
         
-        if ( array_key_exists( $options[ 'type' ], $this->_optionContainerClasses ) ) {
-            // Render the respective container class
-            echo $this->_optionContainerClasses[ $options[ 'type' ] ]
-                ->render( $options, $saved_values );
+        $saved_values = $this->_getOptionsSavedValues( $options, $location = 'dashboard', $id );
+        
+        // Start output buffering
+        ob_start();
+        
+        // Render container options
+        if ( isset( $options[ 'type' ] ) && array_key_exists( $options[ 'type' ], $this->_optionContainerClasses ) ) {
+            echo $this->_optionContainerClasses[ $options[ 'type' ] ]->render( $options, $saved_values );
+        } // Render ungrouped option types
+        else {
+            echo dht_render_options(
+                $options,
+                '',
+                $saved_values,
+                [
+                    'groupsClasses' => $this->_optionGroupsClasses,
+                    'togglesClasses' => $this->_optionTogglesClasses,
+                    'fieldsClasses' => $this->_optionFieldsClasses,
+                ]
+            );
         }
-    }
-    
-    /**
-     * Renders the HTML for group, toggle or option type options.
-     *
-     * @param array  $options      options to be rendered
-     * @param array  $saved_values The saved values for the options.
-     * @param string $options_id   options prefix id
-     *
-     * @return void
-     * @since     1.0.0
-     */
-    private function _renderGroupOrOptionTypes( array $options, array $saved_values, string $options_id ) : void {
         
-        echo dht_render_options(
-            $options,
-            $options_id,
-            $saved_values,
-            [
-                'groupsClasses' => $this->_optionGroupsClasses,
-                'togglesClasses' => $this->_optionTogglesClasses,
-                'fieldsClasses' => $this->_optionFieldsClasses,
-            ]
-        );
+        // Return the generated HTML view
+        return ob_get_clean();
     }
     
 }

@@ -55,31 +55,6 @@ if ( !function_exists( 'dht_set_db_settings_option' ) ) {
     }
 }
 
-/**
- * get option saved value from an array of saved values
- *
- * @param array  $saved_values
- * @param string $option_id
- * @param string $options_id
- *
- * @return mixed
- * @since     1.0.0
- */
-if ( !function_exists( 'dht_get_option_value_from_saved_values' ) ) {
-    function dht_get_option_value_from_saved_values( string $option_id, array $saved_values, string $options_id ) : mixed {
-
-        if ( empty( $options_id ) ) {
-
-            $saved_value = dht_get_db_settings_option( $option_id );
-        } else {
-
-            $saved_value = $saved_values[ $option_id ] ?? [];
-        }
-
-        return $saved_value;
-    }
-}
-
 ////////////////////////////////////// other option help functions
 
 /**
@@ -193,7 +168,7 @@ if ( !function_exists( 'dht_render_options' ) ) {
         foreach ( $options as $option ) {
 
             //get option saved value by its id
-            $saved_value = dht_get_option_value_from_saved_values( $option[ 'id' ], $saved_values, $options_id );
+            $saved_value = $saved_values[ $option[ 'id' ] ] ?? [];
 
             //if it is a group type
             if ( array_key_exists( $option[ 'type' ], $registered_options_classes[ 'groupsClasses' ] ) ) {
@@ -252,6 +227,7 @@ if ( !function_exists( 'dht_render_field_if_exists' ) ) {
     function dht_render_field_if_exists( array $option, mixed $saved_value, string $options_id, array $registered_field_classes ) : string {
 
         if ( array_key_exists( $option[ 'type' ], $registered_field_classes ) ) {
+
             //render the respective option type class
             return $registered_field_classes[ $option[ 'type' ] ]->render( $option, $saved_value, $options_id );
 

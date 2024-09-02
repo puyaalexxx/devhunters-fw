@@ -5,7 +5,7 @@ namespace DHT\Helpers\Traits\Options;
 
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
-trait GroupHelpers {
+trait GroupTypeHelpers {
     
     /**
      * group option save helper to deal with toggles and field options

@@ -4,7 +4,7 @@ if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 use function DHT\Helpers\dht_render_options;
 
-$menu_pages = $args[ 'container' ] ?? [];
+$container = $args[ 'container' ] ?? [];
 //get sidemenu saved values
 $saved_values = $args[ 'saved_values' ] ?? [];
 //used to call the render method on
@@ -13,15 +13,15 @@ $registered_options_classes = $args[ 'registered_options_classes' ] ?? [];
 $options = [];
 ?>
     <!-- container - sidemenu -->
-<?php if ( isset( $menu_pages[ 'subtype' ] ) && $menu_pages[ 'subtype' ] == 'tabs' ): ?>
+<?php if ( isset( $container[ 'subtype' ] ) && $container[ 'subtype' ] == 'tabs' ): ?>
 
     <div id="dht-cosidebar"
-         class="dht-cosidebar-tabs <?php echo isset( $menu_pages[ 'attr' ][ 'class' ] ) ? esc_attr( $menu_pages[ 'attr' ][ 'class' ] ) : ''; ?>">
+         class="dht-cosidebar-tabs <?php echo isset( $container[ 'attr' ][ 'class' ] ) ? esc_attr( $container[ 'attr' ][ 'class' ] ) : ''; ?>">
 
         <div class="dht-cosidebar-header">
             <ul>
                 <?php $count = 0; ?>
-                <?php foreach ( $menu_pages[ 'pages' ] as $page ): $count++; ?>
+                <?php foreach ( $container[ 'pages' ] as $page ): $count++; ?>
 
                     <?php
                     $page_link = $page[ 'page_link' ] ?? '';
@@ -75,11 +75,11 @@ $options = [];
                     // Render submenu items
                     if ( isset( $page[ 'pages' ] ) ) {
                         foreach ( $page[ 'pages' ] as $subpage_id => $options ) {
-                            echo dht_render_sidebar_content( [ 'menu_id' => $menu_pages[ 'id' ], 'page_id' => $page_id, 'subpage_id' => $subpage_id ], $options, $saved_values, $registered_options_classes, $count );
+                            echo dht_render_sidebar_content( [ 'menu_id' => $container[ 'id' ], 'page_id' => $page_id, 'subpage_id' => $subpage_id ], $options, $saved_values, $registered_options_classes, $count );
                         }
                     } else {
                         // Render parent menu item options
-                        echo dht_render_sidebar_content( [ 'menu_id' => $menu_pages[ 'id' ], 'page_id' => $page_id ], $page[ 'options' ], $saved_values, $registered_options_classes, $count );
+                        echo dht_render_sidebar_content( [ 'menu_id' => $container[ 'id' ], 'page_id' => $page_id ], $page[ 'options' ], $saved_values, $registered_options_classes, $count );
                     }
                     ?>
 
@@ -101,11 +101,11 @@ $options = [];
 
     <div
         id="dht-cosidebar"
-        class="<?php echo isset( $menu_pages[ 'attr' ][ 'class' ] ) ? esc_attr( $menu_pages[ 'attr' ][ 'class' ] ) : ''; ?>">
+        class="<?php echo isset( $container[ 'attr' ][ 'class' ] ) ? esc_attr( $container[ 'attr' ][ 'class' ] ) : ''; ?>">
 
         <div class="dht-cosidebar-header">
             <ul>
-                <?php foreach ( $menu_pages[ 'pages' ] as $page ): $count++; ?>
+                <?php foreach ( $container[ 'pages' ] as $page ): $count++; ?>
 
                     <?php
                     $active_parent_class = dht_if_parent_menu_is_active( $page, $current_page );
@@ -155,7 +155,7 @@ $options = [];
             <div class="dht-cosidebar-body">
 
                 <?php
-                echo dht_render_sidebar_content( [ 'menu_id' => $menu_pages[ 'id' ] ], $options, $saved_values, $registered_options_classes, 1 );
+                echo dht_render_sidebar_content( [ 'menu_id' => $container[ 'id' ] ], $options, $saved_values, $registered_options_classes, 1 );
                 ?>
 
             </div>

@@ -3,14 +3,14 @@ declare( strict_types = 1 );
 
 namespace DHT\Extensions\Options\Groups;
 
-use DHT\Helpers\Traits\Options\GroupHelpers;
+use DHT\Helpers\Traits\Options\GroupTypeHelpers;
 use function DHT\Helpers\dht_load_view;
 
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 abstract class BaseGroup {
     
-    use GroupHelpers;
+    use GroupTypeHelpers;
     
     //groups templates directory
     protected string $template_dir = DHT_TEMPLATES_DIR . 'extensions/options/groups/';

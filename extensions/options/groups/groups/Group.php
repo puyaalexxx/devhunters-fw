@@ -4,14 +4,14 @@ declare( strict_types = 1 );
 namespace DHT\Extensions\Options\Groups\Groups;
 
 use DHT\Extensions\Options\Groups\BaseGroup;
-use DHT\Helpers\Traits\Options\GroupHelpers;
+use DHT\Helpers\Traits\Options\GroupTypeHelpers;
 use function DHT\fw;
 
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 final class Group extends BaseGroup {
     
-    use GroupHelpers;
+    use GroupTypeHelpers;
     
     //group type
     protected string $_group = 'group';

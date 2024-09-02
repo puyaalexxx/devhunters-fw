@@ -6,7 +6,11 @@ namespace DHT\Extensions\Options;
 if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 use DHT\Extensions\Options\Options\BaseField;
-use DHT\Helpers\Traits\Options\{OptionsHelpers, RegisterOptionsHelpers, RenderOptionsHelpers, SaveOptionsHelpers};
+use DHT\Helpers\Traits\Options\{EnqueueOptionsHelpers,
+    OptionsHelpers,
+    RegisterOptionsHelpers,
+    RenderOptionsHelpers,
+    SaveOptionsHelpers};
 use WP_Post;
 use function DHT\fw;
 use function DHT\Helpers\{dht_load_view};
@@ -17,6 +21,7 @@ final class Options implements IOptions {
     use SaveOptionsHelpers;
     use RenderOptionsHelpers;
     use RegisterOptionsHelpers;
+    use EnqueueOptionsHelpers;
     
     //option configurations (received from the plugin config/options folder area)
     private array $_options;
@@ -71,9 +76,9 @@ final class Options implements IOptions {
         add_action( 'dht_render_dashboard_page_content', function () {
             
             //save dashboard pages options
-            $this->_saveDashBoardPageOptions( $this->_options[ 'id' ] ?? '' );
+            $this->_saveDashBoardPageOptions();
             
-            $this->renderDashBoardPageContent( $this->_options, $this->_options[ 'id' ] ?? '' );
+            $this->renderDashBoardPageContent( $this->_options );
         } );
         
         //post types related functionality
@@ -139,7 +144,8 @@ final class Options implements IOptions {
                     $metabox[ 'title' ], // Title of the metabox
                     function ( $post ) use ( $metabox, $metabox_id ) {
                         
-                        $this->renderPostTypeMetaboxContent( $metabox, $metabox_id, $post->ID );
+                        $metabox[ 'id' ] = $metabox_id;
+                        $this->renderPostTypeMetaboxContent( $metabox, $post->ID );
                     },
                     $metabox[ 'post-type' ], // Post type
                     $metabox[ 'context' ] ?? 'normal', // Context (normal, side, advanced)
@@ -154,7 +160,8 @@ final class Options implements IOptions {
                 $this->_options[ 'title' ], // Title of the metabox
                 function ( $post ) use ( $metabox_id ) {
                     
-                    $this->renderPostTypeMetaboxContent( $this->_options, $metabox_id, $post->ID );
+                    $this->_options[ 'id' ] = $metabox_id;
+                    $this->renderPostTypeMetaboxContent( $this->_options, $post->ID );
                 },
                 $this->_options[ 'post-type' ], // Post type
                 $this->_options[ 'context' ] ?? 'normal', // Context (normal, side, advanced)
@@ -167,18 +174,15 @@ final class Options implements IOptions {
     /**
      * render dashboard page content
      *
-     * @param array  $options
-     * @param string $options_id - options prefix id
-     *
      * @return void
      * @since     1.0.0
      */
-    public function renderDashBoardPageContent( array $options, string $options_id ) : void {
+    public function renderDashBoardPageContent() : void {
         
         echo dht_load_view( DHT_TEMPLATES_DIR . 'extensions/options/', 'dashboard-page-template.php',
             [
                 'nonce' => $this->_nonce,
-                'options' => $this->_getOptionsView( $options[ 'options' ] ?? $options, $options_id ),
+                'options' => $this->_getOptionsView( $this->_options ),
             ]
         );
     }
@@ -186,19 +190,18 @@ final class Options implements IOptions {
     /**
      * render dashboard page content
      *
-     * @param array  $options    options array
-     * @param string $options_id options prefix id
-     * @param int    $post_id
+     * @param array $options options array
+     * @param int   $post_id
      *
      * @return void
      * @since     1.0.0
      */
-    public function renderPostTypeMetaboxContent( array $options, string $options_id, int $post_id ) : void {
+    public function renderPostTypeMetaboxContent( array $options, int $post_id ) : void {
         
         echo dht_load_view( DHT_TEMPLATES_DIR . 'extensions/options/', 'posts-template.php',
             [
                 'nonce' => $this->_nonce,
-                'options' => $this->_getOptionsView( $options[ 'options' ] ?? $options, $options_id, 'post', $post_id ),
+                'options' => $this->_getOptionsView( $options, 'post', $post_id ),
             ]
         );
     }
@@ -210,24 +213,20 @@ final class Options implements IOptions {
      * and processes the POST data to save settings. It delegates specific processing
      * tasks to other methods to improve readability and maintainability.
      *
-     * @param string $options_id The ID of the options to be saved.
      *
      * @return void
      * @since     1.0.0
      */
-    private function _saveDashBoardPageOptions( string $options_id ) : void {
+    private function _saveDashBoardPageOptions() : void {
         
         if ( $this->_isValidRequest() ) {
             
-            //get correct options
-            $options = $this->_options[ 'options' ] ?? $this->_options;
-            
-            $post_values = $_POST[ $options_id ] ?? null;
+            $post_values = $_POST[ $this->_options[ 'id' ] ?? '' ] ?? null;
             
             if ( $post_values ) {
-                $this->_handleGroupedOptions( $options, $post_values, $options_id );
+                $this->_handleContainerOptions( $this->_options, $post_values, $this->_options[ 'id' ] );
             } else {
-                $this->_handleUngroupedOptions( $options );
+                $this->_handleUngroupedOptions( $this->_options );
             }
         }
     }
@@ -268,7 +267,7 @@ final class Options implements IOptions {
             if ( isset( $_POST ) ) {
                 foreach ( $_POST as $key => $value ) {
                     if ( str_contains( $key, 'dht-fw-metabox-id' ) ) {
-                        $this->_handleGroupedOptions( $this->_options[ 'options' ], $value, $key, 'post', $post_id );
+                        $this->_handleContainerOptions( $this->_options, $value, $key, 'post', $post_id );
                     }
                 }
             }

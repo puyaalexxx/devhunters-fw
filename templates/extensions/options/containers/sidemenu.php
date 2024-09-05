@@ -1,8 +1,11 @@
 <?php
 
-if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
+use function DHT\Helpers\dht_if_parent_menu_is_active;
+use function DHT\Helpers\dht_render_link_area;
+use function DHT\Helpers\dht_render_sidebar_content;
+use function DHT\Helpers\dht_render_subpage_li_area;
 
-use function DHT\Helpers\dht_render_options;
+if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 $container = $args[ 'container' ] ?? [];
 //get sidemenu saved values
@@ -12,7 +15,7 @@ $registered_options_classes = $args[ 'registered_options_classes' ] ?? [];
 //each current menu item / tab options
 $options = [];
 ?>
-    <!-- container - sidemenu -->
+<!-- container - sidemenu -->
 <?php if ( isset( $container[ 'subtype' ] ) && $container[ 'subtype' ] == 'tabs' ): ?>
 
     <div id="dht-cosidebar"
@@ -21,7 +24,7 @@ $options = [];
         <div class="dht-cosidebar-header">
             <ul>
                 <?php $count = 0; ?>
-                <?php foreach ( $container[ 'pages' ] as $page ): $count++; ?>
+                <?php foreach ( $container[ 'options' ] as $page ): $count++; ?>
 
                     <?php
                     $page_link = $page[ 'page_link' ] ?? '';
@@ -105,7 +108,7 @@ $options = [];
 
         <div class="dht-cosidebar-header">
             <ul>
-                <?php foreach ( $container[ 'pages' ] as $page ): $count++; ?>
+                <?php foreach ( $container[ 'options' ] as $page ): $count++; ?>
 
                     <?php
                     $active_parent_class = dht_if_parent_menu_is_active( $page, $current_page );
@@ -164,85 +167,3 @@ $options = [];
 
     </div>
 <?php endif; ?>
-
-<?php
-
-// Function to render the content of the header link area
-function dht_render_link_area( string $page_link, array $page ) : void { ?>
-
-    <a href="<?php echo !empty( $page_link ) ? esc_url( $page_link ) : '#' . $page[ 'id' ]; ?>">
-        <span class="dht-cosidebar-icon">
-            <?php if ( filter_var( $page[ 'icon' ], FILTER_VALIDATE_URL ) ): ?>
-                <img src="<?php echo esc_url( $page[ 'icon' ] ); ?>"
-                     alt="<?php echo esc_attr( $page[ 'title' ] ); ?>">
-            <?php else: ?>
-                <span class="<?php echo esc_attr( $page[ 'icon' ] ); ?>"></span>
-            <?php endif; ?>
-        </span>
-        <span class="title"><?php echo esc_html( $page[ 'title' ] ); ?></span>
-    </a>
-    <?php
-}
-
-// Function to render the content of the header supbpage li tag
-function dht_render_subpage_li_area( string $active_class, string $page_link, array $page ) : void { ?>
-
-    <li class="<?php echo esc_attr( $active_class ); ?>">
-        <a href="<?php echo !empty( $page_link ) ? esc_url( $page_link ) : '#' . $page[ 'id' ]; ?>">
-            <?php echo esc_html( $page[ 'title' ] ); ?>
-        </a>
-    </li>
-    <?php
-}
-
-// Function to render the content of the sidebar
-function dht_render_sidebar_content( $ids, $options, $saved_values, $registered_options_classes, $count ) : string {
-
-    $is_active_class = ( $count == 1 ) ? 'dht-cosidebar-active' : '';
-
-    //prefix id used int he options name attribute for saving
-    $options_id = !empty( $ids[ 'subpage_id' ] ) && !empty( $ids[ 'page_id' ] ) ?
-        ( $ids[ 'menu_id' ] . '[' . $ids[ 'page_id' ] . '][' . $ids[ 'subpage_id' ] . ']' ) :
-        ( !empty( $ids[ 'page_id' ] ) ?
-            ( $ids[ 'menu_id' ] . '[' . $ids[ 'page_id' ] . ']' ) :
-            $ids[ 'menu_id' ]
-        );
-
-    //get specific page group/option saved value
-    $saved_value = !empty( $ids[ 'subpage_id' ] ) && !empty( $ids[ 'page_id' ] ) ?
-        ( $saved_values[ $ids[ 'menu_id' ] ][ $ids[ 'page_id' ] ][ $ids[ 'subpage_id' ] ] ?? [] ) :
-        ( !empty( $ids[ 'page_id' ] ) ?
-            ( $saved_values[ $ids[ 'menu_id' ] ][ $ids[ 'page_id' ] ] ?? [] ) :
-            ( $saved_values[ $ids[ 'menu_id' ] ] ?? [] )
-        );
-
-    //id used for tabs options
-    $content_id = !empty( $ids[ 'subpage_id' ] ) ? $ids[ 'subpage_id' ] : ( !empty( $ids[ 'page_id' ] ) ? $ids[ 'page_id' ] : '' );
-
-    ob_start(); ?>
-
-    <div id="<?php echo esc_attr( $content_id ); ?>"
-         class="dht-cosidebar-content <?php echo esc_attr( $is_active_class ); ?> ">
-        <?php echo dht_render_options( $options, $options_id, $saved_value, $registered_options_classes ) ?>
-    </div>
-
-    <?php
-    return ob_get_clean();
-}
-
-// see if the parent menu is also active if the sub menu is active
-function dht_if_parent_menu_is_active( array $page, string $current_page ) : bool {
-
-    $active_parent_class = false;
-    if ( isset( $page[ 'pages' ] ) ) {
-        // Iterate through the array to check if the link exists
-        foreach ( $page[ 'pages' ] as $item ) {
-            if ( isset( $item[ 'page_link' ] ) && $item[ 'page_link' ] == $current_page ) {
-                $active_parent_class = true;
-                break;
-            }
-        }
-    }
-
-    return $active_parent_class;
-}

@@ -69,7 +69,10 @@ final class Options implements IOptions {
             //enqueue the options container scripts
             add_action( 'admin_enqueue_scripts', [ $this, 'enqueueGeneralScripts' ] );
             //enqueue styles/scripts for each option received from the plugin
-            $this->_enqueueOptionsScripts( $this->_options, array_merge( $this->_optionFieldsClasses, $this->_optionTogglesClasses, $this->_optionGroupsClasses, $this->_optionContainerClasses ) );
+            $this->_enqueueOptionsScripts( $this->_options, [
+                'containerClasses' => $this->_optionContainerClasses, 'groupsClasses' => $this->_optionGroupsClasses,
+                'togglesClasses' => $this->_optionTogglesClasses, 'fieldsClasses' => $this->_optionFieldsClasses
+            ] );
         }
         
         //render dashboard page form HTML content hook with the passed options
@@ -78,7 +81,7 @@ final class Options implements IOptions {
             //save dashboard pages options
             $this->_saveDashBoardPageOptions();
             
-            $this->renderDashBoardPageContent( $this->_options );
+            $this->renderContent( $this->_options );
         } );
         
         //post types related functionality
@@ -131,79 +134,53 @@ final class Options implements IOptions {
      */
     public function registerPostTypeMetaboxes() : void {
         
-        //if more than one metaboxes needs to be registered
-        if ( !isset( $this->_options[ 'options' ] ) && !isset( $this->_options[ 'type' ] ) ) {
+        // Determine if multiple metaboxes need to be registered
+        $metaboxes = isset( $this->_options[ 'options' ] ) ? [ $this->_options ] : $this->_options;
+        
+        // Initialize counter for unique metabox IDs
+        $count = 0;
+        // Loop through each metabox configuration
+        foreach ( $metaboxes as &$metabox ) {
+            $count++;
+            $metabox_id = 'dht-fw-metabox-id-' . $count;
+            // Set metabox ID and options ID
+            $metabox[ 'options_id' ] = $metabox[ 'id' ];
+            $metabox[ 'id' ] = $metabox_id . '[' . $metabox[ 'options_id' ] . ']';
             
-            $count = 0;
-            foreach ( $this->_options as $metabox ) {
-                
-                $metabox_id = 'dht-fw-metabox-id-' . ++$count;
-                
-                add_meta_box(
-                    $metabox_id, // ID of the metabox
-                    $metabox[ 'title' ], // Title of the metabox
-                    function ( $post ) use ( $metabox, $metabox_id ) {
-                        
-                        $metabox[ 'id' ] = $metabox_id;
-                        $this->renderPostTypeMetaboxContent( $metabox, $post->ID );
-                    },
-                    $metabox[ 'post-type' ], // Post type
-                    $metabox[ 'context' ] ?? 'normal', // Context (normal, side, advanced)
-                    $metabox[ 'priority' ] ?? 'high' // Priority (high, core, default, low)
-                );
-            }
-        } else {
-            $metabox_id = 'dht-fw-metabox-id-1';
-            
+            // Register the metabox
             add_meta_box(
                 $metabox_id, // ID of the metabox
-                $this->_options[ 'title' ], // Title of the metabox
-                function ( $post ) use ( $metabox_id ) {
+                $metabox[ 'title' ], // Title of the metabox
+                function ( $post ) use ( $metabox ) {
                     
-                    $this->_options[ 'id' ] = $metabox_id;
-                    $this->renderPostTypeMetaboxContent( $this->_options, $post->ID );
+                    $this->renderContent( $metabox, $post->ID );
                 },
-                $this->_options[ 'post-type' ], // Post type
-                $this->_options[ 'context' ] ?? 'normal', // Context (normal, side, advanced)
-                $this->_options[ 'priority' ] ?? 'high'  // Priority (high, core, default, low)
+                $metabox[ 'post-type' ], // Post type
+                $metabox[ 'context' ] ?? 'normal', // Context (normal, side, advanced)
+                $metabox[ 'priority' ] ?? 'high'  // Priority (high, core, default, low)
             );
         }
-        
     }
     
     /**
-     * render dashboard page content
+     * Render content for dashboard pages and metaboxes.
+     *
+     * @param array $options Options array.
+     * @param int   $post_id Optional. The post ID if rendering post type metabox content.
      *
      * @return void
-     * @since     1.0.0
+     * @since 1.0.0
      */
-    public function renderDashBoardPageContent() : void {
+    public function renderContent( array $options, int $post_id = 0 ) : void {
         
-        echo dht_load_view( DHT_TEMPLATES_DIR . 'extensions/options/', 'dashboard-page-template.php',
-            [
-                'nonce' => $this->_nonce,
-                'options' => $this->_getOptionsView( $this->_options ),
-            ]
-        );
-    }
-    
-    /**
-     * render dashboard page content
-     *
-     * @param array $options options array
-     * @param int   $post_id
-     *
-     * @return void
-     * @since     1.0.0
-     */
-    public function renderPostTypeMetaboxContent( array $options, int $post_id ) : void {
+        $template = $post_id ? 'posts-template.php' : 'dashboard-page-template.php';
         
-        echo dht_load_view( DHT_TEMPLATES_DIR . 'extensions/options/', 'posts-template.php',
-            [
-                'nonce' => $this->_nonce,
-                'options' => $this->_getOptionsView( $options, 'post', $post_id ),
-            ]
-        );
+        $viewData = [
+            'nonce' => $this->_nonce,
+            'options' => $this->_getOptionsView( $options, $post_id ? 'post' : '', $post_id ),
+        ];
+        
+        echo dht_load_view( DHT_TEMPLATES_DIR . 'extensions/options/', $template, $viewData );
     }
     
     /**
@@ -224,7 +201,7 @@ final class Options implements IOptions {
             $post_values = $_POST[ $this->_options[ 'id' ] ?? '' ] ?? null;
             
             if ( $post_values ) {
-                $this->_handleContainerOptions( $this->_options, $post_values, $this->_options[ 'id' ] );
+                $this->_handleContainerOptions( $this->_options, $post_values );
             } else {
                 $this->_handleUngroupedOptions( $this->_options );
             }
@@ -265,9 +242,18 @@ final class Options implements IOptions {
             
             //save metaboxes options
             if ( isset( $_POST ) ) {
-                foreach ( $_POST as $key => $value ) {
-                    if ( str_contains( $key, 'dht-fw-metabox-id' ) ) {
-                        $this->_handleContainerOptions( $this->_options, $value, $key, 'post', $post_id );
+                foreach ( $_POST as $metabox_id => $values ) {
+                    if ( str_contains( $metabox_id, 'dht-fw-metabox-id' ) ) {
+                        //many metaboxes
+                        if ( !isset( $this->_options[ 'options' ] ) ) {
+                            foreach ( $this->_options as $options ) {
+                                if ( isset( $values[ $options[ 'id' ] ] ) ) {
+                                    $this->_handleContainerOptions( $options, $values[ $options[ 'id' ] ], 'post', $post_id );
+                                }
+                            }
+                        } else {
+                            $this->_handleContainerOptions( $this->_options, $values[ $this->_options[ 'id' ] ], 'post', $post_id );
+                        }
                     }
                 }
             }

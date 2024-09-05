@@ -65,39 +65,22 @@ final class SideMenu extends BaseContainer {
         }
         
         $values = [];
-        // Check the subtype of menu pages
-        $is_tabs_subtype = isset( $container[ 'subtype' ] ) && $container[ 'subtype' ] == 'tabs';
-        
         // Sanitize option values
-        foreach ( $container[ 'pages' ] as $page ) {
-            $page_id = $page[ 'id' ];
+        foreach ( $container[ 'options' ] as $page ) {
             $page_options = $page[ 'options' ] ?? [];
             
             // Handle subpages if they exist
             if ( isset( $page[ 'pages' ] ) ) {
                 foreach ( $page[ 'pages' ] as $subpage ) {
-                    $subpage_id = $subpage[ 'id' ];
                     $subpage_options = $subpage[ 'options' ] ?? [];
                     
-                    if ( $is_tabs_subtype ) {
-                        // For 'tabs' subtype, sanitize subpage values
-                        $values[ $page_id ][ $subpage_id ] = $this->_sanitizeValues( $subpage_options, $container_post_values[ $page_id ][ $subpage_id ] ?? [] );
-                    } else {
-                        // For other subtypes, handle subpage values if options are not empty
-                        if ( !empty( $subpage_options ) ) {
-                            $values = $this->_sanitizeValues( $subpage_options, $container_post_values );
-                        }
+                    if ( !empty( $subpage_options ) ) {
+                        $values = array_merge( $values, $this->_sanitizeValues( $subpage_options, $container_post_values ) );
                     }
                 }
             } else {
-                if ( $is_tabs_subtype ) {
-                    // For 'tabs' subtype, sanitize page values
-                    $values[ $page_id ] = $this->_sanitizeValues( $page_options, $container_post_values[ $page_id ] ?? [] );
-                } else {
-                    // For other subtypes, handle page values if options are not empty
-                    if ( !empty( $page_options ) ) {
-                        $values = $this->_sanitizeValues( $page_options, $container_post_values );
-                    }
+                if ( !empty( $page_options ) ) {
+                    $values = array_merge( $values, $this->_sanitizeValues( $page_options, $container_post_values ) );
                 }
             }
         }

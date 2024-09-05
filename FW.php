@@ -39,6 +39,9 @@ final class FW {
         
         //Enqueue framework general scripts and styles
         add_action( 'admin_enqueue_scripts', [ $this, 'enqueueFrameworkGeneralScripts' ] );
+        
+        // Load the text domain for localization
+        add_action( 'plugins_loaded', [ $this, 'loadTextdomain' ] );
     }
     
     /**
@@ -53,6 +56,18 @@ final class FW {
         
         wp_register_style( DHT_PREFIX . '-general-fw', DHT_ASSETS_URI . 'styles/css/general-style.css', array(), fw()->manifest->get( 'version' ) );
         wp_enqueue_style( DHT_PREFIX . '-general-fw' );
+    }
+    
+    
+    /**
+     * Load Text Domain for translation
+     *
+     * @return void
+     * @since     1.0.0
+     */
+    public function loadTextdomain() : void {
+        
+        load_plugin_textdomain( DHT_PREFIX, false, DHT_DIR . '/lang' );
     }
     
 }

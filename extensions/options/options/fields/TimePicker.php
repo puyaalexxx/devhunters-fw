@@ -36,6 +36,9 @@ class TimePicker extends BaseField {
         wp_register_style( DHT_PREFIX . '-jquery-ui-timepicker', DHT_ASSETS_URI . 'styles/libraries/jquery-ui-timepicker-addon.min.css', array(), fw()->manifest->get( 'version' ) );
         wp_enqueue_style( DHT_PREFIX . '-jquery-ui-timepicker' );
         
+        //WordPress comes with the slider option
+        wp_enqueue_script( 'jquery-ui-slider' );
+        
         //custom css
         wp_register_style( DHT_PREFIX . '-timepicker-field', DHT_ASSETS_URI . 'styles/css/extensions/options/fields/timepicker-style.css', array(), fw()->manifest->get( 'version' ) );
         wp_enqueue_style( DHT_PREFIX . '-timepicker-field' );

@@ -34,6 +34,10 @@ class DateTimePicker extends BaseField {
         wp_register_style( DHT_PREFIX . '-jquery-ui-datepicker', DHT_ASSETS_URI . 'styles/libraries/jquery-ui-datepicker.min.css', array(), fw()->manifest->get( 'version' ) );
         wp_enqueue_style( DHT_PREFIX . '-jquery-ui-datepicker' );
         wp_register_style( DHT_PREFIX . '-jquery-ui-timepicker', DHT_ASSETS_URI . 'styles/libraries/jquery-ui-timepicker-addon.min.css', array(), fw()->manifest->get( 'version' ) );
+        
+        //WordPress comes with the slider option
+        wp_enqueue_script( 'jquery-ui-slider' );
+        
         wp_enqueue_style( DHT_PREFIX . '-jquery-ui-timepicker' );
         
         //custom css

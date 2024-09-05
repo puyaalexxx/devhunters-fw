@@ -19,15 +19,12 @@ trait EnqueueOptionsHelpers {
     private function _enqueueOptionsScripts( array $options, array $registeredOptionsClasses ) : void {
         
         //enqueue the scripts for the container type
-        if ( isset( $options[ 'pages' ] ) ) {
-            //pass the container array to the enqueue method
-            $this->_enqueueOptionScriptsHook( $registeredOptionsClasses, $options );
-        }
+        $this->_enqueueOptionScriptsHook( $registeredOptionsClasses, $options );
         
         //extract options in one array from the plugin option configurations
-        $option_fields = $this->_extractOptions( $options );
+        $option_fields = $this->_extractOptions( $options, $registeredOptionsClasses );
         
-        //enqueue the scripts for each group, toggle and field
+        //enqueue the scripts for each group, toggle and field (and metaboxes containers)
         foreach ( $option_fields as $option ) {
             $this->_enqueueScriptsForOptionType( $registeredOptionsClasses, $option );
         }
@@ -49,7 +46,6 @@ trait EnqueueOptionsHelpers {
         
         // If the option has sub-options , handle them recursively (if it is a group or toggle)
         if ( isset( $option[ 'options' ] ) ) {
-            
             foreach ( $option[ 'options' ] as $subOption ) {
                 
                 if ( !isset( $subOption[ 'type' ] ) ) continue;
@@ -63,7 +59,7 @@ trait EnqueueOptionsHelpers {
     /**
      * pass the option array to the specific option enqueue script hook to enqueue its scripts
      *
-     * @param array $registeredOptionsClasses - registered container/group/option types
+     * @param array $registeredOptionsClasses - registered container/group/toggle/option types
      * @param array $option                   - specific option array
      *
      * @return void
@@ -71,8 +67,16 @@ trait EnqueueOptionsHelpers {
      */
     private function _enqueueOptionScriptsHook( array $registeredOptionsClasses, array $option ) : void {
         
-        if ( isset( $registeredOptionsClasses[ $option[ 'type' ] ] ) ) {
-            $registeredOptionsClasses[ $option[ 'type' ] ]->enqueueOptionScriptsHook( $option );
+        if ( !isset( $option[ 'type' ] ) ) return;
+        
+        if ( isset( $registeredOptionsClasses[ 'containerClasses' ][ $option[ 'type' ] ] ) ) {
+            $registeredOptionsClasses[ 'containerClasses' ][ $option[ 'type' ] ]->enqueueOptionScriptsHook( $option );
+        } elseif ( isset( $registeredOptionsClasses[ 'groupsClasses' ][ $option[ 'type' ] ] ) ) {
+            $registeredOptionsClasses[ 'groupsClasses' ][ $option[ 'type' ] ]->enqueueOptionScriptsHook( $option );
+        } elseif ( isset( $registeredOptionsClasses[ 'togglesClasses' ][ $option[ 'type' ] ] ) ) {
+            $registeredOptionsClasses[ 'togglesClasses' ][ $option[ 'type' ] ]->enqueueOptionScriptsHook( $option );
+        } elseif ( isset( $registeredOptionsClasses[ 'fieldsClasses' ][ $option[ 'type' ] ] ) ) {
+            $registeredOptionsClasses[ 'fieldsClasses' ][ $option[ 'type' ] ]->enqueueOptionScriptsHook( $option );
         }
     }
     
@@ -85,17 +89,45 @@ trait EnqueueOptionsHelpers {
      * and add the fields to the array
      * ! if the same type is added to the array, it will not add it again
      *
-     * @param array $options - options to retrieve from
+     * @param array $options                  - options to retrieve from
+     * @param array $registeredOptionsClasses - registered container/group/toggle/option types
      *
      * @return mixed
      * @since     1.0.0
      */
-    private function _extractOptions( array $options ) : array {
+    private function _extractOptions( array $options, array $registeredOptionsClasses ) : array {
         
         // This static array will keep track of processed types across recursive calls
         static $processed_types = [];
-        
         $result = [];
+        
+        // Inner function to extract unique options recursively from container type
+        $extractUniqueOptionsFromContainer = function ( array $options ) use ( &$extractUniqueOptions, $registeredOptionsClasses ) : array {
+            
+            $result = [];
+            
+            // If the 'options' key exists, process nested settings
+            foreach ( $options[ 'options' ] as $page ) {
+                //if it is the sidemenu container
+                if ( isset( $page[ 'options' ] ) && is_array( $page[ 'options' ] ) ) {
+                    foreach ( $page[ 'options' ] as $option ) {
+                        $result = array_merge( $result, $extractUniqueOptions( $option ) );
+                    }
+                }
+                
+                //if it is the simple container
+                if ( isset( $page[ 'type' ] ) ) {
+                    $result = array_merge( $result, $extractUniqueOptions( $page ) );
+                }
+                
+                // Check for other potential nested arrays, such as 'pages' - sidemenu container
+                if ( isset( $page[ 'pages' ] ) && is_array( $page[ 'pages' ] ) ) {
+                    $result = array_merge( $result, $this->_extractOptions( $page[ 'pages' ], $registeredOptionsClasses ) );
+                }
+            }
+            
+            return $result;
+        };
         
         // Inner function to extract unique options recursively
         $extractUniqueOptions = function ( array $option ) use ( &$extractUniqueOptions, &$processed_types ) : array {
@@ -131,29 +163,25 @@ trait EnqueueOptionsHelpers {
         };
         
         //if it is a container type
-        if ( isset( $options[ 'pages' ] ) ) {
-            // If the 'pages' key exists, process nested pages
-            foreach ( $options[ 'pages' ] as $page ) {
-                if ( isset( $page[ 'options' ] ) && is_array( $page[ 'options' ] ) ) {
-                    foreach ( $page[ 'options' ] as $option ) {
-                        $result = array_merge( $result, $extractUniqueOptions( $option ) );
-                    }
-                }
-                
-                // Check for other potential nested arrays, such as 'pages'
-                if ( isset( $page[ 'pages' ] ) && is_array( $page[ 'pages' ] ) ) {
-                    $result = array_merge( $result, $this->_extractOptions( $page[ 'pages' ] ) );
-                }
-            }
+        if ( $this->_isContainerType( $options, $registeredOptionsClasses ) ) {
+            
+            $result = array_merge( $result, $extractUniqueOptionsFromContainer( $options ) );
+            
         } // other option types
         else {
-            
             //extract the correct options
             $options = $options[ 'options' ] ?? $options;
             
             // Process the options directly
             foreach ( $options as $option ) {
+                
                 $result = array_merge( $result, $extractUniqueOptions( $option ) );
+                
+                if ( $this->_isContainerType( $option, $registeredOptionsClasses ) ) {
+                    
+                    $result = array_merge( $result, $extractUniqueOptionsFromContainer( $option ) );
+                    
+                }
             }
         }
         

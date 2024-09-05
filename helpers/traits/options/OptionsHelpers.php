@@ -31,4 +31,31 @@ trait OptionsHelpers {
         return [ 'name' => $nonce . '_name', 'action' => $nonce . '_action' ];
     }
     
+    /**
+     * Check if it is the simple container option type
+     *
+     * @param array $option option to be checked
+     *
+     * @return bool
+     * @since     1.0.0
+     */
+    private function _isSimpleContainer( array $option ) : bool {
+        
+        return isset( $option[ 'type' ] ) && $option[ 'type' ] == 'simple';
+    }
+    
+    /**
+     * Check if it is a container option type
+     *
+     * @param array $option                   option to be checked
+     * @param array $registeredOptionsClasses Registered option type classes
+     *
+     * @return bool
+     * @since     1.0.0
+     */
+    private function _isContainerType( array $option, array $registeredOptionsClasses ) : bool {
+        
+        return isset( $option[ 'type' ] ) && isset( $registeredOptionsClasses[ 'containerClasses' ][ $option[ 'type' ] ] );
+    }
+    
 }

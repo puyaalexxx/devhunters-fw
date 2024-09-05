@@ -191,9 +191,9 @@ if ( !function_exists( 'dht_render_options' ) ) {
 /**
  * render group options (toggles and field options)
  *
- * @param string $group_id
- * @param array  $group_option
- * @param mixed  $saved_value
+ * @param string $group_id                 the group option id
+ * @param array  $group_option             group option settings
+ * @param mixed  $saved_value              Saved values
  * @param array  $registered_field_classes - registered framework field classes
  *
  * @return string
@@ -215,8 +215,8 @@ if ( !function_exists( 'dht_render_group' ) ) {
 /**
  * render field option if it is registered (exists)
  *
- * @param array  $option
- * @param mixed  $saved_value
+ * @param array  $option                   option array
+ * @param mixed  $saved_value              saved values
  * @param string $options_id               - options prefix id
  * @param array  $registered_field_classes - registered framework field classes
  *
@@ -241,10 +241,10 @@ if ( !function_exists( 'dht_render_field_if_exists' ) ) {
 /**
  * render box item (addable group option)
  *
- * @param array $group
- * @param mixed $saved_values
- * @param array $registered_options_classes
- * @param int   $cnt
+ * @param array $group                      group options to be rendered
+ * @param mixed $saved_values               Saved values
+ * @param array $registered_options_classes registered option type classes
+ * @param int   $cnt                        The box item number
  *
  * @return string
  * @since     1.0.0
@@ -288,11 +288,11 @@ if ( !function_exists( 'dht_display_box_item' ) ) {
 /**
  * render box item content (addable group option)
  *
- * @param array  $group
- * @param mixed  $saved_values
- * @param array  $registered_options_classes
- * @param string $default_box_title
- * @param int    $cnt
+ * @param array  $group                      group options to be rendered
+ * @param mixed  $saved_values               Saved values
+ * @param array  $registered_options_classes registered option type classes
+ * @param string $default_box_title          The default bot item title
+ * @param int    $cnt                        The box item number
  *
  * @return mixed
  * @since     1.0.0
@@ -345,3 +345,138 @@ if ( !function_exists( 'dht_render_box_item_content' ) ) {
     }
 }
 
+/**
+ * check if the options must be saved separately and not grouped under an id
+ *
+ * @param array $options
+ *
+ * @return bool
+ * @since     1.0.0
+ */
+if ( !function_exists( 'isSaveOptionsSeparately' ) ) {
+    function is_save_options_separately( array $options ) : bool {
+
+        return isset( $options[ 'save' ] ) && $options[ 'save' ] == "separately";
+    }
+}
+
+/**
+ * Function to render the content of the header link area
+ *
+ * @param string $page_link Page link where to redirect or anchor id
+ * @param array  $page      Page options
+ *
+ * @return mixed The processed value to be saved.
+ * @since     1.0.0
+ */
+if ( !function_exists( 'dht_render_link_area' ) ) {
+    function dht_render_link_area( string $page_link, array $page ) : void { ?>
+
+        <a href="<?php echo !empty( $page_link ) ? esc_url( $page_link ) : '#' . $page[ 'id' ]; ?>">
+        <span class="dht-cosidebar-icon">
+            
+            <?php if ( filter_var( $page[ 'icon' ], FILTER_VALIDATE_URL ) ): ?>
+
+                <img src="<?php echo esc_url( $page[ 'icon' ] ); ?>" alt="<?php echo esc_attr( $page[ 'title' ] ); ?>">
+
+            <?php else: ?>
+
+                <span class="<?php echo esc_attr( $page[ 'icon' ] ); ?>"></span>
+
+            <?php endif; ?>
+            
+        </span>
+            <span class="title"><?php echo esc_html( $page[ 'title' ] ); ?></span>
+        </a>
+        <?php
+    }
+}
+
+/**
+ * Function to render the content of the header supbpage li tag
+ *
+ * @param string $active_class Active class
+ * @param string $page_link    Page link where to redirect or anchor id
+ * @param array  $page         Page options
+ *
+ * @return mixed The processed value to be saved.
+ * @since     1.0.0
+ */
+if ( !function_exists( 'dht_render_subpage_li_area' ) ) {
+    function dht_render_subpage_li_area( string $active_class, string $page_link, array $page ) : void { ?>
+
+        <li class="<?php echo esc_attr( $active_class ); ?>">
+            <a href="<?php echo !empty( $page_link ) ? esc_url( $page_link ) : '#' . $page[ 'id' ]; ?>">
+
+                <?php echo esc_html( $page[ 'title' ] ); ?>
+
+            </a>
+        </li>
+        <?php
+    }
+}
+
+/**
+ * Function to render the content of the sidebar
+ *
+ * @param array $ids                        pages ids
+ * @param array $options                    page options
+ * @param mixed $saved_values               Saved values
+ * @param array $registered_options_classes registered option type classes
+ * @param int   $count                      The box item number
+ *
+ * @return mixed The processed value to be saved.
+ * @since     1.0.0
+ */
+if ( !function_exists( 'dht_render_sidebar_content' ) ) {
+    function dht_render_sidebar_content( array $ids, array $options, mixed $saved_values, array $registered_options_classes, int $count ) : string {
+
+        $is_active_class = ( $count == 1 ) ? 'dht-cosidebar-active' : '';
+
+        //get specific page group/option saved value
+        $saved_value = $saved_values[ $ids[ 'menu_id' ] ] ?? [];
+
+        //id used for tabs options
+        $content_id = !empty( $ids[ 'subpage_id' ] ) ? $ids[ 'subpage_id' ] : ( !empty( $ids[ 'page_id' ] ) ? $ids[ 'page_id' ] : '' );
+
+        ob_start(); ?>
+
+        <div id="<?php echo esc_attr( $content_id ); ?>"
+             class="dht-cosidebar-content <?php echo esc_attr( $is_active_class ); ?> ">
+
+            <?php echo dht_render_options( $options, $ids[ 'menu_id' ], $saved_value, $registered_options_classes ) ?>
+
+        </div>
+
+        <?php
+        return ob_get_clean();
+    }
+}
+
+/**
+ * see if the parent menu is also active if the sub menu is active
+ * Function to render the content of the sidebar
+ *
+ * @param array  $page         Subpages settings
+ * @param string $current_page current clicked page (menu item)
+ *
+ * @return mixed The processed value to be saved.
+ * @since     1.0.0
+ */
+if ( !function_exists( 'dht_if_parent_menu_is_active' ) ) {
+    function dht_if_parent_menu_is_active( array $page, string $current_page ) : bool {
+
+        $active_parent_class = false;
+        if ( isset( $page[ 'pages' ] ) ) {
+            // Iterate through the array to check if the link exists
+            foreach ( $page[ 'pages' ] as $item ) {
+                if ( isset( $item[ 'page_link' ] ) && $item[ 'page_link' ] == $current_page ) {
+                    $active_parent_class = true;
+                    break;
+                }
+            }
+        }
+
+        return $active_parent_class;
+    }
+}

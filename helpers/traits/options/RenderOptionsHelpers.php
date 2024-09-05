@@ -25,7 +25,7 @@ trait RenderOptionsHelpers {
      */
     private function _getOptionsView( array $options, string $location = 'dashboard', int $id = 0 ) : string {
         
-        $saved_values = $this->_getOptionsSavedValues( $options, $location = 'dashboard', $id );
+        $saved_values = $this->_getOptionsSavedValues( $options, $location, $id );
         
         // Start output buffering
         ob_start();
@@ -36,8 +36,8 @@ trait RenderOptionsHelpers {
         } // Render ungrouped option types
         else {
             echo dht_render_options(
-                $options,
-                '',
+                $options[ 'options' ] ?? $options,
+                $options[ 'id' ] ?? '',
                 $saved_values,
                 [
                     'groupsClasses' => $this->_optionGroupsClasses,

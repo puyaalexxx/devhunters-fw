@@ -129,107 +129,159 @@ trait SaveOptionsHelpers {
     /**
      * get options saved values in one array
      *
-     * @param array  $options
+     * @param array  $options  Options array
      * @param string $location Where to save the data - dashboard/post or term
      * @param int    $id       post id or term id
      *
-     * @return mixed The processed value to be saved.
+     * @return mixed
      * @since     1.0.0
      */
     private function _getOptionsSavedValues( array $options, string $location = 'dashboard', int $id = 0 ) : array {
         
         $is_simple_container = $this->_isSimpleContainer( $options );
-        $saved_values = [];
+        $values = $saved_values = [];
         
         if ( is_save_options_separately( $options ) ) {
             foreach ( $options[ 'options' ] as $option ) {
                 if ( $location == 'post' ) {
-                    if ( isset( $option[ 'options' ] ) && !$is_simple_container ) {
-                        foreach ( $option[ 'options' ] as $opt ) {
-                            //get option value
-                            $option_value = get_post_meta( $id, $opt[ 'id' ], true );
-                            
-                            if ( $option_value !== '' ) $saved_values[ $options[ 'id' ] ][ $opt[ 'id' ] ] = $option_value;
-                        }
-                    } else {
-                        //get option value
-                        $option_value = get_post_meta( $id, $option[ 'id' ], true );
-                        
-                        if ( $option_value !== '' ) $saved_values[ $options[ 'id' ] ][ $option[ 'id' ] ] = $option_value;
-                    }
-                    
-                    // Check for other potential nested arrays, such as 'pages' - sidemenu container
-                    if ( isset( $option[ 'pages' ] ) && is_array( $option[ 'pages' ] ) ) {
-                        foreach ( $option[ 'pages' ] as $page ) {
-                            if ( isset( $page[ 'options' ] ) ) {
-                                foreach ( $page[ 'options' ] as $opt ) {
-                                    //get option value
-                                    $option_value = get_post_meta( $id, $opt[ 'id' ], true );
-                                    
-                                    if ( $option_value !== '' ) $saved_values[ $options[ 'id' ] ][ $opt[ 'id' ] ] = $option_value;
-                                }
-                            }
-                        }
-                    }
+                    $values = array_merge( $values, $this->_getPostOptionsSavedValuesSeparately( $option, $is_simple_container, $id ) );
                 } else {
-                    if ( isset( $option[ 'options' ] ) && !$is_simple_container ) {
-                        foreach ( $option[ 'options' ] as $opt ) {
-                            //get option value
-                            if ( isset( $option[ 'subtype' ] ) && $option[ 'subtype' ] == 'tabs' ) {
-                                $saved_values[ $options[ 'id' ] ][ $option[ 'id' ] ][ $opt[ 'id' ] ] = dht_get_db_settings_option( $opt[ 'id' ] );
-                            } else {
-                                $saved_values[ $options[ 'id' ] ][ $opt[ 'id' ] ] = dht_get_db_settings_option( $opt[ 'id' ] );
-                            }
-                        }
-                    } else {
+                    $values = array_merge( $values, $this->_getDashPagesOptionsSavedValuesSeparately( $option, $is_simple_container ) );
+                }
+            }
+            
+            $saved_values[ $options[ 'id' ] ] = $values;
+            
+        } else {
+            $saved_values = $this->_getOptionsSavedValuesGrouped( $options, $location, $id );
+        }
+        
+        return $saved_values;
+    }
+    
+    /**
+     * get post options saved values that are saved separately
+     *
+     * @param array $option              Options array
+     * @param bool  $is_simple_container If it is a simple container type
+     * @param int   $id                  post id or term id
+     *
+     * @return mixed
+     * @since     1.0.0
+     */
+    private function _getPostOptionsSavedValuesSeparately( array $option, bool $is_simple_container, int $id = 0 ) : array {
+        
+        $saved_values = [];
+        
+        //if not a simple container
+        if ( isset( $option[ 'options' ] ) && !$is_simple_container ) {
+            foreach ( $option[ 'options' ] as $opt ) {
+                //get option value
+                $option_value = get_post_meta( $id, $opt[ 'id' ], true );
+                
+                if ( $option_value !== '' ) $saved_values[ $opt[ 'id' ] ] = $option_value;
+            }
+        } // Check for other potential nested arrays, such as 'pages' - sidemenu container
+        elseif ( isset( $option[ 'pages' ] ) && is_array( $option[ 'pages' ] ) ) {
+            foreach ( $option[ 'pages' ] as $page ) {
+                if ( isset( $page[ 'options' ] ) ) {
+                    foreach ( $page[ 'options' ] as $opt ) {
                         //get option value
-                        $option_value = dht_get_db_settings_option( $option[ 'id' ] );
+                        $option_value = get_post_meta( $id, $opt[ 'id' ], true );
                         
-                        if ( empty( $option_value ) ) continue; //skip non existent values
-                        
-                        $saved_values[ $options[ 'id' ] ][ $option[ 'id' ] ] = $option_value;
-                    }
-                    
-                    // Check for other potential nested arrays, such as 'pages' - sidemenu container
-                    if ( isset( $option[ 'pages' ] ) && is_array( $option[ 'pages' ] ) ) {
-                        foreach ( $option[ 'pages' ] as $page ) {
-                            if ( isset( $page[ 'options' ] ) ) {
-                                foreach ( $page[ 'options' ] as $opt ) {
-                                    //get option value
-                                    $saved_values[ $options[ 'id' ] ][ $option[ 'id' ] ][ $page[ 'id' ] ][ $opt[ 'id' ] ] = dht_get_db_settings_option( $opt[ 'id' ] );
-                                }
-                            }
-                        }
+                        if ( $option_value !== '' ) $saved_values[ $opt[ 'id' ] ] = $option_value;
                     }
                 }
             }
         } else {
+            //get option value
+            $option_value = get_post_meta( $id, $option[ 'id' ], true );
             
-            if ( $location == 'post' ) {
+            if ( $option_value !== '' ) $saved_values[ $option[ 'id' ] ] = $option_value;
+        }
+        
+        return $saved_values;
+    }
+    
+    /**
+     * get dashboard pages options saved values that are saved separately
+     *
+     * @param array $option              Options array
+     * @param bool  $is_simple_container If it is a simple container type
+     *
+     * @return mixed
+     * @since     1.0.0
+     */
+    private function _getDashPagesOptionsSavedValuesSeparately( array $option, bool $is_simple_container ) : array {
+        
+        $saved_values = [];
+        
+        //if not a simple container
+        if ( isset( $option[ 'options' ] ) && !$is_simple_container ) {
+            foreach ( $option[ 'options' ] as $opt ) {
                 //get option value
-                $option_values = get_post_meta( $id, $options[ 'options_id' ], true );
-                
-                //retrieve grouped container values
-                $saved_values[ $options[ 'id' ] ] = $option_values[ $options[ 'options_id' ] ] ?? [];
-            } else {
-                //get saved options if settings id present
-                if ( isset( $options[ 'id' ] ) ) {
-                    $saved_values = dht_get_db_settings_option( $options[ 'id' ] );
-                } // if simple options without container
-                else {
-                    foreach ( $options as $option ) {
+                if ( isset( $option[ 'subtype' ] ) && $option[ 'subtype' ] == 'tabs' ) {
+                    $saved_values[ $option[ 'id' ] ][ $opt[ 'id' ] ] = dht_get_db_settings_option( $opt[ 'id' ] );
+                } else {
+                    $saved_values[ $opt[ 'id' ] ] = dht_get_db_settings_option( $opt[ 'id' ] );
+                }
+            }
+        } // Check for other potential nested arrays, such as 'pages' - sidemenu container
+        elseif ( isset( $option[ 'pages' ] ) && is_array( $option[ 'pages' ] ) ) {
+            foreach ( $option[ 'pages' ] as $page ) {
+                if ( isset( $page[ 'options' ] ) ) {
+                    foreach ( $page[ 'options' ] as $opt ) {
                         //get option value
-                        $option_value = dht_get_db_settings_option( $option[ 'id' ] );
-                        
-                        if ( empty( $option_value ) ) continue; //skip non existent values
-                        
-                        $saved_values[ $option[ 'id' ] ] = $option_value;
+                        $saved_values[ $opt[ 'id' ] ] = dht_get_db_settings_option( $opt[ 'id' ] );
                     }
                 }
             }
+        } else {
+            //get option value
+            $option_value = dht_get_db_settings_option( $option[ 'id' ] );
+            
+            if ( !empty( $option_value ) ) $saved_values[ $option[ 'id' ] ] = $option_value;
         }
         
-        // dht_print_r( $saved_values );
+        return $saved_values;
+    }
+    
+    /**
+     * get dashboard pages/post/terms options saved values that are grouped under one id
+     *
+     * @param array  $options  Options array
+     * @param string $location Where to save the data - dashboard/post or term
+     * @param int    $id       post id or term id
+     *
+     * @return mixed
+     * @since     1.0.0
+     */
+    private function _getOptionsSavedValuesGrouped( array $options, string $location = 'dashboard', int $id = 0 ) : array {
+        
+        $saved_values = [];
+        
+        if ( $location == 'post' ) {
+            //get option value
+            $option_values = get_post_meta( $id, $options[ 'options_id' ], true );
+            
+            //retrieve grouped container values
+            $saved_values[ $options[ 'id' ] ] = $option_values[ $options[ 'options_id' ] ] ?? [];
+        } else {
+            //get saved options if settings id present
+            if ( isset( $options[ 'id' ] ) ) {
+                $saved_values = dht_get_db_settings_option( $options[ 'id' ] );
+            } // if simple options without container
+            else {
+                foreach ( $options as $option ) {
+                    //get option value
+                    $option_value = dht_get_db_settings_option( $option[ 'id' ] );
+                    
+                    if ( empty( $option_value ) ) continue; //skip non existent values
+                    
+                    $saved_values[ $option[ 'id' ] ] = $option_value;
+                }
+            }
+        }
         
         return $saved_values;
     }

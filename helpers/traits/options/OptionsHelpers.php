@@ -47,15 +47,14 @@ trait OptionsHelpers {
     /**
      * Check if it is a container option type
      *
-     * @param array $option                   option to be checked
-     * @param array $registeredOptionsClasses Registered option type classes
+     * @param array $option option to be checked
      *
      * @return bool
      * @since     1.0.0
      */
-    private function _isContainerType( array $option, array $registeredOptionsClasses ) : bool {
+    private function _isContainerType( array $option ) : bool {
         
-        return isset( $option[ 'type' ] ) && isset( $registeredOptionsClasses[ 'containerClasses' ][ $option[ 'type' ] ] );
+        return isset( $option[ 'type' ] ) && isset( $this->_optionContainerClasses[ $option[ 'type' ] ] );
     }
     
 }

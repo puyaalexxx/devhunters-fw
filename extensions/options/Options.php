@@ -69,10 +69,7 @@ final class Options implements IOptions {
             //enqueue the options container scripts
             add_action( 'admin_enqueue_scripts', [ $this, 'enqueueGeneralScripts' ] );
             //enqueue styles/scripts for each option received from the plugin
-            $this->_enqueueOptionsScripts( $this->_options, [
-                'containerClasses' => $this->_optionContainerClasses, 'groupsClasses' => $this->_optionGroupsClasses,
-                'togglesClasses' => $this->_optionTogglesClasses, 'fieldsClasses' => $this->_optionFieldsClasses
-            ] );
+            $this->_enqueueOptionsScripts( $this->_options );
         }
         
         //render dashboard page form HTML content hook with the passed options
@@ -112,7 +109,6 @@ final class Options implements IOptions {
     }
     
     /**
-     * TODO: finish this method registerCustomOptionType
      * create custom option types located outside the framework
      *
      * @param BaseField $optionClass

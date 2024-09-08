@@ -50,10 +50,20 @@
         }
     }
 
-    #dht-cosidebar {
+    #dht-cosidebar, .dht-tabsmenu-container {
         .dht-field-child-radio {
 
             @media (max-width: 1250px) {
+                @include radio_resposnive_code();
+            }
+        }
+    }
+}
+
+@media (max-width: 1600px) {
+    .dht-meta-box-content {
+        #dht-cosidebar, .dht-tabsmenu-container {
+            .dht-field-child-radio {
                 @include radio_resposnive_code();
             }
         }

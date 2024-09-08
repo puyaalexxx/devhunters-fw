@@ -10,6 +10,7 @@ function createCssEntry(stylesFileNames, pcssPaths) {
 
         /////////extensions - options - container - css
         [stylesFileNames.sidemenu_style]: pcssPaths.pcss_options_containers + stylesFileNames.sidemenu_style.replace("-style", "") + ".pcss", // sidemenu container CSS entry point
+        [stylesFileNames.tabsmenu_style]: pcssPaths.pcss_options_containers + stylesFileNames.tabsmenu_style.replace("-style", "") + ".pcss", // tabsmenu container CSS entry point
 
         /////////extensions - options - groups - css
         [stylesFileNames.group_style]: pcssPaths.pcss_options_groups + stylesFileNames.group_style.replace("-style", "") + ".pcss", // group group CSS entry point

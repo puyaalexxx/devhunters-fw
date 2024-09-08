@@ -18,7 +18,7 @@ $right_choice = $toggle[ 'right-choice' ];
 ?>
 <!-- field - toggle  -->
 <div
-    class="dht-field-wrapper <?php echo isset( $toggle[ 'attr' ][ 'class' ] ) ? esc_attr( $toggle[ 'attr' ][ 'class' ] ) : ''; ?>" <?php echo dht_parse_option_attributes( $toggle[ 'attr' ] ); ?>>
+    class="dht-field-wrapper dht-toggle-type <?php echo isset( $toggle[ 'attr' ][ 'class' ] ) ? esc_attr( $toggle[ 'attr' ][ 'class' ] ) : ''; ?>" <?php echo dht_parse_option_attributes( $toggle[ 'attr' ] ); ?>>
 
     <div class="dht-title"><?php echo esc_html( $toggle[ 'title' ] ); ?></div>
 

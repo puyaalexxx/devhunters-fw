@@ -7,6 +7,7 @@ if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 use DHT\Extensions\Options\Containers\Containers\SideMenu;
 use DHT\Extensions\Options\Containers\Containers\Simple;
+use DHT\Extensions\Options\Containers\Containers\TabsMenu as TabsContainer;
 use DHT\Extensions\Options\Groups\Groups\Accordion;
 use DHT\Extensions\Options\Groups\Groups\AddableBox;
 use DHT\Extensions\Options\Groups\Groups\Group;
@@ -48,14 +49,15 @@ trait RegisterOptionsHelpers {
      */
     private function _registerFWOptionContainers() : void {
         
-        //instantiate the option group classes
+        //instantiate the option container classes
         $sidemenu = new SideMenu( $this->_optionGroupsClasses, $this->_optionTogglesClasses, $this->_optionFieldsClasses );
-        //instantiate the option group classes
         $simple = new Simple( $this->_optionGroupsClasses, $this->_optionTogglesClasses, $this->_optionFieldsClasses );
+        $tabs = new TabsContainer( $this->_optionGroupsClasses, $this->_optionTogglesClasses, $this->_optionFieldsClasses );
         
         //add class instance to the _optionContainerClasses array to use throughout the Container class methods
         $this->_optionContainerClasses[ $sidemenu->getContainer() ] = $sidemenu;
         $this->_optionContainerClasses[ $simple->getContainer() ] = $simple;
+        $this->_optionContainerClasses[ $tabs->getContainer() ] = $tabs;
     }
     
     /**

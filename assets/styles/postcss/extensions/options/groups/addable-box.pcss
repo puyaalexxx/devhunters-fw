@@ -1,3 +1,5 @@
+@import '../../../mixins.pcss';
+
 .dht-meta-box-content .dht-wrapper {
     .dht-field-child-addable-box {
         .dht-addable-box-item {
@@ -159,27 +161,7 @@
             }
 
             @media (max-width: 1366px) {
-                .dht-field-child-typography-group, .dht-field-borders-group, .dht-field-spacing-group {
-                    display: block;
-                }
-
-                .dht-field-child-typography-dropdown, .dht-field-borders-input, .dht-field-spacing-input {
-                    margin-bottom: 15px;
-                }
-
-                .dht-slider-group {
-                    display: block;
-
-                    .dht-range-slider {
-                        width: 100%;
-                        margin-right: 0 !important;
-                        margin-left: 0 !important;
-                    }
-                }
-
-                .dht-slider {
-                    width: 100% !important;
-                }
+                @include responsive_options_group_code();
             }
 
             @media (max-width: 980px) {
@@ -192,18 +174,10 @@
     }
 
 
-    #dht-cosidebar {
+    #dht-cosidebar, .dht-tabsmenu-container {
         .dht-field-child-addable-box {
             .dht-addable-box-content {
-                @media (max-width: 1250px) {
-                    .dht-field-wrapper {
-                        display: block;
-                    }
-
-                    .dht-field-child-wrapper {
-                        width: 100%;
-                    }
-                }
+                @include responsive_options_group_code();
             }
         }
     }

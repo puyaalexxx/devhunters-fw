@@ -17,7 +17,7 @@ $tabs_id = str_replace( [ '[', ']' ], '-', $group[ 'id' ] ) . 'tab';
 ?>
     <!-- field - tabs -->
     <div
-        class="dht-field-wrapper <?php echo isset( $group[ 'attr' ][ 'class' ] ) ? esc_attr( $group[ 'attr' ][ 'class' ] ) : ''; ?> <?php echo $fullwidth_tabs ? 'dht-field-tabs-fullwidth' : ''; ?>"
+        class="dht-field-wrapper dht-group-type <?php echo $fullwidth_tabs ? 'dht-field-tabs-fullwidth' : ''; ?> <?php echo isset( $group[ 'attr' ][ 'class' ] ) ? esc_attr( $group[ 'attr' ][ 'class' ] ) : ''; ?>"
         <?php echo dht_parse_option_attributes( $group[ 'attr' ] ); ?>>
 
         <?php if ( !$fullwidth_tabs ): ?>

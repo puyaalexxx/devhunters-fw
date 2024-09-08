@@ -6,6 +6,7 @@ const dashboard_page_template_script = "dashboard-page-template-script";
 
 /////////extensions - options - containers - ts
 const sidemenu_script = "sidemenu-script";
+const tabsmenu_script = "tabsmenu-script";
 
 /////////extensions - options - groups - ts
 const tabs_script = "tabs-script";
@@ -44,6 +45,7 @@ const scriptsFileNames = {
 
     //extensions - options - containers
     sidemenu_script,
+    tabsmenu_script,
 
     //extensions - options - groups
     tabs_script,

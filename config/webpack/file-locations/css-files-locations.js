@@ -17,6 +17,9 @@ function getCSSFilesLocations(chunkData, cssPaths, stylesFileNames) {
     if (chunkData.chunk.name === stylesFileNames.sidemenu_style) {
         return cssPaths.css_options_containers + stylesFileNames.sidemenu_style + ".css";
     } //sidemenu container file
+    if (chunkData.chunk.name === stylesFileNames.tabsmenu_style) {
+        return cssPaths.css_options_containers + stylesFileNames.tabsmenu_style + ".css";
+    } //tabsmenu container file
 
     /////////extensions - options - groups - css
     if (chunkData.chunk.name === stylesFileNames.group_style) {

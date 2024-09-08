@@ -12,6 +12,7 @@ function createTsEntry(scriptsFileNames, tsPaths) {
 
         /////////extensions - options - containers - ts
         [scriptsFileNames.sidemenu_script]: tsPaths.ts_options_containers + scriptsFileNames.sidemenu_script.replace("-script", "") + ".ts",
+        [scriptsFileNames.tabsmenu_script]: tsPaths.ts_options_containers + scriptsFileNames.tabsmenu_script.replace("-script", "") + ".ts",
 
         /////////extensions - options - groups - ts
         [scriptsFileNames.tabs_script]: tsPaths.ts_options_groups + scriptsFileNames.tabs_script.replace("-script", "") + ".ts",

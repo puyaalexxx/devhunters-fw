@@ -1,5 +1,41 @@
 @import '../../../variables.pcss';
+@import '../../../mixins.pcss';
 
+@mixin sidemenu_resposnive_code() {
+    .dht-cosidebar-header {
+        height: calc(100% - 50px);
+        width: 50px !important;
+
+        .title {
+            display: none !important;
+        }
+
+        .fa {
+            width: 50px !important;
+            font-size: 20px !important;
+            text-indent: -3px !important;
+        }
+
+        > ul > li {
+
+            > a {
+                padding: 5px 0 !important;
+            }
+
+            .dht-cosidebar-sub-menu {
+                display: none !important;
+            }
+
+            .dht-cosidebar-dropdown-menu {
+                left: 50px !important;
+
+                &:before {
+                    top: 15px !important;
+                }
+            }
+        }
+    }
+}
 .dht-wrapper {
 
     #dht-cosidebar {
@@ -7,7 +43,7 @@
 
         .dht-cosidebar-header {
             width: 175px;
-            background: #1D2327;
+            background: $secondary-color;
             box-sizing: border-box;
             padding-top: 12px;
             float: left;
@@ -155,7 +191,7 @@
 
                     .dht-cosidebar-sub-menu {
                         padding: 7px 15px;
-                        background-color: #32373c;
+                        background-color: $secondary-color-lighten;
                         display: none;
 
                         li a {
@@ -193,14 +229,14 @@
                         top: 0;
                         left: 175px;
                         width: 160px;
-                        background-color: #32373c;
+                        background-color: $secondary-color-lighten;
                         padding: 10px 15px;
                         box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.40);
 
                         &:before {
                             content: "";
                             border: 8px solid transparent;
-                            border-right-color: #32373c;
+                            border-right-color: $secondary-color-lighten;
                             position: absolute;
                             left: -16px;
                         }
@@ -236,41 +272,53 @@
             }
         }
 
+        @media (max-width: 1250px) {
+            @include dashboard_responsive_code();
+        }
+
         @media all and (max-width: 900px) {
+            @include sidemenu_resposnive_code();
+        }
 
-            .dht-cosidebar-header {
-                height: calc(100% - 50px);
-                width: 50px !important;
-
-                .title {
-                    display: none !important;
-                }
-
-                .fa {
-                    width: 50px !important;
-                    font-size: 20px !important;
-                    text-indent: -3px !important;
-                }
-
-                > ul > li {
-
-                    > a {
-                        padding: 5px 0 !important;
-                    }
-
-                    .dht-cosidebar-sub-menu {
-                        display: none !important;
-                    }
-
-                    .dht-cosidebar-dropdown-menu {
-                        left: 50px !important;
-
-                        &:before {
-                            top: 15px !important;
-                        }
-                    }
-                }
+        @media (max-width: 600px) {
+            .dht-field-child-wrapper {
+                width: 100%;
             }
         }
     }
 }
+
+
+@media all and (max-width: 1600px) {
+    .dht-meta-box-content {
+        #dht-cosidebar {
+            @include sidemenu_resposnive_code();
+
+            @include dashboard_responsive_code();
+
+            .dht-field-wrapper {
+                width: 80%;
+                margin: auto;
+
+                .dht-field-child-wrapper, .dht-field-wrapper {
+                    width: 100%;
+                }
+            }
+
+            .dht-field-child-wrapper {
+                width: 100%;
+            }
+        }
+    }
+}
+
+@media (max-width: 980px) {
+    .dht-meta-box-content {
+        #dht-cosidebar {
+            .dht-field-wrapper {
+                width: 90%;
+            }
+        }
+    }
+}
+

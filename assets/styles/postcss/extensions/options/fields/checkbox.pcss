@@ -54,10 +54,19 @@
         }
     }
 
-    #dht-cosidebar {
+    #dht-cosidebar, .dht-tabsmenu-container {
         .dht-field-child-checkbox {
-
             @media (max-width: 1250px) {
+                @include checkbox_resposnive_code();
+            }
+        }
+    }
+}
+
+@media (max-width: 1600px) {
+    .dht-meta-box-content {
+        #dht-cosidebar, .dht-tabsmenu-container {
+            .dht-field-child-checkbox {
                 @include checkbox_resposnive_code();
             }
         }

@@ -13,7 +13,8 @@ $saved_values = !empty( $group[ 'value' ] ) ? $group[ 'value' ] : [];
 ?>
     <!-- field - addable box -->
     <div
-        class="dht-field-wrapper <?php echo $group[ 'sortable' ] ? 'dht-field-wrappers-sortable' : ''; ?> <?php echo isset( $group[ 'attr' ][ 'class' ] ) ? esc_attr( $group[ 'attr' ][ 'class' ] ) : ''; ?>"
+        class="dht-field-wrapper dht-group-type <?php echo $group[ 'sortable' ] ? 'dht-field-wrappers-sortable' : ''; ?>
+        <?php echo isset( $group[ 'attr' ][ 'class' ] ) ? esc_attr( $group[ 'attr' ][ 'class' ] ) : ''; ?>"
         <?php echo dht_parse_option_attributes( $group[ 'attr' ] ); ?>>
 
         <div class="dht-title"><?php echo esc_html( $group[ 'title' ] ); ?></div>

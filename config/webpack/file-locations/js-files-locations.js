@@ -17,6 +17,9 @@ function getJSFilesLocations(chunkData, jsPaths, scriptsFileNames) {
     if (chunkData.chunk.name === scriptsFileNames.sidemenu_script) {
         return jsPaths.js_options_containers + scriptsFileNames.sidemenu_script + ".js";
     } //sidemenu container
+    if (chunkData.chunk.name === scriptsFileNames.tabsmenu_script) {
+        return jsPaths.js_options_containers + scriptsFileNames.tabsmenu_script + ".js";
+    } //tabsmenu container
 
     /////////extensions - options - groups - js
     if (chunkData.chunk.name === scriptsFileNames.tabs_script) {

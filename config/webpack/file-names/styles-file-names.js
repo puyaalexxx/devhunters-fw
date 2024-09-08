@@ -6,6 +6,7 @@ const dashboard_page_template_style = "dashboard-page-template-style";
 
 /////////extensions - options - container - pcss
 const sidemenu_style = "sidemenu-style";
+const tabsmenu_style = "tabsmenu-style";
 
 /////////extensions - options - groups - pcss
 const group_style = "group-style";
@@ -49,6 +50,7 @@ const stylesFileNames = {
 
     //extensions - options - containers
     sidemenu_style,
+    tabsmenu_style,
 
     //extensions - options - groups
     group_style,

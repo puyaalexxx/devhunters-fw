@@ -32,7 +32,9 @@ trait RenderOptionsHelpers {
         
         // Render container options
         if ( isset( $options[ 'type' ] ) && array_key_exists( $options[ 'type' ], $this->_optionContainerClasses ) ) {
+            
             echo $this->_optionContainerClasses[ $options[ 'type' ] ]->render( $options, $saved_values );
+            
         } // Render ungrouped option types
         else {
             echo dht_render_options(

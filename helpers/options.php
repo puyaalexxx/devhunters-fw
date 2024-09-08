@@ -171,11 +171,11 @@ if ( !function_exists( 'dht_render_options' ) ) {
             $saved_value = $saved_values[ $option[ 'id' ] ] ?? [];
 
             //if it is a group type
-            if ( array_key_exists( $option[ 'type' ], $registered_options_classes[ 'groupsClasses' ] ) ) {
+            if ( isset( $option[ 'type' ] ) && array_key_exists( $option[ 'type' ], $registered_options_classes[ 'groupsClasses' ] ) ) {
                 //render the respective option group class
                 echo $registered_options_classes[ 'groupsClasses' ][ $option[ 'type' ] ]->render( $option, $saved_value, $options_id );
             } //if it is a toggle type
-            elseif ( array_key_exists( $option[ 'type' ], $registered_options_classes[ 'togglesClasses' ] ) ) {
+            elseif ( isset( $option[ 'type' ] ) && array_key_exists( $option[ 'type' ], $registered_options_classes[ 'togglesClasses' ] ) ) {
                 //render the respective option toggle class
                 echo $registered_options_classes[ 'togglesClasses' ][ $option[ 'type' ] ]->render( $option, $saved_value, $options_id );
             } else {
@@ -226,7 +226,7 @@ if ( !function_exists( 'dht_render_group' ) ) {
 if ( !function_exists( 'dht_render_field_if_exists' ) ) {
     function dht_render_field_if_exists( array $option, mixed $saved_value, string $options_id, array $registered_field_classes ) : string {
 
-        if ( array_key_exists( $option[ 'type' ], $registered_field_classes ) ) {
+        if ( isset( $option[ 'type' ] ) && array_key_exists( $option[ 'type' ], $registered_field_classes ) ) {
 
             //render the respective option type class
             return $registered_field_classes[ $option[ 'type' ] ]->render( $option, $saved_value, $options_id );

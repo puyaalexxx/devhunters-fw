@@ -17,6 +17,7 @@
       "constants.php",
       "helpers/general.php",
       "helpers/posts.php",
+      "helpers/terms.php",
       "helpers/options.php",
       "helpers/validations.php",
       "helpers/features.php"

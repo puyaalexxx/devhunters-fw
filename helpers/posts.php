@@ -28,12 +28,32 @@ if ( !function_exists( 'dht_is_post_editing_area' ) ) {
  *
  * @return string
  */
-if ( !function_exists( 'dht_get_edited_post_type' ) ) {
-    function dht_get_edited_post_type() : string {
+if ( !function_exists( 'dht_get_current_admin_post_type_from_url' ) ) {
+    function dht_get_current_admin_post_type_from_url() : string {
         
         //get current post id from the $_GET if exists
         $post_id = isset( $_GET[ 'post' ] ) ? intval( $_GET[ 'post' ] ) : 0;
         
         return $post_id ? get_post( $post_id )->post_type : ( isset( $_POST[ 'post_type' ] ) ? sanitize_text_field( $_POST[ 'post_type' ] ) : '' );
+    }
+}
+
+/**
+ * Get current post type from admin area
+ *
+ * @return string
+ */
+if ( !function_exists( 'dht_get_current_admin_post_type' ) ) {
+    function dht_get_current_admin_post_type() : string {
+        
+        $screen = get_current_screen();
+        
+        // Check if we are on a post edit screen
+        if ( !$screen || !in_array( $screen->base, [ 'post', 'edit' ], true ) ) {
+            return '';
+        }
+        
+        // Get the current post type from the screen object
+        return $screen->post_type;
     }
 }

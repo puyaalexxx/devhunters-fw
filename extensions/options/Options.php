@@ -13,7 +13,7 @@ use DHT\Helpers\Traits\Options\{EnqueueOptionsHelpers,
     SaveOptionsHelpers};
 use WP_Post;
 use function DHT\fw;
-use function DHT\Helpers\{dht_load_view};
+use function DHT\Helpers\{dht_get_current_admin_post_type, dht_get_current_admin_taxonomy_from_url, dht_load_view};
 
 final class Options implements IOptions {
     
@@ -88,6 +88,15 @@ final class Options implements IOptions {
             //register post types and pages meta boxes
             add_action( 'add_meta_boxes', [ $this, 'registerPostTypeMetaboxes' ] );
         }
+        
+        //taxonomies related functionality
+        {
+            $current_taxonomy = dht_get_current_admin_taxonomy_from_url();
+            add_action( $current_taxonomy . '_edit_form', function ( $term ) {
+                
+                $this->renderContent( $this->_options, 'term', $term->term_id );
+            }, 999 );
+        }
     }
     
     /**
@@ -130,6 +139,8 @@ final class Options implements IOptions {
      */
     public function registerPostTypeMetaboxes() : void {
         
+        $post_type = dht_get_current_admin_post_type();
+        
         // Determine if multiple metaboxes need to be registered
         $metaboxes = isset( $this->_options[ 'options' ] ) ? [ $this->_options ] : $this->_options;
         
@@ -149,9 +160,9 @@ final class Options implements IOptions {
                 $metabox[ 'title' ], // Title of the metabox
                 function ( $post ) use ( $metabox ) {
                     
-                    $this->renderContent( $metabox, $post->ID );
+                    $this->renderContent( $metabox, 'post', $post->ID );
                 },
-                $metabox[ 'post-type' ], // Post type
+                $post_type, // Post type
                 $metabox[ 'context' ] ?? 'normal', // Context (normal, side, advanced)
                 $metabox[ 'priority' ] ?? 'high'  // Priority (high, core, default, low)
             );
@@ -159,21 +170,28 @@ final class Options implements IOptions {
     }
     
     /**
-     * Render content for dashboard pages and metaboxes.
+     * Render content for dashboard pages, metaboxes and terms area.
      *
-     * @param array $options Options array.
-     * @param int   $post_id Optional. The post ID if rendering post type metabox content.
+     * @param array  $options  Options array.
+     * @param string $location Where to save the data - dashboard/post or term
+     * @param int    $id       The post or term ID if rendering post type metabox content or term fields.
      *
      * @return void
      * @since 1.0.0
      */
-    public function renderContent( array $options, int $post_id = 0 ) : void {
+    public function renderContent( array $options, string $location = 'dashboard', int $id = 0 ) : void {
         
-        $template = $post_id ? 'posts-template.php' : 'dashboard-page-template.php';
+        if ( $location == 'post' ) {
+            $template = 'posts-template.php';
+        } elseif ( $location == 'term' ) {
+            $template = 'terms-template.php';
+        } else {
+            $template = 'dashboard-page-template.php';
+        }
         
         $viewData = [
             'nonce' => $this->_nonce,
-            'options' => $this->_getOptionsView( $options, $post_id ? 'post' : '', $post_id ),
+            'options' => $this->_getOptionsView( $options, $location, $id ),
         ];
         
         echo dht_load_view( DHT_TEMPLATES_DIR . 'extensions/options/', $template, $viewData );

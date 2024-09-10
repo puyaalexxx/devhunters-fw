@@ -4,7 +4,7 @@
 @mixin switch_resposnive_code() {
     label.dht-switch {
         margin: auto;
-        width: 150px;
+        width: 160px;
 
         .dht-slider:before {
             left: -14px;
@@ -35,7 +35,7 @@
         .dht-switch {
             position: relative;
             display: inline-block;
-            width: 125px;
+            width: 133px;
             height: 34px;
             user-select: none;
             -webkit-user-select: none;
@@ -100,8 +100,8 @@
             }
 
             &.dht-slider-on .dht-slider:before {
-                -ms-transform: translateX(85px);
-                transform: translateX(85px);
+                -ms-transform: translateX(93px);
+                transform: translateX(93px);
             }
 
             &.dht-slider-off .dht-slider:before {
@@ -131,6 +131,14 @@
             .dht-field-child-switch {
                 @include switch_resposnive_code();
             }
+        }
+    }
+}
+
+.dht-terms-page-content {
+    .dht-wrapper {
+        .dht-field-child-switch {
+            @include switch_resposnive_code();
         }
     }
 }

@@ -48,6 +48,7 @@
 
     .dht-field {
         width: 100%;
+        min-height: 30px;
     }
 
     .dht-description {
@@ -178,4 +179,16 @@
 
 .dht-terms-page-content .dht-wrapper {
     @include dashboard_responsive_code();
+
+    @media (max-width: 767px) {
+        .dht-field-child-wrapper {
+            width: 100%;
+        }
+    }
+
+    .dht-field-child-wrapper {
+        .dht-field-child-wrapper {
+            width: 100%;
+        }
+    }
 }

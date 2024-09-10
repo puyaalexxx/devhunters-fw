@@ -15,6 +15,7 @@ use DHT\Helpers\Exceptions\ConfigExceptions\{EmptyCPTConfigurationsException,
     EmptySidebarConfigurationsException,
     EmptyWidgetNamesException};
 use DHT\Helpers\Traits\{SingletonTrait, ValidateConfigurations};
+use function DHT\Helpers\dht_print_r;
 
 /**
  * Singleton Class that is used to include all the framework extensions and initialise them

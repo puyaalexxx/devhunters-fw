@@ -1,9 +1,10 @@
 <?php
-declare( strict_types = 1 );
+declare( strict_types=1 );
 
 namespace DHT\Helpers\Traits\Options;
 
-if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
+if( !defined( 'DHT_MAIN' ) )
+    die( 'Forbidden' );
 
 trait OptionsHelpers {
     
@@ -17,7 +18,7 @@ trait OptionsHelpers {
         
         $nonce = '';
         
-        if ( isset( $_POST ) ) {
+        if( isset( $_POST ) ) {
             $nonce = array_filter( array_keys( $_POST ), function ( $key ) {
                 
                 return str_contains( $key, '_dht_fw_nonce' );
@@ -28,7 +29,9 @@ trait OptionsHelpers {
         
         $nonce = empty( $nonce ) ? 'dht_' . md5( uniqid( (string)mt_rand(), true ) ) . '_dht_fw_nonce' : $nonce;
         
-        return [ 'name' => $nonce . '_name', 'action' => $nonce . '_action' ];
+        return [ 'name'   => $nonce . '_name',
+                 'action' => $nonce . '_action'
+        ];
     }
     
     /**
@@ -55,6 +58,27 @@ trait OptionsHelpers {
     private function _isContainerType( array $option ) : bool {
         
         return isset( $option[ 'type' ] ) && isset( $this->_optionContainerClasses[ $option[ 'type' ] ] );
+    }
+    
+    /**
+     * Get the correct option template
+     *
+     * @param string $location Where the options are located (dashboard/post/term)
+     *
+     * @return string
+     * @since     1.0.0
+     */
+    private function _getOptionsTemplate( string $location ) : string {
+        
+        if( $location == 'post' ) {
+            $template = 'posts-template.php';
+        } elseif( $location == 'term' ) {
+            $template = 'terms-template.php';
+        } else {
+            $template = 'dashboard-page-template.php';
+        }
+        
+        return $template;
     }
     
 }

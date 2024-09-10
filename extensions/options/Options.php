@@ -1,19 +1,25 @@
 <?php
-declare( strict_types = 1 );
+declare( strict_types=1 );
 
 namespace DHT\Extensions\Options;
 
-if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
+if( !defined( 'DHT_MAIN' ) )
+    die( 'Forbidden' );
 
 use DHT\Extensions\Options\Options\BaseField;
 use DHT\Helpers\Traits\Options\{EnqueueOptionsHelpers,
     OptionsHelpers,
     RegisterOptionsHelpers,
     RenderOptionsHelpers,
-    SaveOptionsHelpers};
+    SaveOptionsHelpers
+};
 use WP_Post;
 use function DHT\fw;
-use function DHT\Helpers\{dht_get_current_admin_post_type, dht_get_current_admin_taxonomy_from_url, dht_load_view};
+use function DHT\Helpers\{dht_get_current_admin_post_type,
+    dht_get_current_admin_taxonomy_from_url,
+    dht_load_view,
+    dht_print_r
+};
 
 final class Options implements IOptions {
     
@@ -39,7 +45,10 @@ final class Options implements IOptions {
     private array $_optionContainerClasses = [];
     
     //nonce field
-    private array $_nonce = [ 'action' => 'ppht_nonce_action', 'name' => 'ppht_nonce_action' ];
+    private array $_nonce = [
+        'action' => 'ppht_nonce_action',
+        'name'   => 'ppht_nonce_action'
+    ];
     
     /**     * @param array $options
      *
@@ -67,7 +76,11 @@ final class Options implements IOptions {
         //enqueue settings
         {
             //enqueue the options container scripts
-            add_action( 'admin_enqueue_scripts', [ $this, 'enqueueGeneralScripts' ] );
+            add_action( 'admin_enqueue_scripts', [
+                $this,
+                'enqueueGeneralScripts'
+            ] );
+            
             //enqueue styles/scripts for each option received from the plugin
             $this->_enqueueOptionsScripts( $this->_options );
         }
@@ -84,18 +97,31 @@ final class Options implements IOptions {
         //post types related functionality
         {
             //save post type metaboxes options
-            add_action( 'save_post', [ $this, 'savePostTypeOptions' ], 999, 2 );
+            add_action( 'save_post', [
+                $this,
+                'savePostTypeOptions'
+            ], 999, 2 );
+            
             //register post types and pages meta boxes
-            add_action( 'add_meta_boxes', [ $this, 'registerPostTypeMetaboxes' ] );
+            add_action( 'add_meta_boxes', [
+                $this,
+                'registerPostTypeMetaboxes'
+            ] );
         }
         
         //taxonomies related functionality
         {
             $current_taxonomy = dht_get_current_admin_taxonomy_from_url();
+            
             add_action( $current_taxonomy . '_edit_form', function ( $term ) {
                 
                 $this->renderContent( $this->_options, 'term', $term->term_id );
             }, 999 );
+            
+            add_action( 'edited_category', [
+                $this,
+                'saveTermOptions'
+            ], 999 );
         }
     }
     
@@ -147,7 +173,7 @@ final class Options implements IOptions {
         // Initialize counter for unique metabox IDs
         $count = 0;
         // Loop through each metabox configuration
-        foreach ( $metaboxes as &$metabox ) {
+        foreach( $metaboxes as &$metabox ) {
             $count++;
             $metabox_id = 'dht-fw-metabox-id-' . $count;
             // Set metabox ID and options ID
@@ -155,14 +181,12 @@ final class Options implements IOptions {
             $metabox[ 'id' ] = $metabox_id . '[' . $metabox[ 'options_id' ] . ']';
             
             // Register the metabox
-            add_meta_box(
-                $metabox_id, // ID of the metabox
+            add_meta_box( $metabox_id, // ID of the metabox
                 $metabox[ 'title' ], // Title of the metabox
                 function ( $post ) use ( $metabox ) {
                     
                     $this->renderContent( $metabox, 'post', $post->ID );
-                },
-                $post_type, // Post type
+                }, $post_type, // Post type
                 $metabox[ 'context' ] ?? 'normal', // Context (normal, side, advanced)
                 $metabox[ 'priority' ] ?? 'high'  // Priority (high, core, default, low)
             );
@@ -181,16 +205,10 @@ final class Options implements IOptions {
      */
     public function renderContent( array $options, string $location = 'dashboard', int $id = 0 ) : void {
         
-        if ( $location == 'post' ) {
-            $template = 'posts-template.php';
-        } elseif ( $location == 'term' ) {
-            $template = 'terms-template.php';
-        } else {
-            $template = 'dashboard-page-template.php';
-        }
+        $template = $this->_getOptionsTemplate( $location );
         
         $viewData = [
-            'nonce' => $this->_nonce,
+            'nonce'   => $this->_nonce,
             'options' => $this->_getOptionsView( $options, $location, $id ),
         ];
         
@@ -198,7 +216,7 @@ final class Options implements IOptions {
     }
     
     /**
-     * Saves the dashboard page options based on the provided settings ID.
+     * Save dashboard page options based on the provided settings ID.
      *
      * This method handles both grouped and ungrouped options, validates the nonce,
      * and processes the POST data to save settings. It delegates specific processing
@@ -210,11 +228,11 @@ final class Options implements IOptions {
      */
     private function _saveDashBoardPageOptions() : void {
         
-        if ( $this->_isValidRequest() ) {
+        if( $this->_isValidRequest() ) {
             
-            $post_values = $_POST[ $this->_options[ 'id' ] ?? '' ] ?? null;
+            $post_values = $_POST[ $this->_options[ 'id' ] ?? '' ] ?? NULL;
             
-            if ( $post_values ) {
+            if( $post_values ) {
                 $this->_handleContainerOptions( $this->_options, $post_values );
             } else {
                 $this->_handleUngroupedOptions( $this->_options );
@@ -223,7 +241,33 @@ final class Options implements IOptions {
     }
     
     /**
-     * Saves post options settings based on its id
+     * Save term option based on the provided settings ID.
+     *
+     * This method handles both grouped and ungrouped options, validates the nonce,
+     * and processes the POST data to save settings. It delegates specific processing
+     * tasks to other methods to improve readability and maintainability.
+     *
+     *
+     * @param int $term_id Term ID
+     *
+     * @return void
+     * @since     1.0.0
+     */
+    public function saveTermOptions( int $term_id ) : void {
+        
+        if( $this->_isValidRequest() ) {
+            
+            $post_values = $_POST[ $this->_options[ 'id' ] ?? '' ] ?? NULL;
+            
+            //check for the container id
+            if( $post_values ) {
+                $this->_handleContainerOptions( $this->_options, $post_values, 'term', $term_id );
+            }
+        }
+    }
+    
+    /**
+     * Save post options settings based on its id
      *
      * This method handles the post saving options, it is used in the save_post hook, validates the nonce,
      * and processes the POST data to save settings. It delegates specific processing
@@ -238,30 +282,30 @@ final class Options implements IOptions {
     public function savePostTypeOptions( int $post_id, WP_Post $post ) : void {
         
         //check nonce field
-        if ( $this->_isValidRequest() ) {
+        if( $this->_isValidRequest() ) {
             
-            if ( !current_user_can( 'edit_post', $post_id ) ) {
+            if( !current_user_can( 'edit_post', $post_id ) ) {
                 return;
             }
             
             // Check if this is an autosave
-            if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+            if( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
                 return;
             }
             
             // check post type
-            if ( isset( $_POST[ 'post_type' ] ) && $post->post_type != $_POST[ 'post_type' ] ) {
+            if( isset( $_POST[ 'post_type' ] ) && $post->post_type != $_POST[ 'post_type' ] ) {
                 return;
             }
             
             //save metaboxes options
-            if ( isset( $_POST ) ) {
-                foreach ( $_POST as $metabox_id => $values ) {
-                    if ( str_contains( $metabox_id, 'dht-fw-metabox-id' ) ) {
+            if( isset( $_POST ) ) {
+                foreach( $_POST as $metabox_id => $values ) {
+                    if( str_contains( $metabox_id, 'dht-fw-metabox-id' ) ) {
                         //many metaboxes
-                        if ( !isset( $this->_options[ 'options' ] ) ) {
-                            foreach ( $this->_options as $options ) {
-                                if ( isset( $values[ $options[ 'id' ] ] ) ) {
+                        if( !isset( $this->_options[ 'options' ] ) ) {
+                            foreach( $this->_options as $options ) {
+                                if( isset( $values[ $options[ 'id' ] ] ) ) {
                                     $this->_handleContainerOptions( $options, $values[ $options[ 'id' ] ], 'post', $post_id );
                                 }
                             }

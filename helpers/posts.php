@@ -16,6 +16,10 @@ if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 if ( !function_exists( 'dht_is_post_editing_area' ) ) {
     function dht_is_post_editing_area() : bool {
         
+        if (!is_admin()) {
+            return false; // Exit if not in admin area
+        }
+        
         return isset( $_GET[ 'post' ] ) || isset( $_POST[ 'post_type' ] );
     }
 }
@@ -24,12 +28,16 @@ if ( !function_exists( 'dht_is_post_editing_area' ) ) {
  * Get post type from admin editing post/page/cpt areas
  *
  * When editing the post you can use the $_GET to get its id and grab the post type
- * On save_post hook, the $_GET is not available so you can use the $_PODt for this
+ * On save_post hook, the $_GET is not available so you can use the $_POSt for this
  *
  * @return string
  */
 if ( !function_exists( 'dht_get_current_admin_post_type_from_url' ) ) {
     function dht_get_current_admin_post_type_from_url() : string {
+        
+        if (!is_admin()) {
+            return ''; // Exit if not in admin area
+        }
         
         //get current post id from the $_GET if exists
         $post_id = isset( $_GET[ 'post' ] ) ? intval( $_GET[ 'post' ] ) : 0;
@@ -45,6 +53,10 @@ if ( !function_exists( 'dht_get_current_admin_post_type_from_url' ) ) {
  */
 if ( !function_exists( 'dht_get_current_admin_post_type' ) ) {
     function dht_get_current_admin_post_type() : string {
+        
+        if (!is_admin()) {
+            return ''; // Exit if not in admin area
+        }
         
         $screen = get_current_screen();
         

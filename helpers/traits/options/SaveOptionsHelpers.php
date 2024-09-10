@@ -110,7 +110,7 @@ trait SaveOptionsHelpers {
                 update_post_meta( $id, $option_id, $values );
             } //save term data
             elseif ( $location == 'term' ) {
-                //update_term_meta((int)$id, 'custom_field_key', $values);
+                update_term_meta($id, $option_id, $values);
             } //save dashboard page options data
             else {
                 dht_set_db_settings_option( $option_id, $values );
@@ -145,7 +145,11 @@ trait SaveOptionsHelpers {
             foreach ( $options[ 'options' ] as $option ) {
                 if ( $location == 'post' ) {
                     $values = array_merge( $values, $this->_getPostOptionsSavedValuesSeparately( $option, $is_simple_container, $id ) );
-                } else {
+                }
+                elseif ( $location == 'term' ) {
+                    //$values = array_merge( $values, $this->_getTermOptionsSavedValuesSeparately( $option, $is_simple_container, $id ) );
+                }
+                else {
                     $values = array_merge( $values, $this->_getDashPagesOptionsSavedValuesSeparately( $option, $is_simple_container ) );
                 }
             }
@@ -266,7 +270,15 @@ trait SaveOptionsHelpers {
             
             //retrieve grouped container values
             $saved_values[ $options[ 'id' ] ] = $option_values[ $options[ 'options_id' ] ] ?? [];
-        } else {
+        }
+        elseif ( $location == 'term' ) {
+            //get option value
+            $option_values = get_term_meta( $id, $options[ 'id' ], true );
+            
+            //retrieve grouped container values
+            $saved_values[ $options[ 'id' ] ] = $option_values[ $options[ 'id' ] ] ?? [];
+        }
+        else {
             //get saved options if settings id present
             if ( isset( $options[ 'id' ] ) ) {
                 $saved_values = dht_get_db_settings_option( $options[ 'id' ] );

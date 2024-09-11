@@ -3,7 +3,7 @@ declare( strict_types = 1 );
 
 namespace DHT\Extensions\Widgets;
 
-if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
+if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 /**
  * Class that is used to register plugin widgets
@@ -51,7 +51,7 @@ final class RegisterWidget implements IRegisterWidget {
      */
     public function registerWidgetsHook( array $widgets ) : void {
         
-        foreach ( $widgets as $widget ) {
+        foreach( $widgets as $widget ) {
             register_widget( $widget );
         }
     }

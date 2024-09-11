@@ -5,7 +5,7 @@ namespace DHT\Extensions\Options\Toggles;
 
 use function DHT\Helpers\dht_load_view;
 
-if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
+if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 abstract class BaseToggle {
     
@@ -88,9 +88,9 @@ abstract class BaseToggle {
         $toggle = $this->addIDPrefix( $toggle, $options_id );
         
         return dht_load_view( $this->template_dir, $this->getToggle() . '.php', [
-            'toggle' => $toggle,
+            'toggle'            => $toggle,
             'registered_fields' => $this->_registeredFields,
-            'additional_args' => $additional_args
+            'additional_args'   => $additional_args
         ] );
     }
     
@@ -106,7 +106,7 @@ abstract class BaseToggle {
      */
     public function addIDPrefix( array $toggle, string $options_id ) : array {
         
-        if ( empty( $options_id ) ) return $toggle;
+        if( empty( $options_id ) ) return $toggle;
         
         $toggle[ 'id' ] = $options_id . '[' . $toggle[ 'id' ] . ']';
         
@@ -144,14 +144,14 @@ abstract class BaseToggle {
      */
     public function saveValue( array $toggle, mixed $toggle_post_values ) : mixed {
         
-        if ( empty( $toggle_post_values ) ) {
+        if( empty( $toggle_post_values ) ) {
             return $toggle[ 'value' ];
         }
         
         //sanitize option values
-        foreach ( $toggle[ 'options' ] as $subtoggle ) {
+        foreach( $toggle[ 'options' ] as $subtoggle ) {
             
-            foreach ( $subtoggle[ 'options' ] as $option ) {
+            foreach( $subtoggle[ 'options' ] as $option ) {
                 $option_post_value = $toggle_post_values[ $option[ 'id' ] ] ?? [];
                 
                 $toggle_post_values[ $option[ 'id' ] ] = $this->_registeredFields[ $option[ 'type' ] ]->saveValue( $option, $option_post_value );

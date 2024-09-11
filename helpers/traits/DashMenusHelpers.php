@@ -3,7 +3,7 @@ declare( strict_types = 1 );
 
 namespace DHT\Helpers\Traits;
 
-if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
+if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 use function DHT\Helpers\dht_load_view;
 
@@ -21,7 +21,9 @@ trait DashMenusHelpers {
      */
     private function _mergeCallbackArguments( string $callback, string $template_path, array $additional_options ) : callable {
         
-        $func_args = [ 'template_path' => $template_path, 'additional_options' => $additional_options ];
+        $func_args = [ 'template_path'      => $template_path,
+                       'additional_options' => $additional_options
+        ];
         
         return function () use ( $callback, $func_args ) {
             

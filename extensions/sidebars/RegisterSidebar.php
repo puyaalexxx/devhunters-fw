@@ -3,7 +3,7 @@ declare( strict_types = 1 );
 
 namespace DHT\Extensions\Sidebars;
 
-if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
+if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 /**
  * Class that is used to register plugin sidebars
@@ -51,7 +51,7 @@ final class RegisterSidebar implements IRegisterSidebar {
      */
     public function registerSidebarsHook( array $sidebar_config ) : void {
         
-        foreach ( $sidebar_config as $sidebar ) {
+        foreach( $sidebar_config as $sidebar ) {
             register_sidebar( $sidebar );
         }
     }

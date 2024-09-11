@@ -3,7 +3,7 @@ declare( strict_types = 1 );
 
 namespace DHT\Helpers\Traits;
 
-if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
+if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 trait ValidateConfigurations {
     
@@ -21,23 +21,26 @@ trait ValidateConfigurations {
      */
     private function _validateConfigurations( array $config, string $config_key, string $filter_name, string $exception_class = '', string $exception_message = '' ) : array {
         
-        if ( empty( $config_key ) ) {
+        if( empty( $config_key ) ) {
             
-            if ( !empty( $config ) || empty( $exception_class ) ) {
+            if( !empty( $config ) || empty( $exception_class ) ) {
                 
                 return apply_filters( $filter_name, $config );
                 
-            } else {
+            }
+            else {
                 
                 throw new $exception_class( sprintf( _x( '%s', 'exceptions', DHT_PREFIX ), $exception_message ) );
             }
             
-        } else {
-            if ( !empty( $config[ $config_key ] ) ) {
+        }
+        else {
+            if( !empty( $config[ $config_key ] ) ) {
                 
                 return apply_filters( $filter_name, $config[ $config_key ] );
                 
-            } else {
+            }
+            else {
                 
                 throw new $exception_class( sprintf( _x( '%s', 'exceptions', DHT_PREFIX ), $exception_message ) );
             }

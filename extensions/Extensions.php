@@ -3,7 +3,7 @@ declare( strict_types = 1 );
 
 namespace DHT\Extensions;
 
-if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
+if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 use DHT\Extensions\CPT\{CPT, ICPT};
 use DHT\Extensions\DashPages\{DashMenuPage, IDashMenuPage};
@@ -13,7 +13,8 @@ use DHT\Extensions\Widgets\{IRegisterWidget, RegisterWidget};
 use DHT\Helpers\Exceptions\ConfigExceptions\{EmptyCPTConfigurationsException,
     EmptyMenuConfigurationsException,
     EmptySidebarConfigurationsException,
-    EmptyWidgetNamesException};
+    EmptyWidgetNamesException
+};
 use DHT\Helpers\Traits\{SingletonTrait, ValidateConfigurations};
 use function DHT\Helpers\dht_print_r;
 
@@ -49,9 +50,7 @@ final class Extensions {
      */
     public function dashmenus( array $dash_menus_config ) : IDashMenuPage {
         
-        $dash_menus_config = $this->_validateConfigurations( $dash_menus_config, '',
-            'dash_menus_configurations', EmptyMenuConfigurationsException::class,
-            _x( 'Empty dashboard menu configurations array provided', 'exceptions', DHT_PREFIX ) );
+        $dash_menus_config = $this->_validateConfigurations( $dash_menus_config, '', 'dash_menus_configurations', EmptyMenuConfigurationsException::class, _x( 'Empty dashboard menu configurations array provided', 'exceptions', DHT_PREFIX ) );
         
         return new DashMenuPage( $dash_menus_config );
     }
@@ -66,9 +65,7 @@ final class Extensions {
      */
     public function cpts( array $cpt_config ) : ICPT {
         
-        $cpt_config = $this->_validateConfigurations( $cpt_config, '',
-            'dht_cpts_configurations', EmptyCPTConfigurationsException::class,
-            _x( 'Empty cpt configurations array provided', 'exceptions', DHT_PREFIX ) );
+        $cpt_config = $this->_validateConfigurations( $cpt_config, '', 'dht_cpts_configurations', EmptyCPTConfigurationsException::class, _x( 'Empty cpt configurations array provided', 'exceptions', DHT_PREFIX ) );
         
         return new CPT( $cpt_config );
     }
@@ -83,12 +80,11 @@ final class Extensions {
      */
     public function options( array $options ) : ?IOptions {
         
-        $options = $this->_validateConfigurations( $options, '',
-            'dht_options_configurations' );
+        $options = $this->_validateConfigurations( $options, '', 'dht_options_configurations' );
         
         //if the options exists or if it is an ajax request
         // (needed for the options that use ajax specifically)
-        if ( !( !empty( $options ) || wp_doing_ajax() ) ) return null;
+        if( !( !empty( $options ) || wp_doing_ajax() ) ) return NULL;
         
         return new Options( $options );
     }
@@ -103,9 +99,7 @@ final class Extensions {
      */
     public function widgets( array $widgets_config ) : IRegisterWidget {
         
-        $widgets_config = $this->_validateConfigurations( $widgets_config, '',
-            'dht_widgets_configurations', EmptyWidgetNamesException::class,
-            _x( 'Empty widgets configurations array provided', 'exceptions', DHT_PREFIX ) );
+        $widgets_config = $this->_validateConfigurations( $widgets_config, '', 'dht_widgets_configurations', EmptyWidgetNamesException::class, _x( 'Empty widgets configurations array provided', 'exceptions', DHT_PREFIX ) );
         
         return new RegisterWidget( $widgets_config );
     }
@@ -120,9 +114,7 @@ final class Extensions {
      */
     public function sidebars( array $sidebar_config ) : IRegisterSidebar {
         
-        $sidebar_config = $this->_validateConfigurations( $sidebar_config, '',
-            'dht_sidebars_configurations', EmptySidebarConfigurationsException::class,
-            _x( 'Empty configurations array provided', 'exceptions', DHT_PREFIX ) );
+        $sidebar_config = $this->_validateConfigurations( $sidebar_config, '', 'dht_sidebars_configurations', EmptySidebarConfigurationsException::class, _x( 'Empty configurations array provided', 'exceptions', DHT_PREFIX ) );
         
         return new RegisterSidebar( $sidebar_config );
     }

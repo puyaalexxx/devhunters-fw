@@ -3,7 +3,7 @@ declare( strict_types = 1 );
 
 namespace DHT\Helpers\Traits;
 
-if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
+if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 use Exception;
 
@@ -28,10 +28,11 @@ trait SingletonTrait {
     public static function init() : self {
         
         $cls = static::class;
-        if ( !isset( self::$_instances[ $cls ] ) ) {
+        if( !isset( self::$_instances[ $cls ] ) ) {
             error_log( "Creating new instance of {$cls}" );
             self::$_instances[ $cls ] = new static();
-        } else {
+        }
+        else {
             error_log( "Returning existing instance of {$cls}" );
         }
         

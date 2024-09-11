@@ -1,13 +1,13 @@
 <?php
 declare( strict_types = 1 );
 
-namespace DHT\Extensions\Options\Options\fields;
+namespace DHT\Extensions\Options\Options\Fields;
 
 use DHT\Extensions\Options\Options\BaseField;
 use DHT\Helpers\Traits\UploadHelpers;
 use function DHT\fw;
 
-if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
+if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 final class Upload extends BaseField {
     
@@ -41,7 +41,10 @@ final class Upload extends BaseField {
         wp_register_style( DHT_PREFIX . '-upload-field', DHT_ASSETS_URI . 'styles/css/extensions/options/fields/upload-style.css', array(), fw()->manifest->get( 'version' ) );
         wp_enqueue_style( DHT_PREFIX . '-upload-field' );
         
-        wp_enqueue_script( DHT_PREFIX . '-upload-field', DHT_ASSETS_URI . 'scripts/js/extensions/options/fields/upload-script.js', array( 'jquery', 'media-editor' ), fw()->manifest->get( 'version' ), true );
+        wp_enqueue_script( DHT_PREFIX . '-upload-field', DHT_ASSETS_URI . 'scripts/js/extensions/options/fields/upload-script.js', array(
+            'jquery',
+            'media-editor'
+        ), fw()->manifest->get( 'version' ), true );
     }
     
     /**
@@ -51,7 +54,7 @@ final class Upload extends BaseField {
      *  $field_post_value can be null.
      *  In this case you should return default value from $field['value']
      *
-     * @param array $field            - field
+     * @param array $field - field
      * @param mixed $field_post_value - field $_POST value passed on save
      *
      * @return mixed - changed field value
@@ -59,7 +62,7 @@ final class Upload extends BaseField {
      */
     public function saveValue( array $field, mixed $field_post_value ) : mixed {
         
-        if ( empty( $field_post_value ) ) {
+        if( empty( $field_post_value ) ) {
             return $field[ 'value' ];
         }
         

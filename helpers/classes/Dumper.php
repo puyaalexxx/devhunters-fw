@@ -3,7 +3,7 @@ declare( strict_types = 1 );
 
 namespace DHT\Helpers\Classes;
 
-if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
+if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 // original source: https://code.google.com/p/prado3/source/browse/trunk/framework/Util/TVar_dumper.php
 
@@ -80,7 +80,7 @@ class Dumper {
      */
     private static function _dumpInternal( mixed $var, int $level ) : void {
         
-        switch ( gettype( $var ) ) {
+        switch( gettype( $var ) ) {
             case 'boolean':
                 self::$_output .= $var ? 'true' : 'false';
                 
@@ -110,15 +110,17 @@ class Dumper {
                 
                 break;
             case 'array':
-                if ( self::$_depth <= $level ) {
+                if( self::$_depth <= $level ) {
                     self::$_output .= 'array(...)';
-                } else if ( empty( $var ) ) {
+                }
+                else if( empty( $var ) ) {
                     self::$_output .= 'array()';
-                } else {
+                }
+                else {
                     $keys = array_keys( $var );
                     $spaces = str_repeat( ' ', $level * 4 );
                     self::$_output .= "array\n" . $spaces . '(';
-                    foreach ( $keys as $key ) {
+                    foreach( $keys as $key ) {
                         self::$_output .= "\n" . $spaces . "    [$key] => ";
                         self::$_output .= self::_dumpInternal( $var[ $key ], $level + 1 );
                     }
@@ -126,18 +128,20 @@ class Dumper {
                 }
                 break;
             case 'object':
-                if ( ( $id = array_search( $var, self::$_objects, true ) ) !== false ) {
+                if( ( $id = array_search( $var, self::$_objects, true ) ) !== false ) {
                     self::$_output .= get_class( $var ) . '(...)';
-                } else if ( self::$_depth <= $level ) {
+                }
+                else if( self::$_depth <= $level ) {
                     self::$_output .= get_class( $var ) . '(...)';
-                } else {
+                }
+                else {
                     $id = array_push( self::$_objects, $var );
                     $class_name = get_class( $var );
                     $members = (array)$var;
                     $keys = array_keys( $members );
                     $spaces = str_repeat( ' ', $level * 4 );
                     self::$_output .= "$class_name\n" . $spaces . '(';
-                    foreach ( $keys as $key ) {
+                    foreach( $keys as $key ) {
                         $key_display = strtr( trim( $key ), array( "\0" => ':' ) );
                         self::$_output .= "\n" . $spaces . "    [$key_display] => ";
                         self::$_output .= self::_dumpInternal( $members[ $key ], $level + 1 );

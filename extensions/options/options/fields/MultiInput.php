@@ -1,12 +1,12 @@
 <?php
 declare( strict_types = 1 );
 
-namespace DHT\Extensions\Options\Options\fields;
+namespace DHT\Extensions\Options\Options\Fields;
 
 use DHT\Extensions\Options\Options\BaseField;
 use function DHT\fw;
 
-if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
+if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 final class MultiInput extends BaseField {
     
@@ -48,12 +48,12 @@ final class MultiInput extends BaseField {
      */
     public function mergeValues( array $field, mixed $saved_value ) : array {
         
-        if ( !empty( $saved_value ) ) {
+        if( !empty( $saved_value ) ) {
             
-            foreach ( $saved_value as $key => $value ) {
+            foreach( $saved_value as $key => $value ) {
                 
                 //remove empty values as they are not needed
-                if ( empty( $value ) ) unset( $saved_value[ $key ] );
+                if( empty( $value ) ) unset( $saved_value[ $key ] );
             }
             
             $field[ 'value' ] = $saved_value;
@@ -77,12 +77,12 @@ final class MultiInput extends BaseField {
      */
     public function saveValue( array $field, mixed $field_post_value ) : mixed {
         
-        if ( empty( $field_post_value ) ) {
+        if( empty( $field_post_value ) ) {
             return $field[ 'value' ];
         }
         
         $sanitized_values = [];
-        foreach ( $field_post_value as $key => $value ) {
+        foreach( $field_post_value as $key => $value ) {
             
             $sanitized_values[] = sanitize_text_field( $value );
         }

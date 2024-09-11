@@ -3,7 +3,7 @@ declare( strict_types = 1 );
 
 namespace DHT\Helpers\Traits\Options;
 
-if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
+if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 use function DHT\Helpers\dht_render_options;
 
@@ -31,22 +31,17 @@ trait RenderOptionsHelpers {
         ob_start();
         
         // Render container options
-        if ( isset( $options[ 'type' ] ) && array_key_exists( $options[ 'type' ], $this->_optionContainerClasses ) ) {
+        if( isset( $options[ 'type' ] ) && array_key_exists( $options[ 'type' ], $this->_optionContainerClasses ) ) {
             
             echo $this->_optionContainerClasses[ $options[ 'type' ] ]->render( $options, $saved_values );
             
         } // Render ungrouped option types
         else {
-            echo dht_render_options(
-                $options[ 'options' ] ?? $options,
-                $options[ 'id' ] ?? '',
-                $saved_values,
-                [
-                    'groupsClasses' => $this->_optionGroupsClasses,
+            echo dht_render_options( $options[ 'options' ] ?? $options, $options[ 'id' ] ?? '', $saved_values, [
+                    'groupsClasses'  => $this->_optionGroupsClasses,
                     'togglesClasses' => $this->_optionTogglesClasses,
-                    'fieldsClasses' => $this->_optionFieldsClasses,
-                ]
-            );
+                    'fieldsClasses'  => $this->_optionFieldsClasses,
+                ] );
         }
         
         // Return the generated HTML view

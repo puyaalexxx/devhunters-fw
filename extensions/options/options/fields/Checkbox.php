@@ -1,12 +1,12 @@
 <?php
 declare( strict_types = 1 );
 
-namespace DHT\Extensions\Options\Options\fields;
+namespace DHT\Extensions\Options\Options\Fields;
 
 use DHT\Extensions\Options\Options\BaseField;
 use function DHT\fw;
 
-if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
+if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 final class Checkbox extends BaseField {
     
@@ -47,13 +47,13 @@ final class Checkbox extends BaseField {
     public function mergeValues( array $field, mixed $saved_value ) : array {
         
         //if saved value exists
-        if ( !empty( $saved_value ) ) {
+        if( !empty( $saved_value ) ) {
             
             $values = [];
-            foreach ( $field[ 'choices' ] as $checkbox ) {
+            foreach( $field[ 'choices' ] as $checkbox ) {
                 
                 //if checkbox id exists in saved_values array, save it as checked value
-                if ( array_key_exists( $checkbox[ 'id' ], $saved_value ) ) {
+                if( array_key_exists( $checkbox[ 'id' ], $saved_value ) ) {
                     $values[] = $checkbox[ 'id' ];
                 }
             }

@@ -5,7 +5,7 @@ namespace DHT\Extensions\Options\Options;
 
 use function DHT\Helpers\dht_load_view;
 
-if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
+if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 abstract class BaseField {
     
@@ -80,7 +80,9 @@ abstract class BaseField {
         $field = $this->addIDPrefix( $field, $options_id );
         
         //render the respective option type
-        return dht_load_view( $this->template_dir, $this->getField() . '.php', [ 'field' => $field, 'additional_args' => $additional_args ] );
+        return dht_load_view( $this->template_dir, $this->getField() . '.php', [ 'field'           => $field,
+                                                                                 'additional_args' => $additional_args
+        ] );
     }
     
     /**
@@ -95,7 +97,7 @@ abstract class BaseField {
      */
     public function addIDPrefix( array $field, string $options_id ) : array {
         
-        if ( empty( $options_id ) ) return $field;
+        if( empty( $options_id ) ) return $field;
         
         $field[ 'id' ] = $options_id . '[' . $field[ 'id' ] . ']';
         
@@ -133,7 +135,7 @@ abstract class BaseField {
      */
     public function saveValue( array $field, mixed $field_post_value ) : mixed {
         
-        if ( empty( $field_post_value ) ) {
+        if( empty( $field_post_value ) ) {
             return $field[ 'value' ];
         }
         

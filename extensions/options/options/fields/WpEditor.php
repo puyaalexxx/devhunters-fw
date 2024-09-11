@@ -1,13 +1,13 @@
 <?php
 declare( strict_types = 1 );
 
-namespace DHT\Extensions\Options\Options\fields;
+namespace DHT\Extensions\Options\Options\Fields;
 
 use DHT\Extensions\Options\Options\BaseField;
 use function DHT\fw;
 use function DHT\Helpers\dht_sanitize_wpeditor_value;
 
-if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
+if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 final class WpEditor extends BaseField {
     
@@ -51,18 +51,22 @@ final class WpEditor extends BaseField {
      */
     public function addIDPrefix( array $field, string $options_id ) : array {
         
-        if ( !empty( $options_id ) ) {
+        if( !empty( $options_id ) ) {
             $id = $options_id . '[' . $field[ 'id' ] . ']';
             
             //wp editor does not support brackets in the id field so need to leave it without prefix id
             $field[ 'name' ] = $id;
             
-            if ( str_ends_with( $id, ']' ) ) {
+            if( str_ends_with( $id, ']' ) ) {
                 // Replace the last character with an empty space
                 $id = substr( $id, 0, -1 );
             }
-            $field[ 'id' ] = str_replace( [ '[', ']' ], '-', $id );
-        } else {
+            $field[ 'id' ] = str_replace( [
+                '[',
+                ']'
+            ], '-', $id );
+        }
+        else {
             
             //wp editor does not support brackets in the id field so need to leave it without prefix id
             $field[ 'name' ] = $field[ 'id' ];
@@ -86,7 +90,7 @@ final class WpEditor extends BaseField {
      */
     public function saveValue( array $field, mixed $field_post_value ) : mixed {
         
-        if ( empty( $field_post_value ) ) {
+        if( empty( $field_post_value ) ) {
             return $field[ 'value' ];
         }
         

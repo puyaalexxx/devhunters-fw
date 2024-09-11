@@ -1,78 +1,79 @@
 <?php
-if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
+if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 use function DHT\Helpers\dht_parse_option_attributes;
 
 $field = $args[ 'field' ] ?? [];
 ?>
-<!-- field - dropdown-multiple -->
-<div
-    class="dht-field-wrapper <?php echo isset( $field[ 'attr' ][ 'class' ] ) ? esc_attr( $field[ 'attr' ][ 'class' ] ) : ''; ?>" <?php echo dht_parse_option_attributes( $field[ 'attr' ] ); ?>>
+    <!-- field - dropdown-multiple -->
 
-    <div class="dht-title"><?php echo esc_html( $field[ 'title' ] ); ?></div>
+<?php do_action( 'dht_template_fields_dropdown_multiple_before_area' ); ?>
 
-    <div class="dht-field-child-wrapper dht-field-child-dropdown">
+    <div class="dht-field-wrapper <?php echo isset( $field[ 'attr' ][ 'class' ] ) ? esc_attr( $field[ 'attr' ][ 'class' ] ) : ''; ?>" <?php echo dht_parse_option_attributes( $field[ 'attr' ] ); ?>>
 
-        <?php if ( !empty( $field[ 'choices' ] ) ): ?>
+        <div class="dht-title"><?php echo esc_html( $field[ 'title' ] ); ?></div>
 
-            <label
-                for="<?php echo esc_attr( $field[ 'id' ] ); ?>"><?php echo esc_attr( $field[ 'title' ] ); ?></label>
+        <div class="dht-field-child-wrapper dht-field-child-dropdown">
+            
+            <?php if( !empty( $field[ 'choices' ] ) ): ?>
 
-            <select class="dht-dropdown dht-field" name="<?php echo esc_attr( $field[ 'id' ] ); ?>[]"
-                    id="<?php echo esc_attr( $field[ 'id' ] ); ?>" multiple
-                    size="<?php echo esc_attr( (int)$field[ 'size' ] ); ?>">
+                <label for="<?php echo esc_attr( $field[ 'id' ] ); ?>"><?php echo esc_attr( $field[ 'title' ] ); ?></label>
 
-                <?php foreach ( $field[ 'choices' ] as $key => $val ): ?>
+                <select class="dht-dropdown dht-field" name="<?php echo esc_attr( $field[ 'id' ] ); ?>[]"
+                        id="<?php echo esc_attr( $field[ 'id' ] ); ?>" multiple
+                        size="<?php echo esc_attr( (int)$field[ 'size' ] ); ?>">
+                    
+                    <?php foreach( $field[ 'choices' ] as $key => $val ): ?>
 
-                    <!--optgroup-->
-                    <?php if ( is_array( $val ) ): ?>
+                        <!--optgroup-->
+                        <?php if( is_array( $val ) ): ?>
+                            
+                            <?php foreach( $val as $group ): ?>
 
-                        <?php foreach ( $val as $group ): ?>
+                                <optgroup label="<?php echo esc_attr( $group[ 'label' ] ); ?>">
+                                    
+                                    <?php foreach( $group[ 'choices' ] as $group_value => $group_label ): ?>
+                                        <option value="<?php echo esc_attr( $group_value ); ?>" <?php echo ( in_array( $group_value, $field[ 'value' ] ) ) ? 'selected' : ''; ?>>
+                                            <?php echo esc_html( $group_label ); ?>
+                                        </option>
+                                    <?php endforeach; ?>
 
-                            <optgroup label="<?php echo esc_attr( $group[ 'label' ] ); ?>">
+                                </optgroup>
+                            
+                            <?php endforeach; ?>
 
-                                <?php foreach ( $group[ 'choices' ] as $group_value => $group_label ): ?>
-                                    <option
-                                        value="<?php echo esc_attr( $group_value ); ?>" <?php echo ( in_array( $group_value, $field[ 'value' ] ) ) ? 'selected' : ''; ?>>
-                                        <?php echo esc_html( $group_label ); ?>
-                                    </option>
-                                <?php endforeach; ?>
+                            <!--simple option-->
+                        <?php else: ?>
 
-                            </optgroup>
+                            <option value="<?php echo esc_attr( $key ); ?>" <?php echo ( in_array( $key, $field[ 'value' ] ) ) ? 'selected' : ''; ?>>
+                                <?php echo esc_html( $val ); ?>
+                            </option>
+                        
+                        <?php endif; ?>
+                    
+                    <?php endforeach; ?>
 
-                        <?php endforeach; ?>
+                </select>
+            
+            <?php endif; ?>
+            
+            <?php if( !empty( $field[ 'description' ] ) ): ?>
+                <div class="dht-description"><?php echo esc_html( $field[ 'description' ] ); ?></div>
+            <?php endif; ?>
 
-                        <!--simple option-->
-                    <?php else: ?>
-
-                        <option
-                            value="<?php echo esc_attr( $key ); ?>" <?php echo ( in_array( $key, $field[ 'value' ] ) ) ? 'selected' : ''; ?>>
-                            <?php echo esc_html( $val ); ?>
-                        </option>
-
-                    <?php endif; ?>
-
-                <?php endforeach; ?>
-
-            </select>
-
-        <?php endif; ?>
-
-        <?php if ( !empty( $field[ 'description' ] ) ): ?>
-            <div class="dht-description"><?php echo esc_html( $field[ 'description' ] ); ?></div>
+        </div>
+        
+        <?php if( !empty( $field[ 'tooltip' ] ) ): ?>
+            <div class="dht-info-help dashicons dashicons-info"
+                 data-tooltips="<?php echo esc_html( $field[ 'tooltip' ] ); ?>"
+                 data-position="OnLeft">
+            </div>
         <?php endif; ?>
 
     </div>
 
-    <?php if ( !empty( $field[ 'tooltip' ] ) ): ?>
-        <div class="dht-info-help dashicons dashicons-info"
-             data-tooltips="<?php echo esc_html( $field[ 'tooltip' ] ); ?>"
-             data-position="OnLeft">
-        </div>
-    <?php endif; ?>
-
-</div>
-
-<?php if ( isset( $field[ 'divider' ] ) && $field[ 'divider' ] ): ?>
+<?php if( isset( $field[ 'divider' ] ) && $field[ 'divider' ] ): ?>
     <div class="dht-divider"></div>
 <?php endif; ?>
+
+<?php do_action( 'dht_template_fields_dropdown_multiple_after_area' ); ?>

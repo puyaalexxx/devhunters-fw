@@ -5,7 +5,7 @@ namespace DHT\Extensions\Options\Containers\Containers;
 
 use DHT\Extensions\Options\Containers\BaseContainer;
 
-if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
+if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 final class Simple extends BaseContainer {
     

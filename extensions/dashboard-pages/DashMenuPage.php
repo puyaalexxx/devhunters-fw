@@ -3,7 +3,7 @@ declare( strict_types = 1 );
 
 namespace DHT\Extensions\DashPages;
 
-if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
+if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 use DHT\Core\Api\API;
 use DHT\Helpers\Traits\DashMenusHelpers;
@@ -62,14 +62,14 @@ final class DashMenuPage implements IDashMenuPage {
     public function registerMenuPagesAction( array $dash_menus_config ) : void {
         
         //create main dashboard page
-        if ( !dht_array_key_exists( $dash_menus_config, 'main_menu' ) ) {
+        if( !dht_array_key_exists( $dash_menus_config, 'main_menu' ) ) {
             $this->_createMainMenuPage( $dash_menus_config[ 'main_menu' ] );
         }
         
         //create submenu dashboard pages
-        if ( !dht_array_key_exists( $dash_menus_config, 'submenus' ) ) {
+        if( !dht_array_key_exists( $dash_menus_config, 'submenus' ) ) {
             
-            foreach ( $dash_menus_config[ 'submenus' ] as $submenu_values ) {
+            foreach( $dash_menus_config[ 'submenus' ] as $submenu_values ) {
                 $this->_createSubmenuPage( $submenu_values );
             }
         }
@@ -87,10 +87,14 @@ final class DashMenuPage implements IDashMenuPage {
         
         //destructuring the $menu_values array
         [
-            'page_title' => $page_title, 'menu_title' => $menu_title,
-            'capability' => $capability, 'menu_slug' => $menu_slug,
-            'callback' => $callback, 'icon_url' => $icon_url,
-            'position' => $position, 'template_path' => $template_path,
+            'page_title'         => $page_title,
+            'menu_title'         => $menu_title,
+            'capability'         => $capability,
+            'menu_slug'          => $menu_slug,
+            'callback'           => $callback,
+            'icon_url'           => $icon_url,
+            'position'           => $position,
+            'template_path'      => $template_path,
             'additional_options' => $additional_options
         ] = $main_menu_values;
         
@@ -111,10 +115,14 @@ final class DashMenuPage implements IDashMenuPage {
         
         //destructuring the $menu_values array
         [
-            'parent_slug' => $parent_slug, 'page_title' => $page_title,
-            'menu_title' => $menu_title, 'capability' => $capability,
-            'menu_slug' => $menu_slug, 'callback' => $callback,
-            'template_path' => $template_path, 'additional_options' => $additional_options
+            'parent_slug'        => $parent_slug,
+            'page_title'         => $page_title,
+            'menu_title'         => $menu_title,
+            'capability'         => $capability,
+            'menu_slug'          => $menu_slug,
+            'callback'           => $callback,
+            'template_path'      => $template_path,
+            'additional_options' => $additional_options
         ] = $submenu_values;
         
         $callback_func = $callback ? $this->_mergeCallbackArguments( $callback, $template_path, $additional_options ) : '';

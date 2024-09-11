@@ -1,10 +1,10 @@
 <?php
-if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
+if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 $args = $args ?? [];
 ?>
 <form action="" method="post" enctype="multipart/form-data">
-
+    
     <?php wp_nonce_field( $args[ 'nonce' ][ 'action' ], $args[ 'nonce' ][ 'name' ] ); ?>
 
     <div class="dht-field-wrapper-main">
@@ -20,15 +20,15 @@ $args = $args ?? [];
 
         <!--this wrapper will be used for ajax to load content inside-->
         <div class="dht-container-options">
-
-            <?php if ( !empty( $args[ 'options' ] ) ): ?>
-
+            
+            <?php if( !empty( $args[ 'options' ] ) ): ?>
+                
                 <?php echo do_shortcode( $args[ 'options' ] ); ?>
-
+            
             <?php else: ?>
-
-                <?php echo _x( 'No options provided', 'options', DHT_PREFIX ); ?>
-
+                
+                <?php echo apply_filters( 'dht_options_no_options_found', _x( 'No options provided', 'options', DHT_PREFIX ) ); ?>
+            
             <?php endif; ?>
 
         </div>

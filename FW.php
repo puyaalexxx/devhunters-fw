@@ -3,7 +3,7 @@ declare( strict_types = 1 );
 
 namespace DHT;
 
-if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
+if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 use DHT\Core\Manifest;
 use DHT\Extensions\Extensions;
@@ -38,10 +38,16 @@ final class FW {
         $this->extensions = Extensions::init();
         
         //Enqueue framework general scripts and styles
-        add_action( 'admin_enqueue_scripts', [ $this, 'enqueueFrameworkGeneralScripts' ] );
+        add_action( 'admin_enqueue_scripts', [
+            $this,
+            'enqueueFrameworkGeneralScripts'
+        ] );
         
         // Load the text domain for localization
-        add_action( 'plugins_loaded', [ $this, 'loadTextdomain' ] );
+        add_action( 'plugins_loaded', [
+            $this,
+            'loadTextdomain'
+        ] );
     }
     
     /**
@@ -77,9 +83,9 @@ final class FW {
  */
 function fw() : FW {
     
-    static $FW = null; // cache
+    static $FW = NULL; // cache
     
-    if ( $FW === null ) {
+    if( $FW === NULL ) {
         $FW = new Fw();
         
         //framework is loaded

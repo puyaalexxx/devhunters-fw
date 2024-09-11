@@ -13,16 +13,12 @@ declare( strict_types = 1 );
 
 namespace DHT;
 
-if ( !defined( 'ABSPATH' ) ) die( 'Forbidden' );
-
-//TODO - update readme with plugin hooks
-//TODO - update readme with plugin filters
-//TODO - update readme with available fw options
+if( !defined( 'ABSPATH' ) ) die( 'Forbidden' );
 
 /**
  * Check if this plugin was not already loaded (maybe as another plugin with different directory name)
  */
-if ( !defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
     //require autoload to load all the plugin classes
     require_once( plugin_dir_path( __FILE__ ) . "vendor/autoload.php" );
     

@@ -1,12 +1,12 @@
 <?php
 declare( strict_types = 1 );
 
-namespace DHT\Extensions\Options\Options\fields;
+namespace DHT\Extensions\Options\Options\Fields;
 
 use DHT\Extensions\Options\Options\BaseField;
 use function DHT\fw;
 
-if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
+if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 final class Borders extends BaseField {
     
@@ -38,7 +38,10 @@ final class Borders extends BaseField {
         wp_register_style( DHT_PREFIX . '-borders-field', DHT_ASSETS_URI . 'styles/css/extensions/options/fields/borders-style.css', array(), fw()->manifest->get( 'version' ) );
         wp_enqueue_style( DHT_PREFIX . '-borders-field' );
         
-        wp_enqueue_script( DHT_PREFIX . '-wp-color-picker-field', DHT_ASSETS_URI . 'scripts/js/extensions/options/fields/colorpicker-script.js', array( 'jquery', 'wp-color-picker' ), fw()->manifest->get( 'version' ), true );
+        wp_enqueue_script( DHT_PREFIX . '-wp-color-picker-field', DHT_ASSETS_URI . 'scripts/js/extensions/options/fields/colorpicker-script.js', array(
+            'jquery',
+            'wp-color-picker'
+        ), fw()->manifest->get( 'version' ), true );
     }
     
     /**
@@ -56,17 +59,17 @@ final class Borders extends BaseField {
      */
     public function saveValue( array $field, mixed $field_post_value ) : mixed {
         
-        if ( empty( $field_post_value ) ) {
+        if( empty( $field_post_value ) ) {
             return $field[ 'value' ];
         }
         
         //for the range field
-        if ( is_array( $field_post_value ) ) {
+        if( is_array( $field_post_value ) ) {
             
             $field_vals = [];
-            foreach ( $field_post_value as $key => $value ) {
+            foreach( $field_post_value as $key => $value ) {
                 
-                if ( $key == 'style' || $key == 'color' ) {
+                if( $key == 'style' || $key == 'color' ) {
                     
                     $field_vals[ $key ] = $value;
                     

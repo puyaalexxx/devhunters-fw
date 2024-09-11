@@ -1,12 +1,12 @@
 <?php
 declare( strict_types = 1 );
 
-namespace DHT\Extensions\Options\Options\fields;
+namespace DHT\Extensions\Options\Options\Fields;
 
 use DHT\Extensions\Options\Options\BaseField;
 use function DHT\fw;
 
-if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
+if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 final class Spacing extends BaseField {
     
@@ -52,17 +52,17 @@ final class Spacing extends BaseField {
      */
     public function saveValue( array $field, mixed $field_post_value ) : mixed {
         
-        if ( empty( $field_post_value ) ) {
+        if( empty( $field_post_value ) ) {
             return $field[ 'value' ];
         }
         
         //for the range field
-        if ( is_array( $field_post_value ) ) {
+        if( is_array( $field_post_value ) ) {
             
             $field_vals = [];
-            foreach ( $field_post_value as $key => $value ) {
+            foreach( $field_post_value as $key => $value ) {
                 
-                if ( $key == 'size' ) {
+                if( $key == 'size' ) {
                     
                     $field_vals[ $key ] = $value;
                     

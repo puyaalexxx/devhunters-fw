@@ -7,7 +7,7 @@ use DHT\Extensions\Options\Toggles\BaseToggle;
 use function DHT\fw;
 use function DHT\Helpers\dht_load_view;
 
-if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
+if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 final class Toggle extends BaseToggle {
     
@@ -61,10 +61,10 @@ final class Toggle extends BaseToggle {
         
         
         return dht_load_view( $this->template_dir, $this->getToggle() . '.php', [
-            'toggle' => $toggle,
-            'saved_values' => $saved_values,
+            'toggle'            => $toggle,
+            'saved_values'      => $saved_values,
             'registered_fields' => $this->_registeredFields,
-            'additional_args' => $additional_args
+            'additional_args'   => $additional_args
         ] );
     }
     
@@ -99,17 +99,17 @@ final class Toggle extends BaseToggle {
      */
     public function saveValue( array $toggle, mixed $toggle_post_values ) : mixed {
         
-        if ( empty( $toggle_post_values ) ) {
+        if( empty( $toggle_post_values ) ) {
             return $toggle[ 'value' ];
         }
         
         //sanitize option values
-        if ( !empty( $toggle[ 'left-choice' ][ 'options' ] ) ) {
+        if( !empty( $toggle[ 'left-choice' ][ 'options' ] ) ) {
             
             $toggle_post_values = $this->_sanitize_values( $toggle, 'left-choice', $toggle_post_values, $this->_registeredFields );
         }
         
-        if ( !empty( $toggle[ 'right-choice' ][ 'options' ] ) ) {
+        if( !empty( $toggle[ 'right-choice' ][ 'options' ] ) ) {
             
             $toggle_post_values = $this->_sanitize_values( $toggle, 'right-choice', $toggle_post_values, $this->_registeredFields );
         }
@@ -130,7 +130,7 @@ final class Toggle extends BaseToggle {
      */
     private function _sanitize_values( array $toggle, string $choice, array $toggle_post_values, array $option_classes ) : array {
         
-        foreach ( $toggle[ $choice ][ 'options' ] as $option ) {
+        foreach( $toggle[ $choice ][ 'options' ] as $option ) {
             
             $option_post_value = $toggle_post_values[ $choice ][ $option[ 'id' ] ] ?? [];
             

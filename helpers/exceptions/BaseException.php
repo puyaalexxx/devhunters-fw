@@ -3,7 +3,7 @@ declare( strict_types = 1 );
 
 namespace DHT\Helpers\Exceptions;
 
-if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
+if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 use Exception;
 use Throwable;
@@ -19,7 +19,7 @@ abstract class BaseException extends Exception {
      *
      * @since     1.0.0
      */
-    public function __construct( $message, $code = 0, Throwable $previous = null ) {
+    public function __construct( $message, $code = 0, Throwable $previous = NULL ) {
         
         // make sure everything is assigned properly
         parent::__construct( $message, $code, $previous );

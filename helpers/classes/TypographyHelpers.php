@@ -8,7 +8,7 @@ use FontLib\Font;
 use function DHT\Helpers\{dht_remove_font_name_prefix};
 use function DHT\Helpers\dht_get_font_weight_Label;
 
-if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
+if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 final class TypographyHelpers {
     
@@ -22,20 +22,24 @@ final class TypographyHelpers {
         
         $google_fonts_path = DHT_ASSETS_DIR . 'fonts/google-fonts/google-fonts.json';
         
-        if ( !file_exists( $google_fonts_path ) ) return [];
+        if( !file_exists( $google_fonts_path ) ) return [];
         
         $data = file_get_contents( $google_fonts_path );
         $fonts = json_decode( $data, true );
         
         $fonts_family = $font_weights = $font_subsets = [];
-        foreach ( $fonts[ 'items' ] as $font ) {
+        foreach( $fonts[ 'items' ] as $font ) {
             
             $fonts_family[ $font[ 'family' ] ][ 'family' ] = $font[ 'family' ];
             $font_weights[ $font[ 'family' ] ] = $fonts_family[ $font[ 'family' ] ][ 'weights' ] = self::prepareFontWeights( $font[ 'variants' ] );
             $font_subsets[ $font[ 'family' ] ] = $fonts_family[ $font[ 'family' ] ][ 'subsets' ] = $font[ 'subsets' ];
         }
         
-        $google_fonts = [ 'google-fonts' => $fonts_family, 'font-weights' => $font_weights, 'font-subsets' => $font_subsets ];
+        $google_fonts = [
+            'google-fonts' => $fonts_family,
+            'font-weights' => $font_weights,
+            'font-subsets' => $font_subsets
+        ];
         
         return apply_filters( 'dht-disable-google-fonts', $google_fonts );
     }
@@ -50,22 +54,23 @@ final class TypographyHelpers {
      */
     public static function prepareFontWeights( int|array $font_weights ) : array {
         
-        if ( is_array( $font_weights ) ) {
+        if( is_array( $font_weights ) ) {
             
             $font_weights_result = [];
-            foreach ( $font_weights as $font_weight ) {
+            foreach( $font_weights as $font_weight ) {
                 
                 //skip the italic ones
-                if ( str_contains( $font_weight, 'italic' ) ) continue;
+                if( str_contains( $font_weight, 'italic' ) ) continue;
                 
                 //change to a number to be consistent
-                if ( $font_weight == 'regular' ) $font_weight = 400;
+                if( $font_weight == 'regular' ) $font_weight = 400;
                 
                 $font_weight_label = dht_get_font_weight_Label( (int)$font_weight );
                 
                 $font_weights_result[ $font_weight ] = $font_weight_label;
             }
-        } else {
+        }
+        else {
             
             $font_weight_label = dht_get_font_weight_Label( $font_weights );
             
@@ -90,16 +95,19 @@ final class TypographyHelpers {
         $et_folder_path = $upload_dir[ 'basedir' ] . '/' . $et_folder_name;
         
         $et_fonts = [];
-        if ( is_dir( $et_folder_path ) ) {
+        if( is_dir( $et_folder_path ) ) {
             
             // Get the list of files and directories in the folder
             $et_folder_contents = scandir( $et_folder_path );
             
             // Remove "." and ".." from the list
-            $et_folder_contents = array_diff( $et_folder_contents, array( '.', '..' ) );
+            $et_folder_contents = array_diff( $et_folder_contents, array(
+                '.',
+                '..'
+            ) );
             
             // Check if the folder is not empty
-            if ( !empty( $et_folder_contents ) ) {
+            if( !empty( $et_folder_contents ) ) {
                 
                 // Filter files with .ttf and .otf extensions
                 $et_font_files = array_filter( $et_folder_contents, function ( $file ) {
@@ -109,7 +117,7 @@ final class TypographyHelpers {
                 } );
                 
                 // Create a Font object
-                foreach ( $et_font_files as $et_font_name ) {
+                foreach( $et_font_files as $et_font_name ) {
                     
                     $font = '';
                     $font_path = $et_folder_path . '/' . $et_font_name;
@@ -118,7 +126,7 @@ final class TypographyHelpers {
                     //get font info
                     try {
                         $font = Font::load( $font_path );
-                    } catch ( FontNotFoundException $e ) {
+                    } catch( FontNotFoundException $e ) {
                         
                         echo _x( "Error: Font file not found or could not be loaded.\n", 'options', DHT_PREFIX );
                     }
@@ -165,10 +173,14 @@ final class TypographyHelpers {
         $text_decoration_value = !empty( $value[ 'text-decoration' ] ) ? $value[ 'text-decoration' ] : '';
         
         return [
-            $font_value, $font_type_value,
-            $font_path_value, $font_weight_value,
-            $font_subsets_value, $font_style_value,
-            $text_transform_value, $text_decoration_value
+            $font_value,
+            $font_type_value,
+            $font_path_value,
+            $font_weight_value,
+            $font_subsets_value,
+            $font_style_value,
+            $text_transform_value,
+            $text_decoration_value
         ];
     }
     
@@ -184,7 +196,7 @@ final class TypographyHelpers {
     public static function buildPreviewStyles( array $value, array $font_args ) : string {
         
         $preview_styles = '';
-        if ( !empty( $value ) ) {
+        if( !empty( $value ) ) {
             $preview_styles = !empty( $font_args[ 'font_value' ] ) ? 'font-family:"' . dht_remove_font_name_prefix( $font_args[ 'font_value' ] ) . '";' : '';
             $preview_styles .= !empty( $font_args[ 'font_weight_value' ] ) ? 'font-weight:' . $font_args[ 'font_weight_value' ] . ';' : '';
             $preview_styles .= !empty( $font_args[ 'font_style_value' ] ) ? 'font-style:' . $font_args[ 'font_style_value' ] . ';' : '';
@@ -208,9 +220,10 @@ final class TypographyHelpers {
     public static function getFontType( string $font_value, array $google_fonts, array $et_fonts ) : string {
         
         $font_type = 'standard';
-        if ( array_key_exists( $font_value, $google_fonts ) ) {
+        if( array_key_exists( $font_value, $google_fonts ) ) {
             $font_type = 'google';
-        } elseif ( array_key_exists( $font_value, $et_fonts ) ) {
+        }
+        elseif( array_key_exists( $font_value, $et_fonts ) ) {
             $font_type = 'divi';
         }
         

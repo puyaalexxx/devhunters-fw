@@ -1,13 +1,13 @@
 <?php
 declare( strict_types = 1 );
 
-namespace DHT\Extensions\Options\Options\fields;
+namespace DHT\Extensions\Options\Options\Fields;
 
 use DHT\Extensions\Options\Options\BaseField;
 use DHT\Helpers\Traits\UploadHelpers;
 use function DHT\fw;
 
-if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
+if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 final class UploadGallery extends BaseField {
     
@@ -41,7 +41,10 @@ final class UploadGallery extends BaseField {
         wp_register_style( DHT_PREFIX . '-upload-gallery-field', DHT_ASSETS_URI . 'styles/css/extensions/options/fields/upload-gallery-style.css', array(), fw()->manifest->get( 'version' ) );
         wp_enqueue_style( DHT_PREFIX . '-upload-gallery-field' );
         
-        wp_enqueue_script( DHT_PREFIX . '-upload-gallery-field', DHT_ASSETS_URI . 'scripts/js/extensions/options/fields/upload-gallery-script.js', array( 'jquery', 'media-editor' ), fw()->manifest->get( 'version' ), true );
+        wp_enqueue_script( DHT_PREFIX . '-upload-gallery-field', DHT_ASSETS_URI . 'scripts/js/extensions/options/fields/upload-gallery-script.js', array(
+            'jquery',
+            'media-editor'
+        ), fw()->manifest->get( 'version' ), true );
     }
     
     /**
@@ -51,7 +54,7 @@ final class UploadGallery extends BaseField {
      *  $field_post_value can be null.
      *  In this case you should return default value from $field['value']
      *
-     * @param array $field            - field
+     * @param array $field - field
      * @param mixed $field_post_value - field $_POST value passed on save
      *
      * @return mixed - changed field value
@@ -59,7 +62,7 @@ final class UploadGallery extends BaseField {
      */
     public function saveValue( array $field, mixed $field_post_value ) : mixed {
         
-        if ( empty( $field_post_value ) ) {
+        if( empty( $field_post_value ) ) {
             return $field[ 'value' ];
         }
         
@@ -67,7 +70,7 @@ final class UploadGallery extends BaseField {
         $field_post_value = explode( ',', $field_post_value );
         
         //make sure the values are integers
-        foreach ( $field_post_value as $key => $attachment_id ) {
+        foreach( $field_post_value as $key => $attachment_id ) {
             
             $field_post_value[ $key ] = absint( $attachment_id );
         }

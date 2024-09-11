@@ -1,12 +1,12 @@
 <?php
 declare( strict_types = 1 );
 
-namespace DHT\Extensions\Options\Options\fields;
+namespace DHT\Extensions\Options\Options\Fields;
 
 use DHT\Extensions\Options\Options\BaseField;
 use function DHT\fw;
 
-if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
+if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 final class MultiOptions extends BaseField {
     
@@ -41,7 +41,10 @@ final class MultiOptions extends BaseField {
         wp_enqueue_script( DHT_PREFIX . '-select2-field', DHT_ASSETS_URI . 'scripts/libraries/select2.full.min.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
         
         //custom option script
-        wp_enqueue_script( DHT_PREFIX . '-multi-options-field', DHT_ASSETS_URI . 'scripts/js/extensions/options/fields/multi-options-script.js', array( 'jquery', DHT_PREFIX . '-select2-field' ), fw()->manifest->get( 'version' ), true );
+        wp_enqueue_script( DHT_PREFIX . '-multi-options-field', DHT_ASSETS_URI . 'scripts/js/extensions/options/fields/multi-options-script.js', array(
+            'jquery',
+            DHT_PREFIX . '-select2-field'
+        ), fw()->manifest->get( 'version' ), true );
         wp_localize_script( DHT_PREFIX . '-multi-options-field', 'dht_multioptions_ajax', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
     }
     

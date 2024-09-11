@@ -7,7 +7,7 @@ use DHT\Extensions\Options\Groups\BaseGroup;
 use function DHT\fw;
 use function DHT\Helpers\dht_render_box_item_content;
 
-if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
+if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 final class AddableBox extends BaseGroup {
     
@@ -30,8 +30,14 @@ final class AddableBox extends BaseGroup {
         
         parent::__construct( $optionTogglesClasses, $optionFieldsClasses );
         
-        add_action( 'wp_ajax_getBoxOptions', [ $this, 'getBoxOptions' ] );
-        add_action( 'wp_ajax_nopriv_getBoxOptions', [ $this, 'getBoxOptions' ] ); // For non-logged in users
+        add_action( 'wp_ajax_getBoxOptions', [
+            $this,
+            'getBoxOptions'
+        ] );
+        add_action( 'wp_ajax_nopriv_getBoxOptions', [
+            $this,
+            'getBoxOptions'
+        ] ); // For non-logged in users
     }
     
     /**
@@ -50,7 +56,10 @@ final class AddableBox extends BaseGroup {
         wp_register_style( DHT_PREFIX . '-addable-box-group', DHT_ASSETS_URI . 'styles/css/extensions/options/groups/addable-box-style.css', array(), fw()->manifest->get( 'version' ) );
         wp_enqueue_style( DHT_PREFIX . '-addable-box-group' );
         
-        wp_enqueue_script( DHT_PREFIX . '-addable-box-group', DHT_ASSETS_URI . 'scripts/js/extensions/options/groups/addable-box-script.js', array( 'jquery', 'jquery-ui-sortable' ), fw()->manifest->get( 'version' ), true );
+        wp_enqueue_script( DHT_PREFIX . '-addable-box-group', DHT_ASSETS_URI . 'scripts/js/extensions/options/groups/addable-box-script.js', array(
+            'jquery',
+            'jquery-ui-sortable'
+        ), fw()->manifest->get( 'version' ), true );
         wp_localize_script( DHT_PREFIX . '-addable-box-group', DHT_PREFIX . '_addable_box_option_ajax', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
     }
     
@@ -62,7 +71,7 @@ final class AddableBox extends BaseGroup {
      */
     public function getBoxOptions() : void {
         
-        if ( isset( $_POST[ 'data' ][ 'box_number' ] ) && isset( $_POST[ 'data' ][ 'group' ] ) ) {
+        if( isset( $_POST[ 'data' ][ 'box_number' ] ) && isset( $_POST[ 'data' ][ 'group' ] ) ) {
             
             //retrieve box number
             $box_number = !empty( $_POST[ 'data' ][ 'box_number' ] ) ? (int)$_POST[ 'data' ][ 'box_number' ] : 0;
@@ -70,9 +79,13 @@ final class AddableBox extends BaseGroup {
             
             ob_start();
             
-            if ( !empty( $group ) ) {
-                echo dht_render_box_item_content( $group, [], [ 'togglesClasses' => $this->_optionTogglesClasses, 'fieldsClasses' => $this->_optionFieldsClasses ], _x( 'Box Title', 'options', DHT_PREFIX ), $box_number );
-            } else {
+            if( !empty( $group ) ) {
+                echo dht_render_box_item_content( $group, [], [
+                    'togglesClasses' => $this->_optionTogglesClasses,
+                    'fieldsClasses'  => $this->_optionFieldsClasses
+                ], _x( 'Box Title', 'options', DHT_PREFIX ), $box_number );
+            }
+            else {
                 echo _x( 'No options available', 'options', DHT_PREFIX );
             }
             
@@ -80,7 +93,8 @@ final class AddableBox extends BaseGroup {
             
             wp_send_json_success( $content );
             
-        } else {
+        }
+        else {
             wp_send_json_success( _x( 'Something went wrong, please refresh the page', 'options', DHT_PREFIX ) );
         }
         
@@ -94,7 +108,7 @@ final class AddableBox extends BaseGroup {
      *  $group_value can be null.
      *  In this case you should return default value from $group['value']
      *
-     * @param array $group             - group option
+     * @param array $group - group option
      * @param mixed $group_post_values - $_POST values passed on save
      *
      * @return mixed - sanitized group values
@@ -102,7 +116,7 @@ final class AddableBox extends BaseGroup {
      */
     public function saveValue( array $group, mixed $group_post_values ) : mixed {
         
-        if ( empty( $group_post_values ) || empty( $group[ 'options' ] ) ) {
+        if( empty( $group_post_values ) || empty( $group[ 'options' ] ) ) {
             return $group[ 'value' ];
         }
         
@@ -110,27 +124,27 @@ final class AddableBox extends BaseGroup {
         
         // Flatten options array to make it easier to access options by ID
         $options = [];
-        foreach ( $group[ 'options' ] as $option ) {
+        foreach( $group[ 'options' ] as $option ) {
             
             $options[ $option[ 'id' ] ] = $option;
         }
         
         //go through all the saved values and sanitize them
-        foreach ( $group_post_values as $value_key => $values ) {
+        foreach( $group_post_values as $value_key => $values ) {
             
-            foreach ( $values as $option_id => $value ) {
+            foreach( $values as $option_id => $value ) {
                 
                 //the box title, it is not located in the options array so we need to sanitize it separately
-                if ( $option_id == 'box-title' ) {
+                if( $option_id == 'box-title' ) {
                     
                     $sanitized_values[ $value_key ] [ 'box-title' ] = sanitize_text_field( $value );
                     
                     continue;
                 }
                 
-                if ( isset( $options[ $option_id ] ) ) {
+                if( isset( $options[ $option_id ] ) ) {
                     
-                    if ( array_key_exists( $options[ $option_id ][ 'type' ], $this->_optionTogglesClasses ) ) {
+                    if( array_key_exists( $options[ $option_id ][ 'type' ], $this->_optionTogglesClasses ) ) {
                         $sanitized_values[ $value_key ] [ $option_id ] = $this->_optionTogglesClasses[ $options[ $option_id ][ 'type' ] ]->saveValue( $options[ $option_id ], $value );
                     } //if it is a field option type
                     else {

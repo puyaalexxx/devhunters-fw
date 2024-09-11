@@ -1,11 +1,11 @@
 <?php
 declare( strict_types = 1 );
 
-namespace DHT\Extensions\Options\Options\fields;
+namespace DHT\Extensions\Options\Options\Fields;
 
 use DHT\Extensions\Options\Options\BaseField;
 
-if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
+if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 final class Input extends BaseField {
     
@@ -45,16 +45,17 @@ final class Input extends BaseField {
      */
     public function saveValue( array $field, mixed $field_post_value ) : mixed {
         
-        if ( empty( $field_post_value ) ) {
+        if( empty( $field_post_value ) ) {
             return $field[ 'value' ];
         }
         
-        if ( isset( $field[ 'subtype' ] ) ) {
-            if ( $field[ 'subtype' ] == 'url' ) {
+        if( isset( $field[ 'subtype' ] ) ) {
+            if( $field[ 'subtype' ] == 'url' ) {
                 
                 $field_post_value = esc_url_raw( $field_post_value );
                 
-            } elseif ( $field[ 'subtype' ] == 'email' ) {
+            }
+            elseif( $field[ 'subtype' ] == 'email' ) {
                 
                 $field_post_value = sanitize_email( $field_post_value );
             }

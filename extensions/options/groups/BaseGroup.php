@@ -6,7 +6,7 @@ namespace DHT\Extensions\Options\Groups;
 use DHT\Helpers\Traits\Options\GroupTypeHelpers;
 use function DHT\Helpers\dht_load_view;
 
-if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
+if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 abstract class BaseGroup {
     
@@ -96,9 +96,12 @@ abstract class BaseGroup {
         $group = $this->addIDPrefix( $group, $options_id );
         
         return dht_load_view( $this->template_dir, $this->getGroup() . '.php', [
-            'group' => $group,
-            'registered_options_classes' => [ 'togglesClasses' => $this->_optionTogglesClasses, 'fieldsClasses' => $this->_optionFieldsClasses ],
-            'additional_args' => $additional_args
+            'group'                      => $group,
+            'registered_options_classes' => [
+                'togglesClasses' => $this->_optionTogglesClasses,
+                'fieldsClasses'  => $this->_optionFieldsClasses
+            ],
+            'additional_args'            => $additional_args
         ] );
     }
     
@@ -114,7 +117,7 @@ abstract class BaseGroup {
      */
     public function addIDPrefix( array $group, string $options_id ) : array {
         
-        if ( empty( $options_id ) ) return $group;
+        if( empty( $options_id ) ) return $group;
         
         $group[ 'id' ] = $options_id . '[' . $group[ 'id' ] . ']';
         
@@ -152,14 +155,14 @@ abstract class BaseGroup {
      */
     public function saveValue( array $group, mixed $group_post_values ) : mixed {
         
-        if ( empty( $group_post_values ) ) {
+        if( empty( $group_post_values ) ) {
             return $group[ 'value' ];
         }
         
         //sanitize option values
-        foreach ( $group[ 'options' ] as $subgroup ) {
+        foreach( $group[ 'options' ] as $subgroup ) {
             
-            foreach ( $subgroup[ 'options' ] as $option ) {
+            foreach( $subgroup[ 'options' ] as $option ) {
                 
                 $option_post_value = $group_post_values[ $option[ 'id' ] ] ?? [];
                 

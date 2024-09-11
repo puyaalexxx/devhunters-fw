@@ -6,7 +6,7 @@ namespace DHT\Extensions\Options\Groups\Groups;
 use DHT\Extensions\Options\Groups\BaseGroup;
 use function DHT\fw;
 
-if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
+if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 final class Tabs extends BaseGroup {
     

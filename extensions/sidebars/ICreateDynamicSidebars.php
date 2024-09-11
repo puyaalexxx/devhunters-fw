@@ -1,6 +1,9 @@
 <?php
+declare( strict_types = 1 );
 
 namespace DHT\Extensions\Sidebars;
+
+if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 /**
  * Interface  that is used for the CreateSidebar class.

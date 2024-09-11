@@ -1,10 +1,9 @@
 <?php
-declare( strict_types=1 );
+declare( strict_types = 1 );
 
 namespace DHT\Helpers\Traits\Options;
 
-if( !defined( 'DHT_MAIN' ) )
-    die( 'Forbidden' );
+if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 trait OptionsHelpers {
     
@@ -29,8 +28,9 @@ trait OptionsHelpers {
         
         $nonce = empty( $nonce ) ? 'dht_' . md5( uniqid( (string)mt_rand(), true ) ) . '_dht_fw_nonce' : $nonce;
         
-        return [ 'name'   => $nonce . '_name',
-                 'action' => $nonce . '_action'
+        return [
+            'name'   => $nonce . '_name',
+            'action' => $nonce . '_action'
         ];
     }
     
@@ -72,9 +72,11 @@ trait OptionsHelpers {
         
         if( $location == 'post' ) {
             $template = 'posts-template.php';
-        } elseif( $location == 'term' ) {
+        }
+        elseif( $location == 'term' ) {
             $template = 'terms-template.php';
-        } else {
+        }
+        else {
             $template = 'dashboard-page-template.php';
         }
         

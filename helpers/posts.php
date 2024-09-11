@@ -3,7 +3,7 @@ declare( strict_types = 1 );
 
 namespace DHT\Helpers;
 
-if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
+if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 /**
  * Check if it is a post/page/cpt editing area
@@ -13,10 +13,10 @@ if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
  *
  * @return string
  */
-if ( !function_exists( 'dht_is_post_editing_area' ) ) {
+if( !function_exists( 'dht_is_post_editing_area' ) ) {
     function dht_is_post_editing_area() : bool {
         
-        if (!is_admin()) {
+        if( !is_admin() ) {
             return false; // Exit if not in admin area
         }
         
@@ -32,10 +32,10 @@ if ( !function_exists( 'dht_is_post_editing_area' ) ) {
  *
  * @return string
  */
-if ( !function_exists( 'dht_get_current_admin_post_type_from_url' ) ) {
+if( !function_exists( 'dht_get_current_admin_post_type_from_url' ) ) {
     function dht_get_current_admin_post_type_from_url() : string {
         
-        if (!is_admin()) {
+        if( !is_admin() ) {
             return ''; // Exit if not in admin area
         }
         
@@ -51,17 +51,20 @@ if ( !function_exists( 'dht_get_current_admin_post_type_from_url' ) ) {
  *
  * @return string
  */
-if ( !function_exists( 'dht_get_current_admin_post_type' ) ) {
+if( !function_exists( 'dht_get_current_admin_post_type' ) ) {
     function dht_get_current_admin_post_type() : string {
         
-        if (!is_admin()) {
+        if( !is_admin() ) {
             return ''; // Exit if not in admin area
         }
         
         $screen = get_current_screen();
         
         // Check if we are on a post edit screen
-        if ( !$screen || !in_array( $screen->base, [ 'post', 'edit' ], true ) ) {
+        if( !$screen || !in_array( $screen->base, [
+                'post',
+                'edit'
+            ], true ) ) {
             return '';
         }
         

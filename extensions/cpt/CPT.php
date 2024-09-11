@@ -3,7 +3,7 @@ declare( strict_types = 1 );
 
 namespace DHT\Extensions\CPT;
 
-if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
+if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 /**
  *
@@ -37,7 +37,7 @@ final class CPT implements ICPT {
     public function create() : void {
         
         //register posts types if exist
-        if ( isset( $this->_cpt_config[ 'post_types' ] ) ) {
+        if( isset( $this->_cpt_config[ 'post_types' ] ) ) {
             add_action( 'init', function () {
                 
                 $this->registerPostTypes( $this->_cpt_config[ 'post_types' ] );
@@ -45,7 +45,7 @@ final class CPT implements ICPT {
         }
         
         //register taxonomies if exist
-        if ( isset( $this->_cpt_config[ 'taxonomies' ] ) ) {
+        if( isset( $this->_cpt_config[ 'taxonomies' ] ) ) {
             add_action( 'init', function () {
                 
                 $this->registerTaxonomy( $this->_cpt_config[ 'taxonomies' ] );
@@ -63,11 +63,11 @@ final class CPT implements ICPT {
      */
     public function registerPostTypes( array $post_types_args ) : void {
         
-        if ( empty( $post_types_args ) ) return;
+        if( empty( $post_types_args ) ) return;
         
-        foreach ( $post_types_args as $post_type => $post_type_args ) {
+        foreach( $post_types_args as $post_type => $post_type_args ) {
             
-            if ( !isset( $post_type_args[ 'args' ] ) ) break;
+            if( !isset( $post_type_args[ 'args' ] ) ) break;
             
             register_post_type( $post_type, $post_type_args[ 'args' ] );
         }
@@ -83,11 +83,11 @@ final class CPT implements ICPT {
      */
     public function registerTaxonomy( array $taxonomies_args ) : void {
         
-        if ( empty( $taxonomies_args ) ) return;
+        if( empty( $taxonomies_args ) ) return;
         
-        foreach ( $taxonomies_args as $post_type => $taxonomies ) {
+        foreach( $taxonomies_args as $post_type => $taxonomies ) {
             
-            foreach ( $taxonomies as $taxonomy_name => $taxonomy_args ) {
+            foreach( $taxonomies as $taxonomy_name => $taxonomy_args ) {
                 
                 register_taxonomy( $taxonomy_name, $post_type, $taxonomy_args );
             }

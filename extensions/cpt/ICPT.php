@@ -1,8 +1,9 @@
 <?php
+declare( strict_types = 1 );
 
 namespace DHT\Extensions\CPT;
 
-if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
+if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 /**
  * Interface  that is used for the CPT.

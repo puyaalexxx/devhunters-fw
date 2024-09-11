@@ -3,7 +3,7 @@ declare( strict_types = 1 );
 
 namespace DHT\Helpers\Traits\Options;
 
-if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
+if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 trait GroupTypeHelpers {
     
@@ -22,7 +22,7 @@ trait GroupTypeHelpers {
     private function _saveGroupHelper( array $option, array $group_post_values, mixed $option_post_value, array $optionTogglesClasses, array $optionFieldsClasses ) : array {
         
         //if it is a toogle option type
-        if ( array_key_exists( $option[ 'type' ], $optionTogglesClasses ) ) {
+        if( array_key_exists( $option[ 'type' ], $optionTogglesClasses ) ) {
             
             $group_post_values[ $option[ 'id' ] ] = $optionTogglesClasses[ $option[ 'type' ] ]->saveValue( $option, $option_post_value );
         } //if it is a field option type

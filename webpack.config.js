@@ -10,7 +10,7 @@ const RemoveEmptyScriptsPlugin = require("webpack-remove-empty-scripts");
 const dotenv = require("dotenv");
 // Load the appropriate .env file based on NODE_ENV
 const envFile = process.env.NODE_ENV === "production" ? ".env.production" : ".env.development";
-dotenv.config({ path: envFile });
+dotenv.config({path: envFile});
 
 //load paths
 const tsPaths = require("./config/webpack/path-variables/ts-paths-variables");

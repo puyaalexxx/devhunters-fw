@@ -6,7 +6,7 @@ namespace DHT\Extensions\Options\Containers;
 use DHT\Helpers\Traits\Options\ContainerTypeHelpers;
 use function DHT\Helpers\dht_load_view;
 
-if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
+if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 abstract class BaseContainer {
     
@@ -94,16 +94,16 @@ abstract class BaseContainer {
     public function render( array $container, mixed $saved_values, array $additional_args = [] ) : string {
         
         $registered_options_classes = [
-            'groupsClasses' => $this->_optionGroupsClasses,
+            'groupsClasses'  => $this->_optionGroupsClasses,
             'togglesClasses' => $this->_optionTogglesClasses,
-            'fieldsClasses' => $this->_optionFieldsClasses
+            'fieldsClasses'  => $this->_optionFieldsClasses
         ];
         
         return dht_load_view( $this->template_dir, $this->getContainer() . '.php', [
-            'container' => $container,
-            'saved_values' => $saved_values,
+            'container'                  => $container,
+            'saved_values'               => $saved_values,
             'registered_options_classes' => $registered_options_classes,
-            'additional_args' => $additional_args
+            'additional_args'            => $additional_args
         ] );
     }
     
@@ -123,7 +123,7 @@ abstract class BaseContainer {
     public function saveValue( array $container, mixed $container_post_values ) : array {
         
         // Return early if container_post_values is empty
-        if ( empty( $container_post_values ) ) {
+        if( empty( $container_post_values ) ) {
             return [];
         }
         

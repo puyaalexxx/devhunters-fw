@@ -3,7 +3,7 @@ declare( strict_types = 1 );
 
 namespace DHT\Helpers\Traits\Options;
 
-if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
+if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 trait EnqueueOptionsHelpers {
     
@@ -24,7 +24,7 @@ trait EnqueueOptionsHelpers {
         $option_fields = $this->_extractOptions( $options );
         
         //enqueue the scripts for each group, toggle and field (and metaboxes containers)
-        foreach ( $option_fields as $option ) {
+        foreach( $option_fields as $option ) {
             $this->_enqueueScriptsForOptionType( $option );
         }
     }
@@ -43,10 +43,10 @@ trait EnqueueOptionsHelpers {
         $this->_enqueueOptionScriptsHook( $option );
         
         // If the option has sub-options , handle them recursively (if it is a group or toggle)
-        if ( isset( $option[ 'options' ] ) ) {
-            foreach ( $option[ 'options' ] as $subOption ) {
+        if( isset( $option[ 'options' ] ) ) {
+            foreach( $option[ 'options' ] as $subOption ) {
                 
-                if ( !isset( $subOption[ 'type' ] ) ) continue;
+                if( !isset( $subOption[ 'type' ] ) ) continue;
                 
                 //call this method again recursively
                 $this->_enqueueScriptsForOptionType( $subOption );
@@ -64,15 +64,18 @@ trait EnqueueOptionsHelpers {
      */
     private function _enqueueOptionScriptsHook( array $option ) : void {
         
-        if ( !isset( $option[ 'type' ] ) ) return;
+        if( !isset( $option[ 'type' ] ) ) return;
         
-        if ( isset( $this->_optionContainerClasses[ $option[ 'type' ] ] ) ) {
+        if( isset( $this->_optionContainerClasses[ $option[ 'type' ] ] ) ) {
             $this->_optionContainerClasses[ $option[ 'type' ] ]->enqueueOptionScriptsHook( $option );
-        } elseif ( isset( $this->_optionGroupsClasses[ $option[ 'type' ] ] ) ) {
+        }
+        elseif( isset( $this->_optionGroupsClasses[ $option[ 'type' ] ] ) ) {
             $this->_optionGroupsClasses[ $option[ 'type' ] ]->enqueueOptionScriptsHook( $option );
-        } elseif ( isset( $this->_optionTogglesClasses[ $option[ 'type' ] ] ) ) {
+        }
+        elseif( isset( $this->_optionTogglesClasses[ $option[ 'type' ] ] ) ) {
             $this->_optionTogglesClasses[ $option[ 'type' ] ]->enqueueOptionScriptsHook( $option );
-        } elseif ( isset( $this->_optionFieldsClasses[ $option[ 'type' ] ] ) ) {
+        }
+        elseif( isset( $this->_optionFieldsClasses[ $option[ 'type' ] ] ) ) {
             $this->_optionFieldsClasses[ $option[ 'type' ] ]->enqueueOptionScriptsHook( $option );
         }
     }
@@ -103,21 +106,21 @@ trait EnqueueOptionsHelpers {
             $result = [];
             
             // If the 'options' key exists, process nested settings
-            foreach ( $options[ 'options' ] as $page ) {
+            foreach( $options[ 'options' ] as $page ) {
                 //if it is the sidemenu container
-                if ( isset( $page[ 'options' ] ) && is_array( $page[ 'options' ] ) ) {
-                    foreach ( $page[ 'options' ] as $option ) {
+                if( isset( $page[ 'options' ] ) && is_array( $page[ 'options' ] ) ) {
+                    foreach( $page[ 'options' ] as $option ) {
                         $result = array_merge( $result, $extractUniqueOptions( $option ) );
                     }
                 }
                 
                 //if it is the simple container
-                if ( isset( $page[ 'type' ] ) ) {
+                if( isset( $page[ 'type' ] ) ) {
                     $result = array_merge( $result, $extractUniqueOptions( $page ) );
                 }
                 
                 // Check for other potential nested arrays, such as 'pages' - sidemenu container
-                if ( isset( $page[ 'pages' ] ) && is_array( $page[ 'pages' ] ) ) {
+                if( isset( $page[ 'pages' ] ) && is_array( $page[ 'pages' ] ) ) {
                     $result = array_merge( $result, $this->_extractOptions( $page[ 'pages' ] ) );
                 }
             }
@@ -130,27 +133,27 @@ trait EnqueueOptionsHelpers {
             
             $result = [];
             
-            if ( isset( $option[ 'type' ] ) && !in_array( $option[ 'type' ], $processed_types ) ) {
+            if( isset( $option[ 'type' ] ) && !in_array( $option[ 'type' ], $processed_types ) ) {
                 $result[] = $option; // Add to the result array
                 $processed_types[] = $option[ 'type' ]; // Mark this type as processed
             }
             
             // Recursively process nested options
-            if ( isset( $option[ 'options' ] ) && is_array( $option[ 'options' ] ) ) {
-                foreach ( $option[ 'options' ] as $nestedOption ) {
+            if( isset( $option[ 'options' ] ) && is_array( $option[ 'options' ] ) ) {
+                foreach( $option[ 'options' ] as $nestedOption ) {
                     $result = array_merge( $result, $extractUniqueOptions( $nestedOption ) );
                 }
             }
             
             // Recursively process nested choices (left-choice, right-choice)
-            if ( isset( $option[ 'left-choice' ][ 'options' ] ) && is_array( $option[ 'left-choice' ][ 'options' ] ) ) {
-                foreach ( $option[ 'left-choice' ][ 'options' ] as $nestedOption ) {
+            if( isset( $option[ 'left-choice' ][ 'options' ] ) && is_array( $option[ 'left-choice' ][ 'options' ] ) ) {
+                foreach( $option[ 'left-choice' ][ 'options' ] as $nestedOption ) {
                     $result = array_merge( $result, $extractUniqueOptions( $nestedOption ) );
                 }
             }
             
-            if ( isset( $option[ 'right-choice' ][ 'options' ] ) && is_array( $option[ 'right-choice' ][ 'options' ] ) ) {
-                foreach ( $option[ 'right-choice' ][ 'options' ] as $nestedOption ) {
+            if( isset( $option[ 'right-choice' ][ 'options' ] ) && is_array( $option[ 'right-choice' ][ 'options' ] ) ) {
+                foreach( $option[ 'right-choice' ][ 'options' ] as $nestedOption ) {
                     $result = array_merge( $result, $extractUniqueOptions( $nestedOption ) );
                 }
             }
@@ -159,7 +162,7 @@ trait EnqueueOptionsHelpers {
         };
         
         //if it is a container type
-        if ( $this->_isContainerType( $options ) ) {
+        if( $this->_isContainerType( $options ) ) {
             
             $result = array_merge( $result, $extractUniqueOptionsFromContainer( $options ) );
             
@@ -169,11 +172,11 @@ trait EnqueueOptionsHelpers {
             $options = $options[ 'options' ] ?? $options;
             
             // Process the options directly
-            foreach ( $options as $option ) {
+            foreach( $options as $option ) {
                 
                 $result = array_merge( $result, $extractUniqueOptions( $option ) );
                 
-                if ( $this->_isContainerType( $option ) ) {
+                if( $this->_isContainerType( $option ) ) {
                     
                     $result = array_merge( $result, $extractUniqueOptionsFromContainer( $option ) );
                     

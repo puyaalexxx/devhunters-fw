@@ -3,7 +3,7 @@ declare( strict_types = 1 );
 
 namespace DHT\Helpers;
 
-if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
+if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 /**
  *
@@ -15,10 +15,10 @@ if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
  * @return bool
  * @since     1.0.0
  */
-if ( !function_exists( 'dht_array_key_exists' ) ) {
+if( !function_exists( 'dht_array_key_exists' ) ) {
     function dht_array_key_exists( array $array, string $array_key ) : bool {
         
-        if ( array_key_exists( $array_key, $array ) && !empty( $array[ $array_key ] ) ) {
+        if( array_key_exists( $array_key, $array ) && !empty( $array[ $array_key ] ) ) {
             return false;
         }
         

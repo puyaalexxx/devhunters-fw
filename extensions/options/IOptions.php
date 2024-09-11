@@ -5,7 +5,7 @@ namespace DHT\Extensions\Options;
 
 use DHT\Extensions\Options\Options\BaseField;
 
-if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
+if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 /**
  *

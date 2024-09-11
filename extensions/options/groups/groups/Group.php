@@ -7,7 +7,7 @@ use DHT\Extensions\Options\Groups\BaseGroup;
 use DHT\Helpers\Traits\Options\GroupTypeHelpers;
 use function DHT\fw;
 
-if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
+if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 final class Group extends BaseGroup {
     
@@ -59,12 +59,12 @@ final class Group extends BaseGroup {
      */
     public function saveValue( array $group, mixed $group_post_values ) : mixed {
         
-        if ( empty( $group_post_values ) ) {
+        if( empty( $group_post_values ) ) {
             return $group[ 'value' ];
         }
         
         //sanitize option values
-        foreach ( $group[ 'options' ] as $option ) {
+        foreach( $group[ 'options' ] as $option ) {
             
             $option_post_value = $group_post_values[ $option[ 'id' ] ] ?? [];
             

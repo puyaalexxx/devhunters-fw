@@ -1,11 +1,12 @@
 <?php
-declare( strict_types = 1 );
+declare( strict_types=1 );
 
 namespace DHT\Helpers\Traits\Options;
 
-if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
+if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 use function DHT\Helpers\dht_get_db_settings_option;
+use function DHT\Helpers\dht_print_r;
 use function DHT\Helpers\dht_set_db_settings_option;
 use function DHT\Helpers\is_save_options_separately;
 
@@ -22,8 +23,7 @@ trait SaveOptionsHelpers {
      */
     private function _isValidRequest() : bool {
         
-        return isset( $_POST[ $this->_nonce[ 'name' ] ] ) &&
-            wp_verify_nonce( sanitize_key( wp_unslash( $_POST[ $this->_nonce[ 'name' ] ] ) ), $this->_nonce[ 'action' ] );
+        return isset( $_POST[ $this->_nonce[ 'name' ] ] ) && wp_verify_nonce( sanitize_key( wp_unslash( $_POST[ $this->_nonce[ 'name' ] ] ) ), $this->_nonce[ 'action' ] );
     }
     
     /**
@@ -45,7 +45,7 @@ trait SaveOptionsHelpers {
         
         $values = [];
         // Check if the option type is set and has a corresponding container class
-        if ( isset( $options[ 'type' ], $this->_optionContainerClasses[ $options[ 'type' ] ] ) ) {
+        if( isset( $options[ 'type' ], $this->_optionContainerClasses[ $options[ 'type' ] ] ) ) {
             $values[ $options[ 'id' ] ] = $this->_optionContainerClasses[ $options[ 'type' ] ]->saveValue( $options, $post_values );
             
             // Save the values to the database
@@ -70,15 +70,17 @@ trait SaveOptionsHelpers {
      */
     private function _handleUngroupedOptions( array $options, string $location = 'dashboard', int $id = 0 ) : void {
         
-        foreach ( $options as $option ) {
+        foreach( $options as $option ) {
             
-            if ( array_key_exists( $option[ 'id' ], $_POST ) ) {
+            if( array_key_exists( $option[ 'id' ], $_POST ) ) {
                 
-                if ( isset( $this->_optionGroupsClasses[ $option[ 'type' ] ] ) ) {
+                if( isset( $this->_optionGroupsClasses[ $option[ 'type' ] ] ) ) {
                     $value = $this->_optionGroupsClasses[ $option[ 'type' ] ]->saveValue( $option, $_POST[ $option[ 'id' ] ] );
-                } elseif ( isset( $this->_optionTogglesClasses[ $option[ 'type' ] ] ) ) {
+                }
+                elseif( isset( $this->_optionTogglesClasses[ $option[ 'type' ] ] ) ) {
                     $value = $this->_optionTogglesClasses[ $option[ 'type' ] ]->saveValue( $option, $_POST[ $option[ 'id' ] ] );
-                } else {
+                }
+                else {
                     $value = $this->_optionFieldsClasses[ $option[ 'type' ] ]->saveValue( $option, $_POST[ $option[ 'id' ] ] );
                 }
                 
@@ -106,22 +108,23 @@ trait SaveOptionsHelpers {
         $saveData = function ( mixed $values, string $option_id, string $location, int $id ) : void {
             
             //save post data
-            if ( $location == 'post' ) {
+            if( $location == 'post' ) {
                 update_post_meta( $id, $option_id, $values );
             } //save term data
-            elseif ( $location == 'term' ) {
-                update_term_meta($id, $option_id, $values);
+            elseif( $location == 'term' ) {
+                update_term_meta( $id, $option_id, $values );
             } //save dashboard page options data
             else {
                 dht_set_db_settings_option( $option_id, $values );
             }
         };
         
-        if ( is_save_options_separately( $options ) ) {
-            foreach ( $values[ $options[ 'id' ] ] as $option_id => $option_values ) {
+        if( is_save_options_separately( $options ) ) {
+            foreach( $values[ $options[ 'id' ] ] as $option_id => $option_values ) {
                 $saveData( $option_values, $option_id, $location, $id );
             }
-        } else {
+        }
+        else {
             $saveData( $values, $options[ 'id' ], $location, $id );
         }
     }
@@ -141,13 +144,10 @@ trait SaveOptionsHelpers {
         $is_simple_container = $this->_isSimpleContainer( $options );
         $values = $saved_values = [];
         
-        if ( is_save_options_separately( $options ) ) {
-            foreach ( $options[ 'options' ] as $option ) {
-                if ( $location == 'post' ) {
-                    $values = array_merge( $values, $this->_getPostOptionsSavedValuesSeparately( $option, $is_simple_container, $id ) );
-                }
-                elseif ( $location == 'term' ) {
-                    //$values = array_merge( $values, $this->_getTermOptionsSavedValuesSeparately( $option, $is_simple_container, $id ) );
+        if( is_save_options_separately( $options ) ) {
+            foreach( $options[ 'options' ] as $option ) {
+                if( $location == 'post' || $location == 'term' ) {
+                    $values = array_merge( $values, $this->_getOptionsSavedValuesSeparately( $option, $is_simple_container, $location, $id ) );
                 }
                 else {
                     $values = array_merge( $values, $this->_getDashPagesOptionsSavedValuesSeparately( $option, $is_simple_container ) );
@@ -155,8 +155,8 @@ trait SaveOptionsHelpers {
             }
             
             $saved_values[ $options[ 'id' ] ] = $values;
-            
-        } else {
+        }
+        else {
             $saved_values = $this->_getOptionsSavedValuesGrouped( $options, $location, $id );
         }
         
@@ -166,42 +166,35 @@ trait SaveOptionsHelpers {
     /**
      * get post options saved values that are saved separately
      *
-     * @param array $option              Options array
-     * @param bool  $is_simple_container If it is a simple container type
-     * @param int   $id                  post id or term id
+     * @param array  $option              Options array
+     * @param bool   $is_simple_container If it is a simple container type
+     * @param string $location            from where to get the data - post or term
+     * @param int    $id                  post id or term id
      *
      * @return mixed
      * @since     1.0.0
      */
-    private function _getPostOptionsSavedValuesSeparately( array $option, bool $is_simple_container, int $id = 0 ) : array {
+    private function _getOptionsSavedValuesSeparately( array $option, bool $is_simple_container, string $location, int $id = 0 ) : array {
         
         $saved_values = [];
         
         //if not a simple container
-        if ( isset( $option[ 'options' ] ) && !$is_simple_container ) {
-            foreach ( $option[ 'options' ] as $opt ) {
-                //get option value
-                $option_value = get_post_meta( $id, $opt[ 'id' ], true );
-                
-                if ( $option_value !== '' ) $saved_values[ $opt[ 'id' ] ] = $option_value;
+        if( isset( $option[ 'options' ] ) && !$is_simple_container ) {
+            foreach( $option[ 'options' ] as $opt ) {
+                $saved_values = array_merge( $saved_values, $this->_getSavedValue( $opt[ 'id' ], $location, $id ) );
             }
         } // Check for other potential nested arrays, such as 'pages' - sidemenu container
-        elseif ( isset( $option[ 'pages' ] ) && is_array( $option[ 'pages' ] ) ) {
-            foreach ( $option[ 'pages' ] as $page ) {
-                if ( isset( $page[ 'options' ] ) ) {
-                    foreach ( $page[ 'options' ] as $opt ) {
-                        //get option value
-                        $option_value = get_post_meta( $id, $opt[ 'id' ], true );
-                        
-                        if ( $option_value !== '' ) $saved_values[ $opt[ 'id' ] ] = $option_value;
+        elseif( isset( $option[ 'pages' ] ) && is_array( $option[ 'pages' ] ) ) {
+            foreach( $option[ 'pages' ] as $page ) {
+                if( isset( $page[ 'options' ] ) ) {
+                    foreach( $page[ 'options' ] as $opt ) {
+                        $saved_values = array_merge( $saved_values, $this->_getSavedValue( $opt[ 'id' ], $location, $id ) );
                     }
                 }
             }
-        } else {
-            //get option value
-            $option_value = get_post_meta( $id, $option[ 'id' ], true );
-            
-            if ( $option_value !== '' ) $saved_values[ $option[ 'id' ] ] = $option_value;
+        }
+        else {
+            $saved_values = array_merge( $saved_values, $this->_getSavedValue( $option[ 'id' ], $location, $id ) );
         }
         
         return $saved_values;
@@ -221,30 +214,32 @@ trait SaveOptionsHelpers {
         $saved_values = [];
         
         //if not a simple container
-        if ( isset( $option[ 'options' ] ) && !$is_simple_container ) {
-            foreach ( $option[ 'options' ] as $opt ) {
+        if( isset( $option[ 'options' ] ) && !$is_simple_container ) {
+            foreach( $option[ 'options' ] as $opt ) {
                 //get option value
-                if ( isset( $option[ 'subtype' ] ) && $option[ 'subtype' ] == 'tabs' ) {
+                if( isset( $option[ 'subtype' ] ) && $option[ 'subtype' ] == 'tabs' ) {
                     $saved_values[ $option[ 'id' ] ][ $opt[ 'id' ] ] = dht_get_db_settings_option( $opt[ 'id' ] );
-                } else {
+                }
+                else {
                     $saved_values[ $opt[ 'id' ] ] = dht_get_db_settings_option( $opt[ 'id' ] );
                 }
             }
         } // Check for other potential nested arrays, such as 'pages' - sidemenu container
-        elseif ( isset( $option[ 'pages' ] ) && is_array( $option[ 'pages' ] ) ) {
-            foreach ( $option[ 'pages' ] as $page ) {
-                if ( isset( $page[ 'options' ] ) ) {
-                    foreach ( $page[ 'options' ] as $opt ) {
+        elseif( isset( $option[ 'pages' ] ) && is_array( $option[ 'pages' ] ) ) {
+            foreach( $option[ 'pages' ] as $page ) {
+                if( isset( $page[ 'options' ] ) ) {
+                    foreach( $page[ 'options' ] as $opt ) {
                         //get option value
                         $saved_values[ $opt[ 'id' ] ] = dht_get_db_settings_option( $opt[ 'id' ] );
                     }
                 }
             }
-        } else {
+        }
+        else {
             //get option value
             $option_value = dht_get_db_settings_option( $option[ 'id' ] );
             
-            if ( !empty( $option_value ) ) $saved_values[ $option[ 'id' ] ] = $option_value;
+            if( !empty( $option_value ) ) $saved_values[ $option[ 'id' ] ] = $option_value;
         }
         
         return $saved_values;
@@ -264,14 +259,14 @@ trait SaveOptionsHelpers {
         
         $saved_values = [];
         
-        if ( $location == 'post' ) {
+        if( $location == 'post' ) {
             //get option value
             $option_values = get_post_meta( $id, $options[ 'options_id' ], true );
             
             //retrieve grouped container values
             $saved_values[ $options[ 'id' ] ] = $option_values[ $options[ 'options_id' ] ] ?? [];
         }
-        elseif ( $location == 'term' ) {
+        elseif( $location == 'term' ) {
             //get option value
             $option_values = get_term_meta( $id, $options[ 'id' ], true );
             
@@ -280,15 +275,15 @@ trait SaveOptionsHelpers {
         }
         else {
             //get saved options if settings id present
-            if ( isset( $options[ 'id' ] ) ) {
+            if( isset( $options[ 'id' ] ) ) {
                 $saved_values = dht_get_db_settings_option( $options[ 'id' ] );
             } // if simple options without container
             else {
-                foreach ( $options as $option ) {
+                foreach( $options as $option ) {
                     //get option value
                     $option_value = dht_get_db_settings_option( $option[ 'id' ] );
                     
-                    if ( empty( $option_value ) ) continue; //skip non existent values
+                    if( empty( $option_value ) ) continue; //skip non existent values
                     
                     $saved_values[ $option[ 'id' ] ] = $option_value;
                 }
@@ -296,6 +291,32 @@ trait SaveOptionsHelpers {
         }
         
         return $saved_values;
+    }
+    
+    /**
+     * Get term or post individual saved value
+     *
+     * @param string $option_id
+     * @param string $location
+     * @param int    $id
+     *
+     * @return array
+     */
+    private function _getSavedValue( string $option_id, string $location, int $id ) : array {
+        
+        $values = [];
+        
+        //get option value
+        if( $location == 'term' ) {
+            $option_value = get_term_meta( $id, $option_id, true );
+        }
+        else {
+            $option_value = get_post_meta( $id, $option_id, true );
+        }
+        
+        if( $option_value !== '' ) $values[ $option_id ] = $option_value;
+        
+        return $values;
     }
     
 }

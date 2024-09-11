@@ -6,8 +6,9 @@ namespace DHT\Extensions\Options\Options\fields;
 use DHT\Extensions\Options\Options\BaseField;
 use function DHT\fw;
 use function DHT\Helpers\dht_get_variables_from_file;
+use function DHT\Helpers\dht_print_r;
 
-if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
+if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 final class Icon extends BaseField {
     
@@ -21,8 +22,14 @@ final class Icon extends BaseField {
         
         parent::__construct();
         
-        add_action( 'wp_ajax_getOptionIcons', [ $this, 'getOptionIcons' ] );
-        add_action( 'wp_ajax_nopriv_getOptionIcons', [ $this, 'getOptionIcons' ] ); // For non-logged in users
+        add_action( 'wp_ajax_getOptionIcons', [
+            $this,
+            'getOptionIcons'
+        ] );
+        add_action( 'wp_ajax_nopriv_getOptionIcons', [
+            $this,
+            'getOptionIcons'
+        ] ); // For non-logged in users
     }
     
     /**
@@ -75,7 +82,7 @@ final class Icon extends BaseField {
      */
     public function getOptionIcons() : void {
         
-        if ( isset( $_POST[ 'data' ][ 'icon_type' ] ) ) {
+        if( isset( $_POST[ 'data' ][ 'icon_type' ] ) ) {
             
             //retrieve icon type
             $icon_type = $_POST[ 'data' ][ 'icon_type' ];
@@ -83,39 +90,39 @@ final class Icon extends BaseField {
             
             $icons = [];
             
-            if ( $icon_type == 'dashicons' ) {
+            if( $icon_type == 'dashicons' ) {
                 $icons = dht_get_variables_from_file( DHT_OPTIONS_DIR . 'options/fields/icons/dashicons.php', 'dashicons' );
             }
             
-            if ( $icon_type == 'fontawesome' ) {
+            if( $icon_type == 'fontawesome' ) {
                 $icons = dht_get_variables_from_file( DHT_OPTIONS_DIR . 'options/fields/icons/font-awesome.php', 'font_awesome_icons' );
             }
             
-            if ( $icon_type == 'divi' ) {
+            if( $icon_type == 'divi' ) {
                 $icons = dht_get_variables_from_file( DHT_OPTIONS_DIR . 'options/fields/icons/divi.php', 'divi_icons' );
             }
             
-            if ( $icon_type == 'elusive' ) {
+            if( $icon_type == 'elusive' ) {
                 $icons = dht_get_variables_from_file( DHT_OPTIONS_DIR . 'options/fields/icons/elusive.php', 'elusive_icons' );
             }
             
-            if ( $icon_type == 'line' ) {
+            if( $icon_type == 'line' ) {
                 $icons = dht_get_variables_from_file( DHT_OPTIONS_DIR . 'options/fields/icons/line.php', 'line_icons' );
             }
             
-            if ( $icon_type == 'dev' ) {
+            if( $icon_type == 'dev' ) {
                 $icons = dht_get_variables_from_file( DHT_OPTIONS_DIR . 'options/fields/icons/devicon.php', 'devicon_icons' );
             }
             
-            if ( $icon_type == 'bootstrap' ) {
+            if( $icon_type == 'bootstrap' ) {
                 $icons = dht_get_variables_from_file( DHT_OPTIONS_DIR . 'options/fields/icons/bootstrap.php', 'bootstrap_icons' );
             }
             
-            if ( !empty( $icons ) ) {
+            if( !empty( $icons ) ) {
                 
                 ob_start();
                 
-                foreach ( $icons as $icon_class => $icon_code ) {
+                foreach( $icons as $icon_class => $icon_code ) {
                     
                     //set active icon
                     $active_icon = $icon == $icon_class ? 'dht-active-icon="true"' : '';
@@ -125,7 +132,8 @@ final class Icon extends BaseField {
                 
                 $icon_templates = ob_get_clean();
                 
-            } else {
+            }
+            else {
                 
                 $icon_templates = _x( 'No icons provided for this icon type', 'options', DHT_PREFIX );
             }
@@ -148,10 +156,14 @@ final class Icon extends BaseField {
      */
     public function addIDPrefix( array $field, string $options_id ) : array {
         
-        if ( !empty( $options_id ) ) {
+        if( !empty( $options_id ) ) {
             $field[ 'name' ] = $options_id . '[' . $field[ 'id' ] . ']';
-            $field[ 'id' ] = str_replace( [ '[', ']' ], '-', $options_id . '-' . $field[ 'id' ] );
-        } else {
+            $field[ 'id' ] = str_replace( [
+                '[',
+                ']'
+            ], '-', $options_id . '-' . $field[ 'id' ] );
+        }
+        else {
             $field[ 'name' ] = $field[ 'id' ];
         }
         
@@ -173,11 +185,11 @@ final class Icon extends BaseField {
      */
     public function saveValue( array $field, mixed $field_post_value ) : mixed {
         
-        if ( empty( $field_post_value ) ) {
+        if( empty( $field_post_value ) ) {
             return $field[ 'value' ];
         }
         
-        return (array)json_decode( stripslashes( $field_post_value ) );
+        return ( !is_array( $field_post_value ) ) ? (array)json_decode( stripslashes( $field_post_value ) ) : $field_post_value;
     }
     
 }

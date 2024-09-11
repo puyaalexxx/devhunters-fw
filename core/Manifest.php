@@ -3,9 +3,10 @@ declare( strict_types = 1 );
 
 namespace DHT\Core;
 
+use PPHT\Src\Helpers\Traits\SingletonTrait;
 use function DHT\Helpers\dht_get_variables_from_file;
 
-if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
+if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 /*
  * Class used to retrieve the framework manifest array of values
@@ -13,8 +14,7 @@ if ( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 final class Manifest {
     
-    //class instances for Singleton Pattern
-    private static array $_instances = [];
+    use SingletonTrait;
     
     //manifest array values
     private array $_manifest = [];
@@ -42,9 +42,9 @@ final class Manifest {
         
         $no_value = _x( 'Value does not exist', 'manifest', DHT_PREFIX );
         
-        if ( empty( $this->_manifest ) ) return $no_value;
+        if( empty( $this->_manifest ) ) return $no_value;
         
-        if ( array_key_exists( $key, $this->_manifest ) ) {
+        if( array_key_exists( $key, $this->_manifest ) ) {
             
             return $this->_manifest[ $key ];
         }
@@ -64,31 +64,5 @@ final class Manifest {
         
         return dht_get_variables_from_file( DHT_DIR . 'manifest.php', 'manifest' );
     }
-    
-    /**
-     * This is the static method that controls the access to the singleton
-     * instance. On the first run, it creates a singleton object and places it
-     * into the static field. On subsequent runs, it returns the client existing
-     * object stored in the static field.
-     *
-     * @since     1.0.0
-     */
-    public static function init() : self {
-        
-        $cls = static::class;
-        if ( !isset( self::$_instances[ $cls ] ) ) {
-            self::$_instances[ $cls ] = new static();
-        }
-        
-        return self::$_instances[ $cls ];
-    }
-    
-    /**
-     * no possibility to clone this class
-     *
-     * @return void
-     * @since     1.0.0
-     */
-    protected function __clone() : void {}
     
 }

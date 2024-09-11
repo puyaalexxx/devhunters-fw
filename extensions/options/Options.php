@@ -1,10 +1,9 @@
 <?php
-declare( strict_types=1 );
+declare( strict_types = 1 );
 
 namespace DHT\Extensions\Options;
 
-if( !defined( 'DHT_MAIN' ) )
-    die( 'Forbidden' );
+if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 use DHT\Extensions\Options\Options\BaseField;
 use DHT\Helpers\Traits\Options\{EnqueueOptionsHelpers,
@@ -118,7 +117,7 @@ final class Options implements IOptions {
                 $this->renderContent( $this->_options, 'term', $term->term_id );
             }, 999 );
             
-            add_action( 'edited_category', [
+            add_action( 'edited_' . $current_taxonomy, [
                 $this,
                 'saveTermOptions'
             ], 999 );
@@ -234,7 +233,8 @@ final class Options implements IOptions {
             
             if( $post_values ) {
                 $this->_handleContainerOptions( $this->_options, $post_values );
-            } else {
+            }
+            else {
                 $this->_handleUngroupedOptions( $this->_options );
             }
         }
@@ -309,7 +309,8 @@ final class Options implements IOptions {
                                     $this->_handleContainerOptions( $options, $values[ $options[ 'id' ] ], 'post', $post_id );
                                 }
                             }
-                        } else {
+                        }
+                        else {
                             $this->_handleContainerOptions( $this->_options, $values[ $this->_options[ 'id' ] ], 'post', $post_id );
                         }
                     }

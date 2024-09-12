@@ -34,10 +34,10 @@ final class Toggle extends BaseToggle {
      */
     public function enqueueOptionScripts( array $toggle ) : void {
         
-        wp_register_style( DHT_PREFIX . '-toggle-toggle', DHT_ASSETS_URI . 'styles/css/extensions/options/toggles/toggle-style.css', array(), fw()->manifest->get( 'version' ) );
-        wp_enqueue_style( DHT_PREFIX . '-toggle-toggle' );
+        wp_register_style( DHT_PREFIX_CSS . '-toggle-toggle', DHT_ASSETS_URI . 'styles/css/toggle.css', array(), fw()->manifest->get( 'version' ) );
+        wp_enqueue_style( DHT_PREFIX_CSS . '-toggle-toggle' );
         
-        wp_enqueue_script( DHT_PREFIX . '-toggle-toggle', DHT_ASSETS_URI . 'scripts/js/extensions/options/toggles/toggle-script.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
+        wp_enqueue_script( DHT_PREFIX_JS . '-toggle-toggle', DHT_ASSETS_URI . 'scripts/js/toggle-js.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
     }
     
     /**

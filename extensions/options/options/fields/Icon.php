@@ -47,31 +47,31 @@ final class Icon extends BaseField {
         // Enqueue Thickbox stylesheet
         wp_enqueue_style( 'thickbox' );
         
-        wp_register_style( DHT_PREFIX . '-font-awesome-css', DHT_ASSETS_URI . 'styles/libraries/fontawesome-icons.min.css', array(), fw()->manifest->get( 'version' ) );
+        wp_register_style( DHT_PREFIX_CSS . '-font-awesome-css', DHT_ASSETS_URI . 'styles/libraries/fontawesome-icons.min.css', array(), fw()->manifest->get( 'version' ) );
         wp_enqueue_style( 'dht-font-awesome-css' );
         
-        wp_register_style( DHT_PREFIX . '-divi-icons-css', DHT_ASSETS_URI . 'styles/libraries/divi-icons.min.css', array(), fw()->manifest->get( 'version' ) );
-        wp_enqueue_style( DHT_PREFIX . '-divi-icons-css' );
+        wp_register_style( DHT_PREFIX_CSS . '-divi-icons-css', DHT_ASSETS_URI . 'styles/libraries/divi-icons.min.css', array(), fw()->manifest->get( 'version' ) );
+        wp_enqueue_style( DHT_PREFIX_CSS . '-divi-icons-css' );
         
-        wp_register_style( DHT_PREFIX . '-elusive-icons-css', DHT_ASSETS_URI . 'styles/libraries/elusive-icons.min.css', array(), fw()->manifest->get( 'version' ) );
-        wp_enqueue_style( DHT_PREFIX . '-elusive-icons-css' );
+        wp_register_style( DHT_PREFIX_CSS . '-elusive-icons-css', DHT_ASSETS_URI . 'styles/libraries/elusive-icons.min.css', array(), fw()->manifest->get( 'version' ) );
+        wp_enqueue_style( DHT_PREFIX_CSS . '-elusive-icons-css' );
         
-        wp_register_style( DHT_PREFIX . '-line-icons-css', DHT_ASSETS_URI . 'styles/libraries/line-icons.min.css', array(), fw()->manifest->get( 'version' ) );
-        wp_enqueue_style( DHT_PREFIX . '-line-icons-css' );
+        wp_register_style( DHT_PREFIX_CSS . '-line-icons-css', DHT_ASSETS_URI . 'styles/libraries/line-icons.min.css', array(), fw()->manifest->get( 'version' ) );
+        wp_enqueue_style( DHT_PREFIX_CSS . '-line-icons-css' );
         
-        wp_register_style( DHT_PREFIX . '-devicon-icons-css', DHT_ASSETS_URI . 'styles/libraries/devicon-icons.min.css', array(), fw()->manifest->get( 'version' ) );
-        wp_enqueue_style( DHT_PREFIX . '-devicon-icons-css' );
+        wp_register_style( DHT_PREFIX_CSS . '-devicon-icons-css', DHT_ASSETS_URI . 'styles/libraries/devicon-icons.min.css', array(), fw()->manifest->get( 'version' ) );
+        wp_enqueue_style( DHT_PREFIX_CSS . '-devicon-icons-css' );
         
-        wp_register_style( DHT_PREFIX . '-bootstrap-icons-css', DHT_ASSETS_URI . 'styles/libraries/bootstrap-icons.min.css', array(), fw()->manifest->get( 'version' ) );
-        wp_enqueue_style( DHT_PREFIX . '-bootstrap-icons-css' );
+        wp_register_style( DHT_PREFIX_CSS . '-bootstrap-icons-css', DHT_ASSETS_URI . 'styles/libraries/bootstrap-icons.min.css', array(), fw()->manifest->get( 'version' ) );
+        wp_enqueue_style( DHT_PREFIX_CSS . '-bootstrap-icons-css' );
         
         // Register custom style
-        wp_register_style( DHT_PREFIX . '-icon-field', DHT_ASSETS_URI . 'styles/css/extensions/options/fields/icon-style.css', array(), fw()->manifest->get( 'version' ) );
-        wp_enqueue_style( DHT_PREFIX . '-icon-field' );
+        wp_register_style( DHT_PREFIX_CSS . '-icon-field', DHT_ASSETS_URI . 'styles/css/icon.css', array(), fw()->manifest->get( 'version' ) );
+        wp_enqueue_style( DHT_PREFIX_CSS . '-icon-field' );
         
         //custom option script
-        wp_enqueue_script( DHT_PREFIX . '-icon-field', DHT_ASSETS_URI . 'scripts/js/extensions/options/fields/icon-script.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
-        wp_localize_script( DHT_PREFIX . '-icon-field', DHT_PREFIX . '_icon_option_ajax', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
+        wp_enqueue_script( DHT_PREFIX_JS . '-icon-field', DHT_ASSETS_URI . 'scripts/js/icon-js.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
+        wp_localize_script( DHT_PREFIX_JS . '-icon-field', DHT_PREFIX . '_icon_option_ajax', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
     }
     
     /**

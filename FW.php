@@ -58,10 +58,10 @@ final class FW {
      */
     public function enqueueFrameworkGeneralScripts() : void {
         
-        wp_enqueue_script( DHT_PREFIX . '-general-fw', DHT_ASSETS_URI . 'scripts/js/general-script.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
+        wp_enqueue_script( DHT_PREFIX_JS . '-fw', DHT_ASSETS_URI . 'scripts/js/fw-js.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
         
-        wp_register_style( DHT_PREFIX . '-general-fw', DHT_ASSETS_URI . 'styles/css/general-style.css', array(), fw()->manifest->get( 'version' ) );
-        wp_enqueue_style( DHT_PREFIX . '-general-fw' );
+        wp_register_style( DHT_PREFIX_CSS . '-fw', DHT_ASSETS_URI . 'styles/css/fw.css', array(), fw()->manifest->get( 'version' ) );
+        wp_enqueue_style( DHT_PREFIX_CSS . '-fw' );
     }
     
     

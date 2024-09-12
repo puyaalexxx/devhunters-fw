@@ -3,6 +3,8 @@ declare( strict_types = 1 );
 
 namespace DHT\Helpers\Traits\Options;
 
+use function DHT\Helpers\dht_print_r;
+
 if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 trait EnqueueOptionsHelpers {
@@ -133,7 +135,7 @@ trait EnqueueOptionsHelpers {
             
             $result = [];
             
-            if( isset( $option[ 'type' ] ) && !in_array( $option[ 'type' ], $processed_types ) ) {
+            if( isset( $option[ 'type' ] ) && !in_array( $option[ 'type' ], $processed_types ) || isset( $option[ 'subtype' ] ) && !in_array( $option[ 'subtype' ], $processed_types ) ) {
                 $result[] = $option; // Add to the result array
                 $processed_types[] = $option[ 'type' ]; // Mark this type as processed
             }

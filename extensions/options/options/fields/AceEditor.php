@@ -31,9 +31,9 @@ final class AceEditor extends BaseField {
      */
     public function enqueueOptionScripts( array $field ) : void {
         
-        wp_enqueue_script( DHT_PREFIX . '-ace-editor-field', DHT_ASSETS_URI . 'scripts/js/extensions/options/fields/ace-editor-script.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
+        wp_enqueue_script( DHT_PREFIX_JS . '-ace-editor-field', DHT_ASSETS_URI . 'scripts/js/ace-editor-js.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
         
-        wp_localize_script( DHT_PREFIX . '-ace-editor-field', 'dht_ace_editor_path', array(
+        wp_localize_script( DHT_PREFIX_JS . '-ace-editor-field', 'dht_ace_editor_path', array(
             'path' => DHT_URI . 'node_modules/ace-builds/'
         ) );
     }

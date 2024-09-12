@@ -31,17 +31,17 @@ final class Typography extends BaseField {
      */
     public function enqueueOptionScripts( array $field ) : void {
         
-        wp_register_style( DHT_PREFIX . '-select2-field', DHT_ASSETS_URI . 'styles/libraries/select2.min.css', array(), fw()->manifest->get( 'version' ) );
-        wp_enqueue_style( DHT_PREFIX . '-select2-field' );
+        wp_register_style( DHT_PREFIX_CSS . '-select2-field', DHT_ASSETS_URI . 'styles/libraries/select2.min.css', array(), fw()->manifest->get( 'version' ) );
+        wp_enqueue_style( DHT_PREFIX_CSS . '-select2-field' );
         
-        wp_register_style( DHT_PREFIX . '-typography-field', DHT_ASSETS_URI . 'styles/css/extensions/options/fields/typography-style.css', array(), fw()->manifest->get( 'version' ) );
-        wp_enqueue_style( DHT_PREFIX . '-typography-field' );
+        wp_register_style( DHT_PREFIX_CSS . '-typography-field', DHT_ASSETS_URI . 'styles/css/typography.css', array(), fw()->manifest->get( 'version' ) );
+        wp_enqueue_style( DHT_PREFIX_CSS . '-typography-field' );
         
-        wp_enqueue_script( DHT_PREFIX . '-select2-field', DHT_ASSETS_URI . 'scripts/libraries/select2.full.min.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
+        wp_enqueue_script( DHT_PREFIX_JS . '-select2-field', DHT_ASSETS_URI . 'scripts/libraries/select2.full.min.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
         
-        wp_enqueue_script( DHT_PREFIX . '-typography-field', DHT_ASSETS_URI . 'scripts/js/extensions/options/fields/typography-script.js', array(
+        wp_enqueue_script( DHT_PREFIX_JS . '-typography-field', DHT_ASSETS_URI . 'scripts/js/typography-js.js', array(
             'jquery',
-            DHT_PREFIX . '-select2-field'
+            DHT_PREFIX_JS . '-select2-field'
         ), fw()->manifest->get( 'version' ), true );
     }
     

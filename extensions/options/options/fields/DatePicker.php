@@ -31,15 +31,15 @@ class DatePicker extends BaseField {
      */
     public function enqueueOptionScripts( array $field ) : void {
         
-        wp_register_style( DHT_PREFIX . '-jquery-ui-datepicker', DHT_ASSETS_URI . 'styles/libraries/jquery-ui-datepicker.min.css', array(), fw()->manifest->get( 'version' ) );
-        wp_enqueue_style( DHT_PREFIX . '-jquery-ui-datepicker' );
+        wp_register_style( DHT_PREFIX_CSS . '-jquery-ui-datepicker', DHT_ASSETS_URI . 'styles/libraries/jquery-ui-datepicker.min.css', array(), fw()->manifest->get( 'version' ) );
+        wp_enqueue_style( DHT_PREFIX_CSS . '-jquery-ui-datepicker' );
         
-        wp_register_style( DHT_PREFIX . '-datepicker-field', DHT_ASSETS_URI . 'styles/css/extensions/options/fields/datepicker-style.css', array(), fw()->manifest->get( 'version' ) );
-        wp_enqueue_style( DHT_PREFIX . '-datepicker-field' );
+        wp_register_style( DHT_PREFIX_CSS . '-datepicker-field', DHT_ASSETS_URI . 'styles/css/datepicker.css', array(), fw()->manifest->get( 'version' ) );
+        wp_enqueue_style( DHT_PREFIX_CSS . '-datepicker-field' );
         
-        wp_enqueue_script( DHT_PREFIX . '-jquery-ui-datepicker', DHT_ASSETS_URI . 'scripts/libraries/jquery-ui-datepicker.min.js', array(), fw()->manifest->get( 'version' ), true );
+        wp_enqueue_script( DHT_PREFIX_JS . '-jquery-ui-datepicker', DHT_ASSETS_URI . 'scripts/libraries/jquery-ui-datepicker.min.js', array(), fw()->manifest->get( 'version' ), true );
         
-        wp_enqueue_script( DHT_PREFIX . '-datepicker-field', DHT_ASSETS_URI . 'scripts/js/extensions/options/fields/datepicker-script.js', array( DHT_PREFIX . '-jquery-ui-datepicker' ), fw()->manifest->get( 'version' ), true );
+        wp_enqueue_script( DHT_PREFIX_JS . '-datepicker-field', DHT_ASSETS_URI . 'scripts/js/datepicker-js.js', array( DHT_PREFIX_JS . '-jquery-ui-datepicker' ), fw()->manifest->get( 'version' ), true );
     }
     
 }

@@ -31,10 +31,10 @@ final class MultiInput extends BaseField {
      */
     public function enqueueOptionScripts( array $field ) : void {
         
-        wp_enqueue_script( DHT_PREFIX . '-multiinput-field', DHT_ASSETS_URI . 'scripts/js/extensions/options/fields/multiinput-script.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
+        wp_enqueue_script( DHT_PREFIX_JS . '-multiinput-field', DHT_ASSETS_URI . 'scripts/js/multiinput-js.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
         
-        wp_register_style( DHT_PREFIX . '-multiinput-field', DHT_ASSETS_URI . 'styles/css/extensions/options/fields/multiinput-style.css', array(), fw()->manifest->get( 'version' ) );
-        wp_enqueue_style( DHT_PREFIX . '-multiinput-field' );
+        wp_register_style( DHT_PREFIX_CSS . '-multiinput-field', DHT_ASSETS_URI . 'styles/css/multiinput.css', array(), fw()->manifest->get( 'version' ) );
+        wp_enqueue_style( DHT_PREFIX_CSS . '-multiinput-field' );
     }
     
     /**

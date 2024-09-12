@@ -40,8 +40,8 @@ final class Group extends BaseGroup {
      */
     public function enqueueOptionScripts( array $group ) : void {
         
-        wp_register_style( DHT_PREFIX . '-group-group', DHT_ASSETS_URI . 'styles/css/extensions/options/groups/group-style.css', array(), fw()->manifest->get( 'version' ) );
-        wp_enqueue_style( DHT_PREFIX . '-group-group' );
+        wp_register_style( DHT_PREFIX_CSS . '-group-group', DHT_ASSETS_URI . 'styles/css/group.css', array(), fw()->manifest->get( 'version' ) );
+        wp_enqueue_style( DHT_PREFIX_CSS . '-group-group' );
     }
     
     /**

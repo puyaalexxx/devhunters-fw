@@ -36,18 +36,22 @@ final class CreateDynamicSidebars implements ICreateDynamicSidebars {
         
         // Check if we are on the Widgets page
         if( 'widgets.php' === $pagenow ) {
+            
             add_action( 'widgets_init', [
                 $this,
                 'registerCustomWidgetAreas'
             ], 1000 );
+            
             add_action( 'admin_print_scripts', [
                 $this,
                 'widgetAreaFormTemplate'
             ] );
+            
             add_action( 'load-widgets.php', [
                 $this,
                 'addWidgetArea'
             ], 100 );
+            
             add_action( 'admin_enqueue_scripts', [
                 $this,
                 'enqueueSidebarScripts'
@@ -108,11 +112,11 @@ final class CreateDynamicSidebars implements ICreateDynamicSidebars {
      */
     public function enqueueSidebarScripts( string $hook ) : void {
         
-        wp_enqueue_script( DHT_PREFIX . '-create-sidebars', DHT_ASSETS_URI . 'scripts/js/extensions/sidebars/create-sidebars-script.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
-        wp_localize_script( DHT_PREFIX . '-create-sidebars', 'dht_remove_sidebar_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
+        wp_enqueue_script( DHT_PREFIX_JS . '-create-sidebars', DHT_ASSETS_URI . 'scripts/js/create-sidebars-js.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
+        wp_localize_script( DHT_PREFIX_JS . '-create-sidebars', 'dht_remove_sidebar_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
         
-        wp_register_style( DHT_PREFIX . '-create-sidebars', DHT_ASSETS_URI . 'styles/css/extensions/sidebars/create-sidebars-style.css', array(), fw()->manifest->get( 'version' ) );
-        wp_enqueue_style( DHT_PREFIX . '-create-sidebars' );
+        wp_register_style( DHT_PREFIX_CSS . '-create-sidebars', DHT_ASSETS_URI . 'styles/css/create-sidebars.css', array(), fw()->manifest->get( 'version' ) );
+        wp_enqueue_style( DHT_PREFIX_CSS . '-create-sidebars' );
     }
     
     /**
@@ -154,10 +158,10 @@ final class CreateDynamicSidebars implements ICreateDynamicSidebars {
         }
         
         $options = array(
-            'before_title' => '<h3 class="widgettitle">',
-            'after_title' => '</h3>',
+            'before_title'  => '<h3 class="widgettitle">',
+            'after_title'   => '</h3>',
             'before_widget' => '<div id="%1$s" class="widget clearfix %2$s">',
-            'after_widget' => '</div>',
+            'after_widget'  => '</div>',
         );
         
         $options = apply_filters( 'dht_custom_widget_args', $options );

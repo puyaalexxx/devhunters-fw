@@ -5,6 +5,7 @@ namespace DHT\Extensions\Options\Options\Fields;
 
 use DHT\Extensions\Options\Options\BaseField;
 use function DHT\fw;
+use function DHT\Helpers\dht_print_r;
 
 if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
@@ -35,25 +36,25 @@ final class ColorPicker extends BaseField {
         wp_enqueue_script( 'wp-color-picker' );
         
         // Register custom style
-        wp_register_style( DHT_PREFIX . '-wp-color-picker-field', DHT_ASSETS_URI . 'styles/css/extensions/options/fields/colorpicker-style.css', array(), fw()->manifest->get( 'version' ) );
-        wp_enqueue_style( DHT_PREFIX . '-wp-color-picker-field' );
-        
+        wp_register_style( DHT_PREFIX_CSS . '-wp-color-picker-field', DHT_ASSETS_URI . 'styles/css/colorpicker.css', array(), fw()->manifest->get( 'version' ) );
+        wp_enqueue_style( DHT_PREFIX_CSS . '-wp-color-picker-field' );
         
         //include this script only if the option type is rgba
         if( $field[ 'subtype' ] == 'rgba' ) {
             
-            wp_enqueue_script( DHT_PREFIX . '-wp-color-picker-option-alpha-field', DHT_ASSETS_URI . 'scripts/libraries/wp-color-picker-alpha.min.js', array(
+            wp_enqueue_script( DHT_PREFIX_JS . '-wp-color-picker-option-alpha-field', DHT_ASSETS_URI . 'scripts/libraries/wp-color-picker-alpha.min.js', array(
                 'jquery',
                 'wp-color-picker'
             ), fw()->manifest->get( 'version' ), true );
-            wp_enqueue_script( DHT_PREFIX . '-wp-color-picker-field', DHT_ASSETS_URI . 'scripts/js/extensions/options/fields/colorpicker-script.js', array(
+            
+            wp_enqueue_script( DHT_PREFIX_JS . '-wp-color-picker-field', DHT_ASSETS_URI . 'scripts/js/colorpicker-js.js', array(
                 'jquery',
                 'wp-color-picker',
-                DHT_PREFIX . '-wp-color-picker-option-alpha-field'
+                DHT_PREFIX_JS . '-wp-color-picker-option-alpha-field'
             ), fw()->manifest->get( 'version' ), true );
         }
         else {
-            wp_enqueue_script( DHT_PREFIX . '-wp-color-picker-field', DHT_ASSETS_URI . 'scripts/js/extensions/options/fields/colorpicker-script.js', array(
+            wp_enqueue_script( DHT_PREFIX_JS . '-wp-color-picker-field', DHT_ASSETS_URI . 'scripts/js/colorpicker-js.js', array(
                 'jquery',
                 'wp-color-picker'
             ), fw()->manifest->get( 'version' ), true );

@@ -53,14 +53,15 @@ final class AddableBox extends BaseGroup {
         // Enqueue the WordPress editor scripts and styles
         wp_enqueue_editor();
         
-        wp_register_style( DHT_PREFIX . '-addable-box-group', DHT_ASSETS_URI . 'styles/css/extensions/options/groups/addable-box-style.css', array(), fw()->manifest->get( 'version' ) );
-        wp_enqueue_style( DHT_PREFIX . '-addable-box-group' );
+        wp_register_style( DHT_PREFIX_CSS . '-addable-box-group', DHT_ASSETS_URI . 'styles/css/addable-box.css', array(), fw()->manifest->get( 'version' ) );
+        wp_enqueue_style( DHT_PREFIX_CSS . '-addable-box-group' );
         
-        wp_enqueue_script( DHT_PREFIX . '-addable-box-group', DHT_ASSETS_URI . 'scripts/js/extensions/options/groups/addable-box-script.js', array(
+        wp_enqueue_script( DHT_PREFIX_JS . '-addable-box-group', DHT_ASSETS_URI . 'scripts/js/addable-box-js.js', array(
             'jquery',
             'jquery-ui-sortable'
         ), fw()->manifest->get( 'version' ), true );
-        wp_localize_script( DHT_PREFIX . '-addable-box-group', DHT_PREFIX . '_addable_box_option_ajax', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
+        
+        wp_localize_script( DHT_PREFIX_JS . '-addable-box-group', DHT_PREFIX . '_addable_box_option_ajax', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
     }
     
     /**
@@ -108,7 +109,7 @@ final class AddableBox extends BaseGroup {
      *  $group_value can be null.
      *  In this case you should return default value from $group['value']
      *
-     * @param array $group - group option
+     * @param array $group             - group option
      * @param mixed $group_post_values - $_POST values passed on save
      *
      * @return mixed - sanitized group values

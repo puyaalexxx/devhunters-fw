@@ -134,12 +134,12 @@ final class Options implements IOptions {
      */
     public function enqueueGeneralScripts( string $hook ) : void {
         
-        wp_enqueue_script( DHT_PREFIX . '-dashboard-page-template', DHT_ASSETS_URI . 'scripts/js/extensions/options/dashboard-page-template-script.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
+        wp_enqueue_script( DHT_PREFIX_JS . '-dashboard-page-template', DHT_ASSETS_URI . 'scripts/js/dashboard-page-template-js.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
         
         // Register the style
-        wp_register_style( DHT_PREFIX . '-dashboard-page-template', DHT_ASSETS_URI . 'styles/css/extensions/options/dashboard-page-template-style.css', array(), fw()->manifest->get( 'version' ) );
+        wp_register_style( DHT_PREFIX_CSS . '-dashboard-page-template', DHT_ASSETS_URI . 'styles/css/dashboard-page-template.css', array(), fw()->manifest->get( 'version' ) );
         // Enqueue the style
-        wp_enqueue_style( DHT_PREFIX . '-dashboard-page-template' );
+        wp_enqueue_style( DHT_PREFIX_CSS . '-dashboard-page-template' );
     }
     
     /**

@@ -11,7 +11,8 @@
     "noImplicitAny": true,
     "outDir": "assets/scripts/js",
     "moduleResolution": "node",
-    "allowJs": true
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true
   },
   "include": [
     "assets/scripts/ts/",

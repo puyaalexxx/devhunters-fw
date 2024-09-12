@@ -3,12 +3,17 @@ declare( strict_types = 1 );
 
 namespace DHT;
 
-if ( !defined( 'ABSPATH' ) ) die( 'Forbidden' );
+if( !defined( 'ABSPATH' ) ) die( 'Forbidden' );
 
 define( 'DHT_MAIN', true );
 
 //framework prefix used as translation text domain, enqueue scripts
 define( 'DHT_PREFIX', 'dht' );
+
+//used to add a prefix for enqueued js files
+define( 'DHT_PREFIX_JS', 'dht-script' );
+//used to add a prefix for enqueued css files
+define( 'DHT_PREFIX_CSS', 'dht-style' );
 
 //core folder
 define( 'DHT_DIR', plugin_dir_path( __FILE__ ) );

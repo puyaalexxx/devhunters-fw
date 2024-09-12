@@ -35,10 +35,10 @@ final class Borders extends BaseField {
         wp_enqueue_script( 'wp-color-picker' );
         
         // Register custom style
-        wp_register_style( DHT_PREFIX . '-borders-field', DHT_ASSETS_URI . 'styles/css/extensions/options/fields/borders-style.css', array(), fw()->manifest->get( 'version' ) );
-        wp_enqueue_style( DHT_PREFIX . '-borders-field' );
+        wp_register_style( DHT_PREFIX_CSS . '-borders-field', DHT_ASSETS_URI . 'styles/css/borders.css', array(), fw()->manifest->get( 'version' ) );
+        wp_enqueue_style( DHT_PREFIX_CSS . '-borders-field' );
         
-        wp_enqueue_script( DHT_PREFIX . '-wp-color-picker-field', DHT_ASSETS_URI . 'scripts/js/extensions/options/fields/colorpicker-script.js', array(
+        wp_enqueue_script( DHT_PREFIX_JS . '-wp-color-picker-field', DHT_ASSETS_URI . 'scripts/js/colorpicker-js.js', array(
             'jquery',
             'wp-color-picker'
         ), fw()->manifest->get( 'version' ), true );

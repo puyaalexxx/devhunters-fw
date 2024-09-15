@@ -4,6 +4,7 @@ declare( strict_types = 1 );
 namespace DHT\Extensions\Options\Toggles\Toggles;
 
 use DHT\Extensions\Options\Toggles\BaseToggle;
+use DHT\Helpers\Classes\Environment;
 use function DHT\fw;
 use function DHT\Helpers\dht_load_view;
 
@@ -34,10 +35,12 @@ final class Toggle extends BaseToggle {
      */
     public function enqueueOptionScripts( array $toggle ) : void {
         
-        wp_register_style( DHT_PREFIX_CSS . '-toggle-toggle', DHT_ASSETS_URI . 'styles/css/toggle.css', array(), fw()->manifest->get( 'version' ) );
-        wp_enqueue_style( DHT_PREFIX_CSS . '-toggle-toggle' );
-        
-        wp_enqueue_script( DHT_PREFIX_JS . '-toggle-toggle', DHT_ASSETS_URI . 'scripts/js/toggle-js.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
+        if( Environment::isDevelopment() ) {
+            wp_register_style( DHT_PREFIX_CSS . '-toggle-toggle', DHT_ASSETS_URI . 'styles/css/toggle.css', array(), fw()->manifest->get( 'version' ) );
+            wp_enqueue_style( DHT_PREFIX_CSS . '-toggle-toggle' );
+            
+            wp_enqueue_script( DHT_PREFIX_JS . '-toggle-toggle', DHT_ASSETS_URI . 'scripts/js/toggle.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
+        }
     }
     
     /**

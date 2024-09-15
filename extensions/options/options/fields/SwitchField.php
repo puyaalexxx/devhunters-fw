@@ -4,6 +4,7 @@ declare( strict_types = 1 );
 namespace DHT\Extensions\Options\Options\Fields;
 
 use DHT\Extensions\Options\Options\BaseField;
+use DHT\Helpers\Classes\Environment;
 use function DHT\fw;
 
 if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
@@ -31,12 +32,12 @@ final class SwitchField extends BaseField {
      */
     public function enqueueOptionScripts( array $field ) : void {
         
-        wp_enqueue_script( DHT_PREFIX_JS . '-switch-field', DHT_ASSETS_URI . 'scripts/js/switch-js.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
-        
-        // Register the style
-        wp_register_style( DHT_PREFIX_CSS . '-switch-field', DHT_ASSETS_URI . 'styles/css/switch.css', array(), fw()->manifest->get( 'version' ) );
-        // Enqueue the style
-        wp_enqueue_style( DHT_PREFIX_CSS . '-switch-field' );
+        if( Environment::isDevelopment() ) {
+            wp_register_style( DHT_PREFIX_CSS . '-switch-field', DHT_ASSETS_URI . 'styles/css/switch.css', array(), fw()->manifest->get( 'version' ) );
+            wp_enqueue_style( DHT_PREFIX_CSS . '-switch-field' );
+            
+            wp_enqueue_script( DHT_PREFIX_JS . '-switch-field', DHT_ASSETS_URI . 'scripts/js/switch.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
+        }
     }
     
 }

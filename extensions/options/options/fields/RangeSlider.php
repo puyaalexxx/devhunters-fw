@@ -4,6 +4,7 @@ declare( strict_types = 1 );
 namespace DHT\Extensions\Options\Options\Fields;
 
 use DHT\Extensions\Options\Options\BaseField;
+use DHT\Helpers\Classes\Environment;
 use function DHT\fw;
 
 if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
@@ -31,17 +32,19 @@ final class RangeSlider extends BaseField {
      */
     public function enqueueOptionScripts( array $field ) : void {
         
+        //library css
         wp_register_style( DHT_PREFIX_CSS . '-jquery-ui-rangeslider', DHT_ASSETS_URI . 'styles/libraries/jquery-ui-rangeslider.min.css', array(), fw()->manifest->get( 'version' ) );
         wp_enqueue_style( DHT_PREFIX_CSS . '-jquery-ui-rangeslider' );
-        
-        wp_register_style( DHT_PREFIX_CSS . '-rangeslider-field', DHT_ASSETS_URI . 'styles/css/rangeslider.css', array(), fw()->manifest->get( 'version' ) );
-        wp_enqueue_style( DHT_PREFIX_CSS . '-rangeslider-field' );
         
         //WordPress comes with the slider option
         wp_enqueue_script( 'jquery-ui-slider' );
         
-        wp_enqueue_script( DHT_PREFIX_JS . '-rangeslider-field', DHT_ASSETS_URI . 'scripts/js/rangeslider-js.js', array( 'jquery-ui-slider' ), fw()->manifest->get( 'version' ), true );
-        
+        if( Environment::isDevelopment() ) {
+            wp_register_style( DHT_PREFIX_CSS . '-rangeslider-field', DHT_ASSETS_URI . 'styles/css/rangeslider.css', array(), fw()->manifest->get( 'version' ) );
+            wp_enqueue_style( DHT_PREFIX_CSS . '-rangeslider-field' );
+            
+            wp_enqueue_script( DHT_PREFIX_JS . '-rangeslider-field', DHT_ASSETS_URI . 'scripts/js/rangeslider.js', array( 'jquery-ui-slider' ), fw()->manifest->get( 'version' ), true );
+        }
     }
     
     /**

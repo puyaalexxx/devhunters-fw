@@ -12,11 +12,14 @@
     "outDir": "assets/scripts/js",
     "moduleResolution": "node",
     "allowJs": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true
   },
   "include": [
     "assets/scripts/ts/",
-    "assets/scripts/ts/*.tsx"
+    "assets/scripts/ts/*.tsx",
+    "assets/scripts/ts/types/**/*.d.ts"
   ],
   "exclude": [
     "node_modules"

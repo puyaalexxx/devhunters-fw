@@ -8,7 +8,7 @@ $hook_name = 'dht_render_dashboard_page_content';
 
     <div class="dht-container">
         
-        <?php //echo dht_load_preloader(); ?>
+        <?php do_action( 'dht_template_before_content' ); ?>
         
         <?php if( has_action( $hook_name ) ): ?>
             
@@ -16,9 +16,12 @@ $hook_name = 'dht_render_dashboard_page_content';
         
         <?php else: ?>
 
-            <div class="dht-no-content-found"><?php echo apply_filters( 'dht_template_no_content_found', _x( 'No Content found', 'options', DHT_PREFIX ) ); ?></div>
+            <div
+                class="dht-no-content-found"><?php echo apply_filters( 'dht_template_no_content_found', _x( 'No Content found', 'options', DHT_PREFIX ) ); ?></div>
         
         <?php endif; ?>
+        
+        <?php do_action( 'dht_template_after_content' ); ?>
 
     </div>
 </div>

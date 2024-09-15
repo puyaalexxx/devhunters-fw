@@ -4,6 +4,7 @@ declare( strict_types = 1 );
 namespace DHT\Extensions\Options\Groups\Groups;
 
 use DHT\Extensions\Options\Groups\BaseGroup;
+use DHT\Helpers\Classes\Environment;
 use function DHT\fw;
 use function DHT\Helpers\dht_render_box_item_content;
 
@@ -53,15 +54,15 @@ final class AddableBox extends BaseGroup {
         // Enqueue the WordPress editor scripts and styles
         wp_enqueue_editor();
         
-        wp_register_style( DHT_PREFIX_CSS . '-addable-box-group', DHT_ASSETS_URI . 'styles/css/addable-box.css', array(), fw()->manifest->get( 'version' ) );
-        wp_enqueue_style( DHT_PREFIX_CSS . '-addable-box-group' );
-        
-        wp_enqueue_script( DHT_PREFIX_JS . '-addable-box-group', DHT_ASSETS_URI . 'scripts/js/addable-box-js.js', array(
-            'jquery',
-            'jquery-ui-sortable'
-        ), fw()->manifest->get( 'version' ), true );
-        
-        wp_localize_script( DHT_PREFIX_JS . '-addable-box-group', DHT_PREFIX . '_addable_box_option_ajax', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
+        if( Environment::isDevelopment() ) {
+            wp_register_style( DHT_PREFIX_CSS . '-addable-box-group', DHT_ASSETS_URI . 'styles/css/addable-box.css', array(), fw()->manifest->get( 'version' ) );
+            wp_enqueue_style( DHT_PREFIX_CSS . '-addable-box-group' );
+            
+            wp_enqueue_script( DHT_PREFIX_JS . '-addable-box-group', DHT_ASSETS_URI . 'scripts/js/addable-box.js', array(
+                'jquery',
+                'jquery-ui-sortable'
+            ), fw()->manifest->get( 'version' ), true );
+        }
     }
     
     /**

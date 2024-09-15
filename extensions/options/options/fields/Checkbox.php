@@ -4,6 +4,7 @@ declare( strict_types = 1 );
 namespace DHT\Extensions\Options\Options\Fields;
 
 use DHT\Extensions\Options\Options\BaseField;
+use DHT\Helpers\Classes\Environment;
 use function DHT\fw;
 
 if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
@@ -31,8 +32,10 @@ final class Checkbox extends BaseField {
      */
     public function enqueueOptionScripts( array $field ) : void {
         
-        wp_register_style( DHT_PREFIX_CSS . '-checkbox-field', DHT_ASSETS_URI . 'styles/css/checkbox.css', array(), fw()->manifest->get( 'version' ) );
-        wp_enqueue_style( DHT_PREFIX_CSS . '-checkbox-field' );
+        if( Environment::isDevelopment() ) {
+            wp_register_style( DHT_PREFIX_CSS . '-checkbox-field', DHT_ASSETS_URI . 'styles/css/checkbox.css', array(), fw()->manifest->get( 'version' ) );
+            wp_enqueue_style( DHT_PREFIX_CSS . '-checkbox-field' );
+        }
     }
     
     /**

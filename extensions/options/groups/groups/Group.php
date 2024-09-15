@@ -4,6 +4,7 @@ declare( strict_types = 1 );
 namespace DHT\Extensions\Options\Groups\Groups;
 
 use DHT\Extensions\Options\Groups\BaseGroup;
+use DHT\Helpers\Classes\Environment;
 use DHT\Helpers\Traits\Options\GroupTypeHelpers;
 use function DHT\fw;
 
@@ -40,8 +41,10 @@ final class Group extends BaseGroup {
      */
     public function enqueueOptionScripts( array $group ) : void {
         
-        wp_register_style( DHT_PREFIX_CSS . '-group-group', DHT_ASSETS_URI . 'styles/css/group.css', array(), fw()->manifest->get( 'version' ) );
-        wp_enqueue_style( DHT_PREFIX_CSS . '-group-group' );
+        if( Environment::isDevelopment() ) {
+            wp_register_style( DHT_PREFIX_CSS . '-group-group', DHT_ASSETS_URI . 'styles/css/group.css', array(), fw()->manifest->get( 'version' ) );
+            wp_enqueue_style( DHT_PREFIX_CSS . '-group-group' );
+        }
     }
     
     /**

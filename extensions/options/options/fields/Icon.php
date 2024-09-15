@@ -4,6 +4,7 @@ declare( strict_types = 1 );
 namespace DHT\Extensions\Options\Options\Fields;
 
 use DHT\Extensions\Options\Options\BaseField;
+use DHT\Helpers\Classes\Environment;
 use function DHT\fw;
 use function DHT\Helpers\dht_get_variables_from_file;
 use function DHT\Helpers\dht_print_r;
@@ -42,36 +43,30 @@ final class Icon extends BaseField {
      */
     public function enqueueOptionScripts( array $field ) : void {
         
-        // Enqueue Thickbox script
+        // Enqueue Thickbox scripts
         wp_enqueue_script( 'thickbox' );
-        // Enqueue Thickbox stylesheet
         wp_enqueue_style( 'thickbox' );
         
+        //libraries icons css
         wp_register_style( DHT_PREFIX_CSS . '-font-awesome-css', DHT_ASSETS_URI . 'styles/libraries/fontawesome-icons.min.css', array(), fw()->manifest->get( 'version' ) );
         wp_enqueue_style( 'dht-font-awesome-css' );
-        
         wp_register_style( DHT_PREFIX_CSS . '-divi-icons-css', DHT_ASSETS_URI . 'styles/libraries/divi-icons.min.css', array(), fw()->manifest->get( 'version' ) );
         wp_enqueue_style( DHT_PREFIX_CSS . '-divi-icons-css' );
-        
         wp_register_style( DHT_PREFIX_CSS . '-elusive-icons-css', DHT_ASSETS_URI . 'styles/libraries/elusive-icons.min.css', array(), fw()->manifest->get( 'version' ) );
         wp_enqueue_style( DHT_PREFIX_CSS . '-elusive-icons-css' );
-        
         wp_register_style( DHT_PREFIX_CSS . '-line-icons-css', DHT_ASSETS_URI . 'styles/libraries/line-icons.min.css', array(), fw()->manifest->get( 'version' ) );
         wp_enqueue_style( DHT_PREFIX_CSS . '-line-icons-css' );
-        
         wp_register_style( DHT_PREFIX_CSS . '-devicon-icons-css', DHT_ASSETS_URI . 'styles/libraries/devicon-icons.min.css', array(), fw()->manifest->get( 'version' ) );
         wp_enqueue_style( DHT_PREFIX_CSS . '-devicon-icons-css' );
-        
         wp_register_style( DHT_PREFIX_CSS . '-bootstrap-icons-css', DHT_ASSETS_URI . 'styles/libraries/bootstrap-icons.min.css', array(), fw()->manifest->get( 'version' ) );
         wp_enqueue_style( DHT_PREFIX_CSS . '-bootstrap-icons-css' );
         
-        // Register custom style
-        wp_register_style( DHT_PREFIX_CSS . '-icon-field', DHT_ASSETS_URI . 'styles/css/icon.css', array(), fw()->manifest->get( 'version' ) );
-        wp_enqueue_style( DHT_PREFIX_CSS . '-icon-field' );
-        
-        //custom option script
-        wp_enqueue_script( DHT_PREFIX_JS . '-icon-field', DHT_ASSETS_URI . 'scripts/js/icon-js.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
-        wp_localize_script( DHT_PREFIX_JS . '-icon-field', DHT_PREFIX . '_icon_option_ajax', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
+        if( Environment::isDevelopment() ) {
+            wp_register_style( DHT_PREFIX_CSS . '-icon-field', DHT_ASSETS_URI . 'styles/css/icon.css', array(), fw()->manifest->get( 'version' ) );
+            wp_enqueue_style( DHT_PREFIX_CSS . '-icon-field' );
+            
+            wp_enqueue_script( DHT_PREFIX_JS . '-icon-field', DHT_ASSETS_URI . 'scripts/js/icon.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
+        }
     }
     
     /**

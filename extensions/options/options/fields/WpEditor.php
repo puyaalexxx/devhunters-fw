@@ -4,6 +4,7 @@ declare( strict_types = 1 );
 namespace DHT\Extensions\Options\Options\Fields;
 
 use DHT\Extensions\Options\Options\BaseField;
+use DHT\Helpers\Classes\Environment;
 use function DHT\fw;
 use function DHT\Helpers\dht_sanitize_wpeditor_value;
 
@@ -35,8 +36,10 @@ final class WpEditor extends BaseField {
         // Enqueue the WordPress editor scripts and styles
         wp_enqueue_editor();
         
-        wp_register_style( DHT_PREFIX_CSS . '-wpeditor-field', DHT_ASSETS_URI . 'styles/css/wpeditor.css', array(), fw()->manifest->get( 'version' ) );
-        wp_enqueue_style( DHT_PREFIX_CSS . '-wpeditor-field' );
+        if( Environment::isDevelopment() ) {
+            wp_register_style( DHT_PREFIX_CSS . '-wpeditor-field', DHT_ASSETS_URI . 'styles/css/wpeditor.css', array(), fw()->manifest->get( 'version' ) );
+            wp_enqueue_style( DHT_PREFIX_CSS . '-wpeditor-field' );
+        }
     }
     
     /**

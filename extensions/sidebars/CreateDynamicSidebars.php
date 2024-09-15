@@ -3,6 +3,7 @@ declare( strict_types = 1 );
 
 namespace DHT\Extensions\Sidebars;
 
+use DHT\Helpers\Classes\Environment;
 use function DHT\fw;
 
 if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
@@ -112,11 +113,13 @@ final class CreateDynamicSidebars implements ICreateDynamicSidebars {
      */
     public function enqueueSidebarScripts( string $hook ) : void {
         
-        wp_enqueue_script( DHT_PREFIX_JS . '-create-sidebars', DHT_ASSETS_URI . 'scripts/js/create-sidebars-js.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
-        wp_localize_script( DHT_PREFIX_JS . '-create-sidebars', 'dht_remove_sidebar_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
-        
-        wp_register_style( DHT_PREFIX_CSS . '-create-sidebars', DHT_ASSETS_URI . 'styles/css/create-sidebars.css', array(), fw()->manifest->get( 'version' ) );
-        wp_enqueue_style( DHT_PREFIX_CSS . '-create-sidebars' );
+        if( Environment::isDevelopment() ) {
+            wp_register_style( DHT_PREFIX_CSS . '-create-sidebars', DHT_ASSETS_URI . 'styles/css/create-sidebars.css', array(), fw()->manifest->get( 'version' ) );
+            wp_enqueue_style( DHT_PREFIX_CSS . '-create-sidebars' );
+            
+            wp_enqueue_script( DHT_PREFIX_JS . '-create-sidebars', DHT_ASSETS_URI . 'scripts/js/create-sidebars.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
+            wp_localize_script( DHT_PREFIX_JS . '-create-sidebars', 'dht_remove_sidebar_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
+        }
     }
     
     /**

@@ -4,6 +4,7 @@ declare( strict_types = 1 );
 namespace DHT\Extensions\Options\Options\Fields;
 
 use DHT\Extensions\Options\Options\BaseField;
+use DHT\Helpers\Classes\Environment;
 use function DHT\fw;
 
 if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
@@ -31,10 +32,12 @@ final class MultiInput extends BaseField {
      */
     public function enqueueOptionScripts( array $field ) : void {
         
-        wp_enqueue_script( DHT_PREFIX_JS . '-multiinput-field', DHT_ASSETS_URI . 'scripts/js/multiinput-js.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
-        
-        wp_register_style( DHT_PREFIX_CSS . '-multiinput-field', DHT_ASSETS_URI . 'styles/css/multiinput.css', array(), fw()->manifest->get( 'version' ) );
-        wp_enqueue_style( DHT_PREFIX_CSS . '-multiinput-field' );
+        if( Environment::isDevelopment() ) {
+            wp_register_style( DHT_PREFIX_CSS . '-multiinput-field', DHT_ASSETS_URI . 'styles/css/multiinput.css', array(), fw()->manifest->get( 'version' ) );
+            wp_enqueue_style( DHT_PREFIX_CSS . '-multiinput-field' );
+            
+            wp_enqueue_script( DHT_PREFIX_JS . '-multiinput-field', DHT_ASSETS_URI . 'scripts/js/multiinput.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
+        }
     }
     
     /**

@@ -7,6 +7,10 @@ if( !defined( 'ABSPATH' ) ) die( 'Forbidden' );
 
 define( 'DHT_MAIN', true );
 
+//environment
+//define( 'DHT_FW_ENVIRONMENT', 'development' );
+define( 'DHT_FW_ENVIRONMENT', 'production' );
+
 //framework prefix used as translation text domain, enqueue scripts
 define( 'DHT_PREFIX', 'dht' );
 

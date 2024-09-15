@@ -4,6 +4,7 @@ declare( strict_types = 1 );
 namespace DHT\Extensions\Options\Options\Fields;
 
 use DHT\Extensions\Options\Options\BaseField;
+use DHT\Helpers\Classes\Environment;
 use function DHT\fw;
 
 if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
@@ -31,11 +32,18 @@ final class AceEditor extends BaseField {
      */
     public function enqueueOptionScripts( array $field ) : void {
         
-        wp_enqueue_script( DHT_PREFIX_JS . '-ace-editor-field', DHT_ASSETS_URI . 'scripts/js/ace-editor-js.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
-        
-        wp_localize_script( DHT_PREFIX_JS . '-ace-editor-field', 'dht_ace_editor_path', array(
-            'path' => DHT_URI . 'node_modules/ace-builds/'
-        ) );
+        if( Environment::isDevelopment() ) {
+            wp_enqueue_script( DHT_PREFIX_JS . '-ace-editor-field', DHT_ASSETS_URI . 'scripts/js/ace-editor.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
+            
+            wp_localize_script( DHT_PREFIX_JS . '-ace-editor-field', 'dht_ace_editor_path', array(
+                'path' => DHT_URI . 'node_modules/ace-builds/'
+            ) );
+        }
+        else {
+            wp_localize_script( DHT_PREFIX_JS . '-main-bundle', 'dht_ace_editor_path', array(
+                'path' => DHT_URI . 'node_modules/ace-builds/'
+            ) );
+        }
     }
     
     /**

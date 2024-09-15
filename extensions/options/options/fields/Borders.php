@@ -4,6 +4,7 @@ declare( strict_types = 1 );
 namespace DHT\Extensions\Options\Options\Fields;
 
 use DHT\Extensions\Options\Options\BaseField;
+use DHT\Helpers\Classes\Environment;
 use function DHT\fw;
 
 if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
@@ -34,14 +35,15 @@ final class Borders extends BaseField {
         wp_enqueue_style( 'wp-color-picker' );
         wp_enqueue_script( 'wp-color-picker' );
         
-        // Register custom style
-        wp_register_style( DHT_PREFIX_CSS . '-borders-field', DHT_ASSETS_URI . 'styles/css/borders.css', array(), fw()->manifest->get( 'version' ) );
-        wp_enqueue_style( DHT_PREFIX_CSS . '-borders-field' );
-        
-        wp_enqueue_script( DHT_PREFIX_JS . '-wp-color-picker-field', DHT_ASSETS_URI . 'scripts/js/colorpicker-js.js', array(
-            'jquery',
-            'wp-color-picker'
-        ), fw()->manifest->get( 'version' ), true );
+        if( Environment::isDevelopment() ) {
+            wp_register_style( DHT_PREFIX_CSS . '-borders-field', DHT_ASSETS_URI . 'styles/css/borders.css', array(), fw()->manifest->get( 'version' ) );
+            wp_enqueue_style( DHT_PREFIX_CSS . '-borders-field' );
+            
+            wp_enqueue_script( DHT_PREFIX_JS . '-wp-color-picker-field', DHT_ASSETS_URI . 'scripts/js/colorpicker.js', array(
+                'jquery',
+                'wp-color-picker'
+            ), fw()->manifest->get( 'version' ), true );
+        }
     }
     
     /**

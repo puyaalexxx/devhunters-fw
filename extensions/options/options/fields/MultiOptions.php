@@ -4,6 +4,7 @@ declare( strict_types = 1 );
 namespace DHT\Extensions\Options\Options\Fields;
 
 use DHT\Extensions\Options\Options\BaseField;
+use DHT\Helpers\Classes\Environment;
 use function DHT\fw;
 
 if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
@@ -31,22 +32,22 @@ final class MultiOptions extends BaseField {
      */
     public function enqueueOptionScripts( array $field ) : void {
         
+        //library css
         wp_register_style( DHT_PREFIX_CSS . '-select2-field', DHT_ASSETS_URI . 'styles/libraries/select2.min.css', array(), fw()->manifest->get( 'version' ) );
         wp_enqueue_style( DHT_PREFIX_CSS . '-select2-field' );
         
-        //custom option styles
-        wp_register_style( DHT_PREFIX_CSS . '-multi-options-field', DHT_ASSETS_URI . 'styles/css/multi-options.css', array(), fw()->manifest->get( 'version' ) );
-        wp_enqueue_style( DHT_PREFIX_CSS . '-multi-options-field' );
-        
+        //library js
         wp_enqueue_script( DHT_PREFIX_JS . '-select2-field', DHT_ASSETS_URI . 'scripts/libraries/select2.full.min.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
         
-        //custom option script
-        wp_enqueue_script( DHT_PREFIX_JS . '-multi-options-field', DHT_ASSETS_URI . 'scripts/js/multi-options-js.js', array(
-            'jquery',
-            DHT_PREFIX . '-select2-field'
-        ), fw()->manifest->get( 'version' ), true );
-        
-        wp_localize_script( DHT_PREFIX_JS . '-multi-options-field', 'dht_multioptions_ajax', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
+        if( Environment::isDevelopment() ) {
+            wp_register_style( DHT_PREFIX_CSS . '-multi-options-field', DHT_ASSETS_URI . 'styles/css/multi-options.css', array(), fw()->manifest->get( 'version' ) );
+            wp_enqueue_style( DHT_PREFIX_CSS . '-multi-options-field' );
+            
+            wp_enqueue_script( DHT_PREFIX_JS . '-multi-options-field', DHT_ASSETS_URI . 'scripts/js/multi-options.js', array(
+                'jquery',
+                DHT_PREFIX_JS . '-select2-field'
+            ), fw()->manifest->get( 'version' ), true );
+        }
     }
     
 }

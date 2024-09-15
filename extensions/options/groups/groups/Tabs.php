@@ -4,6 +4,7 @@ declare( strict_types = 1 );
 namespace DHT\Extensions\Options\Groups\Groups;
 
 use DHT\Extensions\Options\Groups\BaseGroup;
+use DHT\Helpers\Classes\Environment;
 use function DHT\fw;
 
 if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
@@ -37,10 +38,12 @@ final class Tabs extends BaseGroup {
      */
     public function enqueueOptionScripts( array $group ) : void {
         
-        wp_register_style( DHT_PREFIX_CSS . '-tabs-group', DHT_ASSETS_URI . 'styles/css/tabs.css', array(), fw()->manifest->get( 'version' ) );
-        wp_enqueue_style( DHT_PREFIX_CSS . '-tabs-group' );
-        
-        wp_enqueue_script( DHT_PREFIX_JS . '-tabs-group', DHT_ASSETS_URI . 'scripts/js/tabs-js.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
+        if( Environment::isDevelopment() ) {
+            wp_register_style( DHT_PREFIX_CSS . '-tabs-group', DHT_ASSETS_URI . 'styles/css/tabs.css', array(), fw()->manifest->get( 'version' ) );
+            wp_enqueue_style( DHT_PREFIX_CSS . '-tabs-group' );
+            
+            wp_enqueue_script( DHT_PREFIX_JS . '-tabs-group', DHT_ASSETS_URI . 'scripts/js/tabs.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
+        }
     }
     
 }

@@ -4,6 +4,7 @@ declare( strict_types = 1 );
 namespace DHT\Extensions\Options\Options\Fields;
 
 use DHT\Extensions\Options\Options\BaseField;
+use DHT\Helpers\Classes\Environment;
 use DHT\Helpers\Traits\UploadHelpers;
 use function DHT\fw;
 
@@ -37,14 +38,15 @@ final class UploadGallery extends BaseField {
         //Enqueue the media uploader
         wp_enqueue_media();
         
-        // Register custom style
-        wp_register_style( DHT_PREFIX_CSS . '-upload-gallery-field', DHT_ASSETS_URI . 'styles/css/upload-gallery.css', array(), fw()->manifest->get( 'version' ) );
-        wp_enqueue_style( DHT_PREFIX_CSS . '-upload-gallery-field' );
-        
-        wp_enqueue_script( DHT_PREFIX_JS . '-upload-gallery-field', DHT_ASSETS_URI . 'scripts/js/upload-gallery-js.js', array(
-            'jquery',
-            'media-editor'
-        ), fw()->manifest->get( 'version' ), true );
+        if( Environment::isDevelopment() ) {
+            wp_register_style( DHT_PREFIX_CSS . '-upload-gallery-field', DHT_ASSETS_URI . 'styles/css/upload-gallery.css', array(), fw()->manifest->get( 'version' ) );
+            wp_enqueue_style( DHT_PREFIX_CSS . '-upload-gallery-field' );
+            
+            wp_enqueue_script( DHT_PREFIX_JS . '-upload-gallery-field', DHT_ASSETS_URI . 'scripts/js/upload-gallery.js', array(
+                'jquery',
+                'media-editor'
+            ), fw()->manifest->get( 'version' ), true );
+        }
     }
     
     /**

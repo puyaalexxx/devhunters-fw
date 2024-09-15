@@ -4,6 +4,7 @@ declare( strict_types = 1 );
 namespace DHT\Extensions\Options\Containers\Containers;
 
 use DHT\Extensions\Options\Containers\BaseContainer;
+use DHT\Helpers\Classes\Environment;
 use DHT\Helpers\Traits\Options\ContainerTypeHelpers;
 use function DHT\fw;
 
@@ -38,10 +39,12 @@ final class SideMenu extends BaseContainer {
      */
     public function enqueueOptionScripts( array $container ) : void {
         
-        wp_register_style( DHT_PREFIX_CSS . '-sidemenu-container', DHT_ASSETS_URI . 'styles/css/sidemenu.css', array(), fw()->manifest->get( 'version' ) );
-        wp_enqueue_style( DHT_PREFIX_CSS . '-sidemenu-container' );
-        
-        wp_enqueue_script( DHT_PREFIX_JS . '-sidemenu-container', DHT_ASSETS_URI . 'scripts/js/sidemenu-js.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
+        if( Environment::isDevelopment() ) {
+            wp_register_style( DHT_PREFIX_CSS . '-sidemenu-container', DHT_ASSETS_URI . 'styles/css/sidemenu.css', array(), fw()->manifest->get( 'version' ) );
+            wp_enqueue_style( DHT_PREFIX_CSS . '-sidemenu-container' );
+            
+            wp_enqueue_script( DHT_PREFIX_JS . '-sidemenu-container', DHT_ASSETS_URI . 'scripts/js/sidemenu.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
+        }
     }
     
     /**

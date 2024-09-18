@@ -1,5 +1,3 @@
-import tsFileNames from "../file-names/ts-file-names";
-
 /**
  * Helper function to generate Pcss file names and their paths
  *
@@ -70,4 +68,3 @@ function getPcssEntries(pcssFileNames, folders) {
 }
 
 export default getPcssEntries;
-//module.exports = getPcssEntries;

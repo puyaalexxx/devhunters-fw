@@ -3,7 +3,7 @@
  *
  * @return object
  */
-function getPageModules() {
+function getCurrentPageModules() {
 
     //ts file names
     const tsFileNames = {
@@ -49,14 +49,28 @@ function getPageModules() {
 
     // get existent page modules
     return [
+        //general files that should always be loaded
+        "fw",
+
+        //sidebars
         $("#widgets-right").length ? tsFileNames.create_sidebars : "",
+
+        //options
         $(".dht-wrapper").length ? tsFileNames.dashboard_page_template : "",
+
+        //options - containers
         $("#dht-cosidebar").length ? tsFileNames.sidemenu : "", //change to class at the end
         $(".dht-tabsmenu-container").length ? tsFileNames.tabsmenu : "",
         $(".dht-field-child-wrapper.dht-field-child-tabs").length ? tsFileNames.tabs : "",
+
+        //options - groups
         $(".dht-field-child-wrapper.dht-field-child-accordion").length ? tsFileNames.accordion : "",
         $(".dht-field-child-wrapper.dht-field-child-addable-box").length ? tsFileNames.addable_box : "",
+
+        //options - toggles
         $(".dht-field-child-wrapper.dht-field-child-toggle").length ? tsFileNames.toggle : "",
+
+        //options - fields
         $(".dht-field-child-wrapper.dht-field-child-switch").length ? tsFileNames.switch : "",
         $(".dht-field-child-wrapper.dht-field-child-multiinput").length ? tsFileNames.multiinput : "",
         $(".dht-field-child-wrapper.dht-field-child-code-editor").length ? tsFileNames.ace_editor : "",
@@ -73,37 +87,7 @@ function getPageModules() {
         $(".dht-field-child-wrapper.dht-field-child-upload-item").length ? tsFileNames.upload : "",
         $(".dht-field-child-wrapper.dht-field-child-upload-gallery").length ? tsFileNames.upload_gallery : "",
         $(".dht-field-child-wrapper.dht-field-child-typography").length ? tsFileNames.typography : "",
-    ];
-
-    /* return {
-         [tsFileNames.create_sidebars]: $("#widgets-right").length,
-         [tsFileNames.dashboard_page_template]: $(".dht-wrapper").length,
-         [tsFileNames.sidemenu]: $("#dht-cosidebar").length, //change to class at the end
-         [tsFileNames.tabsmenu]: $(".dht-tabsmenu-container").length,
-         [tsFileNames.tabs]: $(".dht-field-child-wrapper.dht-field-child-tabs").length,
-         [tsFileNames.accordion]: $(".dht-field-child-wrapper.dht-field-child-accordion").length,
-         [tsFileNames.addable_box]: $(".dht-field-child-wrapper.dht-field-child-addable-box").length,
-         [tsFileNames.toggle]: $(".dht-field-child-wrapper.dht-field-child-toggle").length,
-         //[tsFileNames.switch]: $(".dht-field-child-wrapper.dht-field-child-switch").length,
-         //[tsFileNames.multiinput]: $(".dht-field-child-wrapper.dht-field-child-multiinput").length,
-         //[tsFileNames.ace_editor]: $(".dht-field-child-wrapper.dht-field-child-code-editor").length,
-         //[tsFileNames.borders]: $(".dht-field-child-wrapper.dht-field-child-borders").length,
-         //[tsFileNames.colorpicker]: colorpicker,
-         [tsFileNames.radio_image]: $(".dht-field-child-wrapper.dht-field-child-image-select").length,
-         //[tsFileNames.icon]: $(".dht-field-child-wrapper.dht-field-child-icons").length,
-         //[tsFileNames.datepicker]: $(".dht-field-child-wrapper.dht-field-child-datepicker .dht-datepicker").length,
-         //[tsFileNames.timepicker]: $(".dht-field-child-wrapper.dht-field-child-timepicker .dht-timepicker").length,
-         //[tsFileNames.datetimepicker]: $(".dht-field-child-wrapper.dht-field-child-datetimepicker .dht-datetimepicker").length,
-         [tsFileNames.rangeslider]: "",
-         //[tsFileNames.multi_options]: $(".dht-field-child-wrapper.dht-field-child-multioptions").length,
-         /// [tsFileNames.upload_image]: $(".dht-field-child-wrapper.dht-field-child-upload-image").length,
-         // [tsFileNames.upload]: $(".dht-field-child-wrapper.dht-field-child-upload-item").length,
-         // [tsFileNames.upload_gallery]: $(".dht-field-child-wrapper.dht-field-child-upload-gallery").length,
-         // [tsFileNames.typography]: $(".dht-field-child-wrapper.dht-field-child-typography").length,
-     };
- */
-
+    ].filter((fileName) => fileName !== "");
 }
 
-export default getTsEntries;
-//module.exports = getTsEntries;
+export default getCurrentPageModules;

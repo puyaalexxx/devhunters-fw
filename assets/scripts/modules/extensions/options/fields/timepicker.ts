@@ -1,12 +1,10 @@
-import jQuery from "jquery";
-
 (function($: JQueryStatic): void {
     "use strict";
 
     class TimePicker {
         //timePicker reference
         private $_timePicker;
-        
+
         constructor($timePicker: JQuery<HTMLElement>) {
             //timePicker reference
             this.$_timePicker = $timePicker;

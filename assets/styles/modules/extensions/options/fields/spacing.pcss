@@ -1,0 +1,116 @@
+/*spacing styles*/
+.dht-wrapper {
+    .dht-field-child-spacing {
+        .dht-field-spacing-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+            grid-gap: 15px;
+
+            span:before {
+                font-family: dashicons, sans-serif;
+                color: #000;
+            }
+
+            span.dht-spacing-top:before {
+                content: "\f342";
+            }
+
+            span.dht-spacing-right:before {
+                content: "\f344";
+            }
+
+            span.dht-spacing-bottom:before {
+                content: "\f346";
+            }
+
+            span.dht-spacing-left:before {
+                content: "\f340";
+            }
+
+            span {
+                position: absolute;
+                background: #eee;
+                border: 1px solid #7e8993;
+                height: 18px;
+                padding: 5px;
+                border-radius: 4px 0 0 4px;
+            }
+        }
+
+        .dht-field-spacing-input {
+            position: relative;
+        }
+
+        .dht-spacing {
+            padding-left: 30px !important;
+        }
+
+        @media (min-width: 1025px) and (max-width: 1366px) {
+            .dht-field-spacing-group {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (min-width: 981px) and (max-width: 1024px) {
+            .dht-field-spacing-group {
+                display: block;
+            }
+
+            .dht-field-spacing-input {
+                margin-bottom: 15px;
+            }
+
+            .dht-field-spacing-input select {
+                max-width: 100%;
+            }
+        }
+        @media (max-width: 980px) {
+            .dht-field-spacing-group {
+                display: block;
+
+                .dht-field-spacing-input {
+                    margin-bottom: 10px;
+                }
+            }
+
+            .dht-field-spacing-input select {
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .dht-field-spacing-group span {
+                padding: 10px;
+            }
+
+            .dht-spacing {
+                padding-left: 40px !important;
+            }
+        }
+    }
+
+    #dht-cosidebar, .dht-tabsmenu-container {
+        .dht-field-child-spacing {
+
+            @media (max-width: 1600px) {
+                .dht-field-spacing-group {
+                    display: block;
+                }
+
+                .dht-field-spacing-input {
+                    display: block;
+                }
+
+                .dht-field-spacing-input {
+                    margin-bottom: 15px;
+                }
+            }
+
+            @media (max-width: 1250px) {
+                .dht-field-spacing-input select {
+                    max-width: 100%;
+                }
+            }
+        }
+    }
+}

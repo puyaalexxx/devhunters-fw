@@ -70,14 +70,14 @@ final class FW {
         
         //this bundle is loading the modules dynamically
         if( Environment::isProduction() ) {
-            wp_enqueue_script( DHT_PREFIX_JS . '-main-bundle', DHT_ASSETS_URI . 'scripts/js/main.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
+            wp_enqueue_script( DHT_PREFIX_JS . '-main-bundle', DHT_ASSETS_URI . 'dist/main.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
+            //wp_enqueue_script( DHT_PREFIX_JS . '-main-bundle', DHT_ASSETS_URI . 'scripts/js/main.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
             wp_localize_script( DHT_PREFIX_JS . '-main-bundle', 'dht_framework_ajax_info', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
             
             wp_register_style( DHT_PREFIX_CSS . '-main-bundle', DHT_ASSETS_URI . 'styles/css/main.min.css', array(), fw()->manifest->get( 'version' ) );
             wp_enqueue_style( DHT_PREFIX_CSS . '-main-bundle' );
         }
     }
-    
     
     /**
      * Load Text Domain for translation

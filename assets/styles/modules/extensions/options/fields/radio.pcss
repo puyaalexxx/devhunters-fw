@@ -1,0 +1,80 @@
+/*checkbox styles*/
+@mixin radio_resposnive_code() {
+    .dht-radio {
+        float: none;
+        width: 21px;
+        height: 21px !important;
+    }
+
+    .dht-radio[type=radio]:checked:before {
+        position: relative;
+        top: -2px;
+        left: -2px;
+        width: .5625rem;
+        margin: .4375rem;
+    }
+}
+
+.dht-wrapper {
+
+    .dht-field-child-radio {
+
+        .dht-radio-wrapper {
+            clear: both;
+            margin-bottom: 10px;
+
+            .dht-radio:first-child {
+                margin-top: 0;
+            }
+
+            .dht-radio {
+                margin-top: 10px;
+            }
+
+            .dht-radio {
+                float: left;
+                width: auto;
+                min-height: auto;
+            }
+
+            label {
+                display: block;
+            }
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+
+            @media (max-width: 980px) {
+                @include radio_resposnive_code();
+            }
+        }
+    }
+
+    #dht-cosidebar, .dht-tabsmenu-container {
+        .dht-field-child-radio {
+
+            @media (max-width: 1250px) {
+                @include radio_resposnive_code();
+            }
+        }
+    }
+}
+
+@media (max-width: 1600px) {
+    .dht-meta-box-content {
+        #dht-cosidebar, .dht-tabsmenu-container {
+            .dht-field-child-radio {
+                @include radio_resposnive_code();
+            }
+        }
+    }
+}
+
+.dht-terms-page-content {
+    .dht-wrapper {
+        .dht-field-child-radio {
+            @include radio_resposnive_code();
+        }
+    }
+}

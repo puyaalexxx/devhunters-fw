@@ -1,5 +1,3 @@
-import getTsEntries from "../file-entries/ts-entries";
-
 const pcssFileNames = {
     // Modules - folder
     fw: "fw", //key name : pcss file name
@@ -46,4 +44,3 @@ const pcssFileNames = {
 };
 
 export default pcssFileNames;
-//module.exports = pcssFileNames;

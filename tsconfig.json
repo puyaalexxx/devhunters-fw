@@ -2,24 +2,51 @@
   "compilerOptions": {
     "target": "es5",
     "module": "esnext",
-    "jsx": "preserve",
+    "lib": [
+      "DOM",
+      "ESNext"
+    ],
     "strict": true,
-    "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "sourceMap": true,
     "strictNullChecks": true,
     "noImplicitAny": true,
-    "outDir": "assets/scripts/js",
-    "moduleResolution": "node",
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
     "resolveJsonModule": true,
-    "skipLibCheck": true
+    "jsx": "preserve",
+    "sourceMap": true,
+    /*"types": [
+      //"vite/client",
+      "jquery",
+      "jqueryui",
+      "select2",
+      "datepicker",
+      "jquery.timepicker",
+      "jquery.ui.datetimepicker"
+    ],*/
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "assets/*"
+      ],
+      "@ts/*": [
+        "assets/scripts/modules/*"
+      ],
+      "@pcss/*": [
+        "assets/styles/modules/*"
+      ],
+      "@dist/*": [
+        "assets/dist/*"
+      ]
+    }
   },
   "include": [
-    "assets/scripts/ts/",
-    "assets/scripts/ts/*.tsx",
-    "assets/scripts/ts/types/**/*.d.ts"
+    "assets/scripts/",
+    "assets/scripts/*.tsx",
+    "assets/scripts/types/**/*.d.ts"
   ],
   "exclude": [
     "node_modules"

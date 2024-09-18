@@ -1,5 +1,4 @@
-// Define the type for moduleConditions
-type ModuleConditions = {
-    [key: string]: JQuery<HTMLElement>;
-};
+interface ImportMeta {
+    glob: (pattern: string) => Record<string, () => Promise<any>>;
+}
 

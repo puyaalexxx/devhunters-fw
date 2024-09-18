@@ -1,6 +1,4 @@
-import jQuery from "jquery";
-
-(function ($: JQueryStatic): void {
+(function($: JQueryStatic): void {
     "use strict";
 
     class ColorPicker {
@@ -19,7 +17,7 @@ import jQuery from "jquery";
         private _initColorpicker() {
             const $thisClass = this;
 
-            $(".dht-field-child-wrapper .dht-colorpicker").each(function () {
+            $(".dht-field-child-wrapper .dht-colorpicker").each(function() {
                 const $this = $(this);
 
                 //get default palette of colors
@@ -78,12 +76,12 @@ import jQuery from "jquery";
     }
 
     // Initialize on page load
-    $(function () {
+    $(function() {
         init();
     });
 
     // Initialize after AJAX content is loaded
-    $(document).on("dht_colorPickerAjaxComplete", function () {
+    $(document).on("dht_colorPickerAjaxComplete", function() {
         init();
     });
 })(jQuery);

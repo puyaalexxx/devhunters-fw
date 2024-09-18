@@ -9,9 +9,10 @@ module.exports = {
         require("postcss-assets")({
             loadPaths: ["./assets/images"],
         }),
-        require("cssnano")({
-            preset: "default",
-        }),
+        /* require("cssnano")({
+             preset: "default",
+         }),*/
         require("precss"),
+        require("postcss-combine-duplicated-selectors"),
     ],
 };

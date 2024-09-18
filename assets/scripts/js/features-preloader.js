@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunkdevhunters_fw=self.webpackChunkdevhunters_fw||[]).push([[3235],{7606:(e,t,a)=>{a.r(t),a.d(t,{dhtInitializePreloader:()=>n});var r=a(1669),d=a.n(r)();function n(){var e=d("#dht-preloader"),t=e.attr("data-delay");setTimeout((function(){e.fadeOut("slow")}),+t)}}}]);
-//# sourceMappingURL=features-preloader.js.map

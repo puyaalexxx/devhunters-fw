@@ -33,7 +33,7 @@ final class Spacing extends BaseField {
     public function enqueueOptionScripts( array $field ) : void {
         
         if( Environment::isDevelopment() ) {
-            wp_register_style( DHT_PREFIX_CSS . '-spacing-field', DHT_ASSETS_URI . 'styles/css/spacing.css', array(), fw()->manifest->get( 'version' ) );
+            wp_register_style( DHT_PREFIX_CSS . '-spacing-field', DHT_ASSETS_URI . 'dist/css/spacing.css', array(), fw()->manifest->get( 'version' ) );
             wp_enqueue_style( DHT_PREFIX_CSS . '-spacing-field' );
         }
     }

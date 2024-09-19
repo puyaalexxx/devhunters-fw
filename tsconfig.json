@@ -1,10 +1,10 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es2020",
     "module": "esnext",
     "lib": [
-      "DOM",
-      "ESNext"
+      "dom",
+      "esnext"
     ],
     "strict": true,
     "forceConsistentCasingInFileNames": true,
@@ -17,7 +17,7 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "jsx": "preserve",
-    "sourceMap": true,
+    "sourceMap": false,
     /*"types": [
       //"vite/client",
       "jquery",

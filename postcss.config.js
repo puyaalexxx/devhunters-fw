@@ -1,18 +1,20 @@
-// postcss.config.js
 module.exports = {
-    plugins: [
-        require("postcss-preset-env")({
+    plugins: {
+        "postcss-preset-env": {
             stage: 1,
-        }),
-        require("autoprefixer")(),
-        require("postcss-import")(),
-        require("postcss-assets")({
-            loadPaths: ["./assets/images"],
-        }),
-        /* require("cssnano")({
-             preset: "default",
-         }),*/
-        require("precss"),
-        require("postcss-combine-duplicated-selectors"),
-    ],
+        },
+        "postcss-simple-vars": {}, // Add this if you are using variables
+        autoprefixer: {},
+        "postcss-import": {},
+        "postcss-mixins": {},
+        "postcss-nested": {},
+        cssnano: {
+            preset: "default",
+        }, // For minification in production
+        "postcss-assets": {
+            relative: process.env.DHT_IS_DEV_ENVIRONMENT === "true" ? "assets/dist/css/" : "assets/dist/",
+            loadPaths: ["**"],
+        },
+        "postcss-combine-duplicated-selectors": {},
+    },
 };

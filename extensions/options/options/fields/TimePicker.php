@@ -45,10 +45,10 @@ class TimePicker extends BaseField {
         wp_enqueue_script( DHT_PREFIX_JS . '-jquery-ui-timepicker', DHT_ASSETS_URI . 'scripts/libraries/jquery-ui-timepicker-addon.min.js', array( DHT_PREFIX_JS . '-jquery-ui-datepicker' ), fw()->manifest->get( 'version' ), true );
         
         if( Environment::isDevelopment() ) {
-            wp_register_style( DHT_PREFIX_CSS . '-timepicker-field', DHT_ASSETS_URI . 'styles/css/timepicker.css', array(), fw()->manifest->get( 'version' ) );
+            wp_register_style( DHT_PREFIX_CSS . '-timepicker-field', DHT_ASSETS_URI . 'dist/css/timepicker.css', array(), fw()->manifest->get( 'version' ) );
             wp_enqueue_style( DHT_PREFIX_CSS . '-timepicker-field' );
             
-            wp_enqueue_script( DHT_PREFIX_JS . '-timepicker-field', DHT_ASSETS_URI . 'scripts/js/timepicker.js', array( DHT_PREFIX_JS . '-jquery-ui-datepicker' ), fw()->manifest->get( 'version' ), true );
+            wp_enqueue_script( DHT_PREFIX_JS . '-timepicker-field', DHT_ASSETS_URI . 'dist/js/timepicker.js', array( DHT_PREFIX_JS . '-jquery-ui-datepicker' ), fw()->manifest->get( 'version' ), true );
         }
     }
     

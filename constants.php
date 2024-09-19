@@ -3,13 +3,14 @@ declare( strict_types = 1 );
 
 namespace DHT;
 
-if( !defined( 'ABSPATH' ) ) die( 'Forbidden' );
+if ( ! defined( 'ABSPATH' ) ) {
+	die( 'Forbidden' );
+}
 
 define( 'DHT_MAIN', true );
 
 //environment
-//define( 'DHT_FW_ENVIRONMENT', 'development' );
-define( 'DHT_FW_ENVIRONMENT', 'production' );
+define( 'DHT_IS_DEV_ENVIRONMENT', true );
 
 //framework prefix used as translation text domain, enqueue scripts
 define( 'DHT_PREFIX', 'dht' );

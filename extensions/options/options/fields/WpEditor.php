@@ -37,7 +37,7 @@ final class WpEditor extends BaseField {
         wp_enqueue_editor();
         
         if( Environment::isDevelopment() ) {
-            wp_register_style( DHT_PREFIX_CSS . '-wpeditor-field', DHT_ASSETS_URI . 'styles/css/wpeditor.css', array(), fw()->manifest->get( 'version' ) );
+            wp_register_style( DHT_PREFIX_CSS . '-wpeditor-field', DHT_ASSETS_URI . 'dist/css/wpeditor.css', array(), fw()->manifest->get( 'version' ) );
             wp_enqueue_style( DHT_PREFIX_CSS . '-wpeditor-field' );
         }
     }

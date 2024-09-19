@@ -33,10 +33,10 @@ final class RadioImage extends BaseField {
     public function enqueueOptionScripts( array $field ) : void {
         
         if( Environment::isDevelopment() ) {
-            wp_register_style( DHT_PREFIX_CSS . '-radio-image-field', DHT_ASSETS_URI . 'styles/css/radio-image.css', array(), fw()->manifest->get( 'version' ) );
+            wp_register_style( DHT_PREFIX_CSS . '-radio-image-field', DHT_ASSETS_URI . 'dist/css/radio-image.css', array(), fw()->manifest->get( 'version' ) );
             wp_enqueue_style( DHT_PREFIX_CSS . '-radio-image-field' );
             
-            wp_enqueue_script( DHT_PREFIX_JS . '-radio-image-field', DHT_ASSETS_URI . 'scripts/js/radio-image.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
+            wp_enqueue_script( DHT_PREFIX_JS . '-radio-image-field', DHT_ASSETS_URI . 'dist/js/radio-image.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
         }
     }
     

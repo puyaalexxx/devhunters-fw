@@ -1,5 +1,5 @@
 /*checkbox styles*/
-@mixin checkbox_resposnive_code() {
+@define-mixin checkbox_resposnive_code {
     .dht-checkbox {
         float: none;
         width: 21px;
@@ -37,7 +37,7 @@
             }
 
             @media (max-width: 980px) {
-                @include checkbox_resposnive_code();
+                @mixin checkbox_resposnive_code;
             }
         }
 
@@ -58,7 +58,7 @@
     #dht-cosidebar, .dht-tabsmenu-container {
         .dht-field-child-checkbox {
             @media (max-width: 1250px) {
-                @include checkbox_resposnive_code();
+                @mixin checkbox_resposnive_code;
             }
         }
     }
@@ -68,7 +68,7 @@
     .dht-meta-box-content {
         #dht-cosidebar, .dht-tabsmenu-container {
             .dht-field-child-checkbox {
-                @include checkbox_resposnive_code();
+                @mixin checkbox_resposnive_code;
             }
         }
     }
@@ -77,7 +77,7 @@
 .dht-terms-page-content {
     .dht-wrapper {
         .dht-field-child-checkbox {
-            @include checkbox_resposnive_code();
+            @mixin checkbox_resposnive_code;
         }
     }
 }

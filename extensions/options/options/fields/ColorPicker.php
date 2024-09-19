@@ -37,7 +37,7 @@ final class ColorPicker extends BaseField {
         wp_enqueue_script( 'wp-color-picker' );
         
         if( Environment::isDevelopment() ) {
-            wp_register_style( DHT_PREFIX_CSS . '-wp-color-picker-field', DHT_ASSETS_URI . 'styles/css/colorpicker.css', array(), fw()->manifest->get( 'version' ) );
+            wp_register_style( DHT_PREFIX_CSS . '-wp-color-picker-field', DHT_ASSETS_URI . 'dist/css/colorpicker.css', array(), fw()->manifest->get( 'version' ) );
             wp_enqueue_style( DHT_PREFIX_CSS . '-wp-color-picker-field' );
         }
         
@@ -50,7 +50,7 @@ final class ColorPicker extends BaseField {
             ), fw()->manifest->get( 'version' ), true );
             
             if( Environment::isDevelopment() ) {
-                wp_enqueue_script( DHT_PREFIX_JS . '-wp-color-picker-field', DHT_ASSETS_URI . 'scripts/js/colorpicker.js', array(
+                wp_enqueue_script( DHT_PREFIX_JS . '-wp-color-picker-field', DHT_ASSETS_URI . 'dist/js/colorpicker.js', array(
                     'jquery',
                     'wp-color-picker',
                     DHT_PREFIX_JS . '-wp-color-picker-option-alpha-field'
@@ -60,7 +60,7 @@ final class ColorPicker extends BaseField {
         else {
             
             if( Environment::isDevelopment() ) {
-                wp_enqueue_script( DHT_PREFIX_JS . '-wp-color-picker-field', DHT_ASSETS_URI . 'scripts/js/colorpicker.js', array(
+                wp_enqueue_script( DHT_PREFIX_JS . '-wp-color-picker-field', DHT_ASSETS_URI . 'dist/js/colorpicker.js', array(
                     'jquery',
                     'wp-color-picker'
                 ), fw()->manifest->get( 'version' ), true );

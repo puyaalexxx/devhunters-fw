@@ -39,10 +39,10 @@ final class Tabs extends BaseGroup {
     public function enqueueOptionScripts( array $group ) : void {
         
         if( Environment::isDevelopment() ) {
-            wp_register_style( DHT_PREFIX_CSS . '-tabs-group', DHT_ASSETS_URI . 'styles/css/tabs.css', array(), fw()->manifest->get( 'version' ) );
+            wp_register_style( DHT_PREFIX_CSS . '-tabs-group', DHT_ASSETS_URI . 'dist/css/tabs.css', array(), fw()->manifest->get( 'version' ) );
             wp_enqueue_style( DHT_PREFIX_CSS . '-tabs-group' );
             
-            wp_enqueue_script( DHT_PREFIX_JS . '-tabs-group', DHT_ASSETS_URI . 'scripts/js/tabs.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
+            wp_enqueue_script( DHT_PREFIX_JS . '-tabs-group', DHT_ASSETS_URI . 'dist/js/tabs.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
         }
     }
     

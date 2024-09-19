@@ -1,7 +1,6 @@
 @import '../../../../variables.pcss';
 
-
-@mixin switch_resposnive_code() {
+@define-mixin switch_resposnive_code {
     label.dht-switch {
         margin: auto;
         width: 160px;
@@ -111,14 +110,14 @@
         }
 
         @media (max-width: 980px) {
-            @include switch_resposnive_code();
+            @mixin switch_resposnive_code;
         }
     }
 
     #dht-cosidebar, .dht-tabsmenu-container {
         .dht-field-child-switch {
             @media (max-width: 1250px) {
-                @include switch_resposnive_code();
+                @mixin switch_resposnive_code;
             }
         }
     }
@@ -129,7 +128,7 @@
     .dht-meta-box-content {
         #dht-cosidebar, .dht-tabsmenu-container {
             .dht-field-child-switch {
-                @include switch_resposnive_code();
+                @mixin switch_resposnive_code;
             }
         }
     }
@@ -138,7 +137,7 @@
 .dht-terms-page-content {
     .dht-wrapper {
         .dht-field-child-switch {
-            @include switch_resposnive_code();
+            @mixin switch_resposnive_code;
         }
     }
 }

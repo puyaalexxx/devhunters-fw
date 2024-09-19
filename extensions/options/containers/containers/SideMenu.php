@@ -40,10 +40,10 @@ final class SideMenu extends BaseContainer {
     public function enqueueOptionScripts( array $container ) : void {
         
         if( Environment::isDevelopment() ) {
-            wp_register_style( DHT_PREFIX_CSS . '-sidemenu-container', DHT_ASSETS_URI . 'styles/css/sidemenu.css', array(), fw()->manifest->get( 'version' ) );
+            wp_register_style( DHT_PREFIX_CSS . '-sidemenu-container', DHT_ASSETS_URI . 'dist/css/sidemenu.css', array(), fw()->manifest->get( 'version' ) );
             wp_enqueue_style( DHT_PREFIX_CSS . '-sidemenu-container' );
             
-            wp_enqueue_script( DHT_PREFIX_JS . '-sidemenu-container', DHT_ASSETS_URI . 'scripts/js/sidemenu.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
+            wp_enqueue_script( DHT_PREFIX_JS . '-sidemenu-container', DHT_ASSETS_URI . 'dist/js/sidemenu.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
         }
     }
     

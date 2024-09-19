@@ -33,7 +33,7 @@ final class Radio extends BaseField {
     public function enqueueOptionScripts( array $field ) : void {
         
         if( Environment::isDevelopment() ) {
-            wp_register_style( DHT_PREFIX_CSS . '-radio-field', DHT_ASSETS_URI . 'styles/css/radio.css', array(), fw()->manifest->get( 'version' ) );
+            wp_register_style( DHT_PREFIX_CSS . '-radio-field', DHT_ASSETS_URI . 'dist/css/radio.css', array(), fw()->manifest->get( 'version' ) );
             wp_enqueue_style( DHT_PREFIX_CSS . '-radio-field' );
         }
     }

@@ -3,7 +3,7 @@
 
     class Toggle {
         //toggle reference
-        private $_toggle;
+        private $_toggle: JQuery<HTMLElement>;
 
         constructor($toggle: JQuery<HTMLElement>) {
             //toggle reference

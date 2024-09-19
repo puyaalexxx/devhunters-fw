@@ -1,7 +1,7 @@
 @import '../../../../variables.pcss';
 @import '../../../../mixins.pcss';
 
-@mixin sidemenu_resposnive_code() {
+@define-mixin sidemenu_resposnive_code {
     .dht-cosidebar-header {
         height: calc(100% - 50px);
         width: 50px !important;
@@ -273,11 +273,11 @@
         }
 
         @media (max-width: 1250px) {
-            @include dashboard_responsive_code();
+            @mixin dashboard_responsive_code;
         }
 
         @media all and (max-width: 900px) {
-            @include sidemenu_resposnive_code();
+            @mixin sidemenu_resposnive_code;
         }
 
         @media (max-width: 600px) {
@@ -292,9 +292,9 @@
 @media all and (max-width: 1600px) {
     .dht-meta-box-content {
         #dht-cosidebar {
-            @include sidemenu_resposnive_code();
+            @mixin sidemenu_resposnive_code;
 
-            @include dashboard_responsive_code();
+            @mixin dashboard_responsive_code;
 
             .dht-field-wrapper {
                 width: 80%;

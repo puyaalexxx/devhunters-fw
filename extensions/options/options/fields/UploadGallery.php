@@ -39,10 +39,10 @@ final class UploadGallery extends BaseField {
         wp_enqueue_media();
         
         if( Environment::isDevelopment() ) {
-            wp_register_style( DHT_PREFIX_CSS . '-upload-gallery-field', DHT_ASSETS_URI . 'styles/css/upload-gallery.css', array(), fw()->manifest->get( 'version' ) );
+            wp_register_style( DHT_PREFIX_CSS . '-upload-gallery-field', DHT_ASSETS_URI . 'dist/css/upload-gallery.css', array(), fw()->manifest->get( 'version' ) );
             wp_enqueue_style( DHT_PREFIX_CSS . '-upload-gallery-field' );
             
-            wp_enqueue_script( DHT_PREFIX_JS . '-upload-gallery-field', DHT_ASSETS_URI . 'scripts/js/upload-gallery.js', array(
+            wp_enqueue_script( DHT_PREFIX_JS . '-upload-gallery-field', DHT_ASSETS_URI . 'dist/js/upload-gallery.js', array(
                 'jquery',
                 'media-editor'
             ), fw()->manifest->get( 'version' ), true );

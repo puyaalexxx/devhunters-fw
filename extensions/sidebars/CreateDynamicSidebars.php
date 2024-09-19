@@ -114,7 +114,7 @@ final class CreateDynamicSidebars implements ICreateDynamicSidebars {
     public function enqueueSidebarScripts( string $hook ) : void {
         
         if( Environment::isDevelopment() ) {
-            wp_register_style( DHT_PREFIX_CSS . '-create-sidebars', DHT_ASSETS_URI . 'styles/css/create-sidebars.css', array(), fw()->manifest->get( 'version' ) );
+            wp_register_style( DHT_PREFIX_CSS . '-create-sidebars', DHT_ASSETS_URI . 'dist/css/create-sidebars.css', array(), fw()->manifest->get( 'version' ) );
             wp_enqueue_style( DHT_PREFIX_CSS . '-create-sidebars' );
             
             wp_enqueue_script( DHT_PREFIX_JS . '-create-sidebars', DHT_ASSETS_URI . 'scripts/js/create-sidebars.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );

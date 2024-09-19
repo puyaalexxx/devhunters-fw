@@ -39,10 +39,10 @@ final class UploadImage extends BaseField {
         wp_enqueue_media();
         
         if( Environment::isDevelopment() ) {
-            wp_register_style( DHT_PREFIX_CSS . '-upload-image-field', DHT_ASSETS_URI . 'styles/css/upload-image.css', array(), fw()->manifest->get( 'version' ) );
+            wp_register_style( DHT_PREFIX_CSS . '-upload-image-field', DHT_ASSETS_URI . 'dist/css/upload-image.css', array(), fw()->manifest->get( 'version' ) );
             wp_enqueue_style( DHT_PREFIX_CSS . '-upload-image-field' );
             
-            wp_enqueue_script( DHT_PREFIX_JS . '-upload-image-field', DHT_ASSETS_URI . 'scripts/js/upload-image.js', array(
+            wp_enqueue_script( DHT_PREFIX_JS . '-upload-image-field', DHT_ASSETS_URI . 'dist/js/upload-image.js', array(
                 'jquery',
                 'media-editor'
             ), fw()->manifest->get( 'version' ), true );

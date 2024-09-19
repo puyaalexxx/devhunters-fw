@@ -33,7 +33,7 @@ final class Checkbox extends BaseField {
     public function enqueueOptionScripts( array $field ) : void {
         
         if( Environment::isDevelopment() ) {
-            wp_register_style( DHT_PREFIX_CSS . '-checkbox-field', DHT_ASSETS_URI . 'styles/css/checkbox.css', array(), fw()->manifest->get( 'version' ) );
+            wp_register_style( DHT_PREFIX_CSS . '-checkbox-field', DHT_ASSETS_URI . 'dist/css/checkbox.css', array(), fw()->manifest->get( 'version' ) );
             wp_enqueue_style( DHT_PREFIX_CSS . '-checkbox-field' );
         }
     }

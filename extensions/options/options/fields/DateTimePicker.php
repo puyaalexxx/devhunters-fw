@@ -46,10 +46,10 @@ class DateTimePicker extends BaseField {
         
         if( Environment::isDevelopment() ) {
             //custom css
-            wp_register_style( DHT_PREFIX_CSS . '-datetimepicker-field', DHT_ASSETS_URI . 'styles/css/datetimepicker.css', array(), fw()->manifest->get( 'version' ) );
+            wp_register_style( DHT_PREFIX_CSS . '-datetimepicker-field', DHT_ASSETS_URI . 'dist/css/datetimepicker.css', array(), fw()->manifest->get( 'version' ) );
             wp_enqueue_style( DHT_PREFIX_CSS . '-datetimepicker-field' );
             
-            wp_enqueue_script( DHT_PREFIX_JS . '-datetimepicker-field', DHT_ASSETS_URI . 'scripts/js/datetimepicker.js', array( DHT_PREFIX_JS . '-jquery-ui-datepicker' ), fw()->manifest->get( 'version' ), true );
+            wp_enqueue_script( DHT_PREFIX_JS . '-datetimepicker-field', DHT_ASSETS_URI . 'dist/js/datetimepicker.js', array( DHT_PREFIX_JS . '-jquery-ui-datepicker' ), fw()->manifest->get( 'version' ), true );
         }
     }
     

@@ -136,10 +136,10 @@ final class Options implements IOptions {
     public function enqueueGeneralScripts( string $hook ) : void {
         
         if( Environment::isDevelopment() ) {
-            wp_register_style( DHT_PREFIX_CSS . '-dashboard-page-template', DHT_ASSETS_URI . 'styles/css/dashboard-page-template.css', array(), fw()->manifest->get( 'version' ) );
+            wp_register_style( DHT_PREFIX_CSS . '-dashboard-page-template', DHT_ASSETS_URI . 'dist/css/dashboard-page-template.css', array(), fw()->manifest->get( 'version' ) );
             wp_enqueue_style( DHT_PREFIX_CSS . '-dashboard-page-template' );
             
-            wp_enqueue_script( DHT_PREFIX_JS . '-dashboard-page-template', DHT_ASSETS_URI . 'scripts/js/dashboard-page-template.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
+            wp_enqueue_script( DHT_PREFIX_JS . '-dashboard-page-template', DHT_ASSETS_URI . 'dist/js/dashboard-page-template.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
         }
     }
     

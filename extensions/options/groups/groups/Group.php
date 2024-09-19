@@ -42,7 +42,7 @@ final class Group extends BaseGroup {
     public function enqueueOptionScripts( array $group ) : void {
         
         if( Environment::isDevelopment() ) {
-            wp_register_style( DHT_PREFIX_CSS . '-group-group', DHT_ASSETS_URI . 'styles/css/group.css', array(), fw()->manifest->get( 'version' ) );
+            wp_register_style( DHT_PREFIX_CSS . '-group-group', DHT_ASSETS_URI . 'dist/css/group.css', array(), fw()->manifest->get( 'version' ) );
             wp_enqueue_style( DHT_PREFIX_CSS . '-group-group' );
         }
     }

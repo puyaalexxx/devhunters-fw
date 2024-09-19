@@ -62,10 +62,10 @@ final class Icon extends BaseField {
         wp_enqueue_style( DHT_PREFIX_CSS . '-bootstrap-icons-css' );
         
         if( Environment::isDevelopment() ) {
-            wp_register_style( DHT_PREFIX_CSS . '-icon-field', DHT_ASSETS_URI . 'styles/css/icon.css', array(), fw()->manifest->get( 'version' ) );
+            wp_register_style( DHT_PREFIX_CSS . '-icon-field', DHT_ASSETS_URI . 'dist/css/icon.css', array(), fw()->manifest->get( 'version' ) );
             wp_enqueue_style( DHT_PREFIX_CSS . '-icon-field' );
             
-            wp_enqueue_script( DHT_PREFIX_JS . '-icon-field', DHT_ASSETS_URI . 'scripts/js/icon.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
+            wp_enqueue_script( DHT_PREFIX_JS . '-icon-field', DHT_ASSETS_URI . 'dist/js/icon.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
         }
     }
     

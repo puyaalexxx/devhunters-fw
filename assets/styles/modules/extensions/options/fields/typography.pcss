@@ -1,4 +1,4 @@
-@mixin responsive_code() {
+@define-mixin responsive_code {
     .dht-field-child-typography-group {
         display: block;
     }
@@ -45,7 +45,7 @@
         }
 
         @media (max-width: 1366px) {
-            @include responsive_code();
+            @mixin responsive_code;
         }
 
         span.select2.select2-container {
@@ -62,7 +62,7 @@
         .dht-field-child-typography {
 
             @media (max-width: 1600px) {
-                @include responsive_code();
+                @mixin responsive_code;
 
                 span.select2.select2-container {
                     width: 100% !important;

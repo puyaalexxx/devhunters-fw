@@ -21,7 +21,7 @@
         private _initDatePicker(): void {
             this.$_datepicker.datepicker({
                 dateFormat: this.$_datepicker.attr("data-format"),
-                beforeShow: function(input: Element, instance: any): {} {
+                beforeShow: function(input: Element, instance: any): JQueryUI.DatepickerOptions {
                     // Add a custom className to the datepicker element
                     $(instance.dpDiv).addClass("dht-datepicker-ui");
 
@@ -29,6 +29,7 @@
                     setTimeout(function() {
                         $("#ui-datepicker-div.dht-datepicker-ui").insertAfter($(input));
                     }, 10); // Delay to ensure the datepicker is created before moving it
+
                     return {};
                 },
             });

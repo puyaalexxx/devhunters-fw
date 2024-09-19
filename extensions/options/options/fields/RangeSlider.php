@@ -40,10 +40,10 @@ final class RangeSlider extends BaseField {
         wp_enqueue_script( 'jquery-ui-slider' );
         
         if( Environment::isDevelopment() ) {
-            wp_register_style( DHT_PREFIX_CSS . '-rangeslider-field', DHT_ASSETS_URI . 'styles/css/rangeslider.css', array(), fw()->manifest->get( 'version' ) );
+            wp_register_style( DHT_PREFIX_CSS . '-rangeslider-field', DHT_ASSETS_URI . 'dist/css/rangeslider.css', array(), fw()->manifest->get( 'version' ) );
             wp_enqueue_style( DHT_PREFIX_CSS . '-rangeslider-field' );
             
-            wp_enqueue_script( DHT_PREFIX_JS . '-rangeslider-field', DHT_ASSETS_URI . 'scripts/js/rangeslider.js', array( 'jquery-ui-slider' ), fw()->manifest->get( 'version' ), true );
+            wp_enqueue_script( DHT_PREFIX_JS . '-rangeslider-field', DHT_ASSETS_URI . 'dist/js/rangeslider.js', array( 'jquery-ui-slider' ), fw()->manifest->get( 'version' ), true );
         }
     }
     

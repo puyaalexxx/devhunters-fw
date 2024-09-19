@@ -40,10 +40,10 @@ final class TabsMenu extends BaseContainer {
     public function enqueueOptionScripts( array $container ) : void {
         
         if( Environment::isDevelopment() ) {
-            wp_register_style( DHT_PREFIX_CSS . '-tabsmenu-container', DHT_ASSETS_URI . 'styles/css/tabsmenu.css', array(), fw()->manifest->get( 'version' ) );
+            wp_register_style( DHT_PREFIX_CSS . '-tabsmenu-container', DHT_ASSETS_URI . 'dist/css/tabsmenu.css', array(), fw()->manifest->get( 'version' ) );
             wp_enqueue_style( DHT_PREFIX_CSS . '-tabsmenu-container' );
             
-            wp_enqueue_script( DHT_PREFIX_JS . '-tabsmenu-container', DHT_ASSETS_URI . 'scripts/js/tabsmenu.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
+            wp_enqueue_script( DHT_PREFIX_JS . '-tabsmenu-container', DHT_ASSETS_URI . 'dist/js/tabsmenu.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
         }
     }
     

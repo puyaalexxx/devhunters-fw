@@ -1,4 +1,4 @@
-import getCurrentPageModules from "../../config/vite/file-entries/ts-current-page-modules";
+import getCurrentPageModules from "../../helpers/node/vite/current-page-ts-files";
 
 /**
  * Helper function to load modules dynamically
@@ -36,14 +36,14 @@ async function loadModule(modules: Record<string, () => Promise<unknown>>, fileN
 async function initializeJSDynamicModulesLoading() {
 
     //get all the ts files that needs to be dynamically loaded
-    const modules = import.meta.glob("@ts/**/*.ts");
+    const allModules = import.meta.glob("@ts/**/*.ts");
 
     //get existent current page modules
-    const pageModules = getCurrentPageModules();
+    const pageModules = getCurrentPageModules(allModules);
 
     //dynamically load every existent page module
     for (const fileName of pageModules) {
-        await loadModule(modules, fileName);
+        await loadModule(allModules, fileName);
     }
 
 }

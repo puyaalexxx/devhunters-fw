@@ -1,5 +1,5 @@
 /*checkbox styles*/
-@mixin radio_resposnive_code() {
+@define-mixin radio_resposnive_code {
     .dht-radio {
         float: none;
         width: 21px;
@@ -46,7 +46,7 @@
             }
 
             @media (max-width: 980px) {
-                @include radio_resposnive_code();
+                @mixin radio_resposnive_code;
             }
         }
     }
@@ -55,7 +55,7 @@
         .dht-field-child-radio {
 
             @media (max-width: 1250px) {
-                @include radio_resposnive_code();
+                @mixin radio_resposnive_code;
             }
         }
     }
@@ -65,7 +65,7 @@
     .dht-meta-box-content {
         #dht-cosidebar, .dht-tabsmenu-container {
             .dht-field-child-radio {
-                @include radio_resposnive_code();
+                @mixin radio_resposnive_code;
             }
         }
     }
@@ -74,7 +74,7 @@
 .dht-terms-page-content {
     .dht-wrapper {
         .dht-field-child-radio {
-            @include radio_resposnive_code();
+            @mixin radio_resposnive_code;
         }
     }
 }

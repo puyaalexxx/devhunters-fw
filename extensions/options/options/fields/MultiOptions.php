@@ -40,10 +40,10 @@ final class MultiOptions extends BaseField {
         wp_enqueue_script( DHT_PREFIX_JS . '-select2-field', DHT_ASSETS_URI . 'scripts/libraries/select2.full.min.js', array( 'jquery' ), fw()->manifest->get( 'version' ), true );
         
         if( Environment::isDevelopment() ) {
-            wp_register_style( DHT_PREFIX_CSS . '-multi-options-field', DHT_ASSETS_URI . 'styles/css/multi-options.css', array(), fw()->manifest->get( 'version' ) );
+            wp_register_style( DHT_PREFIX_CSS . '-multi-options-field', DHT_ASSETS_URI . 'dist/css/multi-options.css', array(), fw()->manifest->get( 'version' ) );
             wp_enqueue_style( DHT_PREFIX_CSS . '-multi-options-field' );
             
-            wp_enqueue_script( DHT_PREFIX_JS . '-multi-options-field', DHT_ASSETS_URI . 'scripts/js/multi-options.js', array(
+            wp_enqueue_script( DHT_PREFIX_JS . '-multi-options-field', DHT_ASSETS_URI . 'dist/js/multi-options.js', array(
                 'jquery',
                 DHT_PREFIX_JS . '-select2-field'
             ), fw()->manifest->get( 'version' ), true );

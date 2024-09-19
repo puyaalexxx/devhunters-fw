@@ -55,10 +55,10 @@ final class AddableBox extends BaseGroup {
         wp_enqueue_editor();
         
         if( Environment::isDevelopment() ) {
-            wp_register_style( DHT_PREFIX_CSS . '-addable-box-group', DHT_ASSETS_URI . 'styles/css/addable-box.css', array(), fw()->manifest->get( 'version' ) );
+            wp_register_style( DHT_PREFIX_CSS . '-addable-box-group', DHT_ASSETS_URI . 'dist/css/addable-box.css', array(), fw()->manifest->get( 'version' ) );
             wp_enqueue_style( DHT_PREFIX_CSS . '-addable-box-group' );
             
-            wp_enqueue_script( DHT_PREFIX_JS . '-addable-box-group', DHT_ASSETS_URI . 'scripts/js/addable-box.js', array(
+            wp_enqueue_script( DHT_PREFIX_JS . '-addable-box-group', DHT_ASSETS_URI . 'dist/js/addable-box.js', array(
                 'jquery',
                 'jquery-ui-sortable'
             ), fw()->manifest->get( 'version' ), true );

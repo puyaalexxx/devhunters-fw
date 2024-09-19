@@ -36,13 +36,13 @@ final class Borders extends BaseField {
         wp_enqueue_script( 'wp-color-picker' );
         
         if( Environment::isDevelopment() ) {
-            wp_register_style( DHT_PREFIX_CSS . '-borders-field', DHT_ASSETS_URI . 'styles/css/borders.css', array(), fw()->manifest->get( 'version' ) );
+            wp_register_style( DHT_PREFIX_CSS . '-borders-field', DHT_ASSETS_URI . 'dist/css/borders.css', array(), fw()->manifest->get( 'version' ) );
             wp_enqueue_style( DHT_PREFIX_CSS . '-borders-field' );
             
-            wp_enqueue_script( DHT_PREFIX_JS . '-wp-color-picker-field', DHT_ASSETS_URI . 'scripts/js/colorpicker.js', array(
+            wp_enqueue_script_module( DHT_PREFIX_JS . '-wp-color-picker-field', DHT_ASSETS_URI . 'dist/js/borders.js', array(
                 'jquery',
                 'wp-color-picker'
-            ), fw()->manifest->get( 'version' ), true );
+            ), fw()->manifest->get( 'version' ) );
         }
     }
     

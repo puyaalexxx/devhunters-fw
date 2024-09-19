@@ -232,4 +232,4 @@ dist
 /.idea/vcs.xml
 
 .DS_Store
-assets/.DS_Store
+**/.DS_Store

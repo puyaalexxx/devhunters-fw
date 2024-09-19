@@ -230,3 +230,6 @@ dist
 /.idea/modules.xml
 /.idea/php.xml
 /.idea/vcs.xml
+
+.DS_Store
+assets/.DS_Store

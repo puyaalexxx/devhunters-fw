@@ -67,5 +67,4 @@ async function removeJsGeneratedFiles() {
 }
 
 removeJsGeneratedFiles().then(r => {
-    console.log(">>>>> Js files removed <<<<<");
 });

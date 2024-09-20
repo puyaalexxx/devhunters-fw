@@ -11,8 +11,7 @@ const pcssFiles = getFileEntries(path, "assets/styles/modules/**/*.pcss", "pcss"
 const tsFilesSuffix = "-script"; // this is needed because the pcss files keys are the same as the ts ones, and they are overriding each other in the input area
 const tsFiles = getFileEntries(path, "assets/scripts/modules/**/*.ts", "ts", tsFilesSuffix);
 
-export default defineConfig(({ mode }) => {
-
+export default defineConfig(({ command, mode }) => {
     const isDevelopmentEnv = mode === "development";
     //constant used in postcss.config file
     process.env.DHT_IS_DEV_ENVIRONMENT = isDevelopmentEnv.toString();
@@ -56,6 +55,7 @@ export default defineConfig(({ mode }) => {
                 external: ["jquery"],
             },
             cssCodeSplit: cssCodeSplit,
+            watch: command === "serve" ? {} : null, // watch mode available for dev mode only
         },
         css: {
             postcss: path.resolve(__dirname, "postcss.config.js"),

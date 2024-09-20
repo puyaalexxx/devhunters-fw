@@ -28,7 +28,7 @@
          * @return void
          */
         private _dropownMenuHover(): void {
-            $("#dht-cosidebar .dht-cosidebar-header > ul > li").on({
+            $(".dht-cosidebar .dht-cosidebar-header > ul > li").on({
                 mouseenter: function() {
                     if (!$(".dht-cosidebar-sub-menu:visible", this).length) {
                         $(".dht-cosidebar-dropdown-menu", this).show();
@@ -66,7 +66,7 @@
          * @return void
          */
         private _addDropdownMenuDiv(): void {
-            $("#dht-cosidebar .dht-cosidebar-header >ul >li").each(function() {
+            $(".dht-cosidebar .dht-cosidebar-header >ul >li").each(function() {
                 if ($(".dht-cosidebar-sub-menu", this).length) {
                     const html = $(".dht-cosidebar-sub-menu", this).html();
                     $(this).append("<ul dropdown class=\"dht-cosidebar-dropdown-menu\">" + html + "</ul>");
@@ -82,13 +82,13 @@
         private _enableTabsFunctionality(): void {
             //made the menus work like tabs
             $(
-                "#dht-cosidebar.dht-cosidebar-tabs .dht-cosidebar-header ul li > a, " +
-                "#dht-cosidebar.dht-cosidebar-tabs .dht-cosidebar-header ul li .dht-cosidebar-sub-menu a",
+                ".dht-cosidebar.dht-cosidebar-tabs .dht-cosidebar-header ul li > a, " +
+                ".dht-cosidebar.dht-cosidebar-tabs .dht-cosidebar-header ul li .dht-cosidebar-sub-menu a",
             ).on("click", function(e) {
                 e.preventDefault(); // Prevent default anchor behavior
 
                 const $this = $(this);
-                const $parent = $this.parents("#dht-cosidebar");
+                const $parent = $this.parents(".dht-cosidebar");
                 const $header_area = $this.parents(".dht-cosidebar-header");
 
                 // Get the target tab ID from the href attribute

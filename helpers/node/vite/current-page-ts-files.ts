@@ -47,7 +47,7 @@ function getCurrentPageModules(allModules: Record<string, () => Promise<unknown>
         $(".dht-wrapper").length ? tsFileNames.dashboard_page_template : "",
 
         //options - containers
-        $("#dht-cosidebar").length ? tsFileNames.sidemenu : "", //change to class at the end
+        $(".dht-cosidebar").length ? tsFileNames.sidemenu : "", //change to class at the end
         $(".dht-tabsmenu-container").length ? tsFileNames.tabsmenu : "",
         $(".dht-field-child-wrapper.dht-field-child-tabs").length ? tsFileNames.tabs : "",
 

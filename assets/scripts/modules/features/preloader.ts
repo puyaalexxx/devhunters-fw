@@ -8,7 +8,7 @@
 export function dhtInitializePreloader(): void {
     "use strict";
 
-    const $dht_preloader = $("#dht-preloader");
+    const $dht_preloader = $(".dht-preloader");
     const delay = $dht_preloader.attr("data-delay")!;
 
     // Set a timeout to hide the preloader after the specified delay

@@ -61,16 +61,7 @@ export default defineConfig(({ command, mode }) => {
             postcss: path.resolve(__dirname, "postcss.config.js"),
             devSourcemap: isDevelopmentEnv, // Enable source maps for CSS in development mode
         },
-        plugins: [
-            {
-                name: "php",
-                handleHotUpdate({ file, server }) {
-                    if (file.endsWith(".php")) {
-                        server.ws.send({ type: "full-reload" });
-                    }
-                },
-            },
-        ],
+        plugins: [],
         resolve: {
             alias: {
                 "@": path.resolve(__dirname, "assets"),

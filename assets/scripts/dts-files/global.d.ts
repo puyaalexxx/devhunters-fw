@@ -6,3 +6,7 @@ declare module "*.pcss" {
     const content: { [className: string]: string };
     export default content;
 }
+
+interface ImportMeta {
+    glob: (pattern: string) => Record<string, () => Promise<any>>;
+}

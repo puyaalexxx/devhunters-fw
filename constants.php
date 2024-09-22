@@ -9,11 +9,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 define( 'DHT_MAIN', true );
 
-//environment
-define( 'DHT_IS_DEV_ENVIRONMENT', true );
-
 //framework prefix used as translation text domain, enqueue scripts
 define( 'DHT_PREFIX', 'dht' );
+
+//environment
+define( 'DHT_IS_DEV_ENVIRONMENT', false );
 
 //used to add a prefix for enqueued js files
 define( 'DHT_PREFIX_JS', 'dht-script' );

@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "target": "es2020",
     "module": "esnext",
     "lib": [
@@ -13,11 +14,11 @@
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
-    "esModuleInterop": true,
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "jsx": "preserve",
     "sourceMap": false,
+    "esModuleInterop": true,
     /*"types": [
       //"vite/client",
       "jquery",
@@ -27,26 +28,28 @@
       "jquery.timepicker",
       "jquery.ui.datetimepicker"
     ],*/
-    "baseUrl": ".",
     "paths": {
       "@/*": [
         "assets/*"
       ],
       "@ts/*": [
-        "assets/scripts/modules/*"
+        "assets/scripts/*"
       ],
       "@pcss/*": [
-        "assets/styles/modules/*"
+        "assets/styles/*"
       ],
       "@dist/*": [
         "assets/dist/*"
+      ],
+      "@helpers/*": [
+        "helpers/node/*"
       ]
     }
   },
   "include": [
     "assets/scripts/",
-    "assets/scripts/*.tsx",
-    "assets/scripts/types/**/*.d.ts"
+    "assets/scripts/types/*.ts",
+    "assets/scripts/dts-files/*d.ts"
   ],
   "exclude": [
     "node_modules"

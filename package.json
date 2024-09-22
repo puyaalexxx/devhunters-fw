@@ -11,12 +11,12 @@
     "start": "vite",
     "check-types": "tsc --noEmit",
     "lint": "eslint --fix",
-    "format": "prettier --write",
-    "clean:prod": "rimraf assets/scripts/modules/*.js"
+    "format": "prettier --write"
   },
   "keywords": [],
   "author": "DevHunters",
   "license": "ISC",
+  "type": "module",
   "devDependencies": {
     "@types/ace": "^0.0.52",
     "@types/jquery": "^3.5.30",
@@ -26,6 +26,7 @@
     "@types/select2": "^4.0.63",
     "autoprefixer": "^10.4.20",
     "cssnano": "^7.0.6",
+    "devhunters-utils": "github:puyaalexxx/devhunters-utils",
     "glob": "^11.0.0",
     "postcss-assets": "^6.0.0",
     "postcss-cli": "^11.0.0",

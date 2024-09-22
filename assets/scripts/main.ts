@@ -1,28 +1,5 @@
-import getCurrentPageModules from "../../helpers/node/vite/current-page-ts-files";
-
-/**
- * Helper function to load modules dynamically
- *
- * @return void
- */
-async function loadModule(modules: Record<string, () => Promise<unknown>>, fileName: string, fileExtension = "ts") {
-    try {
-        const searchModule = `/${fileName}.${fileExtension}`;
-
-        //see if the module path exists in the modules object from the vite glob function
-        const fullModulePath = Object.keys(modules).find((key: string) =>
-            key.includes(searchModule),
-        );
-
-        //if path exist, load it dynamically
-        if (fullModulePath) {
-            await modules[fullModulePath]();
-        }
-
-    } catch (err) {
-        console.error(`Error loading ${fileName} module:`, err);
-    }
-}
+import { getCurrentPageModules } from "@helpers/vite/current-page-ts-files";
+import { dhtuLoadModule } from "devhunters-utils/utils/dynamic-module-loading";
 
 /**
  * This function is responsible for dynamic loading the js modules
@@ -43,7 +20,7 @@ async function initializeJSDynamicModulesLoading() {
 
     //dynamically load every existent page module
     for (const fileName of pageModules) {
-        await loadModule(allModules, fileName);
+        await dhtuLoadModule(allModules, fileName);
     }
 
 }

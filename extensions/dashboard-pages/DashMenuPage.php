@@ -30,15 +30,12 @@ final class DashMenuPage implements IDashMenuPage {
 	public function __construct( array $dash_menus_config ) {
 		
 		//add dashboard pages hook
-		add_action( 'admin_menu', function () use ( $dash_menus_config ) {
-			
+		add_action( 'admin_menu', function() use ( $dash_menus_config ) {
 			$this->registerMenuPagesAction( $dash_menus_config );
-			
 		}, 99 );
 		
 		//register menus as rest api endpoints (testing purposes)
-		add_action( 'rest_api_init', function () use ( $dash_menus_config ) {
-			
+		add_action( 'rest_api_init', function() use ( $dash_menus_config ) {
 			API::init()->dashmenus->registerAPIEndpoints( $dash_menus_config );
 		} );
 	}

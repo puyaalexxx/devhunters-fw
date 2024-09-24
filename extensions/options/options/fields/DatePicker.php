@@ -5,7 +5,7 @@ namespace DHT\Extensions\Options\Options\Fields;
 
 use DHT\Extensions\Options\Options\BaseField;
 use DHT\Helpers\Classes\Environment;
-use function DHT\fw;
+use function DHT\dht;
 use function DHT\Helpers\dht_print_r;
 
 if ( ! defined( 'DHT_MAIN' ) ) {
@@ -36,17 +36,17 @@ class DatePicker extends BaseField {
 	public function enqueueOptionScripts( array $field ) : void {
 		
 		//library css
-		wp_register_style( DHT_PREFIX_CSS . '-jquery-ui-datepicker', DHT_ASSETS_URI . 'styles/libraries/jquery-ui-datepicker.min.css', array(), fw()->manifest->get( 'version' ) );
+		wp_register_style( DHT_PREFIX_CSS . '-jquery-ui-datepicker', DHT_ASSETS_URI . 'styles/libraries/jquery-ui-datepicker.min.css', array(), dht()->manifest->get( 'version' ) );
 		wp_enqueue_style( DHT_PREFIX_CSS . '-jquery-ui-datepicker' );
 		
 		//library js
-		wp_enqueue_script( DHT_PREFIX_JS . '-jquery-ui-datepicker', DHT_ASSETS_URI . 'scripts/libraries/jquery-ui-datepicker.min.js', array(), fw()->manifest->get( 'version' ), true );
+		wp_enqueue_script( DHT_PREFIX_JS . '-jquery-ui-datepicker', DHT_ASSETS_URI . 'scripts/libraries/jquery-ui-datepicker.min.js', array(), dht()->manifest->get( 'version' ), true );
 		
 		if ( Environment::isDevelopment() ) {
-			wp_register_style( DHT_PREFIX_CSS . '-datepicker-field', DHT_ASSETS_URI . 'dist/css/datepicker.css', array(), fw()->manifest->get( 'version' ) );
+			wp_register_style( DHT_PREFIX_CSS . '-datepicker-field', DHT_ASSETS_URI . 'dist/css/datepicker.css', array(), dht()->manifest->get( 'version' ) );
 			wp_enqueue_style( DHT_PREFIX_CSS . '-datepicker-field' );
 			
-			wp_enqueue_script_module( DHT_PREFIX_JS . '-datepicker-field', DHT_ASSETS_URI . 'dist/js/datepicker.js', array( DHT_PREFIX_JS . '-jquery-ui-datepicker' ), fw()->manifest->get( 'version' ), true );
+			wp_enqueue_script_module( DHT_PREFIX_JS . '-datepicker-field', DHT_ASSETS_URI . 'dist/js/datepicker.js', array( DHT_PREFIX_JS . '-jquery-ui-datepicker' ), dht()->manifest->get( 'version' ), true );
 		}
 	}
 	

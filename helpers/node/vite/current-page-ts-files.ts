@@ -19,7 +19,7 @@ export function getCurrentPageModules(allModules: Record<string, () => Promise<u
         $("#widgets-right").length ? tsFileNames.create_sidebars : "",
 
         //options
-        $(".dht-wrapper").length ? tsFileNames.dashboard_page_template : "",
+        $(".dht-wrapper").length ? tsFileNames.dashboard_page : "",
 
         //options - containers
         $(".dht-cosidebar").length ? tsFileNames.sidemenu : "", //change to class at the end

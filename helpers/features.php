@@ -8,7 +8,6 @@ if ( ! defined( 'DHT_MAIN' ) ) {
 }
 
 /**
- *
  * load the preloader
  *
  * @param int $delay - milliseconds delay

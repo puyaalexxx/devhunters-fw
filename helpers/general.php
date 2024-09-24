@@ -8,8 +8,6 @@ if ( ! defined( 'DHT_MAIN' ) ) {
 }
 
 use DHT\Helpers\Classes\Dumper;
-use ReflectionClass;
-use ReflectionException;
 
 /**
  * print_r alternative with styling
@@ -140,7 +138,7 @@ if ( ! function_exists( 'dht_load_view' ) ) {
 		
 		if ( ! is_file( $file_path ) && ! file_exists( $file_path ) ) {
 			
-			require_once( DHT_TEMPLATES_DIR . "template.php" );
+			require_once( DHT_VIEWS_DIR . "main-view.php" );
 			
 			return '';
 		}
@@ -227,48 +225,33 @@ if ( ! function_exists( 'dht_parse_css_classes_into_array' ) ) {
 }
 
 /**
- * Check if a class is a singleton with init method
+ * Code used for the make file to check for the environment
+ * constant to compile the ts and pcss files via Vite also
  *
- * @param $className
+ * @param string $file_path    - path to your constants file
+ * @param string $env_constant - env constant name
  *
- * @return bool
- * @throws ReflectionException
+ * @return string - constant value
+ * @since     1.0.0
  */
-if ( ! function_exists( 'dht_is_singleton' ) ) {
-	/**
-	 * @throws ReflectionException
-	 */
-	function dht_is_singleton( $className ) : bool {
+if ( ! function_exists( 'dht_grab_env_constant_value' ) ) {
+	function dht_grab_env_constant_value( string $file_path = "constants.php", string $env_constant = "DHT_IS_DEV_ENVIRONMENT" ) : string {
 		
-		$reflection = new ReflectionClass( $className );
-		
-		$method_name = 'init';
-		
-		// Check if there's a static method called getInstance
-		if ( ! $reflection->hasMethod( $method_name ) ) {
-			return false;
+		$value = "";
+		if ( $handle = fopen( $file_path, "r" ) ) {
+			while( ( $line = fgets( $handle ) ) !== false ) {
+				if ( str_contains( $line, $env_constant ) ) {
+					preg_match( "/define\(\s*'+$env_constant+'\s*,\s*(.+?)\s*\);/", $line, $matches );
+					echo "/define\(\s*'+$env_constant+'\s*,\s*(.+?)\s*\);/";
+					$value = isset( $matches[ 1 ] ) ? trim( $matches[ 1 ] ) : "true";
+					break;
+				}
+			}
+			fclose( $handle );
+		} else {
+			$value = _x( "Could not open the file.", 'makefile', DHT_PREFIX );
 		}
 		
-		$initMethod = $reflection->getMethod( $method_name );
-		
-		// Check if getInstance is static
-		if ( ! $initMethod->isStatic() ) {
-			return false;
-		}
-		
-		// Check if $instance returns an instance of the class
-		// Here, instead of checking the return type, we can check if the instance is of the class
-		$instance = $className::init();
-		if ( ! $instance instanceof $className ) {
-			return false;
-		}
-		
-		// Check for a private or protected constructor
-		$constructor = $reflection->getConstructor();
-		if ( $constructor && ! $constructor->isPublic() ) {
-			return true;
-		}
-		
-		return false;
+		return $value;
 	}
 }

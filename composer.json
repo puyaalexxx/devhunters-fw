@@ -21,7 +21,8 @@
       "helpers/terms.php",
       "helpers/options.php",
       "helpers/validations.php",
-      "helpers/features.php"
+      "helpers/features.php",
+      "helpers/framework.php"
     ],
     "psr-4": {
       "DHT\\Helpers\\": "helpers/",
@@ -29,11 +30,15 @@
       "DHT\\Helpers\\Exceptions\\": "helpers/exceptions/",
       "DHT\\Helpers\\Exceptions\\ConfigExceptions\\": "helpers/exceptions/config-exceptions/",
       "DHT\\Core\\": "core/",
-      "DHT\\Features\\": "features/",
+      "DHT\\Core\\Cli\\": "core/cli/",
       "DHT\\Extensions\\": "extensions/",
       "DHT\\Extensions\\DashPages\\": "extensions/dashboard-pages/",
       "DHT\\Extensions\\CPT\\": "extensions/cpt/",
       "DHT\\Extensions\\Widgets\\": "extensions/widgets/"
     }
+  },
+  "require-dev": {
+    "php-stubs/wordpress-stubs": "^6.6",
+    "php-stubs/wp-cli-stubs": "^2.10"
   }
 }

@@ -35,7 +35,7 @@ define( 'DHT_REACT_APP_DIR', DHT_DIR . 'src/' );
 define( 'DHT_EXTENSIONS_DIR', DHT_DIR . 'extensions/' );
 define( 'DHT_OPTIONS_DIR', DHT_EXTENSIONS_DIR . 'options/' );
 
-define( 'DHT_TEMPLATES_DIR', DHT_DIR . 'templates/' );
+define( 'DHT_VIEWS_DIR', DHT_DIR . 'views/' );
 
 /*
  * URL PATHs

@@ -2,12 +2,8 @@
 declare( strict_types = 1 );
 /**
  * Plugin Name: DevHunters
- * Description: Framework for DevHunters plugins
- * Version: 1.0.0
+ * Description: Plugin version is used only for development
  * Requires at least: 6.5
- * Requires PHP: 8.0
- * Author: DevHunters
- * Author URI: https://devhunters.dev
  * Text Domain: dht
  */
 

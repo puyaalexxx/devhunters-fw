@@ -364,3 +364,50 @@ if ( ! function_exists( 'dht_fw_if_parent_menu_is_active' ) ) {
 		return $active_parent_class;
 	}
 }
+
+/**
+ * Grab composer info to use in framework manifest
+ *
+ * @param array $page Subpages settings
+ *
+ * @return array composer info
+ * @since     1.0.0
+ */
+if ( ! function_exists( 'dht_fw_get_composer_info' ) ) {
+	function dht_fw_get_composer_info( string $composer_path = DHT_DIR . 'composer.json' ) : array {
+		$composer_file = DHT_DIR . '/composer.json'; // Adjust the path if necessary
+		
+		$composer_info = [ 'version' => '1.0.0' ];
+		if ( file_exists( $composer_path ) ) {
+			$composer_data = file_get_contents( $composer_file );
+			$composer_json = json_decode( $composer_data, true );
+			
+			if ( isset( $composer_json[ 'version' ] ) ) {
+				$composer_info[ 'version' ] = $composer_json[ 'version' ];
+			}
+			if ( isset( $composer_json[ 'name' ] ) ) {
+				$composer_info[ 'package_name' ] = $composer_json[ 'name' ];
+			}
+			if ( isset( $composer_json[ 'description' ] ) ) {
+				$composer_info[ 'description' ] = $composer_json[ 'description' ];
+			}
+			if ( isset( $composer_json[ 'license' ] ) ) {
+				$composer_info[ 'license' ] = $composer_json[ 'license' ];
+			}
+			if ( isset( $composer_json[ 'author' ] ) ) {
+				$composer_info[ 'author' ] = $composer_json[ 'author' ];
+			}
+			if ( isset( $composer_json[ 'extra' ] ) ) {
+				$composer_info[ 'extra' ] = $composer_json[ 'extra' ];
+			}
+			if ( isset( $composer_json[ 'support' ] ) ) {
+				$composer_info[ 'support' ] = $composer_json[ 'support' ];
+			}
+			if ( isset( $composer_json[ 'require' ] ) ) {
+				$composer_info[ 'require' ] = $composer_json[ 'require' ];
+			}
+		}
+		
+		return $composer_info;
+	}
+}

@@ -1,13 +1,22 @@
 {
   "name": "devhunters/devhunters-fw",
-  "description": "The framework used in our plugins",
+  "description": "Framework for DevHunters plugins",
   "license": "GPL-2.0-or-later",
-  "authors": [
-    {
-      "name": "DevHunters",
-      "email": "devhuntersmain@gmail.com"
-    }
-  ],
+  "version": "1.0.0",
+  "author": {
+    "name": "DevHunters",
+    "homepage": "https://devhunters.dev"
+  },
+  "support": {
+    "email": "devhunterssupp@gmail.com",
+    "url": "https://github.com/puyaalexxx/devhunters-fw",
+    "issues": "https://github.com/puyaalexxx/devhunters-fw/issues",
+    "docs": "https://github.com/puyaalexxx/devhunters-fw"
+  },
+  "extra": {
+    "name": "DevHunters Framework",
+    "wordpress-version": "6.5"
+  },
   "require": {
     "php": ">=8.0",
     "phenx/php-font-lib": "^1.0"

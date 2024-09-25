@@ -115,7 +115,14 @@ final class DHT {
 	 */
 	private function loadTextdomain() : void {
 		
-		load_plugin_textdomain( DHT_PREFIX, false, DHT_DIR . '/lang' );
+		//change this after creating a composer package
+		if ( defined( 'DHT_DIR' ) ) {
+			// Plugin context
+			load_plugin_textdomain( DHT_PREFIX, false, DHT_DIR . '/lang' );
+		} else {
+			// Composer package context
+			load_textdomain( DHT_PREFIX, __DIR__ . '/lang/your-text-domain.mo' );
+		}
 	}
 	
 }

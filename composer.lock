@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "abc2893780bb63e8f6877ba656355e29",
+    "content-hash": "2f1d4effeb53bb5b2949c446182631dd",
     "packages": [
         {
             "name": "phenx/php-font-lib",

@@ -18,6 +18,7 @@ class Commands {
 	
 	/**
 	 * Generate assets based on environment via vite utility
+	 * wp dht init
 	 *
 	 * @return void
 	 */
@@ -29,6 +30,7 @@ class Commands {
 	
 	/**
 	 * Install dependencies (Composer and NPM)
+	 * wp dht install
 	 *
 	 * @return void
 	 */
@@ -67,6 +69,7 @@ class Commands {
 	
 	/**
 	 * Generate assets based on environment
+	 * wp dht vite [watch]
 	 *
 	 * @param array $args Command arguments (optional watch mode)
 	 *
@@ -143,6 +146,7 @@ class Commands {
 	
 	/**
 	 * Clean up generated files
+	 * wp dht clean
 	 *
 	 * @return void
 	 */
@@ -170,6 +174,7 @@ class Commands {
 	
 	/**
 	 * Display help for available commands
+	 * wp dht help
 	 *
 	 * @return void
 	 */

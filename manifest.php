@@ -54,5 +54,3 @@ $manifest[ 'extensions' ] = [
 		'description' => _x( 'An extension to create different option fields that can be used on dashboard pages, terms and post types', 'manifest', DHT_PREFIX )
 	],
 ];
-
-\DHT\Helpers\dht_print_r( $manifest );

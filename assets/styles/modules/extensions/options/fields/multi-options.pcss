@@ -5,16 +5,18 @@
             width: 100% !important;
         }
 
-        .select2-container .select2-selection--multiple .select2-selection__rendered {
-            display: block;
+        .select2-container--default .select2-selection--multiple {
+            padding-bottom: 0;
         }
 
-        li.select2-search.select2-search--inline {
-            margin-bottom: 0;
+        .select2-container--default.select2-container--focus .select2-selection--multiple {
+            border: 1px solid #aaa;
         }
 
         .select2-container .select2-search--inline .select2-search__field {
-            margin-top: 0;
+            position: relative;
+            top: -6px;
+            padding-top: 28px;
         }
     }
 }

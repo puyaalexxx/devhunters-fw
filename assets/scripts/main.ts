@@ -13,7 +13,7 @@ import { dhtuLoadModule } from "devhunters-utils/utils/dynamic-module-loading";
 async function initializeJSDynamicModulesLoading() {
 
     //get all the ts files that needs to be dynamically loaded
-    const allModules = import.meta.glob("@ts/**/*.ts");
+    const allModules = import.meta.glob("@ts/modules/**/*.ts");
 
     //get existent current page modules
     const pageModules = getCurrentPageModules(allModules);

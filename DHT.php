@@ -38,6 +38,9 @@ final class DHT {
 		
 		do_action( 'dht_before_fw_init' );
 		
+		//load environment variables from the .env file
+		Environment::loadEnv( DHT_DIR );
+		
 		//instantiate framework manifest info
 		$this->manifest = Manifest::init();
 		
@@ -95,7 +98,7 @@ final class DHT {
 			wp_register_style( DHT_PREFIX_CSS . '-fw', DHT_ASSETS_URI . 'dist/css/fw.css', array(), dht()->manifest->get( 'version' ) );
 			wp_enqueue_style( DHT_PREFIX_CSS . '-fw' );
 			
-			wp_enqueue_script( DHT_PREFIX_JS . '-fw', DHT_ASSETS_URI . 'dist/js/fw.js', array( 'jquery' ), dht()->manifest->get( 'version' ) );
+			wp_enqueue_script_module( DHT_PREFIX_JS . '-fw', DHT_ASSETS_URI . 'dist/js/fw.js', array( 'jquery' ), dht()->manifest->get( 'version' ) );
 			wp_localize_script( DHT_PREFIX_JS . '-fw', 'dht_framework_ajax_info', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
 		} else {
 			wp_register_style( DHT_PREFIX_CSS . '-main-bundle', DHT_ASSETS_URI . 'dist/main.css', array(), dht()->manifest->get( 'version' ) );

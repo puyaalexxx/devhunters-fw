@@ -7,15 +7,17 @@ if ( ! defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
-/**
- * gent font weight label from its value (ex: 400, 500)
- *
- * @param int $font_weight
- *
- * @return string
- * @since     1.0.0
- */
+///////////////////////////Functions used only in the framework//////////////////////////////
+
 if ( ! function_exists( 'dht_fw_get_font_weight_Label' ) ) {
+	/**
+	 * gent font weight label from its value (ex: 400, 500)
+	 *
+	 * @param int $font_weight
+	 *
+	 * @return string
+	 * @since     1.0.0
+	 */
 	function dht_fw_get_font_weight_Label( int $font_weight ) : string {
 		
 		return match ( $font_weight ) {
@@ -32,18 +34,18 @@ if ( ! function_exists( 'dht_fw_get_font_weight_Label' ) ) {
 	}
 }
 
-/**
- * render all group, toggle and field option types
- *
- * @param array  $options                 - options array
- * @param string $options_id              - options prefix id
- * @param array  $saved_values            - all options saved values
- * @param array  $optionRegisteredClasses - registered framework groups, toggles, and field classes
- *
- * @return string
- * @since     1.0.0
- */
 if ( ! function_exists( 'dht_fw_render_options' ) ) {
+	/**
+	 * render all group, toggle and field option types
+	 *
+	 * @param array  $options                    options array
+	 * @param string $options_id                 options prefix id
+	 * @param array  $saved_values               all options saved values
+	 * @param array  $registered_options_classes registered framework groups, toggles, and field classes
+	 *
+	 * @return string
+	 * @since     1.0.0
+	 */
 	function dht_fw_render_options( array $options, string $options_id, array $saved_values, array $registered_options_classes ) : string {
 		
 		ob_start();
@@ -71,18 +73,19 @@ if ( ! function_exists( 'dht_fw_render_options' ) ) {
 	}
 }
 
-/**
- * render group options (toggles and field options)
- *
- * @param string $group_id                 the group option id
- * @param array  $group_option             group option settings
- * @param mixed  $saved_value              Saved values
- * @param array  $registered_field_classes - registered framework field classes
- *
- * @return string
- * @since     1.0.0
- */
+
 if ( ! function_exists( 'dht_fw_render_group' ) ) {
+	/**
+	 * render group options (toggles and field options)
+	 *
+	 * @param string $group_id                   the group option id
+	 * @param array  $group_option               group option settings
+	 * @param mixed  $saved_value                Saved values
+	 * @param array  $registered_options_classes registered framework field classes
+	 *
+	 * @return string
+	 * @since     1.0.0
+	 */
 	function dht_fw_render_group( string $group_id, array $group_option, mixed $saved_value, array $registered_options_classes ) : string {
 		
 		//render the respective option toggle class
@@ -95,18 +98,19 @@ if ( ! function_exists( 'dht_fw_render_group' ) ) {
 	}
 }
 
-/**
- * render field option if it is registered (exists)
- *
- * @param array  $option                   option array
- * @param mixed  $saved_value              saved values
- * @param string $options_id               - options prefix id
- * @param array  $registered_field_classes - registered framework field classes
- *
- * @return string
- * @since     1.0.0
- */
+
 if ( ! function_exists( 'dht_fw_render_field_if_exists' ) ) {
+	/**
+	 * render field option if it is registered (exists)
+	 *
+	 * @param array  $option                   option array
+	 * @param mixed  $saved_value              saved values
+	 * @param string $options_id               options prefix id
+	 * @param array  $registered_field_classes registered framework field classes
+	 *
+	 * @return string
+	 * @since     1.0.0
+	 */
 	function dht_fw_render_field_if_exists( array $option, mixed $saved_value, string $options_id, array $registered_field_classes ) : string {
 		
 		if ( isset( $option[ 'type' ] ) && array_key_exists( $option[ 'type' ], $registered_field_classes ) ) {
@@ -121,18 +125,18 @@ if ( ! function_exists( 'dht_fw_render_field_if_exists' ) ) {
 	}
 }
 
-/**
- * render box item (addable group option)
- *
- * @param array $group                      group options to be rendered
- * @param mixed $saved_values               Saved values
- * @param array $registered_options_classes registered option type classes
- * @param int   $cnt                        The box item number
- *
- * @return string
- * @since     1.0.0
- */
 if ( ! function_exists( 'dht_fw_display_box_item' ) ) {
+	/**
+	 * render box item (addable group option)
+	 *
+	 * @param array $group                      group options to be rendered
+	 * @param mixed $saved_values               Saved values
+	 * @param array $registered_options_classes registered option type classes
+	 * @param int   $cnt                        The box item number
+	 *
+	 * @return string
+	 * @since     1.0.0
+	 */
 	function dht_fw_display_box_item( array $group, mixed $saved_values, array $registered_options_classes, int $cnt ) : string {
 		
 		$default_box_title = _x( 'Box Title', 'options', DHT_PREFIX );
@@ -168,19 +172,20 @@ if ( ! function_exists( 'dht_fw_display_box_item' ) ) {
 	}
 }
 
-/**
- * render box item content (addable group option)
- *
- * @param array  $group                      group options to be rendered
- * @param mixed  $saved_values               Saved values
- * @param array  $registered_options_classes registered option type classes
- * @param string $default_box_title          The default bot item title
- * @param int    $cnt                        The box item number
- *
- * @return mixed
- * @since     1.0.0
- */
+
 if ( ! function_exists( 'dht_fw_render_box_item_content' ) ) {
+	/**
+	 * render box item content (addable group option)
+	 *
+	 * @param array  $group                      group options to be rendered
+	 * @param mixed  $saved_values               Saved values
+	 * @param array  $registered_options_classes registered option type classes
+	 * @param string $default_box_title          The default bot item title
+	 * @param int    $cnt                        The box item number
+	 *
+	 * @return mixed
+	 * @since     1.0.0
+	 */
 	function dht_fw_render_box_item_content( array $group, mixed $saved_values, array $registered_options_classes, string $default_box_title, int $cnt ) : string {
 		
 		ob_start(); ?>
@@ -229,31 +234,32 @@ if ( ! function_exists( 'dht_fw_render_box_item_content' ) ) {
 }
 
 
-/**
- * check if the options must be saved separately and not grouped under an id
- *
- * @param array $options
- *
- * @return bool
- * @since     1.0.0
- */
 if ( ! function_exists( 'dht_fw_is_save_options_separately' ) ) {
+	/**
+	 * check if the options must be saved separately and not grouped under an id
+	 *
+	 * @param array $options
+	 *
+	 * @return bool
+	 * @since     1.0.0
+	 */
 	function dht_fw_is_save_options_separately( array $options ) : bool {
 		
 		return isset( $options[ 'save' ] ) && $options[ 'save' ] == "separately";
 	}
 }
 
-/**
- * Function to render the content of the header link area
- *
- * @param string $page_link Page link where to redirect or anchor id
- * @param array  $page      Page options
- *
- * @return mixed The processed value to be saved.
- * @since     1.0.0
- */
+
 if ( ! function_exists( 'dht_fw_render_link_area' ) ) {
+	/**
+	 * Function to render the content of the header link area
+	 *
+	 * @param string $page_link Page link where to redirect or anchor id
+	 * @param array  $page      Page options
+	 *
+	 * @return void The processed value to be saved.
+	 * @since     1.0.0
+	 */
 	function dht_fw_render_link_area( string $page_link, array $page ) : void { ?>
 
         <a href="<?php echo ! empty( $page_link ) ? esc_url( $page_link ) : '#' . $page[ 'id' ]; ?>">
@@ -276,17 +282,18 @@ if ( ! function_exists( 'dht_fw_render_link_area' ) ) {
 	}
 }
 
-/**
- * Function to render the content of the header supbpage li tag
- *
- * @param string $active_class Active class
- * @param string $page_link    Page link where to redirect or anchor id
- * @param array  $page         Page options
- *
- * @return mixed The processed value to be saved.
- * @since     1.0.0
- */
+
 if ( ! function_exists( 'dht_fw_render_subpage_li_area' ) ) {
+	/**
+	 * Function to render the content of the header supbpage li tag
+	 *
+	 * @param string $active_class Active class
+	 * @param string $page_link    Page link where to redirect or anchor id
+	 * @param array  $page         Page options
+	 *
+	 * @return void The processed value to be saved.
+	 * @since     1.0.0
+	 */
 	function dht_fw_render_subpage_li_area( string $active_class, string $page_link, array $page ) : void { ?>
 
         <li class="<?php echo esc_attr( $active_class ); ?>">
@@ -300,19 +307,20 @@ if ( ! function_exists( 'dht_fw_render_subpage_li_area' ) ) {
 	}
 }
 
-/**
- * Function to render the content of the sidebar
- *
- * @param array $ids                        pages ids
- * @param array $options                    page options
- * @param mixed $saved_values               Saved values
- * @param array $registered_options_classes registered option type classes
- * @param int   $count                      The box item number
- *
- * @return mixed The processed value to be saved.
- * @since     1.0.0
- */
+
 if ( ! function_exists( 'dht_fw_render_sidebar_content' ) ) {
+	/**
+	 * Function to render the content of the sidebar
+	 *
+	 * @param array $ids                        pages ids
+	 * @param array $options                    page options
+	 * @param mixed $saved_values               Saved values
+	 * @param array $registered_options_classes registered option type classes
+	 * @param int   $count                      The box item number
+	 *
+	 * @return string The processed value to be saved.
+	 * @since     1.0.0
+	 */
 	function dht_fw_render_sidebar_content( array $ids, array $options, mixed $saved_values, array $registered_options_classes, int $count ) : string {
 		
 		$is_active_class = ( $count == 1 ) ? 'dht-cosidebar-active' : '';
@@ -337,17 +345,18 @@ if ( ! function_exists( 'dht_fw_render_sidebar_content' ) ) {
 	}
 }
 
-/**
- * see if the parent menu is also active if the sub menu is active
- * Function to render the content of the sidebar
- *
- * @param array  $page         Subpages settings
- * @param string $current_page current clicked page (menu item)
- *
- * @return mixed The processed value to be saved.
- * @since     1.0.0
- */
+
 if ( ! function_exists( 'dht_fw_if_parent_menu_is_active' ) ) {
+	/**
+	 * see if the parent menu is also active if the sub menu is active
+	 * Function to render the content of the sidebar
+	 *
+	 * @param array  $page         Subpages settings
+	 * @param string $current_page current clicked page (menu item)
+	 *
+	 * @return bool The processed value to be saved.
+	 * @since     1.0.0
+	 */
 	function dht_fw_if_parent_menu_is_active( array $page, string $current_page ) : bool {
 		
 		$active_parent_class = false;
@@ -365,15 +374,16 @@ if ( ! function_exists( 'dht_fw_if_parent_menu_is_active' ) ) {
 	}
 }
 
-/**
- * Grab composer info to use in framework manifest
- *
- * @param array $page Subpages settings
- *
- * @return array composer info
- * @since     1.0.0
- */
+
 if ( ! function_exists( 'dht_fw_get_composer_info' ) ) {
+	/**
+	 * Grab composer info to use in framework manifest
+	 *
+	 * @param string $composer_path
+	 *
+	 * @return array composer info
+	 * @since     1.0.0
+	 */
 	function dht_fw_get_composer_info( string $composer_path = DHT_DIR . 'composer.json' ) : array {
 		$composer_file = DHT_DIR . '/composer.json'; // Adjust the path if necessary
 		

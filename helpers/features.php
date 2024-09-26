@@ -7,15 +7,16 @@ if ( ! defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
-/**
- * load the preloader
- *
- * @param int $delay - milliseconds delay
- *
- * @return string
- * @since     1.0.0
- */
+
 if ( ! function_exists( 'dht_load_preloader' ) ) {
+	/**
+	 * load the preloader
+	 *
+	 * @param int $delay - milliseconds delay
+	 *
+	 * @return string
+	 * @since     1.0.0
+	 */
 	function dht_load_preloader( int $delay = 500 ) : string {
 		
 		ob_start(); ?>

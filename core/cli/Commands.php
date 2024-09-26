@@ -77,23 +77,20 @@ class Commands {
 	 */
 	public function vite( array $args = [] ) : void {
 		
-		if ( DHT_IS_DEV_ENVIRONMENT ) {
-			if ( in_array( 'watch', $args ) ) {
-				$command        = 'script -q /dev/null npm run build:watch:vite';
-				$successMessage = "Assets generated in watch mode!";
+		if ( in_array( 'watch', $args ) ) {
+			if ( in_array( 'main', $args ) ) {
+				$command = 'script -q /dev/null npm run watch:main';
 			} else {
-				$command        = 'script -q /dev/null npm run build:dev:vite';
-				$successMessage = "Assets generated for development!";
+				$command = 'script -q /dev/null npm run watch';
 			}
+			$successMessage = "Assets generated in watch mode!";
 		} else {
-			if ( ! in_array( 'watch', $args ) ) {
-				$command        = 'script -q /dev/null npm run build:prod:vite';
-				$successMessage = "Assets generated for production!";
+			if ( in_array( 'main', $args ) ) {
+				$command = 'script -q /dev/null npm run build:main';
 			} else {
-				WP_CLI::error( WP_CLI::colorize( "%RWatch mode is not available in production!%n" ) );
-				
-				return; // Exit early if watch mode is not allowed
+				$command = 'script -q /dev/null npm run build';
 			}
+			$successMessage = "Assets generated for development!";
 		}
 		
 		// Check if we're in watch mode
@@ -137,11 +134,10 @@ class Commands {
 		if ( $return_var !== 0 ) {
 			WP_CLI::error( WP_CLI::colorize( "%RError occurred while running: $command%n" ) );
 			
-			return; // Exit the method on error
+			// After command execution, display success message
+			WP_CLI::success( WP_CLI::colorize( "%G$successMessage%n" ) );
 		}
 		
-		// After command execution, display success message
-		WP_CLI::success( WP_CLI::colorize( "%G$successMessage%n" ) );
 	}
 	
 	/**
@@ -180,16 +176,20 @@ class Commands {
 	 */
 	public function help() : void {
 		WP_CLI::log( "" );
-		WP_CLI::log( WP_CLI::colorize( "%4 Available commands:                                             %n" ) );
+		WP_CLI::log( WP_CLI::colorize( "%4 Available commands:                                              %n" ) );
 		WP_CLI::log( WP_CLI::colorize( '%G  wp dht init%n             Install dependencies and generate assets' ) );
+		WP_CLI::log( "                          ----------------------------------------" );
 		WP_CLI::log( WP_CLI::colorize( '%B  wp dht install%n          Install dependencies (Composer & NPM)' ) );
+		WP_CLI::log( "                          ----------------------------------------" );
 		WP_CLI::log( WP_CLI::colorize( '%P  wp dht vite [watch]%n     Generate assets via the vite utility' ) );
-		WP_CLI::log( WP_CLI::colorize( '                          %Y@param watch%n - enable watch mode. Will run only when %YDHT_IS_DEV_ENVIRONMENT == true%n command
-			  <<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>
-			  -%YDHT_IS_DEV_ENVIRONMENT == true%n + watch run %Ynpm run build:watch:vite%n command
-			  -%YDHT_IS_DEV_ENVIRONMENT == true%n run %Ynpm run build:dev:vite%n command
-			  -%YDHT_IS_DEV_ENVIRONMENT == false%n run %Ynpm run build:prod:vite%n command' ) );
-		WP_CLI::log( WP_CLI::colorize( '%R  wp dht clean%n            Clean up generated files' ) );
+		WP_CLI::log( "                          ----------------------------------------" );
+		WP_CLI::log( WP_CLI::colorize( '                          %Y@param watch%n - enable watch mode
+			  %Y@param main%n  - compile all files into one main.css and main.js file
+			  ( using dynamic module loading )' ) );
+		WP_CLI::log( "                          ----------------------------------------" );
+		WP_CLI::log( WP_CLI::colorize( '%R  wp dht clean%n            Clean up generated files
+			  ( if using tsc compiler, it will generate js files alongside ts files )' ) );
+		WP_CLI::log( "                          ----------------------------------------" );
 		WP_CLI::log( WP_CLI::colorize( '%C  wp dht help%n             Show this help message' ) );
 	}
 	

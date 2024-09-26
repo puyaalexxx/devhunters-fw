@@ -13,7 +13,8 @@ use DHT\Helpers\Traits\Options\{EnqueueOptionsHelpers,
 	OptionsHelpers,
 	RegisterOptionsHelpers,
 	RenderOptionsHelpers,
-	SaveOptionsHelpers};
+	SaveOptionsHelpers
+};
 use WP_Post;
 use function DHT\dht;
 use function DHT\Helpers\{dht_get_current_admin_post_type, dht_get_current_admin_taxonomy_from_url, dht_load_view};

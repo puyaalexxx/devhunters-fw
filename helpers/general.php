@@ -8,16 +8,17 @@ if ( ! defined( 'DHT_MAIN' ) ) {
 }
 
 use DHT\Helpers\Classes\Dumper;
+use Exception;
 
-/**
- * print_r alternative with styling
- *
- * @param mixed $value the value to be printed
- *
- * @return void
- * @since     1.0.0
- */
 if ( ! function_exists( 'dht_print_r' ) ) {
+	/**
+	 * print_r alternative with styling
+	 *
+	 * @param mixed $value the value to be printed
+	 *
+	 * @return void
+	 * @since     1.0.0
+	 */
 	function dht_print_r( mixed $value ) : void {
 		
 		static $first_time = true;
@@ -85,15 +86,16 @@ if ( ! function_exists( 'dht_print_r' ) ) {
 	}
 }
 
-/**
- * Convert to Unix style directory separators
- *
- * @param string $path - dir path
- *
- * @return string
- * @since     1.0.0
- */
+
 if ( ! function_exists( 'dht_fix_path' ) ) {
+	/**
+	 * Convert to Unix style directory separators
+	 *
+	 * @param string $path - dir path
+	 *
+	 * @return string
+	 * @since     1.0.0
+	 */
 	function dht_fix_path( string $path ) : string {
 		
 		$windows_network_path = isset( $_SERVER[ 'windir' ] ) && in_array( substr( $path, 0, 2 ), array(
@@ -120,18 +122,19 @@ if ( ! function_exists( 'dht_fix_path' ) ) {
 	}
 }
 
-/**
- * load file with arguments and display it or return its content
- *
- * @param string $path   - dir path]
- * @param string $file   - file name
- * @param array  $args   - arguments to be passed into the view
- * @param bool   $return - return the file content or display it
- *
- * @return string
- * @since     1.0.0
- */
+
 if ( ! function_exists( 'dht_load_view' ) ) {
+	/**
+	 * load file with arguments and display it or return its content
+	 *
+	 * @param string $path   - dir path]
+	 * @param string $file   - file name
+	 * @param array  $args   - arguments to be passed into the view
+	 * @param bool   $return - return the file content or display it
+	 *
+	 * @return string
+	 * @since     1.0.0
+	 */
 	function dht_load_view( string $path, string $file, array $args = [], bool $return = true ) : string {
 		
 		$file_path = $path . $file;
@@ -156,19 +159,20 @@ if ( ! function_exists( 'dht_load_view' ) ) {
 	}
 }
 
-/**
- * Safe load variables from a file
- * Use this function to not include files directly and to not give access to current context variables (like $this)
- *
- * @param string $file_path
- * @param string $extract_variable Extract these from file array('variable_name' => 'default_value')
- * @param array  $set_variables    Set these to be available in file (like variables in view)
- * @param bool   $return_array     return array or only the value
- *
- * @return array
- * @since     1.0.0
- */
+
 if ( ! function_exists( 'dht_get_variables_from_file' ) ) {
+	/**
+	 * Safe load variables from a file
+	 * Use this function to not include files directly and to not give access to current context variables (like $this)
+	 *
+	 * @param string $file_path
+	 * @param string $extract_variable Extract these from file array('variable_name' => 'default_value')
+	 * @param array  $set_variables    Set these to be available in file (like variables in view)
+	 * @param bool   $return_array     return array or only the value
+	 *
+	 * @return array
+	 * @since     1.0.0
+	 */
 	function dht_get_variables_from_file( string $file_path, string $extract_variable, array $set_variables = [], bool $return_array = false ) : array {
 		
 		extract( $set_variables, EXTR_REFS );
@@ -193,16 +197,17 @@ if ( ! function_exists( 'dht_get_variables_from_file' ) ) {
 	}
 }
 
-/**
- * Parse CSS icons classes and content codes to a PHP array with key value pairs
- *
- * @param string $css
- * @param string $before_delimiter :before pseudo css delimiter
- *
- * @return array
- * @since     1.0.0
- */
+
 if ( ! function_exists( 'dht_parse_css_classes_into_array' ) ) {
+	/**
+	 * Parse CSS icons classes and content codes to a PHP array with key value pairs
+	 *
+	 * @param string $css
+	 * @param string $before_delimiter :before pseudo css delimiter
+	 *
+	 * @return array
+	 * @since     1.0.0
+	 */
 	function dht_parse_css_classes_into_array( string $css, string $before_delimiter = ':' ) : array {
 		
 		// Regular expression pattern to extract class name and content
@@ -224,18 +229,18 @@ if ( ! function_exists( 'dht_parse_css_classes_into_array' ) ) {
 	}
 }
 
-/**
- * Code used for the make file to check for the environment
- * constant to compile the ts and pcss files via Vite also
- *
- * @param string $file_path    - path to your constants file
- * @param string $env_constant - env constant name
- *
- * @return string - constant value
- * @since     1.0.0
- */
 if ( ! function_exists( 'dht_grab_env_constant_value' ) ) {
-	function dht_grab_env_constant_value( string $file_path = "constants.php", string $env_constant = "DHT_IS_DEV_ENVIRONMENT" ) : string {
+	/**
+	 * Code used for the make file to check for the environment
+	 * constant to compile the ts and pcss files via Vite also
+	 *
+	 * @param string $file_path    - path to your constants file
+	 * @param string $env_constant - env constant name
+	 *
+	 * @return string - constant value
+	 * @since     1.0.0
+	 */
+	function dht_grab_env_constant_value( string $file_path = "constants.php", string $env_constant = "Environment::isDevelopment()" ) : string {
 		
 		$value = "";
 		if ( $handle = fopen( $file_path, "r" ) ) {
@@ -253,5 +258,46 @@ if ( ! function_exists( 'dht_grab_env_constant_value' ) ) {
 		}
 		
 		return $value;
+	}
+}
+
+
+if ( ! function_exists( 'dht_grab_env_constant_value' ) ) {
+	/**
+	 * Code used for the make file to check for the environment
+	 * constant to compile the ts and pcss files via Vite also
+	 *
+	 * @param string $file_path path to your .env file
+	 *
+	 * @return array - constant value
+	 * @throws Exception
+	 * @since     1.0.0
+	 */
+	function dht_load_env( string $file_path ) : array {
+		if ( ! file_exists( $file_path ) ) {
+			throw new Exception( "The .env file does not exist." );
+		}
+		
+		$env   = [];
+		$lines = file( $file_path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES );
+		
+		foreach ( $lines as $line ) {
+			// Skip comments
+			if ( str_starts_with( trim( $line ), '#' ) ) {
+				continue;
+			}
+			
+			// Parse the key and value
+			list( $key, $value ) = explode( '=', $line, 2 );
+			
+			// Remove whitespace and quotes
+			$key   = trim( $key );
+			$value = trim( $value, " \t\n\r\0\x0B\"'" );
+			
+			// Set the environment variable
+			$env[ $key ] = $value;
+		}
+		
+		return $env;
 	}
 }

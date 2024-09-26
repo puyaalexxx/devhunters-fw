@@ -1,19 +1,23 @@
 import { defineConfig } from "vite";
 import * as path from "path";
+import * as dotenv from "dotenv";
 import { dhtuGetFileEntries, dhtuGetViteConfigs } from "devhunters-utils";
 
+// Load environment variables from the .env file
+dotenv.config();
 const ROOT = path.resolve("../../..");
 const BASE = __dirname.replace(ROOT, "");
-// this is needed because the pcss files keys are the same as the ts ones, and they are overriding each other in the input area
+// this is needed because the pcs s files keys are the same as the ts ones, and they are overriding each other in the input area
 const tsFilesSuffix = "-script";
 
 const pcssFiles = dhtuGetFileEntries(path, "assets/styles/modules/**/*.pcss", "pcss");
 const tsFiles = dhtuGetFileEntries(path, "assets/scripts/modules/**/*.ts", "ts", tsFilesSuffix);
 
-export default defineConfig(({ command, mode }) => {
-    const isDevelopmentEnv = mode === "development";
-    //constant used in postcss.config file
-    process.env.DHT_IS_DEV_ENVIRONMENT = isDevelopmentEnv.toString();
+export default defineConfig(({ command }) => {
+    const separate = process.env.VITE_SEPARATE === "true";
+    const isDevelopmentEnv = process.env.DHT_IS_DEV_ENVIRONMENT === "true";
+
+    console.log(process.env.DHT_IS_DEV_ENVIRONMENT);
 
     //get vite configs
     const {
@@ -22,7 +26,7 @@ export default defineConfig(({ command, mode }) => {
         entryFileNames,
         assetFileNames,
         cssCodeSplit,
-    } = dhtuGetViteConfigs(isDevelopmentEnv, tsFiles, pcssFiles, tsFilesSuffix, {
+    } = dhtuGetViteConfigs(separate, tsFiles, pcssFiles, tsFilesSuffix, {
         mainEntry: "assets/scripts",
         tsChunks: "assets/scripts/modules",
         assetFileNames: "assets",
@@ -33,6 +37,7 @@ export default defineConfig(({ command, mode }) => {
         define: {
             "$": "window.jQuery",
             "process.env.DHT_IS_DEV_ENVIRONMENT": JSON.stringify(isDevelopmentEnv),
+            __IS_DEV__: JSON.stringify(process.env.VITE_IS_DEV === "true"),
         },
         build: {
             manifest: true,
@@ -40,6 +45,7 @@ export default defineConfig(({ command, mode }) => {
             assetsDir: ".",
             emptyOutDir: true,
             sourcemap: isDevelopmentEnv,
+            minify: !isDevelopmentEnv,  // Disable minification
             rollupOptions: {
                 input: input,
                 output: {

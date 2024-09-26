@@ -1,3 +1,4 @@
+const isDevelopmentEnv = process.env.DHT_IS_DEV_ENVIRONMENT === "true";
 module.exports = {
     plugins: {
         "postcss-preset-env": {
@@ -8,11 +9,13 @@ module.exports = {
         "postcss-import": {},
         "postcss-mixins": {},
         "postcss-nested": {},
-        cssnano: {
-            preset: "default",
-        }, // For minification in production
+        ...(isDevelopmentEnv ? {} : {
+            cssnano: {
+                preset: "default",
+            },
+        }), // Enable cssnano only in production
         "postcss-assets": {
-            relative: process.env.DHT_IS_DEV_ENVIRONMENT === "true" ? "assets/dist/css/" : "assets/dist/",
+            relative: isDevelopmentEnv ? "assets/dist/css/" : "assets/dist/",
             loadPaths: ["**"],
         },
         "postcss-combine-duplicated-selectors": {},

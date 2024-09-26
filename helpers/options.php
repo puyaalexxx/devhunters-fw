@@ -7,16 +7,17 @@ if ( ! defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
-/**
- * get option or options fields from db
- *
- * @param string $option_id
- * @param array  $default_value
- *
- * @return mixed
- * @since     1.0.0
- */
+
 if ( ! function_exists( 'dht_get_db_settings_option' ) ) {
+	/**
+	 * get option or options fields from db
+	 *
+	 * @param string $option_id
+	 * @param array  $default_value
+	 *
+	 * @return mixed
+	 * @since     1.0.0
+	 */
 	function dht_get_db_settings_option( string $option_id, mixed $default_value = [] ) : mixed {
 		
 		if ( empty( $option_id ) ) {
@@ -27,17 +28,18 @@ if ( ! function_exists( 'dht_get_db_settings_option' ) ) {
 	}
 }
 
-/**
- * save option field or fields in database
- *
- * @param string $option_id
- * @param mixed  $value     - value to be saved
- * @param string $array_key - save all options under this array key
- *
- * @return bool
- * @since     1.0.0
- */
+
 if ( ! function_exists( 'dht_set_db_settings_option' ) ) {
+	/**
+	 * save option field or fields in database
+	 *
+	 * @param string $option_id
+	 * @param mixed  $value     - value to be saved
+	 * @param string $array_key - save all options under this array key
+	 *
+	 * @return bool
+	 * @since     1.0.0
+	 */
 	function dht_set_db_settings_option( string $option_id, mixed $value, string $array_key = '' ) : bool {
 		
 		if ( empty( $option_id ) || empty( $value ) ) {
@@ -59,15 +61,16 @@ if ( ! function_exists( 'dht_set_db_settings_option' ) ) {
 	}
 }
 
-/**
- * parse option attributes to add them to the HTML field
- *
- * @param array $attr
- *
- * @return string
- * @since     1.0.0
- */
+
 if ( ! function_exists( 'dht_parse_option_attributes' ) ) {
+	/**
+	 * parse option attributes to add them to the HTML field
+	 *
+	 * @param array $attr
+	 *
+	 * @return string
+	 * @since     1.0.0
+	 */
 	function dht_parse_option_attributes( array $attr ) : string {
 		
 		if ( isset( $attr[ 'class' ] ) ) {
@@ -90,15 +93,16 @@ if ( ! function_exists( 'dht_parse_option_attributes' ) ) {
 	}
 }
 
-/**
- * add allowed HTML tags to the wp editor value
- *
- * @param string $value
- *
- * @return string
- * @since     1.0.0
- */
+
 if ( ! function_exists( 'dht_sanitize_wpeditor_value' ) ) {
+	/**
+	 * add allowed HTML tags to the wp editor value
+	 *
+	 * @param string $value
+	 *
+	 * @return string
+	 * @since     1.0.0
+	 */
 	function dht_sanitize_wpeditor_value( string $value ) : string {
 		
 		// Get the list of allowed HTML tags and attributes
@@ -112,16 +116,17 @@ if ( ! function_exists( 'dht_sanitize_wpeditor_value' ) ) {
 	}
 }
 
-/**
- * remove dht prefix from the font name added because it conflicts with
- * Google font names
- *
- * @param string $font_name
- *
- * @return string
- * @since     1.0.0
- */
+
 if ( ! function_exists( 'dht_remove_font_name_prefix' ) ) {
+	/**
+	 * remove dht prefix from the font name added because it conflicts with
+	 * Google font names
+	 *
+	 * @param string $font_name
+	 *
+	 * @return string
+	 * @since     1.0.0
+	 */
 	function dht_remove_font_name_prefix( string $font_name ) : string {
 		
 		return preg_replace( '/^' . DHT_PREFIX . '-/', '', $font_name );

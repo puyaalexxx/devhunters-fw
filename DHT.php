@@ -11,6 +11,7 @@ use DHT\Core\Cli\CLI;
 use DHT\Core\Manifest;
 use DHT\Extensions\Extensions;
 use DHT\Helpers\Classes\Environment;
+use function DHT\Helpers\dht_make_script_as_module_type;
 
 /**
  * Singleton Class that is used to include the core devhunters-fw functionality that should be used further up
@@ -53,13 +54,13 @@ final class DHT {
 		//Enqueue framework general scripts and styles
 		add_action( 'admin_enqueue_scripts', [
 			$this,
-			'enqueueFrameworkGeneralScripts'
+			'_enqueueFrameworkGeneralScripts'
 		] );
 		
 		// Load the text domain for localization
 		add_action( 'plugins_loaded', [
 			$this,
-			'loadTextdomain'
+			'_loadTextdomain'
 		] );
 		
 		//register all the framework cli commands
@@ -69,41 +70,28 @@ final class DHT {
 	}
 	
 	/**
-	 * Magic method to allow calls to certain methods without exposing them directly
-	 * When using dht() the methods won't be exposed
-	 */
-	public function __call( $method, $arguments ) {
-		
-		$this->loadTextdomain();
-		
-		// You can control which methods are callable here
-		if ( $method === 'enqueueFrameworkGeneralScripts' ) {
-			return call_user_func_array( [ $this, 'enqueueFrameworkGeneralScripts' ], $arguments );
-		} elseif ( $method === 'loadTextdomain' ) {
-			return call_user_func_array( [ $this, 'loadTextdomain' ], $arguments );
-		}
-		
-		return '';
-	}
-	
-	/**
 	 * Enqueue framework general scripts and styles
 	 *
 	 * @return void
 	 * @since     1.0.0
 	 */
-	private function enqueueFrameworkGeneralScripts() : void {
+	private function _enqueueFrameworkGeneralScripts() : void {
 		
 		if ( Environment::isDevelopment() ) {
 			wp_register_style( DHT_PREFIX_CSS . '-fw', DHT_ASSETS_URI . 'dist/css/fw.css', array(), dht()->manifest->get( 'version' ) );
 			wp_enqueue_style( DHT_PREFIX_CSS . '-fw' );
 			
-			wp_enqueue_script_module( DHT_PREFIX_JS . '-fw', DHT_ASSETS_URI . 'dist/js/fw.js', array( 'jquery' ), dht()->manifest->get( 'version' ) );
+			wp_enqueue_script( DHT_PREFIX_JS . '-fw', DHT_ASSETS_URI . 'dist/js/fw.js', array( 'jquery' ), dht()->manifest->get( 'version' ) );
 			wp_localize_script( DHT_PREFIX_JS . '-fw', 'dht_framework_ajax_info', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
+			
+			//make fw.js as to load as a module
+			add_filter( 'script_loader_tag', function( string $tag, string $handle ) : string {
+				return dht_make_script_as_module_type( $tag, $handle, DHT_PREFIX_JS . '-fw' );
+			}, 10, 2 );
 		} else {
 			wp_register_style( DHT_PREFIX_CSS . '-main-bundle', DHT_ASSETS_URI . 'dist/main.css', array(), dht()->manifest->get( 'version' ) );
-			
 			wp_enqueue_style( DHT_PREFIX_CSS . '-main-bundle' );
+			
 			//this bundle is loading the modules dynamically
 			wp_enqueue_script( DHT_PREFIX_JS . '-main-bundle', DHT_ASSETS_URI . 'dist/main.js', array( 'jquery' ), dht()->manifest->get( 'version' ), true );
 			wp_localize_script( DHT_PREFIX_JS . '-main-bundle', 'dht_framework_ajax_info', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
@@ -116,7 +104,7 @@ final class DHT {
 	 * @return void
 	 * @since     1.0.0
 	 */
-	private function loadTextdomain() : void {
+	private function _loadTextdomain() : void {
 		
 		//change this after creating a composer package
 		if ( defined( 'DHT_DIR' ) ) {
@@ -126,6 +114,24 @@ final class DHT {
 			// Composer package context
 			load_textdomain( DHT_PREFIX, __DIR__ . '/lang/your-text-domain.mo' );
 		}
+	}
+	
+	/**
+	 * Magic method to allow calls to certain methods without exposing them directly
+	 * When using dht() the methods won't be exposed
+	 */
+	public function __call( $method, $arguments ) {
+		
+		//$this->_loadTextdomain();
+		
+		// You can control which methods are callable here
+		if ( $method === '_enqueueFrameworkGeneralScripts' ) {
+			return call_user_func_array( [ $this, '_enqueueFrameworkGeneralScripts' ], $arguments );
+		} elseif ( $method === '_loadTextdomain' ) {
+			return call_user_func_array( [ $this, '_loadTextdomain' ], $arguments );
+		}
+		
+		return '';
 	}
 	
 }

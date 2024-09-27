@@ -14,7 +14,14 @@ if ( ! defined( 'DHT_MAIN' ) ) {
  */
 class Environment {
 	
-	// Load all environment variables from the .env file
+	/**
+	 * Load all environment variables from the .env file
+	 *
+	 * @param string $path .env file path
+	 *
+	 * @return void
+	 * @since     1.0.0
+	 */
 	public static function loadEnv( string $path ) : void {
 		$loader = new Loader( $path . '.env' );
 		$loader->parse();
@@ -24,7 +31,14 @@ class Environment {
 		self::convertEnvValues( $envVariables );
 	}
 	
-	// Convert specific environment variables to boolean-friendly strings
+	/**
+	 * Convert specific environment variables to boolean-friendly strings
+	 *
+	 * @param array $const_names All .env file constants
+	 *
+	 * @return void
+	 * @since     1.0.0
+	 */
 	protected static function convertEnvValues( array $const_names ) : void {
 		
 		foreach ( $const_names as $key => $value ) {
@@ -38,12 +52,22 @@ class Environment {
 		}
 	}
 	
-	// Check if the environment is development by using the getenv function
+	/**
+	 * Check if the environment is development by using the getenv function
+	 *
+	 * @return bool
+	 * @since     1.0.0
+	 */
 	public static function isDevelopment() : bool {
 		return getenv( 'DHT_IS_DEV_ENVIRONMENT' ) === 'true';
 	}
 	
-	// Check if the environment is production
+	/**
+	 * Check if the environment is production by using the getenv function
+	 *
+	 * @return bool
+	 * @since     1.0.0
+	 */
 	public static function isProduction() : bool {
 		return getenv( 'DHT_IS_DEV_ENVIRONMENT' ) === 'false';
 	}

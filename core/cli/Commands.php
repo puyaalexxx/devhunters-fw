@@ -3,7 +3,7 @@ declare( strict_types = 1 );
 
 namespace DHT\Core\Cli;
 
-if ( ! defined( 'ABSPATH' ) ) {
+if ( ! defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 

@@ -17,8 +17,6 @@ export default defineConfig(({ command }) => {
     const separate = process.env.VITE_SEPARATE === "true";
     const isDevelopmentEnv = process.env.DHT_IS_DEV_ENVIRONMENT === "true";
 
-    console.log(process.env.DHT_IS_DEV_ENVIRONMENT);
-
     //get vite configs
     const {
         input,

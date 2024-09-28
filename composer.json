@@ -35,6 +35,7 @@
       "helpers/framework.php"
     ],
     "psr-4": {
+      "DHT\\": "",
       "DHT\\Helpers\\": "helpers/",
       "DHT\\Helpers\\Classes\\": "helpers/classes/",
       "DHT\\Helpers\\Exceptions\\": "helpers/exceptions/",

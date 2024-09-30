@@ -24,85 +24,85 @@ $options = [];
 <?php if ( isset( $container[ 'subtype' ] ) && $container[ 'subtype' ] == 'tabs' ): ?>
 
     <div
-        class="dht-cosidebar dht-cosidebar-tabs <?php echo isset( $container[ 'attr' ][ 'class' ] ) ? esc_attr( $container[ 'attr' ][ 'class' ] ) : ''; ?>">
+        class="dht-cosidebar dht-cosidebar-tabs <?php echo isset( $container[ 'attr' ][ 'class' ] ) && ! isset( $container[ 'area' ] ) ? esc_attr( $container[ 'attr' ][ 'class' ] ) : ''; ?>"">
 
-        <div class="dht-cosidebar-header">
-            <ul>
-				<?php $count = 0; ?>
-				<?php foreach ( $container[ 'options' ] as $page ): $count ++; ?>
-					
-					<?php
-					$page_link = $page[ 'page_link' ] ?? '';
-					//set active class
-					$active_class = $count == 1 ? 'dht-cosidebar-active' : '';
-					//get page options if no page_link available
-					$options[ $page[ 'id' ] ][ 'options' ] = $page[ 'options' ] ?? [];
-					?>
-
-                    <li class="<?php echo esc_attr( $active_class ); ?>">
-						
-						<?php dht_fw_render_link_area( $page_link, $page ); ?>
-						
-						<?php if ( isset( $page[ 'pages' ] ) ): ?>
-
-                            <ul class="dht-cosidebar-sub-menu">
-								
-								<?php foreach ( $page[ 'pages' ] as $subpage ): ?>
-									
-									<?php
-									$page_link = $subpage[ 'page_link' ] ?? '';
-									//set active class
-									$active_class = $count == 1 ? 'dht-cosidebar-active' : '';
-									//get subpage options if no page_link available
-									$options[ $page[ 'id' ] ][ 'pages' ][ $subpage[ 'id' ] ] = $subpage[ 'options' ] ?? [];
-									
-									//render subpage header li tag
-									dht_fw_render_subpage_li_area( $active_class, $page_link, $subpage )
-									?>
-								
-								<?php endforeach; ?>
-
-                            </ul>
-						
-						<?php endif; ?>
-                    </li>
+    <div class="dht-cosidebar-header">
+        <ul>
+			<?php $count = 0; ?>
+			<?php foreach ( $container[ 'options' ] as $page ): $count ++; ?>
 				
-				<?php endforeach; ?>
-            </ul>
-        </div>
+				<?php
+				$page_link = $page[ 'page_link' ] ?? '';
+				//set active class
+				$active_class = $count == 1 ? 'dht-cosidebar-active' : '';
+				//get page options if no page_link available
+				$options[ $page[ 'id' ] ][ 'options' ] = $page[ 'options' ] ?? [];
+				?>
 
-        <!--render the received option from the menu pages-->
-		<?php if ( ! empty( $options ) ): ?>
-
-            <div class="dht-cosidebar-body">
-				
-				<?php $count = 0; ?>
-				<?php foreach ( $options as $page_id => $page ): $count ++; ?>
+                <li class="<?php echo esc_attr( $active_class ); ?>">
 					
-					<?php
-					// Render submenu items
-					if ( isset( $page[ 'pages' ] ) ) {
-						foreach ( $page[ 'pages' ] as $subpage_id => $options ) {
-							echo dht_fw_render_sidebar_content( [
-								'menu_id'    => $container[ 'id' ],
-								'page_id'    => $page_id,
-								'subpage_id' => $subpage_id
-							], $options, $saved_values, $registered_options_classes, $count );
-						}
-					} else {
-						// Render parent menu item options
+					<?php dht_fw_render_link_area( $page_link, $page ); ?>
+					
+					<?php if ( isset( $page[ 'pages' ] ) ): ?>
+
+                        <ul class="dht-cosidebar-sub-menu">
+							
+							<?php foreach ( $page[ 'pages' ] as $subpage ): ?>
+								
+								<?php
+								$page_link = $subpage[ 'page_link' ] ?? '';
+								//set active class
+								$active_class = $count == 1 ? 'dht-cosidebar-active' : '';
+								//get subpage options if no page_link available
+								$options[ $page[ 'id' ] ][ 'pages' ][ $subpage[ 'id' ] ] = $subpage[ 'options' ] ?? [];
+								
+								//render subpage header li tag
+								dht_fw_render_subpage_li_area( $active_class, $page_link, $subpage )
+								?>
+							
+							<?php endforeach; ?>
+
+                        </ul>
+					
+					<?php endif; ?>
+                </li>
+			
+			<?php endforeach; ?>
+        </ul>
+    </div>
+
+    <!--render the received option from the menu pages-->
+	<?php if ( ! empty( $options ) ): ?>
+
+        <div class="dht-cosidebar-body">
+			
+			<?php $count = 0; ?>
+			<?php foreach ( $options as $page_id => $page ): $count ++; ?>
+				
+				<?php
+				// Render submenu items
+				if ( isset( $page[ 'pages' ] ) ) {
+					foreach ( $page[ 'pages' ] as $subpage_id => $options ) {
 						echo dht_fw_render_sidebar_content( [
-							'menu_id' => $container[ 'id' ],
-							'page_id' => $page_id
-						], $page[ 'options' ], $saved_values, $registered_options_classes, $count );
+							'menu_id'    => $container[ 'id' ],
+							'page_id'    => $page_id,
+							'subpage_id' => $subpage_id
+						], $options, $saved_values, $registered_options_classes, $count );
 					}
-					?>
-				
-				<?php endforeach; ?>
+				} else {
+					// Render parent menu item options
+					echo dht_fw_render_sidebar_content( [
+						'menu_id' => $container[ 'id' ],
+						'page_id' => $page_id
+					], $page[ 'options' ], $saved_values, $registered_options_classes, $count );
+				}
+				?>
+			
+			<?php endforeach; ?>
 
-            </div>
-		
-		<?php endif; ?>
+        </div>
+	
+	<?php endif; ?>
 
     </div>
 

@@ -13,8 +13,7 @@ use DHT\Helpers\Traits\Options\{EnqueueOptionsHelpers,
 	OptionsHelpers,
 	RegisterOptionsHelpers,
 	RenderOptionsHelpers,
-	SaveOptionsHelpers
-};
+	SaveOptionsHelpers};
 use WP_Post;
 use function DHT\dht;
 use function DHT\Helpers\{dht_get_current_admin_post_type, dht_get_current_admin_taxonomy_from_url, dht_load_view};
@@ -74,10 +73,7 @@ final class Options implements IOptions {
 		//enqueue settings
 		{
 			//enqueue the options container scripts
-			add_action( 'admin_enqueue_scripts', [
-				$this,
-				'enqueueGeneralScripts'
-			] );
+			add_action( 'admin_enqueue_scripts', [ $this, 'enqueueGeneralScripts' ] );
 			
 			//enqueue styles/scripts for each option received from the plugin
 			$this->_enqueueOptionsScripts( $this->_options );
@@ -94,16 +90,10 @@ final class Options implements IOptions {
 		//post types related functionality
 		{
 			//save post type metaboxes options
-			add_action( 'save_post', [
-				$this,
-				'savePostTypeOptions'
-			], 999, 2 );
+			add_action( 'save_post', [ $this, 'savePostTypeOptions' ], 999, 2 );
 			
 			//register post types and pages meta boxes
-			add_action( 'add_meta_boxes', [
-				$this,
-				'registerPostTypeMetaboxes'
-			] );
+			add_action( 'add_meta_boxes', [ $this, 'registerPostTypeMetaboxes' ] );
 		}
 		
 		//taxonomies related functionality
@@ -114,10 +104,7 @@ final class Options implements IOptions {
 				$this->renderContent( $this->_options, 'term', $term->term_id );
 			}, 999 );
 			
-			add_action( 'edited_' . $current_taxonomy, [
-				$this,
-				'saveTermOptions'
-			], 999 );
+			add_action( 'edited_' . $current_taxonomy, [ $this, 'saveTermOptions' ], 999 );
 		}
 	}
 	
@@ -175,6 +162,8 @@ final class Options implements IOptions {
 			// Set metabox ID and options ID
 			$metabox[ 'options_id' ] = $metabox[ 'id' ];
 			$metabox[ 'id' ]         = $metabox_id . '[' . $metabox[ 'options_id' ] . ']';
+			//used to not adding the class to the containers because it is added to metabox
+			$metabox[ 'area' ] = 'metabox';
 			
 			// Register the metabox
 			add_meta_box( $metabox_id, // ID of the metabox
@@ -186,6 +175,9 @@ final class Options implements IOptions {
 				$metabox[ 'context' ] ?? 'normal', // Context (normal, side, advanced)
 				$metabox[ 'priority' ] ?? 'high'  // Priority (high, core, default, low)
 			);
+			
+			// Add custom class to the postbox area
+			$this->_addMetaboxCustomClass( $metabox, $post_type, $metabox_id );
 		}
 	}
 	
@@ -204,8 +196,9 @@ final class Options implements IOptions {
 		$template = $this->_getOptionsTemplate( $location );
 		
 		$viewData = [
-			'nonce'   => $this->_nonce,
-			'options' => $this->_getOptionsView( $options, $location, $id ),
+			'nonce'      => $this->_nonce,
+			'metabox_id' => $options[ 'options_id' ],
+			'options'    => $this->_getOptionsView( $options, $location, $id ),
 		];
 		
 		echo dht_load_view( DHT_VIEWS_DIR . 'extensions/options/', $template, $viewData );

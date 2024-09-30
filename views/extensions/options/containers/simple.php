@@ -17,7 +17,7 @@ $registered_options_classes = $args[ 'registered_options_classes' ] ?? [];
 <?php do_action( 'dht_template_container_simple_before_area' ); ?>
 
 <div
-    class="dht-simple-container <?php echo isset( $container[ 'attr' ][ 'class' ] ) ? esc_attr( $container[ 'attr' ][ 'class' ] ) : ''; ?>">
+    class="dht-simple-container <?php echo isset( $container[ 'attr' ][ 'class' ] ) && ! isset( $container[ 'area' ] ) ? esc_attr( $container[ 'attr' ][ 'class' ] ) : ''; ?>">
 	
 	<?php if ( ! empty( $container[ 'options' ] ) ): ?>
 		

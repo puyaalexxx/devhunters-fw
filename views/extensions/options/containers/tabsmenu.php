@@ -17,50 +17,50 @@ $registered_options_classes = $args[ 'registered_options_classes' ] ?? [];
 <?php do_action( 'dht_template_container_tabsmenu_before_area' ); ?>
 
     <div
-        class="dht-tabsmenu-container <?php echo isset( $container[ 'attr' ][ 'class' ] ) ? esc_attr( $container[ 'attr' ][ 'class' ] ) : ''; ?>">
+        class="dht-tabsmenu-container <?php echo isset( $container[ 'attr' ][ 'class' ] ) && ! isset( $container[ 'area' ] ) ? esc_attr( $container[ 'attr' ][ 'class' ] ) : ''; ?>"">
+
+<?php if ( ! empty( $container[ 'options' ] ) ): ?>
+
+    <div class="dht-field-tabsmenu">
+
+        <ul class="dht-tabsmenu-links">
+			
+			<?php $cnt = 0;
+			foreach ( $container[ 'options' ] as $tabsmenu ) : $cnt ++; ?>
+
+                <li class="<?php echo $cnt == 1 ? 'active' : '' ?>">
+                    <a href="#<?php echo esc_attr( $tabsmenu[ 'id' ] ); ?>-<?php echo esc_attr( $cnt ); ?>">
+						<?php echo ! empty( $tabsmenu[ 'title' ] ) ? esc_html( $tabsmenu[ 'title' ] ) : sprintf( _x( 'Tab %d', 'options', DHT_PREFIX ), $cnt ); ?>
+                    </a>
+                </li>
+			
+			<?php endforeach; ?>
+
+        </ul>
 		
-		<?php if ( ! empty( $container[ 'options' ] ) ): ?>
+		<?php $count = 0;
+		foreach ( $container[ 'options' ] as $tabsmenu ) : $count ++; ?>
 
-            <div class="dht-field-tabsmenu">
-
-                <ul class="dht-tabsmenu-links">
-					
-					<?php $cnt = 0;
-					foreach ( $container[ 'options' ] as $tabsmenu ) : $cnt ++; ?>
-
-                        <li class="<?php echo $cnt == 1 ? 'active' : '' ?>">
-                            <a href="#<?php echo esc_attr( $tabsmenu[ 'id' ] ); ?>-<?php echo esc_attr( $cnt ); ?>">
-								<?php echo ! empty( $tabsmenu[ 'title' ] ) ? esc_html( $tabsmenu[ 'title' ] ) : sprintf( _x( 'Tab %d', 'options', DHT_PREFIX ), $cnt ); ?>
-                            </a>
-                        </li>
-					
-					<?php endforeach; ?>
-
-                </ul>
+            <div class="dht-tabsmenu-content <?php echo $count == 1 ? 'active' : '' ?>"
+                 id="<?php echo esc_attr( $tabsmenu[ 'id' ] ); ?>-<?php echo esc_attr( $count ); ?>">
 				
-				<?php $count = 0;
-				foreach ( $container[ 'options' ] as $tabsmenu ) : $count ++; ?>
-
-                    <div class="dht-tabsmenu-content <?php echo $count == 1 ? 'active' : '' ?>"
-                         id="<?php echo esc_attr( $tabsmenu[ 'id' ] ); ?>-<?php echo esc_attr( $count ); ?>">
-						
-						<?php if ( ! empty( $tabsmenu[ 'options' ] ) ): ?>
-							
-							<?php
-							//get specific page group/option saved value
-							$saved_value = $saved_values[ $container[ 'id' ] ] ?? [];
-							echo dht_fw_render_options( $tabsmenu[ 'options' ], $container[ 'id' ], $saved_value, $registered_options_classes );
-							?>
-						
-						<?php endif; ?>
-
-                    </div>
+				<?php if ( ! empty( $tabsmenu[ 'options' ] ) ): ?>
+					
+					<?php
+					//get specific page group/option saved value
+					$saved_value = $saved_values[ $container[ 'id' ] ] ?? [];
+					echo dht_fw_render_options( $tabsmenu[ 'options' ], $container[ 'id' ], $saved_value, $registered_options_classes );
+					?>
 				
-				<?php endforeach; ?>
+				<?php endif; ?>
 
             </div>
 		
-		<?php endif; ?>
+		<?php endforeach; ?>
+
+    </div>
+
+<?php endif; ?>
 
     </div>
 

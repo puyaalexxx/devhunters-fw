@@ -20,7 +20,7 @@ trait OptionsHelpers {
 		$nonce = '';
 		
 		if ( isset( $_POST ) ) {
-			$nonce = array_filter( array_keys( $_POST ), function ( $key ) {
+			$nonce = array_filter( array_keys( $_POST ), function( $key ) {
 				
 				return str_contains( $key, '_dht_fw_nonce' );
 			} );
@@ -81,6 +81,27 @@ trait OptionsHelpers {
 		}
 		
 		return $template;
+	}
+	
+	/**
+	 * Add custom class to the metabox area
+	 *
+	 * @param array  $metabox Metabox options
+	 * @param string $post_type
+	 * @param string $metabox_id
+	 *
+	 * @return void
+	 * @since     1.0.0
+	 */
+	private function _addMetaboxCustomClass( array $metabox, string $post_type, string $metabox_id ) : void {
+		
+		if ( isset( $metabox[ 'attr' ][ 'class' ] ) ) {
+			add_filter( 'postbox_classes_' . $post_type . '_' . $metabox_id, function( $classes ) use ( $metabox ) {
+				$classes[] = $metabox[ 'attr' ][ 'class' ];
+				
+				return $classes;
+			} );
+		}
 	}
 	
 }

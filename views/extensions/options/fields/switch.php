@@ -2,7 +2,9 @@
 
 use function DHT\Helpers\dht_parse_option_attributes;
 
-if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
+if ( ! defined( 'DHT_MAIN' ) ) {
+	die( 'Forbidden' );
+}
 
 $field = $args[ 'field' ] ?? [];
 
@@ -12,7 +14,8 @@ $on_off_class = in_array( $field[ 'value' ], $field[ 'left-choice' ] ) ? 'dht-sl
 
 <?php do_action( 'dht_template_fields_switch_before_area' ); ?>
 
-<div class="dht-field-wrapper <?php echo isset( $field[ 'attr' ][ 'class' ] ) ? esc_attr( $field[ 'attr' ][ 'class' ] ) : ''; ?>" <?php echo dht_parse_option_attributes( $field[ 'attr' ] ); ?>>
+<div
+    class="dht-field-wrapper <?php echo isset( $field[ 'attr' ][ 'class' ] ) ? esc_attr( $field[ 'attr' ][ 'class' ] ) : ''; ?>" <?php echo dht_parse_option_attributes( $field[ 'attr' ] ?? [] ); ?>>
 
     <div class="dht-title"><?php echo esc_html( $field[ 'title' ] ); ?></div>
 
@@ -22,7 +25,7 @@ $on_off_class = in_array( $field[ 'value' ], $field[ 'left-choice' ] ) ? 'dht-sl
                for="<?php echo esc_attr( $field[ 'id' ] ); ?>">
 
             <input type="hidden" name="<?php echo esc_attr( $field[ 'id' ] ); ?>"
-                   value="<?php echo esc_attr( $field[ 'value' ] ); ?>"/>
+                   value="<?php echo esc_attr( $field[ 'value' ] ); ?>" />
 
             <span class="dht-slider">
                     <span class="dht-slider-yes"
@@ -32,23 +35,23 @@ $on_off_class = in_array( $field[ 'value' ], $field[ 'left-choice' ] ) ? 'dht-sl
                 </span>
 
         </label>
-        
-        <?php if( !empty( $field[ 'description' ] ) ): ?>
+		
+		<?php if ( ! empty( $field[ 'description' ] ) ): ?>
             <div class="dht-description"><?php echo esc_html( $field[ 'description' ] ); ?></div>
-        <?php endif; ?>
+		<?php endif; ?>
 
     </div>
-    
-    <?php if( !empty( $field[ 'tooltip' ] ) ): ?>
+	
+	<?php if ( ! empty( $field[ 'tooltip' ] ) ): ?>
         <div class="dht-info-help dashicons dashicons-info"
              data-tooltips="<?php echo esc_html( $field[ 'tooltip' ] ); ?>"
              data-position="OnLeft">
         </div>
-    <?php endif; ?>
+	<?php endif; ?>
 
 </div>
 
-<?php if( isset( $field[ 'divider' ] ) && $field[ 'divider' ] ): ?>
+<?php if ( isset( $field[ 'divider' ] ) && $field[ 'divider' ] ): ?>
     <div class="dht-divider"></div>
 <?php endif; ?>
 

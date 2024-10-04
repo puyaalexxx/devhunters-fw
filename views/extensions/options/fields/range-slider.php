@@ -1,5 +1,7 @@
 <?php
-if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
+if ( ! defined( 'DHT_MAIN' ) ) {
+	die( 'Forbidden' );
+}
 
 use function DHT\Helpers\dht_parse_option_attributes;
 
@@ -9,29 +11,32 @@ $field = $args[ 'field' ] ?? [];
 
 <?php do_action( 'dht_template_fields_range_slider_before_area' ); ?>
 
-<div class="dht-field-wrapper <?php echo isset( $field[ 'attr' ][ 'class' ] ) ? esc_attr( $field[ 'attr' ][ 'class' ] ) : ''; ?>" <?php echo dht_parse_option_attributes( $field[ 'attr' ] ); ?>>
+<div
+    class="dht-field-wrapper <?php echo isset( $field[ 'attr' ][ 'class' ] ) ? esc_attr( $field[ 'attr' ][ 'class' ] ) : ''; ?>" <?php echo dht_parse_option_attributes( $field[ 'attr' ] ?? [] ); ?>>
 
     <div class="dht-title"><?php echo esc_html( $field[ 'title' ] ); ?></div>
 
     <div class="dht-field-child-wrapper dht-field-child-rangeslider">
-        
-        <?php if( isset( $field[ 'range' ] ) && $field[ 'range' ] ): ?>
+		
+		<?php if ( isset( $field[ 'range' ] ) && $field[ 'range' ] ): ?>
 
             <div class="dht-slider-group">
 
-                <label for="<?php echo esc_attr( $field[ 'id' ] ); ?>-1"><?php echo esc_html( $field[ 'title' ] ); ?></label>
+                <label
+                    for="<?php echo esc_attr( $field[ 'id' ] ); ?>-1"><?php echo esc_html( $field[ 'title' ] ); ?></label>
                 <input class="dht-range-slider dht-range-slider-1 dht-field"
                        id="<?php echo esc_attr( $field[ 'id' ] ); ?>-1"
                        type="text"
                        name="<?php echo esc_attr( $field[ 'id' ] ); ?>[]"
-                       value="<?php echo !empty( $field[ 'value' ] ) ? $field[ 'value' ][ 0 ] : ''; ?>"/>
+                       value="<?php echo ! empty( $field[ 'value' ] ) ? $field[ 'value' ][ 0 ] : ''; ?>" />
                 -
-                <label for="<?php echo esc_attr( $field[ 'id' ] ); ?>-2"><?php echo esc_html( $field[ 'title' ] ); ?></label>
+                <label
+                    for="<?php echo esc_attr( $field[ 'id' ] ); ?>-2"><?php echo esc_html( $field[ 'title' ] ); ?></label>
                 <input class="dht-range-slider dht-range-slider-2 dht-field"
                        id="<?php echo esc_attr( $field[ 'id' ] ); ?>-2"
                        type="text"
                        name="<?php echo esc_attr( $field[ 'id' ] ); ?>[]"
-                       value="<?php echo !empty( $field[ 'value' ] ) ? $field[ 'value' ][ 1 ] : ''; ?>"/>
+                       value="<?php echo ! empty( $field[ 'value' ] ) ? $field[ 'value' ][ 1 ] : ''; ?>" />
 
             </div>
 
@@ -39,47 +44,47 @@ $field = $args[ 'field' ] ?? [];
             <div class="dht-slider-slider"
                  data-range="yes"
                  data-values="<?php echo implode( ',', $field[ 'value' ] ); ?>"
-                 data-min="<?php echo (int)$field[ 'min' ]; ?>"
-                 data-max="<?php echo (int)$field[ 'max' ]; ?>"
+                 data-min="<?php echo (int) $field[ 'min' ]; ?>"
+                 data-max="<?php echo (int) $field[ 'max' ]; ?>"
             >
             </div>
-        
-        <?php else: ?>
+		
+		<?php else: ?>
 
             <label for="<?php echo esc_attr( $field[ 'id' ] ); ?>"><?php echo esc_html( $field[ 'title' ] ); ?></label>
             <input class="dht-slider dht-field"
                    id="<?php echo esc_attr( $field[ 'id' ] ); ?>"
                    type="text"
                    name="<?php echo esc_attr( $field[ 'id' ] ); ?>"
-                   value="<?php echo esc_html( $field[ 'value' ] ); ?>"/>
+                   value="<?php echo esc_html( $field[ 'value' ] ); ?>" />
 
             <!--range slider -->
             <div class="dht-slider-slider"
                  data-range="no"
-                 data-values="<?php echo (int)$field[ 'value' ]; ?>"
-                 data-min="<?php echo (int)$field[ 'min' ]; ?>"
-                 data-max="<?php echo (int)$field[ 'max' ]; ?>"
+                 data-values="<?php echo (int) $field[ 'value' ]; ?>"
+                 data-min="<?php echo (int) $field[ 'min' ]; ?>"
+                 data-max="<?php echo (int) $field[ 'max' ]; ?>"
             >
             </div>
-        
-        <?php endif; ?>
-        
-        <?php if( !empty( $field[ 'description' ] ) ): ?>
+		
+		<?php endif; ?>
+		
+		<?php if ( ! empty( $field[ 'description' ] ) ): ?>
             <div class="dht-description"><?php echo esc_html( $field[ 'description' ] ); ?></div>
-        <?php endif; ?>
+		<?php endif; ?>
 
     </div>
-    
-    <?php if( !empty( $field[ 'tooltip' ] ) ): ?>
+	
+	<?php if ( ! empty( $field[ 'tooltip' ] ) ): ?>
         <div class="dht-info-help dashicons dashicons-info"
              data-tooltips="<?php echo esc_html( $field[ 'tooltip' ] ); ?>"
              data-position="OnLeft">
         </div>
-    <?php endif; ?>
+	<?php endif; ?>
 
 </div>
 
-<?php if( isset( $field[ 'divider' ] ) && $field[ 'divider' ] ): ?>
+<?php if ( isset( $field[ 'divider' ] ) && $field[ 'divider' ] ): ?>
     <div class="dht-divider"></div>
 <?php endif; ?>
 

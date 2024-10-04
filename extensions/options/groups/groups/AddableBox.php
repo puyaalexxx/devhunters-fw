@@ -33,14 +33,8 @@ final class AddableBox extends BaseGroup {
 		
 		parent::__construct( $optionTogglesClasses, $optionFieldsClasses );
 		
-		add_action( 'wp_ajax_getBoxOptions', [
-			$this,
-			'getBoxOptions'
-		] );
-		add_action( 'wp_ajax_nopriv_getBoxOptions', [
-			$this,
-			'getBoxOptions'
-		] ); // For non-logged in users
+		add_action( 'wp_ajax_getBoxOptions', [ $this, 'getBoxOptions' ] );
+		add_action( 'wp_ajax_nopriv_getBoxOptions', [ $this, 'getBoxOptions' ] ); // For non-logged in users
 	}
 	
 	/**

@@ -12,7 +12,7 @@ $field = $args[ 'field' ] ?? [];
 <?php do_action( 'dht_template_fields_radio_image_before_area' ); ?>
 
 <div
-    class="dht-field-wrapper <?php echo isset( $field[ 'attr' ][ 'class' ] ) ? esc_attr( $field[ 'attr' ][ 'class' ] ) : ''; ?>" <?php echo dht_parse_option_attributes( $field[ 'attr' ] ); ?>>
+    class="dht-field-wrapper <?php echo isset( $field[ 'attr' ][ 'class' ] ) ? esc_attr( $field[ 'attr' ][ 'class' ] ) : ''; ?>" <?php echo dht_parse_option_attributes( $field[ 'attr' ] ?? [] ); ?>>
 
     <div class="dht-title"><?php echo esc_html( $field[ 'title' ] ); ?></div>
 

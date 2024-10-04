@@ -196,10 +196,14 @@ final class Options implements IOptions {
 		$template = $this->_getOptionsTemplate( $location );
 		
 		$viewData = [
-			'nonce'      => $this->_nonce,
-			'metabox_id' => $options[ 'options_id' ],
-			'options'    => $this->_getOptionsView( $options, $location, $id ),
+			'nonce'   => $this->_nonce,
+			'options' => $this->_getOptionsView( $options, $location, $id ),
 		];
+		
+		//add 'metabox_id' if it exists
+		if ( isset( $options[ 'options_id' ] ) ) {
+			$viewData[ 'metabox_id' ] = $options[ 'options_id' ];
+		}
 		
 		echo dht_load_view( DHT_VIEWS_DIR . 'extensions/options/', $template, $viewData );
 	}

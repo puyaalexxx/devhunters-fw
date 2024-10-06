@@ -1,0 +1,112 @@
+@import '../../../../variables.pcss';
+
+.dht-vb-enabled {
+
+    .dht-vb-container {
+
+        &:hover {
+            .dht-vb-buttons-group-container {
+                display: block;
+                opacity: 1;
+                transition: opacity 0.3s ease-in-out;
+            }
+        }
+
+        &.dht-vb-disabled {
+            .dht-vb-buttons-group-container {
+                display: none;
+            }
+        }
+
+        .dht-vb-buttons-group-container {
+            position: absolute;
+            z-index: 9999;
+            top: -14px;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+
+            .dht-vb-button-group {
+                display: flex;
+            }
+
+            button.dht-vb-button {
+                background: #4c5866;
+                border: none;
+                padding: 8px 6px;
+                cursor: pointer;
+
+                /*tooltip styles*/
+
+                .dht-vb-tooltip {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    z-index: 5;
+                    display: none;
+
+                    p.on-bottom {
+                        transform: translate(-50%, -100%);
+                        top: -20px;
+                        font-size: 14px;
+                        text-align: center;
+                    }
+
+                    p {
+                        min-width: 115px;
+                        opacity: 1;
+                        display: inline-block;
+                        visibility: visible;
+                        position: absolute;
+                        text-align: left;
+                        width: auto;
+                        background: #4c5866;
+                        color: #ffffff;
+                        font-size: 1rem;
+                        line-height: 1.2;
+                        padding: 10px;
+                        border-radius: 3px;
+                        white-space: normal;
+                        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+                        transition: all 0.2s ease-out;
+                    }
+
+                    p.on-bottom:before {
+                        position: absolute;
+                        content: "";
+                        width: 0;
+                        height: 0;
+                        border-left: 8px solid transparent;
+                        border-right: 8px solid transparent;
+                        border-top: 8px solid #4c5866;
+                        top: 100%;
+                        left: 50%;
+                        margin-left: -8px;
+                        margin-top: -1px;
+                    }
+                }
+            }
+
+            .dht-vb-icon {
+                fill: rgb(255, 255, 255);
+                opacity: 1;
+                transform: none;
+                width: 16px;
+                min-width: 16px;
+                height: 16px;
+
+                &.dht-vb-icon-drag {
+                    cursor: grab;
+                }
+
+                svg {
+                    width: 16px;
+                    min-width: 16px;
+                    height: 16px;
+                }
+            }
+        }
+    }
+}

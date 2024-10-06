@@ -1,0 +1,100 @@
+@import '../../../../variables.pcss';
+
+.dht-vb-enabled {
+
+    .dht-vb-modal {
+        z-index: 100025 !important;
+        border-radius: 3px;
+        width: 400px;
+        background: #fff;
+        display: none;
+
+        .dht-vb-modal-header {
+            cursor: grab;
+            user-select: none;
+            display: flex;
+            background: #2271b1;
+            color: #fff;
+            align-items: center;
+            border-radius: 3px 3px 0 0;
+            height: 50px;
+
+            &:active {
+                cursor: grabbing;
+            }
+        }
+
+        .dht-vb-modal-title {
+            font-size: 18px;
+            padding: 0 10px;
+            text-transform: capitalize;
+        }
+
+        .dht-vb-modal-content {
+            padding: 10px;
+            height: 390px;
+            overflow: hidden auto;
+            overscroll-behavior: contain;
+            background: #f0b849;
+        }
+
+        .dht-vb-modal-footer {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            cursor: pointer;
+
+            .dht-vb-modal-close, .dht-vb-modal-save {
+                flex: 1;
+                padding: 10px;
+                text-align: center;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .dht-vb-modal-close {
+                background: #ef5556;
+                border-radius: 0 0 0 3px;
+            }
+
+            .dht-vb-modal-save {
+                background: #2ac4aa;
+                border-radius: 0 0 3px 0;
+            }
+
+            svg {
+                fill: rgb(255, 255, 255);
+                width: 15px;
+                height: 20px;
+            }
+
+            .dht-vb-modal-resize {
+                fill: rgb(255, 255, 255);
+                position: absolute;
+                background-color: #4c5866;
+                bottom: -15px;
+                right: -15px;
+                padding: 7px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: nwse-resize;
+                transform: scale(0);
+                transition: transform 0.3s ease;
+                overflow: hidden;
+                z-index: 10;
+
+                svg {
+                    width: 16px;
+                    height: 16px;
+                }
+            }
+        }
+
+        &:hover .dht-vb-modal-footer .dht-vb-modal-resize {
+            transform: scale(1);
+        }
+    }
+}

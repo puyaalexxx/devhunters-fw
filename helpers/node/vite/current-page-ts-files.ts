@@ -10,10 +10,15 @@ export function getCurrentPageModules(allModules: Record<string, () => Promise<u
     // get all ts file names as an object with key-value pairs
     const tsFileNames = dhtuGetTsFileNamesFromPaths(allModules);
 
+    console.log(tsFileNames);
+
     // get existent page modules
     return [
         //general files that should always be loaded
         "fw",
+
+        //core - vb
+        $(".dht-vb-enabled").length ? tsFileNames.vb : "",
 
         //sidebars
         $("#widgets-right").length ? tsFileNames.create_sidebars : "",

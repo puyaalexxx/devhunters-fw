@@ -44,7 +44,7 @@ final class Extensions {
 	 */
 	public function dashmenus( array $dash_menus_config ) : IDashMenuPage {
 		
-		$dash_menus_config = $this->_validateConfigurations( $dash_menus_config, '', 'dash_menus_configurations', EmptyMenuConfigurationsException::class, _x( 'Empty dashboard menu configurations array provided', 'exceptions', DHT_PREFIX ) );
+		$dash_menus_config = $this->_validateConfigurations( $dash_menus_config, '', 'dht_dash_menus_configurations', EmptyMenuConfigurationsException::class, _x( 'Empty dashboard menu configurations array provided', 'exceptions', DHT_PREFIX ) );
 		
 		return new DashMenuPage( $dash_menus_config );
 	}

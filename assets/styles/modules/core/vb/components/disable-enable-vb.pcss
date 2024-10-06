@@ -1,0 +1,75 @@
+@import '../../../../variables.pcss';
+
+.dht-vb-enabled {
+
+    /* disable-enable buttons area */
+
+    #dht-vb-buttons-builder-box {
+
+        #dht-vb-enable-builder-button {
+            display: none !important;
+        }
+
+        #dht-vb-disable-builder-button {
+            display: inline-block !important;
+        }
+
+    }
+}
+
+/* disable-enable buttons area when builder disabled */
+
+#poststuff #dht-vb-buttons-builder-box .inside {
+    margin: 0;
+    padding: 0;
+}
+
+#dht-vb-buttons-builder-box {
+    display: none;
+
+    &.postbox {
+        box-shadow: none !important;
+        background: transparent !important;
+        border: none !important;
+        margin-bottom: 0;
+        margin-top: 20px;
+    }
+
+    .postbox-header {
+        display: none;
+    }
+
+    #dht-vb-enable-builder-button, #dht-vb-disable-builder-button {
+        pointer-events: auto;
+        transition: background .5s;
+        padding: 0 12px;
+        border-radius: 3px;
+        margin: 0;
+        font-size: 14px;
+        font-weight: 600;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        height: 40px;
+        line-height: 40px;
+        position: relative;
+        text-shadow: none;
+        transform: none !important;
+        box-shadow: 0 5px 10px rgba(43, 135, 218, .15);
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    #dht-vb-enable-builder-button {
+        display: inline-block;
+        background-color: $main-color;
+        color: $btn-color;
+        border: none;
+    }
+
+    #dht-vb-disable-builder-button {
+        display: none;
+        border: 1px solid $main-color;
+        background: $btn-color;
+        color: $main-color;
+    }
+}

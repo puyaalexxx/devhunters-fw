@@ -49,7 +49,7 @@
   "include": [
     "assets/scripts/",
     "assets/scripts/types/*.ts",
-    "assets/scripts/dts-files/*d.ts"
+    "assets/scripts/dts-files/*.d.ts"
   ],
   "exclude": [
     "node_modules"

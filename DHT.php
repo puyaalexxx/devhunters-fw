@@ -8,6 +8,7 @@ if ( ! defined( 'DHT_MAIN' ) ) {
 }
 
 use DHT\Core\Cli\CLI;
+use DHT\Core\Core;
 use DHT\Core\Manifest;
 use DHT\Extensions\Extensions;
 use DHT\Helpers\Classes\Environment;
@@ -22,6 +23,9 @@ final class DHT {
 	
 	//framework version
 	public static string $version;
+	
+	//Extensions instance
+	public Core $core;
 	
 	//Extensions instance
 	public Extensions $extensions;
@@ -44,6 +48,9 @@ final class DHT {
 		
 		//instantiate framework manifest info
 		$this->manifest = Manifest::init();
+		
+		//instantiate framework core features
+		$this->core = Core::init();
 		
 		//instantiate framework Extensions
 		$this->extensions = Extensions::init();
@@ -95,6 +102,11 @@ final class DHT {
 			//this bundle is loading the modules dynamically
 			wp_enqueue_script( DHT_PREFIX_JS . '-main-bundle', DHT_ASSETS_URI . 'dist/main.js', array( 'jquery' ), dht()->manifest->get( 'version' ), true );
 			wp_localize_script( DHT_PREFIX_JS . '-main-bundle', 'dht_framework_ajax_info', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
+			
+			//make main.js as to load as a module
+			add_filter( 'script_loader_tag', function( string $tag, string $handle ) : string {
+				return dht_make_script_as_module_type( $tag, $handle, DHT_PREFIX_JS . '-main-bundle' );
+			}, 10, 2 );
 		}
 	}
 	

@@ -1,0 +1,1 @@
+type InitComponentFunction = () => void;

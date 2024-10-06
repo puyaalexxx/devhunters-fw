@@ -31,6 +31,7 @@
       "helpers/terms.php",
       "helpers/options.php",
       "helpers/validations.php",
+      "helpers/vb.php",
       "helpers/features.php",
       "helpers/framework.php"
     ],
@@ -42,6 +43,7 @@
       "DHT\\Helpers\\Exceptions\\ConfigExceptions\\": "helpers/exceptions/config-exceptions/",
       "DHT\\Core\\": "core/",
       "DHT\\Core\\Cli\\": "core/cli/",
+      "DHT\\Core\\Vb\\": "core/vb/",
       "DHT\\Extensions\\": "extensions/",
       "DHT\\Extensions\\DashPages\\": "extensions/dashboard-pages/",
       "DHT\\Extensions\\CPT\\": "extensions/cpt/",

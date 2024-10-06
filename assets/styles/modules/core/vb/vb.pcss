@@ -1,0 +1,32 @@
+.dht-vb-enabled {
+
+    .dht-vb-container {
+        position: relative;
+        display: inline-block;
+
+        &.dht-vb-with-border {
+            &::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                pointer-events: none;
+                border: 2px solid transparent;
+                transition: border-color 0.3s;
+                z-index: 9999;
+            }
+
+            &:hover::before {
+                border-color: #4c5866;
+            }
+
+            &.dht-vb-disabled {
+                &::before {
+                    content: initial !important;
+                }
+            }
+        }
+    }
+}

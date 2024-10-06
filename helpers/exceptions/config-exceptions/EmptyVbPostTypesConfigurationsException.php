@@ -11,9 +11,9 @@ use DHT\Helpers\Exceptions\BaseException;
 use Throwable;
 
 /**
- * Custom class exception thrown when the sidebars configuration array is empty
+ * Custom class exception thrown when the visual builder custom post types configuration array is empty
  */
-class EmptySidebarConfigurationsException extends BaseException {
+class EmptyVbPostTypesConfigurationsException extends BaseException {
 	
 	/**
 	 * @param                $message

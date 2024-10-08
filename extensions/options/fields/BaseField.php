@@ -1,7 +1,7 @@
 <?php
 declare( strict_types = 1 );
 
-namespace DHT\Extensions\Options\Options;
+namespace DHT\Extensions\Options\Fields;
 
 use function DHT\Helpers\dht_load_view;
 

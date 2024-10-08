@@ -1,9 +1,9 @@
 <?php
 declare( strict_types = 1 );
 
-namespace DHT\Extensions\Options\Options\Fields;
+namespace DHT\Extensions\Options\Fields\Fields;
 
-use DHT\Extensions\Options\Options\BaseField;
+use DHT\Extensions\Options\Fields\BaseField;
 use DHT\Helpers\Classes\Environment;
 use function DHT\dht;
 
@@ -11,10 +11,10 @@ if ( ! defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
-class DateTimePicker extends BaseField {
+class TimePicker extends BaseField {
 	
 	//field type
-	protected string $_field = 'datetimepicker';
+	protected string $_field = 'timepicker';
 	
 	/**
 	 * @since     1.0.0
@@ -47,11 +47,10 @@ class DateTimePicker extends BaseField {
 		wp_enqueue_script( DHT_PREFIX_JS . '-jquery-ui-timepicker', DHT_ASSETS_URI . 'scripts/libraries/jquery-ui-timepicker-addon.min.js', array( DHT_PREFIX_JS . '-jquery-ui-datepicker' ), dht()->manifest->get( 'version' ), true );
 		
 		if ( Environment::isDevelopment() ) {
-			//custom css
-			wp_register_style( DHT_PREFIX_CSS . '-datetimepicker-field', DHT_ASSETS_URI . 'dist/css/datetimepicker.css', array(), dht()->manifest->get( 'version' ) );
-			wp_enqueue_style( DHT_PREFIX_CSS . '-datetimepicker-field' );
+			wp_register_style( DHT_PREFIX_CSS . '-timepicker-field', DHT_ASSETS_URI . 'dist/css/timepicker.css', array(), dht()->manifest->get( 'version' ) );
+			wp_enqueue_style( DHT_PREFIX_CSS . '-timepicker-field' );
 			
-			wp_enqueue_script( DHT_PREFIX_JS . '-datetimepicker-field', DHT_ASSETS_URI . 'dist/js/datetimepicker.js', array( DHT_PREFIX_JS . '-jquery-ui-datepicker' ), dht()->manifest->get( 'version' ), true );
+			wp_enqueue_script( DHT_PREFIX_JS . '-timepicker-field', DHT_ASSETS_URI . 'dist/js/timepicker.js', array( DHT_PREFIX_JS . '-jquery-ui-datepicker' ), dht()->manifest->get( 'version' ), true );
 		}
 	}
 	

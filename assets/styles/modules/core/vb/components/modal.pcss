@@ -36,7 +36,7 @@
             height: 390px;
             overflow: hidden auto;
             overscroll-behavior: contain;
-            background: #f0b849;
+            background: #fff;
         }
 
         .dht-vb-modal-footer {
@@ -96,6 +96,14 @@
 
         &:hover .dht-vb-modal-footer .dht-vb-modal-resize {
             transform: scale(1);
+        }
+
+        .dht-preloader {
+            position: relative;
+
+            &.dht-hidden {
+                display: none;
+            }
         }
     }
 }

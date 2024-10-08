@@ -43,8 +43,8 @@ final class Options implements IOptions {
 	
 	//nonce field
 	private array $_nonce = [
-		'action' => 'ppht_nonce_action',
-		'name'   => 'ppht_nonce_action'
+		'action' => DHT_PREFIX . '_nonce_action',
+		'name'   => DHT_PREFIX . 'ppht_nonce_action'
 	];
 	
 	/**     * @param array $options

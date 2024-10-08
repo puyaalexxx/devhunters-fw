@@ -1,9 +1,9 @@
 <?php
 declare( strict_types = 1 );
 
-namespace DHT\Extensions\Options\Options\Fields;
+namespace DHT\Extensions\Options\Fields\Fields;
 
-use DHT\Extensions\Options\Options\BaseField;
+use DHT\Extensions\Options\Fields\BaseField;
 use DHT\Helpers\Classes\Environment;
 use function DHT\dht;
 
@@ -11,10 +11,10 @@ if ( ! defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
-final class AceEditor extends BaseField {
+final class Spacing extends BaseField {
 	
 	//field type
-	protected string $_field = 'ace-editor';
+	protected string $_field = 'spacing';
 	
 	/**
 	 * @since     1.0.0
@@ -35,32 +35,9 @@ final class AceEditor extends BaseField {
 	public function enqueueOptionScripts( array $field ) : void {
 		
 		if ( Environment::isDevelopment() ) {
-			wp_enqueue_script( DHT_PREFIX_JS . '-ace-editor-field', DHT_ASSETS_URI . 'dist/js/ace-editor.js', array( 'jquery' ), dht()->manifest->get( 'version' ), true );
-			
-			wp_localize_script( DHT_PREFIX_JS . '-ace-editor-field', 'dht_ace_editor_path', array(
-				'path' => DHT_URI . 'node_modules/ace-builds/'
-			) );
-		} else {
-			wp_localize_script( DHT_PREFIX_JS . '-main-bundle', 'dht_ace_editor_path', array(
-				'path' => DHT_URI . 'node_modules/ace-builds/'
-			) );
+			wp_register_style( DHT_PREFIX_CSS . '-spacing-field', DHT_ASSETS_URI . 'dist/css/spacing.css', array(), dht()->manifest->get( 'version' ) );
+			wp_enqueue_style( DHT_PREFIX_CSS . '-spacing-field' );
 		}
-	}
-	
-	/**
-	 * merge the field value with the saved value if exists
-	 *
-	 * @param array $field       - field
-	 * @param mixed $saved_value - saved values
-	 *
-	 * @return mixed
-	 * @since     1.0.0
-	 */
-	public function mergeValues( array $field, mixed $saved_value ) : array {
-		
-		$field[ 'value' ] = empty( $saved_value ) ? $field[ 'value' ] : stripslashes( $saved_value );
-		
-		return $field;
 	}
 	
 	/**
@@ -82,7 +59,27 @@ final class AceEditor extends BaseField {
 			return $field[ 'value' ];
 		}
 		
-		return sanitize_textarea_field( $field_post_value );
+		//for the range field
+		if ( is_array( $field_post_value ) ) {
+			
+			$field_vals = [];
+			foreach ( $field_post_value as $key => $value ) {
+				
+				if ( $key == 'size' ) {
+					
+					$field_vals[ $key ] = $value;
+					
+					continue;
+				}
+				
+				$field_vals[ $key ] = absint( sanitize_text_field( $value ) );
+			}
+			
+			$field_post_value = $field_vals;
+			
+		}
+		
+		return $field_post_value;
 	}
 	
 }

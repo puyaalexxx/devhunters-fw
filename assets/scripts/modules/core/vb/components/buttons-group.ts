@@ -111,7 +111,7 @@ class ButtonsGroup {
                     modal.dhtVBModal("open");
 
                     //disable editing buttons area
-                    $(this).parents(".dht-vb-element").addClass("dht-vb-disabled");
+                    $this._vbContainerEditorArea.find(".dht-vb-element").addClass("dht-vb-disabled");
                 })
                 .catch(error => {
                     console.error(error);

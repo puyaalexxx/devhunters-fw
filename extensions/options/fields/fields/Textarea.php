@@ -1,20 +1,18 @@
 <?php
 declare( strict_types = 1 );
 
-namespace DHT\Extensions\Options\Options\Fields;
+namespace DHT\Extensions\Options\Fields\Fields;
 
-use DHT\Extensions\Options\Options\BaseField;
-use DHT\Helpers\Classes\Environment;
-use function DHT\dht;
+use DHT\Extensions\Options\Fields\BaseField;
 
 if ( ! defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
-final class Spacing extends BaseField {
+final class Textarea extends BaseField {
 	
 	//field type
-	protected string $_field = 'spacing';
+	protected string $_field = 'textarea';
 	
 	/**
 	 * @since     1.0.0
@@ -32,13 +30,7 @@ final class Spacing extends BaseField {
 	 * @return void
 	 * @since     1.0.0
 	 */
-	public function enqueueOptionScripts( array $field ) : void {
-		
-		if ( Environment::isDevelopment() ) {
-			wp_register_style( DHT_PREFIX_CSS . '-spacing-field', DHT_ASSETS_URI . 'dist/css/spacing.css', array(), dht()->manifest->get( 'version' ) );
-			wp_enqueue_style( DHT_PREFIX_CSS . '-spacing-field' );
-		}
-	}
+	public function enqueueOptionScripts( array $field ) : void {}
 	
 	/**
 	 *  In this method you receive $field_post_value (from form submit or whatever)
@@ -59,27 +51,7 @@ final class Spacing extends BaseField {
 			return $field[ 'value' ];
 		}
 		
-		//for the range field
-		if ( is_array( $field_post_value ) ) {
-			
-			$field_vals = [];
-			foreach ( $field_post_value as $key => $value ) {
-				
-				if ( $key == 'size' ) {
-					
-					$field_vals[ $key ] = $value;
-					
-					continue;
-				}
-				
-				$field_vals[ $key ] = absint( sanitize_text_field( $value ) );
-			}
-			
-			$field_post_value = $field_vals;
-			
-		}
-		
-		return $field_post_value;
+		return sanitize_textarea_field( $field_post_value );
 	}
 	
 }

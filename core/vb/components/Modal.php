@@ -27,6 +27,9 @@ final class Modal {
 		
 		//enqueue the options container scripts
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueueScripts' ] );
+		
+		add_action( 'wp_ajax_getModalOptions', [ $this, 'getModalOptions' ] );
+		add_action( 'wp_ajax_nopriv_getModalOptions', [ $this, 'getModalOptions' ] ); // For non-logged in users
 	}
 	
 	/**
@@ -45,14 +48,34 @@ final class Modal {
 	
 	
 	/**
-	 * Render the modal template
+	 * ajax action to retrieve all options for the modal
 	 *
-	 * @return string
+	 * @return void
 	 * @since     1.0.0
 	 */
-	/*public function render() : string {
+	public function getModalOptions() : void {
 		
-		return dht_load_view( DHT_VIEWS_DIR . 'core/vb/components/', 'modal.php' );
+		if ( isset( $_POST[ 'action' ] ) && $_POST[ 'action' ] == "getModalOptions" && isset( $_POST[ 'data' ][ 'modalType' ] ) && isset( $_POST[ 'data' ][ 'post_id' ] ) ) {
+			
+			//retrieve box number
+			$modal_type = ! empty( $_POST[ 'data' ][ 'modalType' ] ) ? $_POST[ 'data' ][ 'modalType' ] : "";
+			$post_id    = ! empty( $_POST[ 'data' ][ 'post_id' ] ) ? intval( $_POST[ 'data' ][ 'post_id' ] ) : 0;
+			
+			ob_start();
+			
+			do_action( 'dht-vb-modal-options-hook' );
+			
+			echo $post_id;
+			
+			$content = ob_get_clean();
+			
+			wp_send_json_success( $content );
+			
+		} else {
+			wp_send_json_success( _x( 'Something went wrong, please refresh the page', 'vb', DHT_PREFIX ) );
+		}
+		
+		die();
 	}
-	*/
+	
 }

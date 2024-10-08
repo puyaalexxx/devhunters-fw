@@ -1,9 +1,9 @@
 <?php
 declare( strict_types = 1 );
 
-namespace DHT\Extensions\Options\Options\Fields;
+namespace DHT\Extensions\Options\Fields\Fields;
 
-use DHT\Extensions\Options\Options\BaseField;
+use DHT\Extensions\Options\Fields\BaseField;
 use DHT\Helpers\Classes\Environment;
 use DHT\Helpers\Traits\UploadHelpers;
 use function DHT\dht;
@@ -12,12 +12,12 @@ if ( ! defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
-final class Upload extends BaseField {
+final class UploadGallery extends BaseField {
 	
 	use UploadHelpers;
 	
 	//field type
-	protected string $_field = 'upload';
+	protected string $_field = 'upload-gallery';
 	
 	/**
 	 * @since     1.0.0
@@ -41,10 +41,10 @@ final class Upload extends BaseField {
 		wp_enqueue_media();
 		
 		if ( Environment::isDevelopment() ) {
-			wp_register_style( DHT_PREFIX_CSS . '-upload-field', DHT_ASSETS_URI . 'dist/css/upload.css', array(), dht()->manifest->get( 'version' ) );
-			wp_enqueue_style( DHT_PREFIX_CSS . '-upload-field' );
+			wp_register_style( DHT_PREFIX_CSS . '-upload-gallery-field', DHT_ASSETS_URI . 'dist/css/upload-gallery.css', array(), dht()->manifest->get( 'version' ) );
+			wp_enqueue_style( DHT_PREFIX_CSS . '-upload-gallery-field' );
 			
-			wp_enqueue_script( DHT_PREFIX_JS . '-upload-field', DHT_ASSETS_URI . 'dist/js/upload.js', array(
+			wp_enqueue_script( DHT_PREFIX_JS . '-upload-gallery-field', DHT_ASSETS_URI . 'dist/js/upload-gallery.js', array(
 				'jquery',
 				'media-editor'
 			), dht()->manifest->get( 'version' ), true );
@@ -70,7 +70,16 @@ final class Upload extends BaseField {
 			return $field[ 'value' ];
 		}
 		
-		return $this->_saveUploadFieldHelper( $field, $field_post_value, 'item', 'item_id' );
+		//value is coming as a string
+		$field_post_value = explode( ',', $field_post_value );
+		
+		//make sure the values are integers
+		foreach ( $field_post_value as $key => $attachment_id ) {
+			
+			$field_post_value[ $key ] = absint( $attachment_id );
+		}
+		
+		return $field_post_value;
 	}
 	
 }

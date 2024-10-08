@@ -45,6 +45,8 @@ if ( ! function_exists( 'dht_get_current_admin_post_type_from_url' ) ) {
 		
 		// Get post ID from GET request and sanitize
 		$post_id = isset( $_GET[ 'post' ] ) ? intval( $_GET[ 'post' ] ) : 0;
+		//get post id from the ajax content
+		$post_id = empty( $post_id ) && isset( $_POST[ 'data' ][ 'post_id' ] ) ? intval( $_POST[ 'data' ][ 'post_id' ] ) : $post_id;
 		
 		// Get post type from GET request (if available)
 		$post_type = isset( $_GET[ 'post_type' ] ) ? sanitize_text_field( $_GET[ 'post_type' ] ) : '';

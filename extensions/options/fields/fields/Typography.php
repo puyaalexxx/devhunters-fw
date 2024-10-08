@@ -1,9 +1,9 @@
 <?php
 declare( strict_types = 1 );
 
-namespace DHT\Extensions\Options\Options\Fields;
+namespace DHT\Extensions\Options\Fields\Fields;
 
-use DHT\Extensions\Options\Options\BaseField;
+use DHT\Extensions\Options\Fields\BaseField;
 use DHT\Helpers\Classes\Environment;
 use function DHT\dht;
 use function DHT\Helpers\dht_print_r;

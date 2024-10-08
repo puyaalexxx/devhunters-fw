@@ -33,8 +33,11 @@ final class AddableBox extends BaseGroup {
 		
 		parent::__construct( $optionTogglesClasses, $optionFieldsClasses );
 		
-		add_action( 'wp_ajax_getBoxOptions', [ $this, 'getBoxOptions' ] );
-		add_action( 'wp_ajax_nopriv_getBoxOptions', [ $this, 'getBoxOptions' ] ); // For non-logged in users
+		add_action( 'wp_ajax_getAddableBoxOptions', [ $this, 'getAddableBoxOptions' ] );
+		add_action( 'wp_ajax_nopriv_getAddableBoxOptions', [
+			$this,
+			'getAddableBoxOptions'
+		] ); // For non-logged in users
 	}
 	
 	/**
@@ -62,14 +65,14 @@ final class AddableBox extends BaseGroup {
 	}
 	
 	/**
-	 * ajax action to retrieve all options and add them to ther box item
+	 * ajax action to retrieve all options and add them to their box item
 	 *
 	 * @return void
 	 * @since     1.0.0
 	 */
-	public function getBoxOptions() : void {
+	public function getAddableBoxOptions() : void {
 		
-		if ( isset( $_POST[ 'data' ][ 'box_number' ] ) && isset( $_POST[ 'data' ][ 'group' ] ) ) {
+		if ( isset( $_POST[ 'action' ] ) && $_POST[ 'action' ] == "getAddableBoxOptions" && isset( $_POST[ 'data' ][ 'box_number' ] ) && isset( $_POST[ 'data' ][ 'group' ] ) ) {
 			
 			//retrieve box number
 			$box_number = ! empty( $_POST[ 'data' ][ 'box_number' ] ) ? (int) $_POST[ 'data' ][ 'box_number' ] : 0;

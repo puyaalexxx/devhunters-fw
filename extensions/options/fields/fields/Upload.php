@@ -1,9 +1,9 @@
 <?php
 declare( strict_types = 1 );
 
-namespace DHT\Extensions\Options\Options\Fields;
+namespace DHT\Extensions\Options\Fields\Fields;
 
-use DHT\Extensions\Options\Options\BaseField;
+use DHT\Extensions\Options\Fields\BaseField;
 use DHT\Helpers\Classes\Environment;
 use DHT\Helpers\Traits\UploadHelpers;
 use function DHT\dht;
@@ -12,12 +12,12 @@ if ( ! defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
-final class UploadImage extends BaseField {
+final class Upload extends BaseField {
 	
 	use UploadHelpers;
 	
 	//field type
-	protected string $_field = 'upload-image';
+	protected string $_field = 'upload';
 	
 	/**
 	 * @since     1.0.0
@@ -41,10 +41,10 @@ final class UploadImage extends BaseField {
 		wp_enqueue_media();
 		
 		if ( Environment::isDevelopment() ) {
-			wp_register_style( DHT_PREFIX_CSS . '-upload-image-field', DHT_ASSETS_URI . 'dist/css/upload-image.css', array(), dht()->manifest->get( 'version' ) );
-			wp_enqueue_style( DHT_PREFIX_CSS . '-upload-image-field' );
+			wp_register_style( DHT_PREFIX_CSS . '-upload-field', DHT_ASSETS_URI . 'dist/css/upload.css', array(), dht()->manifest->get( 'version' ) );
+			wp_enqueue_style( DHT_PREFIX_CSS . '-upload-field' );
 			
-			wp_enqueue_script( DHT_PREFIX_JS . '-upload-image-field', DHT_ASSETS_URI . 'dist/js/upload-image.js', array(
+			wp_enqueue_script( DHT_PREFIX_JS . '-upload-field', DHT_ASSETS_URI . 'dist/js/upload.js', array(
 				'jquery',
 				'media-editor'
 			), dht()->manifest->get( 'version' ), true );
@@ -70,7 +70,7 @@ final class UploadImage extends BaseField {
 			return $field[ 'value' ];
 		}
 		
-		return $this->_saveUploadFieldHelper( $field, $field_post_value, 'image', 'image_id' );
+		return $this->_saveUploadFieldHelper( $field, $field_post_value, 'item', 'item_id' );
 	}
 	
 }

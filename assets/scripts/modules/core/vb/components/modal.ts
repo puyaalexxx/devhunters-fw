@@ -124,8 +124,8 @@ function dhtAjaxLoadOptions(modal: JQuery<HTMLElement>): void {
  */
 function dhtVBModal(this: JQuery, options?: IVBModalData | keyof IVBModalMethods): JQuery {
     "use strict";
-
-    let pluginName: string = "dhtVBModal";
+    
+    let pluginName: string = dhtVBModal.name;
 
     let d = 0;
 

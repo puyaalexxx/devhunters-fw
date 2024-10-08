@@ -7,7 +7,7 @@ if ( ! defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
-use DHT\Extensions\Options\Options\BaseField;
+use DHT\Extensions\Options\Fields\BaseField;
 use DHT\Helpers\Classes\Environment;
 use DHT\Helpers\Traits\Options\{EnqueueOptionsHelpers,
 	OptionsHelpers,

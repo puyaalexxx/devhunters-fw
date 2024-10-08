@@ -21,3 +21,12 @@ interface IVBModalMethods {
 interface JQuery {
     dhtVBModal(this: JQuery, options?: IVBModalData | keyof IVBModalMethods): JQuery;
 }
+
+interface IVbTranslations {
+    icon_drag: string;
+    icon_settings: string;
+    icon_duplicate: string;
+    icon_delete: string;
+    icon_other_settings: string;
+    modal_title: string;
+}

@@ -77,7 +77,7 @@
                     allowClear: true, // Allow clearing the selection
                     ajax: {
                         //@ts-ignore
-                        url: dht_framework_ajax_info.ajax_url,
+                        url: dht_framework_info.ajax_url,
                         dataType: "json",
                         delay: 250,
                         type: "POST",

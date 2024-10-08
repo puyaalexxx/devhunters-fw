@@ -172,7 +172,7 @@
             //load box options inside
             $.ajax({
                 // @ts-ignore
-                url: dht_framework_ajax_info.ajax_url,
+                url: dht_framework_info.ajax_url,
                 type: "POST",
                 dataType: "json",
                 data: {

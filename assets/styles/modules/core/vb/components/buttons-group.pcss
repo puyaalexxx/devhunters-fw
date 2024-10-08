@@ -2,7 +2,7 @@
 
 .dht-vb-enabled {
 
-    .dht-vb-container {
+    .dht-vb-element {
 
         &:hover {
             .dht-vb-buttons-group-container {
@@ -35,6 +35,27 @@
                 border: none;
                 padding: 8px 6px;
                 cursor: pointer;
+
+                &.dht-vb-icon-drag {
+                    cursor: grab;
+                }
+
+                .dht-vb-icon {
+                    fill: rgb(255, 255, 255);
+                    opacity: 1;
+                    transform: none;
+                    width: 16px;
+                    min-width: 16px;
+                    height: 16px;
+                    position: relative;
+                    z-index: 9;
+
+                    svg {
+                        width: 16px;
+                        min-width: 16px;
+                        height: 16px;
+                    }
+                }
 
                 /*tooltip styles*/
 
@@ -86,25 +107,6 @@
                         margin-left: -8px;
                         margin-top: -1px;
                     }
-                }
-            }
-
-            .dht-vb-icon {
-                fill: rgb(255, 255, 255);
-                opacity: 1;
-                transform: none;
-                width: 16px;
-                min-width: 16px;
-                height: 16px;
-
-                &.dht-vb-icon-drag {
-                    cursor: grab;
-                }
-
-                svg {
-                    width: 16px;
-                    min-width: 16px;
-                    height: 16px;
                 }
             }
         }

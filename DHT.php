@@ -12,6 +12,7 @@ use DHT\Core\Core;
 use DHT\Core\Manifest;
 use DHT\Extensions\Extensions;
 use DHT\Helpers\Classes\Environment;
+use DHT\helpers\classes\Translations;
 use function DHT\Helpers\dht_make_script_as_module_type;
 
 /**
@@ -59,16 +60,10 @@ final class DHT {
 		$this->cli = CLI::init();
 		
 		//Enqueue framework general scripts and styles
-		add_action( 'admin_enqueue_scripts', [
-			$this,
-			'_enqueueFrameworkGeneralScripts'
-		] );
+		add_action( 'admin_enqueue_scripts', [ $this, '_enqueueFrameworkGeneralScripts' ] );
 		
 		// Load the text domain for localization
-		add_action( 'plugins_loaded', [
-			$this,
-			'_loadTextdomain'
-		] );
+		add_action( 'plugins_loaded', [ Translations::class, 'loadTextdomain' ] );
 		
 		//register all the framework cli commands
 		add_action( 'cli_init', function() {
@@ -84,48 +79,32 @@ final class DHT {
 	 */
 	private function _enqueueFrameworkGeneralScripts() : void {
 		
+		//get localized data
+		$localized_data = array_merge( [ 'ajax_url' => admin_url( 'admin-ajax.php' ) ], [ 'translations' => Translations::getTranslationStrings() ] );
+		
 		if ( Environment::isDevelopment() ) {
 			wp_register_style( DHT_PREFIX_CSS . '-fw', DHT_ASSETS_URI . 'dist/css/fw.css', array(), dht()->manifest->get( 'version' ) );
 			wp_enqueue_style( DHT_PREFIX_CSS . '-fw' );
 			
 			wp_enqueue_script( DHT_PREFIX_JS . '-fw', DHT_ASSETS_URI . 'dist/js/fw.js', array( 'jquery' ), dht()->manifest->get( 'version' ) );
-			wp_localize_script( DHT_PREFIX_JS . '-fw', 'dht_framework_ajax_info', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
+			wp_localize_script( DHT_PREFIX_JS . '-fw', 'dht_framework_info', $localized_data );
 			
-			//make fw.js as to load as a module
-			add_filter( 'script_loader_tag', function( string $tag, string $handle ) : string {
-				return dht_make_script_as_module_type( $tag, $handle, DHT_PREFIX_JS . '-fw' );
-			}, 10, 2 );
 		} else {
 			wp_register_style( DHT_PREFIX_CSS . '-main-bundle', DHT_ASSETS_URI . 'dist/main.css', array(), dht()->manifest->get( 'version' ) );
 			wp_enqueue_style( DHT_PREFIX_CSS . '-main-bundle' );
 			
 			//this bundle is loading the modules dynamically
 			wp_enqueue_script( DHT_PREFIX_JS . '-main-bundle', DHT_ASSETS_URI . 'dist/main.js', array( 'jquery' ), dht()->manifest->get( 'version' ), true );
-			wp_localize_script( DHT_PREFIX_JS . '-main-bundle', 'dht_framework_ajax_info', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
-			
-			//make main.js as to load as a module
-			add_filter( 'script_loader_tag', function( string $tag, string $handle ) : string {
-				return dht_make_script_as_module_type( $tag, $handle, DHT_PREFIX_JS . '-main-bundle' );
-			}, 10, 2 );
+			wp_localize_script( DHT_PREFIX_JS . '-main-bundle', 'dht_framework_info', $localized_data );
 		}
-	}
-	
-	/**
-	 * Load Text Domain for translation
-	 *
-	 * @return void
-	 * @since     1.0.0
-	 */
-	private function _loadTextdomain() : void {
 		
-		//change this after creating a composer package
-		if ( defined( 'DHT_DIR' ) ) {
-			// Plugin context
-			load_plugin_textdomain( DHT_PREFIX, false, DHT_DIR . '/lang' );
-		} else {
-			// Composer package context
-			load_textdomain( DHT_PREFIX, __DIR__ . '/lang/your-text-domain.mo' );
-		}
+		//make main.js and fw.js as to load as a module
+		add_filter( 'script_loader_tag', function( string $tag, string $handle ) : string {
+			return dht_make_script_as_module_type( $tag, $handle, [
+				DHT_PREFIX_JS . '-main-bundle',
+				DHT_PREFIX_JS . '-fw'
+			] );
+		}, 10, 2 );
 	}
 	
 	/**
@@ -139,8 +118,6 @@ final class DHT {
 		// You can control which methods are callable here
 		if ( $method === '_enqueueFrameworkGeneralScripts' ) {
 			return call_user_func_array( [ $this, '_enqueueFrameworkGeneralScripts' ], $arguments );
-		} elseif ( $method === '_loadTextdomain' ) {
-			return call_user_func_array( [ $this, '_loadTextdomain' ], $arguments );
 		}
 		
 		return '';
@@ -149,7 +126,7 @@ final class DHT {
 }
 
 /**
- * @return DHT Framework instance (in case to expose the framework functionality to plugin)
+ * @return DHT Framework instance (in case to expose the framework functionality to a plugin)
  */
 function dht() : DHT {
 	

@@ -8,14 +8,16 @@ if ( ! defined( 'DHT_MAIN' ) ) {
 }
 
 
-if ( ! function_exists( 'dht_enable_vb_on_element' ) ) {
+if ( ! function_exists( 'dht_enable_vb_editor_area' ) ) {
 	/**
-	 * Enable the Visual Builder on a specific element
+	 * Enable the Visual Builder editor area by adding this
+	 * method to an HTML tag. The attribute will do the rest
 	 *
-	 * It will add the element HTML inside VB HTML to activate it
-	 *
-	 * @return string
+	 * @return void
 	 * @since     1.0.0
 	 */
-	function dht_enable_vb_on_element() : string {}
+	function dht_enable_vb_editor_area() : void {
+		
+		echo 'data-dht-vb-editor="true"';
+	}
 }

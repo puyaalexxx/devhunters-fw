@@ -15,16 +15,18 @@ if ( ! function_exists( 'dht_make_script_as_module_type' ) ) {
 	 *
 	 * @param string $tag
 	 * @param string $handle
-	 * @param string $file_id Enqueued file id
+	 * @param array  $file_ids Enqueued file ids
 	 *
 	 * @return string
 	 * @since     1.0.0
 	 */
 	//add_filter( 'script_loader_tag', 'dht_make_script_as_module_type', 10, 2 );
-	function dht_make_script_as_module_type( string $tag, string $handle, string $file_id ) : string {
+	function dht_make_script_as_module_type( string $tag, string $handle, array $file_ids ) : string {
 		
-		if ( $handle === $file_id ) {
-			return str_replace( 'src=', 'type="module" src=', $tag );
+		$moduleAttribute = str_replace( 'src=', 'type="module" src=', $tag );
+		
+		if ( in_array( $handle, $file_ids, true ) ) {
+			return $moduleAttribute;
 		}
 		
 		return $tag;

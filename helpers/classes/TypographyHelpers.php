@@ -12,6 +12,9 @@ if ( ! defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
+/**
+ * Helper methods for Typography option field
+ */
 final class TypographyHelpers {
 	
 	/**
@@ -117,7 +120,7 @@ final class TypographyHelpers {
 			if ( ! empty( $et_folder_contents ) ) {
 				
 				// Filter files with .ttf and .otf extensions
-				$et_font_files = array_filter( $et_folder_contents, function ( $file ) {
+				$et_font_files = array_filter( $et_folder_contents, function( $file ) {
 					
 					// Check if the file has either .ttf or .otf extension
 					return pathinfo( $file, PATHINFO_EXTENSION ) === 'ttf' || pathinfo( $file, PATHINFO_EXTENSION ) === 'otf';

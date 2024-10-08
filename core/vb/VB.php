@@ -71,7 +71,7 @@ final class VB implements IVB {
 			
 			//make vb.js as to load as a module
 			add_filter( 'script_loader_tag', function( string $tag, string $handle ) : string {
-				return dht_make_script_as_module_type( $tag, $handle, DHT_PREFIX_JS . '-vb' );
+				return dht_make_script_as_module_type( $tag, $handle, [ DHT_PREFIX_JS . '-vb' ] );
 			}, 10, 2 );
 		}
 	}

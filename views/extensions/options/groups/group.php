@@ -13,7 +13,7 @@ $registered_options_classes = $args[ 'registered_options_classes' ] ?? [];
 ?>
 <!-- field - group -->
 
-<?php do_action( 'dht_template_groups_group_before_area' ); ?>
+<?php do_action( 'dht_options_view_groups_group_before_area' ); ?>
 
 <div
     class="dht-field-wrapper dht-group-type <?php echo isset( $group[ 'attr' ][ 'class' ] ) ? esc_attr( $group[ 'attr' ][ 'class' ] ) : ''; ?>" <?php echo dht_parse_option_attributes( $group[ 'attr' ] ); ?>>
@@ -55,4 +55,4 @@ $registered_options_classes = $args[ 'registered_options_classes' ] ?? [];
     <div class="dht-divider"></div>
 <?php endif; ?>
 
-<?php do_action( 'dht_template_groups_group_after_area' ); ?>
+<?php do_action( 'dht_options_view_groups_group_after_area' ); ?>

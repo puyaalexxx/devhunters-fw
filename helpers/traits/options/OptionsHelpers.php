@@ -76,6 +76,8 @@ trait OptionsHelpers {
 			$template = 'posts.php';
 		} elseif ( $location == 'term' ) {
 			$template = 'terms.php';
+		} elseif ( $location == 'vb' ) {
+			$template = 'modal.php';
 		} else {
 			$template = 'dashboard-page.php';
 		}

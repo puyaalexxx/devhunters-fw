@@ -177,6 +177,8 @@
                 dataType: "json",
                 data: {
                     action: "getAddableBoxOptions", // The name of your AJAX action
+                    //post id is used to add it to the ajax $_POST
+                    post_id: $("#post_ID[name=\"post_ID\"]").val(),
                     data: {
                         group: $add_button.siblings(".dht-box-item-options").val(),
                         box_number: $box_item.attr("data-box-item-number"),

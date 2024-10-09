@@ -189,6 +189,8 @@
                 dataType: "json",
                 data: {
                     action: "getOptionIcons", // The name of your AJAX action
+                    //post id is used to add it to the ajax $_POST
+                    post_id: $("#post_ID[name=\"post_ID\"]").val(),
                     data: { icon_type: icon_type, icon: icon },
                 },
                 beforeSend: function() {

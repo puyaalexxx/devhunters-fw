@@ -5,8 +5,8 @@ if ( ! defined( 'DHT_MAIN' ) ) {
 
 $args = $args ?? [];
 ?>
-<div class="dht-meta-box-content <?php echo apply_filters( 'dht_template_metabox_area', '' ); ?>">
-    <div class="dht-wrapper <?php echo apply_filters( 'dht_template_wrapper_classes', '' ); ?>">
+<div class="dht-meta-box-content <?php echo apply_filters( 'dht_options_view_metabox_area', '' ); ?>">
+    <div class="dht-wrapper <?php echo apply_filters( 'dht_options_view_wrapper_classes', '' ); ?>">
         <div class="dht-container">
 			
 			<?php do_action( 'dht_metabox_template_before_content', $args[ 'metabox_id' ] ); ?>

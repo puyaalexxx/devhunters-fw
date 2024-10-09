@@ -72,9 +72,9 @@ function dhtAjaxLoadOptions(modal: JQuery<HTMLElement>): void {
         dataType: "json",
         data: {
             action: "getModalOptions", // The name of your AJAX action
+            //post id is used to add it to the ajax $_POST
+            post_id: $("#post_ID[name=\"post_ID\"]").val(),
             data: {
-                //post id is used to add it to the ajax $_POST, so I can retrieve it wherever I need
-                post_id: $("#post_ID[name=\"post_ID\"]").val(),
                 modalType: "yes",
             },
         },
@@ -124,7 +124,7 @@ function dhtAjaxLoadOptions(modal: JQuery<HTMLElement>): void {
  */
 function dhtVBModal(this: JQuery, options?: IVBModalData | keyof IVBModalMethods): JQuery {
     "use strict";
-    
+
     let pluginName: string = dhtVBModal.name;
 
     let d = 0;

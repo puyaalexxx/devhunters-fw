@@ -24,7 +24,7 @@ final class Core {
 	 */
 	private function __construct() {
 		
-		do_action( 'dht_before_core_init' );
+		do_action( 'dht_fw_before_core_init' );
 	}
 	
 	/**

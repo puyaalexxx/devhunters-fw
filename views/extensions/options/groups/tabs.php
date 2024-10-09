@@ -22,7 +22,7 @@ $tabs_id = str_replace( [
 ?>
 <!-- field - tabs -->
 
-<?php do_action( 'dht_template_groups_tabs_before_area' ); ?>
+<?php do_action( 'dht_options_view_groups_tabs_before_area' ); ?>
 
 <div
     class="dht-field-wrapper dht-group-type <?php echo $fullwidth_tabs ? 'dht-field-tabs-fullwidth' : ''; ?> <?php echo isset( $group[ 'attr' ][ 'class' ] ) ? esc_attr( $group[ 'attr' ][ 'class' ] ) : ''; ?>"
@@ -103,4 +103,4 @@ $tabs_id = str_replace( [
     <div class="dht-divider"></div>
 <?php endif; ?>
 
-<?php do_action( 'dht_template_groups_tabs_after_area' ); ?>
+<?php do_action( 'dht_options_view_groups_tabs_after_area' ); ?>

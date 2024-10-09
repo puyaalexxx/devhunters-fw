@@ -20,7 +20,7 @@ $right_choice = $toggle[ 'right-choice' ];
 ?>
 <!-- field - toggle  -->
 
-<?php do_action( 'dht_template_toggles_toggle_before_area' ); ?>
+<?php do_action( 'dht_options_view_toggles_toggle_before_area' ); ?>
 
 <div
     class="dht-field-wrapper dht-toggle-type <?php echo isset( $toggle[ 'attr' ][ 'class' ] ) ? esc_attr( $toggle[ 'attr' ][ 'class' ] ) : ''; ?>" <?php echo dht_parse_option_attributes( $toggle[ 'attr' ] ); ?>>
@@ -101,4 +101,4 @@ $right_choice = $toggle[ 'right-choice' ];
     <div class="dht-divider"></div>
 <?php endif; ?>
 
-<?php do_action( 'dht_template_toggles_toggle_after_area' ); ?>
+<?php do_action( 'dht_options_view_toggles_toggle_after_area' ); ?>

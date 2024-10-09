@@ -19,7 +19,7 @@ $options = [];
 ?>
 <!-- container - sidemenu -->
 
-<?php do_action( 'dht_template_container_sidemenu_before_area' ); ?>
+<?php do_action( 'dht_options_view_container_sidemenu_before_area' ); ?>
 
 <?php if ( isset( $container[ 'subtype' ] ) && $container[ 'subtype' ] == 'tabs' ): ?>
 
@@ -184,4 +184,4 @@ $options = [];
     </div>
 <?php endif; ?>
 
-<?php do_action( 'dht_template_container_sidemenu_after_area' ); ?>
+<?php do_action( 'dht_options_view_container_sidemenu_after_area' ); ?>

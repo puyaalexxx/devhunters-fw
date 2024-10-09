@@ -76,7 +76,7 @@ final class Options implements IOptions {
 			add_action( 'admin_enqueue_scripts', [ $this, 'enqueueGeneralScripts' ] );
 			
 			//enqueue styles/scripts for each option received from the plugin
-			$this->_enqueueOptionsScripts( $this->_options );
+			$this->_enqueueOptionsScripts( apply_filters( 'dht_options_enqueue_option_scripts', $this->_options ) );
 		}
 		
 		//render dashboard page form HTML content hook with the passed options
@@ -84,7 +84,7 @@ final class Options implements IOptions {
 			//save dashboard pages options
 			$this->_saveDashBoardPageOptions();
 			
-			$this->renderContent( $this->_options );
+			$this->renderContent( apply_filters( 'dht_options_dashboard_page_options', $this->_options ) );
 		} );
 		
 		//post types related functionality
@@ -101,10 +101,18 @@ final class Options implements IOptions {
 			$current_taxonomy = dht_get_current_admin_taxonomy_from_url();
 			
 			add_action( $current_taxonomy . '_edit_form', function( $term ) {
-				$this->renderContent( $this->_options, 'term', $term->term_id );
+				$this->renderContent( apply_filters( 'dht_options_term_options', $this->_options ), 'term', $term->term_id );
 			}, 999 );
 			
 			add_action( 'edited_' . $current_taxonomy, [ $this, 'saveTermOptions' ], 999 );
+		}
+		
+		//vb related functionality
+		{
+			//render visual builder modal HTML content hook with the passed options
+			add_action( 'dht_vb_render_modal_content', function( int $postID, string $modalType ) {
+				$this->renderContent( apply_filters( 'dht_options_vb_modal_options', $this->_options ), "vb", $postID );
+			}, 10, 2 );
 		}
 	}
 	
@@ -150,8 +158,10 @@ final class Options implements IOptions {
 		
 		$post_type = dht_get_current_admin_post_type();
 		
+		$options = apply_filters( 'dht_options_post_type_options', $this->_options );
+		
 		// Determine if multiple metaboxes need to be registered
-		$metaboxes = isset( $this->_options[ 'options' ] ) ? [ $this->_options ] : $this->_options;
+		$metaboxes = isset( $options[ 'options' ] ) ? [ $options ] : $options;
 		
 		// Initialize counter for unique metabox IDs
 		$count = 0;
@@ -193,11 +203,11 @@ final class Options implements IOptions {
 	 */
 	public function renderContent( array $options, string $location = 'dashboard', int $id = 0 ) : void {
 		
-		$template = $this->_getOptionsTemplate( $location );
+		$template = apply_filters( 'dht_options_get_options_template_file', $this->_getOptionsTemplate( $location ) );
 		
 		$viewData = [
-			'nonce'   => $this->_nonce,
-			'options' => $this->_getOptionsView( $options, $location, $id ),
+			'nonce'   => apply_filters( 'dht_options_get_options_get_nonce_field', $this->_nonce ),
+			'options' => apply_filters( 'dht_options_get_options_view_html', $this->_getOptionsView( $options, $location, $id ) ),
 		];
 		
 		//add 'metabox_id' if it exists
@@ -205,7 +215,11 @@ final class Options implements IOptions {
 			$viewData[ 'metabox_id' ] = $options[ 'options_id' ];
 		}
 		
-		echo dht_load_view( DHT_VIEWS_DIR . 'extensions/options/', $template, $viewData );
+		if ( $location == 'vb' ) {
+			echo dht_load_view( DHT_VIEWS_DIR . 'core/vb/', $template, $viewData );
+		} else {
+			echo dht_load_view( DHT_VIEWS_DIR . 'extensions/options/', $template, $viewData );
+		}
 	}
 	
 	/**

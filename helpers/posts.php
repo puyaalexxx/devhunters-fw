@@ -23,7 +23,8 @@ if ( ! function_exists( 'dht_is_post_editing_area' ) ) {
 			return false; // Exit if not in admin area
 		}
 		
-		return isset( $_GET[ 'post' ] ) || isset( $_GET[ 'post_type' ] ) || isset( $_POST[ 'post_type' ] );
+		//isset( $_POST[ 'data' ][ 'post_id' ] ) - is for ajax requests
+		return isset( $_GET[ 'post' ] ) || isset( $_GET[ 'post_type' ] ) || isset( $_POST[ 'post_type' ] ) || isset( $_POST[ 'post_id' ] );
 	}
 }
 
@@ -46,7 +47,7 @@ if ( ! function_exists( 'dht_get_current_admin_post_type_from_url' ) ) {
 		// Get post ID from GET request and sanitize
 		$post_id = isset( $_GET[ 'post' ] ) ? intval( $_GET[ 'post' ] ) : 0;
 		//get post id from the ajax content
-		$post_id = empty( $post_id ) && isset( $_POST[ 'data' ][ 'post_id' ] ) ? intval( $_POST[ 'data' ][ 'post_id' ] ) : $post_id;
+		$post_id = empty( $post_id ) && isset( $_POST[ 'post_id' ] ) ? intval( $_POST[ 'post_id' ] ) : $post_id;
 		
 		// Get post type from GET request (if available)
 		$post_type = isset( $_GET[ 'post_type' ] ) ? sanitize_text_field( $_GET[ 'post_type' ] ) : '';

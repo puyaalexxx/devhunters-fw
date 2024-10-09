@@ -48,7 +48,7 @@ final class TypographyHelpers {
 			'font-subsets' => $font_subsets
 		];
 		
-		return apply_filters( 'dht-disable-google-fonts', $google_fonts );
+		return apply_filters( 'dht_options_disable_google_fonts', $google_fonts );
 	}
 	
 	/**

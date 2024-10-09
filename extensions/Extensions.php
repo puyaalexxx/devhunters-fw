@@ -31,7 +31,7 @@ final class Extensions {
 	 */
 	private function __construct() {
 		
-		do_action( 'dht_before_extensions_init' );
+		do_action( 'dht_fw_before_extensions_init' );
 	}
 	
 	/**
@@ -44,7 +44,7 @@ final class Extensions {
 	 */
 	public function dashmenus( array $dash_menus_config ) : IDashMenuPage {
 		
-		$dash_menus_config = $this->_validateConfigurations( $dash_menus_config, '', 'dht_dash_menus_configurations', EmptyMenuConfigurationsException::class, _x( 'Empty dashboard menu configurations array provided', 'exceptions', DHT_PREFIX ) );
+		$dash_menus_config = $this->_validateConfigurations( $dash_menus_config, '', 'dht_extensions_dash_menus_configurations', EmptyMenuConfigurationsException::class, _x( 'Empty dashboard menu configurations array provided', 'exceptions', DHT_PREFIX ) );
 		
 		return new DashMenuPage( $dash_menus_config );
 	}
@@ -59,7 +59,7 @@ final class Extensions {
 	 */
 	public function cpts( array $cpt_config ) : ICPT {
 		
-		$cpt_config = $this->_validateConfigurations( $cpt_config, '', 'dht_cpts_configurations', EmptyCPTConfigurationsException::class, _x( 'Empty cpt configurations array provided', 'exceptions', DHT_PREFIX ) );
+		$cpt_config = $this->_validateConfigurations( $cpt_config, '', 'dht_extensions_cpts_configurations', EmptyCPTConfigurationsException::class, _x( 'Empty cpt configurations array provided', 'exceptions', DHT_PREFIX ) );
 		
 		return new CPT( $cpt_config );
 	}
@@ -74,11 +74,9 @@ final class Extensions {
 	 */
 	public function options( array $options ) : ?IOptions {
 		
-		$options = $this->_validateConfigurations( $options, '', 'dht_options_configurations' );
+		$options = $this->_validateConfigurations( $options, '', 'dht_extensions_options_configurations' );
 		
-		//if the options exists or if it is an ajax request
-		// (needed for the options that use ajax specifically)
-		if ( ! ( ! empty( $options ) || wp_doing_ajax() ) ) {
+		if ( empty( $options ) ) {
 			return NULL;
 		}
 		
@@ -95,7 +93,7 @@ final class Extensions {
 	 */
 	public function widgets( array $widgets_config ) : IRegisterWidget {
 		
-		$widgets_config = $this->_validateConfigurations( $widgets_config, '', 'dht_widgets_configurations', EmptyWidgetNamesException::class, _x( 'Empty widgets configurations array provided', 'exceptions', DHT_PREFIX ) );
+		$widgets_config = $this->_validateConfigurations( $widgets_config, '', 'dht_extensions_widgets_configurations', EmptyWidgetNamesException::class, _x( 'Empty widgets configurations array provided', 'exceptions', DHT_PREFIX ) );
 		
 		return new RegisterWidget( $widgets_config );
 	}
@@ -110,7 +108,7 @@ final class Extensions {
 	 */
 	public function sidebars( array $sidebar_config ) : IRegisterSidebar {
 		
-		$sidebar_config = $this->_validateConfigurations( $sidebar_config, '', 'dht_sidebars_configurations', EmptySidebarConfigurationsException::class, _x( 'Empty configurations array provided', 'exceptions', DHT_PREFIX ) );
+		$sidebar_config = $this->_validateConfigurations( $sidebar_config, '', 'dht_extensions_sidebars_configurations', EmptySidebarConfigurationsException::class, _x( 'Empty configurations array provided', 'exceptions', DHT_PREFIX ) );
 		
 		return new RegisterSidebar( $sidebar_config );
 	}

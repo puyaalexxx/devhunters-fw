@@ -42,7 +42,7 @@ final class DHT {
 	 */
 	public function __construct() {
 		
-		do_action( 'dht_before_fw_init' );
+		do_action( 'dht_fw_before_fw_init' );
 		
 		//load environment variables from the .env file
 		Environment::loadEnv( DHT_DIR );

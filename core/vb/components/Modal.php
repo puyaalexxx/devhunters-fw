@@ -55,17 +55,16 @@ final class Modal {
 	 */
 	public function getModalOptions() : void {
 		
-		if ( isset( $_POST[ 'action' ] ) && $_POST[ 'action' ] == "getModalOptions" && isset( $_POST[ 'data' ][ 'modalType' ] ) && isset( $_POST[ 'data' ][ 'post_id' ] ) ) {
+		if ( isset( $_POST[ 'action' ] ) && $_POST[ 'action' ] == "getModalOptions" && isset( $_POST[ 'data' ][ 'modalType' ] ) && isset( $_POST[ 'post_id' ] ) ) {
 			
 			//retrieve box number
 			$modal_type = ! empty( $_POST[ 'data' ][ 'modalType' ] ) ? $_POST[ 'data' ][ 'modalType' ] : "";
-			$post_id    = ! empty( $_POST[ 'data' ][ 'post_id' ] ) ? intval( $_POST[ 'data' ][ 'post_id' ] ) : 0;
+			$post_id    = ! empty( $_POST[ 'post_id' ] ) ? intval( $_POST[ 'post_id' ] ) : 0;
 			
 			ob_start();
 			
-			do_action( 'dht-vb-modal-options-hook' );
-			
-			echo $post_id;
+			//options are rendered via this hook from the Options class
+			do_action( 'dht_vb_render_modal_content', $post_id, $modal_type );
 			
 			$content = ob_get_clean();
 			

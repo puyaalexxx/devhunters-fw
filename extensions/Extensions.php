@@ -9,13 +9,8 @@ if ( ! defined( 'DHT_MAIN' ) ) {
 
 use DHT\Extensions\CPT\{CPT, ICPT};
 use DHT\Extensions\DashPages\{DashMenuPage, IDashMenuPage};
-use DHT\Extensions\Options\{IOptions, Options};
 use DHT\Extensions\Sidebars\{CreateDynamicSidebars, ICreateDynamicSidebars, IRegisterSidebar, RegisterSidebar};
 use DHT\Extensions\Widgets\{IRegisterWidget, RegisterWidget};
-use DHT\Helpers\Exceptions\ConfigExceptions\{EmptyCPTConfigurationsException,
-	EmptyMenuConfigurationsException,
-	EmptySidebarConfigurationsException,
-	EmptyWidgetNamesException};
 use DHT\Helpers\Traits\{SingletonTrait, ValidateConfigurations};
 
 /**
@@ -39,12 +34,12 @@ final class Extensions {
 	 *
 	 * @param array $dash_menus_config - dashboard menus configurations
 	 *
-	 * @return IDashMenuPage - menu instance
+	 * @return ?IDashMenuPage - menu instance
 	 * @since     1.0.0
 	 */
-	public function dashmenus( array $dash_menus_config ) : IDashMenuPage {
+	public function dashmenus( array $dash_menus_config ) : ?IDashMenuPage {
 		
-		$dash_menus_config = $this->_validateConfigurations( $dash_menus_config, '', 'dht_extensions_dash_menus_configurations', EmptyMenuConfigurationsException::class, _x( 'Empty dashboard menu configurations array provided', 'exceptions', DHT_PREFIX ) );
+		if ( empty( $dash_menus_config ) ) return NULL;
 		
 		return new DashMenuPage( $dash_menus_config );
 	}
@@ -54,33 +49,14 @@ final class Extensions {
 	 *
 	 * @param array $cpt_config
 	 *
-	 * @return ICPT - cpt instance
+	 * @return ?ICPT - cpt instance
 	 * @since     1.0.0
 	 */
-	public function cpts( array $cpt_config ) : ICPT {
+	public function cpts( array $cpt_config ) : ?ICPT {
 		
-		$cpt_config = $this->_validateConfigurations( $cpt_config, '', 'dht_extensions_cpts_configurations', EmptyCPTConfigurationsException::class, _x( 'Empty cpt configurations array provided', 'exceptions', DHT_PREFIX ) );
+		if ( empty( $cpt_config ) ) return NULL;
 		
 		return new CPT( $cpt_config );
-	}
-	
-	/**
-	 * get options extension class instance
-	 *
-	 * @param array $options
-	 *
-	 * @return IOptions|null - options instance
-	 * @since     1.0.0
-	 */
-	public function options( array $options ) : ?IOptions {
-		
-		$options = $this->_validateConfigurations( $options, '', 'dht_extensions_options_configurations' );
-		
-		if ( empty( $options ) ) {
-			return NULL;
-		}
-		
-		return new Options( $options );
 	}
 	
 	/**
@@ -88,12 +64,12 @@ final class Extensions {
 	 *
 	 * @param array $widgets_config
 	 *
-	 * @return IRegisterWidget - register widgets class instance
+	 * @return ?IRegisterWidget - register widgets class instance
 	 * @since     1.0.0
 	 */
-	public function widgets( array $widgets_config ) : IRegisterWidget {
+	public function widgets( array $widgets_config ) : ?IRegisterWidget {
 		
-		$widgets_config = $this->_validateConfigurations( $widgets_config, '', 'dht_extensions_widgets_configurations', EmptyWidgetNamesException::class, _x( 'Empty widgets configurations array provided', 'exceptions', DHT_PREFIX ) );
+		if ( empty( $widgets_config ) ) return NULL;
 		
 		return new RegisterWidget( $widgets_config );
 	}
@@ -103,12 +79,12 @@ final class Extensions {
 	 *
 	 * @param array $sidebar_config
 	 *
-	 * @return IRegisterSidebar - register sidebar class instance
+	 * @return ?IRegisterSidebar - register sidebar class instance
 	 * @since     1.0.0
 	 */
-	public function sidebars( array $sidebar_config ) : IRegisterSidebar {
+	public function sidebars( array $sidebar_config ) : ?IRegisterSidebar {
 		
-		$sidebar_config = $this->_validateConfigurations( $sidebar_config, '', 'dht_extensions_sidebars_configurations', EmptySidebarConfigurationsException::class, _x( 'Empty configurations array provided', 'exceptions', DHT_PREFIX ) );
+		if ( empty( $sidebar_config ) ) return NULL;
 		
 		return new RegisterSidebar( $sidebar_config );
 	}
@@ -116,10 +92,14 @@ final class Extensions {
 	/**
 	 * get dynamic sidebars extension class instance
 	 *
-	 * @return ICreateDynamicSidebars - create sidebar class instance
+	 * @param bool $dynamic_sidebars_config
+	 *
+	 * @return ?ICreateDynamicSidebars - create sidebar class instance
 	 * @since     1.0.0
 	 */
-	public function dynamicSidebars() : ICreateDynamicSidebars {
+	public function dynamicSidebars( bool $dynamic_sidebars_config ) : ?ICreateDynamicSidebars {
+		
+		if ( ! $dynamic_sidebars_config ) return NULL;
 		
 		return new CreateDynamicSidebars();
 	}

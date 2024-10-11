@@ -6,7 +6,7 @@ namespace DHT\Core\Vb\Components;
 use DHT\Helpers\Classes\Environment;
 use DHT\Helpers\Traits\SingletonTrait;
 use WP_Post;
-use function DHT\dht;
+use DHT\DHT;
 
 if ( ! defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
@@ -47,7 +47,7 @@ final class DisableEnableBuilder {
 	public function enqueueScripts() : void {
 		
 		if ( Environment::isDevelopment() ) {
-			wp_register_style( DHT_PREFIX_CSS . '-disable-enable-vb', DHT_ASSETS_URI . 'dist/css/disable-enable-vb.css', array(), dht()->manifest->get( 'version' ) );
+			wp_register_style( DHT_PREFIX_CSS . '-disable-enable-vb', DHT_ASSETS_URI . 'dist/css/disable-enable-vb.css', array(), DHT::$version );
 			wp_enqueue_style( DHT_PREFIX_CSS . '-disable-enable-vb' );
 		}
 	}

@@ -7,7 +7,7 @@ use DHT\Core\Vb\Components\ButtonsGroup;
 use DHT\Core\Vb\Components\DisableEnableBuilder;
 use DHT\Core\Vb\Components\Modal;
 use DHT\Helpers\Classes\Environment;
-use function DHT\dht;
+use DHT\DHT;
 use function DHT\Helpers\dht_get_current_admin_post_type_from_url;
 use function DHT\Helpers\dht_make_script_as_module_type;
 
@@ -51,7 +51,7 @@ final class VB implements IVB {
 			add_filter( 'admin_body_class', [ $this, 'addVBEnabledBodyClass' ] );
 			
 			//load all VB components
-			$this->includeVBComponents( $current_post_type );
+			$this->_includeVBComponents( $current_post_type );
 		}
 	}
 	
@@ -64,10 +64,10 @@ final class VB implements IVB {
 	public function enqueueScripts() : void {
 		
 		if ( Environment::isDevelopment() ) {
-			wp_register_style( DHT_PREFIX_CSS . '-vb', DHT_ASSETS_URI . 'dist/css/vb.css', array(), dht()->manifest->get( 'version' ) );
+			wp_register_style( DHT_PREFIX_CSS . '-vb', DHT_ASSETS_URI . 'dist/css/vb.css', array(), DHT::$version );
 			wp_enqueue_style( DHT_PREFIX_CSS . '-vb' );
 			
-			wp_enqueue_script( DHT_PREFIX_JS . '-vb', DHT_ASSETS_URI . 'dist/js/vb.js', array( 'jquery' ), dht()->manifest->get( 'version' ), true );
+			wp_enqueue_script( DHT_PREFIX_JS . '-vb', DHT_ASSETS_URI . 'dist/js/vb.js', array( 'jquery' ), DHT::$version, true );
 			
 			//make vb.js as to load as a module
 			add_filter( 'script_loader_tag', function( string $tag, string $handle ) : string {
@@ -84,7 +84,7 @@ final class VB implements IVB {
 	 * @return void
 	 * @since     1.0.0
 	 */
-	public function includeVBComponents( string $current_post_type ) : void {
+	private function _includeVBComponents( string $current_post_type ) : void {
 		
 		DisableEnableBuilder::init( $current_post_type );
 		

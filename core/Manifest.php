@@ -24,7 +24,7 @@ final class Manifest {
 	/**
 	 * @since     1.0.0
 	 */
-	protected function __construct() {
+	private function __construct() {
 		
 		//set manifest args to use them through the class
 		$this->_manifest = $this->_getManifestArgs();

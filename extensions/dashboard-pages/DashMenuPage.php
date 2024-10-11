@@ -7,7 +7,6 @@ if ( ! defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
-use DHT\Core\Api\API;
 use DHT\Helpers\Traits\DashMenusHelpers;
 use function DHT\Helpers\{dht_array_key_exists};
 
@@ -33,11 +32,6 @@ final class DashMenuPage implements IDashMenuPage {
 		add_action( 'admin_menu', function() use ( $dash_menus_config ) {
 			$this->registerMenuPagesAction( $dash_menus_config );
 		}, 99 );
-		
-		//register menus as rest api endpoints (testing purposes)
-		add_action( 'rest_api_init', function() use ( $dash_menus_config ) {
-			API::init()->dashmenus->registerAPIEndpoints( $dash_menus_config );
-		} );
 	}
 	
 	/**
@@ -75,72 +69,84 @@ final class DashMenuPage implements IDashMenuPage {
 	}
 	
 	/**
-	 * create the dashboard main menu item (top level dashboard menu item)
+	 * Create the dashboard main menu item (top level dashboard menu item)
 	 *
 	 * @param array $main_menu_values
 	 *
 	 * @return void
-	 * @since     1.0.0
+	 * @since 1.0.0
 	 */
 	private function _createMainMenuPage( array $main_menu_values ) : void {
-		
-		//destructuring the $menu_values array
-		[
-			'page_title'         => $page_title,
-			'menu_title'         => $menu_title,
-			'capability'         => $capability,
-			'menu_slug'          => $menu_slug,
-			'callback'           => $callback,
-			'icon_url'           => $icon_url,
-			'position'           => $position,
-			'template_path'      => $template_path,
-			'additional_options' => $additional_options
-		] = $main_menu_values;
-		
-		$callback_func = $callback ? $this->_mergeCallbackArguments( $callback, $template_path, $additional_options ) : '';
-		
-		add_menu_page( $page_title, $menu_title, $capability, $menu_slug, $callback_func, $icon_url, $position );
+		$this->_createMenuPage( $main_menu_values );
 	}
 	
 	/**
-	 * create the dashboard submenu menu item (under the main menu item)
+	 * Create the dashboard submenu menu item (under the main menu item)
 	 *
 	 * @param array $submenu_values
 	 *
 	 * @return void
-	 * @since     1.0.0
+	 * @since 1.0.0
 	 */
 	private function _createSubmenuPage( array $submenu_values ) : void {
-		
-		//destructuring the $menu_values array
+		$this->_createMenuPage( $submenu_values, true );
+	}
+	
+	/**
+	 * Common method to create a menu or submenu page
+	 *
+	 * @param array $menu_values
+	 * @param bool  $is_submenu
+	 *
+	 * @return void
+	 * @since 1.0.0
+	 */
+	private function _createMenuPage( array $menu_values, bool $is_submenu = false ) : void {
+		// Common destructuring for menu items
 		[
-			'parent_slug'        => $parent_slug,
-			'page_title'         => $page_title,
-			'menu_title'         => $menu_title,
-			'capability'         => $capability,
-			'menu_slug'          => $menu_slug,
-			'callback'           => $callback,
-			'template_path'      => $template_path,
-			'additional_options' => $additional_options
-		] = $submenu_values;
+			'page_title'      => $page_title,
+			'menu_title'      => $menu_title,
+			'capability'      => $capability,
+			'menu_slug'       => $menu_slug,
+			'callback'        => $callback,
+			'template_path'   => $template_path,
+			'additional_args' => $additional_args,
+		] = $menu_values;
 		
-		$callback_func = $callback ? $this->_mergeCallbackArguments( $callback, $template_path, $additional_options ) : '';
+		$callback_func = $callback ? $this->_mergeCallbackArguments( $callback, $template_path, $additional_args ) : '';
 		
-		add_submenu_page( $parent_slug, $page_title, $menu_title, $capability, $menu_slug, $callback_func );
+		// If it's a submenu, destructure the parent_slug
+		if ( $is_submenu ) {
+			//submenu menu item specific options
+			[
+				'parent_slug' => $parent_slug
+			] = $menu_values;
+			
+			add_submenu_page( $parent_slug, $page_title, $menu_title, $capability, $menu_slug, $callback_func );
+		}
+		else {
+			//main menu item specific options
+			[
+				'icon_url' => $icon_url,
+				'position' => $position
+			] = $menu_values;
+			
+			add_menu_page( $page_title, $menu_title, $capability, $menu_slug, $callback_func, $icon_url, $position );
+		}
 	}
 	
 	/**
 	 * dynamically create menu callbacks passed to add_menu_page and add_submenu_page hooks
 	 *
-	 * @param string $func_name - function name to be created
-	 * @param array  $args      - function arguments to be used
+	 * @param string $func_name       - function name to be created
+	 * @param array  $additional_args - function arguments to be used
 	 *
 	 * @return void
 	 * @since     1.0.0
 	 */
-	public function __call( string $func_name, array $args ) {
+	public function __call( string $func_name, array $additional_args ) {
 		
-		echo $this->_getMenuTemplate( $args[ 0 ][ 'template_path' ], $func_name . '.php', $args[ 0 ][ 'additional_options' ] );
+		echo $this->_getMenuTemplate( $additional_args[ 0 ][ 'template_path' ], $func_name . '.php', $additional_args[ 0 ][ 'additional_args' ] );
 	}
 	
 }

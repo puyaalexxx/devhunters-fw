@@ -8,8 +8,41 @@ if ( ! defined( 'DHT_MAIN' ) ) {
 }
 
 use function DHT\Helpers\dht_fw_render_options;
+use function DHT\Helpers\dht_load_view;
 
 trait RenderOptionsHelpers {
+	
+	/**
+	 * Render content for dashboard pages, metaboxes and terms area.
+	 *
+	 * @param array  $options  Options array.
+	 * @param string $location Where to save the data - dashboard/post or term
+	 * @param int    $id       The post or term ID if rendering post type metabox content or term fields.
+	 *
+	 * @return void
+	 * @since 1.0.0
+	 */
+	private function _renderContent( array $options, string $location = 'dashboard', int $id = 0 ) : void {
+		
+		$template = apply_filters( 'dht_options_get_options_template_file', $this->_getOptionsTemplate( $location ) );
+		
+		$viewData = [
+			'nonce'   => apply_filters( 'dht_options_get_options_get_nonce_field', $this->_nonce ),
+			'options' => apply_filters( 'dht_options_get_options_view_html', $this->_getOptionsView( $options, $location, $id ) ),
+		];
+		
+		//add 'metabox_id' if it exists
+		if ( isset( $options[ 'options_id' ] ) ) {
+			$viewData[ 'metabox_id' ] = $options[ 'options_id' ];
+		}
+		
+		if ( $location == 'vb' ) {
+			echo dht_load_view( DHT_VIEWS_DIR . 'core/vb/', $template, $viewData );
+		}
+		else {
+			echo dht_load_view( DHT_VIEWS_DIR . 'extensions/options/', $template, $viewData );
+		}
+	}
 	
 	/**
 	 * Generates the HTML view for the options.
@@ -48,6 +81,32 @@ trait RenderOptionsHelpers {
 		
 		// Return the generated HTML view
 		return ob_get_clean();
+	}
+	
+	/**
+	 * Get the correct option template
+	 *
+	 * @param string $location Where the options are located (dashboard/post/term)
+	 *
+	 * @return string
+	 * @since     1.0.0
+	 */
+	private function _getOptionsTemplate( string $location ) : string {
+		
+		if ( $location == 'post' ) {
+			$template = 'posts.php';
+		}
+		elseif ( $location == 'term' ) {
+			$template = 'terms.php';
+		}
+		elseif ( $location == 'vb' ) {
+			$template = 'modal.php';
+		}
+		else {
+			$template = 'dashboard-page.php';
+		}
+		
+		return $template;
 	}
 	
 }

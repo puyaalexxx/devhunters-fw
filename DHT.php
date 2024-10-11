@@ -7,13 +7,14 @@ if ( ! defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
-use DHT\Core\Cli\CLI;
 use DHT\Core\Core;
-use DHT\Core\Manifest;
 use DHT\Extensions\Extensions;
 use DHT\Helpers\Classes\Environment;
 use DHT\helpers\classes\Translations;
+use DHT\Helpers\Traits\SingletonTrait;
+use function DHT\Helpers\dht_fw_manifest;
 use function DHT\Helpers\dht_make_script_as_module_type;
+use function DHT\Helpers\dht_print_r;
 
 /**
  * Singleton Class that is used to include the core devhunters-fw functionality that should be used further up
@@ -22,53 +23,36 @@ use function DHT\Helpers\dht_make_script_as_module_type;
  */
 final class DHT {
 	
+	use SingletonTrait;
+	
 	//framework version
 	public static string $version;
-	
-	//Extensions instance
-	public Core $core;
-	
-	//Extensions instance
-	public Extensions $extensions;
-	
-	//framework manifest info
-	public Manifest $manifest;
-	
-	//CLI instance
-	public CLI $cli;
 	
 	/**
 	 * @since     1.0.0
 	 */
-	public function __construct() {
+	private function __construct() {
 		
 		do_action( 'dht_fw_before_fw_init' );
 		
-		//load environment variables from the .env file
-		Environment::loadEnv( DHT_DIR );
+		{
+			//set plugin version
+			self::$version = dht_fw_manifest( 'version' );
+			
+			//load environment variables from the .env file
+			Environment::loadEnv( DHT_DIR );
+		}
 		
-		//instantiate framework manifest info
-		$this->manifest = Manifest::init();
+		{
+			//Enqueue framework general scripts and styles
+			add_action( 'admin_enqueue_scripts', [ $this, '_enqueueFrameworkGeneralScripts' ] );
+			
+			// Load the text domain for localization
+			add_action( 'plugins_loaded', [ Translations::class, 'loadTextdomain' ] );
+		}
 		
-		//instantiate framework core features
-		$this->core = Core::init();
-		
-		//instantiate framework Extensions
-		$this->extensions = Extensions::init();
-		
-		//instantiate framework cli commands
-		$this->cli = CLI::init();
-		
-		//Enqueue framework general scripts and styles
-		add_action( 'admin_enqueue_scripts', [ $this, '_enqueueFrameworkGeneralScripts' ] );
-		
-		// Load the text domain for localization
-		add_action( 'plugins_loaded', [ Translations::class, 'loadTextdomain' ] );
-		
-		//register all the framework cli commands
-		add_action( 'cli_init', function() {
-			dht()->cli->registerCustomCliCommands();
-		} );
+		//instantiate all framework features
+		$this->_registerFrameworkFeatures( Core::init(), Extensions::init() );
 	}
 	
 	/**
@@ -83,18 +67,19 @@ final class DHT {
 		$localized_data = array_merge( [ 'ajax_url' => admin_url( 'admin-ajax.php' ) ], [ 'translations' => Translations::getTranslationStrings() ] );
 		
 		if ( Environment::isDevelopment() ) {
-			wp_register_style( DHT_PREFIX_CSS . '-fw', DHT_ASSETS_URI . 'dist/css/fw.css', array(), dht()->manifest->get( 'version' ) );
+			wp_register_style( DHT_PREFIX_CSS . '-fw', DHT_ASSETS_URI . 'dist/css/fw.css', array(), DHT::$version );
 			wp_enqueue_style( DHT_PREFIX_CSS . '-fw' );
 			
-			wp_enqueue_script( DHT_PREFIX_JS . '-fw', DHT_ASSETS_URI . 'dist/js/fw.js', array( 'jquery' ), dht()->manifest->get( 'version' ) );
+			wp_enqueue_script( DHT_PREFIX_JS . '-fw', DHT_ASSETS_URI . 'dist/js/fw.js', array( 'jquery' ), DHT::$version );
 			wp_localize_script( DHT_PREFIX_JS . '-fw', 'dht_framework_info', $localized_data );
 			
-		} else {
-			wp_register_style( DHT_PREFIX_CSS . '-main-bundle', DHT_ASSETS_URI . 'dist/main.css', array(), dht()->manifest->get( 'version' ) );
+		}
+		else {
+			wp_register_style( DHT_PREFIX_CSS . '-main-bundle', DHT_ASSETS_URI . 'dist/main.css', array(), DHT::$version );
 			wp_enqueue_style( DHT_PREFIX_CSS . '-main-bundle' );
 			
 			//this bundle is loading the modules dynamically
-			wp_enqueue_script( DHT_PREFIX_JS . '-main-bundle', DHT_ASSETS_URI . 'dist/main.js', array( 'jquery' ), dht()->manifest->get( 'version' ), true );
+			wp_enqueue_script( DHT_PREFIX_JS . '-main-bundle', DHT_ASSETS_URI . 'dist/main.js', array( 'jquery' ), DHT::$version, true );
 			wp_localize_script( DHT_PREFIX_JS . '-main-bundle', 'dht_framework_info', $localized_data );
 		}
 		
@@ -105,6 +90,60 @@ final class DHT {
 				DHT_PREFIX_JS . '-fw'
 			] );
 		}, 10, 2 );
+	}
+	
+	/**
+	 * register framework core features, extensions...
+	 *
+	 * @param Core       $core
+	 * @param Extensions $extensions
+	 *
+	 * @return void
+	 * @since     1.0.0
+	 */
+	private function _registerFrameworkFeatures( Core $core, Extensions $extensions ) : void {
+		
+		//////////////////////////////////////////
+		//// register framework core features ////
+		//////////////////////////////////////////
+		
+		//register framework options
+		add_action( 'current_screen', function() use ( $core ) {
+			//Config::get_configurations_by_name( PPHT_CONFIG_DIR . 'extensions/options/terms/popup_group_tax.php', 'options' );
+			$dashboardPagesOptions = apply_filters( 'dht_options_dashboard_pages_options', [] );
+			$postTypeOptions       = apply_filters( 'dht_options_post_types_options', [] );
+			
+			dht_print_r( $dashboardPagesOptions );
+			
+			$core->options( $dashboardPagesOptions, $postTypeOptions )?->register();
+		} );
+		
+		//enable the visual builder on these post types
+		$core->vb( apply_filters( 'dht_core_vb_post_types', [] ) )->enable();
+		
+		//register framework cli commands
+		add_action( 'cli_init', function() use ( $core ) {
+			$core->cli()->registerCustomCliCommands();
+		} );
+		
+		////////////////////////////////////////
+		//// register framework extensions /////
+		////////////////////////////////////////
+		
+		//create dashboard menus with plugin configurations
+		$extensions->dashMenus( apply_filters( 'dht_extensions_dash_menus_configurations', [] ) )?->register();
+		
+		//create custom post types with plugin cpt configurations
+		$extensions->cpts( apply_filters( 'dht_extensions_cpts_configurations', [] ) )?->create();
+		
+		//register widgets with plugin configurations
+		$extensions->widgets( apply_filters( 'dht_extensions_widgets_configurations', [] ) )?->register();
+		
+		//register sidebars with plugin sidebar configurations
+		$extensions->sidebars( apply_filters( 'dht_extensions_sidebars_configurations', [] ) )?->register();
+		
+		//enable dynamic sidebars form with plugin sidebar configurations
+		$extensions->dynamicSidebars( apply_filters( 'dht_extensions_dynamic_sidebars_configurations', false ) )?->enable();
 	}
 	
 	/**
@@ -123,21 +162,4 @@ final class DHT {
 		return '';
 	}
 	
-}
-
-/**
- * @return DHT Framework instance (in case to expose the framework functionality to a plugin)
- */
-function dht() : DHT {
-	
-	static $DHT = NULL; // cache
-	
-	if ( $DHT === NULL ) {
-		$DHT = new DHT();
-		
-		//framework is loaded
-		do_action( 'dht_fw_init' );
-	}
-	
-	return $DHT;
 }

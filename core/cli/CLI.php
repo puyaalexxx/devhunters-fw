@@ -7,7 +7,6 @@ if ( ! defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
-use DHT\Helpers\Traits\SingletonTrait;
 use WP_CLI;
 
 /**
@@ -17,12 +16,10 @@ use WP_CLI;
  */
 final class CLI {
 	
-	use SingletonTrait;
-	
 	/**
 	 * @since     1.0.0
 	 */
-	private function __construct() {}
+	public function __construct() {}
 	
 	/**
 	 * Register available CLI commands

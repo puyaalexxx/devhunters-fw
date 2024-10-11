@@ -8,7 +8,6 @@ if ( ! defined( 'DHT_MAIN' ) ) {
 }
 
 use DHT\Helpers\Classes\Dumper;
-use Exception;
 
 if ( ! function_exists( 'dht_print_r' ) ) {
 	/**
@@ -76,7 +75,8 @@ if ( ! function_exists( 'dht_print_r' ) ) {
 			echo '<div class="dht_print_r"><pre>';
 			echo htmlspecialchars( Dumper::dump( $value ), ENT_QUOTES, 'UTF-8' );
 			echo '</pre></div>';
-		} else {
+		}
+		else {
 			echo '<div class="dht_print_r_group">';
 			foreach ( func_get_args() as $param ) {
 				dht_print_r( $param );
@@ -151,7 +151,8 @@ if ( ! function_exists( 'dht_load_view' ) ) {
 			require $file_path;
 			
 			return ob_get_clean();
-		} else {
+		}
+		else {
 			require $file_path;
 		}
 		
@@ -189,7 +190,8 @@ if ( ! function_exists( 'dht_get_variables_from_file' ) ) {
 			}
 			
 			$option = (array) $$extract_variable;
-		} else {
+		}
+		else {
 			$option = $$extract_variable;
 		}
 		
@@ -226,78 +228,5 @@ if ( ! function_exists( 'dht_parse_css_classes_into_array' ) ) {
 		}
 		
 		return $classContentArray;
-	}
-}
-
-if ( ! function_exists( 'dht_grab_env_constant_value' ) ) {
-	/**
-	 * Code used for the make file to check for the environment
-	 * constant to compile the ts and pcss files via Vite also
-	 *
-	 * @param string $file_path    - path to your constants file
-	 * @param string $env_constant - env constant name
-	 *
-	 * @return string - constant value
-	 * @since     1.0.0
-	 */
-	function dht_grab_env_constant_value( string $file_path = "constants.php", string $env_constant = "Environment::isDevelopment()" ) : string {
-		
-		$value = "";
-		if ( $handle = fopen( $file_path, "r" ) ) {
-			while( ( $line = fgets( $handle ) ) !== false ) {
-				if ( str_contains( $line, $env_constant ) ) {
-					preg_match( "/define\(\s*'+$env_constant+'\s*,\s*(.+?)\s*\);/", $line, $matches );
-					echo "/define\(\s*'+$env_constant+'\s*,\s*(.+?)\s*\);/";
-					$value = isset( $matches[ 1 ] ) ? trim( $matches[ 1 ] ) : "true";
-					break;
-				}
-			}
-			fclose( $handle );
-		} else {
-			$value = _x( "Could not open the file.", 'makefile', DHT_PREFIX );
-		}
-		
-		return $value;
-	}
-}
-
-
-if ( ! function_exists( 'dht_grab_env_constant_value' ) ) {
-	/**
-	 * Code used for the make file to check for the environment
-	 * constant to compile the ts and pcss files via Vite also
-	 *
-	 * @param string $file_path path to your .env file
-	 *
-	 * @return array - constant value
-	 * @throws Exception
-	 * @since     1.0.0
-	 */
-	function dht_load_env( string $file_path ) : array {
-		if ( ! file_exists( $file_path ) ) {
-			throw new Exception( "The .env file does not exist." );
-		}
-		
-		$env   = [];
-		$lines = file( $file_path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES );
-		
-		foreach ( $lines as $line ) {
-			// Skip comments
-			if ( str_starts_with( trim( $line ), '#' ) ) {
-				continue;
-			}
-			
-			// Parse the key and value
-			list( $key, $value ) = explode( '=', $line, 2 );
-			
-			// Remove whitespace and quotes
-			$key   = trim( $key );
-			$value = trim( $value, " \t\n\r\0\x0B\"'" );
-			
-			// Set the environment variable
-			$env[ $key ] = $value;
-		}
-		
-		return $env;
 	}
 }

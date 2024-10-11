@@ -26,9 +26,11 @@ define( 'DHT_CONFIG_DIR', DHT_DIR . 'config/' );
 
 define( 'DHT_HELPERS_DIR', DHT_DIR . 'helpers/' );
 
+//core folder
+define( 'DHT_CORE_DIR', DHT_DIR . 'core/' );
+define( 'DHT_OPTIONS_DIR', DHT_CORE_DIR . 'options/' );
 //extensions folder
 define( 'DHT_EXTENSIONS_DIR', DHT_DIR . 'extensions/' );
-define( 'DHT_OPTIONS_DIR', DHT_EXTENSIONS_DIR . 'options/' );
 
 define( 'DHT_VIEWS_DIR', DHT_DIR . 'views/' );
 

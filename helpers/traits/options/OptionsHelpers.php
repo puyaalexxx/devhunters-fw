@@ -3,11 +3,55 @@ declare( strict_types = 1 );
 
 namespace DHT\Helpers\Traits\Options;
 
+use function DHT\Helpers\dht_get_current_admin_post_type;
+
 if ( ! defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
 trait OptionsHelpers {
+	
+	/**
+	 * register post types and pages meta boxes
+	 *
+	 * @param array $options Options array
+	 *
+	 * @return void
+	 * @since     1.0.0
+	 */
+	private function _registerPostTypeMetaboxes( array $options ) : void {
+		
+		$post_type = dht_get_current_admin_post_type();
+		
+		// Determine if multiple metaboxes need to be registered
+		$metaboxes = isset( $options[ 'options' ] ) ? [ $options ] : $options;
+		
+		// Initialize counter for unique metabox IDs
+		$count = 0;
+		// Loop through each metabox configuration
+		foreach ( $metaboxes as &$metabox ) {
+			$count ++;
+			$metabox_id = 'dht-fw-metabox-id-' . $count;
+			// Set metabox ID and options ID
+			$metabox[ 'options_id' ] = $metabox[ 'id' ];
+			$metabox[ 'id' ]         = $metabox_id . '[' . $metabox[ 'options_id' ] . ']';
+			//used to not adding the class to the containers because it is added to metabox
+			$metabox[ 'area' ] = 'metabox';
+			
+			// Register the metabox
+			add_meta_box( $metabox_id, // ID of the metabox
+				$metabox[ 'title' ], // Title of the metabox
+				function( $post ) use ( $metabox ) {
+					$this->_renderContent( $metabox, 'post', $post->ID );
+				}, $post_type, // Post type
+				$metabox[ 'context' ] ?? 'normal', // Context (normal, side, advanced)
+				$metabox[ 'priority' ] ?? 'high'  // Priority (high, core, default, low)
+			);
+			
+			// Add custom class to the postbox area
+			$this->_addMetaboxCustomClass( $metabox, $post_type, $metabox_id );
+		}
+	}
 	
 	/**
 	 * generate form nonce fields (name and action)
@@ -60,29 +104,6 @@ trait OptionsHelpers {
 	private function _isContainerType( array $option ) : bool {
 		
 		return isset( $option[ 'type' ] ) && isset( $this->_optionContainerClasses[ $option[ 'type' ] ] );
-	}
-	
-	/**
-	 * Get the correct option template
-	 *
-	 * @param string $location Where the options are located (dashboard/post/term)
-	 *
-	 * @return string
-	 * @since     1.0.0
-	 */
-	private function _getOptionsTemplate( string $location ) : string {
-		
-		if ( $location == 'post' ) {
-			$template = 'posts.php';
-		} elseif ( $location == 'term' ) {
-			$template = 'terms.php';
-		} elseif ( $location == 'vb' ) {
-			$template = 'modal.php';
-		} else {
-			$template = 'dashboard-page.php';
-		}
-		
-		return $template;
 	}
 	
 	/**

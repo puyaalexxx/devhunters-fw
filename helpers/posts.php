@@ -24,7 +24,7 @@ if ( ! function_exists( 'dht_is_post_editing_area' ) ) {
 		}
 		
 		//isset( $_POST[ 'data' ][ 'post_id' ] ) - is for ajax requests
-		return isset( $_GET[ 'post' ] ) || isset( $_GET[ 'post_type' ] ) || isset( $_POST[ 'post_type' ] ) || isset( $_POST[ 'post_id' ] );
+		return ( isset( $_GET[ 'post' ] ) || isset( $_GET[ 'post_type' ] ) || isset( $_POST[ 'post_type' ] ) || isset( $_POST[ 'post_id' ] ) ) && ! dht_is_term_editing_area();
 	}
 }
 

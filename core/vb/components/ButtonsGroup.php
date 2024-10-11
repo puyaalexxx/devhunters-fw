@@ -5,7 +5,7 @@ namespace DHT\Core\Vb\Components;
 
 use DHT\Helpers\Classes\Environment;
 use DHT\Helpers\Traits\SingletonTrait;
-use function DHT\dht;
+use DHT\DHT;
 
 if ( ! defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
@@ -38,7 +38,7 @@ final class ButtonsGroup {
 	public function enqueueScripts() : void {
 		
 		if ( Environment::isDevelopment() ) {
-			wp_register_style( DHT_PREFIX_CSS . '-buttons-group', DHT_ASSETS_URI . 'dist/css/buttons-group.css', array(), dht()->manifest->get( 'version' ) );
+			wp_register_style( DHT_PREFIX_CSS . '-buttons-group', DHT_ASSETS_URI . 'dist/css/buttons-group.css', array(), DHT::$version );
 			wp_enqueue_style( DHT_PREFIX_CSS . '-buttons-group' );
 		}
 	}

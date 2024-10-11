@@ -3,11 +3,24 @@ declare( strict_types = 1 );
 
 namespace DHT\Helpers;
 
+use DHT\Core\Manifest;
+
 if ( ! defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
-///////////////////////////Functions used only in the framework//////////////////////////////
+if ( ! function_exists( 'dht_fw_manifest' ) ) {
+	/**
+	 * Get FW manifest settings
+	 *
+	 * @return bool The processed value to be saved.
+	 * @since     1.0.0
+	 */
+	function dht_fw_manifest( string $key ) : mixed {
+		
+		return Manifest::init()->get( $key );
+	}
+}
 
 if ( ! function_exists( 'dht_fw_get_font_weight_Label' ) ) {
 	/**
@@ -33,6 +46,10 @@ if ( ! function_exists( 'dht_fw_get_font_weight_Label' ) ) {
 		};
 	}
 }
+
+
+///////////////////////////////////////////////
+
 
 if ( ! function_exists( 'dht_fw_render_options' ) ) {
 	/**

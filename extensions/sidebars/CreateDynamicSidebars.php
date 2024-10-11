@@ -3,8 +3,8 @@ declare( strict_types = 1 );
 
 namespace DHT\Extensions\Sidebars;
 
+use DHT\DHT;
 use DHT\Helpers\Classes\Environment;
-use function DHT\dht;
 
 if ( ! defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
@@ -40,36 +40,18 @@ final class CreateDynamicSidebars implements ICreateDynamicSidebars {
 		// Check if we are on the Widgets page
 		if ( 'widgets.php' === $pagenow ) {
 			
-			add_action( 'widgets_init', [
-				$this,
-				'registerCustomWidgetAreas'
-			], 1000 );
+			add_action( 'widgets_init', [ $this, 'registerCustomWidgetAreas' ], 1000 );
 			
-			add_action( 'admin_print_scripts', [
-				$this,
-				'widgetAreaFormTemplate'
-			] );
+			add_action( 'admin_print_scripts', [ $this, 'widgetAreaFormTemplate' ] );
 			
-			add_action( 'load-widgets.php', [
-				$this,
-				'addWidgetArea'
-			], 100 );
+			add_action( 'load-widgets.php', [ $this, 'addWidgetArea' ], 100 );
 			
-			add_action( 'admin_enqueue_scripts', [
-				$this,
-				'enqueueSidebarScripts'
-			] );
+			add_action( 'admin_enqueue_scripts', [ $this, 'enqueueSidebarScripts' ] );
 		}
 		
 		//ajax actions to remove sidebars
-		add_action( 'wp_ajax_deleteWidgetArea', [
-			$this,
-			'deleteWidgetArea'
-		] );
-		add_action( 'wp_ajax_nopriv_deleteWidgetArea', [
-			$this,
-			'deleteWidgetArea'
-		] ); // For non-logged in users
+		add_action( 'wp_ajax_deleteWidgetArea', [ $this, 'deleteWidgetArea' ] );
+		add_action( 'wp_ajax_nopriv_deleteWidgetArea', [ $this, 'deleteWidgetArea' ] ); // For non-logged in users
 	}
 	
 	
@@ -116,10 +98,10 @@ final class CreateDynamicSidebars implements ICreateDynamicSidebars {
 	public function enqueueSidebarScripts( string $hook ) : void {
 		
 		if ( Environment::isDevelopment() ) {
-			wp_register_style( DHT_PREFIX_CSS . '-create-sidebars', DHT_ASSETS_URI . 'dist/css/create-sidebars.css', array(), dht()->manifest->get( 'version' ) );
+			wp_register_style( DHT_PREFIX_CSS . '-create-sidebars', DHT_ASSETS_URI . 'dist/css/create-sidebars.css', array(), DHT::$version );
 			wp_enqueue_style( DHT_PREFIX_CSS . '-create-sidebars' );
 			
-			wp_enqueue_script( DHT_PREFIX_JS . '-create-sidebars', DHT_ASSETS_URI . 'scripts/js/create-sidebars.js', array( 'jquery' ), dht()->manifest->get( 'version' ), true );
+			wp_enqueue_script( DHT_PREFIX_JS . '-create-sidebars', DHT_ASSETS_URI . 'dist/js/create-sidebars.js', array( 'jquery' ), DHT::$version, true );
 			wp_localize_script( DHT_PREFIX_JS . '-create-sidebars', 'dht_remove_sidebar_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
 		}
 	}
@@ -287,7 +269,8 @@ final class CreateDynamicSidebars implements ICreateDynamicSidebars {
 			
 			if ( ! is_numeric( $counter ) ) {
 				$new_name = $name . ' 1';
-			} else {
+			}
+			else {
 				$new_name = substr( $name, 0, - 1 ) . ( (int) $counter + 1 );
 			}
 			

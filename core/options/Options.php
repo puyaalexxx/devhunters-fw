@@ -3,7 +3,7 @@ declare( strict_types = 1 );
 
 namespace DHT\Core\Options;
 
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
@@ -29,6 +29,8 @@ final class Options implements IOptions {
 	//option configurations (received from the plugin config/options folder area)
 	private array $_dashboardPagesOptions;
 	private array $_postTypeOptions;
+	private array $_termOptions;
+	private array $_vbOptions;
 	
 	//option type Classes
 	private array $_optionFieldsClasses = [];
@@ -51,10 +53,12 @@ final class Options implements IOptions {
 	/**
 	 * @since     1.0.0
 	 */
-	public function __construct( array $dashboardPagesOptions, array $postTypeOptions ) {
+	public function __construct( array $dashboardPagesOptions, array $postTypeOptions, array $termOptions, array $vbOptions ) {
 		
 		$this->_dashboardPagesOptions = $dashboardPagesOptions;
 		$this->_postTypeOptions       = $postTypeOptions;
+		$this->_termOptions           = $termOptions;
+		$this->_vbOptions             = $vbOptions;
 	}
 	
 	/**
@@ -81,10 +85,10 @@ final class Options implements IOptions {
 		$this->_renderPostTypesOptions( $this->_postTypeOptions );
 		
 		//terms
-		$this->_renderTermsOptions();
+		$this->_renderTermsOptions( $this->_termOptions );
 		
 		//vb options
-		$this->_renderVBOptions();
+		$this->_renderVBOptions( $this->_vbOptions );
 	}
 	
 	/**
@@ -97,7 +101,7 @@ final class Options implements IOptions {
 	 */
 	public function enqueueGeneralScripts( string $hook ) : void {
 		
-		if ( Environment::isDevelopment() ) {
+		if( Environment::isDevelopment() ) {
 			wp_register_style( DHT_PREFIX_CSS . '-dashboard-page', DHT_ASSETS_URI . 'dist/css/dashboard-page.css', array(), DHT::$version );
 			wp_enqueue_style( DHT_PREFIX_CSS . '-dashboard-page' );
 			
@@ -122,25 +126,29 @@ final class Options implements IOptions {
 	/**
 	 * Render dashboard page options
 	 *
+	 * @param array $dashboardPagesOptions Dashboard Pages options
+	 *
 	 * @return void
 	 * @since     1.0.0
 	 */
 	private function _renderDashBoardPagesOptions( array $dashboardPagesOptions ) : void {
 		
 		//enqueue styles/scripts for each option received from the plugin
-		$this->_enqueueOptionsScripts( apply_filters( 'dht_options_enqueue_dash_pages_option_scripts', $dashboardPagesOptions ) );
+		$this->_enqueueOptionsScripts( apply_filters( 'dht:options:enqueue_dash_pages_option_scripts', $dashboardPagesOptions ) );
 		
 		//render dashboard page form HTML content hook with the passed options
-		add_action( 'dht_render_dashboard_page_content', function() use ( $dashboardPagesOptions ) {
+		add_action( 'dht:options:view:render_dashboard_page_content', function() use ( $dashboardPagesOptions ) {
 			//save dashboard pages options
 			$this->_saveDashBoardPageOptions( $dashboardPagesOptions );
 			
-			$this->_renderContent( apply_filters( 'dht_options_dashboard_page_options', $dashboardPagesOptions ) );
+			$this->_renderContent( $dashboardPagesOptions );
 		} );
 	}
 	
 	/**
 	 * Render post types options
+	 *
+	 * @param array $postTypeOptions Post type options
 	 *
 	 * @return void
 	 * @since     1.0.0
@@ -148,7 +156,7 @@ final class Options implements IOptions {
 	private function _renderPostTypesOptions( array $postTypeOptions ) : void {
 		
 		//enqueue styles/scripts for each option received from the plugin
-		$this->_enqueueOptionsScripts( apply_filters( 'dht_options_enqueue_post_types_scripts', $postTypeOptions ) );
+		$this->_enqueueOptionsScripts( apply_filters( 'dht:options:enqueue_post_types_scripts', $postTypeOptions ) );
 		
 		//save post type metaboxes options
 		add_action( 'save_post', function( int $post_id, WP_Post $post ) use ( $postTypeOptions ) {
@@ -164,15 +172,15 @@ final class Options implements IOptions {
 	/**
 	 * Render terms options
 	 *
+	 * @param array $termOptions Term options
+	 *
 	 * @return void
 	 * @since     1.0.0
 	 */
-	private function _renderTermsOptions() : void {
-		
-		$termOptions = apply_filters( 'dht_options_terms_options', [] );
+	private function _renderTermsOptions( array $termOptions ) : void {
 		
 		//enqueue styles/scripts for each option received from the plugin
-		$this->_enqueueOptionsScripts( apply_filters( 'dht_options_enqueue_term_scripts', $termOptions ) );
+		$this->_enqueueOptionsScripts( apply_filters( 'dht:options:enqueue_term_scripts', $termOptions ) );
 		
 		//taxonomies related functionality
 		{
@@ -182,8 +190,8 @@ final class Options implements IOptions {
 				$this->_renderContent( $termOptions, 'term', $term->term_id );
 			}, 999 );
 			
-			add_action( 'edited_' . $current_taxonomy, function( $term ) use ( $termOptions ) {
-				$this->_saveTermOptions( $term->term_id, $termOptions );
+			add_action( 'edited_' . $current_taxonomy, function( $term_id ) use ( $termOptions ) {
+				$this->_saveTermOptions( $term_id, $termOptions );
 			}, 999 );
 		}
 	}
@@ -191,18 +199,20 @@ final class Options implements IOptions {
 	/**
 	 * Render visual builder options
 	 *
+	 * @param array $vbOptions VB modal options
+	 *
 	 * @return void
 	 * @since     1.0.0
 	 */
-	private function _renderVBOptions() : void {
+	private function _renderVBOptions( array $vbOptions ) : void {
 		
-		$vbOptions = apply_filters( 'dht_options_vb_modal_options', [] );
+		//dht_print_r( $vbOptions );
 		
 		//enqueue styles/scripts for each option received from the plugin
-		$this->_enqueueOptionsScripts( apply_filters( 'dht_options_enqueue_vb_scripts', $vbOptions ) );
+		$this->_enqueueOptionsScripts( apply_filters( 'dht:options:enqueue_vb_scripts', $vbOptions ) );
 		
 		//render visual builder modal HTML content hook with the passed options
-		add_action( 'dht_vb_render_modal_content', function( int $postID, string $modalType ) use ( $vbOptions ) {
+		add_action( 'dht:vb:render_modal_content', function( int $postID, string $modalType ) use ( $vbOptions ) {
 			$this->_renderContent( $vbOptions, "vb", $postID );
 		}, 10, 2 );
 	}
@@ -222,11 +232,11 @@ final class Options implements IOptions {
 	 */
 	private function _saveDashBoardPageOptions( array $options ) : void {
 		
-		if ( $this->_isValidRequest() ) {
+		if( $this->_isValidRequest() ) {
 			
 			$post_values = $_POST[ $options[ 'id' ] ?? '' ] ?? NULL;
 			
-			if ( $post_values ) {
+			if( $post_values ) {
 				$this->_handleContainerOptions( $options, $post_values );
 			}
 			else {
@@ -252,30 +262,30 @@ final class Options implements IOptions {
 	public function _savePostTypeOptions( int $post_id, WP_Post $post, array $postTypeOptions ) : void {
 		
 		//check nonce field
-		if ( $this->_isValidRequest() ) {
+		if( $this->_isValidRequest() ) {
 			
-			if ( ! current_user_can( 'edit_post', $post_id ) ) {
+			if( !current_user_can( 'edit_post', $post_id ) ) {
 				return;
 			}
 			
 			// Check if this is an autosave
-			if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+			if( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
 				return;
 			}
 			
 			// check post type
-			if ( isset( $_POST[ 'post_type' ] ) && $post->post_type != $_POST[ 'post_type' ] ) {
+			if( isset( $_POST[ 'post_type' ] ) && $post->post_type != $_POST[ 'post_type' ] ) {
 				return;
 			}
 			
 			//save metaboxes options
-			if ( isset( $_POST ) ) {
+			if( isset( $_POST ) ) {
 				foreach ( $_POST as $metabox_id => $values ) {
-					if ( str_contains( $metabox_id, 'dht-fw-metabox-id' ) ) {
+					if( str_contains( $metabox_id, 'dht-fw-metabox-id' ) ) {
 						//many metaboxes
-						if ( ! isset( $postTypeOptions[ 'options' ] ) ) {
+						if( !isset( $postTypeOptions[ 'options' ] ) ) {
 							foreach ( $postTypeOptions as $options ) {
-								if ( isset( $values[ $options[ 'id' ] ] ) ) {
+								if( isset( $values[ $options[ 'id' ] ] ) ) {
 									$this->_handleContainerOptions( $options, $values[ $options[ 'id' ] ], 'post', $post_id );
 								}
 							}
@@ -305,12 +315,12 @@ final class Options implements IOptions {
 	 */
 	private function _saveTermOptions( int $term_id, array $options ) : void {
 		
-		if ( $this->_isValidRequest() ) {
+		if( $this->_isValidRequest() ) {
 			
 			$post_values = $_POST[ $options[ 'id' ] ?? '' ] ?? NULL;
 			
 			//check for the container id
-			if ( $post_values ) {
+			if( $post_values ) {
 				$this->_handleContainerOptions( $options, $post_values, 'term', $term_id );
 			}
 		}

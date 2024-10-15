@@ -13,14 +13,15 @@ if ( ! empty( $field[ 'value' ][ 'image_id' ] ) ) {
 	$attachemnt_url = wp_get_attachment_url( (int) $field[ 'value' ][ 'image_id' ] );
 	$image_url      = $attachemnt_url;
 	
-} elseif ( ! empty( $field[ 'value' ][ 'image' ] ) ) {
+}
+elseif ( ! empty( $field[ 'value' ][ 'image' ] ) ) {
 	
 	$image_url = esc_url( $field[ 'value' ][ 'image' ] );
 }
 ?>
 <!--upload image field-->
 
-<?php do_action( 'dht_options_view_fields_upload_image_before_area' ); ?>
+<?php do_action( 'dht:options:view:fields:upload_image_before_area' ); ?>
 
 <div
     class="dht-field-wrapper <?php echo isset( $field[ 'attr' ][ 'class' ] ) ? esc_attr( $field[ 'attr' ][ 'class' ] ) : ''; ?>" <?php echo dht_parse_option_attributes( $field[ 'attr' ] ?? [] ); ?>>
@@ -72,4 +73,4 @@ if ( ! empty( $field[ 'value' ][ 'image_id' ] ) ) {
     <div class="dht-divider"></div>
 <?php endif; ?>
 
-<?php do_action( 'dht_options_view_fields_upload_image_after_area' ); ?>
+<?php do_action( 'dht:options:view:fields:upload_image_after_area' ); ?>

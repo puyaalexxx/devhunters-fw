@@ -176,6 +176,8 @@ if ( ! function_exists( 'dht_get_variables_from_file' ) ) {
 	 */
 	function dht_get_variables_from_file( string $file_path, string $extract_variable, array $set_variables = [], bool $return_array = false ) : array {
 		
+		if ( ! file_exists( $file_path ) ) return [];
+		
 		extract( $set_variables, EXTR_REFS );
 		unset( $set_variables );
 		
@@ -196,6 +198,24 @@ if ( ! function_exists( 'dht_get_variables_from_file' ) ) {
 		}
 		
 		return $option;
+	}
+}
+
+if ( ! function_exists( 'dht_get_returned_variables_from_file' ) ) {
+	/**
+	 * Safe load the returned variables from a file without knowing its name
+	 *
+	 * @param string $file_path
+	 *
+	 * @return array
+	 * @since     1.0.0
+	 */
+	function dht_get_returned_variables_from_file( string $file_path ) : array {
+		
+		if ( ! file_exists( $file_path ) ) return [];
+		
+		// Include the file and capture the return value
+		return require $file_path; // Return the complete array
 	}
 }
 

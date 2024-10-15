@@ -19,7 +19,7 @@ $options = [];
 ?>
 <!-- container - sidemenu -->
 
-<?php do_action( 'dht_options_view_container_sidemenu_before_area' ); ?>
+<?php do_action( 'dht:options:view:container:sidemenu_before_area' ); ?>
 
 <?php if ( isset( $container[ 'subtype' ] ) && $container[ 'subtype' ] == 'tabs' ): ?>
 
@@ -89,7 +89,8 @@ $options = [];
 							'subpage_id' => $subpage_id
 						], $options, $saved_values, $registered_options_classes, $count );
 					}
-				} else {
+				}
+				else {
 					// Render parent menu item options
 					echo dht_fw_render_sidebar_content( [
 						'menu_id' => $container[ 'id' ],
@@ -184,4 +185,4 @@ $options = [];
     </div>
 <?php endif; ?>
 
-<?php do_action( 'dht_options_view_container_sidemenu_after_area' ); ?>
+<?php do_action( 'dht:options:view:container:sidemenu_after_area' ); ?>

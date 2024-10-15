@@ -6,8 +6,8 @@ namespace DHT\Core\Vb;
 use DHT\Core\Vb\Components\ButtonsGroup;
 use DHT\Core\Vb\Components\DisableEnableBuilder;
 use DHT\Core\Vb\Components\Modal;
-use DHT\Helpers\Classes\Environment;
 use DHT\DHT;
+use DHT\Helpers\Classes\Environment;
 use function DHT\Helpers\dht_get_current_admin_post_type_from_url;
 use function DHT\Helpers\dht_make_script_as_module_type;
 
@@ -105,7 +105,7 @@ final class VB implements IVB {
 	 */
 	public function addVBEnabledBodyClass( string $classes ) : string {
 		
-		$classes .= apply_filters( 'dht_vb_body_class_builder_enabled', ' dht-vb-enabled' );
+		$classes .= apply_filters( 'dht:vb:body_class_builder_enabled', ' dht-vb-enabled' );
 		
 		return $classes;
 	}

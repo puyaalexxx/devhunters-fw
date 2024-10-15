@@ -27,7 +27,7 @@ $args = $args ?? [];
 			
 			<?php else: ?>
 				
-				<?php echo apply_filters( 'dht_options_no_options_found', _x( 'No options provided', 'options', DHT_PREFIX ) ); ?>
+				<?php echo apply_filters( 'dht:options:view:no_options_found', _x( 'No options provided', 'options', DHT_PREFIX ) ); ?>
 			
 			<?php endif; ?>
 

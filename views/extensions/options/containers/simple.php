@@ -14,7 +14,7 @@ $registered_options_classes = $args[ 'registered_options_classes' ] ?? [];
 ?>
 <!-- container - simple -->
 
-<?php do_action( 'dht_options_view_container_simple_before_area' ); ?>
+<?php do_action( 'dht:options:view:container:simple_before_area' ); ?>
 
 <div
     class="dht-simple-container <?php echo isset( $container[ 'attr' ][ 'class' ] ) && ! isset( $container[ 'area' ] ) ? esc_attr( $container[ 'attr' ][ 'class' ] ) : ''; ?>">
@@ -29,4 +29,4 @@ $registered_options_classes = $args[ 'registered_options_classes' ] ?? [];
 
 </div>
 
-<?php do_action( 'dht_options_view_container_simple_after_area' ); ?>
+<?php do_action( 'dht:options:view:container:simple_after_area' ); ?>

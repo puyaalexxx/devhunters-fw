@@ -9,7 +9,7 @@ $field = $args[ 'field' ] ?? [];
 ?>
 <!-- field - textarea -->
 
-<?php do_action( 'dht_options_view_fields_textarea_before_area' ); ?>
+<?php do_action( 'dht:options:view:fields:textarea_before_area' ); ?>
 
 <div
     class="dht-field-wrapper <?php echo isset( $field[ 'attr' ][ 'class' ] ) ? esc_attr( $field[ 'attr' ][ 'class' ] ) : ''; ?>" <?php echo dht_parse_option_attributes( $field[ 'attr' ] ?? [] ); ?>>
@@ -46,4 +46,4 @@ $field = $args[ 'field' ] ?? [];
     <div class="dht-divider"></div>
 <?php endif; ?>
 
-<?php do_action( 'dht_options_view_fields_textarea_after_area' ); ?>
+<?php do_action( 'dht:options:view:fields:textarea_after_area' ); ?>

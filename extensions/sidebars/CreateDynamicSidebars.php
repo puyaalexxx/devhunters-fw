@@ -151,7 +151,7 @@ final class CreateDynamicSidebars implements ICreateDynamicSidebars {
 			'after_widget'  => '</div>',
 		);
 		
-		$options = apply_filters( 'dht_widgets_custom_args', $options );
+		$options = apply_filters( 'dht:extensions:widgets_custom_args', $options );
 		
 		if ( is_array( $this->widget_areas ) ) {
 			foreach ( array_unique( $this->widget_areas ) as $widget_area ) {

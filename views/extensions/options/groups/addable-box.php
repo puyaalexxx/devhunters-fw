@@ -15,7 +15,7 @@ $saved_values = ! empty( $group[ 'value' ] ) ? $group[ 'value' ] : [];
 ?>
 <!-- field - addable box -->
 
-<?php do_action( 'dht_options_view_groups_addable_box_before_area' ); ?>
+<?php do_action( 'dht:options:view:groups:addable_box_before_area' ); ?>
 
 <div class="dht-field-wrapper dht-group-type <?php echo $group[ 'sortable' ] ? 'dht-field-wrappers-sortable' : ''; ?>
     <?php echo isset( $group[ 'attr' ][ 'class' ] ) ? esc_attr( $group[ 'attr' ][ 'class' ] ) : ''; ?>"
@@ -91,4 +91,4 @@ $saved_values = ! empty( $group[ 'value' ] ) ? $group[ 'value' ] : [];
     <div class="dht-divider"></div>
 <?php endif; ?>
 
-<?php do_action( 'dht_options_view_groups_addable_box_after_area' ); ?>
+<?php do_action( 'dht:options:view:groups:addable_box_after_area' ); ?>

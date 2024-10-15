@@ -24,11 +24,11 @@ trait RenderOptionsHelpers {
 	 */
 	private function _renderContent( array $options, string $location = 'dashboard', int $id = 0 ) : void {
 		
-		$template = apply_filters( 'dht_options_get_options_template_file', $this->_getOptionsTemplate( $location ) );
+		$template = apply_filters( 'dht:options:template_file', $this->_getOptionsTemplate( $location ) );
 		
 		$viewData = [
-			'nonce'   => apply_filters( 'dht_options_get_options_get_nonce_field', $this->_nonce ),
-			'options' => apply_filters( 'dht_options_get_options_view_html', $this->_getOptionsView( $options, $location, $id ) ),
+			'nonce'   => apply_filters( 'dht:options:get_nonce_field', $this->_nonce ),
+			'options' => apply_filters( 'dht:options:view_html', $this->_getOptionsView( $options, $location, $id ) ),
 		];
 		
 		//add 'metabox_id' if it exists

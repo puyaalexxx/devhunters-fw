@@ -3,10 +3,11 @@ declare( strict_types = 1 );
 
 namespace DHT;
 
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
+use DHT\Config\Config;
 use DHT\Core\Core;
 use DHT\Extensions\Extensions;
 use DHT\Helpers\Classes\Environment;
@@ -14,7 +15,6 @@ use DHT\helpers\classes\Translations;
 use DHT\Helpers\Traits\SingletonTrait;
 use function DHT\Helpers\dht_fw_manifest;
 use function DHT\Helpers\dht_make_script_as_module_type;
-use function DHT\Helpers\dht_print_r;
 
 /**
  * Singleton Class that is used to include the core devhunters-fw functionality that should be used further up
@@ -33,7 +33,7 @@ final class DHT {
 	 */
 	private function __construct() {
 		
-		do_action( 'dht_fw_before_fw_init' );
+		do_action( 'dht:fw:before_fw_init' );
 		
 		{
 			//set plugin version
@@ -66,7 +66,7 @@ final class DHT {
 		//get localized data
 		$localized_data = array_merge( [ 'ajax_url' => admin_url( 'admin-ajax.php' ) ], [ 'translations' => Translations::getTranslationStrings() ] );
 		
-		if ( Environment::isDevelopment() ) {
+		if( Environment::isDevelopment() ) {
 			wp_register_style( DHT_PREFIX_CSS . '-fw', DHT_ASSETS_URI . 'dist/css/fw.css', array(), DHT::$version );
 			wp_enqueue_style( DHT_PREFIX_CSS . '-fw' );
 			
@@ -103,23 +103,26 @@ final class DHT {
 	 */
 	private function _registerFrameworkFeatures( Core $core, Extensions $extensions ) : void {
 		
+		//get plugin settings folder path
+		$plugin_settings_folder_path = apply_filters( "dht:settings:plugin_settings_folder_path", '' );
+		
 		//////////////////////////////////////////
 		//// register framework core features ////
 		//////////////////////////////////////////
 		
-		//register framework options
-		add_action( 'current_screen', function() use ( $core ) {
-			//Config::get_configurations_by_name( PPHT_CONFIG_DIR . 'extensions/options/terms/popup_group_tax.php', 'options' );
-			$dashboardPagesOptions = apply_filters( 'dht_options_dashboard_pages_options', [] );
-			$postTypeOptions       = apply_filters( 'dht_options_post_types_options', [] );
-			
-			dht_print_r( $dashboardPagesOptions );
-			
-			$core->options( $dashboardPagesOptions, $postTypeOptions )?->register();
-		} );
-		
 		//enable the visual builder on these post types
-		$core->vb( apply_filters( 'dht_core_vb_post_types', [] ) )->enable();
+		$vb_post_types_enable = apply_filters( 'dht:vb:register_on_post_types', [] );
+		$core->vb( $vb_post_types_enable )?->enable();
+		
+		//register framework options
+		add_action( 'init', function() use ( $core, $plugin_settings_folder_path, $vb_post_types_enable ) {
+			$dashboardPagesOptions = Config::getDashboardPagesOptions( apply_filters( 'dht:options:dashboard_pages_options_folder_path', $plugin_settings_folder_path . "/options/dashboard-pages/" ) );
+			$postTypeOptions       = Config::getPostTypeOptions( apply_filters( 'dht:options:post_types_options_folder_path', $plugin_settings_folder_path . "/options/posts/" ) );
+			$termOptions           = Config::getTermsOptions( apply_filters( 'dht:options:terms_options_folder_path', $plugin_settings_folder_path . "/options/terms/" ) );
+			$vbOptions             = Config::getVbOptions( apply_filters( 'dht:options:vb_modal_options_folder_path', $plugin_settings_folder_path . "/options/vb/" ), $vb_post_types_enable );
+			
+			$core->options( $dashboardPagesOptions, $postTypeOptions, $termOptions, $vbOptions )?->register();
+		} );
 		
 		//register framework cli commands
 		add_action( 'cli_init', function() use ( $core ) {
@@ -131,19 +134,19 @@ final class DHT {
 		////////////////////////////////////////
 		
 		//create dashboard menus with plugin configurations
-		$extensions->dashMenus( apply_filters( 'dht_extensions_dash_menus_configurations', [] ) )?->register();
+		$extensions->dashMenus( Config::getConfigurations( apply_filters( "dht:extensions:register_dash_menus", $plugin_settings_folder_path . '/dashboard-pages.php' ) ) )?->register();
 		
 		//create custom post types with plugin cpt configurations
-		$extensions->cpts( apply_filters( 'dht_extensions_cpts_configurations', [] ) )?->create();
+		$extensions->cpts( Config::getConfigurations( apply_filters( "dht:extensions:register_cpts", $plugin_settings_folder_path . '/cpts.php' ) ) )?->create();
 		
 		//register widgets with plugin configurations
-		$extensions->widgets( apply_filters( 'dht_extensions_widgets_configurations', [] ) )?->register();
+		$extensions->widgets( apply_filters( 'dht:extensions:register_widgets', [] ) )?->register();
 		
 		//register sidebars with plugin sidebar configurations
-		$extensions->sidebars( apply_filters( 'dht_extensions_sidebars_configurations', [] ) )?->register();
+		$extensions->sidebars( Config::getConfigurations( apply_filters( "dht:extensions:register_sidebars", $plugin_settings_folder_path . '/sidebars.php' ) ) )?->register();
 		
 		//enable dynamic sidebars form with plugin sidebar configurations
-		$extensions->dynamicSidebars( apply_filters( 'dht_extensions_dynamic_sidebars_configurations', false ) )?->enable();
+		$extensions->dynamicSidebars( apply_filters( 'dht:extensions:register_dynamic_sidebars', false ) )?->enable();
 	}
 	
 	/**
@@ -155,7 +158,7 @@ final class DHT {
 		//$this->_loadTextdomain();
 		
 		// You can control which methods are callable here
-		if ( $method === '_enqueueFrameworkGeneralScripts' ) {
+		if( $method === '_enqueueFrameworkGeneralScripts' ) {
 			return call_user_func_array( [ $this, '_enqueueFrameworkGeneralScripts' ], $arguments );
 		}
 		

@@ -3,7 +3,7 @@ declare( strict_types = 1 );
 
 namespace DHT\Core;
 
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
@@ -27,7 +27,7 @@ final class Core {
 	 */
 	private function __construct() {
 		
-		do_action( 'dht_fw_before_core_init' );
+		do_action( 'dht:fw:before_core_init' );
 	}
 	
 	/**
@@ -40,7 +40,7 @@ final class Core {
 	 */
 	public function vb( array $custom_post_types ) : ?IVB {
 		
-		if ( empty( $custom_post_types ) ) return NULL;
+		if( empty( $custom_post_types ) ) return NULL;
 		
 		return new VB( $custom_post_types );
 	}
@@ -50,15 +50,17 @@ final class Core {
 	 *
 	 * @param array $dashboardPagesOptions
 	 * @param array $postTypeOptions
+	 * @param array $termOptions
+	 * @param array $vbOptions
 	 *
 	 * @return ?IOptions - options instance
 	 * @since     1.0.0
 	 */
-	public function options( array $dashboardPagesOptions, array $postTypeOptions ) : ?IOptions {
+	public function options( array $dashboardPagesOptions, array $postTypeOptions, array $termOptions, array $vbOptions ) : ?IOptions {
 		
-		//if ( empty( $options ) ) return NULL;
+		if( empty( $dashboardPagesOptions ) && empty( $postTypeOptions ) && empty( $termOptions ) && empty( $vbOptions ) ) return NULL;
 		
-		return new Options( $dashboardPagesOptions, $postTypeOptions );
+		return new Options( $dashboardPagesOptions, $postTypeOptions, $termOptions, $vbOptions );
 	}
 	
 	/**

@@ -48,7 +48,7 @@ final class TypographyHelpers {
 			'font-subsets' => $font_subsets
 		];
 		
-		return apply_filters( 'dht_options_disable_google_fonts', $google_fonts );
+		return apply_filters( 'dht:options:disable_google_fonts', $google_fonts );
 	}
 	
 	/**
@@ -80,7 +80,8 @@ final class TypographyHelpers {
 				
 				$font_weights_result[ $font_weight ] = $font_weight_label;
 			}
-		} else {
+		}
+		else {
 			
 			$font_weight_label = dht_fw_get_font_weight_Label( $font_weights );
 			
@@ -232,7 +233,8 @@ final class TypographyHelpers {
 		$font_type = 'standard';
 		if ( array_key_exists( $font_value, $google_fonts ) ) {
 			$font_type = 'google';
-		} elseif ( array_key_exists( $font_value, $et_fonts ) ) {
+		}
+		elseif ( array_key_exists( $font_value, $et_fonts ) ) {
 			$font_type = 'divi';
 		}
 		

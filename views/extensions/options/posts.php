@@ -5,11 +5,11 @@ if ( ! defined( 'DHT_MAIN' ) ) {
 
 $args = $args ?? [];
 ?>
-<div class="dht-meta-box-content <?php echo apply_filters( 'dht_options_view_metabox_area', '' ); ?>">
-    <div class="dht-wrapper <?php echo apply_filters( 'dht_options_view_wrapper_classes', '' ); ?>">
+<div class="dht-meta-box-content <?php echo apply_filters( 'dht:options:view:metabox_area', '' ); ?>">
+    <div class="dht-wrapper <?php echo apply_filters( 'dht:options:view:wrapper_classes', '' ); ?>">
         <div class="dht-container">
 			
-			<?php do_action( 'dht_metabox_template_before_content', $args[ 'metabox_id' ] ); ?>
+			<?php do_action( 'dht:options:view:metabox_before_content', $args[ 'metabox_id' ] ); ?>
 			
 			<?php wp_nonce_field( $args[ 'nonce' ][ 'action' ], $args[ 'nonce' ][ 'name' ] ); ?>
 			
@@ -19,11 +19,11 @@ $args = $args ?? [];
 			
 			<?php else: ?>
 				
-				<?php echo apply_filters( 'dht_options_no_options_found', _x( 'No options provided', 'options', DHT_PREFIX ) ); ?>
+				<?php echo apply_filters( 'dht:options:view:no_options_found', _x( 'No options provided', 'options', DHT_PREFIX ) ); ?>
 			
 			<?php endif; ?>
 			
-			<?php do_action( 'dht_metabox_template_after_content', $args[ 'metabox_id' ] ); ?>
+			<?php do_action( 'dht:options:view:metabox_after_content', $args[ 'metabox_id' ] ); ?>
 
         </div>
     </div>

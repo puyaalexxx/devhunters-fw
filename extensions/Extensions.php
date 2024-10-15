@@ -26,7 +26,7 @@ final class Extensions {
 	 */
 	private function __construct() {
 		
-		do_action( 'dht_fw_before_extensions_init' );
+		do_action( 'dht:fw:before_extensions_init' );
 	}
 	
 	/**

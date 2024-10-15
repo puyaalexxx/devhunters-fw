@@ -32,7 +32,7 @@ final class Modal {
 		add_action( 'wp_ajax_nopriv_getModalOptions', [ $this, 'getModalOptions' ] ); // For non-logged in users
 		
 		//add_filter( "dht_options_enqueue_option_scripts", [ $this, "getModalOptionsFilter" ], 99 );
-		//add_filter( "dht_options_vb_modal_options", [ $this, "getModalOptionsFilter" ] );
+		//add_filter( "dht:options:vb_modal_options", [ $this, "getModalOptionsFilter" ] );
 	}
 	
 	/**
@@ -111,7 +111,7 @@ final class Modal {
 			ob_start();
 			
 			//options are rendered via this hook from the Options class
-			do_action( 'dht_vb_render_modal_content', $post_id, $modal_type );
+			do_action( 'dht:vb:render_modal_content', $post_id, $modal_type );
 			
 			$content = ob_get_clean();
 			

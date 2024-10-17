@@ -1,4 +1,5 @@
 @import '../../../../variables.pcss';
+@import '../../../../animations.pcss';
 
 .dht-vb-enabled {
 
@@ -67,6 +68,9 @@
                     bottom: 0;
                     z-index: 5;
                     display: none;
+                    opacity: 0;
+                    transition: opacity 1s ease; /* Smooth transition */
+                    pointer-events: none; /* Prevent interaction */
 
                     p.on-bottom {
                         transform: translate(-50%, -100%);
@@ -108,7 +112,20 @@
                         margin-top: -1px;
                     }
                 }
+
+                &:hover {
+                    position: relative;
+
+                    .dht-vb-tooltip {
+                        display: block;
+                        animation: dht-fadeIn 1s forwards;
+                        animation-delay: 1s;
+                    }
+                }
+
+                @mixin fadeIn_animation;
             }
         }
     }
 }
+

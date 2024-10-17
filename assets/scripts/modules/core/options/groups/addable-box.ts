@@ -198,7 +198,14 @@
 
                         // Initialize options so they could work as expected
                         setTimeout(function() {
-                            $thisClass._reinitializeOptions($box_content_area);
+                            import("../../../helpers/ajax-options-reload")
+                                .then(module => {
+                                    const { dhtReinitializeOptions } = module;
+                                    dhtReinitializeOptions($box_content_area);
+                                })
+                                .catch(error => {
+                                    console.error("Error loading module:", error);
+                                });
                         }, 100);
 
                         $thisClass._boxItemsManipulations($box_item, box_item_title);
@@ -255,120 +262,22 @@
             $current_box_title.next().slideToggle();
             $current_box_title.children(".dht-addable-box-arrow").toggleClass("dht-addable-box-icon-change");
         }
-
-        /**
-         * reinitialize options loaded via ajax
-         *
-         * @return void
-         */
-        private _reinitializeOptions($content: JQuery<HTMLElement>) {
-            // Trigger custom ajax events based on the presence of specific elements
-            {
-                //if toggle option exists in the current content, reload its js code
-                if ($content.find(".dht-field-child-toggle").length) {
-                    $(document).trigger("dht_toggleAjaxComplete");
-                }
-                //if colorpicker exists in the current content, reload its js code
-                if ($content.find(".dht-field-child-colorpicker").length || $content.find(".dht-field-child-borders").length) {
-                    $(document).trigger("dht_colorPickerAjaxComplete");
-                }
-                //if Ace editor exists in the current content, reload its js code
-                if ($content.find(".dht-field-child-code-editor").length) {
-                    $(document).trigger("dht_aceEditorAjaxComplete");
-                }
-                //if datepicker exists in the current content, reload its js code
-                if ($content.find(".dht-field-child-datepicker").length) {
-                    $(document).trigger("dht_datePickerAjaxComplete");
-                }
-                //if datetimepicker exists in the current content, reload its js code
-                if ($content.find(".dht-field-child-datetimepicker").length) {
-                    $(document).trigger("dht_dateTimePickerAjaxComplete");
-                }
-                //if timepicker exists in the current content, reload its js code
-                if ($content.find(".dht-field-child-timepicker").length) {
-                    $(document).trigger("dht_timePickerAjaxComplete");
-                }
-                //if rangeslider exists in the current content, reload its js code
-                if ($content.find(".dht-field-child-rangeslider").length) {
-                    $(document).trigger("dht_rangeSliderAjaxComplete");
-                }
-                //if multioptions exists in the current content, reload its js code
-                if ($content.find(".dht-field-child-multioptions").length) {
-                    $(document).trigger("dht_multiOptionsAjaxComplete");
-                }
-                //if upload exists in the current content, reload its js code
-                if ($content.find(".dht-field-child-upload-item").length) {
-                    $(document).trigger("dht_uploadAjaxComplete");
-                }
-                //if upload image exists in the current content, reload its js code
-                if ($content.find(".dht-field-child-upload-image").length) {
-                    $(document).trigger("dht_uploadImageAjaxComplete");
-                }
-                //if upload gallery exists in the current content, reload its js code
-                if ($content.find(".dht-field-child-upload-gallery").length) {
-                    $(document).trigger("dht_uploadGalleryAjaxComplete");
-                }
-                //if typography exists in the current content, reload its js code
-                if ($content.find(".dht-field-child-typography").length) {
-                    $(document).trigger("dht_typographyAjaxComplete");
-                }
-                //if switch exists in the current content, reload its js code
-                if ($content.find(".dht-field-child-switch").length) {
-                    $(document).trigger("dht_switchtAjaxComplete");
-                }
-                //if radio image exists in the current content, reload its js code
-                if ($content.find(".dht-field-child-image-select").length) {
-                    $(document).trigger("dht_radioImageAjaxComplete");
-                }
-                //if multiinput exists in the current content, reload its js code
-                if ($content.find(".dht-field-child-multiinput").length) {
-                    $(document).trigger("dht_multiInputAjaxComplete");
-                }
-                //if icon exists in the current content, reload its js code
-                if ($content.find(".dht-field-child-icons").length) {
-                    $(document).trigger("dht_iconAjaxComplete");
-                }
-            }
-
-            this._reinitializeWPEditor($content);
-        }
-
-        /**
-         * reinitialize options loaded via ajax
-         *
-         * @return void
-         */
-        private _reinitializeWPEditor($content: JQuery<HTMLElement>) {
-            //reinitialize the wp editor option
-            $content.find("textarea.wp-editor-area").each(function() {
-                if (typeof wp === "undefined" || typeof wp.editor === "undefined") return;
-
-                //get editor if
-                const id = $(this).attr("id")!;
-
-                if (typeof wp.editor !== "undefined" && typeof id !== "undefined") {
-                    wp.editor.remove(id);
-                    wp.editor.initialize(id, {
-                        tinymce: {
-                            wpautop: true,
-                            plugins:
-                                "charmap colorpicker compat3x directionality fullscreen hr image lists media paste tabfocus textcolor wordpress wpautoresize wpdialogs wpeditimage wpemoji wpgallery wplink wptextpattern wpview",
-                            toolbar1: "formatselect bold italic bullist numlist blockquote alignleft aligncenter alignright link wp_more wp_adv",
-                            toolbar2: "strikethrough hr forecolor pastetext removeformat charmap outdent indent undo redo wp_help",
-                        },
-                        quicktags: {
-                            id: id,
-                            buttons: "strong,em,link,block,del,ins,img,ul,ol,li,code,more,close",
-                        },
-                        mediaButtons: true,
-                    });
-                }
-            });
-        }
     }
 
     //init each accordion group
-    $(".dht-field-wrapper .dht-field-child-addable-box").each(function() {
-        new AddableBox($(this));
+    function init() {
+        $(".dht-field-wrapper .dht-field-child-addable-box").each(function() {
+            new AddableBox($(this));
+        });
+    }
+
+    // Initialize on page load
+    $(function() {
+        init();
+    });
+
+    // Initialize after AJAX content is loaded
+    $(document).on("dht_addableBoxAjaxComplete", function() {
+        init();
     });
 })(jQuery);

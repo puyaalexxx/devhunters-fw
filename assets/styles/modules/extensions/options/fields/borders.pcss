@@ -96,7 +96,7 @@
             }
         }
 
-        @media (max-width: 980px) {
+        @media (max-width: 1366px) {
             .dht-field-borders-group {
                 display: block;
 
@@ -132,8 +132,48 @@
                 .dht-field-borders-input {
                     margin-bottom: 15px;
                 }
+
+                .dht-field-borders-input select {
+                    max-width: 100%;
+                }
             }
-            @media (max-width: 1250px) {
+        }
+    }
+}
+
+@media (max-width: 1920px) {
+    .dht-meta-box-content .dht-wrapper {
+        .dht-cosidebar {
+            .dht-field-child-borders {
+                .dht-field-borders-group {
+                    display: block;
+                }
+
+                .dht-field-borders-input {
+                    margin-bottom: 15px;
+                }
+
+                .dht-field-borders-input select {
+                    max-width: 100%;
+                }
+            }
+        }
+    }
+}
+
+.dht-vb-enabled .dht-vb-modal {
+    &.dht-modal-small, &.dht-modal-medium {
+        .dht-wrapper {
+            .dht-field-child-borders {
+
+                .dht-field-borders-group {
+                    display: block;
+                }
+
+                .dht-field-borders-input {
+                    margin-bottom: 15px;
+                }
+
                 .dht-field-borders-input select {
                     max-width: 100%;
                 }

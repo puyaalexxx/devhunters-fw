@@ -64,7 +64,7 @@
                 max-width: 100%;
             }
         }
-        @media (max-width: 980px) {
+        @media (max-width: 1366px) {
             .dht-field-spacing-group {
                 display: block;
 
@@ -103,10 +103,33 @@
 
                 .dht-field-spacing-input {
                     margin-bottom: 15px;
+
+                    select {
+                        max-width: 100%;
+                    }
                 }
             }
+        }
+    }
+}
 
-            @media (max-width: 1250px) {
+.dht-vb-enabled .dht-vb-modal {
+    &.dht-modal-small, &.dht-modal-medium {
+        .dht-wrapper {
+            .dht-field-child-spacing {
+
+                .dht-field-spacing-group {
+                    display: block;
+                }
+
+                .dht-field-spacing-input {
+                    display: block;
+                }
+
+                .dht-field-spacing-input {
+                    margin-bottom: 15px;
+                }
+
                 .dht-field-spacing-input select {
                     max-width: 100%;
                 }

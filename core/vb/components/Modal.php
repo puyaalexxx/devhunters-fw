@@ -7,7 +7,7 @@ use DHT\DHT;
 use DHT\Helpers\Classes\Environment;
 use DHT\Helpers\Traits\SingletonTrait;
 
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
@@ -43,55 +43,10 @@ final class Modal {
 	 */
 	public function enqueueScripts() : void {
 		
-		if ( Environment::isDevelopment() ) {
+		if( Environment::isDevelopment() ) {
 			wp_register_style( DHT_PREFIX_CSS . '-modal', DHT_ASSETS_URI . 'dist/css/modal.css', array(), DHT::$version );
 			wp_enqueue_style( DHT_PREFIX_CSS . '-modal' );
 		}
-	}
-	
-	/**
-	 *
-	 *
-	 * @return array
-	 * @since     1.0.0
-	 */
-	public function getModalOptionsFilter() : array {
-		
-		return [
-			[
-				'id'    => 'icon_field',
-				'type'  => 'icon',
-				'title' => _x( 'Icon field', 'options', 'PPHT_PREFIX' ),
-				'value' => [
-					'icon-type'  => 'dashicons',
-					'icon-class' => 'dashicons dashicons-universal-access-alt',
-					'icon-code'  => '\f507'
-				],
-				
-				'attr'        => array( 'class' => 'custom-class', 'data-foo' => 'bar' ),
-				'description' => _x( 'Icon description', 'options', 'PPHT_PREFIX' ),
-				'tooltip'     => _x( 'This field is used to add some text', 'options', 'PPHT_PREFIX' ),
-				'divider'     => true
-			],
-			//input field
-			[
-				'id'      => 'input_field22',
-				'type'    => 'input',
-				'title'   => _x( 'Input field', 'options', PPHT_PREFIX ),
-				'label'   => _x( 'Input label', 'options', PPHT_PREFIX ),
-				'value'   => 'default value sss',
-				'subtype' => '',
-				//(can be email, password...)
-				
-				'attr'        => array(
-					'class'    => 'custom-class',
-					'data-foo' => 'bar'
-				),
-				'description' => _x( 'Input description', 'options', PPHT_PREFIX ),
-				'tooltip'     => _x( 'This field is used to add some text', 'options', PPHT_PREFIX ),
-				'divider'     => true
-			]
-		];
 	}
 	
 	/**
@@ -102,21 +57,25 @@ final class Modal {
 	 */
 	public function getModalOptions() : void {
 		
-		if ( isset( $_POST[ 'action' ] ) && $_POST[ 'action' ] == "getModalOptions" && isset( $_POST[ 'data' ][ 'modalType' ] ) && isset( $_POST[ 'post_id' ] ) ) {
+		if( isset( $_POST[ 'action' ] ) && $_POST[ 'action' ] == "getModalOptions" && isset( $_POST[ 'post_id' ] ) ) {
 			
-			//retrieve box number
-			$modal_type = ! empty( $_POST[ 'data' ][ 'modalType' ] ) ? $_POST[ 'data' ][ 'modalType' ] : "";
-			$post_id    = ! empty( $_POST[ 'post_id' ] ) ? intval( $_POST[ 'post_id' ] ) : 0;
-			
-			ob_start();
-			
-			//options are rendered via this hook from the Options class
-			do_action( 'dht:vb:render_modal_content', $post_id, $modal_type );
-			
-			$content = ob_get_clean();
-			
-			wp_send_json_success( $content );
-			
+			if( isset( $_POST[ 'data' ][ 'modalName' ] ) ) {
+				//retrieve box number
+				$modal_name = !empty( $_POST[ 'data' ][ 'modalName' ] ) ? $_POST[ 'data' ][ 'modalName' ] : "";
+				$post_id    = !empty( $_POST[ 'post_id' ] ) ? intval( $_POST[ 'post_id' ] ) : 0;
+				
+				ob_start();
+				
+				//options are rendered via this hook from the Options class
+				do_action( 'dht:vb:render_modal_content', $post_id, $modal_name );
+				
+				$content = ob_get_clean();
+				
+				wp_send_json_success( $content );
+			}
+			else {
+				wp_send_json_success( _x( 'Modal name not provided', 'vb', DHT_PREFIX ) );
+			}
 		}
 		else {
 			wp_send_json_success( _x( 'Something went wrong, please refresh the page', 'vb', DHT_PREFIX ) );

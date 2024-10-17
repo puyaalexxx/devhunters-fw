@@ -141,8 +141,20 @@
         }
     }
 
-    $(function(): void {
-        //init sidemenu
-        new SideMenu();
+    //init sidemenu
+    function init() {
+        $(function(): void {
+            new SideMenu();
+        });
+    }
+
+    // Initialize on page load
+    $(function() {
+        init();
+    });
+
+    // Initialize after AJAX content is loaded
+    $(document).on("dht_sideMenuAjaxComplete", function() {
+        init();
     });
 })(jQuery);

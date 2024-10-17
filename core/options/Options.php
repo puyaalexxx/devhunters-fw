@@ -206,14 +206,15 @@ final class Options implements IOptions {
 	 */
 	private function _renderVBOptions( array $vbOptions ) : void {
 		
-		//dht_print_r( $vbOptions );
-		
-		//enqueue styles/scripts for each option received from the plugin
-		$this->_enqueueOptionsScripts( apply_filters( 'dht:options:enqueue_vb_scripts', $vbOptions ) );
+		//enqueue styles/scripts for each modal options
+		foreach ( $vbOptions as $vbOption ) {
+			$this->_enqueueOptionsScripts( apply_filters( 'dht:options:enqueue_vb_scripts', $vbOption ) );
+		}
 		
 		//render visual builder modal HTML content hook with the passed options
-		add_action( 'dht:vb:render_modal_content', function( int $postID, string $modalType ) use ( $vbOptions ) {
-			$this->_renderContent( $vbOptions, "vb", $postID );
+		add_action( 'dht:vb:render_modal_content', function( int $postID, string $modalName ) use ( $vbOptions ) {
+			//load the options by the modal name key
+			$this->_renderContent( $vbOptions[ $modalName ] ?? [], "vb", $postID );
 		}, 10, 2 );
 	}
 	

@@ -67,7 +67,7 @@
             margin-bottom: 10px;
         }
 
-        @media (max-width: 1366px) {
+        @media (max-width: 1600px) {
             .dht-field-child-wrapper {
                 width: 100%;
             }
@@ -95,7 +95,7 @@
             }
         }
 
-        @media (max-width: 1250px) {
+        @media (max-width: 1366px) {
             @mixin dashboard_responsive_code;
         }
 
@@ -156,4 +156,17 @@
         }
     }
 
+}
+
+.dht-vb-enabled .dht-vb-modal {
+    .dht-tabsmenu-container {
+        margin-top: -10px;
+        margin-left: -20px;
+        margin-right: -20px;
+
+        .dht-tabsmenu-links li.active a {
+            background-color: $main-color-lighten;
+            border-bottom-color: $main-color-lighten;
+        }
+    }
 }

@@ -1,5 +1,5 @@
 <?php
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
@@ -20,7 +20,7 @@ $field = $args[ 'field' ] ?? [];
 
         <div class="dht-field-child-image-select-container">
 			
-			<?php if ( ! empty( $field[ 'choices' ] ) ): ?>
+			<?php if( !empty( $field[ 'choices' ] ) ): ?>
 				
 				<?php $cnt = 0;
 				foreach ( $field[ 'choices' ] as $value => $radio ): ?>
@@ -36,7 +36,7 @@ $field = $args[ 'field' ] ?? [];
                                value="<?php echo esc_attr( $value ); ?>"
 							<?php echo ( $field[ 'value' ] == $value ) ? 'checked' : ''; ?>/>
                         <img
-                            src="<?php echo ! empty( $radio[ 'image' ] ) ? esc_url( $radio[ 'image' ] ) : DHT_ASSETS_URI . "images/demo.png"; ?>"
+                            src="<?php echo !empty( $radio[ 'image' ] ) ? esc_url( $radio[ 'image' ] ) : DHT_ASSETS_URI . "images/demo.png"; ?>"
                             alt="<?php echo esc_attr( $radio[ 'label' ] ); ?>"
                             title="<?php echo esc_attr( $radio[ 'label' ] ); ?>" />
                         <label
@@ -50,22 +50,21 @@ $field = $args[ 'field' ] ?? [];
 
         </div>
 		
-		<?php if ( ! empty( $field[ 'description' ] ) ): ?>
+		<?php if( !empty( $field[ 'description' ] ) ): ?>
             <div class="dht-description"><?php echo esc_html( $field[ 'description' ] ); ?></div>
 		<?php endif; ?>
 
     </div>
 	
-	<?php if ( ! empty( $field[ 'tooltip' ] ) ): ?>
-        <div class="dht-info-help dashicons dashicons-info"
-             data-tooltips="<?php echo esc_html( $field[ 'tooltip' ] ); ?>"
-             data-position="OnLeft">
+	<?php if( !empty( $field[ 'tooltip' ] ) ): ?>
+        <div class="dht-info-help dashicons dashicons-info">
+            <div class="dht-tooltips"><p class="OnLeft"><?php echo esc_html( $field[ 'tooltip' ] ); ?></p></div>
         </div>
 	<?php endif; ?>
 
 </div>
 
-<?php if ( isset( $field[ 'divider' ] ) && $field[ 'divider' ] ): ?>
+<?php if( isset( $field[ 'divider' ] ) && $field[ 'divider' ] ): ?>
     <div class="dht-divider"></div>
 <?php endif; ?>
 

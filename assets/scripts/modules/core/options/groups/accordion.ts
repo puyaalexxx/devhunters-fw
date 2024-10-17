@@ -45,7 +45,19 @@
     }
 
     //init each accordion group
-    $(".dht-field-wrapper .dht-field-child-accordion").each(function() {
-        new Accordion($(this));
+    function init() {
+        $(".dht-field-wrapper .dht-field-child-accordion").each(function() {
+            new Accordion($(this));
+        });
+    }
+
+    // Initialize on page load
+    $(function() {
+        init();
+    });
+
+    // Initialize after AJAX content is loaded
+    $(document).on("dht_accordionAjaxComplete", function() {
+        init();
     });
 })(jQuery);

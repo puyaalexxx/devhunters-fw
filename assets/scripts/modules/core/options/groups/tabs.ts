@@ -40,7 +40,19 @@
     }
 
     //init each tabs group
-    $(".dht-field-wrapper .dht-field-child-tabs").each(function() {
-        new Tabs($(this));
+    function init() {
+        $(".dht-field-wrapper .dht-field-child-tabs").each(function() {
+            new Tabs($(this));
+        });
+    }
+
+    // Initialize on page load
+    $(function() {
+        init();
+    });
+
+    // Initialize after AJAX content is loaded
+    $(document).on("dht_tabsAjaxComplete", function() {
+        init();
     });
 })(jQuery);

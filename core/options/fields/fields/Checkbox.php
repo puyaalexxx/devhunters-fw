@@ -7,7 +7,7 @@ use DHT\Core\Options\Fields\BaseField;
 use DHT\DHT;
 use DHT\Helpers\Classes\Environment;
 
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
@@ -34,7 +34,9 @@ final class Checkbox extends BaseField {
 	 */
 	public function enqueueOptionScripts( array $field ) : void {
 		
-		if ( Environment::isDevelopment() ) {
+		if( Environment::isDevelopment() ) {
+			
+			
 			wp_register_style( DHT_PREFIX_CSS . '-checkbox-field', DHT_ASSETS_URI . 'dist/css/checkbox.css', array(), DHT::$version );
 			wp_enqueue_style( DHT_PREFIX_CSS . '-checkbox-field' );
 		}
@@ -52,13 +54,13 @@ final class Checkbox extends BaseField {
 	public function mergeValues( array $field, mixed $saved_value ) : array {
 		
 		//if saved value exists
-		if ( ! empty( $saved_value ) ) {
+		if( !empty( $saved_value ) ) {
 			
 			$values = [];
 			foreach ( $field[ 'choices' ] as $checkbox ) {
 				
 				//if checkbox id exists in saved_values array, save it as checked value
-				if ( array_key_exists( $checkbox[ 'id' ], $saved_value ) ) {
+				if( array_key_exists( $checkbox[ 'id' ], $saved_value ) ) {
 					$values[] = $checkbox[ 'id' ];
 				}
 			}

@@ -1,5 +1,5 @@
 <?php
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
@@ -31,8 +31,8 @@ $icons = [
 
         <!--icon preview added here-->
         <span
-            class="dht-icon-select-preview <?php echo ! empty( $field[ 'value' ] ) ? 'dht-icon-select-preview-show' : ''; ?>">
-                <i class="<?php echo ! empty( $field[ 'value' ] ) ? esc_attr( $field[ 'value' ][ 'icon-class' ] ) : ''; ?>"></i>
+            class="dht-icon-select-preview <?php echo !empty( $field[ 'value' ] ) ? 'dht-icon-select-preview-show' : ''; ?>">
+                <i class="<?php echo !empty( $field[ 'value' ] ) ? esc_attr( $field[ 'value' ][ 'icon-class' ] ) : ''; ?>"></i>
             </span>
 
         <!--button to trigger the icons popup-->
@@ -41,7 +41,7 @@ $icons = [
 
         <!--remove selected icon-->
         <a href=""
-           class="button button-primary dht-btn-remove <?php echo ! empty( $field[ 'value' ] ) ? 'dht-btn-show' : ''; ?>">
+           class="button button-primary dht-btn-remove <?php echo !empty( $field[ 'value' ] ) ? 'dht-btn-show' : ''; ?>">
 			<?php echo _x( 'Remove Icon', 'options', DHT_PREFIX ) ?>
         </a>
 
@@ -49,7 +49,7 @@ $icons = [
         <input class="dht-icon-select-value"
                type="hidden"
                name="<?php echo esc_attr( $field[ 'name' ] ); ?>"
-               value='<?php echo ! empty( $field[ 'value' ] ) ? json_encode( $field[ 'value' ] ) : ''; ?>' />
+               value='<?php echo !empty( $field[ 'value' ] ) ? json_encode( $field[ 'value' ] ) : ''; ?>' />
 
         <!-----------------popup with icons---------------------->
         <div id="<?php echo esc_attr( $field[ 'id' ] ); ?>" class="dht-modal-icons" style="display:none">
@@ -93,22 +93,21 @@ $icons = [
 
         </div>
 		
-		<?php if ( ! empty( $field[ 'description' ] ) ): ?>
+		<?php if( !empty( $field[ 'description' ] ) ): ?>
             <div class="dht-description"><?php echo esc_html( $field[ 'description' ] ); ?></div>
 		<?php endif; ?>
 
     </div>
 	
-	<?php if ( ! empty( $field[ 'tooltip' ] ) ): ?>
-        <div class="dht-info-help dashicons dashicons-info"
-             data-tooltips="<?php echo esc_html( $field[ 'tooltip' ] ); ?>"
-             data-position="OnLeft">
+	<?php if( !empty( $field[ 'tooltip' ] ) ): ?>
+        <div class="dht-info-help dashicons dashicons-info">
+            <div class="dht-tooltips"><p class="OnLeft"><?php echo esc_html( $field[ 'tooltip' ] ); ?></p></div>
         </div>
 	<?php endif; ?>
 
 </div>
 
-<?php if ( isset( $field[ 'divider' ] ) && $field[ 'divider' ] ): ?>
+<?php if( isset( $field[ 'divider' ] ) && $field[ 'divider' ] ): ?>
     <div class="dht-divider"></div>
 <?php endif; ?>
 

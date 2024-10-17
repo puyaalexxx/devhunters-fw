@@ -33,8 +33,20 @@
         }
     }
 
-    $(function(): void {
-        //init tabsmenu container
-        new Tabsmenu();
+    //init tabsmenu container
+    function init() {
+        $(function(): void {
+            new Tabsmenu();
+        });
+    }
+
+    // Initialize on page load
+    $(function() {
+        init();
+    });
+
+    // Initialize after AJAX content is loaded
+    $(document).on("dht_tabsMenuAjaxComplete", function() {
+        init();
     });
 })(jQuery);

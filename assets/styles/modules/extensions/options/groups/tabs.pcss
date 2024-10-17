@@ -22,7 +22,7 @@
                 display: block !important;
             }
 
-            @media (max-width: 1024px) {
+            @media (max-width: 1366px) {
                 .dht-field-wrapper {
                     display: block;
 
@@ -108,10 +108,20 @@
 
         @media (max-width: 1980px) {
             @mixin responsive_options_group_code;
+
+            div.dht-field-child-wrapper {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 1600px) {
+            div.dht-field-child-wrapper {
+                width: 80%;
+            }
         }
 
         @media (max-width: 980px) {
-            .dht-field-child-wrapper {
+            div.dht-field-child-wrapper {
                 width: 100%;
             }
         }
@@ -129,6 +139,10 @@
                 .dht-info-help {
                     display: none !important;
                 }
+            }
+
+            .dht-field-wrapper .dht-field-child-tabs div.dht-field-child-wrapper {
+                width: 100%;
             }
         }
 
@@ -149,6 +163,38 @@
     }
 }
 
+.dht-meta-box-content .dht-wrapper {
+    .dht-field-wrapper.dht-field-tabs-fullwidth {
+        div.dht-field-child-wrapper {
+            width: 100%;
+        }
+
+        @media (max-width: 1600px) {
+            .dht-field-wrapper {
+                display: block;
+
+                .dht-info-help {
+                    display: none !important;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 1920px) {
+        .dht-cosidebar {
+            .dht-field-wrapper.dht-field-tabs-fullwidth {
+                .dht-field-wrapper {
+                    display: block;
+
+                    .dht-info-help {
+                        display: none !important;
+                    }
+                }
+            }
+        }
+    }
+}
+
 .dht-terms-page-content {
     .dht-field-wrapper.dht-field-tabs-fullwidth .dht-field-child-tabs .dht-field-wrapper {
         display: block;
@@ -159,6 +205,26 @@
 
         .dht-info-help {
             display: none !important;
+        }
+    }
+}
+
+.dht-vb-enabled .dht-vb-modal {
+    &.dht-modal-small, &.dht-modal-medium {
+        .dht-wrapper {
+            .dht-field-wrapper {
+                display: block;
+            }
+        }
+    }
+
+    &.dht-modal-small, &.dht-modal-medium, &.dht-modal-large {
+        .dht-wrapper {
+            .dht-field-wrapper {
+                .dht-info-help {
+                    display: none !important;
+                }
+            }
         }
     }
 }

@@ -1,5 +1,5 @@
 <?php
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
@@ -20,7 +20,7 @@ $field = $args[ 'field' ] ?? [];
 
         <div class="dht-gallery-group">
 			
-			<?php if ( ! empty( $field[ 'value' ] ) ): ?>
+			<?php if( !empty( $field[ 'value' ] ) ): ?>
 				
 				<?php foreach ( $field[ 'value' ] as $attachment_id ): ?>
 					
@@ -44,29 +44,28 @@ $field = $args[ 'field' ] ?? [];
                type="hidden"
                id="<?php echo esc_attr( $field[ 'id' ] ); ?>"
                name="<?php echo esc_attr( $field[ 'id' ] ); ?>"
-               value="<?php echo ! empty( $field[ 'value' ] ) ? implode( ',', $field[ 'value' ] ) : ''; ?>" />
+               value="<?php echo !empty( $field[ 'value' ] ) ? implode( ',', $field[ 'value' ] ) : ''; ?>" />
 
         <span class="dht-upload-gallery-button button"
               data-media-text="<?php echo _x( 'Choose Images', 'options', DHT_PREFIX ) ?>">
             <?php echo _x( 'Upload Gallery', 'options', DHT_PREFIX ) ?>
         </span>
 		
-		<?php if ( ! empty( $field[ 'description' ] ) ): ?>
+		<?php if( !empty( $field[ 'description' ] ) ): ?>
             <div class="dht-description"><?php echo esc_html( $field[ 'description' ] ); ?></div>
 		<?php endif; ?>
 
     </div>
 	
-	<?php if ( ! empty( $field[ 'tooltip' ] ) ): ?>
-        <div class="dht-info-help dashicons dashicons-info"
-             data-tooltips="<?php echo esc_html( $field[ 'tooltip' ] ); ?>"
-             data-position="OnLeft">
+	<?php if( !empty( $field[ 'tooltip' ] ) ): ?>
+        <div class="dht-info-help dashicons dashicons-info">
+            <div class="dht-tooltips"><p class="OnLeft"><?php echo esc_html( $field[ 'tooltip' ] ); ?></p></div>
         </div>
 	<?php endif; ?>
 
 </div>
 
-<?php if ( isset( $field[ 'divider' ] ) && $field[ 'divider' ] ): ?>
+<?php if( isset( $field[ 'divider' ] ) && $field[ 'divider' ] ): ?>
     <div class="dht-divider"></div>
 <?php endif; ?>
 

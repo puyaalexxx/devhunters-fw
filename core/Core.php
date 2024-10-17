@@ -58,9 +58,11 @@ final class Core {
 	 */
 	public function options( array $dashboardPagesOptions, array $postTypeOptions, array $termOptions, array $vbOptions ) : ?IOptions {
 		
-		if( empty( $dashboardPagesOptions ) && empty( $postTypeOptions ) && empty( $termOptions ) && empty( $vbOptions ) ) return NULL;
+		if( wp_doing_ajax() || !( empty( $dashboardPagesOptions ) && empty( $postTypeOptions ) && empty( $termOptions ) && empty( $vbOptions ) ) ) {
+			return new Options( $dashboardPagesOptions, $postTypeOptions, $termOptions, $vbOptions );
+		}
 		
-		return new Options( $dashboardPagesOptions, $postTypeOptions, $termOptions, $vbOptions );
+		return NULL;
 	}
 	
 	/**

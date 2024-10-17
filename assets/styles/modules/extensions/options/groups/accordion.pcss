@@ -1,15 +1,5 @@
 @import '../../../../mixins.pcss';
 
-.dht-meta-box-content .dht-wrapper {
-    .dht-field-child-accordion {
-        .dht-accordion-item {
-            .dht-accordion-title {
-                padding: 15px 60px 10px 20px;
-            }
-        }
-    }
-}
-
 .dht-wrapper {
     .dht-field-child-accordion {
 
@@ -134,3 +124,18 @@
         }
     }
 }
+
+.dht-meta-box-content .dht-wrapper {
+    .dht-field-child-accordion {
+        .dht-accordion-item {
+            .dht-accordion-title {
+                padding: 15px 60px 10px 20px;
+            }
+        }
+
+        .dht-accordion-content {
+            @mixin responsive_options_group_code;
+        }
+    }
+}
+

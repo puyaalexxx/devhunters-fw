@@ -13,7 +13,7 @@
 export function dhtVBModalCreate(modalID: string, appendTo: JQuery<HTMLElement>, modalTitle: string) {
 
     const modalHTML = `
-        <div id="${modalID}" class="dht-vb-modal">
+        <div id="${modalID}" class="dht-vb-modal dht-modal-small" data-modal-name="${String(appendTo.attr("data-dht-vb-modal-name"))}">
         
             <div class="dht-vb-modal-header"><span class="dht-vb-modal-title">${modalTitle}</span></div>
             
@@ -48,7 +48,7 @@ export function dhtVBModalCreate(modalID: string, appendTo: JQuery<HTMLElement>,
 
     //append modal to passed container
     if ($("#" + modalID).length === 0) {
-        $(appendTo).append(modalHTML);
+        appendTo.append(modalHTML);
     }
 }
 
@@ -75,7 +75,7 @@ function dhtAjaxLoadOptions(modal: JQuery<HTMLElement>): void {
             //post id is used to add it to the ajax $_POST
             post_id: $("#post_ID[name=\"post_ID\"]").val(),
             data: {
-                modalType: "yes",
+                modalName: modal.attr("data-modal-name"),
             },
         },
         beforeSend: function() {
@@ -87,26 +87,33 @@ function dhtAjaxLoadOptions(modal: JQuery<HTMLElement>): void {
         success: function(response) {
             if (response.success) {
 
-                console.log(response);
-
                 //add options to the modal
                 $optionsArea.append(response.data);
 
                 // Initialize options so they could work as expected
-                /* setTimeout(function() {
-                     $thisClass._reinitializeOptions($box_content_area);
-                 }, 100);*/
+                setTimeout(function() {
+                    import("../../../helpers/ajax-options-reload")
+                        .then(module => {
+                            const { dhtReinitializeOptions } = module;
+                            dhtReinitializeOptions($optionsArea);
+                        })
+                        .catch(error => {
+                            console.error("Error loading module:", error);
+                        });
+                }, 200);
 
             } else {
-                console.error("Ajax Response", response);
+                console.error("Ajax Response: ", response);
             }
         },
         error: function(error) {
-            console.error("AJAX error:", error);
+            console.error("AJAX error: ", error);
         },
         complete: function() {
-            //hide loading spinner
-            $spinner.toggleClass("dht-hidden");
+            setTimeout(function() {
+                //hide loading spinner
+                $spinner.toggleClass("dht-hidden");
+            }, 500);
         },
     });
 }
@@ -161,6 +168,7 @@ function dhtVBModal(this: JQuery, options?: IVBModalData | keyof IVBModalMethods
         let $moDialog = $(this);
         let $moDialogHeader = $(this).children(".dht-vb-modal-header");
         let $moDialogContent = $(this).children(".dht-vb-modal-content");
+        let $moDialogContentOptionsArea = $moDialogContent.children(".dht-vb-modal-content-options");
         let $moDialogFooter = $(this).children(".dht-vb-modal-footer");
 
         function closeModal() {
@@ -264,10 +272,19 @@ function dhtVBModal(this: JQuery, options?: IVBModalData | keyof IVBModalMethods
                 dialog_resizing_height = (dialog_resizing_height_tmp > dialog_header_height) ? dialog_resizing_height_tmp : dialog_header_height;
                 dialog_resizing_width_tmp = (e.pageX - modal_box_left + modal_box_right_dust);
                 dialog_resizing_width = (dialog_resizing_width_tmp > dialog_header_width) ? dialog_resizing_width_tmp : dialog_header_width;
-                let paddingTop = parseInt($moDialogContent.css("padding-top"));
-                let paddingBottom = parseInt($moDialogContent.css("padding-bottom"));
+                let paddingTop = parseInt($moDialogContentOptionsArea.css("padding-top"));
+                let paddingBottom = parseInt($moDialogContentOptionsArea.css("padding-bottom"));
                 let $moDialogHeaderHeight = $moDialogHeader.outerHeight() || 0;
                 let $moDialogFooterHeight = $moDialogFooter.outerHeight() || 0;
+
+                //add specific class on resize to apply the needed styles
+                if (dialog_resizing_width <= 768) {
+                    $moDialog.addClass("dht-modal-small").removeClass("dht-modal-medium dht-modal-large");
+                } else if (dialog_resizing_width >= 769 && dialog_resizing_width <= 1366) {
+                    $moDialog.addClass("dht-modal-medium").removeClass("dht-modal-small dht-modal-large");
+                } else {
+                    $moDialog.addClass("dht-modal-large").removeClass("dht-modal-small dht-modal-medium");
+                }
 
                 $moDialog.css(
                     {
@@ -275,6 +292,11 @@ function dhtVBModal(this: JQuery, options?: IVBModalData | keyof IVBModalMethods
                         // "height": dialog_resizing_height + "px",
                     });
                 $moDialogContent.css(
+                    {
+                        // "width": dialog_resizing_width + "px",
+                        "height": (dialog_resizing_height - $moDialogHeaderHeight - $moDialogFooterHeight) + "px",
+                    });
+                $moDialogContentOptionsArea.css(
                     {
                         // "width": dialog_resizing_width + "px",
                         "height": (dialog_resizing_height - $moDialogHeaderHeight - $moDialogFooterHeight - paddingTop - paddingBottom) + "px",

@@ -1,5 +1,21 @@
 @import '../../../../variables.pcss';
 
+@define-mixin range_resposnive_code {
+    .dht-slider {
+        width: 100% !important;
+    }
+
+    .dht-slider-group {
+        display: block;
+
+        .dht-range-slider {
+            width: 100% !important;
+            margin-right: 0 !important;
+            margin-left: 0 !important;
+        }
+    }
+}
+
 .dht-wrapper {
 
     .dht-field-child-rangeslider {
@@ -8,7 +24,7 @@
             align-items: center;
 
             .dht-range-slider {
-                width: 200px;
+                width: 100%;
             }
 
             .dht-range-slider:last-child {
@@ -22,7 +38,7 @@
         }
 
         .dht-slider {
-            width: 200px !important;
+            width: 100% !important;
         }
 
         .dht-slider-slider {
@@ -107,18 +123,33 @@
 .dht-terms-page-content {
     .dht-wrapper {
         .dht-field-child-rangeslider {
-            .dht-slider {
-                width: 100% !important;
+            @mixin range_resposnive_code;
+        }
+    }
+}
+
+.dht-vb-enabled .dht-vb-modal {
+    &.dht-modal-small, &.dht-modal-medium {
+        .dht-wrapper {
+            .dht-field-child-rangeslider {
+                @mixin range_resposnive_code;
+
+            }
+        }
+    }
+
+    &.dht-modal-medium {
+        .dht-wrapper .dht-field-child-rangeslider .dht-slider-group {
+            display: flex;
+            align-items: center;
+
+            .dht-range-slider:last-child {
+                margin-right: 0 !important;
+                margin-left: 10px !important;
             }
 
-            .dht-slider-group {
-                display: block;
-
-                .dht-range-slider {
-                    width: 100% !important;
-                    margin-right: 0 !important;
-                    margin-left: 0 !important;
-                }
+            .dht-range-slider {
+                margin-right: 10px !important;
             }
         }
     }

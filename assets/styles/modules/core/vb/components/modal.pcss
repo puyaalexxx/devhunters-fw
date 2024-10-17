@@ -1,4 +1,5 @@
 @import '../../../../variables.pcss';
+@import '../../../../mixins.pcss';
 
 .dht-vb-enabled {
 
@@ -23,20 +24,33 @@
             &:active {
                 cursor: grabbing;
             }
-        }
 
-        .dht-vb-modal-title {
-            font-size: 18px;
-            padding: 0 10px;
-            text-transform: capitalize;
+            .dht-vb-modal-title {
+                font-size: 18px;
+                padding: 0 10px;
+                text-transform: capitalize;
+            }
         }
 
         .dht-vb-modal-content {
-            padding: 10px;
             height: 390px;
-            overflow: hidden auto;
-            overscroll-behavior: contain;
+            overflow: hidden;
             background: #fff;
+
+            .dht-preloader {
+                position: relative;
+
+                &.dht-hidden {
+                    display: none;
+                }
+            }
+
+            .dht-vb-modal-content-options {
+                overflow: hidden auto;
+                overscroll-behavior: contain;
+                padding: 10px 20px;
+                height: 370px;
+            }
 
             .dht-wrapper {
                 height: auto;
@@ -116,11 +130,39 @@
             transform: scale(1);
         }
 
-        .dht-preloader {
-            position: relative;
+        &.dht-modal-small {
+            @mixin dashboard_responsive_code;
 
-            &.dht-hidden {
-                display: none;
+            @mixin responsive_options_group_code;
+        }
+
+        &.dht-modal-medium {
+            .dht-wrapper {
+                @mixin dashboard_responsive_code;
+
+                @mixin responsive_options_group_code;
+            }
+        }
+
+        &.dht-modal-large {
+            .dht-wrapper {
+                .dht-field-wrapper {
+                    grid-template-columns: 30% 50%;
+                }
+            }
+        }
+
+        .dht-wrapper {
+            .dht-field-wrapper {
+                grid-template-columns: 30% 70%;
+            }
+
+            .dht-field-child-wrapper {
+                width: 100%;
+            }
+
+            .dht-info-help {
+                display: none !important;
             }
         }
     }

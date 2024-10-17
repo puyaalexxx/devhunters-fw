@@ -3,7 +3,7 @@
 use function DHT\Helpers\dht_fw_render_field_if_exists;
 use function DHT\Helpers\dht_parse_option_attributes;
 
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
@@ -44,7 +44,7 @@ $right_choice = $toggle[ 'right-choice' ];
 
         </label>
 		
-		<?php if ( ! empty( $left_choice[ 'options' ] ) ): ?>
+		<?php if( !empty( $left_choice[ 'options' ] ) ): ?>
 
             <div
                 class="dht-toggle-content dht-toggle-left-choice <?php echo $left_choice[ 'value' ] == $toggle[ 'value' ] ? 'dht-toggle-show' : ''; ?>"
@@ -63,7 +63,7 @@ $right_choice = $toggle[ 'right-choice' ];
 		
 		<?php endif; ?>
 		
-		<?php if ( ! empty( $right_choice[ 'options' ] ) ): ?>
+		<?php if( !empty( $right_choice[ 'options' ] ) ): ?>
 
             <div
                 class="dht-toggle-content dht-toggle-right-choice <?php echo $right_choice[ 'value' ] == $toggle[ 'value' ] ? 'dht-toggle-show' : ''; ?>"
@@ -82,22 +82,21 @@ $right_choice = $toggle[ 'right-choice' ];
 		
 		<?php endif; ?>
 		
-		<?php if ( ! empty( $toggle[ 'description' ] ) ): ?>
+		<?php if( !empty( $toggle[ 'description' ] ) ): ?>
             <div class="dht-description"><?php echo esc_html( $toggle[ 'description' ] ); ?></div>
 		<?php endif; ?>
 
     </div>
 	
-	<?php if ( ! empty( $toggle[ 'tooltip' ] ) ): ?>
-        <div class="dht-info-help dashicons dashicons-info"
-             data-tooltips="<?php echo esc_html( $toggle[ 'tooltip' ] ); ?>"
-             data-position="OnLeft">
+	<?php if( !empty( $toggle[ 'tooltip' ] ) ): ?>
+        <div class="dht-info-help dashicons dashicons-info">
+            <div class="dht-tooltips"><p class="OnLeft"><?php echo esc_html( $toggle[ 'tooltip' ] ); ?></p></div>
         </div>
 	<?php endif; ?>
 
 </div>
 
-<?php if ( isset( $toggle[ 'divider' ] ) && $toggle[ 'divider' ] ): ?>
+<?php if( isset( $toggle[ 'divider' ] ) && $toggle[ 'divider' ] ): ?>
     <div class="dht-divider"></div>
 <?php endif; ?>
 

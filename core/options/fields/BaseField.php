@@ -5,7 +5,7 @@ namespace DHT\Core\Options\Fields;
 
 use function DHT\Helpers\dht_load_view;
 
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
@@ -44,7 +44,6 @@ abstract class BaseField {
 	 * @since     1.0.0
 	 */
 	public function enqueueOptionScriptsHook( array $field ) : void {
-		
 		add_action( 'admin_enqueue_scripts', function() use ( $field ) {
 			$this->enqueueOptionScripts( $field );
 		} );
@@ -98,7 +97,7 @@ abstract class BaseField {
 	 */
 	public function addIDPrefix( array $field, string $options_id ) : array {
 		
-		if ( empty( $options_id ) ) {
+		if( empty( $options_id ) ) {
 			return $field;
 		}
 		
@@ -138,7 +137,7 @@ abstract class BaseField {
 	 */
 	public function saveValue( array $field, mixed $field_post_value ) : mixed {
 		
-		if ( empty( $field_post_value ) ) {
+		if( empty( $field_post_value ) ) {
 			return $field[ 'value' ];
 		}
 		

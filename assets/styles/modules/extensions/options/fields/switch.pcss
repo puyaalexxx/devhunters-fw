@@ -109,14 +109,23 @@
             }
         }
 
-        @media (max-width: 980px) {
+        @media (max-width: 1366px) {
             @mixin switch_resposnive_code;
         }
     }
 
-    .dht-cosidebar, .dht-tabsmenu-container {
-        .dht-field-child-switch {
-            @media (max-width: 1250px) {
+    @media (max-width: 1600px) {
+        .dht-cosidebar {
+            .dht-field-child-switch {
+                @mixin switch_resposnive_code;
+            }
+        }
+    }
+
+    @media (max-width: 1366px) {
+        .dht-tabsmenu-container {
+            .dht-field-child-switch {
+
                 @mixin switch_resposnive_code;
             }
         }
@@ -124,11 +133,19 @@
 }
 
 
-@media (max-width: 1600px) {
-    .dht-meta-box-content {
-        .dht-cosidebar, .dht-tabsmenu-container {
+.dht-meta-box-content {
+    .dht-wrapper {
+        @media (max-width: 1600px) {
             .dht-field-child-switch {
                 @mixin switch_resposnive_code;
+            }
+        }
+
+        @media (max-width: 1920px) {
+            .dht-cosidebar {
+                .dht-field-child-switch {
+                    @mixin switch_resposnive_code;
+                }
             }
         }
     }
@@ -142,3 +159,12 @@
     }
 }
 
+.dht-vb-enabled .dht-vb-modal {
+    &.dht-modal-small, &.dht-modal-medium {
+        .dht-wrapper {
+            .dht-field-child-switch {
+                @mixin switch_resposnive_code;
+            }
+        }
+    }
+}

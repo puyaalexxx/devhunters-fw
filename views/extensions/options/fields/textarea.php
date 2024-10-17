@@ -1,5 +1,5 @@
 <?php
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
@@ -25,24 +25,23 @@ $field = $args[ 'field' ] ?? [];
             id="<?php echo esc_attr( $field[ 'id' ] ); ?>"
             name="<?php echo esc_attr( $field[ 'id' ] ); ?>"
             placeholder="<?php echo esc_attr( $field[ 'default' ] ); ?>"
-            rows="<?php echo ! empty( $field[ 'row' ] ) ? esc_attr( $field[ 'row' ] ) : 6; ?>"><?php echo esc_html( $field[ 'value' ] ); ?></textarea>
+            rows="<?php echo !empty( $field[ 'row' ] ) ? esc_attr( $field[ 'row' ] ) : 6; ?>"><?php echo esc_html( $field[ 'value' ] ); ?></textarea>
 		
-		<?php if ( ! empty( $field[ 'description' ] ) ): ?>
+		<?php if( !empty( $field[ 'description' ] ) ): ?>
             <div class="dht-description"><?php echo esc_html( $field[ 'description' ] ); ?></div>
 		<?php endif; ?>
 
     </div>
 	
-	<?php if ( ! empty( $field[ 'tooltip' ] ) ): ?>
-        <div class="dht-info-help dashicons dashicons-info"
-             data-tooltips="<?php echo esc_html( $field[ 'tooltip' ] ); ?>"
-             data-position="OnLeft">
+	<?php if( !empty( $field[ 'tooltip' ] ) ): ?>
+        <div class="dht-info-help dashicons dashicons-info">
+            <div class="dht-tooltips"><p class="OnLeft"><?php echo esc_html( $field[ 'tooltip' ] ); ?></p></div>
         </div>
 	<?php endif; ?>
 
 </div>
 
-<?php if ( isset( $field[ 'divider' ] ) && $field[ 'divider' ] ): ?>
+<?php if( isset( $field[ 'divider' ] ) && $field[ 'divider' ] ): ?>
     <div class="dht-divider"></div>
 <?php endif; ?>
 

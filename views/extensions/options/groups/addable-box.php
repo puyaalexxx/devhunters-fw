@@ -3,7 +3,7 @@
 use function DHT\Helpers\dht_fw_display_box_item;
 use function DHT\Helpers\dht_parse_option_attributes;
 
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
@@ -11,7 +11,7 @@ $group = $args[ 'group' ] ?? [];
 //used to call the render method on
 $registered_options_classes = $args[ 'registered_options_classes' ] ?? [];
 //get saved values
-$saved_values = ! empty( $group[ 'value' ] ) ? $group[ 'value' ] : [];
+$saved_values = !empty( $group[ 'value' ] ) ? $group[ 'value' ] : [];
 ?>
 <!-- field - addable box -->
 
@@ -28,7 +28,7 @@ $saved_values = ! empty( $group[ 'value' ] ) ? $group[ 'value' ] : [];
 
         <div class="dht-addable-box dht-addable-box-repeater">
 			
-			<?php if ( ! empty( $group[ 'options' ] ) ): ?>
+			<?php if( !empty( $group[ 'options' ] ) ): ?>
 
                 <input type="hidden" class="dht-box-item-options"
                        value='<?php echo json_encode( [
@@ -39,12 +39,12 @@ $saved_values = ! empty( $group[ 'value' ] ) ? $group[ 'value' ] : [];
                 <div class="dht-addable-box-items"
                      data-max-box-items="<?php echo esc_attr( $group[ 'limit' ] ); ?>">
 					
-					<?php if ( ! empty( $saved_values ) ): ?>
+					<?php if( !empty( $saved_values ) ): ?>
 						
 						<?php $count = 0; ?>
 						<?php foreach ( $saved_values as $key => $saved_value ): ?>
 							
-							<?php if ( $count == (int) $group[ 'limit' ] ) {
+							<?php if( $count == (int) $group[ 'limit' ] ) {
 								break;
 							} ?>
 							
@@ -72,22 +72,21 @@ $saved_values = ! empty( $group[ 'value' ] ) ? $group[ 'value' ] : [];
 			<?php endif; ?>
         </div>
 		
-		<?php if ( ! empty( $group[ 'description' ] ) ): ?>
+		<?php if( !empty( $group[ 'description' ] ) ): ?>
             <div class="dht-description"><?php echo esc_html( $group[ 'description' ] ); ?></div>
 		<?php endif; ?>
 
     </div>
 	
-	<?php if ( ! empty( $group[ 'tooltip' ] ) ): ?>
-        <div class="dht-info-help dashicons dashicons-info"
-             data-tooltips="<?php echo esc_html( $group[ 'tooltip' ] ); ?>"
-             data-position="OnLeft">
+	<?php if( !empty( $group[ 'tooltip' ] ) ): ?>
+        <div class="dht-info-help dashicons dashicons-info">
+            <div class="dht-tooltips"><p class="OnLeft"><?php echo esc_html( $group[ 'tooltip' ] ); ?></p></div>
         </div>
 	<?php endif; ?>
 
 </div>
 
-<?php if ( isset( $group[ 'divider' ] ) && $group[ 'divider' ] ): ?>
+<?php if( isset( $group[ 'divider' ] ) && $group[ 'divider' ] ): ?>
     <div class="dht-divider"></div>
 <?php endif; ?>
 

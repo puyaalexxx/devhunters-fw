@@ -7,8 +7,9 @@ use DHT\Core\Options\Groups\BaseGroup;
 use DHT\DHT;
 use DHT\Helpers\Classes\Environment;
 use function DHT\Helpers\dht_fw_render_box_item_content;
+use function DHT\Helpers\dht_make_script_as_module_type;
 
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
@@ -53,7 +54,7 @@ final class AddableBox extends BaseGroup {
 		// Enqueue the WordPress editor scripts and styles
 		wp_enqueue_editor();
 		
-		if ( Environment::isDevelopment() ) {
+		if( Environment::isDevelopment() ) {
 			wp_register_style( DHT_PREFIX_CSS . '-addable-box-group', DHT_ASSETS_URI . 'dist/css/addable-box.css', array(), DHT::$version );
 			wp_enqueue_style( DHT_PREFIX_CSS . '-addable-box-group' );
 			
@@ -61,6 +62,11 @@ final class AddableBox extends BaseGroup {
 				'jquery',
 				'jquery-ui-sortable'
 			), DHT::$version, true );
+			
+			//make main.js and fw.js as to load as a module
+			add_filter( 'script_loader_tag', function( string $tag, string $handle ) : string {
+				return dht_make_script_as_module_type( $tag, $handle, [ DHT_PREFIX_JS . '-addable-box-group' ] );
+			}, 10, 2 );
 		}
 	}
 	
@@ -72,15 +78,15 @@ final class AddableBox extends BaseGroup {
 	 */
 	public function getAddableBoxOptions() : void {
 		
-		if ( isset( $_POST[ 'action' ] ) && $_POST[ 'action' ] == "getAddableBoxOptions" && isset( $_POST[ 'data' ][ 'box_number' ] ) && isset( $_POST[ 'data' ][ 'group' ] ) ) {
+		if( isset( $_POST[ 'action' ] ) && $_POST[ 'action' ] == "getAddableBoxOptions" && isset( $_POST[ 'data' ][ 'box_number' ] ) && isset( $_POST[ 'data' ][ 'group' ] ) ) {
 			
 			//retrieve box number
-			$box_number = ! empty( $_POST[ 'data' ][ 'box_number' ] ) ? (int) $_POST[ 'data' ][ 'box_number' ] : 0;
-			$group      = ! empty( $_POST[ 'data' ][ 'group' ] ) ? json_decode( stripslashes( html_entity_decode( $_POST[ 'data' ][ 'group' ], ENT_QUOTES, 'UTF-8' ) ), true ) : [];
+			$box_number = !empty( $_POST[ 'data' ][ 'box_number' ] ) ? (int) $_POST[ 'data' ][ 'box_number' ] : 0;
+			$group      = !empty( $_POST[ 'data' ][ 'group' ] ) ? json_decode( stripslashes( html_entity_decode( $_POST[ 'data' ][ 'group' ], ENT_QUOTES, 'UTF-8' ) ), true ) : [];
 			
 			ob_start();
 			
-			if ( ! empty( $group ) ) {
+			if( !empty( $group ) ) {
 				echo dht_fw_render_box_item_content( $group, [], [
 					'togglesClasses' => $this->_optionTogglesClasses,
 					'fieldsClasses'  => $this->_optionFieldsClasses
@@ -117,7 +123,7 @@ final class AddableBox extends BaseGroup {
 	 */
 	public function saveValue( array $group, mixed $group_post_values ) : mixed {
 		
-		if ( empty( $group_post_values ) || empty( $group[ 'options' ] ) ) {
+		if( empty( $group_post_values ) || empty( $group[ 'options' ] ) ) {
 			return $group[ 'value' ];
 		}
 		
@@ -136,16 +142,16 @@ final class AddableBox extends BaseGroup {
 			foreach ( $values as $option_id => $value ) {
 				
 				//the box title, it is not located in the options array so we need to sanitize it separately
-				if ( $option_id == 'box-title' ) {
+				if( $option_id == 'box-title' ) {
 					
 					$sanitized_values[ $value_key ] [ 'box-title' ] = sanitize_text_field( $value );
 					
 					continue;
 				}
 				
-				if ( isset( $options[ $option_id ] ) ) {
+				if( isset( $options[ $option_id ] ) ) {
 					
-					if ( array_key_exists( $options[ $option_id ][ 'type' ], $this->_optionTogglesClasses ) ) {
+					if( array_key_exists( $options[ $option_id ][ 'type' ], $this->_optionTogglesClasses ) ) {
 						$sanitized_values[ $value_key ] [ $option_id ] = $this->_optionTogglesClasses[ $options[ $option_id ][ 'type' ] ]->saveValue( $options[ $option_id ], $value );
 					} //if it is a field option type
 					else {

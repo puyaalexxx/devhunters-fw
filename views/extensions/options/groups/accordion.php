@@ -1,6 +1,6 @@
 <?php
 
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
@@ -24,7 +24,7 @@ $registered_options_classes = $args[ 'registered_options_classes' ] ?? [];
 
         <div class="dht-accordion">
 			
-			<?php if ( ! empty( $group[ 'options' ] ) ): ?>
+			<?php if( !empty( $group[ 'options' ] ) ): ?>
 				
 				<?php $cnt = 0;
 				foreach ( $group[ 'options' ] as $group_toggle ) : $cnt ++; ?>
@@ -39,14 +39,14 @@ $registered_options_classes = $args[ 'registered_options_classes' ] ?? [];
                             </div>
 
                             <span class="dht-accordion-title-text">
-                                    <?php echo ! empty( $group_toggle[ 'title' ] ) ? esc_html( $group_toggle[ 'title' ] ) : sprintf( _x( 'Toggle %d', 'options', DHT_PREFIX ), $cnt ); ?>
+                                    <?php echo !empty( $group_toggle[ 'title' ] ) ? esc_html( $group_toggle[ 'title' ] ) : sprintf( _x( 'Toggle %d', 'options', DHT_PREFIX ), $cnt ); ?>
                                 </span>
 
                         </div>
 
                         <div class="dht-accordion-content">
 							
-							<?php if ( ! empty( $group_toggle[ 'options' ] ) ): ?>
+							<?php if( !empty( $group_toggle[ 'options' ] ) ): ?>
 								
 								<?php foreach ( $group_toggle[ 'options' ] as $toggle_option ) : ?>
 									
@@ -71,22 +71,21 @@ $registered_options_classes = $args[ 'registered_options_classes' ] ?? [];
 
         </div>
 		
-		<?php if ( ! empty( $group[ 'description' ] ) ): ?>
+		<?php if( !empty( $group[ 'description' ] ) ): ?>
             <div class="dht-description"><?php echo esc_html( $group[ 'description' ] ); ?></div>
 		<?php endif; ?>
 
     </div>
 	
-	<?php if ( ! empty( $group[ 'tooltip' ] ) ): ?>
-        <div class="dht-info-help dashicons dashicons-info"
-             data-tooltips="<?php echo esc_html( $group[ 'tooltip' ] ); ?>"
-             data-position="OnLeft">
+	<?php if( !empty( $group[ 'tooltip' ] ) ): ?>
+        <div class="dht-info-help dashicons dashicons-info">
+            <div class="dht-tooltips"><p class="OnLeft"><?php echo esc_html( $group[ 'tooltip' ] ); ?></p></div>
         </div>
 	<?php endif; ?>
 
 </div>
 
-<?php if ( isset( $group[ 'divider' ] ) && $group[ 'divider' ] ): ?>
+<?php if( isset( $group[ 'divider' ] ) && $group[ 'divider' ] ): ?>
     <div class="dht-divider"></div>
 <?php endif; ?>
 

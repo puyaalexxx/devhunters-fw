@@ -1,5 +1,5 @@
 <?php
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
@@ -103,7 +103,7 @@ $font_type = TypographyHelpers::getFontType( $font_value, $google_fonts, $et_fon
                         name="<?php echo esc_attr( $field[ 'id' ] ); ?>[font-family][font]"
                         id="<?php echo esc_attr( $field[ 'id' ] ); ?>-font-family"
                         data-placeholder="Font family" data-font-prefix="<?php echo DHT_PREFIX; ?>"
-                        data-saved-values='<?php echo ! empty( $font_value ) ? json_encode( array(
+                        data-saved-values='<?php echo !empty( $font_value ) ? json_encode( array(
 					        'font'      => $font_value,
 					        'font_type' => $font_type_value,
 					        'weight'    => $font_weight_value
@@ -111,7 +111,7 @@ $font_type = TypographyHelpers::getFontType( $font_value, $google_fonts, $et_fon
 
                     <option></option>
 					
-					<?php if ( ! empty( $et_fonts ) ): ?>
+					<?php if( !empty( $et_fonts ) ): ?>
 
                         <!--Divi fonts-->
                         <optgroup label="Divi Fonts">
@@ -147,7 +147,7 @@ $font_type = TypographyHelpers::getFontType( $font_value, $google_fonts, $et_fon
 
                     </optgroup>
 					
-					<?php if ( ! empty( $google_fonts ) ): ?>
+					<?php if( !empty( $google_fonts ) ): ?>
 
                         <!--Google fonts-->
                         <optgroup label="Google Fonts">
@@ -155,11 +155,11 @@ $font_type = TypographyHelpers::getFontType( $font_value, $google_fonts, $et_fon
 							<?php foreach ( $google_fonts as $font ): ?>
 								<?php
 								//grab google font subsets
-								$font_subset = ! empty( $font[ 'subsets' ] ) ? json_encode( $font[ 'subsets' ] ) : json_encode( [] );
+								$font_subset = !empty( $font[ 'subsets' ] ) ? json_encode( $font[ 'subsets' ] ) : json_encode( [] );
 								?>
 								<?php
 								//grab google font weights
-								$font_weights = ! empty( $font[ 'weights' ] ) ? json_encode( $font[ 'weights' ] ) : json_encode( [] );
+								$font_weights = !empty( $font[ 'weights' ] ) ? json_encode( $font[ 'weights' ] ) : json_encode( [] );
 								?>
 
                                 <option value='<?php echo esc_attr( $font[ 'family' ] ); ?>'
@@ -194,7 +194,7 @@ $font_type = TypographyHelpers::getFontType( $font_value, $google_fonts, $et_fon
                     <option></option>
 
                     <!--check if the saved font is a Google font-->
-					<?php if ( array_key_exists( $font_value, $google_font_weights ) ): ?>
+					<?php if( array_key_exists( $font_value, $google_font_weights ) ): ?>
 						
 						<?php foreach ( $google_font_weights[ $font_value ] as $google_font_weight_key => $google_font_weight_value ): ?>
 
@@ -207,7 +207,7 @@ $font_type = TypographyHelpers::getFontType( $font_value, $google_fonts, $et_fon
 						<?php endforeach; ?>
 
                         <!--check if the saved font is a Divi font-->
-					<?php elseif ( array_key_exists( $font_value, $et_fonts ) ): ?>
+					<?php elseif( array_key_exists( $font_value, $et_fonts ) ): ?>
 						
 						<?php $et_font_weight = $et_fonts[ $font_value ][ 'weight' ]; ?>
 
@@ -274,7 +274,7 @@ $font_type = TypographyHelpers::getFontType( $font_value, $google_fonts, $et_fon
                     <option></option>
 
                     <!--check if the saved font is a Google font-->
-					<?php if ( array_key_exists( $font_value, $google_font_subsets ) ): ?>
+					<?php if( array_key_exists( $font_value, $google_font_subsets ) ): ?>
 						
 						<?php foreach ( $google_font_subsets[ $font_value ] as $google_font_subset_value ): ?>
 
@@ -348,22 +348,21 @@ $font_type = TypographyHelpers::getFontType( $font_value, $google_fonts, $et_fon
 
         </div>
 		
-		<?php if ( ! empty( $field[ 'description' ] ) ): ?>
+		<?php if( !empty( $field[ 'description' ] ) ): ?>
             <div class="dht-description"><?php echo esc_html( $field[ 'description' ] ); ?></div>
 		<?php endif; ?>
 
     </div>
 	
-	<?php if ( ! empty( $field[ 'tooltip' ] ) ): ?>
-        <div class="dht-info-help dashicons dashicons-info"
-             data-tooltips="<?php echo esc_html( $field[ 'tooltip' ] ); ?>"
-             data-position="OnLeft">
+	<?php if( !empty( $field[ 'tooltip' ] ) ): ?>
+        <div class="dht-info-help dashicons dashicons-info">
+            <div class="dht-tooltips"><p class="OnLeft"><?php echo esc_html( $field[ 'tooltip' ] ); ?></p></div>
         </div>
 	<?php endif; ?>
 
 </div>
 
-<?php if ( isset( $field[ 'divider' ] ) && $field[ 'divider' ] ): ?>
+<?php if( isset( $field[ 'divider' ] ) && $field[ 'divider' ] ): ?>
     <div class="dht-divider"></div>
 <?php endif; ?>
 

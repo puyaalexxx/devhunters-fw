@@ -6,6 +6,25 @@
     .dht-field-child-typography-dropdown {
         margin-bottom: 15px;
     }
+
+    .select2-container .select2-selection--single .select2-selection__rendered {
+        padding-left: 10px;
+        text-align: left;
+    }
+}
+
+@define-mixin grid_style {
+    .dht-field-child-typography-group {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 15px;
+    }
+}
+
+@define-mixin select2_style {
+    span.select2.select2-container {
+        width: 100% !important;
+    }
 }
 
 /*checkbox styles*/
@@ -13,11 +32,7 @@
 
     .dht-field-child-typography {
 
-        .dht-field-child-typography-group {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            grid-gap: 15px;
-        }
+        @mixin grid_style;
 
         label {
             display: block !important;
@@ -26,11 +41,9 @@
         .dht-field-child-typography-preview {
             width: 100%;
             border: 1px dotted #d3d3d3;
-            max-width: 850px;
             padding: 10px;
             font-size: 10pt;
             height: auto;
-            -webkit-box-sizing: border-box;
             box-sizing: border-box;
             overflow: hidden;
             margin: 5px 0 20px;
@@ -69,18 +82,46 @@
             @media (max-width: 1600px) {
                 @mixin responsive_code;
 
-                span.select2.select2-container {
-                    width: 100% !important;
-                }
+                @mixin select2_style;
             }
         }
     }
 }
 
 @media (max-width: 980px) {
+    .dht-meta-box-content .dht-wrapper {
+        @mixin select2_style;
+    }
+}
+
+@media (max-width: 980px) {
     .dht-terms-page-content .dht-wrapper {
-        span.select2.select2-container {
-            width: 100% !important;
+        @mixin select2_style;
+    }
+}
+
+.dht-vb-enabled {
+    .dht-vb-modal {
+        &.dht-modal-small {
+            .dht-wrapper {
+                .dht-field-child-typography {
+                    @mixin responsive_code;
+
+                    @mixin select2_style;
+                }
+            }
+        }
+
+        &.dht-modal-medium {
+            .dht-field-child-typography {
+                @mixin grid_style;
+            }
+
+            .dht-cosidebar, .dht-tabsmenu-container {
+                .dht-field-child-typography {
+                    @mixin grid_style;
+                }
+            }
         }
     }
 }

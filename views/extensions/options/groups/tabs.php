@@ -1,6 +1,6 @@
 <?php
 
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
@@ -28,7 +28,7 @@ $tabs_id = str_replace( [
     class="dht-field-wrapper dht-group-type <?php echo $fullwidth_tabs ? 'dht-field-tabs-fullwidth' : ''; ?> <?php echo isset( $group[ 'attr' ][ 'class' ] ) ? esc_attr( $group[ 'attr' ][ 'class' ] ) : ''; ?>"
 	<?php echo dht_parse_option_attributes( $group[ 'attr' ] ); ?>>
 	
-	<?php if ( ! $fullwidth_tabs ): ?>
+	<?php if( !$fullwidth_tabs ): ?>
 
         <div class="dht-title"><?php echo esc_html( $group[ 'title' ] ); ?></div>
 	
@@ -38,7 +38,7 @@ $tabs_id = str_replace( [
 
         <div class="dht-field-tabs">
 			
-			<?php if ( ! empty( $group[ 'options' ] ) ): ?>
+			<?php if( !empty( $group[ 'options' ] ) ): ?>
 
                 <ul class="dht-tab-links">
 					
@@ -47,7 +47,7 @@ $tabs_id = str_replace( [
 
                         <li class="<?php echo $cnt == 1 ? 'active' : '' ?>">
                             <a href="#<?php echo esc_attr( $tabs_id ); ?>-<?php echo esc_attr( $cnt ); ?>">
-								<?php echo ! empty( $group_tabs[ 'title' ] ) ? esc_html( $group_tabs[ 'title' ] ) : sprintf( _x( 'Tab %d', 'options', DHT_PREFIX ), $cnt ); ?>
+								<?php echo !empty( $group_tabs[ 'title' ] ) ? esc_html( $group_tabs[ 'title' ] ) : sprintf( _x( 'Tab %d', 'options', DHT_PREFIX ), $cnt ); ?>
                             </a>
                         </li>
 					
@@ -61,7 +61,7 @@ $tabs_id = str_replace( [
                     <div class="dht-tab-content <?php echo $count == 1 ? 'active' : '' ?>"
                          id="<?php echo esc_attr( $tabs_id ); ?>-<?php echo esc_attr( $count ); ?>">
 						
-						<?php if ( ! empty( $group_tabs_content[ 'options' ] ) ): ?>
+						<?php if( !empty( $group_tabs_content[ 'options' ] ) ): ?>
 							
 							<?php foreach ( $group_tabs_content[ 'options' ] as $tab_option ) : ?>
 								
@@ -84,22 +84,21 @@ $tabs_id = str_replace( [
 
         </div>
 		
-		<?php if ( ! empty( $group[ 'description' ] ) && ! $fullwidth_tabs ): ?>
+		<?php if( !empty( $group[ 'description' ] ) && !$fullwidth_tabs ): ?>
             <div class="dht-description"><?php echo esc_html( $group[ 'description' ] ); ?></div>
 		<?php endif; ?>
 
     </div>
 	
-	<?php if ( ! empty( $group[ 'tooltip' ] ) && ! $fullwidth_tabs ): ?>
-        <div class="dht-info-help dashicons dashicons-info"
-             data-tooltips="<?php echo esc_html( $group[ 'tooltip' ] ); ?>"
-             data-position="OnLeft">
+	<?php if( !empty( $group[ 'tooltip' ] ) && !$fullwidth_tabs ): ?>
+        <div class="dht-info-help dashicons dashicons-info">
+            <div class="dht-tooltips"><p class="OnLeft"><?php echo esc_html( $group[ 'tooltip' ] ); ?></p></div>
         </div>
 	<?php endif; ?>
 
 </div>
 
-<?php if ( isset( $group[ 'divider' ] ) && $group[ 'divider' ] ): ?>
+<?php if( isset( $group[ 'divider' ] ) && $group[ 'divider' ] ): ?>
     <div class="dht-divider"></div>
 <?php endif; ?>
 

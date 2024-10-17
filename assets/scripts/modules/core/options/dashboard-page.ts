@@ -8,7 +8,7 @@
             this.$_tooltip = $(".dht-wrapper .dht-info-help");
 
             //init tooltips
-            this._initTooltips();
+            //this._initTooltips();
         }
 
         /**
@@ -25,7 +25,7 @@
 
                     $this.css("position", "relative");
                     $this.html(
-                        $this.html() + "<div class='dht-tooltips'><p class='" + $this.attr("data-position") + "'>" + $this.attr("data-tooltips") + "</p>",
+                        $this.html() + "<div class='dht-tooltips'><p class='" + $this.attr("data-position") + "'>" + $this.attr("data-tooltips") + "</p></div>",
                     );
                 });
 
@@ -40,7 +40,17 @@
     }
 
     //init main wrapper functionality
-    $(function(): void {
+    function init() {
         new WrapperArea();
+    }
+
+    // Initialize on page load
+    $(function() {
+        init();
+    });
+
+    // Initialize after AJAX content is loaded
+    $(document).on("dht_mainWrapperAjaxComplete", function() {
+        init();
     });
 })(jQuery);

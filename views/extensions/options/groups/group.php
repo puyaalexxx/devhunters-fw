@@ -1,6 +1,6 @@
 <?php
 
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
@@ -36,22 +36,21 @@ $registered_options_classes = $args[ 'registered_options_classes' ] ?? [];
 
         </div>
 		
-		<?php if ( ! empty( $group[ 'description' ] ) ): ?>
+		<?php if( !empty( $group[ 'description' ] ) ): ?>
             <div class="dht-description"><?php echo esc_html( $group[ 'description' ] ); ?></div>
 		<?php endif; ?>
 
     </div>
 	
-	<?php if ( ! empty( $group[ 'tooltip' ] ) ): ?>
-        <div class="dht-info-help dashicons dashicons-info"
-             data-tooltips="<?php echo esc_html( $group[ 'tooltip' ] ); ?>"
-             data-position="OnLeft">
+	<?php if( !empty( $group[ 'tooltip' ] ) ): ?>
+        <div class="dht-info-help dashicons dashicons-info">
+            <div class="dht-tooltips"><p class="OnLeft"><?php echo esc_html( $group[ 'tooltip' ] ); ?></p></div>
         </div>
 	<?php endif; ?>
 
 </div>
 
-<?php if ( isset( $group[ 'divider' ] ) && $group[ 'divider' ] ): ?>
+<?php if( isset( $group[ 'divider' ] ) && $group[ 'divider' ] ): ?>
     <div class="dht-divider"></div>
 <?php endif; ?>
 

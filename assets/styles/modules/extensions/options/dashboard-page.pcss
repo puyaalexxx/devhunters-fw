@@ -1,5 +1,6 @@
 @import '../../../variables.pcss';
 @import '../../../mixins.pcss';
+@import '../../../animations.pcss';
 
 .dht-wrapper {
 
@@ -110,54 +111,71 @@
 
     /*tooltip styles*/
 
-    .dht-tooltips {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        z-index: 5;
-
-        p.OnLeft {
-            transform: translate(-100%, -50%);
-        }
-
-        p {
-            min-width: 100px;
-            opacity: 1;
-            display: inline-block;
-            visibility: visible;
+    .dht-info-help {
+        .dht-tooltips {
             position: absolute;
-            text-align: left;
-            width: auto;
-            background: $tooltip-color;
-            color: #ffffff;
-            font-size: 1rem;
-            line-height: 1.2;
-            padding: 10px;
-            border-radius: 3px;
-            white-space: normal;
-            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
-            transition: all 0.2s ease-out;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 5;
+            display: none;
+            opacity: 0;
+            transition: opacity .3s ease; /* Smooth transition */
+            pointer-events: none; /* Prevent interaction */
+
+            p.OnLeft {
+                transform: translate(-100%, -50%);
+            }
+
+            p {
+                min-width: 100px;
+                opacity: 1;
+                display: inline-block;
+                visibility: visible;
+                position: absolute;
+                text-align: left;
+                width: auto;
+                background: $tooltip-color;
+                color: #ffffff;
+                font-size: 1rem;
+                line-height: 1.2;
+                padding: 10px;
+                border-radius: 3px;
+                white-space: normal;
+                box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+                transition: all 0.2s ease-out;
+            }
+
+            p.OnLeft {
+                left: -6px;
+                top: -5px;
+            }
+
+            p.OnLeft:before {
+                position: absolute;
+                content: "";
+                width: 0;
+                height: 0;
+                border-left: 8px solid #000;
+                border-top: 8px solid transparent;
+                border-bottom: 8px solid transparent;
+                top: 50%;
+                margin-top: -8px;
+                right: -8px;
+            }
         }
 
-        p.OnLeft {
-            left: -6px;
-            top: -5px;
+        &:hover {
+            position: relative;
+
+            .dht-tooltips {
+                display: block;
+                animation: dht-fadeIn .3s forwards;
+            }
         }
 
-        p.OnLeft:before {
-            position: absolute;
-            content: "";
-            width: 0;
-            height: 0;
-            border-left: 8px solid #000;
-            border-top: 8px solid transparent;
-            border-bottom: 8px solid transparent;
-            top: 50%;
-            margin-top: -8px;
-            right: -8px;
-        }
+        @mixin fadeIn_animation;
     }
 
     @media (min-width: 981px) and (max-width: 1024px) {
@@ -166,13 +184,41 @@
         }
     }
 
-    @media (max-width: 980px) {
+    @media (max-width: 1366px) {
         @mixin dashboard_responsive_code;
+
+        .dht-button.dht-submit {
+            float: right;
+        }
+    }
+
+    @media (max-width: 980px) {
+        .dht-button.dht-submit {
+            float: none;
+        }
     }
 
     @media (max-width: 600px) {
         .dht-field-child-wrapper {
             width: 100%;
+        }
+    }
+}
+
+@media (max-width: 1600px) {
+    .dht-meta-box-content .dht-wrapper {
+        @mixin dashboard_responsive_code;
+
+        @media (max-width: 1024px) {
+            .dht-field-child-wrapper {
+                width: 100%;
+            }
+        }
+
+        .dht-field-child-wrapper {
+            .dht-field-child-wrapper {
+                width: 100%;
+            }
         }
     }
 }

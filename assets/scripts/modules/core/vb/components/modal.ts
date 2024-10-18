@@ -135,7 +135,11 @@ function dhtVBModal(this: JQuery, options?: IVBModalData | keyof IVBModalMethods
     let pluginName: string = dhtVBModal.name;
 
     let d = 0;
+    // Set fixed dimensions
+    const modalFixedWidth = 400; // Set your desired width
+    const modalFixedHeight = 500; // Set your desired height
 
+    /////////////// initialize modal code - helper function ///////////////
     let initModal = function(this: JQuery, data: IVBModalData) {
         let modal_box = "rest";
         let modal_x = 0;
@@ -146,14 +150,10 @@ function dhtVBModal(this: JQuery, options?: IVBModalData | keyof IVBModalMethods
         let modal_box_height = 0;
         let modal_box_new_left = 0;
         let modal_box_new_top = 0;
-
         let modal_box_bottom_from_top = 0;
         let modal_box_bottom_dust = 0;
-
         let modal_box_right_from_left = 0;
         let modal_box_right_dust = 0;
-
-
         let dialog_resize = $(this).attr("data-dialogResizable");
         let dialog_move = $(this).attr("data-dialogMovable");
         let dialog_touch_outside_close = $(this).attr("data-dialogTouchOutsideForClose");
@@ -171,6 +171,7 @@ function dhtVBModal(this: JQuery, options?: IVBModalData | keyof IVBModalMethods
         let $moDialogContentOptionsArea = $moDialogContent.children(".dht-vb-modal-content-options");
         let $moDialogFooter = $(this).children(".dht-vb-modal-footer");
 
+        /////////////// close modal ///////////////
         function closeModal() {
             if (typeof data.beforeCloseCallback === "function") {
                 if (data.beforeCloseCallback) {
@@ -189,6 +190,78 @@ function dhtVBModal(this: JQuery, options?: IVBModalData | keyof IVBModalMethods
             }
         }
 
+        /////////////// adjust modal position on window resize ///////////////
+        function adjustModalPosition() {
+
+            const windowWidth = $(window).width() || 0;
+            const windowHeight = $(window).height() || 0;
+            const adminBarHeight = $("#wpadminbar").outerHeight() || 0;
+
+            // Get modal dimensions
+            const modalWidth = $moDialog.outerWidth() || 0;
+            const modalHeight = $moDialog.outerHeight() || 0;
+
+            // Adjust the modal size if it exceeds the viewport
+            let newWidth = modalWidth;
+            let newHeight = modalHeight;
+
+            if (modalWidth > windowWidth) {
+                newWidth = modalFixedWidth; // Set to fixed width
+            }
+
+            if (modalHeight > windowHeight) {
+                newHeight = modalFixedHeight; // Set to fixed height
+            }
+
+            // Apply new dimensions if they have changed
+            if (newWidth !== modalWidth || newHeight !== modalHeight) {
+                $moDialog.css("width", newWidth + "px");
+                $moDialog.css("height", newHeight + "px");
+            }
+
+            // Get updated modal dimensions after resizing
+            const updatedModalWidth = $moDialog.outerWidth() || 0;
+            const updatedModalHeight = $moDialog.outerHeight() || 0;
+
+            // Get current modal position
+            const modalLeft = parseFloat($moDialog.css("left")) || 0;
+            const modalTop = parseFloat($moDialog.css("top")) || 0;
+
+            // Ensure the modal stays within bounds horizontally
+            let newLeft = Math.min(Math.max(modalLeft, 0), windowWidth - updatedModalWidth);
+            // Ensure the modal stays within bounds vertically
+            let newTop = Math.min(Math.max(modalTop, adminBarHeight), windowHeight - updatedModalHeight);
+
+            // If modal is outside the visible area, adjust its position
+            if (newLeft !== modalLeft || newTop !== modalTop) {
+                $moDialog.css({
+                    "left": newLeft + "px",
+                    "top": newTop + "px",
+                });
+            }
+        }
+
+        /////////////// on window resize ///////////////
+        $(window).on("resize", function() {
+            adjustModalPosition();
+        });
+
+        /////////////// stop changing the modal position on scroll ///////////////
+        let isScrolling = false; // Flag to track scrolling state
+        // Set up a scroll event listener
+        $(window).on("scroll", function() {
+            isScrolling = true; // Set flag when scrolling
+        });
+        // Reset the scrolling flag after a short delay to detect scrolling completion
+        let scrollTimeout: any;
+        $(window).on("scroll", function() {
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(function() {
+                isScrolling = false; // Reset scrolling flag
+            }, 50); // Adjust timeout duration as needed
+        });
+
+        /////////////// set modal values on some events ///////////////
         if (dialog_touch_outside_close === "true") {
             $(document).on("mouseup", function(e: JQuery.MouseUpEvent) {
                 const target = e.target as HTMLElement;
@@ -197,13 +270,6 @@ function dhtVBModal(this: JQuery, options?: IVBModalData | keyof IVBModalMethods
                 }
             });
         }
-
-        $(this).find(".dht-vb-modal-close").on("click", function() {
-            closeModal();
-            //remove disabled class to show the edit icons
-            $(".dht-vb-enabled .dht-vb-element").removeClass("dht-vb-disabled");
-        });
-
         if (dialog_move === "true") {
             $(this).find(".dht-vb-modal-header").on("mousedown", function(e) {
                 if (modal_box === "rest") {
@@ -241,6 +307,7 @@ function dhtVBModal(this: JQuery, options?: IVBModalData | keyof IVBModalMethods
             });
         }
 
+        /////////////// mouse events ///////////////
         $(this).on("mouseup", function() {
             modal_box = "rest";
             $(document).css(
@@ -248,6 +315,7 @@ function dhtVBModal(this: JQuery, options?: IVBModalData | keyof IVBModalMethods
                     "cursor": "default",
                 });
         });
+
         $(document).on("mouseup", function() {
             modal_box = "rest";
             $(document).css(
@@ -255,29 +323,79 @@ function dhtVBModal(this: JQuery, options?: IVBModalData | keyof IVBModalMethods
                     "cursor": "default",
                 });
         });
-        $(document).on("mousemove", function(e) {
-            if (modal_box === "move") {
-                $moDialog.css(
-                    {
-                        "left": (e.pageX - modal_box_new_left) + "px",
-                        "top": (e.pageY - modal_box_new_top) + "px",
 
-                    });
-                $(document).css(
-                    {
-                        "cursor": "move",
-                    });
-            } else if (modal_box === "bottom_right_resize") {
+        // move/resize modal on screen
+        $(document).on("mousemove", function(e) {
+
+            // Check if a scroll is happening
+            if (isScrolling) {
+                return; // Don't start dragging if scrolling is active
+            }
+
+            // move modal on screen
+            if (modal_box === "move") {
+
+                // Get window dimensions
+                const windowWidth = $(window).width() || 0;
+                const windowHeight = $(window).height() || 0;
+                const adminBarHeight = $("#wpadminbar").outerHeight() || 0;
+                let newLeft = e.pageX - modal_box_new_left;
+                let newTop = e.pageY - modal_box_new_top;
+                // Ensure the modal stays within bounds
+                const modalWidth = $moDialog.outerWidth() || 0;
+                const modalHeight = $moDialog.outerHeight() || 0;
+
+                // Adjust horizontal position
+                newLeft = Math.min(Math.max(newLeft, 0), windowWidth - modalWidth);
+                // Adjust vertical position with admin bar consideration
+                if (newTop < adminBarHeight) {
+                    newTop = adminBarHeight; // Don't allow above admin bar
+                } else {
+                    newTop = Math.min(Math.max(newTop, 0), windowHeight - modalHeight);
+                }
+
+                // Update the modal position
+                $moDialog.css({
+                    "left": newLeft + "px",
+                    "top": newTop + "px",
+                });
+
+            }
+            // resize modal on screen
+            else if (modal_box === "bottom_right_resize") {
+                // Calculate temporary dimensions based on mouse movement
                 dialog_resizing_height_tmp = (e.pageY - modal_box_top + modal_box_bottom_dust);
                 dialog_resizing_height = (dialog_resizing_height_tmp > dialog_header_height) ? dialog_resizing_height_tmp : dialog_header_height;
+
                 dialog_resizing_width_tmp = (e.pageX - modal_box_left + modal_box_right_dust);
                 dialog_resizing_width = (dialog_resizing_width_tmp > dialog_header_width) ? dialog_resizing_width_tmp : dialog_header_width;
-                let paddingTop = parseInt($moDialogContentOptionsArea.css("padding-top"));
-                let paddingBottom = parseInt($moDialogContentOptionsArea.css("padding-bottom"));
+
+                // Get current window dimensions
+                const windowWidth = $(window).width() || 0;
+                const windowHeight = $(window).height() || 0;
+
+                // Get the height of the WordPress admin bar
+                const adminBarHeight = $("#wpadminbar").outerHeight() || 0;
+
+                // Calculate maximum allowed dimensions based on current position
+                const maxWidth = windowWidth - modal_box_left; // Limit width to available space on the right
+                const maxHeight = windowHeight - modal_box_top; // Limit height to available space below the admin bar
+
+                // Define minimum dimensions
+                const minWidth = 400;  // Minimum width in pixels
+                const minHeight = 400;  // Minimum height in pixels
+
+                // Apply restrictions based on current position
+                dialog_resizing_width = Math.min(Math.max(dialog_resizing_width, minWidth), maxWidth);
+                dialog_resizing_height = Math.min(Math.max(dialog_resizing_height, minHeight), maxHeight);
+
+                // Adjust height to account for the modal header and footer
+                let paddingTop = parseInt($moDialogContentOptionsArea.css("padding-top")) || 0;
+                let paddingBottom = parseInt($moDialogContentOptionsArea.css("padding-bottom")) || 0;
                 let $moDialogHeaderHeight = $moDialogHeader.outerHeight() || 0;
                 let $moDialogFooterHeight = $moDialogFooter.outerHeight() || 0;
 
-                //add specific class on resize to apply the needed styles
+                // Update classes based on width
                 if (dialog_resizing_width <= 768) {
                     $moDialog.addClass("dht-modal-small").removeClass("dht-modal-medium dht-modal-large");
                 } else if (dialog_resizing_width >= 769 && dialog_resizing_width <= 1366) {
@@ -286,29 +404,32 @@ function dhtVBModal(this: JQuery, options?: IVBModalData | keyof IVBModalMethods
                     $moDialog.addClass("dht-modal-large").removeClass("dht-modal-small dht-modal-medium");
                 }
 
-                $moDialog.css(
-                    {
-                        "width": dialog_resizing_width + "px",
-                        // "height": dialog_resizing_height + "px",
-                    });
-                $moDialogContent.css(
-                    {
-                        // "width": dialog_resizing_width + "px",
-                        "height": (dialog_resizing_height - $moDialogHeaderHeight - $moDialogFooterHeight) + "px",
-                    });
-                $moDialogContentOptionsArea.css(
-                    {
-                        // "width": dialog_resizing_width + "px",
-                        "height": (dialog_resizing_height - $moDialogHeaderHeight - $moDialogFooterHeight - paddingTop - paddingBottom) + "px",
-                    });
-                $(document).css(
-                    {
-                        "cursor": "se-resize",
-                    });
+                // Apply the final dimensions
+                $moDialog.css({
+                    "width": dialog_resizing_width + "px",
+                    "height": dialog_resizing_height + "px",
+                });
+                $moDialogContent.css({
+                    "height": (dialog_resizing_height - $moDialogHeaderHeight - $moDialogFooterHeight) + "px",
+                });
+                $moDialogContentOptionsArea.css({
+                    "height": (dialog_resizing_height - $moDialogHeaderHeight - $moDialogFooterHeight - paddingTop - paddingBottom) + "px",
+                });
+                $(document).css({
+                    "cursor": "se-resize",
+                });
             }
+        });
+
+        //close modal on click
+        $(this).find(".dht-vb-modal-close").on("click", function() {
+            closeModal();
+            //remove disabled class to show the edit icons
+            $(".dht-vb-enabled .dht-vb-element").removeClass("dht-vb-disabled");
         });
     };
 
+    /////////////// open modal code - helper function ///////////////
     let openModal = function(this: JQuery, data: IVBModalData) {
         let dialog_id = $(this).attr("data-dialogId");
         let $this = $(this);
@@ -331,10 +452,12 @@ function dhtVBModal(this: JQuery, options?: IVBModalData | keyof IVBModalMethods
         }
     };
 
+    /////////////// close modal code - helper function ///////////////
     let closeModal = function(this: JQuery, data: IVBModalData) {
         let dialog_id = $(this).attr("data-dialogId");
     };
 
+    /////////////// modal methods to use outside ///////////////
     let methods: { [key: string]: (this: JQuery, ...args: any[]) => JQuery } = {
         init: function(this: JQuery, options: IVBModalData) {
             //"this" is a jquery object on which this plugin has been invoked.
@@ -359,8 +482,8 @@ function dhtVBModal(this: JQuery, options?: IVBModalData | keyof IVBModalMethods
                             afterOpenedCallback: false,
                             beforeCloseCallback: false,
                             afterClosedCallback: false,
-                            width: 400, // Set a default width
-                            height: 500, // Set a default height
+                            width: modalFixedWidth, // Set a default width
+                            height: modalFixedHeight, // Set a default height
                         };
 
                     if (options) {
@@ -437,6 +560,7 @@ function dhtVBModal(this: JQuery, options?: IVBModalData | keyof IVBModalMethods
         },
     };
 
+    /////////////// calling methods outside ///////////////
     if (typeof options === "string" && methods[options]) {
         return methods[options].apply(this);
     } else if (typeof options === "object" || !options) {

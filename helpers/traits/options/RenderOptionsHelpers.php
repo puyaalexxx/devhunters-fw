@@ -3,7 +3,7 @@ declare( strict_types = 1 );
 
 namespace DHT\Helpers\Traits\Options;
 
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
@@ -32,11 +32,11 @@ trait RenderOptionsHelpers {
 		];
 		
 		//add 'metabox_id' if it exists
-		if ( isset( $options[ 'options_id' ] ) ) {
+		if( isset( $options[ 'options_id' ] ) ) {
 			$viewData[ 'metabox_id' ] = $options[ 'options_id' ];
 		}
 		
-		if ( $location == 'vb' ) {
+		if( $location == 'vb' ) {
 			echo dht_load_view( DHT_VIEWS_DIR . 'core/vb/', $template, $viewData );
 		}
 		else {
@@ -60,13 +60,13 @@ trait RenderOptionsHelpers {
 	 */
 	private function _getOptionsView( array $options, string $location = 'dashboard', int $id = 0 ) : string {
 		
-		$saved_values = $this->_getOptionsSavedValues( $options, $location, $id );
+		$saved_values = apply_filters( 'dht:options:set_saved_values', $this->_getOptionsSavedValues( $options, $location, $id ) );
 		
 		// Start output buffering
 		ob_start();
 		
 		// Render container options
-		if ( isset( $options[ 'type' ] ) && array_key_exists( $options[ 'type' ], $this->_optionContainerClasses ) ) {
+		if( isset( $options[ 'type' ] ) && array_key_exists( $options[ 'type' ], $this->_optionContainerClasses ) ) {
 			
 			echo $this->_optionContainerClasses[ $options[ 'type' ] ]->render( $options, $saved_values );
 			
@@ -93,13 +93,13 @@ trait RenderOptionsHelpers {
 	 */
 	private function _getOptionsTemplate( string $location ) : string {
 		
-		if ( $location == 'post' ) {
+		if( $location == 'post' ) {
 			$template = 'posts.php';
 		}
-		elseif ( $location == 'term' ) {
+		elseif( $location == 'term' ) {
 			$template = 'terms.php';
 		}
-		elseif ( $location == 'vb' ) {
+		elseif( $location == 'vb' ) {
 			$template = 'modal.php';
 		}
 		else {

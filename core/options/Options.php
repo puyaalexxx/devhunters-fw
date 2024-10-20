@@ -211,11 +211,22 @@ final class Options implements IOptions {
 			$this->_enqueueOptionsScripts( apply_filters( 'dht:options:enqueue_vb_scripts', $vbOption ) );
 		}
 		
+		//process and filter the saved modal form options
+		add_filter( 'dht:vb:save_modal_content', function( int $postID, string $modalName, array $modalFormData ) use ( $vbOptions ) {
+			return $this->_saveVBModalOptions( $vbOptions[ $modalName ] ?? [], $modalFormData );
+		}, 10, 3 );
+		
 		//render visual builder modal HTML content hook with the passed options
-		add_action( 'dht:vb:render_modal_content', function( int $postID, string $modalName ) use ( $vbOptions ) {
-			//load the options by the modal name key
+		add_action( 'dht:vb:render_modal_content', function( int $postID, string $modalName, array $modalSavedFormData ) use ( $vbOptions ) {
+			//apply the new saved values that are already processed and filtered
+			//modal options are not saved globally but locally to a hidden input to apply them when the modal is opened
+			add_filter( 'dht:options:set_saved_values', function() use ( $modalSavedFormData, $modalName ) {
+				return $modalSavedFormData;
+			} );
+			
+			//render the modal options
 			$this->_renderContent( $vbOptions[ $modalName ] ?? [], "vb", $postID );
-		}, 10, 2 );
+		}, 10, 3 );
 	}
 	
 	/**
@@ -325,6 +336,27 @@ final class Options implements IOptions {
 				$this->_handleContainerOptions( $options, $post_values, 'term', $term_id );
 			}
 		}
+	}
+	
+	/**
+	 * Save vb modal options based on the provided modal form values
+	 *
+	 * @param array $options
+	 * @param array $modalOptionsValues Values passed from the modal form
+	 *
+	 * @return array
+	 * @since     1.0.0
+	 */
+	private function _saveVBModalOptions( array $options, array $modalOptionsValues ) : array {
+		
+		if( $modalOptionsValues ) {
+			
+			$modalOptionsValues = $modalOptionsValues[ $options[ 'id' ] ?? '' ] ?? NULL;
+			
+			return $this->_handleContainerOptions( $options, $modalOptionsValues, 'vb' );
+		}
+		
+		return [];
 	}
 	
 	/**

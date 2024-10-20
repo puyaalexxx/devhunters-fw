@@ -5,15 +5,13 @@
  */
 class ButtonsGroup {
     //vb editor area element
-    private readonly _vbContainerEditorArea: JQuery<HTMLElement>;
-    //modal id
-    private readonly _modalID: string;
+    private readonly _vbContainerEditorAreas: JQuery<HTMLElement>;
     //translated strings
     private readonly _translationStrings: IVbTranslations;
 
-    constructor(vbContainerEditorArea: JQuery<HTMLElement>, modalID: string, translationStrings: IVbTranslations) {
-        this._vbContainerEditorArea = vbContainerEditorArea;
-        this._modalID = modalID;
+    constructor(vbContainerEditorAreas: JQuery<HTMLElement>, translationStrings: IVbTranslations) {
+
+        this._vbContainerEditorAreas = vbContainerEditorAreas;
         this._translationStrings = translationStrings;
 
         //init toggle button
@@ -27,9 +25,12 @@ class ButtonsGroup {
      */
     private _init(): void {
 
-        this._addButtonsOnElement();
+        const $this = this;
+        this._vbContainerEditorAreas.each(function(index) {
+            $this._addButtonsOnElement($(this));
 
-        this._openModalOnClick();
+            $this._openModalOnClick($(this), index);
+        });
     }
 
     /**
@@ -37,19 +38,18 @@ class ButtonsGroup {
      *
      * @return void
      */
-    private _addButtonsOnElement(): void {
+    private _addButtonsOnElement($vbContainer: JQuery<HTMLElement>): void {
 
         const $this = this;
-        this._vbContainerEditorArea.find(".dht-vb-element").each(function() {
+        $vbContainer.find(".dht-vb-element").each(function() {
             let btnDrag = "";
             let btnSettings = "";
             let btnDuplicate = "";
             let btnDelete = "";
             let btnOtherSetting = "";
 
-
             //drag button
-            if ($this._vbContainerEditorArea.attr("data-dht-vb-button-drag") === "true") {
+            if ($vbContainer.attr("data-dht-vb-button-drag") === "true") {
                 btnDrag = `<button type="button" class="dht-vb-button dht-vb-icon-drag">
                                 <div class="dht-vb-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -60,7 +60,7 @@ class ButtonsGroup {
                            </button>`;
             }
             //settings button
-            if ($this._vbContainerEditorArea.attr("data-dht-vb-button-settings") === "true") {
+            if ($vbContainer.attr("data-dht-vb-button-settings") === "true") {
                 btnSettings = `<button type="button" class="dht-vb-button dht-vb-icon-setting">
                                     <div class="dht-vb-icon">
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -71,7 +71,7 @@ class ButtonsGroup {
                                 </button>`;
             }
             //duplicate button
-            if ($this._vbContainerEditorArea.attr("data-dht-vb-button-duplicate") === "true") {
+            if ($vbContainer.attr("data-dht-vb-button-duplicate") === "true") {
                 btnDuplicate = `<button type="button" class="dht-vb-button dht-vb-icon-duplicate">
                                 <div class="dht-vb-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -82,7 +82,7 @@ class ButtonsGroup {
                              </button>`;
             }
             //delete button
-            if ($this._vbContainerEditorArea.attr("data-dht-vb-button-delete") === "true") {
+            if ($vbContainer.attr("data-dht-vb-button-delete") === "true") {
                 btnDelete = `<button type="button" class="dht-vb-button dht-vb-icon-delete">
                                 <div class="dht-vb-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
@@ -93,7 +93,7 @@ class ButtonsGroup {
                             </button>`;
             }
             //other settings button
-            if ($this._vbContainerEditorArea.attr("data-dht-vb-button-other-settings") === "true") {
+            if ($vbContainer.attr("data-dht-vb-button-other-settings") === "true") {
                 btnOtherSetting = `<button type="button" class="dht-vb-button dht-vb-icon-other-setting">
                                         <div class="dht-vb-icon">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 512">
@@ -125,23 +125,23 @@ class ButtonsGroup {
      *
      * @return void
      */
-    private _openModalOnClick(): void {
+    private _openModalOnClick($vbContainer: JQuery<HTMLElement>, index: number): void {
 
         const $this = this;
-        this._vbContainerEditorArea.find(".dht-vb-buttons-group-container").on("click", ".dht-vb-button.dht-vb-icon-setting", function(event) {
+        $vbContainer.find(".dht-vb-buttons-group-container").on("click", ".dht-vb-button.dht-vb-icon-setting", function(event) {
             event.preventDefault();
 
-            //init modal component
-            $this._initModalComponent()
-                .then(() => {
-                    //modal element
-                    const modal = $("#" + $this._modalID);
+            // modal id
+            const modalID = "dht-modal-" + index;
 
+            //init modal component
+            $this._initModalComponent($vbContainer, modalID)
+                .then(() => {
                     //open the modal
-                    modal.dhtVBModal("open");
+                    $("#" + modalID).dhtVBModal("open");
 
                     //disable editing buttons area
-                    $this._vbContainerEditorArea.find(".dht-vb-element").addClass("dht-vb-disabled");
+                    $vbContainer.find(".dht-vb-element").addClass("dht-vb-disabled");
                 })
                 .catch(error => {
                     console.error(error);
@@ -154,16 +154,16 @@ class ButtonsGroup {
      *
      * @return void
      */
-    private async _initModalComponent(): Promise<void> {
+    private async _initModalComponent($vbContainer: JQuery<HTMLElement>, modalID: string): Promise<void> {
 
         try {
             const { dhtVBModalCreate } = await import("./modal");
 
             //add modal HTML to the VB container
-            dhtVBModalCreate(this._modalID, this._vbContainerEditorArea, this._translationStrings.modal_title);
+            dhtVBModalCreate(modalID, $vbContainer, this._translationStrings.modal_title);
 
             //init modal
-            $("#" + this._modalID).dhtVBModal({
+            $("#" + modalID).dhtVBModal({
                 autoClose: false,
                 pos_y: "50",
                 movable: true,
@@ -179,6 +179,6 @@ class ButtonsGroup {
 }
 
 //init each button groups area
-export function dhtInitButtonsGroupComponent(vbContainerEditorArea: JQuery<HTMLElement>, modalID: string, translationStrings: IVbTranslations): void {
-    new ButtonsGroup(vbContainerEditorArea, modalID, translationStrings);
+export function dhtInitButtonsGroupComponent(vbContainerEditorAreas: JQuery<HTMLElement>, translationStrings: IVbTranslations): void {
+    new ButtonsGroup(vbContainerEditorAreas, translationStrings);
 }

@@ -9,6 +9,7 @@ if( !defined( 'DHT_MAIN' ) ) {
 $field = $args[ 'field' ] ?? [];
 
 $on_off_class = in_array( $field[ 'value' ], $field[ 'left-choice' ] ) ? 'dht-slider-on' : 'dht-slider-off';
+$size         = $field[ 'size' ] ?? '';
 ?>
 <!-- field - switch  -->
 
@@ -21,8 +22,9 @@ $on_off_class = in_array( $field[ 'value' ], $field[ 'left-choice' ] ) ? 'dht-sl
 
     <div class="dht-field-child-wrapper dht-field-child-switch">
 
-        <label class="dht-switch <?php echo esc_attr( $on_off_class ); ?>"
-               for="<?php echo esc_attr( $field[ 'id' ] ); ?>">
+        <label
+            class="dht-switch <?php echo !empty( $size ) ? 'dht-toggle-btn-' . $size : ''; ?> <?php echo esc_attr( $on_off_class ); ?>"
+            for="<?php echo esc_attr( $field[ 'id' ] ); ?>">
 
             <input type="hidden" name="<?php echo esc_attr( $field[ 'id' ] ); ?>"
                    value="<?php echo esc_attr( $field[ 'value' ] ); ?>" />

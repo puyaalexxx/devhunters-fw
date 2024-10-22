@@ -14,6 +14,7 @@ $registered_fields = $args[ 'registered_fields' ] ?? [];
 $saved_values = $args[ 'saved_values' ] ?? [];
 
 $on_off_class = in_array( $toggle[ 'value' ], $toggle[ 'left-choice' ] ) ? 'dht-slider-on' : 'dht-slider-off';
+$size         = $toggle[ 'size' ] ?? '';
 
 $left_choice  = $toggle[ 'left-choice' ];
 $right_choice = $toggle[ 'right-choice' ];
@@ -29,8 +30,9 @@ $right_choice = $toggle[ 'right-choice' ];
 
     <div class="dht-field-child-wrapper dht-field-child-toggle">
 
-        <label class="dht-toggle <?php echo esc_attr( $on_off_class ); ?>"
-               for="<?php echo esc_attr( $toggle[ 'id' ] ); ?>">
+        <label
+            class="dht-toggle <?php echo !empty( $size ) ? 'dht-toggle-btn-' . $size : ''; ?> <?php echo esc_attr( $on_off_class ); ?>"
+            for="<?php echo esc_attr( $toggle[ 'id' ] ); ?>">
 
             <input type="hidden" name="<?php echo esc_attr( $toggle[ 'id' ] ); ?>[value]"
                    value="<?php echo esc_attr( $toggle[ 'value' ] ); ?>" />

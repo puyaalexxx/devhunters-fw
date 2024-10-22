@@ -1,0 +1,94 @@
+@import '../../../../variables.pcss';
+@import '../../../../mixins.pcss';
+
+@define-mixin toggle_resposnive_code {
+    label.dht-toggle {
+        margin: auto;
+    }
+
+    .dht-field-child-wrapper {
+        width: 100%;
+    }
+}
+
+/* toggle button styles*/
+.dht-wrapper {
+    .dht-field-child-toggle {
+        label.dht-toggle {
+            display: block;
+        }
+
+        .dht-field-wrapper {
+            display: block;
+            padding: 20px 0;
+
+            .dht-title {
+                margin-bottom: 10px;
+            }
+
+            .dht-info-help {
+                display: none !important;
+            }
+        }
+
+        .dht-toggle {
+            @mixin switch_toggle_btn;
+        }
+
+        .dht-toggle-content {
+            display: none;
+
+            &.dht-toggle-show {
+                display: block;
+            }
+        }
+
+        @media (max-width: 1366px) {
+            @mixin toggle_resposnive_code;
+        }
+    }
+
+    @media (max-width: 1600px) {
+        .dht-cosidebar {
+            .dht-field-child-toggle {
+                @mixin toggle_resposnive_code;
+            }
+        }
+    }
+
+    @media (max-width: 1366px) {
+        .dht-tabsmenu-container {
+            .dht-field-child-toggle {
+                @mixin toggle_resposnive_code;
+            }
+        }
+    }
+}
+
+
+.dht-meta-box-content {
+    @media (max-width: 1600px) {
+        .dht-field-child-toggle {
+            @mixin toggle_resposnive_code;
+        }
+    }
+
+    @media (max-width: 1920px) {
+        .dht-cosidebar {
+            .dht-field-child-toggle {
+                @mixin toggle_resposnive_code;
+            }
+        }
+    }
+}
+
+.dht-terms-page-content, .dht-vb-enabled .dht-vb-modal {
+    &.dht-modal-small, &.dht-modal-medium {
+        .dht-wrapper {
+            .dht-field-child-toggle {
+                @mixin toggle_resposnive_code;
+            }
+        }
+    }
+}
+

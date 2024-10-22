@@ -1,0 +1,79 @@
+@import '../../../../variables.pcss';
+@import '../../../../mixins.pcss';
+
+@define-mixin switch_resposnive_code {
+    label.dht-switch {
+        margin: auto;
+    }
+}
+
+/* switch button styles*/
+.dht-wrapper {
+    .dht-field-child-switch {
+        label.dht-switch {
+            display: block;
+        }
+
+        .dht-switch {
+            @mixin switch_toggle_btn;
+        }
+
+        @media (max-width: 1366px) {
+            @mixin switch_resposnive_code;
+        }
+    }
+
+    @media (max-width: 1600px) {
+        .dht-cosidebar {
+            .dht-field-child-switch {
+                @mixin switch_resposnive_code;
+            }
+        }
+    }
+
+    @media (max-width: 1366px) {
+        .dht-tabsmenu-container {
+            .dht-field-child-switch {
+
+                @mixin switch_resposnive_code;
+            }
+        }
+    }
+}
+
+
+.dht-meta-box-content {
+    .dht-wrapper {
+        @media (max-width: 1600px) {
+            .dht-field-child-switch {
+                @mixin switch_resposnive_code;
+            }
+        }
+
+        @media (max-width: 1920px) {
+            .dht-cosidebar {
+                .dht-field-child-switch {
+                    @mixin switch_resposnive_code;
+                }
+            }
+        }
+    }
+}
+
+.dht-terms-page-content {
+    .dht-wrapper {
+        .dht-field-child-switch {
+            @mixin switch_resposnive_code;
+        }
+    }
+}
+
+.dht-vb-enabled .dht-vb-modal {
+    &.dht-modal-small, &.dht-modal-medium {
+        .dht-wrapper {
+            .dht-field-child-switch {
+                @mixin switch_resposnive_code;
+            }
+        }
+    }
+}

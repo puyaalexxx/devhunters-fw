@@ -4,14 +4,16 @@
  * Class used to initialize vb buttons group area
  */
 class ButtonsGroup {
-    //vb editor area element
-    private readonly _vbContainerEditorAreas: JQuery<HTMLElement>;
+    //vb module element
+    private readonly _vbModule: JQuery<HTMLElement>;
+    //hidden input class for modal saved values
+    private readonly _hiddenInputClass = "dht-modal-saved-values";
     //translated strings
     private readonly _translationStrings: IVbTranslations;
 
-    constructor(vbContainerEditorAreas: JQuery<HTMLElement>, translationStrings: IVbTranslations) {
+    constructor(vbModule: JQuery<HTMLElement>, translationStrings: IVbTranslations) {
 
-        this._vbContainerEditorAreas = vbContainerEditorAreas;
+        this._vbModule = vbModule;
         this._translationStrings = translationStrings;
 
         //init toggle button
@@ -26,22 +28,41 @@ class ButtonsGroup {
     private _init(): void {
 
         const $this = this;
-        this._vbContainerEditorAreas.each(function(index) {
+        //go through each VB module element
+        this._vbModule.each(function() {
+            //get module name and id
+            const modalID = $(this).attr("data-dht-vb-module-id") ?? "";
+            const moduleName = $(this).attr("data-dht-vb-module-name") ?? "";
+
             $this._addButtonsOnElement($(this));
 
-            $this._openModalOnClick($(this), index);
+            $this._openModalOnClick({
+                $vbModule: $(this),
+                modalID: modalID,
+                moduleName: moduleName,
+                hiddenInputClass: $this._hiddenInputClass,
+            });
+
+            $this._addSavedValuesInput({
+                $vbModule: $(this),
+                modalID: modalID,
+                moduleName: moduleName,
+                hiddenInputClass: $this._hiddenInputClass,
+            });
         });
     }
 
     /**
-     * Add buttons group HTML code to each vb element
+     * Add buttons group HTML code to each vb module
+     *
+     * @param $vbModule Module element
      *
      * @return void
      */
-    private _addButtonsOnElement($vbContainer: JQuery<HTMLElement>): void {
+    private _addButtonsOnElement($vbModule: JQuery<HTMLElement>): void {
 
         const $this = this;
-        $vbContainer.find(".dht-vb-element").each(function() {
+        $vbModule.find(".dht-vb-module").each(function() {
             let btnDrag = "";
             let btnSettings = "";
             let btnDuplicate = "";
@@ -49,7 +70,7 @@ class ButtonsGroup {
             let btnOtherSetting = "";
 
             //drag button
-            if ($vbContainer.attr("data-dht-vb-button-drag") === "true") {
+            if ($vbModule.attr("data-dht-vb-button-drag") === "true") {
                 btnDrag = `<button type="button" class="dht-vb-button dht-vb-icon-drag">
                                 <div class="dht-vb-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -60,7 +81,7 @@ class ButtonsGroup {
                            </button>`;
             }
             //settings button
-            if ($vbContainer.attr("data-dht-vb-button-settings") === "true") {
+            if ($vbModule.attr("data-dht-vb-button-settings") === "true") {
                 btnSettings = `<button type="button" class="dht-vb-button dht-vb-icon-setting">
                                     <div class="dht-vb-icon">
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -71,7 +92,7 @@ class ButtonsGroup {
                                 </button>`;
             }
             //duplicate button
-            if ($vbContainer.attr("data-dht-vb-button-duplicate") === "true") {
+            if ($vbModule.attr("data-dht-vb-button-duplicate") === "true") {
                 btnDuplicate = `<button type="button" class="dht-vb-button dht-vb-icon-duplicate">
                                 <div class="dht-vb-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -82,7 +103,7 @@ class ButtonsGroup {
                              </button>`;
             }
             //delete button
-            if ($vbContainer.attr("data-dht-vb-button-delete") === "true") {
+            if ($vbModule.attr("data-dht-vb-button-delete") === "true") {
                 btnDelete = `<button type="button" class="dht-vb-button dht-vb-icon-delete">
                                 <div class="dht-vb-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
@@ -93,7 +114,7 @@ class ButtonsGroup {
                             </button>`;
             }
             //other settings button
-            if ($vbContainer.attr("data-dht-vb-button-other-settings") === "true") {
+            if ($vbModule.attr("data-dht-vb-button-other-settings") === "true") {
                 btnOtherSetting = `<button type="button" class="dht-vb-button dht-vb-icon-other-setting">
                                         <div class="dht-vb-icon">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 512">
@@ -123,25 +144,32 @@ class ButtonsGroup {
     /**
      * Open modal on clicking the settings icon
      *
+     * @param moduleInfo All module required info
+     *
      * @return void
      */
-    private _openModalOnClick($vbContainer: JQuery<HTMLElement>, index: number): void {
-
+    private _openModalOnClick(moduleInfo: ModuleInfo): void {
         const $this = this;
-        $vbContainer.find(".dht-vb-buttons-group-container").on("click", ".dht-vb-button.dht-vb-icon-setting", function(event) {
+        const { $vbModule, modalID, moduleName } = moduleInfo;
+
+        $vbModule.find(".dht-vb-buttons-group-container").on("click", ".dht-vb-button.dht-vb-icon-setting", function(event) {
             event.preventDefault();
 
-            // modal id
-            const modalID = "dht-modal-" + index;
+            //some error handling
+            if (modalID.length === 0 || moduleName.length === 0) {
+                if (modalID.length === 0) console.error("Please provide a unque module id");
+                if (moduleName.length === 0) console.error("No module name provided");
+                return;
+            }
 
             //init modal component
-            $this._initModalComponent($vbContainer, modalID)
+            $this._initModalComponent(moduleInfo)
                 .then(() => {
                     //open the modal
                     $("#" + modalID).dhtVBModal("open");
 
                     //disable editing buttons area
-                    $vbContainer.find(".dht-vb-element").addClass("dht-vb-disabled");
+                    $vbModule.find(".dht-vb-module").addClass("dht-vb-disabled");
                 })
                 .catch(error => {
                     console.error(error);
@@ -152,15 +180,18 @@ class ButtonsGroup {
     /**
      * init modal component
      *
+     * @param moduleInfo All module required info
+     *
      * @return void
      */
-    private async _initModalComponent($vbContainer: JQuery<HTMLElement>, modalID: string): Promise<void> {
+    private async _initModalComponent(moduleInfo: ModuleInfo): Promise<void> {
+        const { modalID } = moduleInfo;
 
         try {
-            const { dhtVBModalCreate } = await import("./modal");
+            const { dhtCreateVBModal } = await import("./modal");
 
             //add modal HTML to the VB container
-            dhtVBModalCreate(modalID, $vbContainer, this._translationStrings.modal_title);
+            dhtCreateVBModal({ ...moduleInfo, modalTitle: this._translationStrings.modal_title });
 
             //init modal
             $("#" + modalID).dhtVBModal({
@@ -176,9 +207,22 @@ class ButtonsGroup {
         }
     }
 
+    /**
+     * add hidden input for modal saved values to the module container
+     *
+     * @param moduleInfo All module required info
+     *
+     * @return void
+     */
+    private _addSavedValuesInput(moduleInfo: ModuleInfo): void {
+        const { $vbModule, modalID, moduleName, hiddenInputClass } = moduleInfo;
+
+        $vbModule.append(`<input type="hidden" name="dht-fw-modules[${moduleName}][${modalID}]" class="${hiddenInputClass}" value="">`);
+    }
+
 }
 
 //init each button groups area
-export function dhtInitButtonsGroupComponent(vbContainerEditorAreas: JQuery<HTMLElement>, translationStrings: IVbTranslations): void {
-    new ButtonsGroup(vbContainerEditorAreas, translationStrings);
+export function dhtInitButtonsGroupComponent(vbModule: JQuery<HTMLElement>, translationStrings: IVbTranslations): void {
+    new ButtonsGroup(vbModule, translationStrings);
 }

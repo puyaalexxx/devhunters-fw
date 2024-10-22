@@ -8,7 +8,7 @@ use DHT\DHT;
 use DHT\Helpers\Classes\Environment;
 use function DHT\Helpers\dht_get_variables_from_file;
 
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
@@ -56,7 +56,7 @@ final class Icon extends BaseField {
 		wp_register_style( DHT_PREFIX_CSS . '-bootstrap-icons-css', DHT_ASSETS_URI . 'styles/libraries/bootstrap-icons.min.css', array(), DHT::$version );
 		wp_enqueue_style( DHT_PREFIX_CSS . '-bootstrap-icons-css' );
 		
-		if ( Environment::isDevelopment() ) {
+		if( Environment::isDevelopment() ) {
 			wp_register_style( DHT_PREFIX_CSS . '-icon-field', DHT_ASSETS_URI . 'dist/css/icon.css', array(), DHT::$version );
 			wp_enqueue_style( DHT_PREFIX_CSS . '-icon-field' );
 			
@@ -72,43 +72,43 @@ final class Icon extends BaseField {
 	 */
 	public function getOptionIcons() : void {
 		
-		if ( isset( $_POST[ 'action' ] ) && $_POST[ 'action' ] == "getOptionIcons" && isset( $_POST[ 'data' ][ 'icon_type' ] ) ) {
+		if( isset( $_POST[ 'action' ] ) && $_POST[ 'action' ] == "getOptionIcons" && isset( $_POST[ 'data' ][ 'icon_type' ] ) ) {
 			
 			//retrieve icon type
 			$icon_type = $_POST[ 'data' ][ 'icon_type' ];
-			$icon      = ! empty( $_POST[ 'data' ][ 'icon' ] ) ? $_POST[ 'data' ][ 'icon' ] : '';
+			$icon      = !empty( $_POST[ 'data' ][ 'icon' ] ) ? $_POST[ 'data' ][ 'icon' ] : '';
 			
 			$icons = [];
 			
-			if ( $icon_type == 'dashicons' ) {
+			if( $icon_type == 'dashicons' ) {
 				$icons = dht_get_variables_from_file( DHT_OPTIONS_DIR . 'fields/fields/icons/dashicons.php', 'dashicons' );
 			}
 			
-			if ( $icon_type == 'fontawesome' ) {
+			if( $icon_type == 'fontawesome' ) {
 				$icons = dht_get_variables_from_file( DHT_OPTIONS_DIR . 'fields/fields/icons/font-awesome.php', 'font_awesome_icons' );
 			}
 			
-			if ( $icon_type == 'divi' ) {
+			if( $icon_type == 'divi' ) {
 				$icons = dht_get_variables_from_file( DHT_OPTIONS_DIR . 'fields/fields/icons/divi.php', 'divi_icons' );
 			}
 			
-			if ( $icon_type == 'elusive' ) {
+			if( $icon_type == 'elusive' ) {
 				$icons = dht_get_variables_from_file( DHT_OPTIONS_DIR . 'fields/fields/icons/elusive.php', 'elusive_icons' );
 			}
 			
-			if ( $icon_type == 'line' ) {
+			if( $icon_type == 'line' ) {
 				$icons = dht_get_variables_from_file( DHT_OPTIONS_DIR . 'fields/fields/icons/line.php', 'line_icons' );
 			}
 			
-			if ( $icon_type == 'dev' ) {
+			if( $icon_type == 'dev' ) {
 				$icons = dht_get_variables_from_file( DHT_OPTIONS_DIR . 'fields/fields/icons/devicon.php', 'devicon_icons' );
 			}
 			
-			if ( $icon_type == 'bootstrap' ) {
+			if( $icon_type == 'bootstrap' ) {
 				$icons = dht_get_variables_from_file( DHT_OPTIONS_DIR . 'fields/fields/icons/bootstrap.php', 'bootstrap_icons' );
 			}
 			
-			if ( ! empty( $icons ) ) {
+			if( !empty( $icons ) ) {
 				
 				ob_start();
 				
@@ -146,7 +146,7 @@ final class Icon extends BaseField {
 	 */
 	public function addIDPrefix( array $field, string $options_id ) : array {
 		
-		if ( ! empty( $options_id ) ) {
+		if( !empty( $options_id ) ) {
 			$field[ 'name' ] = $options_id . '[' . $field[ 'id' ] . ']';
 			$field[ 'id' ]   = str_replace( [
 				'[',
@@ -170,16 +170,29 @@ final class Icon extends BaseField {
 	 * @param array $field            - field
 	 * @param mixed $field_post_value - $field $_POST value passed on save
 	 *
-	 * @return mixed - changed field value
+	 * @return mixed mixed - changed field value
+	 * mixed - changed field value
 	 * @since     1.0.0
 	 */
 	public function saveValue( array $field, mixed $field_post_value ) : mixed {
 		
-		if ( empty( $field_post_value ) ) {
+		if( empty( $field_post_value ) ) {
 			return $field[ 'value' ];
 		}
 		
-		return ( ! is_array( $field_post_value ) ) ? (array) json_decode( stripslashes( $field_post_value ) ) : $field_post_value;
+		if( is_array( $field_post_value ) ) {
+			return $field_post_value;
+		}
+		else {
+			//if it is a json object without escaped characters
+			$data = json_decode( $field_post_value, true );
+			
+			if( json_last_error() !== JSON_ERROR_NONE ) {
+				$data = json_decode( stripslashes( $field_post_value ), true );
+			}
+			
+			return $data;
+		}
 	}
 	
 }

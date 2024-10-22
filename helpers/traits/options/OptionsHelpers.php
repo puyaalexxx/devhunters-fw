@@ -5,7 +5,7 @@ namespace DHT\Helpers\Traits\Options;
 
 use function DHT\Helpers\dht_get_current_admin_post_type;
 
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
@@ -63,13 +63,13 @@ trait OptionsHelpers {
 		
 		$nonce = '';
 		
-		if ( isset( $_POST ) ) {
+		if( isset( $_POST ) ) {
 			$nonce = array_filter( array_keys( $_POST ), function( $key ) {
 				
 				return str_contains( $key, '_dht_fw_nonce' );
 			} );
 			
-			$nonce = ! empty( $nonce ) ? str_replace( "_name", "", implode( "", $nonce ) ) : '';
+			$nonce = !empty( $nonce ) ? str_replace( "_name", "", implode( "", $nonce ) ) : '';
 		}
 		
 		$nonce = empty( $nonce ) ? 'dht_' . md5( uniqid( (string) mt_rand(), true ) ) . '_dht_fw_nonce' : $nonce;
@@ -118,13 +118,33 @@ trait OptionsHelpers {
 	 */
 	private function _addMetaboxCustomClass( array $metabox, string $post_type, string $metabox_id ) : void {
 		
-		if ( isset( $metabox[ 'attr' ][ 'class' ] ) ) {
+		if( isset( $metabox[ 'attr' ][ 'class' ] ) ) {
 			add_filter( 'postbox_classes_' . $post_type . '_' . $metabox_id, function( $classes ) use ( $metabox ) {
 				$classes[] = $metabox[ 'attr' ][ 'class' ];
 				
 				return $classes;
 			} );
 		}
+	}
+	
+	/**
+	 * Validates the nonce in the POST request.
+	 *
+	 * This method checks if the nonce in the POST data is valid to ensure that the
+	 * request is coming from a legitimate source.
+	 *
+	 * @param array $nonce Custom nonce field
+	 *
+	 * @return bool True if the nonce is valid, otherwise false.
+	 * @since     1.0.0
+	 */
+	private function _isValidRequest( array $nonce = [] ) : bool {
+		
+		if( !empty( $nonce ) ) {
+			return isset( $nonce[ 'name' ] ) && wp_verify_nonce( sanitize_key( wp_unslash( $nonce[ 'name' ] ) ), $nonce[ 'action' ] );
+		}
+		
+		return isset( $_POST[ $this->_nonce[ 'name' ] ] ) && wp_verify_nonce( sanitize_key( wp_unslash( $_POST[ $this->_nonce[ 'name' ] ] ) ), $this->_nonce[ 'action' ] );
 	}
 	
 }

@@ -11,6 +11,7 @@ use DHT\Core\Options\Fields\BaseField;
 use DHT\DHT;
 use DHT\Helpers\Classes\Environment;
 use DHT\Helpers\Traits\Options\{EnqueueOptionsHelpers,
+	GetOptionsHelpers,
 	OptionsHelpers,
 	RegisterOptionsHelpers,
 	RenderOptionsHelpers,
@@ -22,6 +23,7 @@ final class Options implements IOptions {
 	
 	use OptionsHelpers;
 	use SaveOptionsHelpers;
+	use GetOptionsHelpers;
 	use RenderOptionsHelpers;
 	use RegisterOptionsHelpers;
 	use EnqueueOptionsHelpers;
@@ -79,16 +81,16 @@ final class Options implements IOptions {
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueueGeneralScripts' ] );
 		
 		//dashboard pages
-		$this->_renderDashBoardPagesOptions( $this->_dashboardPagesOptions );
+		$this->_renderDashBoardPagesOptions();
 		
 		//post types
-		$this->_renderPostTypesOptions( $this->_postTypeOptions );
+		$this->_renderPostTypesOptions();
 		
 		//terms
-		$this->_renderTermsOptions( $this->_termOptions );
+		$this->_renderTermsOptions();
 		
 		//vb options
-		$this->_renderVBOptions( $this->_vbOptions );
+		$this->_renderVBOptions();
 	}
 	
 	/**
@@ -126,107 +128,106 @@ final class Options implements IOptions {
 	/**
 	 * Render dashboard page options
 	 *
-	 * @param array $dashboardPagesOptions Dashboard Pages options
-	 *
 	 * @return void
 	 * @since     1.0.0
 	 */
-	private function _renderDashBoardPagesOptions( array $dashboardPagesOptions ) : void {
+	private function _renderDashBoardPagesOptions() : void {
 		
 		//enqueue styles/scripts for each option received from the plugin
-		$this->_enqueueOptionsScripts( apply_filters( 'dht:options:enqueue_dash_pages_option_scripts', $dashboardPagesOptions ) );
+		$this->_enqueueOptionsScripts( apply_filters( 'dht:options:enqueue_dash_pages_option_scripts', $this->_dashboardPagesOptions ) );
 		
 		//render dashboard page form HTML content hook with the passed options
-		add_action( 'dht:options:view:render_dashboard_page_content', function() use ( $dashboardPagesOptions ) {
+		add_action( 'dht:options:view:render_dashboard_page_content', function() {
 			//save dashboard pages options
-			$this->_saveDashBoardPageOptions( $dashboardPagesOptions );
+			$this->_saveDashBoardPageOptions();
 			
-			$this->_renderContent( $dashboardPagesOptions );
-		} );
-	}
-	
-	/**
-	 * Render post types options
-	 *
-	 * @param array $postTypeOptions Post type options
-	 *
-	 * @return void
-	 * @since     1.0.0
-	 */
-	private function _renderPostTypesOptions( array $postTypeOptions ) : void {
-		
-		//enqueue styles/scripts for each option received from the plugin
-		$this->_enqueueOptionsScripts( apply_filters( 'dht:options:enqueue_post_types_scripts', $postTypeOptions ) );
-		
-		//save post type metaboxes options
-		add_action( 'save_post', function( int $post_id, WP_Post $post ) use ( $postTypeOptions ) {
-			$this->_savePostTypeOptions( $post_id, $post, $postTypeOptions );
-		}, 999, 2 );
-		
-		//register post types and pages meta boxes
-		add_action( 'add_meta_boxes', function() use ( $postTypeOptions ) {
-			$this->_registerPostTypeMetaboxes( $postTypeOptions );
+			$this->_renderContent( $this->_dashboardPagesOptions );
 		} );
 	}
 	
 	/**
 	 * Render terms options
 	 *
-	 * @param array $termOptions Term options
-	 *
 	 * @return void
 	 * @since     1.0.0
 	 */
-	private function _renderTermsOptions( array $termOptions ) : void {
+	private function _renderTermsOptions() : void {
 		
 		//enqueue styles/scripts for each option received from the plugin
-		$this->_enqueueOptionsScripts( apply_filters( 'dht:options:enqueue_term_scripts', $termOptions ) );
+		$this->_enqueueOptionsScripts( apply_filters( 'dht:options:enqueue_term_scripts', $this->_termOptions ) );
 		
 		//taxonomies related functionality
 		{
 			$current_taxonomy = dht_get_current_admin_taxonomy_from_url();
 			
-			add_action( $current_taxonomy . '_edit_form', function( $term ) use ( $termOptions ) {
-				$this->_renderContent( $termOptions, 'term', $term->term_id );
+			add_action( $current_taxonomy . '_edit_form', function( $term ) {
+				$this->_renderContent( $this->_termOptions, 'term', $term->term_id );
 			}, 999 );
 			
-			add_action( 'edited_' . $current_taxonomy, function( $term_id ) use ( $termOptions ) {
-				$this->_saveTermOptions( $term_id, $termOptions );
+			add_action( 'edited_' . $current_taxonomy, function( $term_id ) {
+				$this->_saveTermOptions( $term_id );
 			}, 999 );
 		}
 	}
 	
 	/**
-	 * Render visual builder options
-	 *
-	 * @param array $vbOptions VB modal options
+	 * Render post types options
 	 *
 	 * @return void
 	 * @since     1.0.0
 	 */
-	private function _renderVBOptions( array $vbOptions ) : void {
+	private function _renderPostTypesOptions() : void {
+		
+		//enqueue styles/scripts for each option received from the plugin
+		$this->_enqueueOptionsScripts( apply_filters( 'dht:options:enqueue_post_types_scripts', $this->_postTypeOptions ) );
+		
+		//save post type metaboxes options
+		add_action( 'save_post', function( int $post_id, WP_Post $post ) {
+			$this->_savePostTypeOptions( $post_id, $post );
+		}, 999, 2 );
+		
+		//register post types and pages meta boxes
+		add_action( 'add_meta_boxes', function() {
+			$this->_registerPostTypeMetaboxes( $this->_postTypeOptions );
+		} );
+	}
+	
+	/**
+	 * Render visual builder options
+	 *
+	 * @return void
+	 * @since     1.0.0
+	 */
+	private function _renderVBOptions() : void {
 		
 		//enqueue styles/scripts for each modal options
-		foreach ( $vbOptions as $vbOption ) {
+		foreach ( $this->_vbOptions as $vbOption ) {
 			$this->_enqueueOptionsScripts( apply_filters( 'dht:options:enqueue_vb_scripts', $vbOption ) );
 		}
 		
 		//process and filter the saved modal form options
-		add_filter( 'dht:vb:save_modal_content', function( int $postID, string $modalName, array $modalFormData ) use ( $vbOptions ) {
-			return $this->_saveVBModalOptions( $vbOptions[ $modalName ] ?? [], $modalFormData );
-		}, 10, 3 );
+		add_filter( 'dht:vb:save_modal_content', function( int $postID, string $moduleName, string $moduleID, array $modalFormData ) {
+			$options = array_merge( $this->_vbOptions[ $moduleName ], [ "id" => $moduleID ] );
+			
+			return $modalFormData ? $this->_saveContainerOptions( $options, $modalFormData[ $options[ 'id' ] ] ?? [], 'vb', $postID, false ) : [];
+		}, 10, 4 );
 		
 		//render visual builder modal HTML content hook with the passed options
-		add_action( 'dht:vb:render_modal_content', function( int $postID, string $modalName, array $modalSavedFormData ) use ( $vbOptions ) {
-			//apply the new saved values that are already processed and filtered
-			//modal options are not saved globally but locally to a hidden input to apply them when the modal is opened
-			add_filter( 'dht:options:set_saved_values', function() use ( $modalSavedFormData, $modalName ) {
-				return $modalSavedFormData;
-			} );
+		add_action( 'dht:vb:render_modal_content', function( int $postID, string $modalName, string $moduleID, array $modalSavedFormData ) {
+			//change options id to the module id to make them unique
+			$options = array_merge( $this->_vbOptions[ $modalName ], [ "id" => $moduleID ] );
+			
+			//override the modal saved values if you click the modal save button
+			//modal options are not saved in the DB but locally to a hidden input to grab them when the modal is opened
+			if( !empty( $modalSavedFormData ) ) {
+				add_filter( 'dht:options:set_saved_values', function() use ( $options, $modalName, $modalSavedFormData ) {
+					return [ $options[ 'id' ] => $modalSavedFormData ];
+				} );
+			}
 			
 			//render the modal options
-			$this->_renderContent( $vbOptions[ $modalName ] ?? [], "vb", $postID );
-		}, 10, 3 );
+			$this->_renderContent( $options, "vb", $postID );
+		}, 10, 4 );
 	}
 	
 	/**
@@ -236,47 +237,68 @@ final class Options implements IOptions {
 	 * and processes the POST data to save settings. It delegates specific processing
 	 * tasks to other methods to improve readability and maintainability.
 	 *
-	 *
-	 * @param array $options
-	 *
 	 * @return void
 	 * @since     1.0.0
 	 */
-	private function _saveDashBoardPageOptions( array $options ) : void {
+	private function _saveDashBoardPageOptions() : void {
 		
 		if( $this->_isValidRequest() ) {
 			
-			$post_values = $_POST[ $options[ 'id' ] ?? '' ] ?? NULL;
+			$post_values = $_POST[ $this->_dashboardPagesOptions[ 'id' ] ?? '' ] ?? [];
 			
 			if( $post_values ) {
-				$this->_handleContainerOptions( $options, $post_values );
+				$this->_saveContainerOptions( $this->_dashboardPagesOptions, $post_values );
 			}
 			else {
-				$this->_handleUngroupedOptions( $options );
+				$this->_saveUngroupedOptions( $this->_dashboardPagesOptions );
 			}
 		}
 	}
 	
 	/**
-	 * Save post options settings based on its id
+	 * Save term option based on the provided settings ID.
+	 *
+	 * This method handles both grouped and ungrouped options, validates the nonce,
+	 * and processes the POST data to save settings. It delegates specific processing
+	 * tasks to other methods to improve readability and maintainability.
+	 *
+	 * @param int $term_id Term ID
+	 *
+	 * @return void
+	 * @since     1.0.0
+	 */
+	private function _saveTermOptions( int $term_id ) : void {
+		
+		if( $this->_isValidRequest() ) {
+			
+			$post_values = $_POST[ $this->_termOptions[ 'id' ] ?? '' ] ?? [];
+			
+			//check for the container id
+			if( $post_values ) {
+				$this->_saveContainerOptions( $this->_termOptions, $post_values, 'term', $term_id );
+			}
+		}
+	}
+	
+	/**
+	 * Save post options settings based on its id (metaboxes and vb modules)
 	 *
 	 * This method handles the post saving options, it is used in the save_post hook, validates the nonce,
 	 * and processes the POST data to save settings. It delegates specific processing
 	 * tasks to other methods to improve readability and maintainability.
 	 *
-	 * @param int     $post_id         saved post id
-	 * @param WP_Post $post            saved post
-	 * @param array   $postTypeOptions Options array
+	 * @param int     $postID Saved post id
+	 * @param WP_Post $post   Saved post
 	 *
 	 * @return void
 	 * @since     1.0.0
 	 */
-	public function _savePostTypeOptions( int $post_id, WP_Post $post, array $postTypeOptions ) : void {
+	public function _savePostTypeOptions( int $postID, WP_Post $post ) : void {
 		
 		//check nonce field
 		if( $this->_isValidRequest() ) {
 			
-			if( !current_user_can( 'edit_post', $post_id ) ) {
+			if( !current_user_can( 'edit_post', $postID ) ) {
 				return;
 			}
 			
@@ -290,73 +312,19 @@ final class Options implements IOptions {
 				return;
 			}
 			
-			//save metaboxes options
 			if( isset( $_POST ) ) {
-				foreach ( $_POST as $metabox_id => $values ) {
-					if( str_contains( $metabox_id, 'dht-fw-metabox-id' ) ) {
-						//many metaboxes
-						if( !isset( $postTypeOptions[ 'options' ] ) ) {
-							foreach ( $postTypeOptions as $options ) {
-								if( isset( $values[ $options[ 'id' ] ] ) ) {
-									$this->_handleContainerOptions( $options, $values[ $options[ 'id' ] ], 'post', $post_id );
-								}
-							}
-						}
-						else {
-							$this->_handleContainerOptions( $postTypeOptions, $values[ $postTypeOptions[ 'id' ] ], 'post', $post_id );
-						}
+				foreach ( $_POST as $id => $values ) {
+					//saving for metaboxes
+					if( str_contains( $id, 'dht-fw-metabox-id' ) ) {
+						$this->_savePostTypeMetaboxesOptions( $postID, $values );
+					}
+					//saving for vb modals
+					elseif( str_contains( $id, 'dht-fw-modules' ) ) {
+						$this->_saveVBModulesOptions( $postID, $values );
 					}
 				}
 			}
 		}
-	}
-	
-	/**
-	 * Save term option based on the provided settings ID.
-	 *
-	 * This method handles both grouped and ungrouped options, validates the nonce,
-	 * and processes the POST data to save settings. It delegates specific processing
-	 * tasks to other methods to improve readability and maintainability.
-	 *
-	 *
-	 * @param int   $term_id Term ID
-	 * @param array $options Option array
-	 *
-	 * @return void
-	 * @since     1.0.0
-	 */
-	private function _saveTermOptions( int $term_id, array $options ) : void {
-		
-		if( $this->_isValidRequest() ) {
-			
-			$post_values = $_POST[ $options[ 'id' ] ?? '' ] ?? NULL;
-			
-			//check for the container id
-			if( $post_values ) {
-				$this->_handleContainerOptions( $options, $post_values, 'term', $term_id );
-			}
-		}
-	}
-	
-	/**
-	 * Save vb modal options based on the provided modal form values
-	 *
-	 * @param array $options
-	 * @param array $modalOptionsValues Values passed from the modal form
-	 *
-	 * @return array
-	 * @since     1.0.0
-	 */
-	private function _saveVBModalOptions( array $options, array $modalOptionsValues ) : array {
-		
-		if( $modalOptionsValues ) {
-			
-			$modalOptionsValues = $modalOptionsValues[ $options[ 'id' ] ?? '' ] ?? NULL;
-			
-			return $this->_handleContainerOptions( $options, $modalOptionsValues, 'vb' );
-		}
-		
-		return [];
 	}
 	
 	/**

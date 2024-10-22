@@ -11,7 +11,7 @@ use DHT\Helpers\Classes\Environment;
 use function DHT\Helpers\dht_get_current_admin_post_type_from_url;
 use function DHT\Helpers\dht_make_script_as_module_type;
 
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
@@ -42,7 +42,7 @@ final class VB implements IVB {
 		//get current editing post type
 		$current_post_type = dht_get_current_admin_post_type_from_url();
 		
-		if ( in_array( $current_post_type, $this->_custom_post_types, true ) ) {
+		if( in_array( $current_post_type, $this->_custom_post_types, true ) ) {
 			
 			//enqueue the vb scripts
 			add_action( 'admin_enqueue_scripts', [ $this, 'enqueueScripts' ] );
@@ -63,7 +63,7 @@ final class VB implements IVB {
 	 */
 	public function enqueueScripts() : void {
 		
-		if ( Environment::isDevelopment() ) {
+		if( Environment::isDevelopment() ) {
 			wp_register_style( DHT_PREFIX_CSS . '-vb', DHT_ASSETS_URI . 'dist/css/vb.css', array(), DHT::$version );
 			wp_enqueue_style( DHT_PREFIX_CSS . '-vb' );
 			

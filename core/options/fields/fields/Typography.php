@@ -7,7 +7,7 @@ use DHT\Core\Options\Fields\BaseField;
 use DHT\DHT;
 use DHT\Helpers\Classes\Environment;
 
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
@@ -41,7 +41,7 @@ final class Typography extends BaseField {
 		//library js
 		wp_enqueue_script( DHT_PREFIX_JS . '-select2-field', DHT_ASSETS_URI . 'scripts/libraries/select2.full.min.js', array( 'jquery' ), DHT::$version, true );
 		
-		if ( Environment::isDevelopment() ) {
+		if( Environment::isDevelopment() ) {
 			wp_register_style( DHT_PREFIX_CSS . '-typography-field', DHT_ASSETS_URI . 'dist/css/typography.css', array(), DHT::$version );
 			wp_enqueue_style( DHT_PREFIX_CSS . '-typography-field' );
 			
@@ -91,15 +91,13 @@ final class Typography extends BaseField {
 	 */
 	public function saveValue( array $field, mixed $field_post_value ) : mixed {
 		
-		if ( empty( $field_post_value ) ) {
+		if( empty( $field_post_value ) ) {
 			return $field[ 'value' ];
 		}
 		
 		//for the range field
-		if ( ! empty( $field_post_value[ 'font-family' ] ) ) {
-			
+		if( !empty( $field_post_value[ 'font-family' ] ) ) {
 			$field_post_value[ 'font-family' ][ 'font' ] = stripslashes( $field_post_value[ 'font-family' ][ 'font' ] );
-			
 		}
 		
 		return $field_post_value;

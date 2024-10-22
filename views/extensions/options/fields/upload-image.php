@@ -31,7 +31,7 @@ elseif( !empty( $field[ 'value' ][ 'image' ] ) ) {
     <div class="dht-field-child-wrapper dht-field-child-upload dht-field-child-upload-image">
 
         <label
-            for="<?php echo esc_attr( $field[ 'id' ] ); ?>"><?php echo esc_html( $field[ 'title' ] ); ?></label><br />
+            for="<?php echo esc_attr( $field[ 'id' ] ); ?>"><?php echo esc_html( $field[ 'title' ] ); ?></label>
 
         <!--show image preview if image link not empty -->
 		<?php if( !empty( $image_url ) ): ?>

@@ -8,7 +8,7 @@ use DHT\DHT;
 use DHT\Helpers\Classes\Environment;
 use DHT\Helpers\Traits\Options\ContainerTypeHelpers;
 
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
@@ -41,7 +41,7 @@ final class TabsMenu extends BaseContainer {
 	 */
 	public function enqueueOptionScripts( array $container ) : void {
 		
-		if ( Environment::isDevelopment() ) {
+		if( Environment::isDevelopment() ) {
 			wp_register_style( DHT_PREFIX_CSS . '-tabsmenu-container', DHT_ASSETS_URI . 'dist/css/tabsmenu.css', array(), DHT::$version );
 			wp_enqueue_style( DHT_PREFIX_CSS . '-tabsmenu-container' );
 			
@@ -65,7 +65,7 @@ final class TabsMenu extends BaseContainer {
 	public function saveValue( array $container, mixed $container_post_values ) : array {
 		
 		// Return early if container_post_values is empty
-		if ( empty( $container_post_values ) ) {
+		if( empty( $container_post_values ) ) {
 			return [];
 		}
 		
@@ -74,7 +74,7 @@ final class TabsMenu extends BaseContainer {
 		foreach ( $container[ 'options' ] as $page ) {
 			$page_options = $page[ 'options' ] ?? [];
 			
-			if ( ! empty( $page_options ) ) {
+			if( !empty( $page_options ) ) {
 				$values = array_merge( $values, $this->_sanitizeValues( $page_options, $container_post_values ) );
 			}
 		}

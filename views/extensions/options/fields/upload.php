@@ -31,7 +31,7 @@ elseif( !empty( $field[ 'value' ][ 'item' ] ) ) {
     <div class="dht-field-child-wrapper dht-field-child-upload dht-field-child-upload-item">
 
         <label
-            for="<?php echo esc_attr( $field[ 'id' ] ); ?>"><?php echo esc_html( $field[ 'title' ] ); ?></label><br />
+            for="<?php echo esc_attr( $field[ 'id' ] ); ?>"><?php echo esc_html( $field[ 'title' ] ); ?></label>
 
         <input class="dht-upload-item dht-field"
                type="text"

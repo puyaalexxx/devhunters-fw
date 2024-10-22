@@ -59,20 +59,16 @@ final class Modal {
 		
 		if( isset( $_POST[ 'action' ] ) && $_POST[ 'action' ] == "getModalOptions" && isset( $_POST[ 'post_id' ] ) ) {
 			
-			if( isset( $_POST[ 'data' ][ 'modalName' ] ) ) {
-				$modal_name = !empty( $_POST[ 'data' ][ 'modalName' ] ) ? $_POST[ 'data' ][ 'modalName' ] : "";
-				$post_id    = !empty( $_POST[ 'post_id' ] ) ? intval( $_POST[ 'post_id' ] ) : 0;
-				
-				//check for the saved form data
-				$modalSavedFormData = [];
-				if( isset( $_POST[ 'data' ][ 'formSavedData' ] ) && $_POST[ 'data' ][ 'formSavedData' ] ) {
-					$modalSavedFormData = json_decode( stripslashes( html_entity_decode( $_POST[ 'data' ][ 'formSavedData' ], ENT_QUOTES, 'UTF-8' ) ), true );
-				}
+			if( isset( $_POST[ 'data' ][ 'moduleName' ] ) && isset( $_POST[ 'data' ][ 'moduleID' ] ) ) {
+				$postId        = !empty( $_POST[ 'post_id' ] ) ? intval( $_POST[ 'post_id' ] ) : 0;
+				$moduleName    = !empty( $_POST[ 'data' ][ 'moduleName' ] ) ? $_POST[ 'data' ][ 'moduleName' ] : "";
+				$moduleID      = !empty( $_POST[ 'data' ][ 'moduleID' ] ) ? $_POST[ 'data' ][ 'moduleID' ] : "";
+				$formSavedData = !empty( $_POST[ 'data' ][ 'formSavedData' ] ) ? json_decode( stripslashes( html_entity_decode( $_POST[ 'data' ][ 'formSavedData' ], ENT_QUOTES, 'UTF-8' ) ), true ) : [];
 				
 				ob_start();
 				
 				//options are rendered via this hook from the Options class
-				do_action( 'dht:vb:render_modal_content', $post_id, $modal_name, $modalSavedFormData );
+				do_action( 'dht:vb:render_modal_content', $postId, $moduleName, $moduleID, $formSavedData );
 				
 				$content = ob_get_clean();
 				
@@ -97,15 +93,16 @@ final class Modal {
 	 */
 	public function saveModalOptions() : void {
 		
-		if( isset( $_POST[ 'action' ] ) && $_POST[ 'action' ] == "saveModalOptions" ) {
+		if( isset( $_POST[ 'action' ] ) && $_POST[ 'action' ] == "saveModalOptions" && isset( $_POST[ 'post_id' ] ) ) {
 			
-			if( isset( $_POST[ 'data' ][ 'formData' ] ) ) {
+			if( isset( $_POST[ 'data' ][ 'formData' ] ) && isset( $_POST[ 'data' ][ 'moduleID' ] ) && isset( $_POST[ 'data' ][ 'moduleName' ] ) ) {
 				$post_id    = !empty( $_POST[ 'post_id' ] ) ? intval( $_POST[ 'post_id' ] ) : 0;
-				$modal_name = !empty( $_POST[ 'data' ][ 'modalName' ] ) ? $_POST[ 'data' ][ 'modalName' ] : "";
+				$modal_name = !empty( $_POST[ 'data' ][ 'moduleName' ] ) ? $_POST[ 'data' ][ 'moduleName' ] : "";
+				$moduleID   = !empty( $_POST[ 'data' ][ 'moduleID' ] ) ? $_POST[ 'data' ][ 'moduleID' ] : "";
 				parse_str( $_POST[ 'data' ][ 'formData' ], $formData ); // Parse the serialized string into an array
 				
 				//get filtered form data
-				$filteredFormData = apply_filters( 'dht:vb:save_modal_content', $post_id, $modal_name, $formData );
+				$filteredFormData = apply_filters( 'dht:vb:save_modal_content', $post_id, $modal_name, $moduleID, $formData );
 				
 				wp_send_json_success( json_encode( $filteredFormData ) );
 			}

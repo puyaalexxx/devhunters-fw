@@ -30,3 +30,11 @@ interface IVbTranslations {
     icon_other_settings: string;
     modal_title: string;
 }
+
+interface ModuleInfo {
+    $vbModule: JQuery<HTMLElement>; //Module container selector
+    modalID: string; //Module id - must be unique
+    moduleName: string; //Module Name
+    modalTitle?: string; // Translated modal title
+    hiddenInputClass?: string; //Hidden input class where the modal options are saved
+}

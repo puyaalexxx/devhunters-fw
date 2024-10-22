@@ -1,5 +1,3 @@
-const formSavedDataInput = "dht-modal-saved-values";
-
 /**
  * Modal Component (Plugin)
  *
@@ -306,7 +304,7 @@ function dhtVBModal(this: JQuery, options?: IVBModalData | keyof IVBModalMethods
         //close/save modal on click
         $moDialog.find(".dht-vb-modal-close, .dht-vb-modal-save").on("click", function() {
             //remove disabled class to show the edit icons
-            $(".dht-vb-enabled .dht-vb-element").removeClass("dht-vb-disabled");
+            $(".dht-vb-enabled .dht-vb-module").removeClass("dht-vb-disabled");
         });
 
         //close modal on click
@@ -474,16 +472,15 @@ $.fn.dhtVBModal = function(this: JQuery, options?: IVBModalData): JQuery {
  * Call this method first to append the modal HTML
  * to the specified container selector
  *
- * @param modalID
- * @param appendTo Container selector where the modal should be appended
- * @param modalTitle
+ * @param moduleInfo All module required info
  *
  * @return void
  */
-export function dhtVBModalCreate(modalID: string, appendTo: JQuery<HTMLElement>, modalTitle: string) {
+export function dhtCreateVBModal(moduleInfo: ModuleInfo) {
+    const { $vbModule, modalID, moduleName, modalTitle, hiddenInputClass } = moduleInfo;
 
     const modalHTML = `
-        <div id="${modalID}" class="dht-vb-modal dht-modal-small" data-modal-name="${String(appendTo.attr("data-dht-vb-modal-name"))}">
+        <div id="${modalID}" class="dht-vb-modal dht-modal-small" data-module-name="${moduleName}" data-module-input="${hiddenInputClass}">
         
             <div class="dht-vb-modal-header"><span class="dht-vb-modal-title">${modalTitle}</span></div>
             
@@ -513,14 +510,12 @@ export function dhtVBModalCreate(modalID: string, appendTo: JQuery<HTMLElement>,
                </div>
             </div>
             
-            <input type="hidden" name="" class="${formSavedDataInput}" value="">
-        
         </div>
    `;
 
     //append modal to passed container
     if ($("#" + modalID).length === 0) {
-        appendTo.append(modalHTML);
+        $vbModule.append(modalHTML);
     }
 }
 
@@ -532,10 +527,10 @@ export function dhtVBModalCreate(modalID: string, appendTo: JQuery<HTMLElement>,
  * @return void
  */
 function dhtAjaxLoadOptions(modal: JQuery<HTMLElement>): void {
-
     const $contentArea = modal.children(".dht-vb-modal-content");
     const $optionsArea = $contentArea.children(".dht-vb-modal-content-options");
     const $spinner = $contentArea.children(".dht-preloader");
+    const hiddenInputClass = modal.attr("data-module-input");
 
     $.ajax({
         // @ts-ignore
@@ -547,8 +542,9 @@ function dhtAjaxLoadOptions(modal: JQuery<HTMLElement>): void {
             //post id is used to add it to the ajax $_POST
             post_id: $("#post_ID[name=\"post_ID\"]").val(),
             data: {
-                modalName: modal.attr("data-modal-name"),
-                formSavedData: modal.find(".dht-modal-saved-values").val(),
+                moduleName: modal.attr("data-module-name"),
+                moduleID: modal.attr("id"),
+                formSavedData: modal.siblings("." + hiddenInputClass).val(),
             },
         },
         beforeSend: function() {
@@ -561,9 +557,6 @@ function dhtAjaxLoadOptions(modal: JQuery<HTMLElement>): void {
             if (response.success) {
                 //add options to the modal
                 $optionsArea.append(response.data);
-
-                //content is loaded attribute
-                modal.attr("data-modal-content-loaded", "true");
 
                 // Initialize options so they could work as expected
                 setTimeout(function() {
@@ -608,6 +601,7 @@ function dhtAjaxSaveOptions(modal: JQuery<HTMLElement>, closeModal: () => void):
     const $form = modal.find("form");
     const $formFooter = modal.children(".dht-vb-modal-footer");
     const $spinner = modal.find(".dht-preloader");
+    const hiddenInputClass = modal.attr("data-module-input");
 
     $.ajax({
         // @ts-ignore
@@ -619,7 +613,8 @@ function dhtAjaxSaveOptions(modal: JQuery<HTMLElement>, closeModal: () => void):
             //post id is used to add it to the ajax $_POST
             post_id: $("#post_ID[name=\"post_ID\"]").val(),
             data: {
-                modalName: modal.attr("data-modal-name"),
+                moduleName: modal.attr("data-module-name"),
+                moduleID: modal.attr("id"),
                 formData: $form.serialize(),
             },
         },
@@ -631,7 +626,7 @@ function dhtAjaxSaveOptions(modal: JQuery<HTMLElement>, closeModal: () => void):
         success: function(response) {
             if (response.success) {
                 //save form values to the input
-                modal.find("." + formSavedDataInput).val(response.data);
+                modal.siblings("." + hiddenInputClass).val(response.data);
 
             } else {
                 console.error("Ajax Response: ", response);

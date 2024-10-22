@@ -6,7 +6,7 @@ namespace DHT\Core\Options\Containers;
 use DHT\Helpers\Traits\Options\ContainerTypeHelpers;
 use function DHT\Helpers\dht_load_view;
 
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
@@ -123,7 +123,7 @@ abstract class BaseContainer {
 	public function saveValue( array $container, mixed $container_post_values ) : array {
 		
 		// Return early if container_post_values is empty
-		if ( empty( $container_post_values ) ) {
+		if( empty( $container_post_values ) ) {
 			return [];
 		}
 		

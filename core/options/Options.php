@@ -137,7 +137,7 @@ final class Options implements IOptions {
 		$this->_enqueueOptionsScripts( apply_filters( 'dht:options:enqueue_dash_pages_option_scripts', $this->_dashboardPagesOptions ) );
 		
 		//render dashboard page form HTML content hook with the passed options
-		add_action( 'dht:options:view:render_dashboard_page_content', function() {
+		add_action( 'dht:view:render_dashboard_page_content', function() {
 			//save dashboard pages options
 			$this->_saveDashBoardPageOptions();
 			

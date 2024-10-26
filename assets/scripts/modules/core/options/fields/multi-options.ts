@@ -114,7 +114,7 @@
 
     //init each multioptions option
     function init() {
-        $(".dht-field-wrapper .dht-field-child-multioptions").each(function() {
+        $(".dht-field-wrapper-multioptions").each(function() {
             new MultiOptions($(this));
         });
     }

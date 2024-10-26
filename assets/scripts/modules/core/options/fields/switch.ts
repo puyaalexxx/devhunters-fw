@@ -20,10 +20,10 @@
          */
         private _initSwitch(): void {
             //class reference
-            const $this = this;
+            const $thisClass = this;
 
-            $this.$_switch.off("click", ".dht-switch");
-            $this.$_switch.on("click", ".dht-switch", function() {
+            $thisClass.$_switch.off("click", ".dht-switch");
+            $thisClass.$_switch.on("click", ".dht-switch", function() {
                 const $switch = $(this);
                 const $switchInput = $switch.children("input");
 
@@ -33,20 +33,51 @@
                     let value = $switch.children(".dht-slider").children(".dht-slider-no").attr("data-value")!;
 
                     $switchInput.val(value);
+
+                    //init live editing
+                    $thisClass._liveEditing("dht-slider-off");
                 } else {
                     $switch.removeClass("dht-slider-off").addClass("dht-slider-on");
                     //get on value
                     let value = $switch.children(".dht-slider").children(".dht-slider-yes").attr("data-value")!;
 
                     $switchInput.val(value);
+
+                    //init live editing
+                    $thisClass._liveEditing("dht-slider-on");
                 }
             });
+        }
+
+        /**
+         * live editing
+         * Ability to change other areas via changing the field
+         * with the provided CSS selectors
+         *
+         * @param switchClass On/Off switch class
+         *
+         * @return void
+         */
+        private _liveEditing(switchClass: string): void {
+            //get switch selectors
+            const onSelectors = this.$_switch.find(".dht-slider-yes").attr("data-live-selectors") ?? "";
+            const offSelectors = this.$_switch.find(".dht-slider-no").attr("data-live-selectors") ?? "";
+
+            if (onSelectors.length === 0 || offSelectors.length === 0) return;
+
+            if (switchClass === "dht-slider-on") {
+                $(onSelectors).show();
+                $(offSelectors).hide();
+            } else if (switchClass === "dht-slider-off") {
+                $(onSelectors).hide();
+                $(offSelectors).show();
+            }
         }
     }
 
     //init each switch button option
     function init() {
-        $(".dht-field-wrapper .dht-field-child-switch").each(function() {
+        $(".dht-field-wrapper-switch").each(function() {
             new Switch($(this));
         });
     }

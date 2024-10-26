@@ -383,7 +383,7 @@
 
     //init each typography option
     function init() {
-        $(".dht-field-wrapper .dht-field-child-typography").each(function() {
+        $(".dht-field-wrapper-typography").each(function() {
             new Typography($(this));
         });
     }

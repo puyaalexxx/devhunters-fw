@@ -51,6 +51,9 @@
                     $image_input.val(attachment.url);
                     $image_input.attr("value", attachment.url);
 
+                    //init live editing
+                    $thisClass._liveEditing(attachment.url);
+
                     //add attachment ids to the hidden input
                     $hidden_input.val(attachment.id);
 
@@ -71,6 +74,9 @@
          * @return void
          */
         private _removeImageOnInput(): void {
+            //this class reference
+            const $thisClass = this;
+
             this.$_uploadImage.off("input", ".dht-upload").on("input", ".dht-upload", function() {
                 const $this = $(this);
 
@@ -87,6 +93,9 @@
                     $this.before("<img src=\"" + $this.val() + "\" width=\"100\" height=\"100\"  alt=\"\"/>");
                     $this.attr("value", $this.val());
                 }
+
+                //init live editing
+                $thisClass._liveEditing($this.val());
             });
         }
 
@@ -104,11 +113,29 @@
                 custom_uploader.state().get("selection").add(wp.media.attachment($hidden_input.val()));
             }
         }
+
+        /**
+         * live editing
+         * Ability to change other areas via changing the field
+         * with the provided CSS selectors
+         *
+         * @param imageURL Image URL to apply on the element
+         *
+         * @return void
+         */
+        private _liveEditing(imageURL: string): void {
+            const selectors = this.$_uploadImage.attr("data-live-selectors") ?? "";
+
+            if (selectors.length === 0) return;
+
+            //change image src attr
+            $(selectors).attr("src", imageURL);
+        }
     }
 
     //init each upload image button option
     function init() {
-        $(".dht-field-wrapper .dht-field-child-upload-image").each(function() {
+        $(".dht-field-wrapper-upload-image").each(function() {
             new UploadImage($(this));
         });
     }

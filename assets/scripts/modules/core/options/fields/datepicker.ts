@@ -19,7 +19,7 @@
          * @return void
          */
         private _initDatePicker(): void {
-            this.$_datepicker.datepicker({
+            this.$_datepicker.find(".dht-datepicker").datepicker({
                 dateFormat: this.$_datepicker.attr("data-format"),
                 beforeShow: function(input: Element, instance: any): JQueryUI.DatepickerOptions {
                     // Add a custom className to the datepicker element
@@ -38,7 +38,7 @@
 
     //init each datepicker option
     function init() {
-        $(".dht-field-wrapper .dht-field-child-datepicker .dht-datepicker").each(function() {
+        $(".dht-field-wrapper-datepicker").each(function() {
             new DatePicker($(this));
         });
     }

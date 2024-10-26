@@ -193,7 +193,7 @@
 
     //init each upload gallery button option
     function init() {
-        $(".dht-field-wrapper .dht-field-child-upload-gallery").each(function() {
+        $(".dht-field-wrapper-upload-gallery").each(function() {
             new UploadGallery($(this));
         });
     }

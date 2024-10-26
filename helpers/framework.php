@@ -5,11 +5,11 @@ namespace DHT\Helpers;
 
 use DHT\Core\Manifest;
 
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
-if ( ! function_exists( 'dht_fw_manifest' ) ) {
+if( !function_exists( 'dht_fw_manifest' ) ) {
 	/**
 	 * Get FW manifest settings
 	 *
@@ -22,7 +22,7 @@ if ( ! function_exists( 'dht_fw_manifest' ) ) {
 	}
 }
 
-if ( ! function_exists( 'dht_fw_get_font_weight_Label' ) ) {
+if( !function_exists( 'dht_fw_get_font_weight_Label' ) ) {
 	/**
 	 * gent font weight label from its value (ex: 400, 500)
 	 *
@@ -51,7 +51,7 @@ if ( ! function_exists( 'dht_fw_get_font_weight_Label' ) ) {
 ///////////////////////////////////////////////
 
 
-if ( ! function_exists( 'dht_fw_render_options' ) ) {
+if( !function_exists( 'dht_fw_render_options' ) ) {
 	/**
 	 * render all group, toggle and field option types
 	 *
@@ -73,14 +73,15 @@ if ( ! function_exists( 'dht_fw_render_options' ) ) {
 			$saved_value = $saved_values[ $option[ 'id' ] ] ?? [];
 			
 			//if it is a group type
-			if ( isset( $option[ 'type' ] ) && array_key_exists( $option[ 'type' ], $registered_options_classes[ 'groupsClasses' ] ) ) {
+			if( isset( $option[ 'type' ] ) && array_key_exists( $option[ 'type' ], $registered_options_classes[ 'groupsClasses' ] ) ) {
 				//render the respective option group class
 				echo $registered_options_classes[ 'groupsClasses' ][ $option[ 'type' ] ]->render( $option, $saved_value, $options_id );
 			} //if it is a toggle type
-            elseif ( isset( $option[ 'type' ] ) && array_key_exists( $option[ 'type' ], $registered_options_classes[ 'togglesClasses' ] ) ) {
+            elseif( isset( $option[ 'type' ] ) && array_key_exists( $option[ 'type' ], $registered_options_classes[ 'togglesClasses' ] ) ) {
 				//render the respective option toggle class
 				echo $registered_options_classes[ 'togglesClasses' ][ $option[ 'type' ] ]->render( $option, $saved_value, $options_id );
-			} else {
+			}
+			else {
 				//render the respective option type class
 				echo dht_fw_render_field_if_exists( $option, $saved_value, $options_id, $registered_options_classes[ 'fieldsClasses' ] );
 			}
@@ -91,7 +92,7 @@ if ( ! function_exists( 'dht_fw_render_options' ) ) {
 }
 
 
-if ( ! function_exists( 'dht_fw_render_group' ) ) {
+if( !function_exists( 'dht_fw_render_group' ) ) {
 	/**
 	 * render group options (toggles and field options)
 	 *
@@ -106,7 +107,7 @@ if ( ! function_exists( 'dht_fw_render_group' ) ) {
 	function dht_fw_render_group( string $group_id, array $group_option, mixed $saved_value, array $registered_options_classes ) : string {
 		
 		//render the respective option toggle class
-		if ( array_key_exists( $group_option[ 'type' ], $registered_options_classes[ 'togglesClasses' ] ) ) {
+		if( array_key_exists( $group_option[ 'type' ], $registered_options_classes[ 'togglesClasses' ] ) ) {
 			return $registered_options_classes[ 'togglesClasses' ][ $group_option[ 'type' ] ]->render( $group_option, $saved_value, $group_id );
 		} //render the specific field type
 		else {
@@ -116,7 +117,7 @@ if ( ! function_exists( 'dht_fw_render_group' ) ) {
 }
 
 
-if ( ! function_exists( 'dht_fw_render_field_if_exists' ) ) {
+if( !function_exists( 'dht_fw_render_field_if_exists' ) ) {
 	/**
 	 * render field option if it is registered (exists)
 	 *
@@ -130,19 +131,20 @@ if ( ! function_exists( 'dht_fw_render_field_if_exists' ) ) {
 	 */
 	function dht_fw_render_field_if_exists( array $option, mixed $saved_value, string $options_id, array $registered_field_classes ) : string {
 		
-		if ( isset( $option[ 'type' ] ) && array_key_exists( $option[ 'type' ], $registered_field_classes ) ) {
+		if( isset( $option[ 'type' ] ) && array_key_exists( $option[ 'type' ], $registered_field_classes ) ) {
 			
 			//render the respective option type class
 			return $registered_field_classes[ $option[ 'type' ] ]->render( $option, $saved_value, $options_id );
 			
-		} else {
+		}
+		else {
 			//display no option template if no match
 			return dht_load_view( DHT_VIEWS_DIR . 'extensions/options/fields/', 'no-option.php' );
 		}
 	}
 }
 
-if ( ! function_exists( 'dht_fw_display_box_item' ) ) {
+if( !function_exists( 'dht_fw_display_box_item' ) ) {
 	/**
 	 * render box item (addable group option)
 	 *
@@ -172,7 +174,7 @@ if ( ! function_exists( 'dht_fw_display_box_item' ) ) {
                 <span
                     class="dht-addable-box-title-text"
                     data-default-title="<?php echo esc_attr( $default_box_title ); ?>">
-                    <?php echo ! empty( $saved_values[ 'box-title' ] ) ? esc_html( $saved_values[ 'box-title' ] ) : $default_box_title; ?>
+                    <?php echo !empty( $saved_values[ 'box-title' ] ) ? esc_html( $saved_values[ 'box-title' ] ) : $default_box_title; ?>
                 </span>
 
             </div>
@@ -190,7 +192,7 @@ if ( ! function_exists( 'dht_fw_display_box_item' ) ) {
 }
 
 
-if ( ! function_exists( 'dht_fw_render_box_item_content' ) ) {
+if( !function_exists( 'dht_fw_render_box_item_content' ) ) {
 	/**
 	 * render box item content (addable group option)
 	 *
@@ -210,14 +212,14 @@ if ( ! function_exists( 'dht_fw_render_box_item_content' ) ) {
             <div class="dht-field-box-wrapper dht-field-child-input">
                 <label
                     for="<?php echo esc_attr( $group[ 'id' ] ); ?>[<?php echo esc_attr( $cnt ); ?>][box-title]">
-					<?php echo ! empty( $saved_values[ 'box-title' ] ) ? esc_html( $saved_values[ 'box-title' ] ) : _x( 'Box Title', 'options', DHT_PREFIX ); ?>
+					<?php echo !empty( $saved_values[ 'box-title' ] ) ? esc_html( $saved_values[ 'box-title' ] ) : _x( 'Box Title', 'options', DHT_PREFIX ); ?>
                 </label>
                 <input
                     class="dht-input dht-field dht-box-title"
                     id="<?php echo esc_attr( $group[ 'id' ] ); ?>[<?php echo esc_attr( $cnt ); ?>][box-title]"
                     type="text"
                     name="<?php echo esc_attr( $group[ 'id' ] ); ?>[<?php echo esc_attr( $cnt ); ?>][box-title]"
-                    value="<?php echo ! empty( $saved_values[ 'box-title' ] ) ? esc_html( $saved_values[ 'box-title' ] ) : ''; ?>"
+                    value="<?php echo !empty( $saved_values[ 'box-title' ] ) ? esc_html( $saved_values[ 'box-title' ] ) : ''; ?>"
                     placeholder="<?php echo esc_attr( $default_box_title ); ?>" />
             </div>
         </div>
@@ -251,7 +253,7 @@ if ( ! function_exists( 'dht_fw_render_box_item_content' ) ) {
 }
 
 
-if ( ! function_exists( 'dht_fw_is_save_options_separately' ) ) {
+if( !function_exists( 'dht_fw_is_save_options_separately' ) ) {
 	/**
 	 * check if the options must be saved separately and not grouped under an id
 	 *
@@ -267,7 +269,7 @@ if ( ! function_exists( 'dht_fw_is_save_options_separately' ) ) {
 }
 
 
-if ( ! function_exists( 'dht_fw_render_link_area' ) ) {
+if( !function_exists( 'dht_fw_render_link_area' ) ) {
 	/**
 	 * Function to render the content of the header link area
 	 *
@@ -279,10 +281,10 @@ if ( ! function_exists( 'dht_fw_render_link_area' ) ) {
 	 */
 	function dht_fw_render_link_area( string $page_link, array $page ) : void { ?>
 
-        <a href="<?php echo ! empty( $page_link ) ? esc_url( $page_link ) : '#' . $page[ 'id' ]; ?>">
+        <a href="<?php echo !empty( $page_link ) ? esc_url( $page_link ) : '#' . $page[ 'id' ]; ?>">
         <span class="dht-cosidebar-icon">
             
-            <?php if ( filter_var( $page[ 'icon' ], FILTER_VALIDATE_URL ) ): ?>
+            <?php if( filter_var( $page[ 'icon' ], FILTER_VALIDATE_URL ) ): ?>
 
                 <img src="<?php echo esc_url( $page[ 'icon' ] ); ?>" alt="<?php echo esc_attr( $page[ 'title' ] ); ?>">
             
@@ -300,7 +302,7 @@ if ( ! function_exists( 'dht_fw_render_link_area' ) ) {
 }
 
 
-if ( ! function_exists( 'dht_fw_render_subpage_li_area' ) ) {
+if( !function_exists( 'dht_fw_render_subpage_li_area' ) ) {
 	/**
 	 * Function to render the content of the header supbpage li tag
 	 *
@@ -314,7 +316,7 @@ if ( ! function_exists( 'dht_fw_render_subpage_li_area' ) ) {
 	function dht_fw_render_subpage_li_area( string $active_class, string $page_link, array $page ) : void { ?>
 
         <li class="<?php echo esc_attr( $active_class ); ?>">
-            <a href="<?php echo ! empty( $page_link ) ? esc_url( $page_link ) : '#' . $page[ 'id' ]; ?>">
+            <a href="<?php echo !empty( $page_link ) ? esc_url( $page_link ) : '#' . $page[ 'id' ]; ?>">
 				
 				<?php echo esc_html( $page[ 'title' ] ); ?>
 
@@ -325,7 +327,7 @@ if ( ! function_exists( 'dht_fw_render_subpage_li_area' ) ) {
 }
 
 
-if ( ! function_exists( 'dht_fw_render_sidebar_content' ) ) {
+if( !function_exists( 'dht_fw_render_sidebar_content' ) ) {
 	/**
 	 * Function to render the content of the sidebar
 	 *
@@ -346,7 +348,7 @@ if ( ! function_exists( 'dht_fw_render_sidebar_content' ) ) {
 		$saved_value = $saved_values[ $ids[ 'menu_id' ] ] ?? [];
 		
 		//id used for tabs options
-		$content_id = ! empty( $ids[ 'subpage_id' ] ) ? $ids[ 'subpage_id' ] : ( ! empty( $ids[ 'page_id' ] ) ? $ids[ 'page_id' ] : '' );
+		$content_id = !empty( $ids[ 'subpage_id' ] ) ? $ids[ 'subpage_id' ] : ( !empty( $ids[ 'page_id' ] ) ? $ids[ 'page_id' ] : '' );
 		
 		ob_start(); ?>
 
@@ -363,7 +365,7 @@ if ( ! function_exists( 'dht_fw_render_sidebar_content' ) ) {
 }
 
 
-if ( ! function_exists( 'dht_fw_if_parent_menu_is_active' ) ) {
+if( !function_exists( 'dht_fw_if_parent_menu_is_active' ) ) {
 	/**
 	 * see if the parent menu is also active if the sub menu is active
 	 * Function to render the content of the sidebar
@@ -377,10 +379,10 @@ if ( ! function_exists( 'dht_fw_if_parent_menu_is_active' ) ) {
 	function dht_fw_if_parent_menu_is_active( array $page, string $current_page ) : bool {
 		
 		$active_parent_class = false;
-		if ( isset( $page[ 'pages' ] ) ) {
+		if( isset( $page[ 'pages' ] ) ) {
 			// Iterate through the array to check if the link exists
 			foreach ( $page[ 'pages' ] as $item ) {
-				if ( isset( $item[ 'page_link' ] ) && $item[ 'page_link' ] == $current_page ) {
+				if( isset( $item[ 'page_link' ] ) && $item[ 'page_link' ] == $current_page ) {
 					$active_parent_class = true;
 					break;
 				}
@@ -392,7 +394,7 @@ if ( ! function_exists( 'dht_fw_if_parent_menu_is_active' ) ) {
 }
 
 
-if ( ! function_exists( 'dht_fw_get_composer_info' ) ) {
+if( !function_exists( 'dht_fw_get_composer_info' ) ) {
 	/**
 	 * Grab composer info to use in framework manifest
 	 *
@@ -405,36 +407,58 @@ if ( ! function_exists( 'dht_fw_get_composer_info' ) ) {
 		$composer_file = DHT_DIR . '/composer.json'; // Adjust the path if necessary
 		
 		$composer_info = [ 'version' => '1.0.0' ];
-		if ( file_exists( $composer_path ) ) {
+		if( file_exists( $composer_path ) ) {
 			$composer_data = file_get_contents( $composer_file );
 			$composer_json = json_decode( $composer_data, true );
 			
-			if ( isset( $composer_json[ 'version' ] ) ) {
+			if( isset( $composer_json[ 'version' ] ) ) {
 				$composer_info[ 'version' ] = $composer_json[ 'version' ];
 			}
-			if ( isset( $composer_json[ 'name' ] ) ) {
+			if( isset( $composer_json[ 'name' ] ) ) {
 				$composer_info[ 'package_name' ] = $composer_json[ 'name' ];
 			}
-			if ( isset( $composer_json[ 'description' ] ) ) {
+			if( isset( $composer_json[ 'description' ] ) ) {
 				$composer_info[ 'description' ] = $composer_json[ 'description' ];
 			}
-			if ( isset( $composer_json[ 'license' ] ) ) {
+			if( isset( $composer_json[ 'license' ] ) ) {
 				$composer_info[ 'license' ] = $composer_json[ 'license' ];
 			}
-			if ( isset( $composer_json[ 'author' ] ) ) {
+			if( isset( $composer_json[ 'author' ] ) ) {
 				$composer_info[ 'author' ] = $composer_json[ 'author' ];
 			}
-			if ( isset( $composer_json[ 'extra' ] ) ) {
+			if( isset( $composer_json[ 'extra' ] ) ) {
 				$composer_info[ 'extra' ] = $composer_json[ 'extra' ];
 			}
-			if ( isset( $composer_json[ 'support' ] ) ) {
+			if( isset( $composer_json[ 'support' ] ) ) {
 				$composer_info[ 'support' ] = $composer_json[ 'support' ];
 			}
-			if ( isset( $composer_json[ 'require' ] ) ) {
+			if( isset( $composer_json[ 'require' ] ) ) {
 				$composer_info[ 'require' ] = $composer_json[ 'require' ];
 			}
 		}
 		
 		return $composer_info;
+	}
+}
+
+if( !function_exists( 'dht_fw_live_option_selectors' ) ) {
+	/**
+	 * add live data attribute with the css selectors
+	 * to be able to edit the target area via js
+	 * Some sort of one way data binding
+	 *
+	 * @param string $selectors_attr CSS selectors
+	 *
+	 * @return string
+	 * @since     1.0.0
+	 */
+	function dht_fw_live_option_selectors( string $selectors_attr ) : string {
+		
+		if( !empty( $selectors_attr ) ) {
+			
+			return 'data-live-selectors="' . trim( $selectors_attr ) . '"';
+		}
+		
+		return $selectors_attr;
 	}
 }

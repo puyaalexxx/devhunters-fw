@@ -79,7 +79,7 @@
 
     //init each range slider option
     function init() {
-        $(".dht-field-wrapper .dht-field-child-rangeslider").each(function() {
+        $(".dht-field-wrapper-rangeslider").each(function() {
             new RangeSlider($(this));
         });
     }

@@ -96,7 +96,7 @@ import "ace-builds/src-min-noconflict/mode-css";
 
     //init each ace editor
     function init() {
-        $(".dht-field-wrapper .dht-field-child-code-editor").each(function() {
+        $(".dht-field-wrapper-code-editor").each(function() {
             new AceEditor($(this));
         });
     }

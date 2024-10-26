@@ -5,14 +5,14 @@ namespace DHT\Core\Options\Toggles;
 
 use function DHT\Helpers\dht_load_view;
 
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
 abstract class BaseToggle {
 	
 	//toggles views directory
-	protected string $template_dir = DHT_VIEWS_DIR . 'extensions/options/toggles/';
+	protected string $template_dir = DHT_VIEWS_DIR . 'core/options/toggles/';
 	
 	//toggle type
 	protected string $_toggle = 'unknown';
@@ -106,7 +106,7 @@ abstract class BaseToggle {
 	 */
 	public function addIDPrefix( array $toggle, string $options_id ) : array {
 		
-		if ( empty( $options_id ) ) {
+		if( empty( $options_id ) ) {
 			return $toggle;
 		}
 		
@@ -146,7 +146,7 @@ abstract class BaseToggle {
 	 */
 	public function saveValue( array $toggle, mixed $toggle_post_values ) : mixed {
 		
-		if ( empty( $toggle_post_values ) ) {
+		if( empty( $toggle_post_values ) ) {
 			return $toggle[ 'value' ];
 		}
 		

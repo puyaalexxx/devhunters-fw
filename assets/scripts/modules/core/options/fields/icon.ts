@@ -3,7 +3,7 @@
 
     class Icon {
         //icon reference
-        private $_icon;
+        private readonly $_icon;
 
         constructor($icon: JQuery<HTMLElement>) {
             //icon reference
@@ -94,6 +94,9 @@
          * @return void
          */
         private _addSelectedIconOnPreviewArea(): void {
+            //this class reference
+            const $thisClass = this;
+
             $(document)
                 .off("click", "#TB_window .dht-icons-preview i")
                 .on("click", "#TB_window .dht-icons-preview i", function() {
@@ -127,6 +130,9 @@
 
                     //close popup
                     $("#TB_closeWindowButton").trigger("click");
+
+                    //init live editing
+                    $thisClass._liveEditing(popup.parents(".dht-field-wrapper-icons"), icon_class);
                 });
         }
 
@@ -136,11 +142,17 @@
          * @return void
          */
         private _removeSelectedIcon(): void {
+            //this class reference
+            const $thisClass = this;
+
             this.$_icon.off("click", ".dht-btn-remove").on("click", ".dht-btn-remove", function() {
                 const $this = $(this);
                 $this.siblings(".dht-icon-select-preview").children("i").removeAttr("class").parent().removeClass("dht-icon-select-preview-show");
                 $this.siblings(".dht-icon-select-value").val("");
                 $this.removeClass("dht-btn-show");
+
+                //init live editing
+                $thisClass._liveEditing($this.parents(".dht-field-wrapper-icons"), "");
 
                 return false;
             });
@@ -178,6 +190,11 @@
                 });
         }
 
+        /**
+         * ajax method to grab the icons
+         *
+         * @return void
+         */
         private _getIconsViaAjax(icon_type: string, $dht_icons_type_group: JQuery<HTMLElement>, icon: string) {
             //disable icons dropdown to prevent choose several times until ajax is finished
             $dht_icons_type_group.children(".dht-icons-type").prop("disabled", true);
@@ -219,11 +236,29 @@
                 },
             });
         }
+
+        /**
+         * live editing
+         * Ability to change other areas via changing the field
+         * with the provided CSS selectors
+         *
+         * @param $thisIconsWrapper Icon wrapper area
+         * @param iconClass         Icon class to apply on the selector
+         *
+         * @return void
+         */
+        private _liveEditing($thisIconsWrapper: JQuery<HTMLElement>, iconClass: string): void {
+            const selectors = $thisIconsWrapper.attr("data-live-selectors") ?? "";
+
+            if (selectors.length === 0) return;
+
+            $(selectors).attr("class", iconClass);
+        }
     }
 
     //init icon option
     function init() {
-        $(".dht-field-wrapper .dht-field-child-icons").each(function() {
+        $(".dht-field-wrapper-icons").each(function() {
             new Icon($(this));
         });
     }

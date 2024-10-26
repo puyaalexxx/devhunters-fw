@@ -61,7 +61,7 @@
 
     //init each multiinput option
     function init() {
-        $(".dht-field-wrapper .dht-field-child-multiinput").each(function() {
+        $(".dht-field-wrapper-multiinput").each(function() {
             new MultiInput($(this));
         });
     }

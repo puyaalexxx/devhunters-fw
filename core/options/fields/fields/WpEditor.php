@@ -8,7 +8,7 @@ use DHT\DHT;
 use DHT\Helpers\Classes\Environment;
 use function DHT\Helpers\dht_sanitize_wpeditor_value;
 
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
@@ -38,9 +38,11 @@ final class WpEditor extends BaseField {
 		// Enqueue the WordPress editor scripts and styles
 		wp_enqueue_editor();
 		
-		if ( Environment::isDevelopment() ) {
+		if( Environment::isDevelopment() ) {
 			wp_register_style( DHT_PREFIX_CSS . '-wpeditor-field', DHT_ASSETS_URI . 'dist/css/wpeditor.css', array(), DHT::$version );
 			wp_enqueue_style( DHT_PREFIX_CSS . '-wpeditor-field' );
+			
+			wp_enqueue_script( DHT_PREFIX_JS . '-wpeditor-field', DHT_ASSETS_URI . 'dist/js/wpeditor.js', array( 'jquery' ), DHT::$version, true );
 		}
 	}
 	
@@ -56,13 +58,13 @@ final class WpEditor extends BaseField {
 	 */
 	public function addIDPrefix( array $field, string $options_id ) : array {
 		
-		if ( ! empty( $options_id ) ) {
+		if( !empty( $options_id ) ) {
 			$id = $options_id . '[' . $field[ 'id' ] . ']';
 			
 			//wp editor does not support brackets in the id field so need to leave it without prefix id
 			$field[ 'name' ] = $id;
 			
-			if ( str_ends_with( $id, ']' ) ) {
+			if( str_ends_with( $id, ']' ) ) {
 				// Replace the last character with an empty space
 				$id = substr( $id, 0, - 1 );
 			}
@@ -95,7 +97,7 @@ final class WpEditor extends BaseField {
 	 */
 	public function saveValue( array $field, mixed $field_post_value ) : mixed {
 		
-		if ( empty( $field_post_value ) ) {
+		if( empty( $field_post_value ) ) {
 			return $field[ 'value' ];
 		}
 		

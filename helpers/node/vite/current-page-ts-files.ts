@@ -39,6 +39,9 @@ export function getCurrentPageModules(allModules: Record<string, () => Promise<u
         $(".dht-field-child-wrapper.dht-field-child-toggle").length ? tsFileNames.toggle : "",
 
         //options - fields
+        $(".dht-field-wrapper-input").length ? tsFileNames.input : "",
+        $(".dht-field-wrapper-textarea").length ? tsFileNames.textarea : "",
+        $(".dht-field-wrapper-editor").length ? tsFileNames.wpeditor : "",
         $(".dht-field-child-wrapper.dht-field-child-switch").length ? tsFileNames.switch : "",
         $(".dht-field-child-wrapper.dht-field-child-multiinput").length ? tsFileNames.multiinput : "",
         $(".dht-field-child-wrapper.dht-field-child-code-editor").length ? tsFileNames.ace_editor : "",

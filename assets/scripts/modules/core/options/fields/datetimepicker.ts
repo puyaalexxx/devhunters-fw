@@ -20,7 +20,7 @@
          */
         private _initDateTimePicker(): void {
 
-            this.$_datetimepicker.datetimepicker({
+            this.$_datetimepicker.find(".dht-datetimepicker").datetimepicker({
                 dateFormat: this.$_datetimepicker.attr("data-date-format"),
                 timeFormat: this.$_datetimepicker.attr("data-time-format"),
                 //interval: 15,
@@ -48,7 +48,7 @@
 
     //init each datetimepicker option
     function init() {
-        $(".dht-field-wrapper .dht-field-child-datetimepicker .dht-datetimepicker").each(function() {
+        $(".dht-field-wrapper-datetimepicker").each(function() {
             new DateTimePicker($(this));
         });
     }

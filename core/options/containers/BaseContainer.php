@@ -15,7 +15,7 @@ abstract class BaseContainer {
 	use ContainerTypeHelpers;
 	
 	//options views directory
-	protected string $template_dir = DHT_VIEWS_DIR . 'extensions/options/containers/';
+	protected string $template_dir = DHT_VIEWS_DIR . 'core/options/containers/';
 	
 	//field type
 	protected string $_container = 'unknown';

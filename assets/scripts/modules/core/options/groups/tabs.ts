@@ -41,7 +41,7 @@
 
     //init each tabs group
     function init() {
-        $(".dht-field-wrapper .dht-field-child-tabs").each(function() {
+        $(".dht-field-wrapper-tabs").each(function() {
             new Tabs($(this));
         });
     }

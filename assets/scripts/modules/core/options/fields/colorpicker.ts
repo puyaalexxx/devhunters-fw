@@ -17,7 +17,7 @@
         private _initColorpicker() {
             const $thisClass = this;
 
-            $(".dht-field-child-wrapper .dht-colorpicker").each(function() {
+            $(".dht-field-wrapper-colorpicker .dht-colorpicker").each(function() {
                 const $this = $(this);
 
                 //get default palette of colors

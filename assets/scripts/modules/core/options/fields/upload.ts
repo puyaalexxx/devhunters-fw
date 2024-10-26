@@ -97,7 +97,7 @@
 
     //init each upload button option
     function init() {
-        $(".dht-field-wrapper .dht-field-child-upload-item").each(function() {
+        $(".dht-field-wrapper-upload-item").each(function() {
             new Upload($(this));
         });
     }

@@ -37,7 +37,7 @@
 
     //init each radio images option
     function init() {
-        $(".dht-field-wrapper .dht-field-child-image-select").each(function() {
+        $(".dht-field-wrapper-image-select").each(function() {
             new RadioImage($(this));
         });
     }

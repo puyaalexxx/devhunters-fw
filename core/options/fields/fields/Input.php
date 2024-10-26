@@ -4,8 +4,10 @@ declare( strict_types = 1 );
 namespace DHT\Core\Options\Fields\Fields;
 
 use DHT\Core\Options\Fields\BaseField;
+use DHT\DHT;
+use DHT\Helpers\Classes\Environment;
 
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
@@ -30,7 +32,12 @@ final class Input extends BaseField {
 	 * @return void
 	 * @since     1.0.0
 	 */
-	public function enqueueOptionScripts( array $field ) : void {}
+	public function enqueueOptionScripts( array $field ) : void {
+		
+		if( Environment::isDevelopment() ) {
+			wp_enqueue_script( DHT_PREFIX_JS . '-input-field', DHT_ASSETS_URI . 'dist/js/input.js', array( 'jquery' ), DHT::$version, true );
+		}
+	}
 	
 	/**
 	 *  In this method you receive $field_post_value (from form submit or whatever)
@@ -47,17 +54,17 @@ final class Input extends BaseField {
 	 */
 	public function saveValue( array $field, mixed $field_post_value ) : mixed {
 		
-		if ( empty( $field_post_value ) ) {
+		if( empty( $field_post_value ) ) {
 			return $field[ 'value' ];
 		}
 		
-		if ( isset( $field[ 'subtype' ] ) ) {
-			if ( $field[ 'subtype' ] == 'url' ) {
+		if( isset( $field[ 'subtype' ] ) ) {
+			if( $field[ 'subtype' ] == 'url' ) {
 				
 				$field_post_value = esc_url_raw( $field_post_value );
 				
 			}
-			elseif ( $field[ 'subtype' ] == 'email' ) {
+			elseif( $field[ 'subtype' ] == 'email' ) {
 				
 				$field_post_value = sanitize_email( $field_post_value );
 			}

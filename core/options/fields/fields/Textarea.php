@@ -4,8 +4,10 @@ declare( strict_types = 1 );
 namespace DHT\Core\Options\Fields\Fields;
 
 use DHT\Core\Options\Fields\BaseField;
+use DHT\DHT;
+use DHT\Helpers\Classes\Environment;
 
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
@@ -30,7 +32,12 @@ final class Textarea extends BaseField {
 	 * @return void
 	 * @since     1.0.0
 	 */
-	public function enqueueOptionScripts( array $field ) : void {}
+	public function enqueueOptionScripts( array $field ) : void {
+		
+		if( Environment::isDevelopment() ) {
+			wp_enqueue_script( DHT_PREFIX_JS . '-textarea-field', DHT_ASSETS_URI . 'dist/js/textarea.js', array( 'jquery' ), DHT::$version, true );
+		}
+	}
 	
 	/**
 	 *  In this method you receive $field_post_value (from form submit or whatever)
@@ -47,7 +54,7 @@ final class Textarea extends BaseField {
 	 */
 	public function saveValue( array $field, mixed $field_post_value ) : mixed {
 		
-		if ( empty( $field_post_value ) ) {
+		if( empty( $field_post_value ) ) {
 			return $field[ 'value' ];
 		}
 		

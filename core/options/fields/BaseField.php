@@ -12,7 +12,7 @@ if( !defined( 'DHT_MAIN' ) ) {
 abstract class BaseField {
 	
 	//fields views directory
-	protected string $template_dir = DHT_VIEWS_DIR . 'extensions/options/fields/';
+	protected string $template_dir = DHT_VIEWS_DIR . 'core/options/fields/';
 	
 	//field type
 	protected string $_field = 'unknown';

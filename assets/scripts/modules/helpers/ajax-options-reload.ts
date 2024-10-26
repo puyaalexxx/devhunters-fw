@@ -9,68 +9,83 @@ export function dhtReinitializeOptions($content: JQuery<HTMLElement>) {
     // Trigger custom ajax events based on the presence of specific elements
     {
         //if toggle option exists in the current content, reload its js code
-        if ($content.find(".dht-field-child-toggle").length) {
+        if ($content.find(".dht-field-wrapper-toggle").length) {
             $(document).trigger("dht_toggleAjaxComplete");
         }
         //if colorpicker exists in the current content, reload its js code
-        if ($content.find(".dht-field-child-colorpicker").length || $content.find(".dht-field-child-borders").length) {
+        if ($content.find(".dht-field-wrapper-colorpicker").length || $content.find(".dht-field-wrapper-borders").length) {
             $(document).trigger("dht_colorPickerAjaxComplete");
         }
         //if Ace editor exists in the current content, reload its js code
-        if ($content.find(".dht-field-child-code-editor").length) {
+        if ($content.find(".dht-field-wrapper-code-editor").length) {
             $(document).trigger("dht_aceEditorAjaxComplete");
         }
         //if datepicker exists in the current content, reload its js code
-        if ($content.find(".dht-field-child-datepicker").length) {
+        if ($content.find(".dht-field-wrapper-datepicker").length) {
             $(document).trigger("dht_datePickerAjaxComplete");
         }
         //if datetimepicker exists in the current content, reload its js code
-        if ($content.find(".dht-field-child-datetimepicker").length) {
+        if ($content.find(".dht-field-wrapper-datetimepicker").length) {
             $(document).trigger("dht_dateTimePickerAjaxComplete");
         }
         //if timepicker exists in the current content, reload its js code
-        if ($content.find(".dht-field-child-timepicker").length) {
+        if ($content.find(".dht-field-wrapper-timepicker").length) {
             $(document).trigger("dht_timePickerAjaxComplete");
         }
         //if rangeslider exists in the current content, reload its js code
-        if ($content.find(".dht-field-child-rangeslider").length) {
+        if ($content.find(".dht-field-wrapper-rangeslider").length) {
             $(document).trigger("dht_rangeSliderAjaxComplete");
         }
         //if multioptions exists in the current content, reload its js code
-        if ($content.find(".dht-field-child-multioptions").length) {
+        if ($content.find(".dht-field-wrapper-multioptions").length) {
             $(document).trigger("dht_multiOptionsAjaxComplete");
         }
         //if upload exists in the current content, reload its js code
-        if ($content.find(".dht-field-child-upload-item").length) {
+        if ($content.find(".dht-field-wrapper-upload-item").length) {
             $(document).trigger("dht_uploadAjaxComplete");
         }
         //if upload image exists in the current content, reload its js code
-        if ($content.find(".dht-field-child-upload-image").length) {
+        if ($content.find(".dht-field-wrapper-upload-image").length) {
             $(document).trigger("dht_uploadImageAjaxComplete");
         }
         //if upload gallery exists in the current content, reload its js code
-        if ($content.find(".dht-field-child-upload-gallery").length) {
+        if ($content.find(".dht-field-wrapper-upload-gallery").length) {
             $(document).trigger("dht_uploadGalleryAjaxComplete");
         }
         //if typography exists in the current content, reload its js code
-        if ($content.find(".dht-field-child-typography").length) {
+        if ($content.find(".dht-field-wrapper-typography").length) {
             $(document).trigger("dht_typographyAjaxComplete");
         }
         //if switch exists in the current content, reload its js code
-        if ($content.find(".dht-field-child-switch").length) {
+        if ($content.find(".dht-field-wrapper-switch").length) {
             $(document).trigger("dht_switchtAjaxComplete");
         }
         //if radio image exists in the current content, reload its js code
-        if ($content.find(".dht-field-child-image-select").length) {
+        if ($content.find(".dht-field-wrapper-image-select").length) {
             $(document).trigger("dht_radioImageAjaxComplete");
         }
         //if multiinput exists in the current content, reload its js code
-        if ($content.find(".dht-field-child-multiinput").length) {
+        if ($content.find(".dht-field-wrapper-multiinput").length) {
             $(document).trigger("dht_multiInputAjaxComplete");
         }
         //if icon exists in the current content, reload its js code
-        if ($content.find(".dht-field-child-icons").length) {
+        if ($content.find(".dht-field-wrapper-icons").length) {
             $(document).trigger("dht_iconAjaxComplete");
+        }
+        //if input exists in the current content, reload its js code
+        const $input = $content.find(".dht-field-wrapper-input");
+        if ($input.length && $input.attr("data-live-selectors")?.length) {
+            $(document).trigger("dht_inputAjaxComplete");
+        }
+        //if textarea exists in the current content, reload its js code
+        const $textarea = $content.find(".dht-field-wrapper-textarea");
+        if ($textarea.length && $textarea.attr("data-live-selectors")?.length) {
+            $(document).trigger("dht_textareaAjaxComplete");
+        }
+        //if wpeditor exists in the current content, reload its js code
+        const $wpEditor = $content.find(".dht-field-wrapper-editor");
+        if ($wpEditor.length && $wpEditor.attr("data-live-selectors")?.length) {
+            $(document).trigger("dht_wpEditorAjaxComplete");
         }
 
         /////////////// vb modal ///////////////
@@ -86,15 +101,15 @@ export function dhtReinitializeOptions($content: JQuery<HTMLElement>) {
             }
 
             //if accordion group exists in the current content, reload its js code
-            if ($content.find(".dht-field-child-accordion").length) {
+            if ($content.find(".dht-field-wrapper-accordion").length) {
                 $(document).trigger("dht_accordionAjaxComplete");
             }
             //if addable box group exists in the current content, reload its js code
-            if ($content.find(".dht-field-child-addable-box").length) {
+            if ($content.find(".dht-field-wrapper-addable-box").length) {
                 $(document).trigger("dht_addableBoxAjaxComplete");
             }
             //if tabs group exists in the current content, reload its js code
-            if ($content.find(".dht-field-child-tabs").length) {
+            if ($content.find(".dht-field-wrapper-tabs").length) {
                 $(document).trigger("dht_tabsAjaxComplete");
             }
         }

@@ -19,7 +19,7 @@
          * @return void
          */
         private _initTimePicker(): void {
-            this.$_timePicker.timepicker({
+            this.$_timePicker.find(".dht-timepicker").timepicker({
                 timeFormat: this.$_timePicker.attr("data-format"),
                 interval: 15,
                 /* minTime: '10:00am',
@@ -45,7 +45,7 @@
 
     //init each timePicker option
     function init() {
-        $(".dht-field-wrapper .dht-field-child-timepicker .dht-timepicker").each(function() {
+        $(".dht-field-wrapper-timepicker").each(function() {
             new TimePicker($(this));
         });
     }

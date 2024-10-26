@@ -40,7 +40,7 @@ trait RenderOptionsHelpers {
 			echo dht_load_view( DHT_VIEWS_DIR . 'core/vb/', $template, $viewData );
 		}
 		else {
-			echo dht_load_view( DHT_VIEWS_DIR . 'extensions/options/', $template, $viewData );
+			echo dht_load_view( DHT_VIEWS_DIR . 'core/options/', $template, $viewData );
 		}
 	}
 	

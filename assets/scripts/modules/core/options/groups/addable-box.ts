@@ -266,7 +266,7 @@
 
     //init each accordion group
     function init() {
-        $(".dht-field-wrapper .dht-field-child-addable-box").each(function() {
+        $(".dht-field-wrapper-addable-box .dht-field-child-addable-box").each(function() {
             new AddableBox($(this));
         });
     }

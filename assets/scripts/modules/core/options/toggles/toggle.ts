@@ -21,6 +21,7 @@
         private _initToggle(): void {
             const $thisClass = this;
 
+            let values = [];
             this.$_toggle.off("click", ".dht-toggle").on("click", ".dht-toggle", function() {
                 const $toggle = $(this);
                 const $toggleInput = $toggle.children("input");
@@ -31,12 +32,18 @@
                     let value = $toggle.children(".dht-slider").children(".dht-slider-no").attr("data-value")!;
 
                     $toggleInput.val(value);
+
+                    //init live editing
+                    $thisClass._liveEditing("dht-slider-off");
                 } else {
                     $toggle.removeClass("dht-slider-off").addClass("dht-slider-on");
                     //get on value
                     let value = $toggle.children(".dht-slider").children(".dht-slider-yes").attr("data-value")!;
 
                     $toggleInput.val(value);
+
+                    //init live editing
+                    $thisClass._liveEditing("dht-slider-on");
                 }
 
                 $thisClass._showHideOptions($toggle);
@@ -61,11 +68,36 @@
                 }
             });
         }
+
+        /**
+         * live editing
+         * Ability to change other areas via changing the field
+         * with the provided CSS selectors
+         *
+         * @param toggleClass On/Off toggle class
+         *
+         * @return void
+         */
+        private _liveEditing(toggleClass: string): void {
+            //get toggle selectors
+            const onSelectors = this.$_toggle.find(".dht-slider-yes").attr("data-live-selectors") ?? "";
+            const offSelectors = this.$_toggle.find(".dht-slider-no").attr("data-live-selectors") ?? "";
+
+            if (onSelectors.length === 0 || offSelectors.length === 0) return;
+
+            if (toggleClass === "dht-slider-on") {
+                $(onSelectors).show();
+                $(offSelectors).hide();
+            } else if (toggleClass === "dht-slider-off") {
+                $(onSelectors).hide();
+                $(offSelectors).show();
+            }
+        }
     }
 
     //init each toggle button option
     function init() {
-        $(".dht-field-wrapper .dht-field-child-toggle").each(function() {
+        $(".dht-field-wrapper-toggle").each(function() {
             new Toggle($(this));
         });
     }

@@ -6,7 +6,7 @@ namespace DHT\Core\Options\Groups;
 use DHT\Helpers\Traits\Options\GroupTypeHelpers;
 use function DHT\Helpers\dht_load_view;
 
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
@@ -15,7 +15,7 @@ abstract class BaseGroup {
 	use GroupTypeHelpers;
 	
 	//groups views directory
-	protected string $template_dir = DHT_VIEWS_DIR . 'extensions/options/groups/';
+	protected string $template_dir = DHT_VIEWS_DIR . 'core/options/groups/';
 	
 	//field type
 	protected string $_group = 'unknown';
@@ -117,7 +117,7 @@ abstract class BaseGroup {
 	 */
 	public function addIDPrefix( array $group, string $options_id ) : array {
 		
-		if ( empty( $options_id ) ) {
+		if( empty( $options_id ) ) {
 			return $group;
 		}
 		
@@ -157,7 +157,7 @@ abstract class BaseGroup {
 	 */
 	public function saveValue( array $group, mixed $group_post_values ) : mixed {
 		
-		if ( empty( $group_post_values ) ) {
+		if( empty( $group_post_values ) ) {
 			return $group[ 'value' ];
 		}
 		

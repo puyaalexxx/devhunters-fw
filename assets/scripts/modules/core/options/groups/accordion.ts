@@ -46,7 +46,7 @@
 
     //init each accordion group
     function init() {
-        $(".dht-field-wrapper-addable-box .dht-field-child-accordion").each(function() {
+        $(".dht-field-wrapper-accordion .dht-field-child-accordion").each(function() {
             new Accordion($(this));
         });
     }

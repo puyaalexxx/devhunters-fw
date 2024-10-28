@@ -61,8 +61,10 @@ $font_type = TypographyHelpers::getFontType( $font_value, $google_fonts, $et_fon
 <div
     class="dht-field-wrapper dht-field-wrapper-typography <?php echo isset( $field[ 'attr' ][ 'class' ] ) ? esc_attr( $field[ 'attr' ][ 'class' ] ) : ''; ?>"
 	<?php echo dht_parse_option_attributes( $field[ 'attr' ] ?? [] ); ?> <?php echo dht_fw_live_option_selectors( $field[ 'live' ] ?? "" ); ?>>
-
-    <div class="dht-title"><?php echo esc_html( $field[ 'title' ] ); ?></div>
+	
+	<?php if( !empty( $field[ 'title' ] ) ): ?>
+        <div class="dht-title"><?php echo esc_html( $field[ 'title' ] ); ?></div>
+	<?php endif; ?>
 
     <div class="dht-field-child-wrapper dht-field-child-typography">
 

@@ -22,8 +22,10 @@ $saved_values = !empty( $group[ 'value' ] ) ? $group[ 'value' ] : [];
     class="dht-field-wrapper dht-field-wrapper-addable-box dht-group-type <?php echo $group[ 'sortable' ] ? 'dht-field-wrappers-sortable' : ''; ?>
     <?php echo isset( $group[ 'attr' ][ 'class' ] ) ? esc_attr( $group[ 'attr' ][ 'class' ] ) : ''; ?>"
 	<?php echo dht_parse_option_attributes( $group[ 'attr' ] ); ?> <?php echo dht_fw_live_option_selectors( $group[ 'live' ] ?? "" ); ?>>
-
-    <div class="dht-title"><?php echo esc_html( $group[ 'title' ] ); ?></div>
+	
+	<?php if( !empty( $group[ 'title' ] ) ): ?>
+        <div class="dht-title"><?php echo esc_html( $group[ 'title' ] ); ?></div>
+	<?php endif; ?>
 
     <div
         class="dht-field-child-wrapper dht-field-child-addable-box <?php echo $group[ 'sortable' ] ? 'dht-field-child-addable-box-sortable' : ''; ?>">

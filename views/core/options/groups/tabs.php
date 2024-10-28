@@ -29,10 +29,8 @@ $tabs_id = str_replace( [
     class="dht-field-wrapper dht-field-wrapper-tabs dht-group-type <?php echo $fullwidth_tabs ? 'dht-field-tabs-fullwidth' : ''; ?> <?php echo isset( $group[ 'attr' ][ 'class' ] ) ? esc_attr( $group[ 'attr' ][ 'class' ] ) : ''; ?>"
 	<?php echo dht_parse_option_attributes( $group[ 'attr' ] ); ?> <?php echo dht_fw_live_option_selectors( $group[ 'live' ] ?? "" ); ?>>
 	
-	<?php if( !$fullwidth_tabs ): ?>
-
+	<?php if( !$fullwidth_tabs && !empty( $group[ 'title' ] ) ): ?>
         <div class="dht-title"><?php echo esc_html( $group[ 'title' ] ); ?></div>
-	
 	<?php endif; ?>
 
     <div class="dht-field-child-wrapper dht-field-child-tabs">

@@ -1,5 +1,4 @@
 <?php
-
 if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
@@ -9,46 +8,51 @@ use function DHT\Helpers\dht_fw_render_group;
 use function DHT\Helpers\dht_parse_option_attributes;
 
 $group = $args[ 'group' ] ?? [];
+
+//see if the tabs should be fullwidth
+$fullwidth_panel = $group[ 'fullwidth' ] ?? false;
+
 //used to call the render method on
 $registered_options_classes = $args[ 'registered_options_classes' ] ?? [];
 ?>
-<!-- field - accordion -->
+<!-- field - panel -->
 
-<?php do_action( 'dht:options:view:groups:accordion_before_area' ); ?>
+<?php do_action( 'dht:options:view:groups:panel_before_area' ); ?>
 
 <div
-    class="dht-field-wrapper dht-field-wrapper-accordion dht-group-type <?php echo isset( $group[ 'attr' ][ 'class' ] ) ? esc_attr( $group[ 'attr' ][ 'class' ] ) : ''; ?>"
+    class="dht-field-wrapper dht-field-wrapper-panel dht-group-type <?php echo $fullwidth_panel ? 'dht-field-panel-fullwidth' : ''; ?>
+    <?php echo isset( $group[ 'attr' ][ 'class' ] ) ? esc_attr( $group[ 'attr' ][ 'class' ] ) : ''; ?>"
 	<?php echo dht_parse_option_attributes( $group[ 'attr' ] ); ?> <?php echo dht_fw_live_option_selectors( $group[ 'live' ] ?? "" ); ?>>
 	
-	<?php if( !empty( $group[ 'title' ] ) ): ?>
+	<?php if( !$fullwidth_panel && !empty( $group[ 'title' ] ) ): ?>
         <div class="dht-title"><?php echo esc_html( $group[ 'title' ] ); ?></div>
 	<?php endif; ?>
 
-    <div class="dht-field-child-wrapper dht-field-child-accordion">
+    <div class="dht-field-child-wrapper dht-field-child-panel">
 
-        <div class="dht-accordion">
+        <div class="dht-panel">
 			
 			<?php if( !empty( $group[ 'options' ] ) ): ?>
 				
 				<?php $cnt = 0;
 				foreach ( $group[ 'options' ] as $group_panel ) : $cnt ++; ?>
 
-                    <div class="dht-accordion-item">
+                    <div class="dht-panel-item">
 
-                        <div class="dht-accordion-title">
+                        <div class="dht-panel-title">
 
-                            <div class="dht-accordion-arrow">
-                                <span class="dht-accordion-arrow-item dashicons dashicons-plus-alt"></span>
-                                <span class="dht-accordion-arrow-item-close dashicons dashicons-dismiss"></span>
+                            <div class="dht-panel-arrow">
+                                <span class="dht-panel-arrow-item dashicons dashicons-plus-alt"></span>
+                                <span class="dht-panel-arrow-item-close dashicons dashicons-dismiss"></span>
                             </div>
 
-                            <span class="dht-accordion-title-text">
-                                <?php echo !empty( $group_panel[ 'title' ] ) ? esc_html( $group_panel[ 'title' ] ) : sprintf( _x( 'Panel %d', 'options', DHT_PREFIX ), $cnt ); ?>
+                            <span class="dht-panel-title-text">
+                                <?php echo !empty( $group_panel[ 'panel_title' ] ) ? esc_html( $group_panel[ 'panel_title' ] ) : _x( 'Panel', 'options', DHT_PREFIX ); ?>
                             </span>
 
                         </div>
 
-                        <div class="dht-accordion-content">
+                        <div class="dht-panel-content">
 							
 							<?php if( !empty( $group_panel[ 'options' ] ) ): ?>
 								
@@ -93,4 +97,4 @@ $registered_options_classes = $args[ 'registered_options_classes' ] ?? [];
     <div class="dht-divider"></div>
 <?php endif; ?>
 
-<?php do_action( 'dht:options:view:groups:accordion_after_area' ); ?>
+<?php do_action( 'dht:options:view:groups:panel_after_area' ); ?>

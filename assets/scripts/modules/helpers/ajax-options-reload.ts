@@ -99,10 +99,13 @@ export function dhtReinitializeOptions($content: JQuery<HTMLElement>) {
             if ($content.find(".dht-tabsmenu-container").length) {
                 $(document).trigger("dht_tabsMenuAjaxComplete");
             }
-
             //if accordion group exists in the current content, reload its js code
             if ($content.find(".dht-field-wrapper-accordion").length) {
                 $(document).trigger("dht_accordionAjaxComplete");
+            }
+            //if panel group exists in the current content, reload its js code
+            if ($content.find(".dht-field-wrapper-panel").length) {
+                $(document).trigger("dht_panelAjaxComplete");
             }
             //if addable box group exists in the current content, reload its js code
             if ($content.find(".dht-field-wrapper-addable-box").length) {

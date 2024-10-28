@@ -3,7 +3,7 @@ declare( strict_types = 1 );
 
 namespace DHT\Helpers\Traits\Options;
 
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
@@ -38,6 +38,7 @@ use DHT\Core\Options\Fields\Fields\WpEditor;
 use DHT\Core\Options\Groups\Groups\Accordion;
 use DHT\Core\Options\Groups\Groups\AddableBox;
 use DHT\Core\Options\Groups\Groups\Group;
+use DHT\Core\Options\Groups\Groups\Panel;
 use DHT\Core\Options\Groups\Groups\Tabs;
 use DHT\Core\Options\Toggles\Toggles\Toggle;
 
@@ -74,12 +75,14 @@ trait RegisterOptionsHelpers {
 		$group       = new Group( $this->_optionTogglesClasses, $this->_optionFieldsClasses );
 		$tabs        = new Tabs( $this->_optionTogglesClasses, $this->_optionFieldsClasses );
 		$accordion   = new Accordion( $this->_optionTogglesClasses, $this->_optionFieldsClasses );
+		$panel       = new Panel( $this->_optionTogglesClasses, $this->_optionFieldsClasses );
 		$addable_box = new AddableBox( $this->_optionTogglesClasses, $this->_optionFieldsClasses );
 		
 		//add class instance to the _optionGroupClasses array to use throughout the Group class methods
 		$this->_optionGroupsClasses[ $group->getGroup() ]       = $group;
 		$this->_optionGroupsClasses[ $tabs->getGroup() ]        = $tabs;
 		$this->_optionGroupsClasses[ $accordion->getGroup() ]   = $accordion;
+		$this->_optionGroupsClasses[ $panel->getGroup() ]       = $panel;
 		$this->_optionGroupsClasses[ $addable_box->getGroup() ] = $addable_box;
 	}
 	

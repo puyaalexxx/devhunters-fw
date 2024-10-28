@@ -33,6 +33,7 @@ export function getCurrentPageModules(allModules: Record<string, () => Promise<u
 
         //options - groups
         $(".dht-field-child-wrapper.dht-field-child-accordion").length ? tsFileNames.accordion : "",
+        $(".dht-field-child-wrapper.dht-field-child-panel").length ? tsFileNames.panel : "",
         $(".dht-field-child-wrapper.dht-field-child-addable-box").length ? tsFileNames.addable_box : "",
 
         //options - toggles

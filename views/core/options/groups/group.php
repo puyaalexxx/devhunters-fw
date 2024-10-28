@@ -19,8 +19,10 @@ $registered_options_classes = $args[ 'registered_options_classes' ] ?? [];
 <div
     class="dht-field-wrapper dht-field-wrapper-groups dht-group-type <?php echo isset( $group[ 'attr' ][ 'class' ] ) ? esc_attr( $group[ 'attr' ][ 'class' ] ) : ''; ?>"
 	<?php echo dht_parse_option_attributes( $group[ 'attr' ] ); ?> <?php echo dht_fw_live_option_selectors( $group[ 'live' ] ?? "" ); ?>>
-
-    <div class="dht-title"><?php echo esc_html( $group[ 'title' ] ); ?></div>
+	
+	<?php if( !empty( $group[ 'title' ] ) ): ?>
+        <div class="dht-title"><?php echo esc_html( $group[ 'title' ] ); ?></div>
+	<?php endif; ?>
 
     <div class="dht-field-child-wrapper dht-field-child-groups">
 

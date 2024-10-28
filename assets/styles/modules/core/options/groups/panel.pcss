@@ -1,14 +1,14 @@
 @import '../../../../mixins.pcss';
 
 .dht-wrapper {
-    .dht-field-child-accordion {
+    .dht-field-child-panel {
 
-        .dht-accordion-item {
+        .dht-panel-item {
             margin: 5px auto;
         }
 
-        .dht-accordion-item {
-            .dht-accordion-title {
+        .dht-panel-item {
+            .dht-panel-title {
                 position: relative;
                 display: block;
                 padding: 20px 60px 15px 20px;
@@ -22,7 +22,7 @@
                 transition: background-color 0.2s;
                 cursor: pointer;
 
-                .dht-accordion-arrow {
+                .dht-panel-arrow {
                     position: absolute;
                     top: 13px;
                     right: 15px;
@@ -41,11 +41,11 @@
 
             }
 
-            .dht-accordion-active {
+            .dht-panel-active {
                 background-color: #e5e4e4;
             }
 
-            .dht-accordion-content {
+            .dht-panel-content {
                 padding: 30px;
                 margin-bottom: 2px;
                 font-size: 14px;
@@ -67,8 +67,8 @@
                 }
             }
 
-            .dht-accordion-arrow-item,
-            .dht-accordion-arrow-item-close {
+            .dht-panel-arrow-item,
+            .dht-panel-arrow-item-close {
                 top: 3px;
                 position: relative;
                 font-size: 25px !important;
@@ -76,16 +76,16 @@
         }
 
 
-        .dht-accordion-arrow .dht-accordion-arrow-item-close,
-        .dht-accordion-arrow.dht-accordion-icon-change .dht-accordion-arrow-item {
+        .dht-panel-arrow .dht-panel-arrow-item-close,
+        .dht-panel-arrow.dht-panel-icon-change .dht-panel-arrow-item {
             display: none;
         }
 
-        .dht-accordion-arrow.dht-accordion-icon-change .dht-accordion-arrow-item-close {
+        .dht-panel-arrow.dht-panel-icon-change .dht-panel-arrow-item-close {
             display: block;
         }
 
-        .dht-accordion {
+        .dht-panel {
 
             .dht-field-child-toggle .dht-field-wrapper {
                 padding-top: 20px;
@@ -118,23 +118,50 @@
     }
 
     .dht-cosidebar, .dht-tabsmenu-container {
-        .dht-field-child-accordion {
+        .dht-field-child-panel {
             @mixin responsive_options_group_code;
         }
     }
 }
 
 .dht-meta-box-content .dht-wrapper {
-    .dht-field-child-accordion {
-        .dht-accordion-item {
-            .dht-accordion-title {
+    .dht-field-child-panel {
+        .dht-panel-item {
+            .dht-panel-title {
                 padding: 15px 60px 10px 20px;
             }
         }
 
-        .dht-accordion-content {
+        .dht-panel-content {
             @mixin responsive_options_group_code;
         }
     }
 }
 
+.dht-vb-enabled .dht-vb-modal {
+    .dht-wrapper {
+        .dht-field-wrapper-panel.dht-field-panel-fullwidth {
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
+            margin-left: -20px;
+            margin-right: -20px;
+            grid-template-columns: 100%;
+
+            .dht-field-child-panel {
+                .dht-panel-item {
+                    margin: 0 auto;
+
+                    .dht-panel-title {
+                        border-radius: 0;
+                        margin-bottom: 2px;
+                        text-align: left;
+                    }
+
+                    .dht-panel-content {
+                        margin-bottom: 0;
+                    }
+                }
+            }
+        }
+    }
+}

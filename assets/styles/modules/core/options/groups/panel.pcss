@@ -1,6 +1,11 @@
 @import '../../../../mixins.pcss';
 
 .dht-wrapper {
+
+    .dht-field-wrapper-panel.dht-field-panel-fullwidth {
+        grid-template-columns: 100%;
+    }
+
     .dht-field-child-panel {
 
         .dht-panel-item {
@@ -139,7 +144,38 @@
 }
 
 .dht-vb-enabled .dht-vb-modal {
+    &.dht-modal-large {
+        .dht-field-wrapper-panel.dht-field-panel-fullwidth {
+            .dht-field-child-panel {
+                .dht-panel-item {
+                    .dht-panel-content {
+                        padding: 20px;
+
+                        .dht-field-wrapper {
+                            display: grid;
+                            grid-template-columns: repeat(3, 33%);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     .dht-wrapper {
+        .dht-field-wrapper-panel {
+            .dht-field-child-panel {
+                .dht-panel-item {
+                    .dht-panel-content {
+                        padding: 0 30px 30px 30px;
+
+                        .dht-divider {
+                            margin: 0;
+                        }
+                    }
+                }
+            }
+        }
+
         .dht-field-wrapper-panel.dht-field-panel-fullwidth {
             padding-top: 0 !important;
             padding-bottom: 0 !important;
@@ -159,6 +195,10 @@
 
                     .dht-panel-content {
                         margin-bottom: 0;
+
+                        .dht-title {
+                            margin-bottom: 10px;
+                        }
                     }
                 }
             }

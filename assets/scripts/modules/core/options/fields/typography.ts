@@ -12,6 +12,11 @@
         private $_font_subsets_dropdown;
         private $_text_transform_dropdown;
         private $_text_decoration_dropdown;
+        private $_text_align_dropdown;
+        private $_text_font_size;
+        private $_text_line_height;
+        private $_text_letter_spacing;
+        private $_colorpicker;
         private _font_prefix: string;
         private $_font_type_hidden_input;
         private $_font_path_hidden_input;
@@ -38,6 +43,16 @@
             this.$_text_transform_dropdown = this.$_typography.find(".dht-typography-transform");
             //text decoration
             this.$_text_decoration_dropdown = this.$_typography.find(".dht-typography-decoration");
+            //text align
+            this.$_text_align_dropdown = this.$_typography.find(".dht-typography-align");
+            //text font size
+            this.$_text_font_size = this.$_typography.find(".dht-typography-font-size");
+            //text line height
+            this.$_text_line_height = this.$_typography.find(".dht-typography-line-height");
+            //text letter spacing
+            this.$_text_letter_spacing = this.$_typography.find(".dht-typography-letter-spacing");
+            //text align
+            this.$_colorpicker = this.$_typography.find(".dht-colorpicker");
             //font prefix
             this._font_prefix = this.$_fonts_dropdown.attr("data-font-prefix")!;
             //font type hidden input
@@ -65,6 +80,26 @@
 
             //text decoration dropdown
             this._textDecorationDropdown($thisClass);
+
+            //text align dropdown
+            this._textAlignDropdown($thisClass);
+
+            //text font size
+            this._fontSize($thisClass);
+
+            //text line height
+            this._lineHeight($thisClass);
+
+            //text letter spacing
+            this._letterSpacing($thisClass);
+
+            //init colorpickers
+            this._initColorpicker($thisClass)
+                .then(() => {
+                })
+                .catch(error => {
+                    console.error(error);
+                });
         }
 
         /**
@@ -290,6 +325,139 @@
         }
 
         /**
+         * text align dropdown
+         *
+         * @param $thisClass : this
+         *
+         * @return void
+         */
+        private _textAlignDropdown($thisClass: this): void {
+            this.$_text_align_dropdown.select2({
+                allowClear: true,
+            });
+            this.$_text_align_dropdown.off("change.mychange").on("change.mychange", function() {
+                const text_align = String($(this).val());
+
+                $thisClass.$_preview_area.css("text-align", text_align);
+            });
+        }
+
+        /**
+         * text font zie
+         *
+         * @param $thisClass : this
+         *
+         * @return void
+         */
+        private _fontSize($thisClass: this): void {
+            //on size dropdown change
+            this.$_text_font_size.children("select").off("change").on("change", function() {
+                const size = String($(this).val());
+                const value = String($(this).siblings(".dht-input").val());
+
+                $thisClass.$_preview_area.css("font-size", value + size);
+            });
+            //on input change
+            this.$_text_font_size.children(".dht-input").off("input change").on("input change", function() {
+                const value = String($(this).val());
+                const size = String($(this).siblings("select").val());
+
+                $thisClass.$_preview_area.css("font-size", value + size);
+            });
+        }
+
+        /**
+         * text line height
+         *
+         * @param $thisClass : this
+         *
+         * @return void
+         */
+        private _lineHeight($thisClass: this): void {
+            //on size dropdown change
+            this.$_text_line_height.children("select").off("change").on("change", function() {
+                const size = String($(this).val());
+                const value = String($(this).siblings(".dht-input").val());
+
+                $thisClass.$_preview_area.css("line-height", value + size);
+            });
+            //on input change
+            this.$_text_line_height.children(".dht-input").off("input change").on("input change", function() {
+                const value = String($(this).val());
+                const size = String($(this).siblings("select").val());
+
+                $thisClass.$_preview_area.css("line-height", value + size);
+            });
+        }
+
+        /**
+         * text letter spacing
+         *
+         * @param $thisClass : this
+         *
+         * @return void
+         */
+        private _letterSpacing($thisClass: this): void {
+            //on size dropdown change
+            this.$_text_letter_spacing.children("select").off("change").on("change", function() {
+                const size = String($(this).val());
+                const value = String($(this).siblings(".dht-input").val());
+
+                $thisClass.$_preview_area.css("letter-spacing", value + size);
+            });
+            //on input change
+            this.$_text_letter_spacing.children(".dht-input").off("input change").on("input change", function() {
+                const value = String($(this).val());
+                const size = String($(this).siblings("select").val());
+
+                $thisClass.$_preview_area.css("letter-spacing", value + size);
+            });
+        }
+
+        /**
+         * initialize colorpicker field
+         *
+         * @param $thisClass : this
+         *
+         * @return void
+         */
+        private async _initColorpicker($thisClass: this): Promise<void> {
+            try {
+                const { dhtInitColorpicker } = await import("@helpers/options/colorpicker-utilities");
+
+                //call colorpicker functionality
+                this.$_colorpicker.each(function() {
+                    const $this = $(this);
+
+                    //load colorpicker
+                    dhtInitColorpicker($this);
+
+                    //grab color on colorpicker change
+                    ($this as any).wpColorPicker(
+                        "option",
+                        "change",
+                        function(_event: any, ui: any): void {
+                            const color = ui.color.toString();
+
+                            // Apply the selected color to the preview area
+                            $thisClass.$_preview_area.css("color", color);
+                        },
+                    );
+
+                    // grab color on input change
+                    $this.off("input change").on("input change", () => {
+                        const color = String($(this).val());
+
+                        // Apply the selected color to the preview area
+                        $thisClass.$_preview_area.css("color", color);
+                    });
+                });
+            } catch (error) {
+                console.error("Error loading module:", error);
+            }
+        }
+
+        /**
          * populate font weight dropdown
          *
          * @param $thisClass : this
@@ -383,7 +551,7 @@
 
     //init each typography option
     function init() {
-        $(".dht-field-wrapper-typography").each(function() {
+        $(".dht-field-wrapper-typography .dht-field-child-typography").each(function() {
             new Typography($(this));
         });
     }

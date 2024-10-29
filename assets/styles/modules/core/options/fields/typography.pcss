@@ -1,3 +1,5 @@
+@import '../../../../mixins.pcss';
+
 @define-mixin responsive_code {
     .dht-field-child-typography-group {
         display: block;
@@ -31,6 +33,8 @@
 .dht-wrapper {
 
     .dht-field-child-typography {
+
+        @mixin colorpicker;
 
         @mixin grid_style;
 
@@ -73,6 +77,16 @@
         .select2-container--default .select2-selection--single .select2-selection__clear {
             top: -1px;
             position: relative;
+        }
+
+        .dht-field-child-typography-fields {
+            display: grid;
+            grid-template-columns: 68% 30%;
+            gap: 2%;
+
+            label {
+                display: none !important;
+            }
         }
     }
 

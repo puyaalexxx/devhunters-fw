@@ -47,6 +47,26 @@ if( !function_exists( 'dht_fw_get_font_weight_Label' ) ) {
 	}
 }
 
+if( !function_exists( 'dht_fw_get_css_sizes' ) ) {
+	/**
+	 * gent available sizes like px, em, rem
+	 *
+	 * @return array
+	 * @since     1.0.0
+	 */
+	function dht_fw_get_css_sizes() : array {
+		
+		return [
+			"px"  => 'px',
+			"%"   => '%',
+			"em"  => 'em',
+			"rem" => 'rem',
+			"vw"  => 'vw',
+			"vh"  => 'vh'
+		];
+	}
+}
+
 
 ///////////////////////////////////////////////
 

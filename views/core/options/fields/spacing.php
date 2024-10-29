@@ -3,20 +3,14 @@ if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
+use function DHT\Helpers\dht_fw_get_css_sizes;
 use function DHT\Helpers\dht_fw_live_option_selectors;
 use function DHT\Helpers\dht_parse_option_attributes;
 
 $field = $args[ 'field' ] ?? [];
 
 //spacing sizes
-$sizes = [
-	"px"         => 'px',
-	"percentage" => '%',
-	"em"         => 'em',
-	"rem"        => 'rem',
-	"vw"         => 'vw',
-	"vh"         => 'vh'
-];
+$sizes = dht_fw_get_css_sizes();
 ?>
 <!-- field - spacing -->
 

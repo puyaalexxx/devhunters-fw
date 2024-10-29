@@ -8,7 +8,7 @@ use FontLib\Font;
 use function DHT\Helpers\{dht_remove_font_name_prefix};
 use function DHT\Helpers\dht_fw_get_font_weight_Label;
 
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
@@ -27,7 +27,7 @@ final class TypographyHelpers {
 		
 		$google_fonts_path = DHT_ASSETS_DIR . 'fonts/google-fonts/google-fonts.json';
 		
-		if ( ! file_exists( $google_fonts_path ) ) {
+		if( !file_exists( $google_fonts_path ) ) {
 			return [];
 		}
 		
@@ -61,18 +61,18 @@ final class TypographyHelpers {
 	 */
 	public static function prepareFontWeights( int|array $font_weights ) : array {
 		
-		if ( is_array( $font_weights ) ) {
+		if( is_array( $font_weights ) ) {
 			
 			$font_weights_result = [];
 			foreach ( $font_weights as $font_weight ) {
 				
 				//skip the italic ones
-				if ( str_contains( $font_weight, 'italic' ) ) {
+				if( str_contains( $font_weight, 'italic' ) ) {
 					continue;
 				}
 				
 				//change to a number to be consistent
-				if ( $font_weight == 'regular' ) {
+				if( $font_weight == 'regular' ) {
 					$font_weight = 400;
 				}
 				
@@ -106,7 +106,7 @@ final class TypographyHelpers {
 		$et_folder_path = $upload_dir[ 'basedir' ] . '/' . $et_folder_name;
 		
 		$et_fonts = [];
-		if ( is_dir( $et_folder_path ) ) {
+		if( is_dir( $et_folder_path ) ) {
 			
 			// Get the list of files and directories in the folder
 			$et_folder_contents = scandir( $et_folder_path );
@@ -118,7 +118,7 @@ final class TypographyHelpers {
 			) );
 			
 			// Check if the folder is not empty
-			if ( ! empty( $et_folder_contents ) ) {
+			if( !empty( $et_folder_contents ) ) {
 				
 				// Filter files with .ttf and .otf extensions
 				$et_font_files = array_filter( $et_folder_contents, function( $file ) {
@@ -169,19 +169,24 @@ final class TypographyHelpers {
 	 */
 	public static function getOptionValues( array $value ) : array {
 		
-		$font_family_value = ! empty( $value[ 'font-family' ] ) ? $value[ 'font-family' ] : '';
+		$font_family_value = !empty( $value[ 'font-family' ] ) ? $value[ 'font-family' ] : '';
 		
 		//font values
-		$font_value      = ! empty( $font_family_value[ 'font' ] ) ? $font_family_value[ 'font' ] : '';
-		$font_type_value = ! empty( $font_family_value[ 'font-type' ] ) ? $font_family_value[ 'font-type' ] : '';
-		$font_path_value = ! empty( $font_family_value[ 'font-path' ] ) ? $font_family_value[ 'font-path' ] : '';
+		$font_value      = !empty( $font_family_value[ 'font' ] ) ? $font_family_value[ 'font' ] : '';
+		$font_type_value = !empty( $font_family_value[ 'font-type' ] ) ? $font_family_value[ 'font-type' ] : '';
+		$font_path_value = !empty( $font_family_value[ 'font-path' ] ) ? $font_family_value[ 'font-path' ] : '';
 		
 		//other dropdown values
-		$font_weight_value     = ! empty( $value[ 'font-weight' ] ) ? $value[ 'font-weight' ] : '';
-		$font_subsets_value    = ! empty( $value[ 'font-subsets' ] ) ? $value[ 'font-subsets' ] : '';
-		$font_style_value      = ! empty( $value[ 'font-style' ] ) ? $value[ 'font-style' ] : '';
-		$text_transform_value  = ! empty( $value[ 'text-transform' ] ) ? $value[ 'text-transform' ] : '';
-		$text_decoration_value = ! empty( $value[ 'text-decoration' ] ) ? $value[ 'text-decoration' ] : '';
+		$font_weight_value     = !empty( $value[ 'font-weight' ] ) ? $value[ 'font-weight' ] : '';
+		$font_subsets_value    = !empty( $value[ 'font-subsets' ] ) ? $value[ 'font-subsets' ] : '';
+		$font_style_value      = !empty( $value[ 'font-style' ] ) ? $value[ 'font-style' ] : '';
+		$text_transform_value  = !empty( $value[ 'text-transform' ] ) ? $value[ 'text-transform' ] : '';
+		$text_decoration_value = !empty( $value[ 'text-decoration' ] ) ? $value[ 'text-decoration' ] : '';
+		$text_align_value      = !empty( $value[ 'text-align' ] ) ? $value[ 'text-align' ] : '';
+		$font_size_value       = !empty( $value[ 'font-size' ] ) ? $value[ 'font-size' ] : '';
+		$line_height_value     = !empty( $value[ 'line-height' ] ) ? $value[ 'line-height' ] : '';
+		$letter_spacing_value  = !empty( $value[ 'letter-spacing' ] ) ? $value[ 'letter-spacing' ] : '';
+		$text_color_value      = !empty( $value[ 'color' ] ) ? $value[ 'color' ] : '';
 		
 		return [
 			$font_value,
@@ -191,7 +196,12 @@ final class TypographyHelpers {
 			$font_subsets_value,
 			$font_style_value,
 			$text_transform_value,
-			$text_decoration_value
+			$text_decoration_value,
+			$text_align_value,
+			$font_size_value,
+			$line_height_value,
+			$letter_spacing_value,
+			$text_color_value
 		];
 	}
 	
@@ -207,12 +217,17 @@ final class TypographyHelpers {
 	public static function buildPreviewStyles( array $value, array $font_args ) : string {
 		
 		$preview_styles = '';
-		if ( ! empty( $value ) ) {
-			$preview_styles = ! empty( $font_args[ 'font_value' ] ) ? 'font-family:"' . dht_remove_font_name_prefix( $font_args[ 'font_value' ] ) . '";' : '';
-			$preview_styles .= ! empty( $font_args[ 'font_weight_value' ] ) ? 'font-weight:' . $font_args[ 'font_weight_value' ] . ';' : '';
-			$preview_styles .= ! empty( $font_args[ 'font_style_value' ] ) ? 'font-style:' . $font_args[ 'font_style_value' ] . ';' : '';
-			$preview_styles .= ! empty( $font_args[ 'text_transform_value' ] ) ? 'text-transform:' . $font_args[ 'text_transform_value' ] . ';' : '';
-			$preview_styles .= ! empty( $font_args[ 'text_decoration_value' ] ) ? 'text-decoration:' . $font_args[ 'text_decoration_value' ] . ';' : '';
+		if( !empty( $value ) ) {
+			$preview_styles = !empty( $font_args[ 'font_value' ] ) ? 'font-family:"' . dht_remove_font_name_prefix( $font_args[ 'font_value' ] ) . '";' : '';
+			$preview_styles .= !empty( $font_args[ 'font_weight_value' ] ) ? 'font-weight:' . $font_args[ 'font_weight_value' ] . ';' : '';
+			$preview_styles .= !empty( $font_args[ 'font_style_value' ] ) ? 'font-style:' . $font_args[ 'font_style_value' ] . ';' : '';
+			$preview_styles .= !empty( $font_args[ 'text_transform_value' ] ) ? 'text-transform:' . $font_args[ 'text_transform_value' ] . ';' : '';
+			$preview_styles .= !empty( $font_args[ 'text_decoration_value' ] ) ? 'text-decoration:' . $font_args[ 'text_decoration_value' ] . ';' : '';
+			$preview_styles .= !empty( $font_args[ 'text_align_value' ] ) ? 'text-align:' . $font_args[ 'text_align_value' ] . ';' : '';
+			$preview_styles .= !empty( $font_args[ 'font_size_value' ] ) ? 'font-size:' . $font_args[ 'font_size_value' ][ 'value' ] . $font_args[ 'font_size_value' ][ 'size' ] . ';' : '';
+			$preview_styles .= !empty( $font_args[ 'line_height_value' ] ) ? 'line-height:' . $font_args[ 'line_height_value' ][ 'value' ] . $font_args[ 'line_height_value' ][ 'size' ] . ';' : '';
+			$preview_styles .= !empty( $font_args[ 'letter_spacing_value' ] ) ? 'letter-spacing:' . $font_args[ 'letter_spacing_value' ][ 'value' ] . $font_args[ 'letter_spacing_value' ][ 'size' ] . ';' : '';
+			$preview_styles .= !empty( $font_args[ 'text_color_value' ] ) ? 'color:' . $font_args[ 'text_color_value' ] . ';' : '';
 		}
 		
 		return $preview_styles;
@@ -231,10 +246,10 @@ final class TypographyHelpers {
 	public static function getFontType( string $font_value, array $google_fonts, array $et_fonts ) : string {
 		
 		$font_type = 'standard';
-		if ( array_key_exists( $font_value, $google_fonts ) ) {
+		if( array_key_exists( $font_value, $google_fonts ) ) {
 			$font_type = 'google';
 		}
-		elseif ( array_key_exists( $font_value, $et_fonts ) ) {
+		elseif( array_key_exists( $font_value, $et_fonts ) ) {
 			$font_type = 'divi';
 		}
 		

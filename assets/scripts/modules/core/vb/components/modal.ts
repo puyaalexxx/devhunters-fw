@@ -560,7 +560,7 @@ function dhtAjaxLoadOptions(modal: JQuery<HTMLElement>): void {
 
                 // Initialize options so they could work as expected
                 setTimeout(function() {
-                    import("../../../helpers/ajax-options-reload")
+                    import("@helpers/options/ajax-options-reload")
                         .then(module => {
                             const { dhtReinitializeOptions } = module;
                             dhtReinitializeOptions($optionsArea);

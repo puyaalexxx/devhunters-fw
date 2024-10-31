@@ -47,9 +47,10 @@
     }
   },
   "include": [
-    "assets/scripts/",
-    "assets/scripts/types/*.ts",
-    "assets/scripts/dts-files/*.d.ts"
+    "assets/scripts/**/*",        // Include all scripts in the assets/scripts directory
+    "helpers/node/**/*",          // Include everything in the helpers/node directory
+    "helpers/node/types/**/*",    // Include all .ts files in types directory
+    "helpers/node/dts/**/*"       // Include all declaration files in dts directory
   ],
   "exclude": [
     "node_modules"

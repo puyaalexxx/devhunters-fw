@@ -44,12 +44,12 @@ $right_choice = $toggle[ 'right-choice' ];
             <span class="dht-slider">
                 <span class="dht-slider-yes"
                       data-value="<?php echo esc_attr( $left_choice[ 'value' ] ); ?>"
-                      <?php echo dht_fw_live_option_selectors( $left_choice[ 'live' ] ?? "" ); ?>>
+                      <?php echo dht_fw_live_option_selectors( $left_choice[ 'live' ] ?? [] ); ?>>
                     <?php echo esc_attr( $left_choice[ 'label' ] ); ?>
                 </span>
                 <span class="dht-slider-no"
                       data-value="<?php echo esc_attr( $right_choice[ 'value' ] ); ?>"
-                      <?php echo dht_fw_live_option_selectors( $right_choice[ 'live' ] ?? "" ); ?>>
+                      <?php echo dht_fw_live_option_selectors( $right_choice[ 'live' ] ?? [] ); ?>>
                     <?php echo esc_attr( $right_choice[ 'label' ] ); ?>
                 </span>
             </span>

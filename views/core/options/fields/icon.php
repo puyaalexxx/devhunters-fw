@@ -25,7 +25,7 @@ $icons = [
 
 <div
     class="dht-field-wrapper dht-field-wrapper-icons <?php echo isset( $field[ 'attr' ][ 'class' ] ) ? esc_attr( $field[ 'attr' ][ 'class' ] ) : ''; ?>"
-	<?php echo dht_parse_option_attributes( $field[ 'attr' ] ?? [] ); ?> <?php echo dht_fw_live_option_selectors( $field[ 'live' ] ?? "" ); ?>>
+	<?php echo dht_parse_option_attributes( $field[ 'attr' ] ?? [] ); ?> <?php echo dht_fw_live_option_selectors( $field[ 'live' ] ?? [] ); ?>>
 	
 	<?php if( !empty( $field[ 'title' ] ) ): ?>
         <div class="dht-title"><?php echo esc_html( $field[ 'title' ] ); ?></div>

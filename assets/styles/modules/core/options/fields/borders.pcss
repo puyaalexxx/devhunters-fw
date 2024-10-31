@@ -11,6 +11,14 @@
             grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
             grid-gap: 15px;
             margin-bottom: 10px;
+
+            &.dht-field-borders-group-col-4 {
+                grid-template-columns: 1fr 1fr 1fr 1fr;
+            }
+
+            &.dht-field-borders-group-col-6 {
+                grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+            }
         }
 
         .dht-field-borders-group {
@@ -85,6 +93,10 @@
             .dht-field-borders-input select {
                 max-width: 100%;
             }
+
+            @media (max-width: 1366px) {
+                @mixin colorpicker_responsive;
+            }
         }
 
         @media (max-width: 767px) {
@@ -98,10 +110,9 @@
         }
     }
 
-    .dht-cosidebar, .dht-tabsmenu-container {
-        .dht-field-child-borders {
-
-            @media (max-width: 1600px) {
+    @media (max-width: 1600px) {
+        .dht-cosidebar, .dht-tabsmenu-container {
+            .dht-field-child-borders {
                 .dht-field-borders-group {
                     display: block;
                 }
@@ -113,13 +124,17 @@
                 .dht-field-borders-input select {
                     max-width: 100%;
                 }
+
+                .dht-field-borders-group-colorpicker {
+                    @mixin colorpicker_responsive;
+                }
             }
         }
     }
 }
 
-@media (max-width: 1920px) {
-    .dht-meta-box-content .dht-wrapper {
+.dht-meta-box-content .dht-wrapper {
+    @media (max-width: 1920px) {
         .dht-cosidebar {
             .dht-field-child-borders {
                 .dht-field-borders-group {
@@ -133,8 +148,26 @@
                 .dht-field-borders-input select {
                     max-width: 100%;
                 }
+
+                .dht-field-borders-group-colorpicker {
+                    @mixin colorpicker_responsive;
+                }
             }
         }
+    }
+
+    @media (max-width: 1600px) {
+        .dht-field-child-borders {
+            .dht-field-borders-group-colorpicker {
+                @mixin colorpicker_responsive;
+            }
+        }
+    }
+}
+
+.dht-terms-page-content .dht-wrapper {
+    .dht-field-borders-group-colorpicker {
+        @mixin colorpicker_responsive;
     }
 }
 
@@ -142,7 +175,6 @@
     &.dht-modal-small, &.dht-modal-medium {
         .dht-wrapper {
             .dht-field-child-borders {
-
                 .dht-field-borders-group {
                     display: block;
                 }
@@ -153,6 +185,10 @@
 
                 .dht-field-borders-input select {
                     max-width: 100%;
+                }
+
+                .dht-field-borders-group-colorpicker {
+                    @mixin colorpicker_responsive;
                 }
             }
         }

@@ -1,4 +1,4 @@
-//import "./colorpicker";
+import { errorLoadingModule } from "@helpers/general";
 
 (function($: JQueryStatic): void {
     "use strict";
@@ -12,12 +12,10 @@
             this.$_borders = $borders;
 
             //init borders
-            this._initBorders()
-                .then(() => {
-                })
-                .catch(error => {
-                    console.error(error);
-                });
+            this._initBorders().then(() => {
+            }).catch(error => {
+                console.error(error);
+            });
         }
 
         /**
@@ -35,7 +33,7 @@
                     dhtInitColorpicker($(this));
                 });
             } catch (error) {
-                console.error("Error loading module:", error);
+                errorLoadingModule(error as string);
             }
         }
     }

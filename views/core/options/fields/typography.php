@@ -4,7 +4,7 @@ if( !defined( 'DHT_MAIN' ) ) {
 }
 
 use DHT\Helpers\Classes\TypographyHelpers;
-use function DHT\Helpers\{dht_fw_get_css_sizes,
+use function DHT\Helpers\{dht_fw_get_css_units,
 	dht_fw_live_option_selectors,
 	dht_parse_option_attributes,
 	dht_remove_font_name_prefix};
@@ -74,7 +74,7 @@ $font_type = TypographyHelpers::getFontType( $font_value, $google_fonts, $et_fon
 
 <div
     class="dht-field-wrapper dht-field-wrapper-typography <?php echo isset( $field[ 'attr' ][ 'class' ] ) ? esc_attr( $field[ 'attr' ][ 'class' ] ) : ''; ?>"
-	<?php echo dht_parse_option_attributes( $field[ 'attr' ] ?? [] ); ?> <?php echo dht_fw_live_option_selectors( $field[ 'live' ] ?? "" ); ?>>
+	<?php echo dht_parse_option_attributes( $field[ 'attr' ] ?? [] ); ?> <?php echo dht_fw_live_option_selectors( $field[ 'live' ] ?? [] ); ?>>
 	
 	<?php if( !empty( $field[ 'title' ] ) ): ?>
         <div class="dht-title"><?php echo esc_html( $field[ 'title' ] ); ?></div>
@@ -418,7 +418,7 @@ $font_type = TypographyHelpers::getFontType( $font_value, $google_fonts, $et_fon
                                 id="<?php echo esc_attr( $field[ 'id' ] ); ?>-font-size-size">
 							
 							<?php $cnt = 0;
-							foreach ( dht_fw_get_css_sizes() as $size_val => $size_name ): $cnt ++; ?>
+							foreach ( dht_fw_get_css_units() as $size_val => $size_name ): $cnt ++; ?>
 								<?php $size = $font_size_value[ 'size' ] ?? ""; ?>
                                 <option
                                     value="<?php echo esc_attr( $size_val ); ?>"
@@ -458,7 +458,7 @@ $font_type = TypographyHelpers::getFontType( $font_value, $google_fonts, $et_fon
                                 id="<?php echo esc_attr( $field[ 'id' ] ); ?>-line-height-size">
 							
 							<?php $cnt = 0;
-							foreach ( dht_fw_get_css_sizes() as $size_val => $size_name ): $cnt ++; ?>
+							foreach ( dht_fw_get_css_units() as $size_val => $size_name ): $cnt ++; ?>
 								<?php $size = $line_height_value[ 'size' ] ?? ""; ?>
                                 <option
                                     value="<?php echo esc_attr( $size_val ); ?>"
@@ -498,7 +498,7 @@ $font_type = TypographyHelpers::getFontType( $font_value, $google_fonts, $et_fon
                                 id="<?php echo esc_attr( $field[ 'id' ] ); ?>-letter-spacing-size">
 							
 							<?php $cnt = 0;
-							foreach ( dht_fw_get_css_sizes() as $size_val => $size_name ): $cnt ++; ?>
+							foreach ( dht_fw_get_css_units() as $size_val => $size_name ): $cnt ++; ?>
 								<?php $size = $letter_spacing_value[ 'size' ] ?? ""; ?>
                                 <option
                                     value="<?php echo esc_attr( $size_val ); ?>"
@@ -513,32 +513,32 @@ $font_type = TypographyHelpers::getFontType( $font_value, $google_fonts, $et_fon
 
                 </div>
 			<?php endif; ?>
-			
-			<?php if( $field[ 'color' ] ): ?>
-                <!--text color-->
-                <div class="dht-field-child-typography-dropdown">
-
-                    <label
-                        for="<?php echo esc_attr( $field[ 'id' ] ); ?>-color"><?php echo _x( 'Text Color', 'options', DHT_PREFIX ) ?></label>
-
-                    <input
-                        class="dht-colorpicker dht-field"
-                        id="<?php echo esc_attr( $field[ 'id' ] ); ?>-color"
-                        type="text"
-                        data-alpha="false" data-alpha-enabled="false"
-                        name="<?php echo esc_attr( $field[ 'id' ] ); ?>[color]"
-                        value="<?php echo esc_html( $text_color_value ); ?>"
-                        data-palette='<?php //echo !empty( $field[ 'palettes' ] ) ? json_encode( $field[ 'palettes' ] ) : ''; ?>' />
-
-                    <input type="button" id="<?php echo esc_attr( $field[ 'id' ] ) . '-btn'; ?>"
-                           class="dht-default-color-btn button button-small"
-                           data-default-value="<?php echo esc_html( $text_color_value ); ?>"
-                           value="<?php echo _x( 'Default', 'options', DHT_PREFIX ) ?>">
-
-                </div>
-			<?php endif; ?>
 
         </div>
+		
+		<?php if( $field[ 'color' ] ): ?>
+            <!--text color-->
+            <div class="dht-field-child-typography-colorpicker">
+
+                <label
+                    for="<?php echo esc_attr( $field[ 'id' ] ); ?>-color"><?php echo _x( 'Text Color', 'options', DHT_PREFIX ) ?></label>
+
+                <input
+                    class="dht-colorpicker dht-field"
+                    id="<?php echo esc_attr( $field[ 'id' ] ); ?>-color"
+                    type="text"
+                    data-alpha="false" data-alpha-enabled="false"
+                    name="<?php echo esc_attr( $field[ 'id' ] ); ?>[color]"
+                    value="<?php echo esc_html( $text_color_value ); ?>"
+                    data-palette='<?php //echo !empty( $field[ 'palettes' ] ) ? json_encode( $field[ 'palettes' ] ) : ''; ?>' />
+
+                <input type="button" id="<?php echo esc_attr( $field[ 'id' ] ) . '-btn'; ?>"
+                       class="dht-default-color-btn button button-small"
+                       data-default-value="<?php echo esc_html( $text_color_value ); ?>"
+                       value="<?php echo _x( 'Default', 'options', DHT_PREFIX ) ?>">
+
+            </div>
+		<?php endif; ?>
 		
 		<?php if( !empty( $field[ 'description' ] ) ): ?>
             <div class="dht-description"><?php echo esc_html( $field[ 'description' ] ); ?></div>

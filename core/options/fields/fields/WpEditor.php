@@ -42,7 +42,7 @@ final class WpEditor extends BaseField {
 			wp_register_style( DHT_PREFIX_CSS . '-wpeditor-field', DHT_ASSETS_URI . 'dist/css/wpeditor.css', array(), DHT::$version );
 			wp_enqueue_style( DHT_PREFIX_CSS . '-wpeditor-field' );
 			
-			wp_enqueue_script( DHT_PREFIX_JS . '-wpeditor-field', DHT_ASSETS_URI . 'dist/js/wpeditor.js', array( 'jquery' ), DHT::$version, true );
+			wp_enqueue_script_module( DHT_PREFIX_JS . '-wpeditor-field', DHT_ASSETS_URI . 'dist/js/wpeditor.js', array( 'jquery' ), DHT::$version, true );
 		}
 	}
 	

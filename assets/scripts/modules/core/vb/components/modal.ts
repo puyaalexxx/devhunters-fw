@@ -1,3 +1,5 @@
+import { errorLoadingModule } from "@helpers/general";
+
 /**
  * Modal Component (Plugin)
  *
@@ -555,6 +557,9 @@ function dhtAjaxLoadOptions(modal: JQuery<HTMLElement>): void {
         },
         success: function(response) {
             if (response.success) {
+                //remove the modal content before load
+                $optionsArea.empty();
+
                 //add options to the modal
                 $optionsArea.append(response.data);
 
@@ -566,7 +571,7 @@ function dhtAjaxLoadOptions(modal: JQuery<HTMLElement>): void {
                             dhtReinitializeOptions($optionsArea);
                         })
                         .catch(error => {
-                            console.error("Error loading module:", error);
+                            errorLoadingModule(error as string);
                         });
                 }, 200);
 

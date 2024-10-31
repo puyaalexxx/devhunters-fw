@@ -3,5 +3,31 @@
 .dht-wrapper {
     .dht-field-child-colorpicker {
         @mixin colorpicker;
+
+        @media (max-width: 1366px) {
+            @mixin colorpicker_responsive;
+        }
+    }
+
+    @media (max-width: 1600px) {
+        .dht-cosidebar, .dht-tabsmenu-container {
+            .dht-field-child-colorpicker {
+                @mixin colorpicker_responsive;
+            }
+        }
+    }
+}
+
+@media (max-width: 1600px) {
+    .dht-meta-box-content .dht-wrapper {
+        .dht-field-child-colorpicker {
+            @mixin colorpicker_responsive;
+        }
+    }
+}
+
+.dht-terms-page-content .dht-wrapper {
+    .dht-field-child-colorpicker {
+        @mixin colorpicker_responsive;
     }
 }

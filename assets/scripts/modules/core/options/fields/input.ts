@@ -1,16 +1,22 @@
+import { errorLoadingModule } from "@helpers/general";
+import { dhtApplyLiveChanges } from "@helpers/options/live-editing";
+
 (function($: JQueryStatic): void {
     "use strict";
 
     class Input {
         //input reference
-        private $_input;
+        private readonly $_input;
 
         constructor($input: JQuery<HTMLElement>) {
             //input reference
             this.$_input = $input;
 
             //init live editing
-            this._liveEditing();
+            this._liveEditing().then(() => {
+            }).catch(error => {
+                console.error(error);
+            });
         }
 
         /**
@@ -20,16 +26,32 @@
          *
          * @return void
          */
-        private _liveEditing(): void {
-            const selectors = this.$_input.attr("data-live-selectors") ?? "";
+        private async _liveEditing(): Promise<void> {
+            try {
+                const {
+                    dhtGetLiveEditingSelectors,
+                    dhtApplyLiveChanges,
+                } = await import("@helpers/options/live-editing");
 
-            if (selectors.length === 0) return;
+                //get option selectors
+                const selectors: ILiveEditorSelectorTarget = dhtGetLiveEditingSelectors(this.$_input);
 
-            this.$_input.on("input", ".dht-input", function() {
-                const value = $(this).val();
+                if (Object.entries(selectors).length === 0) return;
 
-                $(selectors).text(value);
-            });
+                this.$_input.on("input", ".dht-input", function() {
+                    const value = String($(this).val());
+
+                    dhtApplyLiveChanges(selectors, (selector) => {
+                        if (selectors.target === "content") {
+                            $(selector).text(value);
+                        } else {
+                            $(selector).css(selectors.target, value);
+                        }
+                    });
+                });
+            } catch (error) {
+                errorLoadingModule(error as string);
+            }
         }
     }
 

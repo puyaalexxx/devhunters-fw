@@ -1,3 +1,5 @@
+import { errorLoadingModule } from "@helpers/general";
+
 (function($: JQueryStatic): void {
     "use strict";
 
@@ -204,7 +206,7 @@
                                     dhtReinitializeOptions($box_content_area);
                                 })
                                 .catch(error => {
-                                    console.error("Error loading module:", error);
+                                    errorLoadingModule(error as string);
                                 });
                         }, 100);
 

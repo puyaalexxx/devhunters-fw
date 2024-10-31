@@ -1,3 +1,5 @@
+import { errorLoadingModule } from "@helpers/general";
+
 (function($: JQueryStatic): void {
     "use strict";
 
@@ -84,7 +86,7 @@
                         return; // Exit if the module name is not recognized
                 }
             } catch (error) {
-                console.error(`Error loading module ${module}:`, error);
+                errorLoadingModule(error as string, module);
             }
         }
     }

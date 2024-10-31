@@ -1,5 +1,7 @@
 "use strict";
 
+import { errorLoadingModule } from "@helpers/general";
+
 /**
  * Class used to initialize vb buttons group area
  */
@@ -203,7 +205,7 @@ class ButtonsGroup {
             });
 
         } catch (error) {
-            console.error("Error loading module:", error);
+            errorLoadingModule(error as string);
         }
     }
 

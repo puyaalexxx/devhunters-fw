@@ -1,3 +1,5 @@
+import { errorLoadingModule } from "@helpers/general";
+
 (function($: JQueryStatic): void {
     "use strict";
 
@@ -94,12 +96,10 @@
             this._letterSpacing($thisClass);
 
             //init colorpickers
-            this._initColorpicker($thisClass)
-                .then(() => {
-                })
-                .catch(error => {
-                    console.error(error);
-                });
+            this._initColorpicker($thisClass).then(() => {
+            }).catch(error => {
+                console.error(error);
+            });
         }
 
         /**
@@ -453,7 +453,7 @@
                     });
                 });
             } catch (error) {
-                console.error("Error loading module:", error);
+                errorLoadingModule(error as string);
             }
         }
 

@@ -8,7 +8,7 @@ use DHT\DHT;
 use DHT\Helpers\Classes\Environment;
 use function DHT\Helpers\dht_load_view;
 
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
@@ -37,11 +37,11 @@ final class Toggle extends BaseToggle {
 	 */
 	public function enqueueOptionScripts( array $toggle ) : void {
 		
-		if ( Environment::isDevelopment() ) {
+		if( Environment::isDevelopment() ) {
 			wp_register_style( DHT_PREFIX_CSS . '-toggle-toggle', DHT_ASSETS_URI . 'dist/css/toggle.css', array(), DHT::$version );
 			wp_enqueue_style( DHT_PREFIX_CSS . '-toggle-toggle' );
 			
-			wp_enqueue_script( DHT_PREFIX_JS . '-toggle-toggle', DHT_ASSETS_URI . 'dist/js/toggle.js', array( 'jquery' ), DHT::$version, true );
+			wp_enqueue_script_module( DHT_PREFIX_JS . '-toggle-toggle', DHT_ASSETS_URI . 'dist/js/toggle.js', array( 'jquery' ), DHT::$version, true );
 		}
 	}
 	
@@ -104,17 +104,17 @@ final class Toggle extends BaseToggle {
 	 */
 	public function saveValue( array $toggle, mixed $toggle_post_values ) : mixed {
 		
-		if ( empty( $toggle_post_values ) ) {
+		if( empty( $toggle_post_values ) ) {
 			return $toggle[ 'value' ];
 		}
 		
 		//sanitize option values
-		if ( ! empty( $toggle[ 'left-choice' ][ 'options' ] ) ) {
+		if( !empty( $toggle[ 'left-choice' ][ 'options' ] ) ) {
 			
 			$toggle_post_values = $this->_sanitize_values( $toggle, 'left-choice', $toggle_post_values, $this->_registeredFields );
 		}
 		
-		if ( ! empty( $toggle[ 'right-choice' ][ 'options' ] ) ) {
+		if( !empty( $toggle[ 'right-choice' ][ 'options' ] ) ) {
 			
 			$toggle_post_values = $this->_sanitize_values( $toggle, 'right-choice', $toggle_post_values, $this->_registeredFields );
 		}

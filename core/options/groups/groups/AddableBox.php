@@ -7,7 +7,6 @@ use DHT\Core\Options\Groups\BaseGroup;
 use DHT\DHT;
 use DHT\Helpers\Classes\Environment;
 use function DHT\Helpers\dht_fw_render_box_item_content;
-use function DHT\Helpers\dht_make_script_as_module_type;
 
 if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
@@ -58,15 +57,10 @@ final class AddableBox extends BaseGroup {
 			wp_register_style( DHT_PREFIX_CSS . '-addable-box-group', DHT_ASSETS_URI . 'dist/css/addable-box.css', array(), DHT::$version );
 			wp_enqueue_style( DHT_PREFIX_CSS . '-addable-box-group' );
 			
-			wp_enqueue_script( DHT_PREFIX_JS . '-addable-box-group', DHT_ASSETS_URI . 'dist/js/addable-box.js', array(
+			wp_enqueue_script_module( DHT_PREFIX_JS . '-addable-box-group', DHT_ASSETS_URI . 'dist/js/addable-box.js', array(
 				'jquery',
 				'jquery-ui-sortable'
 			), DHT::$version, true );
-			
-			//make main.js and fw.js as to load as a module
-			add_filter( 'script_loader_tag', function( string $tag, string $handle ) : string {
-				return dht_make_script_as_module_type( $tag, $handle, [ DHT_PREFIX_JS . '-addable-box-group' ] );
-			}, 10, 2 );
 		}
 	}
 	

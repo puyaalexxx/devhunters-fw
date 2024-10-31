@@ -47,14 +47,14 @@ if( !function_exists( 'dht_fw_get_font_weight_Label' ) ) {
 	}
 }
 
-if( !function_exists( 'dht_fw_get_css_sizes' ) ) {
+if( !function_exists( 'dht_fw_get_css_units' ) ) {
 	/**
-	 * gent available sizes like px, em, rem
+	 * get available sizes like px, em, rem
 	 *
 	 * @return array
 	 * @since     1.0.0
 	 */
-	function dht_fw_get_css_sizes() : array {
+	function dht_fw_get_css_units() : array {
 		
 		return [
 			"px"  => 'px',
@@ -463,22 +463,23 @@ if( !function_exists( 'dht_fw_get_composer_info' ) ) {
 
 if( !function_exists( 'dht_fw_live_option_selectors' ) ) {
 	/**
-	 * add live data attribute with the css selectors
-	 * to be able to edit the target area via js
+	 * add live data attributes with the css selectors
+	 * and their targets that need to be changed on live
+	 * editing via js
 	 * Some sort of one way data binding
 	 *
-	 * @param string $selectors_attr CSS selectors
+	 * @param array $selectors Live attributes
 	 *
 	 * @return string
 	 * @since     1.0.0
 	 */
-	function dht_fw_live_option_selectors( string $selectors_attr ) : string {
+	function dht_fw_live_option_selectors( array $selectors ) : string {
 		
-		if( !empty( $selectors_attr ) ) {
+		if( !empty( $selectors ) ) {
 			
-			return 'data-live-selectors="' . trim( $selectors_attr ) . '"';
+			return 'data-live-selectors="' . htmlspecialchars( json_encode( $selectors ), ENT_QUOTES ) . '"';
 		}
 		
-		return $selectors_attr;
+		return "";
 	}
 }

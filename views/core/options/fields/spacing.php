@@ -3,14 +3,14 @@ if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
-use function DHT\Helpers\dht_fw_get_css_sizes;
+use function DHT\Helpers\dht_fw_get_css_units;
 use function DHT\Helpers\dht_fw_live_option_selectors;
 use function DHT\Helpers\dht_parse_option_attributes;
 
 $field = $args[ 'field' ] ?? [];
 
 //spacing sizes
-$sizes = dht_fw_get_css_sizes();
+$sizes = dht_fw_get_css_units();
 ?>
 <!-- field - spacing -->
 
@@ -18,7 +18,7 @@ $sizes = dht_fw_get_css_sizes();
 
 <div
     class="dht-field-wrapper dht-field-wrapper-spacing <?php echo isset( $field[ 'attr' ][ 'class' ] ) ? esc_attr( $field[ 'attr' ][ 'class' ] ) : ''; ?>"
-	<?php echo dht_parse_option_attributes( $field[ 'attr' ] ?? [] ); ?> <?php echo dht_fw_live_option_selectors( $field[ 'live' ] ?? "" ); ?>>
+	<?php echo dht_parse_option_attributes( $field[ 'attr' ] ?? [] ); ?> <?php echo dht_fw_live_option_selectors( $field[ 'live' ] ?? [] ); ?>>
 	
 	<?php if( !empty( $field[ 'title' ] ) ): ?>
         <div class="dht-title"><?php echo esc_html( $field[ 'title' ] ); ?></div>
@@ -29,7 +29,6 @@ $sizes = dht_fw_get_css_sizes();
         <div class="dht-field-spacing-group">
 
             <div class="dht-field-spacing-input">
-
                 <label
                     for="<?php echo esc_attr( $field[ 'id' ] ); ?>-top"><?php echo _x( 'Top', 'options', DHT_PREFIX ); ?></label>
 
@@ -40,11 +39,9 @@ $sizes = dht_fw_get_css_sizes();
                        type="number"
                        name="<?php echo esc_attr( $field[ 'id' ] ); ?>[top]"
                        value="<?php echo esc_attr( $field[ 'value' ][ 'top' ] ); ?>" />
-
             </div>
 
             <div class="dht-field-spacing-input">
-
                 <label
                     for="<?php echo esc_attr( $field[ 'id' ] ); ?>-right"><?php echo _x( 'Right', 'options', DHT_PREFIX ); ?></label>
 
@@ -55,11 +52,9 @@ $sizes = dht_fw_get_css_sizes();
                        type="number"
                        name="<?php echo esc_attr( $field[ 'id' ] ); ?>[right]"
                        value="<?php echo esc_attr( $field[ 'value' ][ 'right' ] ); ?>" />
-
             </div>
 
             <div class="dht-field-spacing-input">
-
                 <label
                     for="<?php echo esc_attr( $field[ 'id' ] ); ?>-bottom"><?php echo _x( 'Bottom', 'options', DHT_PREFIX ); ?></label>
 
@@ -70,11 +65,9 @@ $sizes = dht_fw_get_css_sizes();
                        type="number"
                        name="<?php echo esc_attr( $field[ 'id' ] ); ?>[bottom]"
                        value="<?php echo esc_attr( $field[ 'value' ][ 'bottom' ] ); ?>" />
-
             </div>
 
             <div class="dht-field-spacing-input">
-
                 <label
                     for="<?php echo esc_attr( $field[ 'id' ] ); ?>-left"><?php echo _x( 'Left', 'options', DHT_PREFIX ); ?></label>
 
@@ -85,11 +78,9 @@ $sizes = dht_fw_get_css_sizes();
                        type="number"
                        name="<?php echo esc_attr( $field[ 'id' ] ); ?>[left]"
                        value="<?php echo esc_attr( $field[ 'value' ][ 'left' ] ); ?>" />
-
             </div>
 
             <div class="dht-field-spacing-input">
-
                 <label
                     for="<?php echo esc_attr( $field[ 'id' ] ); ?>-sizes"><?php echo _x( 'Sizes', 'options', DHT_PREFIX ); ?></label>
 
@@ -103,7 +94,6 @@ $sizes = dht_fw_get_css_sizes();
 					<?php endforeach; ?>
 
                 </select>
-
             </div>
         </div>
 		

@@ -6,7 +6,6 @@ namespace DHT\Core\Options\Fields\Fields;
 use DHT\Core\Options\Fields\BaseField;
 use DHT\DHT;
 use DHT\Helpers\Classes\Environment;
-use function DHT\Helpers\dht_make_script_as_module_type;
 
 if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
@@ -51,17 +50,10 @@ final class Typography extends BaseField {
 			wp_register_style( DHT_PREFIX_CSS . '-typography-field', DHT_ASSETS_URI . 'dist/css/typography.css', array(), DHT::$version );
 			wp_enqueue_style( DHT_PREFIX_CSS . '-typography-field' );
 			
-			wp_enqueue_script( DHT_PREFIX_JS . '-typography-field', DHT_ASSETS_URI . 'dist/js/typography.js', array(
+			wp_enqueue_script_module( DHT_PREFIX_JS . '-typography-field', DHT_ASSETS_URI . 'dist/js/typography.js', array(
 				'jquery',
 				DHT_PREFIX_JS . '-select2-field'
 			), DHT::$version, true );
-			
-			//make typography.js to load as a module
-			add_filter( 'script_loader_tag', function( string $tag, string $handle ) : string {
-				return dht_make_script_as_module_type( $tag, $handle, [
-					DHT_PREFIX_JS . '-typography-field',
-				] );
-			}, 10, 2 );
 		}
 	}
 	

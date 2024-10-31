@@ -9,7 +9,6 @@ use DHT\Core\Vb\Components\Modal;
 use DHT\DHT;
 use DHT\Helpers\Classes\Environment;
 use function DHT\Helpers\dht_get_current_admin_post_type_from_url;
-use function DHT\Helpers\dht_make_script_as_module_type;
 
 if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
@@ -67,12 +66,7 @@ final class VB implements IVB {
 			wp_register_style( DHT_PREFIX_CSS . '-vb', DHT_ASSETS_URI . 'dist/css/vb.css', array(), DHT::$version );
 			wp_enqueue_style( DHT_PREFIX_CSS . '-vb' );
 			
-			wp_enqueue_script( DHT_PREFIX_JS . '-vb', DHT_ASSETS_URI . 'dist/js/vb.js', array( 'jquery' ), DHT::$version, true );
-			
-			//make vb.js as to load as a module
-			add_filter( 'script_loader_tag', function( string $tag, string $handle ) : string {
-				return dht_make_script_as_module_type( $tag, $handle, [ DHT_PREFIX_JS . '-vb' ] );
-			}, 10, 2 );
+			wp_enqueue_script_module( DHT_PREFIX_JS . '-vb', DHT_ASSETS_URI . 'dist/js/vb.js', array( 'jquery' ), DHT::$version, true );
 		}
 	}
 	

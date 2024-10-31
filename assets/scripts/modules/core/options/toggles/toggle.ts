@@ -1,3 +1,5 @@
+import { errorLoadingModule } from "@helpers/general";
+
 (function($: JQueryStatic): void {
     "use strict";
 
@@ -34,7 +36,10 @@
                     $toggleInput.val(value);
 
                     //init live editing
-                    $thisClass._liveEditing("dht-slider-off");
+                    $thisClass._liveEditing("dht-slider-off").then(() => {
+                    }).catch(error => {
+                        console.error(error);
+                    });
                 } else {
                     $toggle.removeClass("dht-slider-off").addClass("dht-slider-on");
                     //get on value
@@ -43,7 +48,10 @@
                     $toggleInput.val(value);
 
                     //init live editing
-                    $thisClass._liveEditing("dht-slider-on");
+                    $thisClass._liveEditing("dht-slider-on").then(() => {
+                    }).catch(error => {
+                        console.error(error);
+                    });
                 }
 
                 $thisClass._showHideOptions($toggle);
@@ -78,19 +86,35 @@
          *
          * @return void
          */
-        private _liveEditing(toggleClass: string): void {
-            //get toggle selectors
-            const onSelectors = this.$_toggle.find(".dht-slider-yes").attr("data-live-selectors") ?? "";
-            const offSelectors = this.$_toggle.find(".dht-slider-no").attr("data-live-selectors") ?? "";
+        private async _liveEditing(toggleClass: string): Promise<void> {
+            try {
+                const {
+                    dhtGetLiveEditingSelectors,
+                    dhtApplyLiveChanges,
+                } = await import("@helpers/options/live-editing");
 
-            if (onSelectors.length === 0 || offSelectors.length === 0) return;
+                //get toggle selectors
+                const onSelectors: ILiveEditorSelectorTarget = dhtGetLiveEditingSelectors(this.$_toggle.find(".dht-slider-yes"));
+                const offSelectors: ILiveEditorSelectorTarget = dhtGetLiveEditingSelectors(this.$_toggle.find(".dht-slider-no"));
 
-            if (toggleClass === "dht-slider-on") {
-                $(onSelectors).show();
-                $(offSelectors).hide();
-            } else if (toggleClass === "dht-slider-off") {
-                $(onSelectors).hide();
-                $(offSelectors).show();
+                if (Object.entries(onSelectors).length === 0 || Object.entries(offSelectors).length === 0) return;
+
+                dhtApplyLiveChanges(onSelectors, (selector) => {
+                    if (onSelectors.target === "content") {
+                        $(selector).hide();
+                        $(offSelectors).show();
+                    }
+                });
+
+                dhtApplyLiveChanges(offSelectors, (selector) => {
+                    if (offSelectors.target === "content") {
+                        $(onSelectors).show();
+                        $(selector).hide();
+                    }
+                });
+
+            } catch (error) {
+                errorLoadingModule(error as string);
             }
         }
     }

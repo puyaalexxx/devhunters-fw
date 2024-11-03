@@ -3,13 +3,13 @@ declare( strict_types = 1 );
 
 namespace DHT\Helpers;
 
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
 use DHT\Helpers\Classes\Dumper;
 
-if ( ! function_exists( 'dht_print_r' ) ) {
+if( !function_exists( 'dht_print_r' ) ) {
 	/**
 	 * print_r alternative with styling
 	 *
@@ -22,7 +22,7 @@ if ( ! function_exists( 'dht_print_r' ) ) {
 		
 		static $first_time = true;
 		
-		if ( $first_time ) {
+		if( $first_time ) {
 			ob_start();
 			echo '<style>
 		div.dht_print_r {
@@ -71,7 +71,7 @@ if ( ! function_exists( 'dht_print_r' ) ) {
 			$first_time = false;
 		}
 		
-		if ( func_num_args() == 1 ) {
+		if( func_num_args() == 1 ) {
 			echo '<div class="dht_print_r"><pre>';
 			echo htmlspecialchars( Dumper::dump( $value ), ENT_QUOTES, 'UTF-8' );
 			echo '</pre></div>';
@@ -87,7 +87,7 @@ if ( ! function_exists( 'dht_print_r' ) ) {
 }
 
 
-if ( ! function_exists( 'dht_fix_path' ) ) {
+if( !function_exists( 'dht_fix_path' ) ) {
 	/**
 	 * Convert to Unix style directory separators
 	 *
@@ -110,11 +110,11 @@ if ( ! function_exists( 'dht_fix_path' ) ) {
 			'/'
 		), $path ) );
 		
-		if ( empty( $fixed_path ) && ! empty( $path ) ) {
+		if( empty( $fixed_path ) && !empty( $path ) ) {
 			$fixed_path = '/';
 		}
 		
-		if ( $windows_network_path ) {
+		if( $windows_network_path ) {
 			$fixed_path = '//' . ltrim( $fixed_path, '/' );
 		}
 		
@@ -123,7 +123,7 @@ if ( ! function_exists( 'dht_fix_path' ) ) {
 }
 
 
-if ( ! function_exists( 'dht_load_view' ) ) {
+if( !function_exists( 'dht_load_view' ) ) {
 	/**
 	 * load file with arguments and display it or return its content
 	 *
@@ -139,14 +139,14 @@ if ( ! function_exists( 'dht_load_view' ) ) {
 		
 		$file_path = $path . $file;
 		
-		if ( ! is_file( $file_path ) && ! file_exists( $file_path ) ) {
+		if( !is_file( $file_path ) && !file_exists( $file_path ) ) {
 			
 			require_once( DHT_VIEWS_DIR . "main-view.php" );
 			
 			return '';
 		}
 		
-		if ( $return ) {
+		if( $return ) {
 			ob_start();
 			require $file_path;
 			
@@ -161,7 +161,7 @@ if ( ! function_exists( 'dht_load_view' ) ) {
 }
 
 
-if ( ! function_exists( 'dht_get_variables_from_file' ) ) {
+if( !function_exists( 'dht_get_variables_from_file' ) ) {
 	/**
 	 * Safe load variables from a file
 	 * Use this function to not include files directly and to not give access to current context variables (like $this)
@@ -176,17 +176,17 @@ if ( ! function_exists( 'dht_get_variables_from_file' ) ) {
 	 */
 	function dht_get_variables_from_file( string $file_path, string $extract_variable, array $set_variables = [], bool $return_array = false ) : array {
 		
-		if ( ! file_exists( $file_path ) ) return [];
+		if( !file_exists( $file_path ) ) return [];
 		
 		extract( $set_variables, EXTR_REFS );
 		unset( $set_variables );
 		
 		require $file_path;
 		
-		if ( $return_array ) {
+		if( $return_array ) {
 			foreach ( $$extract_variable as $variable_name => $default_value ) {
 				
-				if ( isset( $$variable_name ) ) {
+				if( isset( $$variable_name ) ) {
 					$$extract_variable[ $variable_name ] = $$variable_name;
 				}
 			}
@@ -201,7 +201,7 @@ if ( ! function_exists( 'dht_get_variables_from_file' ) ) {
 	}
 }
 
-if ( ! function_exists( 'dht_get_returned_variables_from_file' ) ) {
+if( !function_exists( 'dht_get_returned_variables_from_file' ) ) {
 	/**
 	 * Safe load the returned variables from a file without knowing its name
 	 *
@@ -212,7 +212,7 @@ if ( ! function_exists( 'dht_get_returned_variables_from_file' ) ) {
 	 */
 	function dht_get_returned_variables_from_file( string $file_path ) : array {
 		
-		if ( ! file_exists( $file_path ) ) return [];
+		if( !file_exists( $file_path ) ) return [];
 		
 		// Include the file and capture the return value
 		return require $file_path; // Return the complete array
@@ -220,7 +220,7 @@ if ( ! function_exists( 'dht_get_returned_variables_from_file' ) ) {
 }
 
 
-if ( ! function_exists( 'dht_parse_css_classes_into_array' ) ) {
+if( !function_exists( 'dht_parse_css_classes_into_array' ) ) {
 	/**
 	 * Parse CSS icons classes and content codes to a PHP array with key value pairs
 	 *

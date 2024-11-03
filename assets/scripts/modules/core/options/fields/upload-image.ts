@@ -1,9 +1,11 @@
+import { errorLoadingModule } from "@helpers/general";
+
 (function($: JQueryStatic): void {
     "use strict";
 
     class UploadImage {
         //upload gallery reference
-        private $_uploadImage;
+        private readonly $_uploadImage;
 
         constructor($uploadImage: JQuery<HTMLElement>) {
             //upload image reference
@@ -52,7 +54,10 @@
                     $image_input.attr("value", attachment.url);
 
                     //init live editing
-                    $thisClass._liveEditing(attachment.url);
+                    $thisClass._liveEditing(attachment.url).then(() => {
+                    }).catch(error => {
+                        console.error(error);
+                    });
 
                     //add attachment ids to the hidden input
                     $hidden_input.val(attachment.id);
@@ -95,7 +100,10 @@
                 }
 
                 //init live editing
-                $thisClass._liveEditing($this.val());
+                $thisClass._liveEditing($this.val()).then(() => {
+                }).catch(error => {
+                    console.error(error);
+                });
             });
         }
 
@@ -121,15 +129,22 @@
          *
          * @param imageURL Image URL to apply on the element
          *
-         * @return void
+         * @return Promise<void>
          */
-        private _liveEditing(imageURL: string): void {
-            const selectors = this.$_uploadImage.attr("data-live-selectors") ?? "";
+        private async _liveEditing(imageURL: string): Promise<void> {
+            try {
+                const { dhtKeyedSelectorsHelper } = await import("@helpers/options/live-editing");
 
-            if (selectors.length === 0) return;
-
-            //change image src attr
-            $(selectors).attr("src", imageURL);
+                dhtKeyedSelectorsHelper(this.$_uploadImage, (key: string, target: string, selector: string) => {
+                    if (target === "attr") {
+                        $(selector).attr(key, imageURL);
+                    } else if (target === "style") {
+                        $(selector).css({ [key]: "url(" + imageURL + ")" });
+                    }
+                });
+            } catch (error) {
+                errorLoadingModule(error as string);
+            }
         }
     }
 

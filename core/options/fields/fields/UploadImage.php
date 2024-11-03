@@ -8,7 +8,7 @@ use DHT\DHT;
 use DHT\Helpers\Classes\Environment;
 use DHT\Helpers\Traits\UploadHelpers;
 
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
@@ -40,11 +40,11 @@ final class UploadImage extends BaseField {
 		//Enqueue the media uploader
 		wp_enqueue_media();
 		
-		if ( Environment::isDevelopment() ) {
+		if( Environment::isDevelopment() ) {
 			wp_register_style( DHT_PREFIX_CSS . '-upload-image-field', DHT_ASSETS_URI . 'dist/css/upload-image.css', array(), DHT::$version );
 			wp_enqueue_style( DHT_PREFIX_CSS . '-upload-image-field' );
 			
-			wp_enqueue_script( DHT_PREFIX_JS . '-upload-image-field', DHT_ASSETS_URI . 'dist/js/upload-image.js', array(
+			wp_enqueue_script_module( DHT_PREFIX_JS . '-upload-image-field', DHT_ASSETS_URI . 'dist/js/upload-image.js', array(
 				'jquery',
 				'media-editor'
 			), DHT::$version, true );
@@ -66,7 +66,7 @@ final class UploadImage extends BaseField {
 	 */
 	public function saveValue( array $field, mixed $field_post_value ) : mixed {
 		
-		if ( empty( $field_post_value ) ) {
+		if( empty( $field_post_value ) ) {
 			return $field[ 'value' ];
 		}
 		

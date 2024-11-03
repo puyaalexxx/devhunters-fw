@@ -36,7 +36,7 @@ import { errorLoadingModule } from "@helpers/general";
                     $toggleInput.val(value);
 
                     //init live editing
-                    $thisClass._liveEditing("dht-slider-off").then(() => {
+                    $thisClass._liveEditing("hide").then(() => {
                     }).catch(error => {
                         console.error(error);
                     });
@@ -48,7 +48,7 @@ import { errorLoadingModule } from "@helpers/general";
                     $toggleInput.val(value);
 
                     //init live editing
-                    $thisClass._liveEditing("dht-slider-on").then(() => {
+                    $thisClass._liveEditing("show").then(() => {
                     }).catch(error => {
                         console.error(error);
                     });
@@ -82,37 +82,23 @@ import { errorLoadingModule } from "@helpers/general";
          * Ability to change other areas via changing the field
          * with the provided CSS selectors
          *
-         * @param toggleClass On/Off toggle class
+         * @param displayToggleValue On/Off toggle value
          *
          * @return void
          */
-        private async _liveEditing(toggleClass: string): Promise<void> {
+        private async _liveEditing(displayToggleValue: string): Promise<void> {
             try {
-                const {
-                    dhtGetLiveEditingSelectors,
-                    dhtApplyLiveChanges,
-                } = await import("@helpers/options/live-editing");
+                const { dhtKeyedSelectorsHelper } = await import("@helpers/options/live-editing");
 
-                //get toggle selectors
-                const onSelectors: ILiveEditorSelectorTarget = dhtGetLiveEditingSelectors(this.$_toggle.find(".dht-slider-yes"));
-                const offSelectors: ILiveEditorSelectorTarget = dhtGetLiveEditingSelectors(this.$_toggle.find(".dht-slider-no"));
-
-                if (Object.entries(onSelectors).length === 0 || Object.entries(offSelectors).length === 0) return;
-
-                dhtApplyLiveChanges(onSelectors, (selector) => {
-                    if (onSelectors.target === "content") {
-                        $(selector).hide();
-                        $(offSelectors).show();
+                dhtKeyedSelectorsHelper(this.$_toggle, (key: string, target: string, selector: string) => {
+                    if (target === "display") {
+                        if (key == displayToggleValue) {
+                            $(selector).show();
+                        } else {
+                            $(selector).hide();
+                        }
                     }
                 });
-
-                dhtApplyLiveChanges(offSelectors, (selector) => {
-                    if (offSelectors.target === "content") {
-                        $(onSelectors).show();
-                        $(selector).hide();
-                    }
-                });
-
             } catch (error) {
                 errorLoadingModule(error as string);
             }

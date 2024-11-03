@@ -159,7 +159,7 @@ if( !function_exists( 'dht_fw_render_field_if_exists' ) ) {
 		}
 		else {
 			//display no option template if no match
-			return dht_load_view( DHT_VIEWS_DIR . 'extensions/options/fields/', 'no-option.php' );
+			return dht_load_view( DHT_VIEWS_DIR . 'core/options/fields/', 'no-option.php' );
 		}
 	}
 }

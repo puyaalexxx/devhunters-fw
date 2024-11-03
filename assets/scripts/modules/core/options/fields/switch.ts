@@ -1,9 +1,11 @@
+import { errorLoadingModule } from "@helpers/general";
+
 (function($: JQueryStatic): void {
     "use strict";
 
     class Switch {
         //switch reference
-        private $_switch;
+        private readonly $_switch;
 
         constructor($switch: JQuery<HTMLElement>) {
             //switch reference
@@ -35,7 +37,10 @@
                     $switchInput.val(value);
 
                     //init live editing
-                    $thisClass._liveEditing("dht-slider-off");
+                    $thisClass._liveEditing("hide").then(() => {
+                    }).catch(error => {
+                        console.error(error);
+                    });
                 } else {
                     $switch.removeClass("dht-slider-off").addClass("dht-slider-on");
                     //get on value
@@ -44,7 +49,10 @@
                     $switchInput.val(value);
 
                     //init live editing
-                    $thisClass._liveEditing("dht-slider-on");
+                    $thisClass._liveEditing("show").then(() => {
+                    }).catch(error => {
+                        console.error(error);
+                    });
                 }
             });
         }
@@ -54,23 +62,25 @@
          * Ability to change other areas via changing the field
          * with the provided CSS selectors
          *
-         * @param switchClass On/Off switch class
+         * @param displaySwitchValue On/Off switch value
          *
-         * @return void
+         * @return Promise<void>
          */
-        private _liveEditing(switchClass: string): void {
-            //get switch selectors
-            const onSelectors = this.$_switch.find(".dht-slider-yes").attr("data-live-selectors") ?? "";
-            const offSelectors = this.$_switch.find(".dht-slider-no").attr("data-live-selectors") ?? "";
+        private async _liveEditing(displaySwitchValue: string): Promise<void> {
+            try {
+                const { dhtKeyedSelectorsHelper } = await import("@helpers/options/live-editing");
 
-            if (onSelectors.length === 0 || offSelectors.length === 0) return;
-
-            if (switchClass === "dht-slider-on") {
-                $(onSelectors).show();
-                $(offSelectors).hide();
-            } else if (switchClass === "dht-slider-off") {
-                $(onSelectors).hide();
-                $(offSelectors).show();
+                dhtKeyedSelectorsHelper(this.$_switch, (key: string, target: string, selector: string) => {
+                    if (target === "display") {
+                        if (key == displaySwitchValue) {
+                            $(selector).show();
+                        } else {
+                            $(selector).hide();
+                        }
+                    }
+                });
+            } catch (error) {
+                errorLoadingModule(error as string);
             }
         }
     }

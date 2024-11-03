@@ -44,7 +44,7 @@ interface ModuleInfo {
 }
 
 //used for live editing feature
-interface ILiveEditorSelectorTarget {
+interface ILiveEditorSelectors {
     selectors: string[];
     target: string;
 }

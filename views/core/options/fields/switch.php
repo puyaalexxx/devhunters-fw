@@ -34,14 +34,10 @@ $size         = $field[ 'size' ] ?? '';
                    value="<?php echo esc_attr( $field[ 'value' ] ); ?>" />
 
             <span class="dht-slider">
-                <span class="dht-slider-yes"
-                      data-value="<?php echo esc_attr( $field[ 'left-choice' ][ 'value' ] ); ?>"
-                      <?php echo dht_fw_live_option_selectors( $field[ 'left-choice' ][ 'live' ] ?? "" ); ?>>
+                <span class="dht-slider-yes" data-value="<?php echo esc_attr( $field[ 'left-choice' ][ 'value' ] ); ?>">
                     <?php echo esc_attr( $field[ 'left-choice' ][ 'label' ] ); ?>
                 </span>
-                <span class="dht-slider-no"
-                      data-value="<?php echo esc_attr( $field[ 'right-choice' ][ 'value' ] ); ?>"
-                      <?php echo dht_fw_live_option_selectors( $field[ 'right-choice' ][ 'live' ] ?? "" ); ?>>
+                <span class="dht-slider-no" data-value="<?php echo esc_attr( $field[ 'right-choice' ][ 'value' ] ); ?>">
                     <?php echo esc_attr( $field[ 'right-choice' ][ 'label' ] ); ?>
                 </span>
             </span>

@@ -23,31 +23,22 @@ import { errorLoadingModule } from "@helpers/general";
          * Ability to change other areas via changing the field
          * with the provided CSS selectors
          *
-         * @return void
+         * @return Promise<void>
          */
         private async _liveEditing(): Promise<void> {
             try {
-                const {
-                    dhtGetLiveEditingSelectors,
-                    dhtApplyLiveChanges,
-                } = await import("@helpers/options/live-editing");
+                const { dhtNotKeyedSelectorsHelper } = await import("@helpers/options/live-editing");
 
-                //get option selectors
-                const selectors: ILiveEditorSelectorTarget = dhtGetLiveEditingSelectors(this.$_textarea);
+                dhtNotKeyedSelectorsHelper(this.$_textarea, (target: string, selector: string) => {
+                    this.$_textarea.on("input", ".dht-textarea", function() {
+                        const value = String($(this).val());
 
-                if (Object.entries(selectors).length === 0) return;
-
-                this.$_textarea.on("input", ".dht-textarea", function() {
-                    const value = String($(this).val());
-
-                    dhtApplyLiveChanges(selectors, (selector) => {
-                        if (selectors.target === "content") {
+                        if (target === "content") {
                             $(selector).text(value);
-                        } else {
-                            $(selector).css(selectors.target, value);
                         }
                     });
                 });
+
             } catch (error) {
                 errorLoadingModule(error as string);
             }

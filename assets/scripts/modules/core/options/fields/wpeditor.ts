@@ -23,61 +23,50 @@ import { errorLoadingModule } from "@helpers/general";
          * Ability to change other areas via changing the field
          * with the provided CSS selectors
          *
-         * @return void
+         * @return Promise<void>
          */
         private async _liveEditing(): Promise<void> {
             try {
-                const {
-                    dhtGetLiveEditingSelectors,
-                    dhtApplyLiveChanges,
-                } = await import("@helpers/options/live-editing");
-
-                //get option selectors
-                const selectors: ILiveEditorSelectorTarget = dhtGetLiveEditingSelectors(this.$_wpeditor);
+                const { dhtNotKeyedSelectorsHelper } = await import("@helpers/options/live-editing");
                 const editorID = this.$_wpeditor.find("textarea.wp-editor-area").attr("id") ?? "";
 
-                if (Object.entries(selectors).length === 0 || editorID.length === 0) return;
+                //the code below depends on the editor ID
+                if (editorID.length === 0) return;
 
-                // visual tab output change
-                function updateVisualTabOutput() {
-                    const content = tinymce.get(editorID).getContent();
+                dhtNotKeyedSelectorsHelper(this.$_wpeditor, (target: string, selector: string) => {
+                    // visual tab output change
+                    function updateVisualTabOutput() {
+                        const content = tinymce.get(editorID).getContent();
 
-                    dhtApplyLiveChanges(selectors, (selector) => {
-                        if (selectors.target === "content") {
+                        if (target === "content") {
                             $(selector).html(content);
-                        } else {
-                            $(selector).css(selectors.target, content);
-                        }
-                    });
-                }
-
-                // text tab output change
-                function updateTextTabOutput() {
-                    const content = String($("#" + editorID).val());
-
-                    dhtApplyLiveChanges(selectors, (selector) => {
-                        if (selectors.target === "content") {
-                            $(selector).html(content);
-                        } else {
-                            $(selector).css(selectors.target, content);
-                        }
-                    });
-                }
-
-                // Use setTimeout to ensure the editor is initialized
-                setTimeout(function() {
-                    const editor = tinymce.get(editorID);
-                    if (editor) {
-                        // Listen for input and change events in the TinyMCE editor
-                        editor.on("input change", updateVisualTabOutput);
-
-                        // Listen for changes directly on the textarea for Text mode
-                        const textarea = $("#" + editorID);
-                        if (textarea) {
-                            $(textarea).on("input change", updateTextTabOutput); // Update on direct textarea input
                         }
                     }
-                }, 500); // Adjust the timeout as necessary
+
+                    // text tab output change
+                    function updateTextTabOutput() {
+                        const content = String($("#" + editorID).val());
+
+                        if (target === "content") {
+                            $(selector).html(content);
+                        }
+                    }
+
+                    // Use setTimeout to ensure the editor is initialized
+                    setTimeout(function() {
+                        const editor = tinymce.get(editorID);
+                        if (editor) {
+                            // Listen for input and change events in the TinyMCE editor
+                            editor.on("input change", updateVisualTabOutput);
+
+                            // Listen for changes directly on the textarea for Text mode
+                            const textarea = $("#" + editorID);
+                            if (textarea) {
+                                $(textarea).on("input change", updateTextTabOutput); // Update on direct textarea input
+                            }
+                        }
+                    }, 500);
+                });
             } catch (error) {
                 errorLoadingModule(error as string);
             }

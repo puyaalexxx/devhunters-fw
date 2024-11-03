@@ -26,7 +26,7 @@ $right_choice = $toggle[ 'right-choice' ];
 
 <div
     class="dht-field-wrapper dht-field-wrapper-toggle dht-toggle-type <?php echo isset( $toggle[ 'attr' ][ 'class' ] ) ? esc_attr( $toggle[ 'attr' ][ 'class' ] ) : ''; ?>"
-	<?php echo dht_parse_option_attributes( $toggle[ 'attr' ] ); ?>>
+	<?php echo dht_parse_option_attributes( $toggle[ 'attr' ] ); ?> <?php echo dht_fw_live_option_selectors( $toggle[ 'live' ] ?? [] ); ?>>
 	
 	<?php if( !empty( $toggle[ 'title' ] ) ): ?>
         <div class="dht-title"><?php echo esc_html( $toggle[ 'title' ] ); ?></div>
@@ -42,14 +42,10 @@ $right_choice = $toggle[ 'right-choice' ];
                    value="<?php echo esc_attr( $toggle[ 'value' ] ); ?>" />
 
             <span class="dht-slider">
-                <span class="dht-slider-yes"
-                      data-value="<?php echo esc_attr( $left_choice[ 'value' ] ); ?>"
-                      <?php echo dht_fw_live_option_selectors( $left_choice[ 'live' ] ?? [] ); ?>>
+                <span class="dht-slider-yes" data-value="<?php echo esc_attr( $left_choice[ 'value' ] ); ?>">
                     <?php echo esc_attr( $left_choice[ 'label' ] ); ?>
                 </span>
-                <span class="dht-slider-no"
-                      data-value="<?php echo esc_attr( $right_choice[ 'value' ] ); ?>"
-                      <?php echo dht_fw_live_option_selectors( $right_choice[ 'live' ] ?? [] ); ?>>
+                <span class="dht-slider-no" data-value="<?php echo esc_attr( $right_choice[ 'value' ] ); ?>">
                     <?php echo esc_attr( $right_choice[ 'label' ] ); ?>
                 </span>
             </span>

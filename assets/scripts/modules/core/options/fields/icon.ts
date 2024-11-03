@@ -1,3 +1,5 @@
+import { errorLoadingModule } from "@helpers/general";
+
 (function($: JQueryStatic): void {
     "use strict";
 
@@ -132,7 +134,10 @@
                     $("#TB_closeWindowButton").trigger("click");
 
                     //init live editing
-                    $thisClass._liveEditing(popup.parents(".dht-field-wrapper-icons"), icon_class);
+                    $thisClass._liveEditing(popup.parents(".dht-field-wrapper-icons"), icon_class).then(() => {
+                    }).catch(error => {
+                        console.error(error);
+                    });
                 });
         }
 
@@ -152,7 +157,10 @@
                 $this.removeClass("dht-btn-show");
 
                 //init live editing
-                $thisClass._liveEditing($this.parents(".dht-field-wrapper-icons"), "");
+                $thisClass._liveEditing($this.parents(".dht-field-wrapper-icons"), "").then(() => {
+                }).catch(error => {
+                    console.error(error);
+                });
 
                 return false;
             });
@@ -245,14 +253,20 @@
          * @param $thisIconsWrapper Icon wrapper area
          * @param iconClass         Icon class to apply on the selector
          *
-         * @return void
+         * @return Promise<void>
          */
-        private _liveEditing($thisIconsWrapper: JQuery<HTMLElement>, iconClass: string): void {
-            const selectors = $thisIconsWrapper.attr("data-live-selectors") ?? "";
+        private async _liveEditing($thisIconsWrapper: JQuery<HTMLElement>, iconClass: string): Promise<void> {
+            try {
+                const { dhtNotKeyedSelectorsHelper } = await import("@helpers/options/live-editing");
 
-            if (selectors.length === 0) return;
-
-            $(selectors).attr("class", iconClass);
+                dhtNotKeyedSelectorsHelper($thisIconsWrapper, (target: string, selector: string) => {
+                    if (target === "class") {
+                        $(selector).attr("class", iconClass);
+                    }
+                });
+            } catch (error) {
+                errorLoadingModule(error as string);
+            }
         }
     }
 

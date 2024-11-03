@@ -60,7 +60,7 @@ final class Icon extends BaseField {
 			wp_register_style( DHT_PREFIX_CSS . '-icon-field', DHT_ASSETS_URI . 'dist/css/icon.css', array(), DHT::$version );
 			wp_enqueue_style( DHT_PREFIX_CSS . '-icon-field' );
 			
-			wp_enqueue_script( DHT_PREFIX_JS . '-icon-field', DHT_ASSETS_URI . 'dist/js/icon.js', array( 'jquery' ), DHT::$version, true );
+			wp_enqueue_script_module( DHT_PREFIX_JS . '-icon-field', DHT_ASSETS_URI . 'dist/js/icon.js', array( 'jquery' ), DHT::$version, true );
 		}
 	}
 	

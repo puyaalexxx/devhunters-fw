@@ -55,7 +55,7 @@ final class ColorPicker extends BaseField {
 					'jquery',
 					'wp-color-picker',
 					DHT_PREFIX_JS . '-wp-color-picker-option-alpha-field'
-				), DHT::$version, true );
+				), DHT::$version );
 			}
 		}
 		else {
@@ -63,7 +63,7 @@ final class ColorPicker extends BaseField {
 				wp_enqueue_script_module( DHT_PREFIX_JS . '-wp-color-picker-field', DHT_ASSETS_URI . 'dist/js/colorpicker.js', array(
 					'jquery',
 					'wp-color-picker'
-				), DHT::$version, true );
+				), DHT::$version );
 			}
 		}
 	}

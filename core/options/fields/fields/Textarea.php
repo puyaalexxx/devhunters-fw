@@ -35,7 +35,7 @@ final class Textarea extends BaseField {
 	public function enqueueOptionScripts( array $field ) : void {
 		
 		if( Environment::isDevelopment() ) {
-			wp_enqueue_script_module( DHT_PREFIX_JS . '-textarea-field', DHT_ASSETS_URI . 'dist/js/textarea.js', array( 'jquery' ), DHT::$version, true );
+			wp_enqueue_script_module( DHT_PREFIX_JS . '-textarea-field', DHT_ASSETS_URI . 'dist/js/textarea.js', array( 'jquery' ), DHT::$version );
 		}
 	}
 	

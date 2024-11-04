@@ -31,3 +31,13 @@
         @mixin colorpicker_responsive;
     }
 }
+
+.dht-vb-enabled .dht-vb-modal {
+    &.dht-modal-small, &.dht-modal-medium {
+        .dht-wrapper {
+            .dht-field-child-colorpicker {
+                @mixin colorpicker_responsive;
+            }
+        }
+    }
+}

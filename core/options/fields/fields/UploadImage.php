@@ -47,7 +47,7 @@ final class UploadImage extends BaseField {
 			wp_enqueue_script_module( DHT_PREFIX_JS . '-upload-image-field', DHT_ASSETS_URI . 'dist/js/upload-image.js', array(
 				'jquery',
 				'media-editor'
-			), DHT::$version, true );
+			), DHT::$version );
 		}
 	}
 	

@@ -25,7 +25,7 @@
 
                     $this.css("position", "relative");
                     $this.html(
-                        $this.html() + "<div class='dht-tooltips'><p class='" + $this.attr("data-position") + "'>" + $this.attr("data-tooltips") + "</p></div>",
+                        $this.html() + `<div class='dht-tooltips'><p class='${$this.attr("data-position")}'>${$this.attr("data-tooltips")}</p></div>`,
                     );
                 });
 

@@ -16,8 +16,6 @@
 export function dhtNotKeyedSelectorsHelper($element: JQuery<HTMLElement>, applyStyles: (target: string, selector: string) => void): void {
     const selectors: ILiveEditorSelectors = dhtGetLiveEditingSelectors($element);
 
-    if (Object.entries(selectors).length === 0) return;
-
     dhtApplyLiveChanges(selectors.selectors, (selector) => {
         applyStyles(selectors.target, selector);
     });
@@ -40,10 +38,8 @@ export function dhtNotKeyedSelectorsHelper($element: JQuery<HTMLElement>, applyS
  *
  * @return {void}
  */
-export function dhtKeyedSelectorsHelper($element: JQuery<HTMLElement>, /*optionValue: string,*/ applyStyles: (key: string, target: string, selector: string) => void): void {
+export function dhtKeyedSelectorsHelper($element: JQuery<HTMLElement>, applyStyles: (key: string, target: string, selector: string) => void): void {
     const selectors: ILiveEditorSelectors = dhtGetLiveEditingSelectors($element);
-
-    if (Object.entries(selectors).length === 0) return;
 
     //go through selectors keys
     Object.entries(selectors.selectors).forEach(([key, keySelectors]) => {
@@ -62,25 +58,6 @@ export function dhtKeyedSelectorsHelper($element: JQuery<HTMLElement>, /*optionV
  * Get live editing selectors to use further from
  * attribute and decode them
  *
- * This is without PHP target attribute
- *
- * @param $element HTML element
- *
- * @return ILiveEditorAttr
- */
-function dhtGetTextSelectors($element: JQuery<HTMLElement>): string[] {
-
-    const selectors = $element.attr("data-live-selectors") ?? "";
-
-    if (selectors.length === 0) return [];
-
-    return Object.values(JSON.parse(selectors));
-}
-
-/**
- * Get live editing selectors to use further from
- * attribute and decode them
- *
  * This is for PHP target attribute
  *
  * @param $element HTML element
@@ -88,10 +65,9 @@ function dhtGetTextSelectors($element: JQuery<HTMLElement>): string[] {
  * @return ILiveEditorAttr
  */
 function dhtGetLiveEditingSelectors($element: JQuery<HTMLElement>): ILiveEditorSelectors {
-
     const selectors = $element.attr("data-live-selectors") ?? "";
 
-    if (selectors.length === 0) return {} as ILiveEditorSelectors;
+    if (Object.entries(selectors).length === 0) return {} as ILiveEditorSelectors;
 
     return JSON.parse(selectors);
 }

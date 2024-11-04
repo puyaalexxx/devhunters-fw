@@ -423,7 +423,10 @@ import { errorLoadingModule } from "@helpers/general";
          */
         private async _initColorpicker($thisClass: this): Promise<void> {
             try {
-                const { dhtInitColorpicker } = await import("@helpers/options/colorpicker-utilities");
+                const {
+                    dhtInitColorpicker,
+                    dhtOnChangeColorpicker,
+                } = await import("@helpers/options/colorpicker-utilities");
 
                 //call colorpicker functionality
                 this.$_colorpicker.each(function() {
@@ -432,22 +435,8 @@ import { errorLoadingModule } from "@helpers/general";
                     //load colorpicker
                     dhtInitColorpicker($this);
 
-                    //grab color on colorpicker change
-                    ($this as any).wpColorPicker(
-                        "option",
-                        "change",
-                        function(_event: any, ui: any): void {
-                            const color = ui.color.toString();
-
-                            // Apply the selected color to the preview area
-                            $thisClass.$_preview_area.css("color", color);
-                        },
-                    );
-
-                    // grab color on input change
-                    $this.off("input change").on("input change", () => {
-                        const color = String($(this).val());
-
+                    //apply styles on colorPicker change value
+                    dhtOnChangeColorpicker($this, (color) => {
                         // Apply the selected color to the preview area
                         $thisClass.$_preview_area.css("color", color);
                     });

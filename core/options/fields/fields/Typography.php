@@ -53,7 +53,7 @@ final class Typography extends BaseField {
 			wp_enqueue_script_module( DHT_PREFIX_JS . '-typography-field', DHT_ASSETS_URI . 'dist/js/typography.js', array(
 				'jquery',
 				DHT_PREFIX_JS . '-select2-field'
-			), DHT::$version, true );
+			), DHT::$version );
 		}
 	}
 	

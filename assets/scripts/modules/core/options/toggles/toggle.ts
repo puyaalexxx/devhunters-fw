@@ -87,6 +87,9 @@ import { errorLoadingModule } from "@helpers/general";
          * @return void
          */
         private async _liveEditing(displayToggleValue: string): Promise<void> {
+            //no live editor attribute
+            if (!(this.$_toggle.attr("data-live-selectors") ?? "").length) return;
+
             try {
                 const { dhtKeyedSelectorsHelper } = await import("@helpers/options/live-editing");
 

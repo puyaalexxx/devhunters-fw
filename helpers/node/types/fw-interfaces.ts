@@ -48,3 +48,7 @@ interface ILiveEditorSelectors {
     selectors: string[];
     target: string;
 }
+
+interface ILiveEditorStylesSelectors {
+    [key: string]: string;
+}

@@ -41,7 +41,7 @@ final class Toggle extends BaseToggle {
 			wp_register_style( DHT_PREFIX_CSS . '-toggle-toggle', DHT_ASSETS_URI . 'dist/css/toggle.css', array(), DHT::$version );
 			wp_enqueue_style( DHT_PREFIX_CSS . '-toggle-toggle' );
 			
-			wp_enqueue_script_module( DHT_PREFIX_JS . '-toggle-toggle', DHT_ASSETS_URI . 'dist/js/toggle.js', array( 'jquery' ), DHT::$version, true );
+			wp_enqueue_script_module( DHT_PREFIX_JS . '-toggle-toggle', DHT_ASSETS_URI . 'dist/js/toggle.js', array( 'jquery' ), DHT::$version );
 		}
 	}
 	

@@ -8,7 +8,6 @@
  * @return void
  */
 export function dhtInitColorpicker($colorpicker: JQuery<HTMLElement>) {
-
     //get default palette of colors
     const palette = $colorpicker.attr("data-palette")!;
 
@@ -23,6 +22,47 @@ export function dhtInitColorpicker($colorpicker: JQuery<HTMLElement>) {
 }
 
 /**
+ * on change colorpicker values
+ *
+ * @param $colorpicker This colorpicker HTML element
+ * @param applyStyles  A closure to apply the styles from where it is called
+ *
+ * @return void
+ */
+export function dhtOnChangeColorpicker($colorpicker: JQuery<HTMLElement>, applyStyles: (color: string) => void) {
+    //check if it is the rgba colorpicker type
+    const isAlphaPicker = $colorpicker.attr("data-alpha-enabled");
+
+    // Grab color on colorpicker change
+    ($colorpicker as any).wpColorPicker({
+        change: function(_: any, ui: any) {
+            let color = ui.color.toString();
+
+            //check if it is the rgba colorpicker type
+            if (isAlphaPicker === "true") {
+                const alphaOptions = ($colorpicker as any).wpColorPicker("instance").alphaOptions; // Get the alpha options
+                //grab rgba color type and not the rgb
+                color = ui.color.to_s(alphaOptions.alphaColorType);
+            }
+
+            // Manually trigger change event
+            $(this).val(color).trigger("change");
+        },
+        clear: function() {
+            // Manually trigger change event
+            $colorpicker.val("").trigger("change");
+        },
+    });
+
+    // Grab color on input change
+    $colorpicker.off("input change").on("input change", function() {
+        const color = String($(this).val());
+
+        applyStyles(color);
+    });
+}
+
+/**
  * set the default colorpicker args
  *
  * @param $colorpicker Colorpicker instance
@@ -30,8 +70,7 @@ export function dhtInitColorpicker($colorpicker: JQuery<HTMLElement>) {
  *
  * @return void
  */
-function dhtSetDefaultColorPickerArgs($colorpicker: any, palette: string): void {
-
+function dhtSetDefaultColorPickerArgs($colorpicker: JQuery<HTMLElement>, palette: string): void {
     let wpColorPickerArgs = {};
 
     if (palette.length !== 0) {
@@ -40,7 +79,7 @@ function dhtSetDefaultColorPickerArgs($colorpicker: any, palette: string): void 
         };
     }
 
-    $colorpicker.wpColorPicker(wpColorPickerArgs);
+    ($colorpicker as any).wpColorPicker(wpColorPickerArgs);
 }
 
 /**
@@ -51,7 +90,7 @@ function dhtSetDefaultColorPickerArgs($colorpicker: any, palette: string): void 
  *
  * @return void
  */
-function dhtResetColoPickerValue($colorpicker: any, $default_btn: JQuery<HTMLElement>): void {
+function dhtResetColoPickerValue($colorpicker: JQuery<HTMLElement>, $default_btn: JQuery<HTMLElement>): void {
     //default button to reset the color picker color to its default value
     $default_btn.insertAfter($colorpicker.parent("label"));
 
@@ -60,7 +99,8 @@ function dhtResetColoPickerValue($colorpicker: any, $default_btn: JQuery<HTMLEle
         //get option default color value
         let defaultColor = $default_btn.attr("data-default-value")!;
 
-        $colorpicker.wpColorPicker("color", defaultColor);
+        $colorpicker.val(defaultColor);
+        ($colorpicker as any).wpColorPicker("color", defaultColor);
     });
 }
 

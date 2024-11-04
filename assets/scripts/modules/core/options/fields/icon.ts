@@ -256,6 +256,9 @@ import { errorLoadingModule } from "@helpers/general";
          * @return Promise<void>
          */
         private async _liveEditing($thisIconsWrapper: JQuery<HTMLElement>, iconClass: string): Promise<void> {
+            //no live editor attribute
+            if (!($thisIconsWrapper.attr("data-live-selectors") ?? "").length) return;
+
             try {
                 const { dhtNotKeyedSelectorsHelper } = await import("@helpers/options/live-editing");
 

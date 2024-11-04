@@ -27,6 +27,9 @@ import { dhtNotKeyedSelectorsHelper } from "@helpers/options/live-editing";
          * @return Promise<void>
          */
         private async _liveEditing(): Promise<void> {
+            //no live editor attribute
+            if (!(this.$_input.attr("data-live-selectors") ?? "").length) return;
+
             try {
                 const { dhtNotKeyedSelectorsHelper } = await import("@helpers/options/live-editing");
 

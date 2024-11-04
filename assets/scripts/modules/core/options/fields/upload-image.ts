@@ -95,7 +95,7 @@ import { errorLoadingModule } from "@helpers/general";
                 //change image when adding a new link
                 if ($this.val().length > 0) {
                     $this.siblings("img").remove();
-                    $this.before("<img src=\"" + $this.val() + "\" width=\"100\" height=\"100\"  alt=\"\"/>");
+                    $this.before(`<img src="${$this.val()}" width="100" height="100"  alt=""/>`);
                     $this.attr("value", $this.val());
                 }
 
@@ -132,6 +132,9 @@ import { errorLoadingModule } from "@helpers/general";
          * @return Promise<void>
          */
         private async _liveEditing(imageURL: string): Promise<void> {
+            //no live editor attribute
+            if (!(this.$_uploadImage.attr("data-live-selectors") ?? "").length) return;
+
             try {
                 const { dhtKeyedSelectorsHelper } = await import("@helpers/options/live-editing");
 
@@ -139,7 +142,7 @@ import { errorLoadingModule } from "@helpers/general";
                     if (target === "attr") {
                         $(selector).attr(key, imageURL);
                     } else if (target === "style") {
-                        $(selector).css({ [key]: "url(" + imageURL + ")" });
+                        $(selector).css({ [key]: `url(${imageURL})` });
                     }
                 });
             } catch (error) {

@@ -26,6 +26,9 @@ import { errorLoadingModule } from "@helpers/general";
          * @return Promise<void>
          */
         private async _liveEditing(): Promise<void> {
+            //no live editor attribute
+            if (!(this.$_wpeditor.attr("data-live-selectors") ?? "").length) return;
+
             try {
                 const { dhtNotKeyedSelectorsHelper } = await import("@helpers/options/live-editing");
                 const editorID = this.$_wpeditor.find("textarea.wp-editor-area").attr("id") ?? "";

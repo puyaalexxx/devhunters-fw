@@ -4,8 +4,10 @@ declare( strict_types = 1 );
 namespace DHT\Core\Options\Fields\Fields;
 
 use DHT\Core\Options\Fields\BaseField;
+use DHT\DHT;
+use DHT\Helpers\Classes\Environment;
 
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
@@ -30,6 +32,10 @@ final class Dropdown extends BaseField {
 	 * @return void
 	 * @since     1.0.0
 	 */
-	public function enqueueOptionScripts( array $field ) : void {}
+	public function enqueueOptionScripts( array $field ) : void {
+		if( Environment::isDevelopment() ) {
+			wp_enqueue_script_module( DHT_PREFIX_JS . '-dropdown-field', DHT_ASSETS_URI . 'dist/js/dropdown.js', array( 'jquery' ), DHT::$version );
+		}
+	}
 	
 }

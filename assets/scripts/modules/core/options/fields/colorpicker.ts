@@ -62,24 +62,14 @@ import { dhtOnChangeColorpicker } from "@helpers/options/colorpicker-utilities";
                 const { dhtKeyedSelectorsHelper } = await import("@helpers/options/live-editing");
                 const { dhtOnChangeColorpicker } = await import("@helpers/options/colorpicker-utilities");
 
-                let allSelectors: ILiveEditorStylesSelectors = {};
-                let liveTarget = "";
-                dhtKeyedSelectorsHelper(this.$_colorpicker, (key: string, target: string, selector: string) => {
-                    allSelectors[key] = selector;
-                    liveTarget = target;
-                });
-
-                if (Object.entries(allSelectors).length === 0) return;
-
-                //apply color styles
-                if (liveTarget === "style") {
+                dhtKeyedSelectorsHelper(this.$_colorpicker, (key: string, target: string, selectors: string) => {
                     //apply styles on colorPicker change value
-                    dhtOnChangeColorpicker($thisColorpicker, (color) => {
-                        Object.entries(allSelectors).forEach(([key, selector]) => {
-                            $(selector).css({ [key]: color });
+                    if (target === "style") {
+                        dhtOnChangeColorpicker($thisColorpicker, (color) => {
+                            $(selectors).css({ [key]: color });
                         });
-                    });
-                }
+                    }
+                });
             } catch (error) {
                 errorLoadingModule(error as string);
             }

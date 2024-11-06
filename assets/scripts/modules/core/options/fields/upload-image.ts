@@ -138,11 +138,11 @@ import { errorLoadingModule } from "@helpers/general";
             try {
                 const { dhtKeyedSelectorsHelper } = await import("@helpers/options/live-editing");
 
-                dhtKeyedSelectorsHelper(this.$_uploadImage, (key: string, target: string, selector: string) => {
+                dhtKeyedSelectorsHelper(this.$_uploadImage, (key: string, target: string, selectors: string) => {
                     if (target === "attr") {
-                        $(selector).attr(key, imageURL);
+                        $(selectors).attr(key, imageURL);
                     } else if (target === "style") {
-                        $(selector).css({ [key]: `url(${imageURL})` });
+                        $(selectors).css({ [key]: `url(${imageURL})` });
                     }
                 });
             } catch (error) {

@@ -3,15 +3,17 @@ if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
+use function DHT\Helpers\dht_fw_border_styles;
 use function DHT\Helpers\dht_fw_get_css_units;
 use function DHT\Helpers\dht_fw_live_option_selectors;
 use function DHT\Helpers\dht_parse_option_attributes;
 
 $field = $args[ 'field' ] ?? [];
 
-$size  = $field[ 'size' ] ?? true;
-$style = $field[ 'style' ] ?? true;
-$color = $field[ 'color' ] ?? true;
+$size          = $field[ 'size' ] ?? true;
+$style         = $field[ 'style' ] ?? true;
+$color         = $field[ 'color' ] ?? true;
+$border_radius = isset( $field[ 'subtype' ] ) && $field[ 'subtype' ] == "border-radius";
 
 $columns = "";
 if( !$size && !$style ) {
@@ -20,26 +22,14 @@ if( !$size && !$style ) {
 elseif( $size && $style ) {
 	$columns = "dht-field-borders-group-col-6";
 }
-
-//border styles
-$styles = [
-	"none"   => _x( 'None', 'options', DHT_PREFIX ),
-	"solid"  => _x( 'Solid', 'options', DHT_PREFIX ),
-	"dashed" => _x( 'Dashed', 'options', DHT_PREFIX ),
-	"dotted" => _x( 'Dotted', 'options', DHT_PREFIX ),
-	"double" => _x( 'Double', 'options', DHT_PREFIX ),
-	"groove" => _x( 'Groove', 'options', DHT_PREFIX ),
-	"ridge"  => _x( 'Ridge', 'options', DHT_PREFIX ),
-	"inset"  => _x( 'Inset', 'options', DHT_PREFIX ),
-	"outset" => _x( 'Outset', 'options', DHT_PREFIX ),
-];
 ?>
 <!-- field - borders -->
 
 <?php do_action( 'dht:options:view:fields:borders_before_area' ); ?>
 
 <div
-    class="dht-field-wrapper dht-field-wrapper-borders <?php echo isset( $field[ 'attr' ][ 'class' ] ) ? esc_attr( $field[ 'attr' ][ 'class' ] ) : ''; ?>"
+    class="dht-field-wrapper dht-field-wrapper-borders <?php echo $border_radius ? "dht-field-wrapper-border-radius" : ""; ?>
+    <?php echo isset( $field[ 'attr' ][ 'class' ] ) ? esc_attr( $field[ 'attr' ][ 'class' ] ) : ''; ?>"
 	<?php echo dht_parse_option_attributes( $field[ 'attr' ] ?? [] ); ?> <?php echo dht_fw_live_option_selectors( $field[ 'live' ] ?? [] ); ?>>
 	
 	<?php if( !empty( $field[ 'title' ] ) ): ?>
@@ -56,7 +46,7 @@ $styles = [
 
                 <span class="dht-borders-top"></span>
 
-                <input class="dht-borders dht-field"
+                <input class="dht-borders dht-border-top dht-field"
                        id="<?php echo esc_attr( $field[ 'id' ] ); ?>-top"
                        type="number"
                        min="0"
@@ -70,7 +60,7 @@ $styles = [
 
                 <span class="dht-borders-right"></span>
 
-                <input class="dht-borders dht-field"
+                <input class="dht-borders dht-border-right dht-field"
                        id="<?php echo esc_attr( $field[ 'id' ] ); ?>-right"
                        type="number"
                        min="0"
@@ -84,7 +74,7 @@ $styles = [
 
                 <span class="dht-borders-bottom"></span>
 
-                <input class="dht-borders dht-field"
+                <input class="dht-borders dht-border-bottom dht-field"
                        id="<?php echo esc_attr( $field[ 'id' ] ); ?>-bottom"
                        type="number"
                        min="0"
@@ -98,7 +88,7 @@ $styles = [
 
                 <span class="dht-borders-left"></span>
 
-                <input class="dht-borders dht-field"
+                <input class="dht-borders dht-border-left dht-field"
                        id="<?php echo esc_attr( $field[ 'id' ] ); ?>-left"
                        type="number"
                        min="0"
@@ -111,11 +101,11 @@ $styles = [
                     <label
                         for="<?php echo esc_attr( $field[ 'id' ] ); ?>-sizes"><?php echo _x( 'Sizes', 'options', DHT_PREFIX ); ?></label>
 
-                    <select class="dht-borders-dropdown dht-field"
+                    <select class="dht-borders-dropdown dht-border-size dht-field"
                             name="<?php echo esc_attr( $field[ 'id' ] ); ?>[size]"
                             id="<?php echo esc_attr( $field[ 'id' ] ); ?>-sizes">
 						
-						<?php foreach ( dht_fw_get_css_units() as $key => $size ): ?>
+						<?php foreach ( apply_filters( 'dht:options:borders:size_dropdown_values', dht_fw_get_css_units( $border_radius ? [] : [ "%" => false ] ) ) as $key => $size ): ?>
                             <option
                                 value="<?php echo esc_attr( $key ); ?>" <?php echo $field[ 'value' ][ 'size' ] == $key ? 'selected' : ''; ?>><?php echo esc_html( $size ); ?></option>
 						<?php endforeach; ?>
@@ -124,16 +114,16 @@ $styles = [
                 </div>
 			<?php endif; ?>
 			
-			<?php if( !empty( $style ) ): ?>
+			<?php if( !empty( $style ) && !$border_radius ): ?>
                 <div class="dht-field-borders-input">
                     <label
                         for="<?php echo esc_attr( $field[ 'id' ] ); ?>-style"><?php echo _x( 'Style', 'options', DHT_PREFIX ) ?></label>
 
-                    <select class="dht-borders-dropdown dht-field"
+                    <select class="dht-borders-dropdown dht-border-style dht-field"
                             name="<?php echo esc_attr( $field[ 'id' ] ); ?>[style]"
                             id="<?php echo esc_attr( $field[ 'id' ] ); ?>-style">
 						
-						<?php foreach ( $styles as $key => $style ): ?>
+						<?php foreach ( dht_fw_border_styles() as $key => $style ): ?>
                             <option
                                 value="<?php echo esc_attr( $key ); ?>" <?php echo $field[ 'value' ][ 'style' ] == $key ? 'selected' : ''; ?>><?php echo esc_html( $style ); ?></option>
 						<?php endforeach; ?>
@@ -143,8 +133,8 @@ $styles = [
 			<?php endif; ?>
         </div>
 		
-		<?php if( !empty( $color ) ): ?>
-            <div class="dht-field-borders-group-colorpicker">
+		<?php if( !empty( $color ) && !$border_radius ): ?>
+            <div class="dht-field-borders-group-colorpicker dht-border-colorpicker">
 
                 <label for="<?php echo esc_attr( $field[ 'id' ] ); ?>-color"></label>
 

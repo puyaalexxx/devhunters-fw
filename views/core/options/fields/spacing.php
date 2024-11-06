@@ -10,7 +10,7 @@ use function DHT\Helpers\dht_parse_option_attributes;
 $field = $args[ 'field' ] ?? [];
 
 //spacing sizes
-$sizes = dht_fw_get_css_units();
+$sizes = apply_filters( 'dht:options:spacing:size_dropdown_values', dht_fw_get_css_units() );
 ?>
 <!-- field - spacing -->
 

@@ -36,13 +36,13 @@ import { errorLoadingModule } from "@helpers/general";
                 //the code below depends on the editor ID
                 if (editorID.length === 0) return;
 
-                dhtNotKeyedSelectorsHelper(this.$_wpeditor, (target: string, selector: string) => {
+                dhtNotKeyedSelectorsHelper(this.$_wpeditor, (target: string, selectors: string) => {
                     // visual tab output change
                     function updateVisualTabOutput() {
                         const content = tinymce.get(editorID).getContent();
 
                         if (target === "content") {
-                            $(selector).html(content);
+                            $(selectors).html(content);
                         }
                     }
 
@@ -51,7 +51,7 @@ import { errorLoadingModule } from "@helpers/general";
                         const content = String($("#" + editorID).val());
 
                         if (target === "content") {
-                            $(selector).html(content);
+                            $(selectors).html(content);
                         }
                     }
 

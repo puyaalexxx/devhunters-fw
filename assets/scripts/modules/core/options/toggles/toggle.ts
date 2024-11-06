@@ -23,7 +23,6 @@ import { errorLoadingModule } from "@helpers/general";
         private _initToggle(): void {
             const $thisClass = this;
 
-            let values = [];
             this.$_toggle.off("click", ".dht-toggle").on("click", ".dht-toggle", function() {
                 const $toggle = $(this);
                 const $toggleInput = $toggle.children("input");
@@ -36,7 +35,7 @@ import { errorLoadingModule } from "@helpers/general";
                     $toggleInput.val(value);
 
                     //init live editing
-                    $thisClass._liveEditing("hide").then(() => {
+                    $thisClass._liveEditing(value).then(() => {
                     }).catch(error => {
                         console.error(error);
                     });
@@ -48,7 +47,7 @@ import { errorLoadingModule } from "@helpers/general";
                     $toggleInput.val(value);
 
                     //init live editing
-                    $thisClass._liveEditing("show").then(() => {
+                    $thisClass._liveEditing(value).then(() => {
                     }).catch(error => {
                         console.error(error);
                     });
@@ -93,12 +92,12 @@ import { errorLoadingModule } from "@helpers/general";
             try {
                 const { dhtKeyedSelectorsHelper } = await import("@helpers/options/live-editing");
 
-                dhtKeyedSelectorsHelper(this.$_toggle, (key: string, target: string, selector: string) => {
+                dhtKeyedSelectorsHelper(this.$_toggle, (key: string, target: string, selectors: string) => {
                     if (target === "display") {
                         if (key == displayToggleValue) {
-                            $(selector).show();
+                            $(selectors).show();
                         } else {
-                            $(selector).hide();
+                            $(selectors).hide();
                         }
                     }
                 });

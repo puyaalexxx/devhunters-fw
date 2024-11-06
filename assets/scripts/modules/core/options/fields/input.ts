@@ -33,12 +33,12 @@ import { dhtNotKeyedSelectorsHelper } from "@helpers/options/live-editing";
             try {
                 const { dhtNotKeyedSelectorsHelper } = await import("@helpers/options/live-editing");
 
-                dhtNotKeyedSelectorsHelper(this.$_input, (target: string, selector: string) => {
-                    this.$_input.on("input", ".dht-input", function() {
+                dhtNotKeyedSelectorsHelper(this.$_input, (target: string, selectors: string) => {
+                    this.$_input.on("input change", ".dht-input", function() {
                         const value = String($(this).val());
 
                         if (target === "content") {
-                            $(selector).text(value);
+                            $(selectors).text(value);
                         }
                     });
                 });

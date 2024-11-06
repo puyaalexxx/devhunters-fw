@@ -13,12 +13,13 @@
  *
  * @return void
  */
-export function dhtNotKeyedSelectorsHelper($element: JQuery<HTMLElement>, applyStyles: (target: string, selector: string) => void): void {
-    const selectors: ILiveEditorSelectors = dhtGetLiveEditingSelectors($element);
+export function dhtNotKeyedSelectorsHelper($element: JQuery<HTMLElement>, applyStyles: (target: string, selectors: string) => void): void {
+    const objectSelectors: ILiveEditorSelectors = dhtGetLiveEditingSelectors($element);
 
-    dhtApplyLiveChanges(selectors.selectors, (selector) => {
-        applyStyles(selectors.target, selector);
-    });
+    //combine all selectors
+    const selectors = objectSelectors.selectors.join(", ");
+
+    applyStyles(objectSelectors.target, selectors);
 }
 
 /**
@@ -45,9 +46,11 @@ export function dhtKeyedSelectorsHelper($element: JQuery<HTMLElement>, applyStyl
     Object.entries(selectors.selectors).forEach(([key, keySelectors]) => {
         //check for array selectors only
         if (Array.isArray(keySelectors)) {
-            dhtApplyLiveChanges(keySelectors, (selector) => {
-                applyStyles(key, selectors.target, selector);
-            });
+
+            //combine all selectors
+            const joinedSelectors = keySelectors.join(", ");
+
+            applyStyles(key, selectors.target, joinedSelectors);
         } else {
             console.error("Expected selectors to be an array", keySelectors);
         }

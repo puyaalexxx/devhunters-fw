@@ -32,12 +32,12 @@ import { errorLoadingModule } from "@helpers/general";
             try {
                 const { dhtNotKeyedSelectorsHelper } = await import("@helpers/options/live-editing");
 
-                dhtNotKeyedSelectorsHelper(this.$_textarea, (target: string, selector: string) => {
-                    this.$_textarea.on("input", ".dht-textarea", function() {
+                dhtNotKeyedSelectorsHelper(this.$_textarea, (target: string, selectors: string) => {
+                    this.$_textarea.on("input change", ".dht-textarea", function() {
                         const value = String($(this).val());
 
                         if (target === "content") {
-                            $(selector).text(value);
+                            $(selectors).text(value);
                         }
                     });
                 });

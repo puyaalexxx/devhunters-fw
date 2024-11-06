@@ -418,7 +418,7 @@ $font_type = TypographyHelpers::getFontType( $font_value, $google_fonts, $et_fon
                                 id="<?php echo esc_attr( $field[ 'id' ] ); ?>-font-size-size">
 							
 							<?php $cnt = 0;
-							foreach ( dht_fw_get_css_units() as $size_val => $size_name ): $cnt ++; ?>
+							foreach ( apply_filters( 'dht:options:typography:size_dropdown_values', dht_fw_get_css_units() ) as $size_val => $size_name ): $cnt ++; ?>
 								<?php $size = $font_size_value[ 'size' ] ?? ""; ?>
                                 <option
                                     value="<?php echo esc_attr( $size_val ); ?>"
@@ -458,7 +458,7 @@ $font_type = TypographyHelpers::getFontType( $font_value, $google_fonts, $et_fon
                                 id="<?php echo esc_attr( $field[ 'id' ] ); ?>-line-height-size">
 							
 							<?php $cnt = 0;
-							foreach ( dht_fw_get_css_units() as $size_val => $size_name ): $cnt ++; ?>
+							foreach ( apply_filters( 'dht:options:typography:size_dropdown_values', dht_fw_get_css_units() ) as $size_val => $size_name ): $cnt ++; ?>
 								<?php $size = $line_height_value[ 'size' ] ?? ""; ?>
                                 <option
                                     value="<?php echo esc_attr( $size_val ); ?>"
@@ -498,7 +498,7 @@ $font_type = TypographyHelpers::getFontType( $font_value, $google_fonts, $et_fon
                                 id="<?php echo esc_attr( $field[ 'id' ] ); ?>-letter-spacing-size">
 							
 							<?php $cnt = 0;
-							foreach ( dht_fw_get_css_units() as $size_val => $size_name ): $cnt ++; ?>
+							foreach ( apply_filters( 'dht:options:typography:size_dropdown_values', dht_fw_get_css_units() ) as $size_val => $size_name ): $cnt ++; ?>
 								<?php $size = $letter_spacing_value[ 'size' ] ?? ""; ?>
                                 <option
                                     value="<?php echo esc_attr( $size_val ); ?>"

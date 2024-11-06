@@ -37,7 +37,7 @@ import { errorLoadingModule } from "@helpers/general";
                     $switchInput.val(value);
 
                     //init live editing
-                    $thisClass._liveEditing("hide").then(() => {
+                    $thisClass._liveEditing(value).then(() => {
                     }).catch(error => {
                         console.error(error);
                     });
@@ -49,7 +49,7 @@ import { errorLoadingModule } from "@helpers/general";
                     $switchInput.val(value);
 
                     //init live editing
-                    $thisClass._liveEditing("show").then(() => {
+                    $thisClass._liveEditing(value).then(() => {
                     }).catch(error => {
                         console.error(error);
                     });
@@ -73,12 +73,12 @@ import { errorLoadingModule } from "@helpers/general";
             try {
                 const { dhtKeyedSelectorsHelper } = await import("@helpers/options/live-editing");
 
-                dhtKeyedSelectorsHelper(this.$_switch, (key: string, target: string, selector: string) => {
+                dhtKeyedSelectorsHelper(this.$_switch, (key: string, target: string, selectors: string) => {
                     if (target === "display") {
                         if (key == displaySwitchValue) {
-                            $(selector).show();
+                            $(selectors).show();
                         } else {
-                            $(selector).hide();
+                            $(selectors).hide();
                         }
                     }
                 });

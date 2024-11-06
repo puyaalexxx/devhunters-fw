@@ -262,9 +262,9 @@ import { errorLoadingModule } from "@helpers/general";
             try {
                 const { dhtNotKeyedSelectorsHelper } = await import("@helpers/options/live-editing");
 
-                dhtNotKeyedSelectorsHelper($thisIconsWrapper, (target: string, selector: string) => {
+                dhtNotKeyedSelectorsHelper($thisIconsWrapper, (target: string, selectors: string) => {
                     if (target === "class") {
-                        $(selector).attr("class", iconClass);
+                        $(selectors).attr("class", iconClass);
                     }
                 });
             } catch (error) {

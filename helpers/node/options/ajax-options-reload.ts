@@ -76,19 +76,24 @@ export function dhtReinitializeOptions($content: JQuery<HTMLElement>) {
         if ($content.find(".dht-field-wrapper-icons").length) {
             $(document).trigger("dht_iconAjaxComplete");
         }
-        //if input exists in the current content, reload its js code
-        const $input = $content.find(".dht-field-wrapper-input");
-        if ($input.length && $input.attr("data-live-selectors")?.length) {
+        //if inputs exists in the current content, reload its js code
+        const $inputs = $content.find(".dht-field-wrapper-input");
+        if ($inputs.length && $inputs.filter("[data-live-selectors]").length > 0) {
             $(document).trigger("dht_inputAjaxComplete");
         }
-        //if textarea exists in the current content, reload its js code
-        const $textarea = $content.find(".dht-field-wrapper-textarea");
-        if ($textarea.length && $textarea.attr("data-live-selectors")?.length) {
+        //if dropdowns exists in the current content, reload its js code
+        const $dropdowns = $content.find(".dht-field-wrapper-dropdown");
+        if ($dropdowns.length && $dropdowns.filter("[data-live-selectors]").length > 0) {
+            $(document).trigger("dht_dropdownAjaxComplete");
+        }
+        //if textareas exists in the current content, reload its js code
+        const $textareas = $content.find(".dht-field-wrapper-textarea");
+        if ($textareas.length && $textareas.filter("[data-live-selectors]").length > 0) {
             $(document).trigger("dht_textareaAjaxComplete");
         }
-        //if wpeditor exists in the current content, reload its js code
-        const $wpEditor = $content.find(".dht-field-wrapper-editor");
-        if ($wpEditor.length && $wpEditor.attr("data-live-selectors")?.length) {
+        //if wpeditors exists in the current content, reload its js code
+        const $wpEditors = $content.find(".dht-field-wrapper-editor");
+        if ($wpEditors.length && $wpEditors.filter("[data-live-selectors]").length > 0) {
             $(document).trigger("dht_wpEditorAjaxComplete");
         }
 

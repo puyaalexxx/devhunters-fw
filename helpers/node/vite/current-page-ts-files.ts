@@ -45,7 +45,7 @@ export function getCurrentPageModules(allModules: Record<string, () => Promise<u
         $(".dht-field-wrapper-switch").length ? tsFileNames.switch : "",
         $(".dht-field-wrapper-multiinput").length ? tsFileNames.multiinput : "",
         $(".dht-field-wrapper-code-editor").length ? tsFileNames.ace_editor : "",
-        $(".dht-field-wrapper-borders").length ? tsFileNames.borders : "",
+        $(".dht-field-wrapper-dimension").length ? tsFileNames.dimension : "",
         $(".dht-field-wrapper-colorpicker").length ? tsFileNames.colorpicker : "",
         $(".dht-field-wrapper-image-select").length ? tsFileNames.radio_image : "",
         $(".dht-field-wrapper-icons").length ? tsFileNames.icon : "",

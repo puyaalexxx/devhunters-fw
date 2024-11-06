@@ -2,44 +2,51 @@
 
 .dht-wrapper {
 
-    .dht-field-child-borders {
+    /*.dht-field-wrapper-border-radius .dht-field-child-dimension .dht-field-dimension-group {
+        span:before {
+            display: inline-block;
+            transform: rotate(-50deg);
+        }
+    }*/
+
+    .dht-field-child-dimension {
 
         @mixin colorpicker;
 
-        .dht-field-borders-group {
+        .dht-field-dimension-group {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
             grid-gap: 15px;
             margin-bottom: 10px;
 
-            &.dht-field-borders-group-col-4 {
+            &.dht-field-dimension-group-col-4 {
                 grid-template-columns: 1fr 1fr 1fr 1fr;
             }
 
-            &.dht-field-borders-group-col-6 {
+            &.dht-field-dimension-group-col-6 {
                 grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
             }
         }
 
-        .dht-field-borders-group {
+        .dht-field-dimension-group {
             span:before {
                 font-family: dashicons, sans-serif;
                 color: #000;
             }
 
-            span.dht-borders-top:before {
+            span.dht-dimension-top:before {
                 content: "\f342";
             }
 
-            span.dht-borders-right:before {
+            span.dht-dimension-right:before {
                 content: "\f344";
             }
 
-            span.dht-borders-bottom:before {
+            span.dht-dimension-bottom:before {
                 content: "\f346";
             }
 
-            span.dht-borders-left:before {
+            span.dht-dimension-left:before {
                 content: "\f340";
             }
 
@@ -53,44 +60,44 @@
             }
         }
 
-        .dht-field-borders-input {
+        .dht-field-dimension-input {
             position: relative;
         }
 
-        .dht-borders {
+        .dht-dimension {
             padding-left: 30px !important;
         }
 
         @media (min-width: 1025px) and (max-width: 1366px) {
-            .dht-field-borders-group {
+            .dht-field-dimension-group {
                 grid-template-columns: 1fr 1fr;
             }
         }
 
         @media (min-width: 981px) and (max-width: 1024px) {
-            .dht-field-borders-group {
+            .dht-field-dimension-group {
                 display: block;
             }
 
-            .dht-field-borders-input {
+            .dht-field-dimension-input {
                 margin-bottom: 15px;
             }
 
-            .dht-field-borders-input select {
+            .dht-field-dimension-input select {
                 max-width: 100%;
             }
         }
 
         @media (max-width: 1366px) {
-            .dht-field-borders-group {
+            .dht-field-dimension-group {
                 display: block;
 
-                .dht-field-borders-input {
+                .dht-field-dimension-input {
                     margin-bottom: 10px;
                 }
             }
 
-            .dht-field-borders-input select {
+            .dht-field-dimension-input select {
                 max-width: 100%;
             }
 
@@ -100,11 +107,11 @@
         }
 
         @media (max-width: 767px) {
-            .dht-field-borders-group span {
+            .dht-field-dimension-group span {
                 padding: 10px;
             }
 
-            .dht-borders {
+            .dht-dimension {
                 padding-left: 40px !important;
             }
         }
@@ -112,20 +119,20 @@
 
     @media (max-width: 1600px) {
         .dht-cosidebar, .dht-tabsmenu-container {
-            .dht-field-child-borders {
-                .dht-field-borders-group {
+            .dht-field-child-dimension {
+                .dht-field-dimension-group {
                     display: block;
                 }
 
-                .dht-field-borders-input {
+                .dht-field-dimension-input {
                     margin-bottom: 15px;
                 }
 
-                .dht-field-borders-input select {
+                .dht-field-dimension-input select {
                     max-width: 100%;
                 }
 
-                .dht-field-borders-group-colorpicker {
+                .dht-field-dimension-group-colorpicker {
                     @mixin colorpicker_responsive;
                 }
             }
@@ -136,20 +143,20 @@
 .dht-meta-box-content .dht-wrapper {
     @media (max-width: 1920px) {
         .dht-cosidebar {
-            .dht-field-child-borders {
-                .dht-field-borders-group {
+            .dht-field-child-dimension {
+                .dht-field-dimension-group {
                     display: block;
                 }
 
-                .dht-field-borders-input {
+                .dht-field-dimension-input {
                     margin-bottom: 15px;
                 }
 
-                .dht-field-borders-input select {
+                .dht-field-dimension-input select {
                     max-width: 100%;
                 }
 
-                .dht-field-borders-group-colorpicker {
+                .dht-field-dimension-group-colorpicker {
                     @mixin colorpicker_responsive;
                 }
             }
@@ -157,8 +164,8 @@
     }
 
     @media (max-width: 1600px) {
-        .dht-field-child-borders {
-            .dht-field-borders-group-colorpicker {
+        .dht-field-child-dimension {
+            .dht-field-dimension-group-colorpicker {
                 @mixin colorpicker_responsive;
             }
         }
@@ -166,7 +173,7 @@
 }
 
 .dht-terms-page-content .dht-wrapper {
-    .dht-field-borders-group-colorpicker {
+    .dht-field-dimension-group-colorpicker {
         @mixin colorpicker_responsive;
     }
 }
@@ -174,20 +181,20 @@
 .dht-vb-enabled .dht-vb-modal {
     &.dht-modal-small, &.dht-modal-medium {
         .dht-wrapper {
-            .dht-field-child-borders {
-                .dht-field-borders-group {
+            .dht-field-child-dimension {
+                .dht-field-dimension-group {
                     display: block;
                 }
 
-                .dht-field-borders-input {
+                .dht-field-dimension-input {
                     margin-bottom: 15px;
                 }
 
-                .dht-field-borders-input select {
+                .dht-field-dimension-input select {
                     max-width: 100%;
                 }
 
-                .dht-field-borders-group-colorpicker {
+                .dht-field-dimension-group-colorpicker {
                     @mixin colorpicker_responsive;
                 }
             }

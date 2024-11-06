@@ -17,8 +17,8 @@ export function dhtReinitializeOptions($content: JQuery<HTMLElement>) {
             $(document).trigger("dht_colorPickerAjaxComplete");
         }
         //if borders exists in the current content, reload its js code
-        if ($content.find(".dht-field-wrapper-borders").length) {
-            $(document).trigger("dht_bordersAjaxComplete");
+        if ($content.find(".dht-field-wrapper-dimension").length) {
+            $(document).trigger("dht_dimensionAjaxComplete");
         }
         //if Ace editor exists in the current content, reload its js code
         if ($content.find(".dht-field-wrapper-code-editor").length) {

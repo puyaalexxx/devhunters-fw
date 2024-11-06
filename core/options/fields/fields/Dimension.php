@@ -7,14 +7,14 @@ use DHT\Core\Options\Fields\BaseField;
 use DHT\DHT;
 use DHT\Helpers\Classes\Environment;
 
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
-final class Spacing extends BaseField {
+final class Dimension extends BaseField {
 	
 	//field type
-	protected string $_field = 'spacing';
+	protected string $_field = 'dimension';
 	
 	/**
 	 * @since     1.0.0
@@ -34,9 +34,17 @@ final class Spacing extends BaseField {
 	 */
 	public function enqueueOptionScripts( array $field ) : void {
 		
-		if ( Environment::isDevelopment() ) {
-			wp_register_style( DHT_PREFIX_CSS . '-spacing-field', DHT_ASSETS_URI . 'dist/css/spacing.css', array(), DHT::$version );
-			wp_enqueue_style( DHT_PREFIX_CSS . '-spacing-field' );
+		wp_enqueue_style( 'wp-color-picker' );
+		wp_enqueue_script( 'wp-color-picker' );
+		
+		if( Environment::isDevelopment() ) {
+			wp_register_style( DHT_PREFIX_CSS . '-dimension-field', DHT_ASSETS_URI . 'dist/css/dimension.css', array(), DHT::$version );
+			wp_enqueue_style( DHT_PREFIX_CSS . '-dimension-field' );
+			
+			wp_enqueue_script_module( DHT_PREFIX_JS . '-wp-color-picker-field-dimension', DHT_ASSETS_URI . 'dist/js/dimension.js', array(
+				'jquery',
+				'wp-color-picker'
+			), DHT::$version );
 		}
 	}
 	
@@ -47,25 +55,25 @@ final class Spacing extends BaseField {
 	 *  $field_post_value can be null.
 	 *  In this case you should return default value from $field['value']
 	 *
-	 * @param array $field            - field
-	 * @param mixed $field_post_value - field $_POST value passed on save
+	 * @param array $field            - option field
+	 * @param mixed $field_post_value - option $_POST value passed on save
 	 *
-	 * @return mixed - changed field value
+	 * @return mixed - changed option value
 	 * @since     1.0.0
 	 */
 	public function saveValue( array $field, mixed $field_post_value ) : mixed {
 		
-		if ( empty( $field_post_value ) ) {
+		if( empty( $field_post_value ) ) {
 			return $field[ 'value' ];
 		}
 		
 		//for the range field
-		if ( is_array( $field_post_value ) ) {
+		if( is_array( $field_post_value ) ) {
 			
 			$field_vals = [];
 			foreach ( $field_post_value as $key => $value ) {
 				
-				if ( $key == 'size' ) {
+				if( $key == 'border-style' || $key == 'color' || $key == 'unit' ) {
 					
 					$field_vals[ $key ] = $value;
 					

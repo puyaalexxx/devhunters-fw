@@ -74,7 +74,7 @@ import { errorLoadingModule } from "@helpers/general";
                 const { dhtOnChangeColorpicker } = await import("@helpers/options/colorpicker-utilities");
 
                 const dimensionInputs = [
-                    ".dht-dimension-input-top", ".dht-dimension-input-right", ".dht-dimension-input-bottom", ".dht-dimension-input-left",
+                    ".dht-dimension-input-size-1", ".dht-dimension-input-size-2", ".dht-dimension-input-size-3", ".dht-dimension-input-size-4",
                 ];
 
                 dhtKeyedSelectorsHelper(this.$_dimension, (key: string, target: string, selectors: string) => {
@@ -84,7 +84,7 @@ import { errorLoadingModule } from "@helpers/general";
                         if (preparedCSSProperty === "border") {
                             //dimension border styles could be disabled
                             if (this.$_border_style.length) {
-                                this.$_border_style.on("change", function() {
+                                $(this.$_border_style).on("change", function() {
                                     triggerDimensionInputsChange();
                                 });
                             }
@@ -98,7 +98,7 @@ import { errorLoadingModule } from "@helpers/general";
                         }
                         //dimension size - px, em... (dimension sizes could be disabled)
                         if (this.$_units.length) {
-                            this.$_units.on("change", function() {
+                            $(this.$_units).on("change", function() {
                                 triggerDimensionInputsChange();
                             });
                         }
@@ -127,14 +127,20 @@ import { errorLoadingModule } from "@helpers/general";
                                 // If this is the current input, use the value captured in the event
                                 return currentValue.length === 0 ? 0 : currentValue + size;
                             } else {
-                                const value = String($thisClass.$_dimension.find(input).val());
-                                // Otherwise, use the value of the other dimension inputs
-                                return value.length === 0 ? 0 : value + size;
+                                const inputElement = $thisClass.$_dimension.find(input);
+
+                                //check if input exist as it could be disabled
+                                if (inputElement.length > 0) {
+                                    const value = String(inputElement.val());
+                                    return value.length === 0 ? 0 : value + size;
+                                }
                             }
                         });
 
                         // Join the dimension values to form the CSS value (top, right, bottom, left)
                         const dimensionValues = dimensionInputsValues.join(" ");
+
+                        console.log(dimensionValues);
 
                         // $(selectors).css({ "border-radius": dimensionValues });
                         if (cssProperty === "border") {
@@ -156,7 +162,7 @@ import { errorLoadingModule } from "@helpers/general";
 
                 //helper function for dimension inputs to be triggered
                 function triggerDimensionInputsChange() {
-                    $thisClass.$_dimension.find(".dht-dimension-input-top").trigger("change");
+                    $thisClass.$_dimension.find(".dht-dimension-input-size-1").trigger("change");
                 }
             } catch (error) {
                 errorLoadingModule(error as string);

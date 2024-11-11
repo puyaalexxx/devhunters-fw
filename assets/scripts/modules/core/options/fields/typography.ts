@@ -5,7 +5,7 @@ import { errorLoadingModule } from "@helpers/general";
 
     class Typography {
         //typography reference
-        private $_typography;
+        private readonly $_typography;
 
         private $_preview_area;
         private $_fonts_dropdown;
@@ -114,8 +114,7 @@ import { errorLoadingModule } from "@helpers/general";
                 allowClear: true,
             });
 
-            this.$_fonts_dropdown.off("change.mychange");
-            this.$_fonts_dropdown.on("change.mychange", function() {
+            this.$_fonts_dropdown.off("change.mychange").on("change.mychange", function() {
                 const $selected_font = $(this);
 
                 //get font type (google, standard, divi)
@@ -126,6 +125,12 @@ import { errorLoadingModule } from "@helpers/general";
 
                 //apply font to preview area
                 $thisClass.$_preview_area.css("font-family", font_family);
+
+                //init live editing with font family
+                $thisClass._liveEditing({ "font-family": font_family }).then(() => {
+                }).catch(error => {
+                    console.error(error);
+                });
 
                 //if Google font
                 if (font_type === "google") {
@@ -246,6 +251,12 @@ import { errorLoadingModule } from "@helpers/general";
                 }
 
                 $thisClass.$_preview_area.css("font-weight", font_weight);
+
+                //init live editing with font weight
+                $thisClass._liveEditing({ "font-weight": font_weight }).then(() => {
+                }).catch(error => {
+                    console.error(error);
+                });
             });
         }
 
@@ -277,6 +288,12 @@ import { errorLoadingModule } from "@helpers/general";
                 const font_style = String($(this).val());
 
                 $thisClass.$_preview_area.css("font-style", font_style);
+
+                //init live editing with font style
+                $thisClass._liveEditing({ "font-style": font_style }).then(() => {
+                }).catch(error => {
+                    console.error(error);
+                });
             });
         }
 
@@ -300,8 +317,20 @@ import { errorLoadingModule } from "@helpers/general";
 
                 if (text_transform === "small-caps") {
                     $thisClass.$_preview_area.css("font-variant", text_transform);
+
+                    //init live editing with text transform
+                    $thisClass._liveEditing({ "font-variant": text_transform }).then(() => {
+                    }).catch(error => {
+                        console.error(error);
+                    });
                 } else {
                     $thisClass.$_preview_area.css("text-transform", text_transform);
+
+                    //init live editing with text transform
+                    $thisClass._liveEditing({ "text-transform": text_transform }).then(() => {
+                    }).catch(error => {
+                        console.error(error);
+                    });
                 }
             });
         }
@@ -321,6 +350,12 @@ import { errorLoadingModule } from "@helpers/general";
                 const text_decoration = String($(this).val());
 
                 $thisClass.$_preview_area.css("text-decoration", text_decoration);
+
+                //init live editing with text decoration
+                $thisClass._liveEditing({ "text-decoration": text_decoration }).then(() => {
+                }).catch(error => {
+                    console.error(error);
+                });
             });
         }
 
@@ -339,6 +374,12 @@ import { errorLoadingModule } from "@helpers/general";
                 const text_align = String($(this).val());
 
                 $thisClass.$_preview_area.css("text-align", text_align);
+
+                //init live editing with text align
+                $thisClass._liveEditing({ "text-align": text_align }).then(() => {
+                }).catch(error => {
+                    console.error(error);
+                });
             });
         }
 
@@ -356,6 +397,12 @@ import { errorLoadingModule } from "@helpers/general";
                 const value = String($(this).siblings(".dht-input").val());
 
                 $thisClass.$_preview_area.css("font-size", value + size);
+
+                //init live editing with font size
+                $thisClass._liveEditing({ "font-size": value + size }).then(() => {
+                }).catch(error => {
+                    console.error(error);
+                });
             });
             //on input change
             this.$_text_font_size.children(".dht-input").off("input change").on("input change", function() {
@@ -363,6 +410,12 @@ import { errorLoadingModule } from "@helpers/general";
                 const size = String($(this).siblings("select").val());
 
                 $thisClass.$_preview_area.css("font-size", value + size);
+
+                //init live editing with font size
+                $thisClass._liveEditing({ "font-size": value + size }).then(() => {
+                }).catch(error => {
+                    console.error(error);
+                });
             });
         }
 
@@ -380,6 +433,12 @@ import { errorLoadingModule } from "@helpers/general";
                 const value = String($(this).siblings(".dht-input").val());
 
                 $thisClass.$_preview_area.css("line-height", value + size);
+
+                //init live editing with line height
+                $thisClass._liveEditing({ "line-height": value + size }).then(() => {
+                }).catch(error => {
+                    console.error(error);
+                });
             });
             //on input change
             this.$_text_line_height.children(".dht-input").off("input change").on("input change", function() {
@@ -387,6 +446,12 @@ import { errorLoadingModule } from "@helpers/general";
                 const size = String($(this).siblings("select").val());
 
                 $thisClass.$_preview_area.css("line-height", value + size);
+
+                //init live editing with line height
+                $thisClass._liveEditing({ "line-height": value + size }).then(() => {
+                }).catch(error => {
+                    console.error(error);
+                });
             });
         }
 
@@ -404,6 +469,12 @@ import { errorLoadingModule } from "@helpers/general";
                 const value = String($(this).siblings(".dht-input").val());
 
                 $thisClass.$_preview_area.css("letter-spacing", value + size);
+
+                //init live editing with letter spacing
+                $thisClass._liveEditing({ "letter-spacing": value + size }).then(() => {
+                }).catch(error => {
+                    console.error(error);
+                });
             });
             //on input change
             this.$_text_letter_spacing.children(".dht-input").off("input change").on("input change", function() {
@@ -411,6 +482,12 @@ import { errorLoadingModule } from "@helpers/general";
                 const size = String($(this).siblings("select").val());
 
                 $thisClass.$_preview_area.css("letter-spacing", value + size);
+
+                //init live editing with letter spacing
+                $thisClass._liveEditing({ "letter-spacing": value + size }).then(() => {
+                }).catch(error => {
+                    console.error(error);
+                });
             });
         }
 
@@ -439,6 +516,12 @@ import { errorLoadingModule } from "@helpers/general";
                     dhtOnChangeColorpicker($this, (color) => {
                         // Apply the selected color to the preview area
                         $thisClass.$_preview_area.css("color", color);
+
+                        //init live editing with color
+                        $thisClass._liveEditing({ "color": color }).then(() => {
+                        }).catch(error => {
+                            console.error(error);
+                        });
                     });
                 });
             } catch (error) {
@@ -535,6 +618,32 @@ import { errorLoadingModule } from "@helpers/general";
             }
 
             $("<link href=\"" + fontLink + "\" rel=\"stylesheet\">").appendTo("head");
+        }
+
+        /**
+         * live editing
+         * Ability to change other areas via changing the field
+         * with the provided CSS selectors
+         *
+         * @param style Style to be applied on the selectors
+         *
+         * @return Promise<void>
+         */
+        private async _liveEditing(style: { [key: string]: string }): Promise<void> {
+            //no live editor attribute
+            if (!(this.$_typography.attr("data-live-selectors") ?? "").length) return;
+
+            try {
+                const { dhtNotKeyedSelectorsHelper } = await import("@helpers/options/live-editing");
+
+                dhtNotKeyedSelectorsHelper(this.$_typography, (target: string, selectors: string) => {
+                    if (target === "style") {
+                        $(selectors).css(style);
+                    }
+                });
+            } catch (error) {
+                errorLoadingModule(error as string);
+            }
         }
     }
 

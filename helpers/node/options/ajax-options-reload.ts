@@ -99,7 +99,6 @@ export function dhtReinitializeOptions($content: JQuery<HTMLElement>) {
 
         /////////////// vb modal ///////////////
         if ($content.hasClass("dht-vb-modal-content-options")) {
-
             //if sidemenu container exists in the current content, reload its js code
             if ($content.find(".dht-cosidebar").length) {
                 $(document).trigger("dht_sideMenuAjaxComplete");

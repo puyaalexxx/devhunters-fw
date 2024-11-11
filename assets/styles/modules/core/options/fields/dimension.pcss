@@ -14,17 +14,14 @@
         @mixin colorpicker;
 
         .dht-field-dimension-group {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-            grid-gap: 15px;
+            display: flex;
+            grid-gap: 10px;
             margin-bottom: 10px;
 
-            &.dht-field-dimension-group-col-4 {
-                grid-template-columns: 1fr 1fr 1fr 1fr;
-            }
-
-            &.dht-field-dimension-group-col-6 {
-                grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+            .dht-field-dimension-input {
+                flex: 1; /* This makes each element grow equally */
+                min-width: 0; /* Prevents overflow due to content */
+                box-sizing: border-box; /* Prevents padding from causing overflow */
             }
         }
 
@@ -34,19 +31,19 @@
                 color: #000;
             }
 
-            span.dht-dimension-top:before {
+            span.dht-dimension-size-1:before {
                 content: "\f342";
             }
 
-            span.dht-dimension-right:before {
+            span.dht-dimension-size-2:before {
                 content: "\f344";
             }
 
-            span.dht-dimension-bottom:before {
+            span.dht-dimension-size-3:before {
                 content: "\f346";
             }
 
-            span.dht-dimension-left:before {
+            span.dht-dimension-size-4:before {
                 content: "\f340";
             }
 
@@ -64,8 +61,14 @@
             position: relative;
         }
 
+        .dht-field-dimension-group-icons {
+            .dht-dimension {
+                padding-left: 30px !important;
+            }
+        }
+
         .dht-dimension {
-            padding-left: 30px !important;
+            padding-left: 8px !important;
         }
 
         @media (min-width: 1025px) and (max-width: 1366px) {
@@ -111,8 +114,14 @@
                 padding: 10px;
             }
 
+            .dht-field-dimension-group-icons {
+                .dht-dimension {
+                    padding-left: 40px !important;
+                }
+            }
+
             .dht-dimension {
-                padding-left: 40px !important;
+                padding-left: 8px !important;
             }
         }
     }

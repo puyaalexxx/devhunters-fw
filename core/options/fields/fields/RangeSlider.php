@@ -7,7 +7,7 @@ use DHT\Core\Options\Fields\BaseField;
 use DHT\DHT;
 use DHT\Helpers\Classes\Environment;
 
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
@@ -41,11 +41,11 @@ final class RangeSlider extends BaseField {
 		//WordPress comes with the slider option
 		wp_enqueue_script( 'jquery-ui-slider' );
 		
-		if ( Environment::isDevelopment() ) {
+		if( Environment::isDevelopment() ) {
 			wp_register_style( DHT_PREFIX_CSS . '-rangeslider-field', DHT_ASSETS_URI . 'dist/css/rangeslider.css', array(), DHT::$version );
 			wp_enqueue_style( DHT_PREFIX_CSS . '-rangeslider-field' );
 			
-			wp_enqueue_script( DHT_PREFIX_JS . '-rangeslider-field', DHT_ASSETS_URI . 'dist/js/rangeslider.js', array( 'jquery-ui-slider' ), DHT::$version, true );
+			wp_enqueue_script_module( DHT_PREFIX_JS . '-rangeslider-field', DHT_ASSETS_URI . 'dist/js/rangeslider.js', array( 'jquery-ui-slider' ), DHT::$version, true );
 		}
 	}
 	
@@ -64,12 +64,12 @@ final class RangeSlider extends BaseField {
 	 */
 	public function saveValue( array $field, mixed $field_post_value ) : mixed {
 		
-		if ( empty( $field_post_value ) ) {
+		if( empty( $field_post_value ) ) {
 			return (int) $field[ 'value' ];
 		}
 		
 		//for the range field
-		if ( is_array( $field_post_value ) ) {
+		if( is_array( $field_post_value ) ) {
 			
 			$field_vals = [];
 			foreach ( $field_post_value as $value ) {

@@ -46,11 +46,10 @@ export function dhtKeyedSelectorsHelper($element: JQuery<HTMLElement>, applyStyl
     Object.entries(selectors.selectors).forEach(([key, keySelectors]) => {
         //check for array selectors only
         if (Array.isArray(keySelectors)) {
-
             //combine all selectors
             const joinedSelectors = keySelectors.join(", ");
 
-            applyStyles(key, selectors.target, joinedSelectors);
+            applyStyles(key.trim(), selectors.target, joinedSelectors);
         } else {
             console.error("Expected selectors to be an array", keySelectors);
         }

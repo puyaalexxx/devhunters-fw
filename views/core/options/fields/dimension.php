@@ -10,17 +10,14 @@ use function DHT\Helpers\dht_parse_option_attributes;
 $field = $args[ 'field' ] ?? [];
 
 $units_values = $field[ 'units-values' ] ?? "";
+
+$size2        = $field[ 'size-2' ] ?? true;
+$size3        = $field[ 'size-3' ] ?? true;
+$size4        = $field[ 'size-4' ] ?? true;
 $units        = $field[ 'units' ] ?? true;
 $border_style = $field[ 'border-styles' ] ?? true;
 $color        = $field[ 'color' ] ?? true;
-
-$columns = "";
-if( !$units && !$border_style ) {
-	$columns = "dht-field-dimension-group-col-4";
-}
-elseif( $units && $border_style ) {
-	$columns = "dht-field-dimension-group-col-6";
-}
+$input_icons  = $field[ 'input-icons' ] ?? true;
 ?>
 <!-- field - dimension -->
 
@@ -36,63 +33,78 @@ elseif( $units && $border_style ) {
 
     <div class="dht-field-child-wrapper dht-field-child-dimension">
 
-        <div class="dht-field-dimension-group <?php echo esc_attr( $columns ); ?>">
+        <div
+            class="dht-field-dimension-group <?php echo $input_icons ? "dht-field-dimension-group-icons" : ""; ?>">
 
             <div class="dht-field-dimension-input">
                 <label
-                    for="<?php echo esc_attr( $field[ 'id' ] ); ?>-top"><?php echo _x( 'Top', 'options', DHT_PREFIX ) ?></label>
+                    for="<?php echo esc_attr( $field[ 'id' ] ); ?>-size-1"><?php echo _x( 'Size 1', 'options', DHT_PREFIX ) ?></label>
+				
+				<?php if( $input_icons ): ?>
+                    <span class="dht-dimension-size-1"></span>
+				<?php endif; ?>
 
-                <span class="dht-dimension-top"></span>
-
-                <input class="dht-dimension dht-dimension-input-top dht-field"
-                       id="<?php echo esc_attr( $field[ 'id' ] ); ?>-top"
+                <input class="dht-dimension dht-dimension-input-size-1 dht-field"
+                       id="<?php echo esc_attr( $field[ 'id' ] ); ?>-size-1"
                        type="number"
                        min="0"
-                       name="<?php echo esc_attr( $field[ 'id' ] ); ?>[top]"
-                       value="<?php echo esc_attr( $field[ 'value' ][ 'top' ] ); ?>" />
+                       name="<?php echo esc_attr( $field[ 'id' ] ); ?>[size-1]"
+                       value="<?php echo isset( $field[ 'value' ][ 'size-1' ] ) ? esc_attr( $field[ 'value' ][ 'size-1' ] ) : 0; ?>" />
             </div>
+			
+			<?php if( $size2 ): ?>
+                <div class="dht-field-dimension-input">
+                    <label
+                        for="<?php echo esc_attr( $field[ 'id' ] ); ?>-size-2"><?php echo _x( 'Size 2', 'options', DHT_PREFIX ) ?></label>
+					
+					<?php if( $input_icons ): ?>
+                        <span class="dht-dimension-size-2"></span>
+					<?php endif; ?>
 
-            <div class="dht-field-dimension-input">
-                <label
-                    for="<?php echo esc_attr( $field[ 'id' ] ); ?>-right"><?php echo _x( 'Right', 'options', DHT_PREFIX ) ?></label>
+                    <input class="dht-dimension dht-dimension-input-size-2 dht-field"
+                           id="<?php echo esc_attr( $field[ 'id' ] ); ?>-size-2"
+                           type="number"
+                           min="0"
+                           name="<?php echo esc_attr( $field[ 'id' ] ); ?>[size-2]"
+                           value="<?php echo isset( $field[ 'value' ][ 'size-2' ] ) ? esc_attr( $field[ 'value' ][ 'size-2' ] ) : 0; ?>" />
+                </div>
+			<?php endif; ?>
+			
+			<?php if( $size3 ): ?>
+                <div class="dht-field-dimension-input">
+                    <label
+                        for="<?php echo esc_attr( $field[ 'id' ] ); ?>-size-3"><?php echo _x( 'Size 3', 'options', DHT_PREFIX ) ?></label>
+					
+					<?php if( $input_icons ): ?>
+                        <span class="dht-dimension-size-3"></span>
+					<?php endif; ?>
 
-                <span class="dht-dimension-right"></span>
+                    <input class="dht-dimension dht-dimension-input-size-3 dht-field"
+                           id="<?php echo esc_attr( $field[ 'id' ] ); ?>-size-3"
+                           type="number"
+                           min="0"
+                           name="<?php echo esc_attr( $field[ 'id' ] ); ?>[size-3]"
+                           value="<?php echo isset( $field[ 'value' ][ 'size-3' ] ) ? esc_attr( $field[ 'value' ][ 'size-3' ] ) : 0; ?>" />
+                </div>
+			<?php endif; ?>
+			
+			<?php if( $size4 ): ?>
+                <div class="dht-field-dimension-input">
+                    <label
+                        for="<?php echo esc_attr( $field[ 'id' ] ); ?>-size-4"><?php echo _x( 'Size 4', 'options', DHT_PREFIX ) ?></label>
+					
+					<?php if( $input_icons ): ?>
+                        <span class="dht-dimension-size-4"></span>
+					<?php endif; ?>
 
-                <input class="dht-dimension dht-dimension-input-right dht-field"
-                       id="<?php echo esc_attr( $field[ 'id' ] ); ?>-right"
-                       type="number"
-                       min="0"
-                       name="<?php echo esc_attr( $field[ 'id' ] ); ?>[right]"
-                       value="<?php echo esc_attr( $field[ 'value' ][ 'right' ] ); ?>" />
-            </div>
-
-            <div class="dht-field-dimension-input">
-                <label
-                    for="<?php echo esc_attr( $field[ 'id' ] ); ?>-bottom"><?php echo _x( 'Bottom', 'options', DHT_PREFIX ) ?></label>
-
-                <span class="dht-dimension-bottom"></span>
-
-                <input class="dht-dimension dht-dimension-input-bottom dht-field"
-                       id="<?php echo esc_attr( $field[ 'id' ] ); ?>-bottom"
-                       type="number"
-                       min="0"
-                       name="<?php echo esc_attr( $field[ 'id' ] ); ?>[bottom]"
-                       value="<?php echo esc_attr( $field[ 'value' ][ 'bottom' ] ); ?>" />
-            </div>
-
-            <div class="dht-field-dimension-input">
-                <label
-                    for="<?php echo esc_attr( $field[ 'id' ] ); ?>-left"><?php echo _x( 'Left', 'options', DHT_PREFIX ) ?></label>
-
-                <span class="dht-dimension-left"></span>
-
-                <input class="dht-dimension dht-dimension-input-left dht-field"
-                       id="<?php echo esc_attr( $field[ 'id' ] ); ?>-left"
-                       type="number"
-                       min="0"
-                       name="<?php echo esc_attr( $field[ 'id' ] ); ?>[left]"
-                       value="<?php echo esc_attr( $field[ 'value' ][ 'left' ] ); ?>" />
-            </div>
+                    <input class="dht-dimension dht-dimension-input-size-4 dht-field"
+                           id="<?php echo esc_attr( $field[ 'id' ] ); ?>-size-4"
+                           type="number"
+                           min="0"
+                           name="<?php echo esc_attr( $field[ 'id' ] ); ?>[size-4]"
+                           value="<?php echo isset( $field[ 'value' ][ 'size-4' ] ) ? esc_attr( $field[ 'value' ][ 'size-4' ] ) : 0; ?>" />
+                </div>
+			<?php endif; ?>
 			
 			<?php if( $units && !empty( $units_values ) ): ?>
 				<?php $units_value = $field[ 'value' ][ 'unit' ] ?? ""; ?>

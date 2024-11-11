@@ -7,6 +7,9 @@ use function DHT\Helpers\dht_fw_live_option_selectors;
 use function DHT\Helpers\dht_parse_option_attributes;
 
 $field = $args[ 'field' ] ?? [];
+
+$min = isset( $field[ 'min' ] ) ? (int) $field[ 'min' ] : 0;
+$max = isset( $field[ 'max' ] ) ? (int) $field[ 'max' ] : 0;
 ?>
 <!-- field - rangeslider -->
 
@@ -30,16 +33,22 @@ $field = $args[ 'field' ] ?? [];
                     for="<?php echo esc_attr( $field[ 'id' ] ); ?>-1"><?php echo esc_html( $field[ 'title' ] ); ?></label>
                 <input class="dht-range-slider dht-range-slider-1 dht-field"
                        id="<?php echo esc_attr( $field[ 'id' ] ); ?>-1"
-                       type="text"
+                       type="number"
+                       min="<?php echo esc_attr( $min ); ?>"
+                       max="<?php echo esc_attr( $max ); ?>"
                        name="<?php echo esc_attr( $field[ 'id' ] ); ?>[]"
+                       readonly
                        value="<?php echo !empty( $field[ 'value' ] ) ? $field[ 'value' ][ 0 ] : ''; ?>" />
                 -
                 <label
                     for="<?php echo esc_attr( $field[ 'id' ] ); ?>-2"><?php echo esc_html( $field[ 'title' ] ); ?></label>
                 <input class="dht-range-slider dht-range-slider-2 dht-field"
                        id="<?php echo esc_attr( $field[ 'id' ] ); ?>-2"
-                       type="text"
+                       type="number"
+                       min="<?php echo esc_attr( $min ); ?>"
+                       max="<?php echo esc_attr( $max ); ?>"
                        name="<?php echo esc_attr( $field[ 'id' ] ); ?>[]"
+                       readonly
                        value="<?php echo !empty( $field[ 'value' ] ) ? $field[ 'value' ][ 1 ] : ''; ?>" />
 
             </div>
@@ -47,9 +56,9 @@ $field = $args[ 'field' ] ?? [];
             <!--range slider -->
             <div class="dht-slider-slider"
                  data-range="yes"
-                 data-values="<?php echo implode( ',', $field[ 'value' ] ); ?>"
-                 data-min="<?php echo (int) $field[ 'min' ]; ?>"
-                 data-max="<?php echo (int) $field[ 'max' ]; ?>"
+                 data-values="<?php echo is_array( $field[ 'value' ] ) ? implode( ',', $field[ 'value' ] ) : 0; ?>"
+                 data-min="<?php echo esc_attr( $min ); ?>"
+                 data-max="<?php echo esc_attr( $max ); ?>"
             >
             </div>
 		
@@ -58,16 +67,19 @@ $field = $args[ 'field' ] ?? [];
             <label for="<?php echo esc_attr( $field[ 'id' ] ); ?>"><?php echo esc_html( $field[ 'title' ] ); ?></label>
             <input class="dht-slider dht-field"
                    id="<?php echo esc_attr( $field[ 'id' ] ); ?>"
-                   type="text"
+                   type="number"
+                   min="<?php echo esc_attr( $min ); ?>"
+                   max="<?php echo esc_attr( $max ); ?>"
                    name="<?php echo esc_attr( $field[ 'id' ] ); ?>"
+                   readonly
                    value="<?php echo esc_html( $field[ 'value' ] ); ?>" />
 
             <!--range slider -->
             <div class="dht-slider-slider"
                  data-range="no"
                  data-values="<?php echo (int) $field[ 'value' ]; ?>"
-                 data-min="<?php echo (int) $field[ 'min' ]; ?>"
-                 data-max="<?php echo (int) $field[ 'max' ]; ?>"
+                 data-min="<?php echo esc_attr( $min ); ?>"
+                 data-max="<?php echo esc_attr( $max ); ?>"
             >
             </div>
 		

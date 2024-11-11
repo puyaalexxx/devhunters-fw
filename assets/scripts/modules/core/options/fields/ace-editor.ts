@@ -11,7 +11,7 @@ import "ace-builds/src-min-noconflict/mode-css";
     const dht_ace_files_path = dht_ace_editor_path.path;
 
     class AceEditor {
-        private $_ace_textarea;
+        private readonly $_ace_textarea;
         private $_ace_editor_area;
         private readonly $_ace_editor_mode;
         private _ace_editor: any;

@@ -13,10 +13,10 @@
             //multioptions reference
             this.$_multioptions = $multioptions;
 
-            this.$_dropdown = this.$_multioptions.children(".dht-multioptions");
+            this.$_dropdown = this.$_multioptions.find(".dht-multioptions");
             this.$_input_text = this.$_dropdown.attr("data-input-text");
-            this.$_selected_values = this.$_dropdown.attr("data-values")!;
-            this.$_minimumInputLength = +this.$_dropdown.attr("data-minimumInputLength")!;
+            this.$_selected_values = this.$_dropdown.attr("data-values") ?? "";
+            this.$_minimumInputLength = this.$_dropdown.attr("data-minimumInputLength") ?? 3;
 
             //set selected values
             this._setSelectedValues();
@@ -72,7 +72,7 @@
 
                 // Initialize Select2 with AJAX
                 this.$_dropdown.select2({
-                    minimumInputLength: this.$_minimumInputLength, // Set minimum input length to 1 to trigger AJAX after typing
+                    minimumInputLength: +this.$_minimumInputLength, // Set minimum input length to 1 to trigger AJAX after typing
                     placeholder: this.$_input_text, // Placeholder text
                     allowClear: true, // Allow clearing the selection
                     ajax: {
@@ -103,7 +103,7 @@
             else {
                 this.$_dropdown.select2({
                     placeholder: this.$_input_text, // Placeholder text
-                    minimumInputLength: this.$_minimumInputLength,
+                    minimumInputLength: +this.$_minimumInputLength,
                     allowClear: true, // Allow clearing the selection
                 });
             }

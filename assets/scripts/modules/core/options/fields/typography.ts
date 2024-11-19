@@ -123,14 +123,7 @@ import { errorLoadingModule } from "@helpers/general";
                 //get the selected font family
                 const font_family: string = String($selected_font.val())!.replace(new RegExp(`^${$thisClass._font_prefix}-`), "");
 
-                //apply font to preview area
-                $thisClass.$_preview_area.css("font-family", font_family);
-
-                //init live editing with font family
-                $thisClass._liveEditing({ "font-family": font_family }).then(() => {
-                }).catch(error => {
-                    console.error(error);
-                });
+                $thisClass._applyStyles("font-family", font_family);
 
                 //if Google font
                 if (font_type === "google") {
@@ -250,13 +243,7 @@ import { errorLoadingModule } from "@helpers/general";
                     $("<link href=\"" + fontLink + "\" rel=\"stylesheet\">").appendTo("head");
                 }
 
-                $thisClass.$_preview_area.css("font-weight", font_weight);
-
-                //init live editing with font weight
-                $thisClass._liveEditing({ "font-weight": font_weight }).then(() => {
-                }).catch(error => {
-                    console.error(error);
-                });
+                $thisClass._applyStyles("font-weight", font_weight);
             });
         }
 
@@ -287,13 +274,7 @@ import { errorLoadingModule } from "@helpers/general";
             this.$_font_style_dropdown.off("change.mychange").on("change.mychange", function() {
                 const font_style = String($(this).val());
 
-                $thisClass.$_preview_area.css("font-style", font_style);
-
-                //init live editing with font style
-                $thisClass._liveEditing({ "font-style": font_style }).then(() => {
-                }).catch(error => {
-                    console.error(error);
-                });
+                $thisClass._applyStyles("font-style", font_style);
             });
         }
 
@@ -316,21 +297,9 @@ import { errorLoadingModule } from "@helpers/general";
                 $thisClass.$_preview_area.css("text-transform", "");
 
                 if (text_transform === "small-caps") {
-                    $thisClass.$_preview_area.css("font-variant", text_transform);
-
-                    //init live editing with text transform
-                    $thisClass._liveEditing({ "font-variant": text_transform }).then(() => {
-                    }).catch(error => {
-                        console.error(error);
-                    });
+                    $thisClass._applyStyles("font-variant", text_transform);
                 } else {
-                    $thisClass.$_preview_area.css("text-transform", text_transform);
-
-                    //init live editing with text transform
-                    $thisClass._liveEditing({ "text-transform": text_transform }).then(() => {
-                    }).catch(error => {
-                        console.error(error);
-                    });
+                    $thisClass._applyStyles("text-transform", text_transform);
                 }
             });
         }
@@ -349,13 +318,7 @@ import { errorLoadingModule } from "@helpers/general";
             this.$_text_decoration_dropdown.off("change.mychange").on("change.mychange", function() {
                 const text_decoration = String($(this).val());
 
-                $thisClass.$_preview_area.css("text-decoration", text_decoration);
-
-                //init live editing with text decoration
-                $thisClass._liveEditing({ "text-decoration": text_decoration }).then(() => {
-                }).catch(error => {
-                    console.error(error);
-                });
+                $thisClass._applyStyles("text-decoration", text_decoration);
             });
         }
 
@@ -373,13 +336,7 @@ import { errorLoadingModule } from "@helpers/general";
             this.$_text_align_dropdown.off("change.mychange").on("change.mychange", function() {
                 const text_align = String($(this).val());
 
-                $thisClass.$_preview_area.css("text-align", text_align);
-
-                //init live editing with text align
-                $thisClass._liveEditing({ "text-align": text_align }).then(() => {
-                }).catch(error => {
-                    console.error(error);
-                });
+                $thisClass._applyStyles("text-align", text_align);
             });
         }
 
@@ -396,26 +353,15 @@ import { errorLoadingModule } from "@helpers/general";
                 const size = String($(this).val());
                 const value = String($(this).siblings(".dht-input").val());
 
-                $thisClass.$_preview_area.css("font-size", value + size);
-
-                //init live editing with font size
-                $thisClass._liveEditing({ "font-size": value + size }).then(() => {
-                }).catch(error => {
-                    console.error(error);
-                });
+                $thisClass._applyStyles("font-size", value + size);
             });
             //on input change
             this.$_text_font_size.children(".dht-input").off("input change").on("input change", function() {
                 const value = String($(this).val());
                 const size = String($(this).siblings("select").val());
+                const preparedValue = value.length === 0 ? 0 + size : value + size;
 
-                $thisClass.$_preview_area.css("font-size", value + size);
-
-                //init live editing with font size
-                $thisClass._liveEditing({ "font-size": value + size }).then(() => {
-                }).catch(error => {
-                    console.error(error);
-                });
+                $thisClass._applyStyles("font-size", preparedValue);
             });
         }
 
@@ -432,26 +378,15 @@ import { errorLoadingModule } from "@helpers/general";
                 const size = String($(this).val());
                 const value = String($(this).siblings(".dht-input").val());
 
-                $thisClass.$_preview_area.css("line-height", value + size);
-
-                //init live editing with line height
-                $thisClass._liveEditing({ "line-height": value + size }).then(() => {
-                }).catch(error => {
-                    console.error(error);
-                });
+                $thisClass._applyStyles("line-height", value + size);
             });
             //on input change
             this.$_text_line_height.children(".dht-input").off("input change").on("input change", function() {
                 const value = String($(this).val());
                 const size = String($(this).siblings("select").val());
+                const preparedValue = value.length === 0 ? 0 + size : value + size;
 
-                $thisClass.$_preview_area.css("line-height", value + size);
-
-                //init live editing with line height
-                $thisClass._liveEditing({ "line-height": value + size }).then(() => {
-                }).catch(error => {
-                    console.error(error);
-                });
+                $thisClass._applyStyles("line-height", preparedValue);
             });
         }
 
@@ -468,26 +403,15 @@ import { errorLoadingModule } from "@helpers/general";
                 const size = String($(this).val());
                 const value = String($(this).siblings(".dht-input").val());
 
-                $thisClass.$_preview_area.css("letter-spacing", value + size);
-
-                //init live editing with letter spacing
-                $thisClass._liveEditing({ "letter-spacing": value + size }).then(() => {
-                }).catch(error => {
-                    console.error(error);
-                });
+                $thisClass._applyStyles("letter-spacing", value + size);
             });
             //on input change
             this.$_text_letter_spacing.children(".dht-input").off("input change").on("input change", function() {
                 const value = String($(this).val());
                 const size = String($(this).siblings("select").val());
+                const preparedValue = value.length === 0 ? 0 + size : value + size;
 
-                $thisClass.$_preview_area.css("letter-spacing", value + size);
-
-                //init live editing with letter spacing
-                $thisClass._liveEditing({ "letter-spacing": value + size }).then(() => {
-                }).catch(error => {
-                    console.error(error);
-                });
+                $thisClass._applyStyles("letter-spacing", preparedValue);
             });
         }
 
@@ -514,14 +438,7 @@ import { errorLoadingModule } from "@helpers/general";
 
                     //apply styles on colorPicker change value
                     dhtOnChangeColorpicker($this, (color) => {
-                        // Apply the selected color to the preview area
-                        $thisClass.$_preview_area.css("color", color);
-
-                        //init live editing with color
-                        $thisClass._liveEditing({ "color": color }).then(() => {
-                        }).catch(error => {
-                            console.error(error);
-                        });
+                        $thisClass._applyStyles("color", color);
                     });
                 });
             } catch (error) {
@@ -618,6 +535,26 @@ import { errorLoadingModule } from "@helpers/general";
             }
 
             $("<link href=\"" + fontLink + "\" rel=\"stylesheet\">").appendTo("head");
+        }
+
+        /**
+         * Helper function to apply the styles to preview area
+         * and the live editing feature
+         *
+         * @param cssProperty   CSS property to apply the values to (font-size)
+         * @param preparedValue
+         *
+         * @return void
+         */
+        private _applyStyles(cssProperty: string, preparedValue: string) {
+            //apply font to preview area
+            this.$_preview_area.css(cssProperty, preparedValue);
+
+            //init live editing with font size
+            this._liveEditing({ [cssProperty]: preparedValue }).then(() => {
+            }).catch(error => {
+                console.error(error);
+            });
         }
 
         /**

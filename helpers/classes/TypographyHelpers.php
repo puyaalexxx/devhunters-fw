@@ -5,7 +5,6 @@ namespace DHT\Helpers\Classes;
 
 use FontLib\Exception\FontNotFoundException;
 use FontLib\Font;
-use function DHT\Helpers\{dht_remove_font_name_prefix};
 use function DHT\Helpers\dht_fw_get_font_weight_Label;
 
 if( !defined( 'DHT_MAIN' ) ) {
@@ -48,7 +47,7 @@ final class TypographyHelpers {
 			'font-subsets' => $font_subsets
 		];
 		
-		return apply_filters( 'dht:options:disable_google_fonts', $google_fonts );
+		return apply_filters( 'dht:options:fields:typography_google_fonts', $google_fonts );
 	}
 	
 	/**
@@ -163,11 +162,12 @@ final class TypographyHelpers {
 	 * get all option values default or saved ones
 	 *
 	 * @param array $value
+	 * @param bool  $associativeArray Return an associative array
 	 *
 	 * @return array
 	 * @since     1.0.0
 	 */
-	public static function getOptionValues( array $value ) : array {
+	public static function getOptionValues( array $value, bool $associativeArray = false ) : array {
 		
 		$font_family_value = !empty( $value[ 'font-family' ] ) ? $value[ 'font-family' ] : '';
 		
@@ -203,34 +203,6 @@ final class TypographyHelpers {
 			$letter_spacing_value,
 			$text_color_value
 		];
-	}
-	
-	/**
-	 * build preview styles to apply them to the preview area
-	 *
-	 * @param array $value
-	 * @param array $font_args
-	 *
-	 * @return string
-	 * @since     1.0.0
-	 */
-	public static function buildPreviewStyles( array $value, array $font_args ) : string {
-		
-		$preview_styles = '';
-		if( !empty( $value ) ) {
-			$preview_styles = !empty( $font_args[ 'font_value' ] ) ? 'font-family:"' . dht_remove_font_name_prefix( $font_args[ 'font_value' ] ) . '";' : '';
-			$preview_styles .= !empty( $font_args[ 'font_weight_value' ] ) ? 'font-weight:' . $font_args[ 'font_weight_value' ] . ';' : '';
-			$preview_styles .= !empty( $font_args[ 'font_style_value' ] ) ? 'font-style:' . $font_args[ 'font_style_value' ] . ';' : '';
-			$preview_styles .= !empty( $font_args[ 'text_transform_value' ] ) ? 'text-transform:' . $font_args[ 'text_transform_value' ] . ';' : '';
-			$preview_styles .= !empty( $font_args[ 'text_decoration_value' ] ) ? 'text-decoration:' . $font_args[ 'text_decoration_value' ] . ';' : '';
-			$preview_styles .= !empty( $font_args[ 'text_align_value' ] ) ? 'text-align:' . $font_args[ 'text_align_value' ] . ';' : '';
-			$preview_styles .= !empty( $font_args[ 'font_size_value' ] ) ? 'font-size:' . $font_args[ 'font_size_value' ][ 'value' ] . $font_args[ 'font_size_value' ][ 'size' ] . ';' : '';
-			$preview_styles .= !empty( $font_args[ 'line_height_value' ] ) ? 'line-height:' . $font_args[ 'line_height_value' ][ 'value' ] . $font_args[ 'line_height_value' ][ 'size' ] . ';' : '';
-			$preview_styles .= !empty( $font_args[ 'letter_spacing_value' ] ) ? 'letter-spacing:' . $font_args[ 'letter_spacing_value' ][ 'value' ] . $font_args[ 'letter_spacing_value' ][ 'size' ] . ';' : '';
-			$preview_styles .= !empty( $font_args[ 'text_color_value' ] ) ? 'color:' . $font_args[ 'text_color_value' ] . ';' : '';
-		}
-		
-		return $preview_styles;
 	}
 	
 	/**

@@ -6,6 +6,7 @@ if( !defined( 'DHT_MAIN' ) ) {
 use DHT\Helpers\Classes\TypographyHelpers;
 use function DHT\Helpers\{dht_fw_get_css_units,
 	dht_fw_live_option_selectors,
+	dht_get_typography_field_css_properties,
 	dht_parse_option_attributes,
 	dht_remove_font_name_prefix};
 
@@ -52,19 +53,7 @@ $et_fonts = TypographyHelpers::getDiviFonts();
 ] = TypographyHelpers::getOptionValues( $field[ 'value' ] );
 
 //styles used for preview area
-$preview_styles = TypographyHelpers::buildPreviewStyles( $field[ 'value' ], [
-	'font_value'            => $font_value,
-	'font_weight_value'     => $font_weight_value,
-	'font_style_value'      => $font_style_value,
-	'text_transform_value'  => $text_transform_value,
-	'text_decoration_value' => $text_decoration_value,
-	'text_align_value'      => $text_align_value,
-	'font_size_value'       => $font_size_value,
-	'line_height_value'     => $line_height_value,
-	'letter_spacing_value'  => $letter_spacing_value,
-	'text_color_value'      => $text_color_value,
-] );
-
+$preview_styles = dht_get_typography_field_css_properties( $field[ 'value' ] );
 
 $font_type = TypographyHelpers::getFontType( $font_value, $google_fonts, $et_fonts );
 ?>
@@ -167,7 +156,7 @@ $font_type = TypographyHelpers::getFontType( $font_value, $google_fonts, $et_fon
 
                     </optgroup>
 					
-					<?php if( !empty( $google_fonts ) ): ?>
+					<?php if( !empty( $google_fonts ) && apply_filters( 'dht:options:fields:typography_enable_google_fonts', true ) ): ?>
 
                         <!--Google fonts-->
                         <optgroup label="Google Fonts">

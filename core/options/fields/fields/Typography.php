@@ -106,6 +106,18 @@ final class Typography extends BaseField {
 			$field_post_value[ 'font-family' ][ 'font' ] = stripslashes( $field_post_value[ 'font-family' ][ 'font' ] );
 		}
 		
+		if( !empty( $field_post_value[ 'font-size' ] ) ) {
+			$field_post_value[ 'font-size' ][ 'value' ] = (int) $field_post_value[ 'font-size' ][ 'value' ];
+		}
+		
+		if( !empty( $field_post_value[ 'line-height' ] ) ) {
+			$field_post_value[ 'line-height' ][ 'value' ] = (int) $field_post_value[ 'line-height' ][ 'value' ];
+		}
+		
+		if( !empty( $field_post_value[ 'letter-spacing' ] ) ) {
+			$field_post_value[ 'letter-spacing' ][ 'value' ] = (int) $field_post_value[ 'letter-spacing' ][ 'value' ];
+		}
+		
 		return $field_post_value;
 	}
 	

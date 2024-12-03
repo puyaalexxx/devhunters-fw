@@ -3,7 +3,7 @@ declare( strict_types = 1 );
 
 namespace DHT\Helpers\Classes;
 
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
@@ -21,12 +21,13 @@ final class Translations {
 	public static function loadTextdomain() : void {
 		
 		//change this after creating a composer package
-		if ( defined( 'DHT_DIR' ) ) {
+		if( defined( 'DHT_DIR' ) ) {
 			// Plugin context
-			load_plugin_textdomain( DHT_PREFIX, false, DHT_DIR . '/lang' );
-		} else {
+			//load_plugin_textdomain( DHT_PREFIX, false, DHT_DIR . '/lang' );
+		}
+		else {
 			// Composer package context
-			load_textdomain( DHT_PREFIX, __DIR__ . '/lang/your-text-domain.mo' );
+			//load_textdomain( DHT_PREFIX, __DIR__ . '/lang/your-text-domain.mo' );
 		}
 	}
 	

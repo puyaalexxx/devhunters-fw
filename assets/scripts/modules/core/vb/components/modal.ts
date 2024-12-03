@@ -312,6 +312,9 @@ function dhtVBModal(this: JQuery, options?: IVBModalData | keyof IVBModalMethods
         //close modal on click
         $(this).find(".dht-vb-modal-close").on("click", function() {
             closeModal();
+
+            //remove modal element
+            $moDialog.remove();
         });
 
         //save modal on click
@@ -482,7 +485,7 @@ export function dhtCreateVBModal(moduleInfo: ModuleInfo) {
     const { $vbModule, modalID, moduleName, modalTitle, hiddenInputClass } = moduleInfo;
 
     const modalHTML = `
-        <div id="${modalID}" class="dht-vb-modal dht-modal-small" data-module-name="${moduleName}" data-module-input="${hiddenInputClass}">
+        <div id="dht-modal-${modalID}" class="dht-vb-modal dht-modal-small" data-module-id="${modalID}" data-module-name="${moduleName}" data-module-input="${hiddenInputClass}">
         
             <div class="dht-vb-modal-header"><span class="dht-vb-modal-title">${modalTitle}</span></div>
             
@@ -516,7 +519,7 @@ export function dhtCreateVBModal(moduleInfo: ModuleInfo) {
    `;
 
     //append modal to passed container
-    if ($("#" + modalID).length === 0) {
+    if ($("#dht-modal-" + modalID).length === 0) {
         $vbModule.append(modalHTML);
     }
 }
@@ -533,7 +536,7 @@ function dhtAjaxLoadOptions(modal: JQuery<HTMLElement>): void {
     const $optionsArea = $contentArea.children(".dht-vb-modal-content-options");
     const $spinner = $contentArea.children(".dht-preloader");
     const hiddenInputClass = modal.attr("data-module-input");
-
+    
     $.ajax({
         // @ts-ignore
         url: dht_framework_info.ajax_url,
@@ -545,7 +548,7 @@ function dhtAjaxLoadOptions(modal: JQuery<HTMLElement>): void {
             post_id: $("#post_ID[name=\"post_ID\"]").val(),
             data: {
                 moduleName: modal.attr("data-module-name"),
-                moduleID: modal.attr("id"),
+                moduleID: modal.attr("data-module-id"),
                 formSavedData: modal.siblings("." + hiddenInputClass).val(),
             },
         },
@@ -619,7 +622,7 @@ function dhtAjaxSaveOptions(modal: JQuery<HTMLElement>, closeModal: () => void):
             post_id: $("#post_ID[name=\"post_ID\"]").val(),
             data: {
                 moduleName: modal.attr("data-module-name"),
-                moduleID: modal.attr("id"),
+                moduleID: modal.attr("data-module-id"),
                 formData: $form.serialize(),
             },
         },
@@ -632,7 +635,6 @@ function dhtAjaxSaveOptions(modal: JQuery<HTMLElement>, closeModal: () => void):
             if (response.success) {
                 //save form values to the input
                 modal.siblings("." + hiddenInputClass).val(response.data);
-
             } else {
                 console.error("Ajax Response: ", response);
             }
@@ -647,6 +649,9 @@ function dhtAjaxSaveOptions(modal: JQuery<HTMLElement>, closeModal: () => void):
             setTimeout(function() {
                 $spinner.toggleClass("dht-hidden");
                 $formFooter.toggleClass("dht-vb-modal-footer-disabled");
+
+                //remove modal element
+                modal.remove();
             }, 500);
         },
     });

@@ -22,8 +22,6 @@ import { errorLoadingModule } from "@helpers/general";
         private _font_prefix: string;
         private $_font_type_hidden_input;
         private $_font_path_hidden_input;
-        //store selected google font name
-        private _selected_google_font_name = "";
 
         constructor($typography: JQuery<HTMLElement>) {
             //typography reference
@@ -121,7 +119,7 @@ import { errorLoadingModule } from "@helpers/general";
                 const font_type = String($selected_font.find("option:selected").attr("data-font-type"))!;
 
                 //get the selected font family
-                const font_family: string = String($selected_font.val())!.replace(new RegExp(`^${$thisClass._font_prefix}-`), "");
+                const font_family: string = $thisClass._getSelectedFontFamily($thisClass, $selected_font);
 
                 $thisClass._applyStyles("font-family", font_family);
 
@@ -152,9 +150,6 @@ import { errorLoadingModule } from "@helpers/general";
             //set font path input value
             $thisClass.$_font_path_hidden_input.attr("value", "");
 
-            //variable used in other dropdowns
-            $thisClass._selected_google_font_name = font_family;
-
             //get the selected Google font - font subsets
             const font_subsets = String($selected_font.find("option:selected").attr("data-font-subsets"))!;
             //include the font link for preview
@@ -162,7 +157,7 @@ import { errorLoadingModule } from "@helpers/general";
 
             //add Google font - font weights to the font weights dropdown
             const font_weights = $selected_font.find("option:selected").attr("data-font-weights")!;
-            $thisClass._populateFontWeightDropdown($thisClass, $selected_font, font_weights);
+            $thisClass._populateFontWeightDropdown($thisClass, font_weights);
 
             //add Google font - font subsets to the font subsets dropdown
             $thisClass._populateFontSubsetsDropdown($thisClass, font_subsets);
@@ -197,7 +192,7 @@ import { errorLoadingModule } from "@helpers/general";
 
             //add Divi font - font weights to the font weights dropdown
             const font_weights = $selected_font.find("option:selected").attr("data-font-weights")!;
-            $thisClass._populateFontWeightDropdown($thisClass, $selected_font, font_weights);
+            $thisClass._populateFontWeightDropdown($thisClass, font_weights);
         }
 
         /**
@@ -219,7 +214,7 @@ import { errorLoadingModule } from "@helpers/general";
 
             //restore the standard font weights
             const font_weights = $thisClass.$_font_weight_dropdown.attr("data-standard-font-weights")!;
-            $thisClass._populateFontWeightDropdown($thisClass, $selected_font, font_weights);
+            $thisClass._populateFontWeightDropdown($thisClass, font_weights);
         }
 
         /**
@@ -235,12 +230,11 @@ import { errorLoadingModule } from "@helpers/general";
             });
             this.$_font_weight_dropdown.off("change.mychange").on("change.mychange", function() {
                 const font_weight = String($(this).val())!;
+                const font_family: string = $thisClass._getSelectedFontFamily($thisClass);
 
                 //include the font link for preview + font weight
                 if (font_weight.length !== 0) {
-                    const fontLink =
-                        "https://fonts.googleapis.com/css?family=" + $thisClass._selected_google_font_name.replace(/\s+/g, "+") + ":" + font_weight;
-                    $("<link href=\"" + fontLink + "\" rel=\"stylesheet\">").appendTo("head");
+                    $thisClass._buildFontLink(font_family, font_weight);
                 }
 
                 $thisClass._applyStyles("font-weight", font_weight);
@@ -450,12 +444,11 @@ import { errorLoadingModule } from "@helpers/general";
          * populate font weight dropdown
          *
          * @param $thisClass : this
-         * @param $selected_font : JQuery<HTMLElement>
          * @param font_weights : string
          *
          * @return void
          */
-        private _populateFontWeightDropdown($thisClass: this, $selected_font: JQuery<HTMLElement>, font_weights: string): void {
+        private _populateFontWeightDropdown($thisClass: this, font_weights: string): void {
             $thisClass.$_font_weight_dropdown.empty();
 
             if (font_weights.length > 0) {
@@ -526,15 +519,31 @@ import { errorLoadingModule } from "@helpers/general";
          * @return void
          */
         private _buildFontLink(font_family: string, font_weight = ""): void {
-            let fontLink = "";
+            let fontLink = "https://fonts.googleapis.com/css2?family=" + font_family;
+
+            //add font weight to the font also
             if (font_weight.length > 0) {
-                fontLink = "https://fonts.googleapis.com/css?family=" + font_family.replace(/\s+/g, "+") + ":" + font_weight;
-                $("<link href=\"" + fontLink + "\" rel=\"stylesheet\">").appendTo("head");
-            } else {
-                fontLink = "https://fonts.googleapis.com/css?family=" + font_family.replace(/\s+/g, "+");
+                fontLink = "https://fonts.googleapis.com/css2?family=" + font_family + ":wght@" + font_weight;
             }
 
             $("<link href=\"" + fontLink + "\" rel=\"stylesheet\">").appendTo("head");
+        }
+
+        /**
+         * get font dropdown selected font name
+         *
+         * @param $thisClass
+         * @param $selected_font_dropdown Current font dropdown element
+         *
+         * @return void
+         */
+        private _getSelectedFontFamily($thisClass: this, $selected_font_dropdown: JQuery<HTMLElement> = $()): string {
+            $selected_font_dropdown = $selected_font_dropdown.length > 0 ? $selected_font_dropdown : $thisClass.$_fonts_dropdown;
+
+            // If no value is found, return an empty string
+            const fontValue = $selected_font_dropdown.val() ? String($selected_font_dropdown.val()) : "";
+
+            return fontValue.replace(new RegExp(`^${$thisClass._font_prefix}-`), "");
         }
 
         /**

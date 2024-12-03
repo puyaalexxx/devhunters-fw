@@ -17,7 +17,7 @@ export function dhtNotKeyedSelectorsHelper($element: JQuery<HTMLElement>, applyS
     const objectSelectors: ILiveEditorSelectors = dhtGetLiveEditingSelectors($element);
 
     //combine all selectors
-    const selectors = objectSelectors.selectors.join(", ");
+    const selectors = dhtReplaceSelectorsPlaceholders(objectSelectors.selectors.join(", "), dhtGetOpenedModalID($element));
 
     applyStyles(objectSelectors.target, selectors);
 }
@@ -42,12 +42,13 @@ export function dhtNotKeyedSelectorsHelper($element: JQuery<HTMLElement>, applyS
 export function dhtKeyedSelectorsHelper($element: JQuery<HTMLElement>, applyStyles: (key: string, target: string, selector: string) => void): void {
     const selectors: ILiveEditorSelectors = dhtGetLiveEditingSelectors($element);
 
+    const moduleID = dhtGetOpenedModalID($element);
+
     //go through selectors keys
     Object.entries(selectors.selectors).forEach(([key, keySelectors]) => {
         //check for array selectors only
         if (Array.isArray(keySelectors)) {
-            //combine all selectors
-            const joinedSelectors = keySelectors.join(", ");
+            const joinedSelectors = dhtReplaceSelectorsPlaceholders(keySelectors.join(", "), moduleID);
 
             applyStyles(key.trim(), selectors.target, joinedSelectors);
         } else {
@@ -87,4 +88,34 @@ function dhtApplyLiveChanges(selectors: string[], applyStyles: (selector: string
     selectors.forEach((selector: string) => {
         applyStyles(selector);
     });
+}
+
+/**
+ * Get opened modal id to target the specific
+ * module and not all of the
+ *
+ * @param $element    The HTML element to manipulate.
+ *
+ * @return string
+ */
+function dhtGetOpenedModalID($element: JQuery<HTMLElement>): string {
+    //get modal data-module-id (the module id also - they should match)
+    return $element.parents("[data-module-name]").attr("data-module-id") || "";
+}
+
+/**
+ * Replace placeholders like {{module-id}} with the current opened module id
+ * to target only it instead all of them on the page
+ *
+ * @param moduleID    The module id
+ * @param selectors   The element selectors
+ *
+ * @return string
+ */
+function dhtReplaceSelectorsPlaceholders(selectors: string, moduleID: string): string {
+    if (selectors.includes("{{module-id}}")) {
+        selectors = selectors.replace(/{{module-id}}/g, moduleID);
+    }
+
+    return selectors;
 }

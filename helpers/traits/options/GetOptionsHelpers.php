@@ -160,7 +160,10 @@ trait GetOptionsHelpers {
 		}
 		elseif( $location == 'vb' ) {
 			//get option value
-			$saved_values[ $options[ 'id' ] ] = get_post_meta( $id, $options[ 'id' ], true );
+			$option_values = get_post_meta( $id, $options[ 'id' ], true );
+			
+			//retrieve grouped container values
+			$saved_values[ $options[ 'id' ] ] = !empty( $option_values ) ? $option_values : [];
 		}
 		else {
 			//get saved options if settings id present

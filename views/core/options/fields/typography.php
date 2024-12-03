@@ -113,7 +113,7 @@ $font_type = TypographyHelpers::getFontType( $font_value, $google_fonts, $et_fon
                         id="<?php echo esc_attr( $field[ 'id' ] ); ?>-font-family"
                         data-placeholder="Font family" data-font-prefix="<?php echo DHT_PREFIX; ?>"
                         data-saved-values='<?php echo !empty( $font_value ) ? htmlspecialchars( json_encode( array(
-					        'font'      => $font_value,
+					        'font'      => urlencode( $font_value ),
 					        'font_type' => $font_type_value,
 					        'weight'    => $font_weight_value
 				        ) ), ENT_QUOTES ) : ""; ?>'>

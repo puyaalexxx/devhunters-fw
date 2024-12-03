@@ -44,6 +44,6 @@ if( !function_exists( 'dht_enable_vb_editor_area' ) ) {
 		}
 		
 		// Output the data attributes
-		echo $data_attributes;
+		echo 'id="' . $module_id . '"' . $data_attributes;
 	}
 }

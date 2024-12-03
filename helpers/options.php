@@ -180,7 +180,7 @@ if( !function_exists( 'dht_get_typography_field_css_properties' ) ) {
 		
 		$preview_styles = '';
 		if( !empty( $values ) ) {
-			$preview_styles = !empty( $values[ 'font-family' ] ) ? 'font-family:"' . dht_remove_font_name_prefix( $values[ 'font-family' ][ 'font' ] ) . ', Helvetica, Arial, Lucida, sans-serif";' : '';
+			$preview_styles = !empty( $values[ 'font-family' ] ) ? 'font-family:' . dht_remove_font_name_prefix( $values[ 'font-family' ][ 'font' ] ) . ', Helvetica, Arial, Lucida, sans-serif;' : '';
 			$preview_styles .= !empty( $values[ 'font-weight' ] ) ? 'font-weight:' . $values[ 'font-weight' ] . ';' : '';
 			$preview_styles .= !empty( $values[ 'font-style' ] ) ? 'font-style:' . $values[ 'font-style' ] . ';' : '';
 			$preview_styles .= !empty( $values[ 'text-transform' ] ) ? 'text-transform:' . $values[ 'text-transform' ] . ';' : '';

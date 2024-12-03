@@ -75,7 +75,7 @@ final class Modal {
 				wp_send_json_success( $content );
 			}
 			else {
-				wp_send_json_success( _x( 'Modal name not provided', 'vb', DHT_PREFIX ) );
+				wp_send_json_success( _x( 'Modal name or id not provided', 'vb', DHT_PREFIX ) );
 			}
 		}
 		else {

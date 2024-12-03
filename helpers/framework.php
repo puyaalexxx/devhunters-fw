@@ -117,13 +117,13 @@ if( !function_exists( 'dht_fw_render_options' ) ) {
 	 *
 	 * @param array  $options                    options array
 	 * @param string $options_id                 options prefix id
-	 * @param array  $saved_values               all options saved values
+	 * @param mixed  $saved_values               all options saved values
 	 * @param array  $registered_options_classes registered framework groups, toggles, and field classes
 	 *
 	 * @return string
 	 * @since     1.0.0
 	 */
-	function dht_fw_render_options( array $options, string $options_id, array $saved_values, array $registered_options_classes ) : string {
+	function dht_fw_render_options( array $options, string $options_id, mixed $saved_values, array $registered_options_classes ) : string {
 		
 		ob_start();
 		

@@ -168,10 +168,10 @@ class ButtonsGroup {
             $this._initModalComponent(moduleInfo)
                 .then(() => {
                     //open the modal
-                    $("#" + modalID).dhtVBModal("open");
+                    $("#dht-modal-" + modalID).dhtVBModal("open");
 
-                    //disable editing buttons area
-                    $vbModule.find(".dht-vb-module").addClass("dht-vb-disabled");
+                    //disable all editing buttons area (change it when the feature to open several popus will be added)
+                    $(".dht-vb-module").addClass("dht-vb-disabled");
                 })
                 .catch(error => {
                     console.error(error);
@@ -196,7 +196,7 @@ class ButtonsGroup {
             dhtCreateVBModal({ ...moduleInfo, modalTitle: this._translationStrings.modal_title });
 
             //init modal
-            $("#" + modalID).dhtVBModal({
+            $("#dht-modal-" + modalID).dhtVBModal({
                 autoClose: false,
                 pos_y: "50",
                 movable: true,

@@ -48,7 +48,7 @@ final class DHT {
 			add_action( 'admin_enqueue_scripts', [ $this, '_enqueueFrameworkGeneralScripts' ] );
 			
 			// Load the text domain for localization
-			add_action( 'plugins_loaded', [ Translations::class, 'loadTextdomain' ] );
+			//add_action( 'plugins_loaded', [ Translations::class, 'loadTextdomain' ] );
 		}
 		
 		//instantiate all framework features

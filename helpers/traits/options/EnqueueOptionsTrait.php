@@ -5,7 +5,7 @@ namespace DHT\Helpers\Traits\Options;
 
 if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
-trait EnqueueOptionsHelpers {
+trait EnqueueOptionsTrait {
 	
 	/**
 	 * enqueue styles/scripts for each option received from the plugin

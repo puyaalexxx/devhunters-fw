@@ -3,7 +3,7 @@ declare( strict_types = 1 );
 
 namespace DHT\Core\Options\Groups;
 
-use DHT\Helpers\Traits\Options\GroupTypeHelpers;
+use DHT\Helpers\Traits\Options\GroupTypeTrait;
 use function DHT\Helpers\dht_load_view;
 
 if( !defined( 'DHT_MAIN' ) ) {
@@ -12,7 +12,7 @@ if( !defined( 'DHT_MAIN' ) ) {
 
 abstract class BaseGroup {
 	
-	use GroupTypeHelpers;
+	use GroupTypeTrait;
 	
 	//groups views directory
 	protected string $template_dir = DHT_VIEWS_DIR . 'core/options/groups/';

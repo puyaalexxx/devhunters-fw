@@ -7,10 +7,10 @@ if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
-use function DHT\Helpers\dht_fw_render_options;
+use DHT\Helpers\Classes\OptionsHelpers;
 use function DHT\Helpers\dht_load_view;
 
-trait RenderOptionsHelpers {
+trait RenderOptionsTrait {
 	
 	/**
 	 * Render content for dashboard pages, metaboxes and terms area.
@@ -70,7 +70,7 @@ trait RenderOptionsHelpers {
 			echo $this->_optionContainerClasses[ $options[ 'type' ] ]->render( $options, $saved_values );
 		} // Render ungrouped option types
 		else {
-			echo dht_fw_render_options( $options[ 'options' ] ?? $options, $options[ 'id' ] ?? '', $saved_values, [
+			echo OptionsHelpers::renderOptions( $options[ 'options' ] ?? $options, $options[ 'id' ] ?? '', $saved_values, [
 				'groupsClasses'  => $this->_optionGroupsClasses,
 				'togglesClasses' => $this->_optionTogglesClasses,
 				'fieldsClasses'  => $this->_optionFieldsClasses,

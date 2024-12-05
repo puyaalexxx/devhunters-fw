@@ -6,15 +6,15 @@ namespace DHT\Core\Options\Groups\Groups;
 use DHT\Core\Options\Groups\BaseGroup;
 use DHT\DHT;
 use DHT\Helpers\Classes\Environment;
-use DHT\Helpers\Traits\Options\GroupTypeHelpers;
+use DHT\Helpers\Traits\Options\GroupTypeTrait;
 
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
 final class Group extends BaseGroup {
 	
-	use GroupTypeHelpers;
+	use GroupTypeTrait;
 	
 	//group type
 	protected string $_group = 'group';
@@ -43,7 +43,7 @@ final class Group extends BaseGroup {
 	 */
 	public function enqueueOptionScripts( array $group ) : void {
 		
-		if ( Environment::isDevelopment() ) {
+		if( Environment::isDevelopment() ) {
 			wp_register_style( DHT_PREFIX_CSS . '-group-group', DHT_ASSETS_URI . 'dist/css/group.css', array(), DHT::$version );
 			wp_enqueue_style( DHT_PREFIX_CSS . '-group-group' );
 		}
@@ -64,7 +64,7 @@ final class Group extends BaseGroup {
 	 */
 	public function saveValue( array $group, mixed $group_post_values ) : mixed {
 		
-		if ( empty( $group_post_values ) ) {
+		if( empty( $group_post_values ) ) {
 			return $group[ 'value' ];
 		}
 		

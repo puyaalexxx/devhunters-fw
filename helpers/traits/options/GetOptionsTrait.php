@@ -7,10 +7,9 @@ if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
-use function DHT\Helpers\dht_fw_is_save_options_separately;
 use function DHT\Helpers\dht_get_db_settings_option;
 
-trait GetOptionsHelpers {
+trait GetOptionsTrait {
 	
 	/**
 	 * get options saved values in one array
@@ -24,7 +23,7 @@ trait GetOptionsHelpers {
 	 */
 	private function _getOptionsSavedValues( array $options, string $location = 'dashboard', int $id = 0 ) : array {
 		
-		if( dht_fw_is_save_options_separately( $options ) && $location !== 'vb' ) {
+		if( $this->_isSaveOptionsSeparately( $options ) && $location !== 'vb' ) {
 			$values              = $saved_values = [];
 			$is_simple_container = $this->_isSimpleContainer( $options );
 			

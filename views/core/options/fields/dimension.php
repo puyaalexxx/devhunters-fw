@@ -3,8 +3,8 @@ if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
-use function DHT\Helpers\dht_fw_border_styles;
-use function DHT\Helpers\dht_fw_live_option_selectors;
+use function DHT\Helpers\dht_border_styles;
+use DHT\Helpers\Classes\OptionsHelpers;
 use function DHT\Helpers\dht_parse_option_attributes;
 
 $field = $args[ 'field' ] ?? [];
@@ -25,7 +25,7 @@ $input_icons  = $field[ 'input-icons' ] ?? true;
 
 <div
     class="dht-field-wrapper dht-field-wrapper-dimension <?php echo isset( $field[ 'attr' ][ 'class' ] ) ? esc_attr( $field[ 'attr' ][ 'class' ] ) : ''; ?>"
-	<?php echo dht_parse_option_attributes( $field[ 'attr' ] ?? [] ); ?> <?php echo dht_fw_live_option_selectors( $field[ 'live' ] ?? [] ); ?>>
+	<?php echo dht_parse_option_attributes( $field[ 'attr' ] ?? [] ); ?> <?php echo OptionsHelpers::liveOptionSelectors( $field[ 'live' ] ?? [] ); ?>>
 	
 	<?php if( !empty( $field[ 'title' ] ) ): ?>
         <div class="dht-title"><?php echo esc_html( $field[ 'title' ] ); ?></div>
@@ -135,7 +135,7 @@ $input_icons  = $field[ 'input-icons' ] ?? true;
                             name="<?php echo esc_attr( $field[ 'id' ] ); ?>[border-style]"
                             id="<?php echo esc_attr( $field[ 'id' ] ); ?>-border-style">
 						
-						<?php foreach ( dht_fw_border_styles() as $key => $border_style ): ?>
+						<?php foreach ( dht_border_styles() as $key => $border_style ): ?>
                             <option
                                 value="<?php echo esc_attr( $key ); ?>" <?php echo $border_style_value == $key ? 'selected' : ''; ?>><?php echo esc_html( $border_style ); ?></option>
 						<?php endforeach; ?>

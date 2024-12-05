@@ -1,7 +1,7 @@
 <?php
 
-use function DHT\Helpers\dht_fw_display_box_item;
-use function DHT\Helpers\dht_fw_live_option_selectors;
+use DHT\Helpers\Classes\OptionsHelpers;
+use DHT\Helpers\Classes\OptionsHelpers;
 use function DHT\Helpers\dht_parse_option_attributes;
 
 if( !defined( 'DHT_MAIN' ) ) {
@@ -21,7 +21,7 @@ $saved_values = !empty( $group[ 'value' ] ) ? $group[ 'value' ] : [];
 <div
     class="dht-field-wrapper dht-field-wrapper-addable-box dht-group-type <?php echo $group[ 'sortable' ] ? 'dht-field-wrappers-sortable' : ''; ?>
     <?php echo isset( $group[ 'attr' ][ 'class' ] ) ? esc_attr( $group[ 'attr' ][ 'class' ] ) : ''; ?>"
-	<?php echo dht_parse_option_attributes( $group[ 'attr' ] ); ?> <?php echo dht_fw_live_option_selectors( $group[ 'live' ] ?? [] ); ?>>
+	<?php echo dht_parse_option_attributes( $group[ 'attr' ] ); ?> <?php echo OptionsHelpers::liveOptionSelectors( $group[ 'live' ] ?? [] ); ?>>
 	
 	<?php if( !empty( $group[ 'title' ] ) ): ?>
         <div class="dht-title"><?php echo esc_html( $group[ 'title' ] ); ?></div>
@@ -52,14 +52,14 @@ $saved_values = !empty( $group[ 'value' ] ) ? $group[ 'value' ] : [];
 								break;
 							} ?>
 							
-							<?php echo dht_fw_display_box_item( $group, $saved_value, $registered_options_classes, $key ); ?>
+							<?php echo OptionsHelpers::displayBoxItem( $group, $saved_value, $registered_options_classes, $key ); ?>
 							
 							<?php $count ++; ?>
 						<?php endforeach; ?>
 					
 					<?php else: ?>
 						
-						<?php echo dht_fw_display_box_item( $group, [], $registered_options_classes, 1 ); ?>
+						<?php echo OptionsHelpers::displayBoxItem( $group, [], $registered_options_classes, 1 ); ?>
 					
 					<?php endif; ?>
 

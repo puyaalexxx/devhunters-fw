@@ -3,11 +3,11 @@ declare( strict_types = 1 );
 
 namespace DHT\Extensions\DashPages;
 
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
-use DHT\Helpers\Traits\DashMenusHelpers;
+use DHT\Helpers\Traits\DashMenusTrait;
 use function DHT\Helpers\{dht_array_key_exists};
 
 /**
@@ -16,7 +16,7 @@ use function DHT\Helpers\{dht_array_key_exists};
  */
 final class DashMenuPage implements IDashMenuPage {
 	
-	use DashMenusHelpers;
+	use DashMenusTrait;
 	
 	//extension name
 	public string $ext_name = 'dashboard-pages';
@@ -55,12 +55,12 @@ final class DashMenuPage implements IDashMenuPage {
 	public function registerMenuPagesAction( array $dash_menus_config ) : void {
 		
 		//create main dashboard page
-		if ( ! dht_array_key_exists( $dash_menus_config, 'main_menu' ) ) {
+		if( !dht_array_key_exists( $dash_menus_config, 'main_menu' ) ) {
 			$this->_createMainMenuPage( $dash_menus_config[ 'main_menu' ] );
 		}
 		
 		//create submenu dashboard pages
-		if ( ! dht_array_key_exists( $dash_menus_config, 'submenus' ) ) {
+		if( !dht_array_key_exists( $dash_menus_config, 'submenus' ) ) {
 			
 			foreach ( $dash_menus_config[ 'submenus' ] as $submenu_values ) {
 				$this->_createSubmenuPage( $submenu_values );
@@ -116,7 +116,7 @@ final class DashMenuPage implements IDashMenuPage {
 		$callback_func = $callback ? $this->_mergeCallbackArguments( $callback, $template_path, $additional_args ) : '';
 		
 		// If it's a submenu, destructure the parent_slug
-		if ( $is_submenu ) {
+		if( $is_submenu ) {
 			//submenu menu item specific options
 			[
 				'parent_slug' => $parent_slug

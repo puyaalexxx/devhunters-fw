@@ -41,7 +41,7 @@ use DHT\Core\Options\Groups\Groups\Panel;
 use DHT\Core\Options\Groups\Groups\Tabs;
 use DHT\Core\Options\Toggles\Toggles\Toggle;
 
-trait RegisterOptionsHelpers {
+trait RegisterOptionsTrait {
 	
 	/**
 	 * register framework option containers (container options can contain group, toggle options and simple options)

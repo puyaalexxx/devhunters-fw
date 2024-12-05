@@ -100,6 +100,10 @@ import { errorLoadingModule } from "@helpers/general";
             });
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        //////                  Main Methods used above                   //////
+        ////////////////////////////////////////////////////////////////////////
+
         /**
          * init fonts dropdown
          *
@@ -126,10 +130,10 @@ import { errorLoadingModule } from "@helpers/general";
                 //if Google font
                 if (font_type === "google") {
                     $thisClass._googleFontsManipulations($thisClass, $selected_font, font_family);
-                } else if (font_type === "divi") {
-                    $thisClass._diviFontsManipulations($thisClass, $selected_font, font_family);
-                } else {
+                } else if (font_type === "standard") {
                     $thisClass._standardFontsManipulations($thisClass, $selected_font);
+                } else {
+                    $thisClass._customFontsManipulations($thisClass, $selected_font, font_family);
                 }
             });
         }
@@ -167,7 +171,7 @@ import { errorLoadingModule } from "@helpers/general";
         }
 
         /**
-         * Divi fonts manipulations
+         * Custom fonts manipulations
          *
          * @param $thisClass : this
          * @param $selected_font : JQuery<HTMLElement>
@@ -175,17 +179,17 @@ import { errorLoadingModule } from "@helpers/general";
          *
          * @return void
          */
-        private _diviFontsManipulations($thisClass: this, $selected_font: JQuery<HTMLElement>, font_family: string): void {
+        private _customFontsManipulations($thisClass: this, $selected_font: JQuery<HTMLElement>, font_family: string): void {
             //set font type input value
             $thisClass.$_font_type_hidden_input.attr("value", "divi");
 
             //get font path
-            const font_path = String($selected_font.find("option:selected").attr("data-font-path"))!;
+            const font_path = $thisClass._getCustomFontPath($selected_font);
             //set font path input value
             $thisClass.$_font_path_hidden_input.attr("value", font_path);
 
-            //preview css code (font face)
-            $thisClass._setStyleTagCSS($thisClass, font_family, font_path);
+            //add font-face style to the header area
+            $thisClass._addHeaderFontFaceStyle($thisClass, font_family, font_path);
 
             //no subsets present for standard fonts
             $thisClass.$_font_subsets_dropdown.empty().trigger("change.mychange");
@@ -440,6 +444,10 @@ import { errorLoadingModule } from "@helpers/general";
             }
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        //////                 Helper Methods used above                  //////
+        ////////////////////////////////////////////////////////////////////////
+
         /**
          * populate font weight dropdown
          *
@@ -497,7 +505,7 @@ import { errorLoadingModule } from "@helpers/general";
         }
 
         /**
-         * set style tag CSS for the Divi fonts
+         * add custom font font-face style to the header tag area
          *
          * @param $thisClass : this
          * @param font_family : string
@@ -505,9 +513,58 @@ import { errorLoadingModule } from "@helpers/general";
          *
          * @return void
          */
-        private _setStyleTagCSS($thisClass: this, font_family: string, font_path: string): void {
-            const $style_container = $thisClass.$_typography.find("#dht-custom-style").children("style");
-            $style_container.empty().append("@font-face {font-family: " + font_family + ";src: url(" + font_path + ") format('truetype');}");
+        private _addHeaderFontFaceStyle($thisClass: this, font_family: string, font_path: string): void {
+            if (font_path.length > 0) {
+                const fontFormat = $thisClass._getFontFormatFromPath(font_path);
+
+                $(`<style class='dht-custom-font-face-style'>@font-face{font-family:${font_family};src:url(${encodeURI(font_path)}) format('${fontFormat}');font-display: swap;}</style>`).appendTo("head");
+            }
+        }
+
+        /**
+         * get selected custom font path
+         *
+         * @param $selected_font Current selected font from element from dropdown
+         *
+         * @return string
+         */
+        private _getCustomFontPath($selected_font: JQuery<HTMLElement>): string {
+            //get font path
+            return String($selected_font.find("option:selected").attr("data-font-path"))!;
+        }
+
+        /**
+         * get font format value from the font link extension
+         *
+         * @param font_path : string
+         *
+         * @return string
+         */
+        private _getFontFormatFromPath(font_path: string): string {
+            // Extract the file extension to determine the font format
+            const file_extension = font_path.split(".").pop()?.toLowerCase();
+            let font_format: string;
+
+            // Determine the font format based on the file extension
+            switch (file_extension) {
+                case "otf":
+                    font_format = "opentype";
+                    break;
+                case "ttf":
+                    font_format = "truetype";
+                    break;
+                case "woff":
+                    font_format = "woff";
+                    break;
+                case "woff2":
+                    font_format = "woff2";
+                    break;
+                default:
+                    font_format = "truetype";  // Default to truetype if the extension is unknown
+                    break;
+            }
+
+            return font_format;
         }
 
         /**

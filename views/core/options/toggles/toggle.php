@@ -1,7 +1,6 @@
 <?php
 
-use function DHT\Helpers\dht_fw_live_option_selectors;
-use function DHT\Helpers\dht_fw_render_field_if_exists;
+use DHT\Helpers\Classes\OptionsHelpers;
 use function DHT\Helpers\dht_parse_option_attributes;
 
 if( !defined( 'DHT_MAIN' ) ) {
@@ -26,7 +25,7 @@ $right_choice = $toggle[ 'right-choice' ];
 
 <div
     class="dht-field-wrapper dht-field-wrapper-toggle dht-toggle-type <?php echo isset( $toggle[ 'attr' ][ 'class' ] ) ? esc_attr( $toggle[ 'attr' ][ 'class' ] ) : ''; ?>"
-	<?php echo dht_parse_option_attributes( $toggle[ 'attr' ] ); ?> <?php echo dht_fw_live_option_selectors( $toggle[ 'live' ] ?? [] ); ?>>
+	<?php echo dht_parse_option_attributes( $toggle[ 'attr' ] ); ?> <?php echo OptionsHelpers::liveOptionSelectors( $toggle[ 'live' ] ?? [] ); ?>>
 	
 	<?php if( !empty( $toggle[ 'title' ] ) ): ?>
         <div class="dht-title"><?php echo esc_html( $toggle[ 'title' ] ); ?></div>
@@ -64,7 +63,7 @@ $right_choice = $toggle[ 'right-choice' ];
 					$saved_value = $saved_values[ 'left-choice' ][ $toggle_option[ 'id' ] ] ?? [];
 					
 					//render the specific option type
-					echo dht_fw_render_field_if_exists( $toggle_option, $saved_value, $toggle[ 'id' ] . '[left-choice]', $registered_fields );
+					echo OptionsHelpers::renderFieldIfExists( $toggle_option, $saved_value, $toggle[ 'id' ] . '[left-choice]', $registered_fields );
 				}
 				?>
             </div>
@@ -83,7 +82,7 @@ $right_choice = $toggle[ 'right-choice' ];
 					$saved_value = $saved_values[ 'right-choice' ][ $toggle_option[ 'id' ] ] ?? [];
 					
 					//render the specific option type
-					echo dht_fw_render_field_if_exists( $toggle_option, $saved_value, $toggle[ 'id' ] . '[right-choice]', $registered_fields );
+					echo OptionsHelpers::renderFieldIfExists( $toggle_option, $saved_value, $toggle[ 'id' ] . '[right-choice]', $registered_fields );
 				}
 				?>
             </div>

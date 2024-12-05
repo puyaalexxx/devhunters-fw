@@ -3,7 +3,7 @@ declare( strict_types = 1 );
 
 namespace DHT\Core\Options\Containers;
 
-use DHT\Helpers\Traits\Options\ContainerTypeHelpers;
+use DHT\Helpers\Traits\Options\ContainerTypeTrait;
 use function DHT\Helpers\dht_load_view;
 
 if( !defined( 'DHT_MAIN' ) ) {
@@ -12,7 +12,7 @@ if( !defined( 'DHT_MAIN' ) ) {
 
 abstract class BaseContainer {
 	
-	use ContainerTypeHelpers;
+	use ContainerTypeTrait;
 	
 	//options views directory
 	protected string $template_dir = DHT_VIEWS_DIR . 'core/options/containers/';

@@ -6,7 +6,7 @@ namespace DHT\Core\Options\Containers\Containers;
 use DHT\Core\Options\Containers\BaseContainer;
 use DHT\DHT;
 use DHT\Helpers\Classes\Environment;
-use DHT\Helpers\Traits\Options\ContainerTypeHelpers;
+use DHT\Helpers\Traits\Options\ContainerTypeTrait;
 
 if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
@@ -14,7 +14,7 @@ if( !defined( 'DHT_MAIN' ) ) {
 
 final class TabsMenu extends BaseContainer {
 	
-	use ContainerTypeHelpers;
+	use ContainerTypeTrait;
 	
 	//field type
 	protected string $_container = 'tabsmenu';

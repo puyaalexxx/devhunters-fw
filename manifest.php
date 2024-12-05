@@ -1,16 +1,16 @@
 <?php
 declare( strict_types = 1 );
 
-use function DHT\Helpers\dht_fw_get_composer_info;
+use DHT\Helpers\Classes\FWHelpers;
 
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
 //framework manifest
 //name, version, requirements and other useful things
 
-$composer_info = dht_fw_get_composer_info();
+$composer_info = FWHelpers::getComposerInfo();
 
 $manifest[ 'name' ]         = $composer_info[ 'extra' ][ 'name' ] ?? '';
 $manifest[ 'package_name' ] = $composer_info[ 'package_name' ] ?? '';

@@ -3,7 +3,7 @@ declare( strict_types = 1 );
 
 namespace DHT\Extensions;
 
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
@@ -11,14 +11,14 @@ use DHT\Extensions\CPT\{CPT, ICPT};
 use DHT\Extensions\DashPages\{DashMenuPage, IDashMenuPage};
 use DHT\Extensions\Sidebars\{CreateDynamicSidebars, ICreateDynamicSidebars, IRegisterSidebar, RegisterSidebar};
 use DHT\Extensions\Widgets\{IRegisterWidget, RegisterWidget};
-use DHT\Helpers\Traits\{SingletonTrait, ValidateConfigurations};
+use DHT\Helpers\Traits\{SingletonTrait, ValidateConfigurationsTrait};
 
 /**
  * Singleton Class that is used to include all the framework extensions and initialise them
  */
 final class Extensions {
 	
-	use ValidateConfigurations;
+	use ValidateConfigurationsTrait;
 	use SingletonTrait;
 	
 	/**
@@ -39,7 +39,7 @@ final class Extensions {
 	 */
 	public function dashmenus( array $dash_menus_config ) : ?IDashMenuPage {
 		
-		if ( empty( $dash_menus_config ) ) return NULL;
+		if( empty( $dash_menus_config ) ) return NULL;
 		
 		return new DashMenuPage( $dash_menus_config );
 	}
@@ -54,7 +54,7 @@ final class Extensions {
 	 */
 	public function cpts( array $cpt_config ) : ?ICPT {
 		
-		if ( empty( $cpt_config ) ) return NULL;
+		if( empty( $cpt_config ) ) return NULL;
 		
 		return new CPT( $cpt_config );
 	}
@@ -69,7 +69,7 @@ final class Extensions {
 	 */
 	public function widgets( array $widgets_config ) : ?IRegisterWidget {
 		
-		if ( empty( $widgets_config ) ) return NULL;
+		if( empty( $widgets_config ) ) return NULL;
 		
 		return new RegisterWidget( $widgets_config );
 	}
@@ -84,7 +84,7 @@ final class Extensions {
 	 */
 	public function sidebars( array $sidebar_config ) : ?IRegisterSidebar {
 		
-		if ( empty( $sidebar_config ) ) return NULL;
+		if( empty( $sidebar_config ) ) return NULL;
 		
 		return new RegisterSidebar( $sidebar_config );
 	}
@@ -99,7 +99,7 @@ final class Extensions {
 	 */
 	public function dynamicSidebars( bool $dynamic_sidebars_config ) : ?ICreateDynamicSidebars {
 		
-		if ( ! $dynamic_sidebars_config ) return NULL;
+		if( !$dynamic_sidebars_config ) return NULL;
 		
 		return new CreateDynamicSidebars();
 	}

@@ -32,8 +32,7 @@
       "helpers/options.php",
       "helpers/validations.php",
       "helpers/vb.php",
-      "helpers/features.php",
-      "helpers/framework.php"
+      "helpers/features.php"
     ],
     "psr-4": {
       "DHT\\": "",

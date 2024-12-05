@@ -6,7 +6,7 @@ namespace DHT\Core\Options\Fields\Fields;
 use DHT\Core\Options\Fields\BaseField;
 use DHT\DHT;
 use DHT\Helpers\Classes\Environment;
-use DHT\Helpers\Traits\UploadHelpers;
+use DHT\Helpers\Traits\UploadFieldTrait;
 
 if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
@@ -14,7 +14,7 @@ if( !defined( 'DHT_MAIN' ) ) {
 
 final class UploadImage extends BaseField {
 	
-	use UploadHelpers;
+	use UploadFieldTrait;
 	
 	//field type
 	protected string $_field = 'upload-image';

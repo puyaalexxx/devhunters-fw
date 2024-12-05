@@ -3,11 +3,11 @@ declare( strict_types = 1 );
 
 namespace DHT\Helpers\Traits;
 
-if ( ! defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
+if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
 use function DHT\Helpers\dht_load_view;
 
-trait DashMenusHelpers {
+trait DashMenusTrait {
 	
 	/**
 	 * utility method to build the menu callback function with passed arguments

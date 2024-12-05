@@ -250,3 +250,113 @@ if( !function_exists( 'dht_parse_css_classes_into_array' ) ) {
 		return $classContentArray;
 	}
 }
+
+if( !function_exists( 'dht_get_font_weight_Label' ) ) {
+	/**
+	 * gent font weight label from its value (ex: 400, 500)
+	 *
+	 * @param int $font_weight
+	 *
+	 * @return string
+	 * @since     1.0.0
+	 */
+	function dht_get_font_weight_Label( int $font_weight ) : string {
+		
+		return match ( $font_weight ) {
+			100 => 'Thin',
+			200 => 'Extra Light',
+			300 => 'Light',
+			400 => 'Regular',
+			500 => 'Medium',
+			600 => 'Semi Bold',
+			700 => 'Bold',
+			800 => 'Extra Bold',
+			900 => 'Black'
+		};
+	}
+}
+
+if( !function_exists( 'dht_get_css_units' ) ) {
+	/**
+	 * get available sizes like px, em, rem
+	 *
+	 * @param array $disable_units
+	 *
+	 * @return array
+	 * @since     1.0.0
+	 */
+	function dht_get_css_units( array $disable_units = [] ) : array {
+		
+		$default_units = [
+			"px"  => true,
+			"%"   => true,
+			"em"  => true,
+			"rem" => true,
+			"vw"  => true,
+			"vh"  => true
+		];
+		
+		// Merge the provided $disable_units with $default_units (with priority to the provided array)
+		$default_units = array_merge( $default_units, $disable_units );
+		
+		// Filter out units that have the value false and return the key => key format
+		$enabled_units = array_filter( $default_units, function( $value ) {
+			return $value !== false; // Retain only values that are not false
+		} );
+		
+		$units = [];
+		foreach ( $enabled_units as $unit => $enabled ) {
+			$units[ $unit ] = $unit;
+		}
+		
+		return $units;
+	}
+}
+
+if( !function_exists( 'dht_border_styles' ) ) {
+	/**
+	 * get available border styles
+	 *
+	 * @return array
+	 * @since     1.0.0
+	 */
+	function dht_border_styles() : array {
+		
+		return apply_filters( 'dht:options:border:styles_args', [
+			"none"   => _x( 'None', 'options', DHT_PREFIX ),
+			"solid"  => _x( 'Solid', 'options', DHT_PREFIX ),
+			"dashed" => _x( 'Dashed', 'options', DHT_PREFIX ),
+			"dotted" => _x( 'Dotted', 'options', DHT_PREFIX ),
+			"double" => _x( 'Double', 'options', DHT_PREFIX ),
+			"groove" => _x( 'Groove', 'options', DHT_PREFIX ),
+			"ridge"  => _x( 'Ridge', 'options', DHT_PREFIX ),
+			"inset"  => _x( 'Inset', 'options', DHT_PREFIX ),
+			"outset" => _x( 'Outset', 'options', DHT_PREFIX ),
+		] );
+	}
+	
+	if( !function_exists( 'dht_get_font_format_by_its_extension' ) ) {
+		/**
+		 * Get font format from the font link extensions
+		 * Used for format('truetype')
+		 *
+		 * @param string $font_url Font URL
+		 *
+		 * @return string
+		 * @since     1.0.0
+		 */
+		function dht_get_font_format_by_its_extension( string $font_url ) : string {
+			// Extract the file extension from the URL
+			$file_extension = pathinfo( $font_url, PATHINFO_EXTENSION );
+			
+			// Determine the font format based on the extension
+			return match ( $file_extension ) {
+				'otf' => 'opentype',
+				'ttf' => 'truetype',
+				'woff' => 'woff',
+				'woff2' => 'woff2',
+				default => 'truetype',
+			};
+		}
+	}
+}

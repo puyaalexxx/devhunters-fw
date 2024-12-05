@@ -5,7 +5,7 @@ namespace DHT\Helpers\Classes;
 
 use FontLib\Exception\FontNotFoundException;
 use FontLib\Font;
-use function DHT\Helpers\dht_fw_get_font_weight_Label;
+use function DHT\Helpers\dht_get_font_weight_Label;
 
 if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
@@ -75,14 +75,14 @@ final class TypographyHelpers {
 					$font_weight = 400;
 				}
 				
-				$font_weight_label = dht_fw_get_font_weight_Label( (int) $font_weight );
+				$font_weight_label = dht_get_font_weight_Label( (int) $font_weight );
 				
 				$font_weights_result[ $font_weight ] = $font_weight_label;
 			}
 		}
 		else {
 			
-			$font_weight_label = dht_fw_get_font_weight_Label( $font_weights );
+			$font_weight_label = dht_get_font_weight_Label( $font_weights );
 			
 			$font_weights_result[ $font_weights ] = $font_weight_label;
 		}
@@ -143,12 +143,16 @@ final class TypographyHelpers {
 					//this is to get the font weight
 					$font->parse();
 					
+					//////Font prefix added to the font name because if the font name match the other font, from Google maybe,/////
+					//////then it will pick the Google font and not the custom one on page reload/////
+					$font_name = DHT_PREFIX . '-' . $font->getFontName();
+					
 					// set the font path
-					$et_fonts[ DHT_PREFIX . '-' . $font->getFontName() ][ 'path' ] = $font_uri;
+					$et_fonts[ $font_name ][ 'path' ] = $font_uri;
 					// set the font name
-					$et_fonts[ DHT_PREFIX . '-' . $font->getFontName() ][ 'name' ] = $font->getFontName();
+					$et_fonts[ $font_name ][ 'name' ] = $font->getFontName();
 					// set the font weights
-					$et_fonts[ DHT_PREFIX . '-' . $font->getFontName() ][ 'weight' ] = self::prepareFontWeights( (int) $font->getFontWeight() );
+					$et_fonts[ $font_name ][ 'weight' ] = self::prepareFontWeights( (int) $font->getFontWeight() );
 					
 					$font->close();
 				}

@@ -1,10 +1,10 @@
 <?php
 
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
-use function DHT\Helpers\dht_fw_render_options;
+use DHT\Helpers\Classes\OptionsHelpers;
 
 $container = $args[ 'container' ] ?? [];
 //get saved values
@@ -17,13 +17,13 @@ $registered_options_classes = $args[ 'registered_options_classes' ] ?? [];
 <?php do_action( 'dht:options:view:container:simple_before_area' ); ?>
 
 <div
-    class="dht-simple-container <?php echo isset( $container[ 'attr' ][ 'class' ] ) && ! isset( $container[ 'area' ] ) ? esc_attr( $container[ 'attr' ][ 'class' ] ) : ''; ?>">
+    class="dht-simple-container <?php echo isset( $container[ 'attr' ][ 'class' ] ) && !isset( $container[ 'area' ] ) ? esc_attr( $container[ 'attr' ][ 'class' ] ) : ''; ?>">
 	
-	<?php if ( ! empty( $container[ 'options' ] ) ): ?>
+	<?php if( !empty( $container[ 'options' ] ) ): ?>
 		
 		<?php $saved_values = $saved_values[ $container[ 'id' ] ] ?? []; ?>
 		
-		<?php echo dht_fw_render_options( $container[ 'options' ], $container[ 'id' ], $saved_values, $registered_options_classes ); ?>
+		<?php echo OptionsHelpers::renderOptions( $container[ 'options' ], $container[ 'id' ], $saved_values, $registered_options_classes ); ?>
 	
 	<?php endif; ?>
 

@@ -3,9 +3,9 @@ if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
+use DHT\Helpers\Classes\OptionsHelpers;
 use DHT\Helpers\Classes\TypographyHelpers;
-use function DHT\Helpers\{dht_fw_get_css_units,
-	dht_fw_live_option_selectors,
+use function DHT\Helpers\{dht_get_css_units,
 	dht_get_typography_field_css_properties,
 	dht_parse_option_attributes,
 	dht_remove_font_name_prefix};
@@ -70,7 +70,7 @@ $font_type = TypographyHelpers::getFontType( $font_value, $google_fonts, $et_fon
 	<?php endif; ?>
 
     <div
-        class="dht-field-child-wrapper dht-field-child-typography" <?php echo dht_fw_live_option_selectors( $field[ 'live' ] ?? [] ); ?>>
+        class="dht-field-child-wrapper dht-field-child-typography" <?php echo OptionsHelpers::liveOptionSelectors( $field[ 'live' ] ?? [] ); ?>>
 		
 		<?php if( $field[ 'preview' ] ): ?>
             <p class="dht-field-child-typography-preview" style="<?php echo esc_attr( $preview_styles ); ?>">
@@ -78,17 +78,14 @@ $font_type = TypographyHelpers::getFontType( $font_value, $google_fonts, $et_fon
                 s t u v w x y z 1 2 3 4 5 6 7 8 9 0
             </p>
             <!-- custom fonts font face area -->
-            <div id="dht-custom-style">
+			<?php if( !empty( $font_path_value ) ): ?>
                 <style>
-                    <?php if ( !empty( $font_path_value ) ): ?>
                     @font-face {
                         font-family: <?php echo esc_html(dht_remove_font_name_prefix(  $font_value )); ?>;
                         src: url(<?php echo esc_url($font_path_value); ?>) format('truetype');
                     }
-
-                    <?php endif; ?>
                 </style>
-            </div>
+			<?php endif; ?>
 		<?php endif; ?>
 
         <div class="dht-field-child-typography-group">
@@ -408,7 +405,7 @@ $font_type = TypographyHelpers::getFontType( $font_value, $google_fonts, $et_fon
                                 id="<?php echo esc_attr( $field[ 'id' ] ); ?>-font-size-size">
 							
 							<?php $cnt = 0;
-							foreach ( apply_filters( 'dht:options:typography:units_dropdown_values', dht_fw_get_css_units() ) as $size_val => $size_name ): $cnt ++; ?>
+							foreach ( apply_filters( 'dht:options:typography:units_dropdown_values', dht_get_css_units() ) as $size_val => $size_name ): $cnt ++; ?>
 								<?php $size = $font_size_value[ 'size' ] ?? ""; ?>
                                 <option
                                     value="<?php echo esc_attr( $size_val ); ?>"
@@ -448,7 +445,7 @@ $font_type = TypographyHelpers::getFontType( $font_value, $google_fonts, $et_fon
                                 id="<?php echo esc_attr( $field[ 'id' ] ); ?>-line-height-size">
 							
 							<?php $cnt = 0;
-							foreach ( apply_filters( 'dht:options:typography:units_dropdown_values', dht_fw_get_css_units() ) as $size_val => $size_name ): $cnt ++; ?>
+							foreach ( apply_filters( 'dht:options:typography:units_dropdown_values', dht_get_css_units() ) as $size_val => $size_name ): $cnt ++; ?>
 								<?php $size = $line_height_value[ 'size' ] ?? ""; ?>
                                 <option
                                     value="<?php echo esc_attr( $size_val ); ?>"
@@ -488,7 +485,7 @@ $font_type = TypographyHelpers::getFontType( $font_value, $google_fonts, $et_fon
                                 id="<?php echo esc_attr( $field[ 'id' ] ); ?>-letter-spacing-size">
 							
 							<?php $cnt = 0;
-							foreach ( apply_filters( 'dht:options:typography:units_dropdown_values', dht_fw_get_css_units( [ "%" => false ] ) ) as $size_val => $size_name ): $cnt ++; ?>
+							foreach ( apply_filters( 'dht:options:typography:units_dropdown_values', dht_get_css_units( [ "%" => false ] ) ) as $size_val => $size_name ): $cnt ++; ?>
 								<?php $size = $letter_spacing_value[ 'size' ] ?? ""; ?>
                                 <option
                                     value="<?php echo esc_attr( $size_val ); ?>"

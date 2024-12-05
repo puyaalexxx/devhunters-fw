@@ -9,7 +9,7 @@ if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
-trait OptionsHelpers {
+trait OptionsTrait {
 	
 	/**
 	 * register post types and pages meta boxes
@@ -145,6 +145,19 @@ trait OptionsHelpers {
 		}
 		
 		return isset( $_POST[ $this->_nonce[ 'name' ] ] ) && wp_verify_nonce( sanitize_key( wp_unslash( $_POST[ $this->_nonce[ 'name' ] ] ) ), $this->_nonce[ 'action' ] );
+	}
+	
+	/**
+	 * check if the options must be saved separately and not grouped under an id
+	 *
+	 * @param array $options
+	 *
+	 * @return bool
+	 * @since     1.0.0
+	 */
+	private function _isSaveOptionsSeparately( array $options ) : bool {
+		
+		return isset( $options[ 'save' ] ) && $options[ 'save' ] == "separately";
 	}
 	
 }

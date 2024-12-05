@@ -1,9 +1,6 @@
 <?php
 
-use function DHT\Helpers\dht_fw_if_parent_menu_is_active;
-use function DHT\Helpers\dht_fw_render_link_area;
-use function DHT\Helpers\dht_fw_render_sidebar_content;
-use function DHT\Helpers\dht_fw_render_subpage_li_area;
+use DHT\Helpers\Classes\OptionsHelpers;
 
 if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
@@ -41,7 +38,7 @@ $options = [];
 
                     <li class="<?php echo esc_attr( $active_class ); ?>">
 						
-						<?php dht_fw_render_link_area( $page_link, $page ); ?>
+						<?php OptionsHelpers::renderLinkArea( $page_link, $page ); ?>
 						
 						<?php if( isset( $page[ 'pages' ] ) ): ?>
 
@@ -57,7 +54,7 @@ $options = [];
 									$options[ $page[ 'id' ] ][ 'pages' ][ $subpage[ 'id' ] ] = $subpage[ 'options' ] ?? [];
 									
 									//render subpage header li tag
-									dht_fw_render_subpage_li_area( $active_class, $page_link, $subpage )
+									OptionsHelpers::renderSubpageLiArea( $active_class, $page_link, $subpage )
 									?>
 								
 								<?php endforeach; ?>
@@ -83,7 +80,7 @@ $options = [];
 					// Render submenu items
 					if( isset( $page[ 'pages' ] ) ) {
 						foreach ( $page[ 'pages' ] as $subpage_id => $options ) {
-							echo dht_fw_render_sidebar_content( [
+							echo OptionsHelpers::renderSidebarContent( [
 								'menu_id'    => $container[ 'id' ],
 								'page_id'    => $page_id,
 								'subpage_id' => $subpage_id
@@ -92,7 +89,7 @@ $options = [];
 					}
 					else {
 						// Render parent menu item options
-						echo dht_fw_render_sidebar_content( [
+						echo OptionsHelpers::renderSidebarContent( [
 							'menu_id' => $container[ 'id' ],
 							'page_id' => $page_id
 						], $page[ 'options' ], $saved_values, $registered_options_classes, $count );
@@ -124,7 +121,7 @@ $options = [];
 				<?php foreach ( $container[ 'options' ] as $page ): $count ++; ?>
 					
 					<?php
-					$active_parent_class = dht_fw_if_parent_menu_is_active( $page, $current_page );
+					$active_parent_class = OptionsHelpers::ifParentMenuIsActive( $page, $current_page );
 					
 					$page_link = $page[ 'page_link' ] ?? '';
 					//set active class
@@ -137,7 +134,7 @@ $options = [];
 
                     <li class="<?php echo esc_attr( $active_class ); ?>">
 						
-						<?php dht_fw_render_link_area( $page_link, $page ); ?>
+						<?php OptionsHelpers::renderLinkArea( $page_link, $page ); ?>
 						
 						<?php if( isset( $page[ 'pages' ] ) ): ?>
 
@@ -155,7 +152,7 @@ $options = [];
 									}
 									
 									//render subpage header li tag
-									dht_fw_render_subpage_li_area( $active_class, $page_link, $subpage );
+									OptionsHelpers::renderSubpageLiArea( $active_class, $page_link, $subpage );
 									?>
 								
 								<?php endforeach; ?>
@@ -175,7 +172,7 @@ $options = [];
             <div class="dht-cosidebar-body">
 				
 				<?php
-				echo dht_fw_render_sidebar_content( [ 'menu_id' => $container[ 'id' ] ], $options, $saved_values, $registered_options_classes, 1 );
+				echo OptionsHelpers::renderSidebarContent( [ 'menu_id' => $container[ 'id' ] ], $options, $saved_values, $registered_options_classes, 1 );
 				?>
 
             </div>

@@ -5,7 +5,7 @@ namespace DHT\Helpers\Traits\Options;
 
 if( !defined( 'DHT_MAIN' ) ) die( 'Forbidden' );
 
-trait ContainerTypeHelpers {
+trait ContainerTypeTrait {
 	
 	/**
 	 * sanitize each option value passed from the $_POST array

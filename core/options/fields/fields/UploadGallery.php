@@ -6,15 +6,15 @@ namespace DHT\Core\Options\Fields\Fields;
 use DHT\Core\Options\Fields\BaseField;
 use DHT\DHT;
 use DHT\Helpers\Classes\Environment;
-use DHT\Helpers\Traits\UploadHelpers;
+use DHT\Helpers\Traits\UploadFieldTrait;
 
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
 final class UploadGallery extends BaseField {
 	
-	use UploadHelpers;
+	use UploadFieldTrait;
 	
 	//field type
 	protected string $_field = 'upload-gallery';
@@ -40,7 +40,7 @@ final class UploadGallery extends BaseField {
 		//Enqueue the media uploader
 		wp_enqueue_media();
 		
-		if ( Environment::isDevelopment() ) {
+		if( Environment::isDevelopment() ) {
 			wp_register_style( DHT_PREFIX_CSS . '-upload-gallery-field', DHT_ASSETS_URI . 'dist/css/upload-gallery.css', array(), DHT::$version );
 			wp_enqueue_style( DHT_PREFIX_CSS . '-upload-gallery-field' );
 			
@@ -66,7 +66,7 @@ final class UploadGallery extends BaseField {
 	 */
 	public function saveValue( array $field, mixed $field_post_value ) : mixed {
 		
-		if ( empty( $field_post_value ) ) {
+		if( empty( $field_post_value ) ) {
 			return $field[ 'value' ];
 		}
 		

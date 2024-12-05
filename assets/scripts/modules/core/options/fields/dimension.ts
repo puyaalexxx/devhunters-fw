@@ -139,9 +139,7 @@ import { errorLoadingModule } from "@helpers/general";
 
                         // Join the dimension values to form the CSS value (top, right, bottom, left)
                         const dimensionValues = dimensionInputsValues.join(" ");
-
-                        console.log(dimensionValues);
-
+                        
                         // $(selectors).css({ "border-radius": dimensionValues });
                         if (cssProperty === "border") {
                             //get dimension border style value

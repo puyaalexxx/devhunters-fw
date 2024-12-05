@@ -10,23 +10,23 @@ if( !defined( 'DHT_MAIN' ) ) {
 use DHT\Core\Options\Fields\BaseField;
 use DHT\DHT;
 use DHT\Helpers\Classes\Environment;
-use DHT\Helpers\Traits\Options\{EnqueueOptionsHelpers,
-	GetOptionsHelpers,
-	OptionsHelpers,
-	RegisterOptionsHelpers,
-	RenderOptionsHelpers,
-	SaveOptionsHelpers};
+use DHT\Helpers\Traits\Options\{EnqueueOptionsTrait,
+	GetOptionsTrait,
+	OptionsTrait,
+	RegisterOptionsTrait,
+	RenderOptionsTrait,
+	SaveOptionsTrait};
 use WP_Post;
 use function DHT\Helpers\{dht_get_current_admin_taxonomy_from_url};
 
 final class Options implements IOptions {
 	
-	use OptionsHelpers;
-	use SaveOptionsHelpers;
-	use GetOptionsHelpers;
-	use RenderOptionsHelpers;
-	use RegisterOptionsHelpers;
-	use EnqueueOptionsHelpers;
+	use OptionsTrait;
+	use SaveOptionsTrait;
+	use GetOptionsTrait;
+	use RenderOptionsTrait;
+	use RegisterOptionsTrait;
+	use EnqueueOptionsTrait;
 	
 	//option configurations (received from the plugin config/options folder area)
 	private array $_dashboardPagesOptions;

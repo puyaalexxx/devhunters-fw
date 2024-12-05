@@ -181,7 +181,7 @@ if( !function_exists( 'dht_get_typography_field_css_properties' ) ) {
 		$preview_styles = '';
 		if( !empty( $values ) ) {
 			$preview_styles = !empty( $values[ 'font-family' ] ) ? 'font-family:' . dht_remove_font_name_prefix( $values[ 'font-family' ][ 'font' ] ) . ', Helvetica, Arial, Lucida, sans-serif;' : '';
-			$preview_styles .= !empty( $values[ 'font-weight' ] ) ? 'font-weight:' . $values[ 'font-weight' ] . ';' : '';
+			$preview_styles .= !empty( $values[ 'font-weight' ] ) ? 'font-weight:' . $values[ 'font-weight' ] . ';' : 'font-weight: 400;';
 			$preview_styles .= !empty( $values[ 'font-style' ] ) ? 'font-style:' . $values[ 'font-style' ] . ';' : '';
 			$preview_styles .= !empty( $values[ 'text-transform' ] ) ? 'text-transform:' . $values[ 'text-transform' ] . ';' : '';
 			$preview_styles .= !empty( $values[ 'text-decoration' ] ) ? 'text-decoration:' . $values[ 'text-decoration' ] . ';' : '';
@@ -193,5 +193,187 @@ if( !function_exists( 'dht_get_typography_field_css_properties' ) ) {
 		}
 		
 		return $preview_styles;
+	}
+}
+
+if( !function_exists( 'dht_build_google_fonts_enqueue_link' ) ) {
+	/**
+	 * Build the Google fonts link that needs to be enqueued
+	 * This function will add all the passed google fonts
+	 * in one link with their font weights and subsets
+	 *
+	 * Result Link: https://fonts.googleapis.com/css2?family=Felipa:wght@400&family=Graduate:wght@400&subset&display=swap
+	 *
+	 *  Expected fonts array (typography fields combined):
+	 *
+	 *  ```php
+	 * $array = [
+	 *  [
+	 *      'font-family' => [
+	 *          'font-type' => 'google',
+	 *          'font-path' => '',
+	 *          'font' => 'Felipa',
+	 *      ],
+	 *      'font-weight' => '',
+	 *  ],
+	 *  [
+	 *      'font-family' => [
+	 *          'font-type' => 'google',
+	 *          'font-path' => '',
+	 *          'font' => 'Felipa',
+	 *      ],
+	 *      'font-weight' => '',
+	 *      'font-subsets' => '',
+	 *  ],
+	 * ];
+	 *  ```
+	 *
+	 * @param array $fonts Array of fonts
+	 *
+	 * @return string
+	 * @since     1.0.0
+	 */
+	function dht_build_google_fonts_enqueue_link( array $fonts ) : string {
+		
+		$google_fonts_url = "";
+		
+		if( !empty( $fonts ) ) {
+			//build fonts array with weights and subsets
+			$font_values = [];
+			foreach ( $fonts as $font ) {
+				if( ( $font[ 'font-family' ][ 'font-type' ] ?? "" ) === "google" ) {
+					//if font empty, skip iteration
+					if( empty( $font[ 'font-family' ][ 'font' ] ) ) continue;
+					
+					$font_name   = $font[ 'font-family' ][ 'font' ];
+					$font_weight = $font[ 'font-weight' ] ?? "";
+					$font_subset = $font[ 'font-subsets' ] ?? "";
+					
+					if( !in_array( $font_weight, $font_values[ $font_name ][ "font-weights" ] ?? [] ) ) {
+						$font_values[ $font_name ][ 'font-weights' ][] = !empty( $font_weight ) ? $font_weight : 400;
+					}
+					
+					if( !in_array( $font_subset, $font_values[ $font_name ][ 'font-subsets' ] ?? [] ) ) {
+						$font_values[ $font_name ][ 'font-subsets' ][] = $font_subset;
+					}
+				}
+			}
+			
+			//build google fonts url to be enqueued
+			if( !empty( $font_values ) ) {
+				$fonts_family   = [];
+				$unique_subsets = [];
+				foreach ( $font_values as $font_name => $font_data ) {
+					sort( $font_data[ 'font-weights' ], SORT_NUMERIC );
+					
+					// Handle font weights (only add if unique)
+					if( !empty( $font_data[ 'font-weights' ] ) ) {
+						$weights = implode( ';', array_map( 'trim', $font_data[ 'font-weights' ] ) );
+						// Add font weights to the family (format: font-family:wght@...)
+						$fonts_family[] = "{$font_name}:wght@{$weights}";
+					}
+					else {
+						// Add the font family (without weights) to the family list
+						$fonts_family[] = $font_name;
+					}
+					
+					// Handle subsets (if defined)
+					if( !empty( $font_data[ 'font-subsets' ] ) ) {
+						// Ensure 'font-subsets' is always an array
+						$subsets = is_array( $font_data[ 'font-subsets' ] ) ? $font_data[ 'font-subsets' ] : [ $font_data[ 'font-subsets' ] ];
+						
+						// Filter out empty subsets
+						$filtered_subsets = array_filter( $subsets );
+						$unique_subsets   = array_merge( $unique_subsets, $filtered_subsets );
+					}
+				}
+				
+				// Remove duplicate subsets
+				$unique_subsets = array_unique( $unique_subsets );
+				
+				// Construct the Google Fonts URL
+				$google_fonts_url_args = [
+					'family'  => implode( '&family=', $fonts_family ),
+					'subset'  => implode( ',', $unique_subsets ),
+					'display' => 'swap'
+				];
+				
+				// Build the final URL
+				$google_fonts_url = esc_url_raw( add_query_arg( $google_fonts_url_args, 'https://fonts.googleapis.com/css2' ) );
+			}
+		}
+		
+		return $google_fonts_url;
+	}
+}
+
+if( !function_exists( 'dht_build_custom_fonts_enqueue_styles' ) ) {
+	/**
+	 * Build the Custom fonts font face styles that needs to be enqueued
+	 * This function will add all the passed custom fonts
+	 * in one style with their font face styles
+	 *
+	 * Result: <style>@font-face {font-family:'dht-Monsieur La Doulaise';src:url('uploads/et-fonts/MonsieurLaDoulaise-Regular.ttf') format('truetype');font-display:swap;}</style>'
+	 *
+	 *  Expected fonts array (typography fields combined):
+	 *
+	 *  ```php
+	 * $array = [
+	 *  [
+	 *      'font-family' => [
+	 *          'font-type' => 'divi',
+	 *          'font-path' => 'uploads/et-fonts/MonsieurLaDoulaise-Regular.ttf',
+	 *          'font' => 'Felipa',
+	 *      ],
+	 *      'font-weight' => '',
+	 *  ],
+	 *  [
+	 *      'font-family' => [
+	 *          'font-type' => 'custom',
+	 *          'font-path' => 'uploads/et-fonts/MonsieurLaDoulaise-Regular.ttf',
+	 *          'font' => 'Felipa',
+	 *      ],
+	 *      'font-weight' => '',
+	 *      'font-subsets' => '',
+	 *  ],
+	 * ];
+	 *  ```
+	 *
+	 * @param array $fonts Array of fonts
+	 *
+	 * @return string
+	 * @since     1.0.0
+	 */
+	function dht_build_custom_fonts_enqueue_styles( array $fonts ) : string {
+		
+		$font_face_styles = "";
+		
+		//custom uploaded fonts
+		if( !empty( $fonts ) ) {
+			//build fonts array
+			$font_values = [];
+			foreach ( $fonts as $font ) {
+				if( ( $font[ 'font-family' ][ 'font-type' ] ?? "" ) !== "google" && ( $font[ 'font-family' ][ 'font-type' ] ?? "" ) !== "standard" ) {
+					//if font empty, skip iteration
+					if( empty( $font[ 'font-family' ][ 'font' ] ) ) continue;
+					if( empty( $font[ 'font-family' ][ 'font-path' ] ) ) continue;
+					
+					$font_name                                = dht_remove_font_name_prefix( $font[ 'font-family' ][ 'font' ] );
+					$font_values[ $font_name ][ 'font-path' ] = $font[ 'font-family' ][ 'font-path' ];
+				}
+			}
+			
+			//build font face styles
+			if( !empty( $font_values ) ) {
+				foreach ( $font_values as $font_name => $font_data ) {
+					if( !empty( $font_data[ 'font-path' ] ) ) {
+						$font_url         = esc_url( $font_data[ 'font-path' ] );
+						$font_face_styles .= "@font-face {font-family: '" . $font_name . "';src: url('" . $font_url . "') format('" . dht_get_font_format_by_its_extension( $font_url ) . "');font-display: swap;}";
+					}
+				}
+			}
+		}
+		
+		return $font_face_styles;
 	}
 }

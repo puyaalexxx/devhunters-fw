@@ -6,15 +6,15 @@ namespace DHT\Core\Options\Containers\Containers;
 use DHT\Core\Options\Containers\BaseContainer;
 use DHT\DHT;
 use DHT\Helpers\Classes\Environment;
-use DHT\Helpers\Traits\Options\ContainerTypeHelpers;
+use DHT\Helpers\Traits\Options\ContainerTypeTrait;
 
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
 final class SideMenu extends BaseContainer {
 	
-	use ContainerTypeHelpers;
+	use ContainerTypeTrait;
 	
 	//field type
 	protected string $_container = 'sidemenu';
@@ -41,7 +41,7 @@ final class SideMenu extends BaseContainer {
 	 */
 	public function enqueueOptionScripts( array $container ) : void {
 		
-		if ( Environment::isDevelopment() ) {
+		if( Environment::isDevelopment() ) {
 			wp_register_style( DHT_PREFIX_CSS . '-sidemenu-container', DHT_ASSETS_URI . 'dist/css/sidemenu.css', array(), DHT::$version );
 			wp_enqueue_style( DHT_PREFIX_CSS . '-sidemenu-container' );
 			
@@ -65,7 +65,7 @@ final class SideMenu extends BaseContainer {
 	public function saveValue( array $container, mixed $container_post_values ) : array {
 		
 		// Return early if container_post_values is empty
-		if ( empty( $container_post_values ) ) {
+		if( empty( $container_post_values ) ) {
 			return [];
 		}
 		
@@ -75,17 +75,17 @@ final class SideMenu extends BaseContainer {
 			$page_options = $page[ 'options' ] ?? [];
 			
 			// Handle subpages if they exist
-			if ( isset( $page[ 'pages' ] ) ) {
+			if( isset( $page[ 'pages' ] ) ) {
 				foreach ( $page[ 'pages' ] as $subpage ) {
 					$subpage_options = $subpage[ 'options' ] ?? [];
 					
-					if ( ! empty( $subpage_options ) ) {
+					if( !empty( $subpage_options ) ) {
 						$values = array_merge( $values, $this->_sanitizeValues( $subpage_options, $container_post_values ) );
 					}
 				}
 			}
 			else {
-				if ( ! empty( $page_options ) ) {
+				if( !empty( $page_options ) ) {
 					$values = array_merge( $values, $this->_sanitizeValues( $page_options, $container_post_values ) );
 				}
 			}

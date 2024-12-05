@@ -1,6 +1,6 @@
 <?php
 
-use function DHT\Helpers\dht_fw_live_option_selectors;
+use DHT\Helpers\Classes\OptionsHelpers;
 use function DHT\Helpers\dht_parse_option_attributes;
 
 if( !defined( 'DHT_MAIN' ) ) {
@@ -18,7 +18,7 @@ $size         = $field[ 'size' ] ?? '';
 
 <div
     class="dht-field-wrapper dht-field-wrapper-switch <?php echo isset( $field[ 'attr' ][ 'class' ] ) ? esc_attr( $field[ 'attr' ][ 'class' ] ) : ''; ?>"
-	<?php echo dht_parse_option_attributes( $field[ 'attr' ] ?? [] ); ?> <?php echo dht_fw_live_option_selectors( $field[ 'live' ] ?? [] ); ?>>
+	<?php echo dht_parse_option_attributes( $field[ 'attr' ] ?? [] ); ?> <?php echo OptionsHelpers::liveOptionSelectors( $field[ 'live' ] ?? [] ); ?>>
 	
 	<?php if( !empty( $field[ 'title' ] ) ): ?>
         <div class="dht-title"><?php echo esc_html( $field[ 'title' ] ); ?></div>

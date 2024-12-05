@@ -12,14 +12,14 @@ use DHT\Core\Options\IOptions;
 use DHT\Core\Options\Options;
 use DHT\Core\Vb\{IVB, VB};
 use DHT\Helpers\Exceptions\ConfigExceptions\EmptyVbPostTypesConfigurationsException;
-use DHT\Helpers\Traits\{SingletonTrait, ValidateConfigurations};
+use DHT\Helpers\Traits\{SingletonTrait, ValidateConfigurationsTrait};
 
 /**
  * Singleton Class that is used to include all the framework core features
  */
 final class Core {
 	
-	use ValidateConfigurations;
+	use ValidateConfigurationsTrait;
 	use SingletonTrait;
 	
 	/**

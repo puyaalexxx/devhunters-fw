@@ -6,7 +6,7 @@ namespace DHT\Core\Options\Groups\Groups;
 use DHT\Core\Options\Groups\BaseGroup;
 use DHT\DHT;
 use DHT\Helpers\Classes\Environment;
-use function DHT\Helpers\dht_fw_render_box_item_content;
+use DHT\Helpers\Classes\OptionsHelpers;
 
 if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
@@ -81,7 +81,7 @@ final class AddableBox extends BaseGroup {
 			ob_start();
 			
 			if( !empty( $group ) ) {
-				echo dht_fw_render_box_item_content( $group, [], [
+				echo OptionsHelpers::renderBoxItemContent( $group, [], [
 					'togglesClasses' => $this->_optionTogglesClasses,
 					'fieldsClasses'  => $this->_optionFieldsClasses
 				], _x( 'Box Title', 'options', DHT_PREFIX ), $box_number );

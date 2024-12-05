@@ -4,8 +4,7 @@ if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
-use function DHT\Helpers\dht_fw_live_option_selectors;
-use function DHT\Helpers\dht_fw_render_group;
+use DHT\Helpers\Classes\OptionsHelpers;
 use function DHT\Helpers\dht_parse_option_attributes;
 
 $group = $args[ 'group' ] ?? [];
@@ -18,7 +17,7 @@ $registered_options_classes = $args[ 'registered_options_classes' ] ?? [];
 
 <div
     class="dht-field-wrapper dht-field-wrapper-accordion dht-group-type <?php echo isset( $group[ 'attr' ][ 'class' ] ) ? esc_attr( $group[ 'attr' ][ 'class' ] ) : ''; ?>"
-	<?php echo dht_parse_option_attributes( $group[ 'attr' ] ); ?> <?php echo dht_fw_live_option_selectors( $group[ 'live' ] ?? [] ); ?>>
+	<?php echo dht_parse_option_attributes( $group[ 'attr' ] ); ?> <?php echo OptionsHelpers::liveOptionSelectors( $group[ 'live' ] ?? [] ); ?>>
 	
 	<?php if( !empty( $group[ 'title' ] ) ): ?>
         <div class="dht-title"><?php echo esc_html( $group[ 'title' ] ); ?></div>
@@ -58,7 +57,7 @@ $registered_options_classes = $args[ 'registered_options_classes' ] ?? [];
 									//get saved value
 									$saved_value = $group[ 'value' ][ $panel_option[ 'id' ] ] ?? [];
 									
-									echo dht_fw_render_group( $group[ 'id' ], $panel_option, $saved_value, $registered_options_classes );
+									echo OptionsHelpers::renderGroup( $group[ 'id' ], $panel_option, $saved_value, $registered_options_classes );
 									?>
 								
 								<?php endforeach; ?>

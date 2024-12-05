@@ -7,10 +7,9 @@ if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
-use function DHT\Helpers\dht_fw_is_save_options_separately;
 use function DHT\Helpers\dht_set_db_settings_option;
 
-trait SaveOptionsHelpers {
+trait SaveOptionsTrait {
 	
 	/**
 	 * Save post metaboxes options
@@ -168,7 +167,7 @@ trait SaveOptionsHelpers {
 		};
 		
 		//vb modals should never save their options separately
-		if( dht_fw_is_save_options_separately( $options ) && $location !== "vb" ) {
+		if( $this->_isSaveOptionsSeparately( $options ) && $location !== "vb" ) {
 			foreach ( $values[ $options[ 'id' ] ] as $option_id => $option_values ) {
 				$saveData( $option_values, $option_id, $location, $id );
 			}

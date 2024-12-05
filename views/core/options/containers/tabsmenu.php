@@ -1,6 +1,6 @@
 <?php
 
-use function DHT\Helpers\dht_fw_render_options;
+use DHT\Helpers\Classes\OptionsHelpers;
 
 if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
@@ -50,7 +50,7 @@ $registered_options_classes = $args[ 'registered_options_classes' ] ?? [];
 							//get specific page group/option saved value
 							$saved_value = $saved_values[ $container[ 'id' ] ] ?? [];
 							
-							echo dht_fw_render_options( $tabsmenu[ 'options' ], $container[ 'id' ], $saved_value, $registered_options_classes );
+							echo OptionsHelpers::renderOptions( $tabsmenu[ 'options' ], $container[ 'id' ], $saved_value, $registered_options_classes );
 							?>
 						
 						<?php endif; ?>

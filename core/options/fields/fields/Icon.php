@@ -6,6 +6,7 @@ namespace DHT\Core\Options\Fields\Fields;
 use DHT\Core\Options\Fields\BaseField;
 use DHT\DHT;
 use DHT\Helpers\Classes\Environment;
+use function DHT\Helpers\dht_get_icon_style_by_type;
 use function DHT\Helpers\dht_get_variables_from_file;
 
 if( !defined( 'DHT_MAIN' ) ) {
@@ -43,18 +44,11 @@ final class Icon extends BaseField {
 		wp_enqueue_style( 'thickbox' );
 		
 		//libraries icons css
-		wp_register_style( DHT_PREFIX_CSS . '-font-awesome-css', DHT_ASSETS_URI . 'styles/libraries/fontawesome-icons.min.css', array(), DHT::$version );
-		wp_enqueue_style( DHT_PREFIX_CSS . '-font-awesome-css' );
-		wp_register_style( DHT_PREFIX_CSS . '-divi-icons-css', DHT_ASSETS_URI . 'styles/libraries/divi-icons.min.css', array(), DHT::$version );
-		wp_enqueue_style( DHT_PREFIX_CSS . '-divi-icons-css' );
-		wp_register_style( DHT_PREFIX_CSS . '-elusive-icons-css', DHT_ASSETS_URI . 'styles/libraries/elusive-icons.min.css', array(), DHT::$version );
-		wp_enqueue_style( DHT_PREFIX_CSS . '-elusive-icons-css' );
-		wp_register_style( DHT_PREFIX_CSS . '-line-icons-css', DHT_ASSETS_URI . 'styles/libraries/line-icons.min.css', array(), DHT::$version );
-		wp_enqueue_style( DHT_PREFIX_CSS . '-line-icons-css' );
-		wp_register_style( DHT_PREFIX_CSS . '-devicon-icons-css', DHT_ASSETS_URI . 'styles/libraries/devicon-icons.min.css', array(), DHT::$version );
-		wp_enqueue_style( DHT_PREFIX_CSS . '-devicon-icons-css' );
-		wp_register_style( DHT_PREFIX_CSS . '-bootstrap-icons-css', DHT_ASSETS_URI . 'styles/libraries/bootstrap-icons.min.css', array(), DHT::$version );
-		wp_enqueue_style( DHT_PREFIX_CSS . '-bootstrap-icons-css' );
+		$icon_style_links = dht_get_icon_style_by_type();
+		foreach ( $icon_style_links as $icon_type => $icon_link ) {
+			wp_register_style( DHT_PREFIX_CSS . '-' . $icon_type . '-icon', esc_url( $icon_link ), array(), DHT::$version );
+			wp_enqueue_style( DHT_PREFIX_CSS . '-' . $icon_type . '-icon' );
+		}
 		
 		if( Environment::isDevelopment() ) {
 			wp_register_style( DHT_PREFIX_CSS . '-icon-field', DHT_ASSETS_URI . 'dist/css/icon.css', array(), DHT::$version );

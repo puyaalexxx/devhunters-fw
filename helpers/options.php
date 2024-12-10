@@ -155,14 +155,14 @@ if( !function_exists( 'dht_get_dimension_field_css_properties' ) ) {
 		$left_size   = isset( $values[ 'size-4' ] ) ? (int) $values[ 'size-4' ] . $unit : "";
 		
 		if( $css_property === "border" ) {
-			$borders = 'border-width: ' . esc_attr( $top_size ) . " " . esc_attr( $right_size ) . " " . esc_attr( $bottom_size ) . " " . esc_attr( $left_size ) . ';';
-			$borders .= !empty( $values[ 'border-style' ] ) ? 'border-style: ' . esc_attr( $values[ 'border-style' ] ) . ';' : "";
-			$borders .= !empty( $values[ 'color' ] ) ? 'border-color: ' . esc_attr( $values[ 'color' ] ) . ';' : "";
+			$borders = 'border-width:' . trim( esc_attr( $top_size ) . " " . esc_attr( $right_size ) . " " . esc_attr( $bottom_size ) . " " . esc_attr( $left_size ) ) . ';';
+			$borders .= !empty( $values[ 'border-style' ] ) ? 'border-style:' . esc_attr( $values[ 'border-style' ] ) . ';' : "";
+			$borders .= !empty( $values[ 'color' ] ) ? 'border-color:' . esc_attr( $values[ 'color' ] ) . ';' : "";
 			
 			return $borders;
 		}
 		else {
-			return $css_property . ': ' . esc_attr( $top_size ) . " " . esc_attr( $right_size ) . " " . esc_attr( $bottom_size ) . " " . esc_attr( $left_size ) . ';';
+			return $css_property . ':' . trim( esc_attr( $top_size ) . " " . esc_attr( $right_size ) . " " . esc_attr( $bottom_size ) . " " . esc_attr( $left_size ) ) . ';';
 		}
 	}
 }
@@ -180,8 +180,8 @@ if( !function_exists( 'dht_get_typography_field_css_properties' ) ) {
 		
 		$preview_styles = '';
 		if( !empty( $values ) ) {
-			$preview_styles = !empty( $values[ 'font-family' ] ) ? 'font-family:' . dht_remove_font_name_prefix( $values[ 'font-family' ][ 'font' ] ) . ', Helvetica, Arial, Lucida, sans-serif;' : '';
-			$preview_styles .= !empty( $values[ 'font-weight' ] ) ? 'font-weight:' . $values[ 'font-weight' ] . ';' : 'font-weight: 400;';
+			$preview_styles .= !empty( $values[ 'font-family' ] ) ? 'font-family:' . dht_remove_font_name_prefix( $values[ 'font-family' ][ 'font' ] ) . ', Helvetica, Arial, Lucida, sans-serif;' : '';
+			$preview_styles .= !empty( $values[ 'font-weight' ] ) ? 'font-weight:' . $values[ 'font-weight' ] . ';' : 'font-weight:400;';
 			$preview_styles .= !empty( $values[ 'font-style' ] ) ? 'font-style:' . $values[ 'font-style' ] . ';' : '';
 			$preview_styles .= !empty( $values[ 'text-transform' ] ) ? 'text-transform:' . $values[ 'text-transform' ] . ';' : '';
 			$preview_styles .= !empty( $values[ 'text-decoration' ] ) ? 'text-decoration:' . $values[ 'text-decoration' ] . ';' : '';
@@ -196,6 +196,50 @@ if( !function_exists( 'dht_get_typography_field_css_properties' ) ) {
 	}
 }
 
+if( !function_exists( 'dht_get_background_field_css_properties' ) ) {
+	/**
+	 * Construct background fields css properties from the saved values.
+	 * Pass the array of the values that you want for your background and the
+	 * needed CSS will be returned
+	 *
+	 *   Expected bg array (several fields combined):
+	 *
+	 * <code>
+	 * $array = [
+	 *     'bg_image' => [
+	 *          'image'    => 'https://testhunters:8890/wp-content/uploads/2024/09/2.webp',
+	 *          'image_id' => 11
+	 *     ],
+	 *     'bg_color'      => 'rgb(30, 115, 190)',
+	 *     'bg_repeat'     => 'no-repeat',
+	 *     'bg_size'       => 'initial',
+	 *     'bg_position'   => 'left top',
+	 *     'bg_blend_mode' => 'overlay'
+	 * ];
+	 * </code>
+	 *
+	 * @param array $values
+	 *
+	 * @return string
+	 * @since     1.0.0
+	 */
+	function dht_get_background_field_css_properties( array $values ) : string {
+		
+		$bg = '';
+		if( !empty( $values ) ) {
+			$bg .= !empty( $values[ 'bg_image' ] ) ? 'background-image:url(' . esc_url( $values[ 'bg_image' ][ 'image' ] ) . ');' : "";
+			$bg .= !empty( $values[ 'bg_color' ] ) ? 'background-color:' . esc_attr( $values[ 'bg_color' ] ) . ';' : "";
+			$bg .= !empty( $values[ 'bg_repeat' ] ) ? 'background-repeat:' . esc_attr( $values[ 'bg_repeat' ] ) . ';' : "";
+			$bg .= !empty( $values[ 'bg_size' ] ) ? 'background-size:' . esc_attr( $values[ 'bg_size' ] ) . ';' : "";
+			$bg .= !empty( $values[ 'bg_position' ] ) ? 'background-position:' . esc_attr( $values[ 'bg_position' ] ) . ';' : "";
+			$bg .= !empty( $values[ 'bg_blend_mode' ] ) ? 'background-blend-mode:' . esc_attr( $values[ 'bg_blend_mode' ] ) . ';' : "";
+		}
+		
+		return $bg;
+	}
+}
+
+
 if( !function_exists( 'dht_build_google_fonts_enqueue_link' ) ) {
 	/**
 	 * Build the Google fonts link that needs to be enqueued
@@ -206,27 +250,27 @@ if( !function_exists( 'dht_build_google_fonts_enqueue_link' ) ) {
 	 *
 	 *  Expected fonts array (typography fields combined):
 	 *
-	 *  ```php
-	 * $array = [
-	 *  [
-	 *      'font-family' => [
-	 *          'font-type' => 'google',
-	 *          'font-path' => '',
-	 *          'font' => 'Felipa',
-	 *      ],
-	 *      'font-weight' => '',
-	 *  ],
-	 *  [
-	 *      'font-family' => [
-	 *          'font-type' => 'google',
-	 *          'font-path' => '',
-	 *          'font' => 'Felipa',
-	 *      ],
-	 *      'font-weight' => '',
-	 *      'font-subsets' => '',
-	 *  ],
-	 * ];
-	 *  ```
+	 * <code>
+	 *   $array = [
+	 *   [
+	 *       'font-family' => [
+	 *           'font-type' => 'google',
+	 *           'font-path' => '',
+	 *           'font' => 'Felipa',
+	 *       ],
+	 *       'font-weight' => '',
+	 *   ],
+	 *   [
+	 *       'font-family' => [
+	 *           'font-type' => 'google',
+	 *           'font-path' => '',
+	 *           'font' => 'Felipa',
+	 *       ],
+	 *       'font-weight' => '',
+	 *       'font-subsets' => '',
+	 *   ],
+	 *  ];
+	 * </code>
 	 *
 	 * @param array $fonts Array of fonts
 	 *
@@ -375,5 +419,36 @@ if( !function_exists( 'dht_build_custom_fonts_enqueue_styles' ) ) {
 		}
 		
 		return $font_face_styles;
+	}
+}
+
+if( !function_exists( 'dht_get_icon_style_by_type' ) ) {
+	/**
+	 * Get icon style file link by its type
+	 *
+	 * @param string $icon_type Icon type to return style for
+	 *
+	 * @return array|string
+	 * @since     1.0.0
+	 */
+	function dht_get_icon_style_by_type( string $icon_type = "all" ) : array|string {
+		
+		$icon_styles = apply_filters( 'dht:options:fields:icon_style_links', [
+			"fontawesome" => DHT_ASSETS_URI . 'styles/libraries/fontawesome-icons.min.css',
+			"divi"        => DHT_ASSETS_URI . 'styles/libraries/divi-icons.min.css',
+			"elusive"     => DHT_ASSETS_URI . 'styles/libraries/elusive-icons.min.css',
+			"line"        => DHT_ASSETS_URI . 'styles/libraries/line-icons.min.css',
+			"dev"         => DHT_ASSETS_URI . 'styles/libraries/devicon-icons.min.css',
+			"bootstrap"   => DHT_ASSETS_URI . 'styles/libraries/bootstrap-icons.min.css'
+		] );
+		
+		if( $icon_type == "all" ) {
+			return $icon_styles;
+		}
+		elseif( array_key_exists( $icon_type, $icon_styles ) ) {
+			return $icon_styles[ $icon_type ];
+		}
+		
+		return "";
 	}
 }

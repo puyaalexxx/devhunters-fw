@@ -536,7 +536,7 @@ function dhtAjaxLoadOptions(modal: JQuery<HTMLElement>): void {
     const $optionsArea = $contentArea.children(".dht-vb-modal-content-options");
     const $spinner = $contentArea.children(".dht-preloader");
     const hiddenInputClass = modal.attr("data-module-input");
-    
+
     $.ajax({
         // @ts-ignore
         url: dht_framework_info.ajax_url,
@@ -635,6 +635,14 @@ function dhtAjaxSaveOptions(modal: JQuery<HTMLElement>, closeModal: () => void):
             if (response.success) {
                 //save form values to the input
                 modal.siblings("." + hiddenInputClass).val(response.data);
+
+                //hide loading spinner
+                $spinner.toggleClass("dht-hidden");
+                $formFooter.toggleClass("dht-vb-modal-footer-disabled");
+                
+                //remove modal element
+                closeModal();
+                modal.remove();
             } else {
                 console.error("Ajax Response: ", response);
             }
@@ -643,16 +651,6 @@ function dhtAjaxSaveOptions(modal: JQuery<HTMLElement>, closeModal: () => void):
             console.error("AJAX error: ", error);
         },
         complete: function() {
-            closeModal();
-
-            //hide loading spinner
-            setTimeout(function() {
-                $spinner.toggleClass("dht-hidden");
-                $formFooter.toggleClass("dht-vb-modal-footer-disabled");
-
-                //remove modal element
-                modal.remove();
-            }, 500);
         },
     });
 

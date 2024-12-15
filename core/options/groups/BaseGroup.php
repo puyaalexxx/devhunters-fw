@@ -90,7 +90,7 @@ abstract class BaseGroup {
 	public function render( array $group, mixed $saved_values, string $options_id, array $additional_args = [] ) : string {
 		
 		//merge default values with saved ones to display the saved ones
-		$group = $this->mergeValues( $group, $saved_values );
+		$group[ 'value' ] = $this->mergeValues( $group[ "value" ] ?? [], $saved_values );
 		
 		//add group prefix id
 		$group = $this->addIDPrefix( $group, $options_id );
@@ -129,17 +129,14 @@ abstract class BaseGroup {
 	/**
 	 * merge the group value with the saved values if exists
 	 *
-	 * @param array $group        - group field
+	 * @param array $group_values - group values
 	 * @param mixed $saved_values - saved values
 	 *
 	 * @return mixed
 	 * @since     1.0.0
 	 */
-	public function mergeValues( array $group, mixed $saved_values ) : array {
-		
-		$group[ 'value' ] = empty( $saved_values ) ? $group[ 'value' ] : $saved_values;
-		
-		return $group;
+	public function mergeValues( array $group_values, mixed $saved_values ) : array {
+		return empty( $saved_values ) ? $group_values : $saved_values;
 	}
 	
 	/**
@@ -157,15 +154,9 @@ abstract class BaseGroup {
 	 */
 	public function saveValue( array $group, mixed $group_post_values ) : mixed {
 		
-		if( empty( $group_post_values ) ) {
-			return $group[ 'value' ];
-		}
-		
 		//sanitize option values
 		foreach ( $group[ 'options' ] as $subgroup ) {
-			
 			foreach ( $subgroup[ 'options' ] as $option ) {
-				
 				$option_post_value = $group_post_values[ $option[ 'id' ] ] ?? [];
 				
 				$group_post_values = $this->_saveGroupHelper( $option, $group_post_values, $option_post_value, $this->_optionTogglesClasses, $this->_optionFieldsClasses );

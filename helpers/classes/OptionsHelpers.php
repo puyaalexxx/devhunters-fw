@@ -112,8 +112,6 @@ final class OptionsHelpers {
 	 */
 	public static function displayBoxItem( array $group, mixed $saved_values, array $registered_options_classes, int $cnt ) : string {
 		
-		$default_box_title = _x( 'Box Title', 'options', DHT_PREFIX );
-		
 		ob_start();
 		?>
         <div class="dht-addable-box-item" data-box-item-number="<?php echo esc_attr( $cnt ); ?>">
@@ -127,16 +125,14 @@ final class OptionsHelpers {
 
                 <span
                     class="dht-addable-box-title-text"
-                    data-default-title="<?php echo esc_attr( $default_box_title ); ?>">
-                    <?php echo !empty( $saved_values[ 'box-title' ] ) ? esc_html( $saved_values[ 'box-title' ] ) : $default_box_title; ?>
+                    data-default-title="<?php echo esc_attr( $group[ "box-title" ] ); ?>">
+                    <?php echo !empty( $saved_values[ 'box-title' ] ) ? esc_html( $saved_values[ 'box-title' ] ) : $group[ "box-title" ]; ?>
                 </span>
 
             </div>
 
             <div class="dht-addable-box-content">
-				
-				<?php echo self::renderBoxItemContent( $group, $saved_values, $registered_options_classes, $default_box_title, $cnt ); ?>
-
+				<?php echo self::renderBoxItemContent( $group, $saved_values, $registered_options_classes, $cnt ); ?>
             </div>
 
         </div>
@@ -147,23 +143,22 @@ final class OptionsHelpers {
 	/**
 	 * render box item content (addable group option)
 	 *
-	 * @param array  $group                      group options to be rendered
-	 * @param mixed  $saved_values               Saved values
-	 * @param array  $registered_options_classes registered option type classes
-	 * @param string $default_box_title          The default bot item title
-	 * @param int    $cnt                        The box item number
+	 * @param array $group                      group options to be rendered
+	 * @param mixed $saved_values               Saved values
+	 * @param array $registered_options_classes registered option type classes
+	 * @param int   $cnt                        The box item number
 	 *
 	 * @return mixed
 	 * @since     1.0.0
 	 */
-	public static function renderBoxItemContent( array $group, mixed $saved_values, array $registered_options_classes, string $default_box_title, int $cnt ) : string {
+	public static function renderBoxItemContent( array $group, mixed $saved_values, array $registered_options_classes, int $cnt ) : string {
 		
 		ob_start(); ?>
         <div class="dht-field-wrapper">
             <div class="dht-field-box-wrapper dht-field-child-input">
                 <label
                     for="<?php echo esc_attr( $group[ 'id' ] ); ?>[<?php echo esc_attr( $cnt ); ?>][box-title]">
-					<?php echo !empty( $saved_values[ 'box-title' ] ) ? esc_html( $saved_values[ 'box-title' ] ) : _x( 'Box Title', 'options', DHT_PREFIX ); ?>
+					<?php echo !empty( $saved_values[ 'box-title' ] ) ? esc_html( $saved_values[ 'box-title' ] ) : $group[ "box-title" ] ?>
                 </label>
                 <input
                     class="dht-input dht-field dht-box-title"
@@ -171,7 +166,7 @@ final class OptionsHelpers {
                     type="text"
                     name="<?php echo esc_attr( $group[ 'id' ] ); ?>[<?php echo esc_attr( $cnt ); ?>][box-title]"
                     value="<?php echo !empty( $saved_values[ 'box-title' ] ) ? esc_html( $saved_values[ 'box-title' ] ) : ''; ?>"
-                    placeholder="<?php echo esc_attr( $default_box_title ); ?>" />
+                    placeholder="<?php echo esc_attr( $group[ 'box-title' ] ); ?>" />
             </div>
         </div>
 

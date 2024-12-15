@@ -50,17 +50,21 @@ final class AddableBox extends BaseGroup {
 	 */
 	public function enqueueOptionScripts( array $group ) : void {
 		
+		$deps = [ 'jquery' ];
+		
 		// Enqueue the WordPress editor scripts and styles
 		wp_enqueue_editor();
+		
+		if( $group[ 'sortable' ] ) {
+			$deps = [ 'jquery', 'jquery-ui-sortable' ];
+			wp_enqueue_script( 'jquery-ui-sortable' );
+		}
 		
 		if( Environment::isDevelopment() ) {
 			wp_register_style( DHT_PREFIX_CSS . '-addable-box-group', DHT_ASSETS_URI . 'dist/css/addable-box.css', array(), DHT::$version );
 			wp_enqueue_style( DHT_PREFIX_CSS . '-addable-box-group' );
 			
-			wp_enqueue_script_module( DHT_PREFIX_JS . '-addable-box-group', DHT_ASSETS_URI . 'dist/js/addable-box.js', array(
-				'jquery',
-				'jquery-ui-sortable'
-			), DHT::$version, true );
+			wp_enqueue_script_module( DHT_PREFIX_JS . '-addable-box-group', DHT_ASSETS_URI . 'dist/js/addable-box.js', $deps, DHT::$version );
 		}
 	}
 	
@@ -84,7 +88,7 @@ final class AddableBox extends BaseGroup {
 				echo OptionsHelpers::renderBoxItemContent( $group, [], [
 					'togglesClasses' => $this->_optionTogglesClasses,
 					'fieldsClasses'  => $this->_optionFieldsClasses
-				], _x( 'Box Title', 'options', DHT_PREFIX ), $box_number );
+				], $box_number );
 			}
 			else {
 				echo _x( 'No options available', 'options', DHT_PREFIX );
@@ -117,39 +121,51 @@ final class AddableBox extends BaseGroup {
 	 */
 	public function saveValue( array $group, mixed $group_post_values ) : mixed {
 		
-		if( empty( $group_post_values ) || empty( $group[ 'options' ] ) ) {
-			return $group[ 'value' ];
+		if( empty( $group[ 'options' ] ) ) {
+			return [];
 		}
 		
-		$sanitized_values = [];
+		$sanitized_values = $options = [];
 		
-		// Flatten options array to make it easier to access options by ID
-		$options = [];
+		// flatten options array to make it easier to access options by ID
 		foreach ( $group[ 'options' ] as $option ) {
-			
 			$options[ $option[ 'id' ] ] = $option;
 		}
 		
-		//go through all the saved values and sanitize them
-		foreach ( $group_post_values as $value_key => $values ) {
+		//return the addable box default option values
+		if( empty( $group_post_values ) ) {
+			//for default values, there will always be only one box
+			$box_number = 0;
 			
-			foreach ( $values as $option_id => $value ) {
-				
-				//the box title, it is not located in the options array so we need to sanitize it separately
-				if( $option_id == 'box-title' ) {
-					
-					$sanitized_values[ $value_key ] [ 'box-title' ] = sanitize_text_field( $value );
-					
-					continue;
+			//box title value
+			$sanitized_values[ $box_number ][ 'box-title' ] = $group[ "box-title" ] ?? "";
+			
+			foreach ( $options as $option ) {
+				if( array_key_exists( $option[ 'type' ], $this->_optionTogglesClasses ) ) {
+					$sanitized_values[ $box_number ] [ $option[ 'id' ] ] = $this->_optionTogglesClasses[ $option[ 'type' ] ]->saveValue( $option, $option[ 'value' ] );
+				} //if it is a field option type
+				else {
+					$sanitized_values[ $box_number ] [ $option[ 'id' ] ] = $this->_optionFieldsClasses[ $option[ 'type' ] ]->saveValue( $option, $option[ 'value' ] );
 				}
-				
-				if( isset( $options[ $option_id ] ) ) {
+			}
+		}
+		else {
+			//go through all the saved values and sanitize them
+			foreach ( $group_post_values as $value_key => $values ) {
+				foreach ( $values as $option_id => $value ) {
+					//the box title, it is not located in the options array so we need to sanitize it separately
+					if( $option_id == 'box-title' ) {
+						$sanitized_values[ $value_key ] [ 'box-title' ] = sanitize_text_field( $value );
+						continue;
+					}
 					
-					if( array_key_exists( $options[ $option_id ][ 'type' ], $this->_optionTogglesClasses ) ) {
-						$sanitized_values[ $value_key ] [ $option_id ] = $this->_optionTogglesClasses[ $options[ $option_id ][ 'type' ] ]->saveValue( $options[ $option_id ], $value );
-					} //if it is a field option type
-					else {
-						$sanitized_values[ $value_key ] [ $option_id ] = $this->_optionFieldsClasses[ $options[ $option_id ][ 'type' ] ]->saveValue( $options[ $option_id ], $value );
+					if( isset( $options[ $option_id ] ) ) {
+						if( array_key_exists( $options[ $option_id ][ 'type' ], $this->_optionTogglesClasses ) ) {
+							$sanitized_values[ $value_key ] [ $option_id ] = $this->_optionTogglesClasses[ $options[ $option_id ][ 'type' ] ]->saveValue( $options[ $option_id ], $value );
+						} //if it is a field option type
+						else {
+							$sanitized_values[ $value_key ] [ $option_id ] = $this->_optionFieldsClasses[ $options[ $option_id ][ 'type' ] ]->saveValue( $options[ $option_id ], $value );
+						}
 					}
 				}
 			}

@@ -60,12 +60,9 @@ final class Input extends BaseField {
 		
 		if( isset( $field[ 'subtype' ] ) ) {
 			if( $field[ 'subtype' ] == 'url' ) {
-				
 				$field_post_value = esc_url_raw( $field_post_value );
-				
 			}
 			elseif( $field[ 'subtype' ] == 'email' ) {
-				
 				$field_post_value = sanitize_email( $field_post_value );
 			}
 		}

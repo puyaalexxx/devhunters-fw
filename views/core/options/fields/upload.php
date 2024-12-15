@@ -9,15 +9,12 @@ use function DHT\Helpers\dht_parse_option_attributes;
 $field = $args[ 'field' ] ?? [];
 
 $item_url = '';
-//if item id present
-if( !empty( $field[ 'value' ][ 'item_id' ] ) ) {
-	
+if( !empty( $field[ 'value' ][ 'item' ] ) ) {
+	$item_url = $field[ 'value' ][ 'item' ];
+}
+elseif( !empty( $field[ 'value' ][ 'item_id' ] ) ) {
 	$attachemnt_url = wp_get_attachment_url( (int) $field[ 'value' ][ 'item_id' ] );
 	$item_url       = $attachemnt_url;
-} //if item link present
-elseif( !empty( $field[ 'value' ][ 'item' ] ) ) {
-	
-	$item_url = $field[ 'value' ][ 'item' ];
 }
 ?>
 <!--upload field-->

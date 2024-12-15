@@ -67,14 +67,11 @@ final class Dimension extends BaseField {
 			return $field[ 'value' ];
 		}
 		
-		//for the range field
 		if( is_array( $field_post_value ) ) {
-			
+			//for the range field
 			$field_vals = [];
 			foreach ( $field_post_value as $key => $value ) {
-				
 				if( $key == 'border-style' || $key == 'color' || $key == 'unit' ) {
-					
 					$field_vals[ $key ] = $value;
 					
 					continue;
@@ -84,7 +81,6 @@ final class Dimension extends BaseField {
 			}
 			
 			$field_post_value = $field_vals;
-			
 		}
 		
 		return $field_post_value;

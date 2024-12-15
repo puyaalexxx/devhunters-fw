@@ -155,12 +155,12 @@
          */
         private _onSortImages() {
             this.$_gallery
-                .children(".dht-gallery-group")
+                .find(".dht-gallery-group")
                 .sortable({
                     //  axis: "x", // Ensure sorting is horizontal
                     containment: "parent", // Keep sorting within the parent
                     //update hidden input ids
-                    update: function(event, ui) {
+                    update: function() {
                         let sortedIDs = $(this)
                             .children(".dht-img-remove")
                             .map(function() {

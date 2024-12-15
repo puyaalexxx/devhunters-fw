@@ -64,11 +64,6 @@ final class TabsMenu extends BaseContainer {
 	 */
 	public function saveValue( array $container, mixed $container_post_values ) : array {
 		
-		// Return early if container_post_values is empty
-		if( empty( $container_post_values ) ) {
-			return [];
-		}
-		
 		$values = [];
 		// Sanitize option values
 		foreach ( $container[ 'options' ] as $page ) {

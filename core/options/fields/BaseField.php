@@ -137,11 +137,7 @@ abstract class BaseField {
 	 */
 	public function saveValue( array $field, mixed $field_post_value ) : mixed {
 		
-		if( empty( $field_post_value ) ) {
-			return $field[ 'value' ];
-		}
-		
-		return $field_post_value;
+		return empty( $field_post_value ) ? $field[ 'value' ] : $field_post_value;
 	}
 	
 }

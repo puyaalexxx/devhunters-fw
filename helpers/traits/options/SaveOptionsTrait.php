@@ -121,7 +121,7 @@ trait SaveOptionsTrait {
 	private function _saveUngroupedOptions( array $options, string $location = 'dashboard', int $id = 0, bool $save = true ) : void {
 		
 		foreach ( $options as $option ) {
-			if( array_key_exists( $option[ 'id' ], $_POST ) ) {
+			if( isset( $option[ 'id' ] ) && array_key_exists( $option[ 'id' ], $_POST ) ) {
 				if( isset( $this->_optionGroupsClasses[ $option[ 'type' ] ] ) ) {
 					$value = $this->_optionGroupsClasses[ $option[ 'type' ] ]->saveValue( $option, $_POST[ $option[ 'id' ] ] );
 				}

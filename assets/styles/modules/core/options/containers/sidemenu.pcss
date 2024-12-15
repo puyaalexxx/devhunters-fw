@@ -4,11 +4,7 @@
 @define-mixin sidemenu_resposnive_code {
     .dht-cosidebar-header {
         height: calc(100% - 50px);
-        width: 50px !important;
-
-        .title {
-            display: none !important;
-        }
+        width: 150px !important;
 
         .fa {
             width: 50px !important;
@@ -23,14 +19,33 @@
             }
 
             .dht-cosidebar-sub-menu {
-                display: none !important;
+                display: block !important;
             }
 
             .dht-cosidebar-dropdown-menu {
-                left: 50px !important;
+                display: none !important;
+            }
+        }
 
-                &:before {
-                    top: 15px !important;
+        @media (max-width: 600px) {
+            width: 50px !important;
+
+            .title {
+                display: none !important;
+            }
+
+            > ul > li {
+
+                .dht-cosidebar-sub-menu {
+                    display: none !important;
+                }
+
+                .dht-cosidebar-dropdown-menu {
+                    left: 50px !important;
+
+                    &:before {
+                        top: 15px !important;
+                    }
                 }
             }
         }
@@ -89,13 +104,15 @@
 
             .title {
                 position: relative;
+                left: 5px;
             }
 
             .dht-cosidebar-icon {
+                display: flex;
 
                 span {
+                    display: flex;
                     position: relative;
-                    top: -2px;
                     padding-left: 5px;
 
                     &:before {
@@ -124,10 +141,11 @@
                     position: relative;
 
                     > a {
-                        display: block;
                         line-height: 35px;
                         color: #eee;
                         font-size: 14px;
+                        display: flex;
+                        align-items: center;
 
                         .fa {
                             color: #9ca1a6;
@@ -216,7 +234,7 @@
                             display: block;
                         }
 
-                        @media (min-width: 901px) {
+                        @media (min-width: 981px) {
                             ul.dht-cosidebar-dropdown-menu {
                                 display: none !important;
                             }

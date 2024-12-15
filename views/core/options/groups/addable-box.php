@@ -1,7 +1,6 @@
 <?php
 
 use DHT\Helpers\Classes\OptionsHelpers;
-use DHT\Helpers\Classes\OptionsHelpers;
 use function DHT\Helpers\dht_parse_option_attributes;
 
 if( !defined( 'DHT_MAIN' ) ) {
@@ -36,8 +35,9 @@ $saved_values = !empty( $group[ 'value' ] ) ? $group[ 'value' ] : [];
 
                 <input type="hidden" class="dht-box-item-options"
                        value='<?php echo json_encode( [
-					       'id'      => $group[ 'id' ],
-					       'options' => $group[ 'options' ]
+					       'id'        => $group[ 'id' ],
+					       'box-title' => $group[ 'box-title' ],
+					       'options'   => $group[ 'options' ]
 				       ], JSON_UNESCAPED_UNICODE ) ?>' />
 
                 <div class="dht-addable-box-items"

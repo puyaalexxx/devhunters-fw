@@ -639,9 +639,10 @@ function dhtAjaxSaveOptions(modal: JQuery<HTMLElement>, closeModal: () => void):
                 //hide loading spinner
                 $spinner.toggleClass("dht-hidden");
                 $formFooter.toggleClass("dht-vb-modal-footer-disabled");
-                
-                //remove modal element
+
                 closeModal();
+
+                //remove modal element
                 modal.remove();
             } else {
                 console.error("Ajax Response: ", response);

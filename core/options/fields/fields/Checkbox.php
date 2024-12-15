@@ -53,10 +53,8 @@ final class Checkbox extends BaseField {
 		
 		//if saved value exists
 		if( !empty( $saved_value ) ) {
-			
 			$values = [];
 			foreach ( $field[ 'choices' ] as $checkbox ) {
-				
 				//if checkbox id exists in saved_values array, save it as checked value
 				if( array_key_exists( $checkbox[ 'id' ], $saved_value ) ) {
 					$values[] = $checkbox[ 'id' ];
@@ -64,12 +62,35 @@ final class Checkbox extends BaseField {
 			}
 			
 			$field[ 'value' ] = $values;
-			
-		} /*elseif ( empty($saved_value) && $field['id'] ) {
-            $field[ 'value' ] = [];
-        }*/
+		}
 		
 		return $field;
+	}
+	
+	/**
+	 *  In this method you receive $field_post_value (from form submit or whatever)
+	 *  and must return correct and safe value that will be stored in database.
+	 *
+	 *  $field_post_value can be null.
+	 *  In this case you should return default value from $field['value']
+	 *
+	 * @param array $field            - field
+	 * @param mixed $field_post_value - field $_POST value passed on save
+	 *
+	 * @return array - changed field value
+	 * @since     1.0.0
+	 */
+	public function saveValue( array $field, mixed $field_post_value ) : array {
+		
+		$values = [];
+		foreach ( $field[ 'choices' ] as $checkbox ) {
+			if( array_key_exists( $checkbox[ 'id' ], $field_post_value ) ) {
+				if( $field_post_value[ $checkbox[ 'id' ] ] !== "no" ) $values[ $checkbox[ 'id' ] ] = $checkbox[ 'value' ];
+			}
+			
+		}
+		
+		return $values;
 	}
 	
 }

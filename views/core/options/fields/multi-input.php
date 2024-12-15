@@ -7,6 +7,9 @@ use DHT\Helpers\Classes\OptionsHelpers;
 use function DHT\Helpers\dht_parse_option_attributes;
 
 $field = $args[ 'field' ] ?? [];
+
+// Check if 'value' exists and is an array (this also avoids unnecessary checks in the loop)
+$values = !empty( $field[ 'value' ] ) && is_array( $field[ 'value' ] ) ? $field[ 'value' ] : [ '' ]; // Default to empty string if no values
 ?>
 <!-- field - multiinput -->
 
@@ -24,7 +27,7 @@ $field = $args[ 'field' ] ?? [];
 
         <label for="<?php echo esc_attr( $field[ 'id' ] ); ?>"><?php echo esc_html( $field[ 'title' ] ); ?></label>
 		
-		<?php foreach ( $field[ 'value' ] as $value ): ?>
+		<?php foreach ( $values as $value ): ?>
 
             <div class="dht-multiinput-child-wrapper">
 

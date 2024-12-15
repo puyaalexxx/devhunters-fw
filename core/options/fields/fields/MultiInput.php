@@ -7,7 +7,7 @@ use DHT\Core\Options\Fields\BaseField;
 use DHT\DHT;
 use DHT\Helpers\Classes\Environment;
 
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
@@ -34,7 +34,7 @@ final class MultiInput extends BaseField {
 	 */
 	public function enqueueOptionScripts( array $field ) : void {
 		
-		if ( Environment::isDevelopment() ) {
+		if( Environment::isDevelopment() ) {
 			wp_register_style( DHT_PREFIX_CSS . '-multiinput-field', DHT_ASSETS_URI . 'dist/css/multiinput.css', array(), DHT::$version );
 			wp_enqueue_style( DHT_PREFIX_CSS . '-multiinput-field' );
 			
@@ -53,12 +53,10 @@ final class MultiInput extends BaseField {
 	 */
 	public function mergeValues( array $field, mixed $saved_value ) : array {
 		
-		if ( ! empty( $saved_value ) ) {
-			
+		if( !empty( $saved_value ) ) {
 			foreach ( $saved_value as $key => $value ) {
-				
 				//remove empty values as they are not needed
-				if ( empty( $value ) ) {
+				if( empty( $value ) ) {
 					unset( $saved_value[ $key ] );
 				}
 			}
@@ -79,19 +77,18 @@ final class MultiInput extends BaseField {
 	 * @param array $field            - field
 	 * @param mixed $field_post_value - field $_POST value passed on save
 	 *
-	 * @return mixed - changed field value
+	 * @return array - changed field value
 	 * @since     1.0.0
 	 */
-	public function saveValue( array $field, mixed $field_post_value ) : mixed {
+	public function saveValue( array $field, mixed $field_post_value ) : array {
 		
-		if ( empty( $field_post_value ) ) {
+		if( empty( $field_post_value ) ) {
 			return $field[ 'value' ];
 		}
 		
 		$sanitized_values = [];
-		foreach ( $field_post_value as $key => $value ) {
-			
-			$sanitized_values[] = sanitize_text_field( $value );
+		foreach ( $field_post_value as $value ) {
+			if( !empty( $value ) ) $sanitized_values[] = sanitize_text_field( $value );
 		}
 		
 		return $sanitized_values;

@@ -146,13 +146,12 @@ abstract class BaseToggle {
 	 */
 	public function saveValue( array $toggle, mixed $toggle_post_values ) : mixed {
 		
-		if( empty( $toggle_post_values ) ) {
+		/*if( empty( $toggle_post_values ) ) {
 			return $toggle[ 'value' ];
-		}
+		}*/
 		
 		//sanitize option values
 		foreach ( $toggle[ 'options' ] as $subtoggle ) {
-			
 			foreach ( $subtoggle[ 'options' ] as $option ) {
 				$option_post_value = $toggle_post_values[ $option[ 'id' ] ] ?? [];
 				

@@ -3,8 +3,8 @@ if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
-use function DHT\Helpers\dht_border_styles;
 use DHT\Helpers\Classes\OptionsHelpers;
+use function DHT\Helpers\dht_border_styles;
 use function DHT\Helpers\dht_parse_option_attributes;
 
 $field = $args[ 'field' ] ?? [];

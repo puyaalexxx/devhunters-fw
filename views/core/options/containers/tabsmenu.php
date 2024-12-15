@@ -8,7 +8,7 @@ if( !defined( 'DHT_MAIN' ) ) {
 
 $container = $args[ 'container' ] ?? [];
 //get saved values
-$saved_values = $args[ 'saved_values' ] ?? [];
+$saved_values = $container[ 'value' ] ?? [];
 //used to call the render method on
 $registered_options_classes = $args[ 'registered_options_classes' ] ?? [];
 ?>

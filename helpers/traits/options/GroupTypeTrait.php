@@ -23,7 +23,6 @@ trait GroupTypeTrait {
 		
 		//if it is a toogle option type
 		if( array_key_exists( $option[ 'type' ], $optionTogglesClasses ) ) {
-			
 			$group_post_values[ $option[ 'id' ] ] = $optionTogglesClasses[ $option[ 'type' ] ]->saveValue( $option, $option_post_value );
 		} //if it is a field option type
 		else {

@@ -32,6 +32,9 @@ $field = $args[ 'field' ] ?? [];
 
                     <div class="dht-checkbox-wrapper">
 
+                        <input type="hidden"
+                               name="<?php echo esc_attr( $field[ 'id' ] ); ?>[<?php echo esc_attr( $checkbox[ 'id' ] ); ?>]"
+                               value="no">
                         <input
                             class="dht-checkbox dht-field"
                             type="checkbox"

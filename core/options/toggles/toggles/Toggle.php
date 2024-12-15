@@ -105,7 +105,8 @@ final class Toggle extends BaseToggle {
 	public function saveValue( array $toggle, mixed $toggle_post_values ) : mixed {
 		
 		if( empty( $toggle_post_values ) ) {
-			return $toggle[ 'value' ];
+			//return $toggle[ 'value' ];
+			$toggle_post_values[ 'value' ] = $toggle[ 'value' ];
 		}
 		
 		//sanitize option values

@@ -65,12 +65,11 @@ final class RangeSlider extends BaseField {
 	public function saveValue( array $field, mixed $field_post_value ) : mixed {
 		
 		if( empty( $field_post_value ) ) {
-			return (int) $field[ 'value' ];
+			return $field[ 'value' ];
 		}
 		
 		//for the range field
 		if( is_array( $field_post_value ) ) {
-			
 			$field_vals = [];
 			foreach ( $field_post_value as $value ) {
 				$field_vals[] = absint( sanitize_text_field( $value ) );
@@ -80,7 +79,6 @@ final class RangeSlider extends BaseField {
 			
 		} //for the slider field
 		else {
-			
 			$field_post_value = absint( sanitize_text_field( $field_post_value ) );
 		}
 		

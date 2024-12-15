@@ -93,6 +93,9 @@ abstract class BaseContainer {
 	 */
 	public function render( array $container, mixed $saved_values, array $additional_args = [] ) : string {
 		
+		//merge default values with saved ones to display the saved ones
+		$container[ 'value' ] = $this->mergeValues( $containe[ "value" ] ?? [], $saved_values );
+		
 		$registered_options_classes = [
 			'groupsClasses'  => $this->_optionGroupsClasses,
 			'togglesClasses' => $this->_optionTogglesClasses,
@@ -101,10 +104,22 @@ abstract class BaseContainer {
 		
 		return dht_load_view( $this->template_dir, $this->getContainer() . '.php', [
 			'container'                  => $container,
-			'saved_values'               => $saved_values,
 			'registered_options_classes' => $registered_options_classes,
 			'additional_args'            => $additional_args
 		] );
+	}
+	
+	/**
+	 * merge the container values with the saved values if exists
+	 *
+	 * @param array $container_values - container values
+	 * @param mixed $saved_values     - saved values
+	 *
+	 * @return mixed
+	 * @since     1.0.0
+	 */
+	public function mergeValues( array $container_values, mixed $saved_values ) : array {
+		return empty( $saved_values ) ? $container_values : $saved_values;
 	}
 	
 	/**
@@ -121,12 +136,6 @@ abstract class BaseContainer {
 	 * @since     1.0.0
 	 */
 	public function saveValue( array $container, mixed $container_post_values ) : array {
-		
-		// Return early if container_post_values is empty
-		if( empty( $container_post_values ) ) {
-			return [];
-		}
-		
 		return $this->_sanitizeValues( $container[ 'options' ], $container_post_values );
 	}
 	

@@ -64,13 +64,8 @@ final class Group extends BaseGroup {
 	 */
 	public function saveValue( array $group, mixed $group_post_values ) : mixed {
 		
-		if( empty( $group_post_values ) ) {
-			return $group[ 'value' ];
-		}
-		
 		//sanitize option values
 		foreach ( $group[ 'options' ] as $option ) {
-			
 			$option_post_value = $group_post_values[ $option[ 'id' ] ] ?? [];
 			
 			$group_post_values = $this->_saveGroupHelper( $option, $group_post_values, $option_post_value, $this->_optionTogglesClasses, $this->_optionFieldsClasses );

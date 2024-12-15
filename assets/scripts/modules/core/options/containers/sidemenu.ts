@@ -48,16 +48,13 @@
          * @return void
          */
         private _addRemoveActiveClass(): void {
-            $("[dropdown] >li").hover(
-                function() {
-                    $("ul", this).show();
-                    $(this).addClass("dht-cosidebar-active");
-                },
-                function() {
-                    $("ul", this).hide();
-                    $(this).removeClass("dht-cosidebar-active");
-                },
-            );
+            $("[dropdown] > li").on("mouseenter", function() {
+                $("ul", this).show();
+                $(this).addClass("dht-cosidebar-active");
+            }).on("mouseleave", function() {
+                $("ul", this).hide();
+                $(this).removeClass("dht-cosidebar-active");
+            });
         }
 
         /**

@@ -243,7 +243,6 @@ final class Options implements IOptions {
 	private function _saveDashBoardPageOptions() : void {
 		
 		if( $this->_isValidRequest() ) {
-			
 			$post_values = $_POST[ $this->_dashboardPagesOptions[ 'id' ] ?? '' ] ?? [];
 			
 			if( $post_values ) {
@@ -270,7 +269,6 @@ final class Options implements IOptions {
 	private function _saveTermOptions( int $term_id ) : void {
 		
 		if( $this->_isValidRequest() ) {
-			
 			$post_values = $_POST[ $this->_termOptions[ 'id' ] ?? '' ] ?? [];
 			
 			//check for the container id
@@ -297,7 +295,6 @@ final class Options implements IOptions {
 		
 		//check nonce field
 		if( $this->_isValidRequest() ) {
-			
 			if( !current_user_can( 'edit_post', $postID ) ) {
 				return;
 			}

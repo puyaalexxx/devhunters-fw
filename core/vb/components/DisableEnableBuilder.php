@@ -3,12 +3,12 @@ declare( strict_types = 1 );
 
 namespace DHT\Core\Vb\Components;
 
+use DHT\DHT;
 use DHT\Helpers\Classes\Environment;
 use DHT\Helpers\Traits\SingletonTrait;
 use WP_Post;
-use DHT\DHT;
 
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
@@ -46,7 +46,7 @@ final class DisableEnableBuilder {
 	 */
 	public function enqueueScripts() : void {
 		
-		if ( Environment::isDevelopment() ) {
+		if( Environment::isDevelopment() ) {
 			wp_register_style( DHT_PREFIX_CSS . '-disable-enable-vb', DHT_ASSETS_URI . 'dist/css/disable-enable-vb.css', array(), DHT::$version );
 			wp_enqueue_style( DHT_PREFIX_CSS . '-disable-enable-vb' );
 		}
@@ -62,10 +62,10 @@ final class DisableEnableBuilder {
 	 */
 	private function _addEnableDisableVbButtons( string $post_type ) : void {
 		
-		add_meta_box( 'dht-vb-buttons-builder-box', _x( 'Enable/Disable VB Buttons', 'vb', DHT_PREFIX ), [
+		/*add_meta_box( 'dht-vb-buttons-builder-box', _x( 'Enable/Disable VB Buttons', 'vb', DHT_PREFIX ), [
 			$this,
 			'view'
-		], $post_type, 'normal', 'high' );
+		], $post_type, 'normal', 'high' );*/
 	}
 	
 	/**
@@ -98,7 +98,7 @@ final class DisableEnableBuilder {
 	public static function init( string $post_type ) : self {
 		
 		$cls = static::class;
-		if ( ! isset( self::$_instances[ $cls ] ) ) {
+		if( !isset( self::$_instances[ $cls ] ) ) {
 			self::$_instances[ $cls ] = new static( $post_type );
 		}
 		

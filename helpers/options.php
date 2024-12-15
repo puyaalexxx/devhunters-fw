@@ -42,13 +42,12 @@ if( !function_exists( 'dht_set_db_settings_option' ) ) {
 	 */
 	function dht_set_db_settings_option( string $option_id, mixed $value, string $array_key = '' ) : bool {
 		
-		if( empty( $option_id ) || empty( $value ) ) {
+		if( empty( $option_id ) /*|| empty( $value )*/ ) {
 			return false;
 		}
 		
 		//this is useful for array of arrays of options
 		if( !empty( $array_key ) ) {
-			
 			//get saved value first to not override all the settings
 			$saved_values = dht_get_db_settings_option( $option_id );
 			

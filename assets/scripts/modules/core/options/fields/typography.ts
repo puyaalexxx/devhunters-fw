@@ -125,15 +125,19 @@ import { errorLoadingModule } from "@helpers/general";
                 //get the selected font family
                 const font_family: string = $thisClass._getSelectedFontFamily($thisClass, $selected_font);
 
-                $thisClass._applyStyles("font-family", font_family);
+                $thisClass._applyStyles("font-family", font_family.length ? font_family : "initial");
 
                 //if Google font
-                if (font_type === "google") {
-                    $thisClass._googleFontsManipulations($thisClass, $selected_font, font_family);
-                } else if (font_type === "standard") {
-                    $thisClass._standardFontsManipulations($thisClass, $selected_font);
+                if (font_family.length) {
+                    if (font_type === "google") {
+                        $thisClass._googleFontsManipulations($thisClass, $selected_font, font_family);
+                    } else if (font_type === "standard") {
+                        $thisClass._standardFontsManipulations($thisClass, $selected_font);
+                    } else {
+                        $thisClass._customFontsManipulations($thisClass, $selected_font, font_family);
+                    }
                 } else {
-                    $thisClass._customFontsManipulations($thisClass, $selected_font, font_family);
+                    $thisClass._setFontFamilyHiddenInputs($thisClass, "", "");
                 }
             });
         }
@@ -148,11 +152,7 @@ import { errorLoadingModule } from "@helpers/general";
          * @return void
          */
         private _googleFontsManipulations($thisClass: this, $selected_font: JQuery<HTMLElement>, font_family: string): void {
-            //set font type input value
-            $thisClass.$_font_type_hidden_input.attr("value", "google");
-
-            //set font path input value
-            $thisClass.$_font_path_hidden_input.attr("value", "");
+            $thisClass._setFontFamilyHiddenInputs($thisClass, "google", "");
 
             //get the selected Google font - font subsets
             const font_subsets = String($selected_font.find("option:selected").attr("data-font-subsets"))!;
@@ -180,13 +180,9 @@ import { errorLoadingModule } from "@helpers/general";
          * @return void
          */
         private _customFontsManipulations($thisClass: this, $selected_font: JQuery<HTMLElement>, font_family: string): void {
-            //set font type input value
-            $thisClass.$_font_type_hidden_input.attr("value", "divi");
-
             //get font path
             const font_path = $thisClass._getCustomFontPath($selected_font);
-            //set font path input value
-            $thisClass.$_font_path_hidden_input.attr("value", font_path);
+            $thisClass._setFontFamilyHiddenInputs($thisClass, "divi", font_path);
 
             //add font-face style to the header area
             $thisClass._addHeaderFontFaceStyle($thisClass, font_family, font_path);
@@ -208,10 +204,7 @@ import { errorLoadingModule } from "@helpers/general";
          * @return void
          */
         private _standardFontsManipulations($thisClass: this, $selected_font: JQuery<HTMLElement>): void {
-            //set font type input value
-            $thisClass.$_font_type_hidden_input.attr("value", "standard");
-            //set font path input value
-            $thisClass.$_font_path_hidden_input.attr("value", "");
+            $thisClass._setFontFamilyHiddenInputs($thisClass, "standard", "");
 
             //no subsets present for standard fonts
             $thisClass.$_font_subsets_dropdown.empty().trigger("change.mychange");
@@ -241,7 +234,7 @@ import { errorLoadingModule } from "@helpers/general";
                     $thisClass._buildFontLink(font_family, font_weight);
                 }
 
-                $thisClass._applyStyles("font-weight", font_weight);
+                $thisClass._applyStyles("font-weight", font_weight.length ? font_weight : "initial");
             });
         }
 
@@ -272,7 +265,7 @@ import { errorLoadingModule } from "@helpers/general";
             this.$_font_style_dropdown.off("change.mychange").on("change.mychange", function() {
                 const font_style = String($(this).val());
 
-                $thisClass._applyStyles("font-style", font_style);
+                $thisClass._applyStyles("font-style", font_style.length ? font_style : "initial");
             });
         }
 
@@ -295,9 +288,9 @@ import { errorLoadingModule } from "@helpers/general";
                 $thisClass.$_preview_area.css("text-transform", "");
 
                 if (text_transform === "small-caps") {
-                    $thisClass._applyStyles("font-variant", text_transform);
+                    $thisClass._applyStyles("font-variant", text_transform.length ? text_transform : "initial");
                 } else {
-                    $thisClass._applyStyles("text-transform", text_transform);
+                    $thisClass._applyStyles("text-transform", text_transform.length ? text_transform : "initial");
                 }
             });
         }
@@ -316,7 +309,7 @@ import { errorLoadingModule } from "@helpers/general";
             this.$_text_decoration_dropdown.off("change.mychange").on("change.mychange", function() {
                 const text_decoration = String($(this).val());
 
-                $thisClass._applyStyles("text-decoration", text_decoration);
+                $thisClass._applyStyles("text-decoration", text_decoration.length ? text_decoration : "initial");
             });
         }
 
@@ -334,7 +327,7 @@ import { errorLoadingModule } from "@helpers/general";
             this.$_text_align_dropdown.off("change.mychange").on("change.mychange", function() {
                 const text_align = String($(this).val());
 
-                $thisClass._applyStyles("text-align", text_align);
+                $thisClass._applyStyles("text-align", text_align.length ? text_align : "initial");
             });
         }
 
@@ -459,7 +452,7 @@ import { errorLoadingModule } from "@helpers/general";
         private _populateFontWeightDropdown($thisClass: this, font_weights: string): void {
             $thisClass.$_font_weight_dropdown.empty();
 
-            if (font_weights.length > 0) {
+            if (font_weights && font_weights.length > 0) {
                 $thisClass.$_font_weight_dropdown.append("<option></option>");
                 $.each(JSON.parse(font_weights), function(weight_value: string, weight_value_label: string) {
                     $thisClass.$_font_weight_dropdown.append("<option value=\"" + weight_value + "\">" + weight_value_label + "</option>");
@@ -592,7 +585,7 @@ import { errorLoadingModule } from "@helpers/general";
          * @param $thisClass
          * @param $selected_font_dropdown Current font dropdown element
          *
-         * @return void
+         * @return string
          */
         private _getSelectedFontFamily($thisClass: this, $selected_font_dropdown: JQuery<HTMLElement> = $()): string {
             $selected_font_dropdown = $selected_font_dropdown.length > 0 ? $selected_font_dropdown : $thisClass.$_fonts_dropdown;
@@ -601,6 +594,24 @@ import { errorLoadingModule } from "@helpers/general";
             const fontValue = $selected_font_dropdown.val() ? String($selected_font_dropdown.val()) : "";
 
             return fontValue.replace(new RegExp(`^${$thisClass._font_prefix}-`), "");
+        }
+
+        /**
+         * Set font family dropdown hidden inputs
+         * These are needed to contruct an array of font family values, like
+         * font, font-type and font-path
+         *
+         * @param $thisClass
+         * @param font_type Font type to be applied
+         * @param font_path Font path if it is a custom font
+         *
+         * @return void
+         */
+        private _setFontFamilyHiddenInputs($thisClass: this, font_type: string, font_path: string): void {
+            //set font type input value
+            $thisClass.$_font_type_hidden_input.attr("value", font_type);
+            //set font path input value
+            $thisClass.$_font_path_hidden_input.attr("value", font_path);
         }
 
         /**

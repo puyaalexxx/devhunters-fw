@@ -18,12 +18,14 @@ import "ace-builds/src-min-noconflict/mode-css";
 
         constructor($ace_editor_container: JQuery<HTMLElement>) {
             //textarea to send value via $_POST
-            this.$_ace_textarea = $ace_editor_container.children(".dht-ace-editor");
+            this.$_ace_textarea = $ace_editor_container.find(".dht-ace-editor");
 
             //editor area where the editor is displayed
-            this.$_ace_editor_area = $ace_editor_container.children(".dht-ace-editor-area");
+            this.$_ace_editor_area = $ace_editor_container.find(".dht-ace-editor-area");
 
             this.$_ace_editor_mode = this.$_ace_editor_area.attr("data-editor-mode");
+
+            console.log(this.$_ace_editor_mode);
 
             //because the ace editor does not find this files correctly, we need to set them explicitly
             this._setModuleUrl();

@@ -316,16 +316,19 @@ final class OptionsHelpers {
 	 * editing via js
 	 * Some sort of one way data binding
 	 *
-	 * @param array $selectors Live attributes
+	 * @param array  $selectors   Live attributes
+	 * @param string $saved_value This is the default or savwed option value to revert on closing the modal
 	 *
 	 * @return string
 	 * @since     1.0.0
 	 */
-	public static function liveOptionSelectors( array $selectors ) : string {
+	public static function liveOptionSelectors( array $selectors, string $saved_value = "" ) : string {
 		
 		if( !empty( $selectors ) ) {
+			$revert        = $selectors[ 'revert' ] ?? false;
+			$default_value = $revert && !empty( $saved_value ) ? 'data-live-default-value="' . esc_attr( $saved_value ) . '"' : "";
 			
-			return 'data-live-selectors="' . htmlspecialchars( json_encode( $selectors ), ENT_QUOTES ) . '"';
+			return 'data-live-selectors="' . htmlspecialchars( json_encode( $selectors ), ENT_QUOTES ) . '"' . $default_value;
 		}
 		
 		return "";

@@ -113,7 +113,7 @@ import { errorLoadingModule } from "@helpers/general";
          */
         private _fontDropdown($thisClass: this): void {
             this.$_fonts_dropdown.select2({
-                allowClear: true,
+                //allowClear: true,
             });
 
             this.$_fonts_dropdown.off("change.mychange").on("change.mychange", function() {
@@ -125,14 +125,14 @@ import { errorLoadingModule } from "@helpers/general";
                 //get the selected font family
                 const font_family: string = $thisClass._getSelectedFontFamily($thisClass, $selected_font);
 
-                $thisClass._applyStyles("font-family", font_family.length ? font_family : "initial");
+                $thisClass._applyStyles("font-family", font_family.length ? font_family : "");
 
                 //if Google font
                 if (font_family.length) {
                     if (font_type === "google") {
                         $thisClass._googleFontsManipulations($thisClass, $selected_font, font_family);
                     } else if (font_type === "standard") {
-                        $thisClass._standardFontsManipulations($thisClass, $selected_font);
+                        $thisClass._standardFontsManipulations($thisClass);
                     } else {
                         $thisClass._customFontsManipulations($thisClass, $selected_font, font_family);
                     }
@@ -199,11 +199,10 @@ import { errorLoadingModule } from "@helpers/general";
          * standard fonts manipulations
          *
          * @param $thisClass : this
-         * @param $selected_font : JQuery<HTMLElement>
          *
          * @return void
          */
-        private _standardFontsManipulations($thisClass: this, $selected_font: JQuery<HTMLElement>): void {
+        private _standardFontsManipulations($thisClass: this): void {
             $thisClass._setFontFamilyHiddenInputs($thisClass, "standard", "");
 
             //no subsets present for standard fonts
@@ -223,7 +222,7 @@ import { errorLoadingModule } from "@helpers/general";
          */
         private _fontWeightsDropdown($thisClass: this): void {
             this.$_font_weight_dropdown.select2({
-                allowClear: true,
+                //allowClear: true,
             });
             this.$_font_weight_dropdown.off("change.mychange").on("change.mychange", function() {
                 const font_weight = String($(this).val())!;
@@ -234,7 +233,7 @@ import { errorLoadingModule } from "@helpers/general";
                     $thisClass._buildFontLink(font_family, font_weight);
                 }
 
-                $thisClass._applyStyles("font-weight", font_weight.length ? font_weight : "initial");
+                $thisClass._applyStyles("font-weight", font_weight.length ? font_weight : "");
             });
         }
 
@@ -247,7 +246,7 @@ import { errorLoadingModule } from "@helpers/general";
          */
         private _fontSubsetsDropdown($thisClass: this): void {
             this.$_font_subsets_dropdown.select2({
-                allowClear: true,
+                //allowClear: true,
             });
         }
 
@@ -260,12 +259,12 @@ import { errorLoadingModule } from "@helpers/general";
          */
         private _fontStylesDropdown($thisClass: this): void {
             this.$_font_style_dropdown.select2({
-                allowClear: true,
+                //allowClear: true,
             });
             this.$_font_style_dropdown.off("change.mychange").on("change.mychange", function() {
                 const font_style = String($(this).val());
 
-                $thisClass._applyStyles("font-style", font_style.length ? font_style : "initial");
+                $thisClass._applyStyles("font-style", font_style.length ? font_style : "");
             });
         }
 
@@ -278,19 +277,17 @@ import { errorLoadingModule } from "@helpers/general";
          */
         private _textTransformDropdown($thisClass: this): void {
             this.$_text_transform_dropdown.select2({
-                allowClear: true,
+                //allowClear: true,
             });
             this.$_text_transform_dropdown.off("change.mychange").on("change.mychange", function() {
                 const text_transform = String($(this).val());
 
-                //reset css
-                $thisClass.$_preview_area.css("font-variant", "");
-                $thisClass.$_preview_area.css("text-transform", "");
-
                 if (text_transform === "small-caps") {
-                    $thisClass._applyStyles("font-variant", text_transform.length ? text_transform : "initial");
+                    $thisClass._applyStyles("font-variant", text_transform.length ? text_transform : "");
+                    $thisClass._applyStyles("text-transform", "");
                 } else {
-                    $thisClass._applyStyles("text-transform", text_transform.length ? text_transform : "initial");
+                    $thisClass._applyStyles("text-transform", text_transform.length ? text_transform : "");
+                    $thisClass._applyStyles("font-variant", "");
                 }
             });
         }
@@ -304,12 +301,12 @@ import { errorLoadingModule } from "@helpers/general";
          */
         private _textDecorationDropdown($thisClass: this): void {
             this.$_text_decoration_dropdown.select2({
-                allowClear: true,
+                //allowClear: true,
             });
             this.$_text_decoration_dropdown.off("change.mychange").on("change.mychange", function() {
                 const text_decoration = String($(this).val());
 
-                $thisClass._applyStyles("text-decoration", text_decoration.length ? text_decoration : "initial");
+                $thisClass._applyStyles("text-decoration", text_decoration.length ? text_decoration : "");
             });
         }
 
@@ -322,12 +319,12 @@ import { errorLoadingModule } from "@helpers/general";
          */
         private _textAlignDropdown($thisClass: this): void {
             this.$_text_align_dropdown.select2({
-                allowClear: true,
+                //allowClear: true,
             });
             this.$_text_align_dropdown.off("change.mychange").on("change.mychange", function() {
                 const text_align = String($(this).val());
 
-                $thisClass._applyStyles("text-align", text_align.length ? text_align : "initial");
+                $thisClass._applyStyles("text-align", text_align.length ? text_align : "");
             });
         }
 
@@ -648,13 +645,34 @@ import { errorLoadingModule } from "@helpers/general";
             if (!(this.$_typography.attr("data-live-selectors") ?? "").length) return;
 
             try {
-                const { dhtNotKeyedSelectorsHelper } = await import("@helpers/options/live-editing");
+                const {
+                    dhtApplyChangesForNotKeyedSelectors, dhtRestoreElementDefaultValues, dhtGetDefaultValue,
+                } = await import("@helpers/options/live-editing");
 
-                dhtNotKeyedSelectorsHelper(this.$_typography, (target: string, selectors: string) => {
-                    if (target === "style") {
-                        $(selectors).css(style);
-                    }
-                });
+                dhtApplyChangesForNotKeyedSelectors(
+                    this.$_typography,
+                    // Live change handler
+                    (target: string, selectors: string) => {
+                        if (target === "style") {
+                            applyChangesHelper(selectors, style);
+                        }
+                    },
+                    //restore to defaults
+                    (target: string, selectors: string) => {
+                        if (target === "style") {
+                            dhtRestoreElementDefaultValues(this.$_typography, () => {
+                                const defaultTypographyValues = dhtGetDefaultValue(this.$_typography);
+
+                                if (defaultTypographyValues.length) applyChangesHelper(selectors, JSON.parse(defaultTypographyValues));
+                            });
+                        }
+                    },
+                );
+
+                //helper function to apply the style changes
+                function applyChangesHelper(selectors: string, style: { [key: string]: string }) {
+                    $(selectors).css(style);
+                }
             } catch (error) {
                 errorLoadingModule(error as string);
             }

@@ -1,7 +1,7 @@
 "use strict";
 
 /**
- * Helper function for handling selectors without keys.
+ * Apply live changes for selectors without keys.
  *
  * Example usage:
  * const selectors = {
@@ -9,21 +9,31 @@
  *     selectors: ['.ppht-box .pht-box-img', '.ppht-box .pht-box-title']
  *
  * @param $element        HTML element
- * @param applyStyles
+ * @param applyChanges    Callback to apply the live changes
+ * @param revertChanges   Callback to revert the live changes to its defaults
  *
  * @return void
  */
-export function dhtNotKeyedSelectorsHelper($element: JQuery<HTMLElement>, applyStyles: (target: string, selectors: string) => void): void {
+export function dhtApplyChangesForNotKeyedSelectors($element: JQuery<HTMLElement>,
+                                                    applyChanges: (target: string, selectors: string) => void,
+                                                    revertChanges: (target: string, selectors: string) => void): void {
+
     const objectSelectors: ILiveEditorSelectors = dhtGetLiveEditingSelectors($element);
 
-    //combine all selectors
-    const selectors = dhtReplaceSelectorsPlaceholders(objectSelectors.selectors.join(", "), dhtGetOpenedModalID($element));
+    const moduleID = dhtGetOpenedModalID($element);
 
-    applyStyles(objectSelectors.target, selectors);
+    //combine all selectors
+    const selectors = dhtReplaceSelectorsPlaceholders(objectSelectors.selectors.join(", "), moduleID);
+
+    applyChanges(objectSelectors.target, selectors);
+
+    if (objectSelectors.revert) {
+        revertChanges(objectSelectors.target, selectors);
+    }
 }
 
 /**
- * Helper function for handling selectors with keys.
+ * Apply live changes for selectors with keys.
  *
  * Example usage:
  * const selectors = {
@@ -35,11 +45,15 @@ export function dhtNotKeyedSelectorsHelper($element: JQuery<HTMLElement>, applyS
  * };
  *
  * @param $element    The HTML element to manipulate.
- * @param applyStyles A callback that will come from each fields with the specific code
+ * @param applyChanges Callback to apply the live changes
+ * @param revertChanges   Callback to revert the live changes to its defaults
  *
  * @return {void}
  */
-export function dhtKeyedSelectorsHelper($element: JQuery<HTMLElement>, applyStyles: (key: string, target: string, selector: string) => void): void {
+export function dhtApplyChangesForKeyedSelectors($element: JQuery<HTMLElement>,
+                                                 applyChanges: (key: string, target: string, selector: string) => void,
+                                                 revertChanges: (key: string, target: string, selector: string) => void): void {
+
     const selectors: ILiveEditorSelectors = dhtGetLiveEditingSelectors($element);
 
     const moduleID = dhtGetOpenedModalID($element);
@@ -50,10 +64,33 @@ export function dhtKeyedSelectorsHelper($element: JQuery<HTMLElement>, applyStyl
         if (Array.isArray(keySelectors)) {
             const joinedSelectors = dhtReplaceSelectorsPlaceholders(keySelectors.join(", "), moduleID);
 
-            applyStyles(key.trim(), selectors.target, joinedSelectors);
+            applyChanges(key.trim(), selectors.target, joinedSelectors);
+
+            if (selectors.revert) {
+                revertChanges(key.trim(), selectors.target, joinedSelectors);
+            }
         } else {
             console.error("Expected selectors to be an array", keySelectors);
         }
+    });
+}
+
+/**
+ * Restore element initial values before live changes
+ *
+ * This will restore the initial values for elements on
+ * clicking the modal closing button
+ *
+ * @param $element       The HTML element to manipulate.
+ * @param restoreChanges A callback that will come from each fields with the specific code
+ *
+ * @return void
+ */
+export function dhtRestoreElementDefaultValues($element: JQuery<HTMLElement>, restoreChanges: () => void): void {
+    const moduleID = dhtGetOpenedModalID($element);
+
+    $("#" + moduleID).find(".dht-vb-modal-close").on("click", function(e: any) {
+        restoreChanges();
     });
 }
 
@@ -73,21 +110,6 @@ function dhtGetLiveEditingSelectors($element: JQuery<HTMLElement>): ILiveEditorS
     if (Object.entries(selectors).length === 0) return {} as ILiveEditorSelectors;
 
     return JSON.parse(selectors);
-}
-
-/**
- * Go through all selectors and apply the changes to them
- *
- * @param selectors   Selectors array
- * @param applyStyles Style that needs to be applied
- *
- * @return ILiveEditorAttr
- */
-function dhtApplyLiveChanges(selectors: string[], applyStyles: (selector: string) => void) {
-    // Iterate through the selectors
-    selectors.forEach((selector: string) => {
-        applyStyles(selector);
-    });
 }
 
 /**
@@ -118,4 +140,15 @@ function dhtReplaceSelectorsPlaceholders(selectors: string, moduleID: string): s
     }
 
     return selectors;
+}
+
+/**
+ * Get field default value that we need to restore
+ *
+ * @param $element    The HTML element to manipulate.
+ *
+ * @return string
+ */
+export function dhtGetDefaultValue($element: JQuery<HTMLElement>): string {
+    return $element.attr("data-live-default-value") ?? "";
 }

@@ -127,7 +127,7 @@ import { errorLoadingModule } from "@helpers/general";
          * Ability to change other areas via changing the field
          * with the provided CSS selectors
          *
-         * @param imageURL Image URL to apply on the element
+         * @param imageURL             Image URL to apply on the element
          *
          * @return Promise<void>
          */
@@ -136,15 +136,32 @@ import { errorLoadingModule } from "@helpers/general";
             if (!(this.$_uploadImage.attr("data-live-selectors") ?? "").length) return;
 
             try {
-                const { dhtKeyedSelectorsHelper } = await import("@helpers/options/live-editing");
+                const {
+                    dhtApplyChangesForKeyedSelectors, dhtRestoreElementDefaultValues, dhtGetDefaultValue,
+                } = await import("@helpers/options/live-editing");
 
-                dhtKeyedSelectorsHelper(this.$_uploadImage, (key: string, target: string, selectors: string) => {
+                dhtApplyChangesForKeyedSelectors(
+                    this.$_uploadImage,
+                    // Live change handler
+                    (key: string, target: string, selectors: string) => {
+                        applyChangesHelper(target, selectors, key, imageURL);
+                    },
+                    //restore to defaults
+                    (key: string, target: string, selectors: string) => {
+                        dhtRestoreElementDefaultValues(this.$_uploadImage, () => {
+                            applyChangesHelper(target, selectors, key, dhtGetDefaultValue(this.$_uploadImage));
+                        });
+                    },
+                );
+
+                //helper function to apply the style changes
+                function applyChangesHelper(target: string, selectors: string, key: string, imageURL: string) {
                     if (target === "attr") {
                         $(selectors).attr(key, imageURL);
                     } else if (target === "style") {
                         $(selectors).css({ [key]: `url(${imageURL})` });
                     }
-                });
+                }
             } catch (error) {
                 errorLoadingModule(error as string);
             }

@@ -10,13 +10,11 @@ $field = $args[ 'field' ] ?? [];
 
 $image_url = '';
 if( !empty( $field[ 'value' ][ 'image_id' ] ) ) {
-	
 	$attachemnt_url = wp_get_attachment_url( (int) $field[ 'value' ][ 'image_id' ] );
 	$image_url      = $attachemnt_url;
 	
 }
 elseif( !empty( $field[ 'value' ][ 'image' ] ) ) {
-	
 	$image_url = esc_url( $field[ 'value' ][ 'image' ] );
 }
 ?>
@@ -26,7 +24,7 @@ elseif( !empty( $field[ 'value' ][ 'image' ] ) ) {
 
 <div
     class="dht-field-wrapper dht-field-wrapper-upload-image <?php echo isset( $field[ 'attr' ][ 'class' ] ) ? esc_attr( $field[ 'attr' ][ 'class' ] ) : ''; ?>"
-	<?php echo dht_parse_option_attributes( $field[ 'attr' ] ?? [] ); ?> <?php echo OptionsHelpers::liveOptionSelectors( $field[ 'live' ] ?? [] ); ?>>
+	<?php echo dht_parse_option_attributes( $field[ 'attr' ] ?? [] ); ?> <?php echo OptionsHelpers::liveOptionSelectors( $field[ 'live' ] ?? [], $image_url ); ?>>
 	
 	<?php if( !empty( $field[ 'title' ] ) ): ?>
         <div class="dht-title"><?php echo esc_html( $field[ 'title' ] ); ?></div>

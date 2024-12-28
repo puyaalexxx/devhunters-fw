@@ -25,7 +25,7 @@ $right_choice = $toggle[ 'right-choice' ];
 
 <div
     class="dht-field-wrapper dht-field-wrapper-toggle dht-toggle-type <?php echo isset( $toggle[ 'attr' ][ 'class' ] ) ? esc_attr( $toggle[ 'attr' ][ 'class' ] ) : ''; ?>"
-	<?php echo dht_parse_option_attributes( $toggle[ 'attr' ] ); ?> <?php echo OptionsHelpers::liveOptionSelectors( $toggle[ 'live' ] ?? [] ); ?>>
+	<?php echo dht_parse_option_attributes( $toggle[ 'attr' ] ); ?> <?php echo OptionsHelpers::liveOptionSelectors( $toggle[ 'live' ] ?? [], $toggle[ 'value' ] ); ?>>
 	
 	<?php if( !empty( $toggle[ 'title' ] ) ): ?>
         <div class="dht-title"><?php echo esc_html( $toggle[ 'title' ] ); ?></div>

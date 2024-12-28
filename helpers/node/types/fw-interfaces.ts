@@ -45,6 +45,7 @@ interface ModuleInfo {
 
 //used for live editing feature
 interface ILiveEditorSelectors {
+    revert: boolean;
     selectors: string[];
     target: string;
 }

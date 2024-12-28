@@ -70,97 +70,131 @@ import { errorLoadingModule } from "@helpers/general";
             if (!(this.$_dimension.attr("data-live-selectors") ?? "").length) return;
 
             try {
-                const { dhtKeyedSelectorsHelper } = await import("@helpers/options/live-editing");
+                const {
+                    dhtApplyChangesForKeyedSelectors, dhtRestoreElementDefaultValues,
+                } = await import("@helpers/options/live-editing");
                 const { dhtOnChangeColorpicker } = await import("@helpers/options/colorpicker-utilities");
 
                 const dimensionInputs = [
                     ".dht-dimension-input-size-1", ".dht-dimension-input-size-2", ".dht-dimension-input-size-3", ".dht-dimension-input-size-4",
                 ];
 
-                dhtKeyedSelectorsHelper(this.$_dimension, (key: string, target: string, selectors: string) => {
-                    if (target === "style") {
-                        const preparedCSSProperty = key.trim();
+                dhtApplyChangesForKeyedSelectors(
+                    this.$_dimension,
+                    // Live change handler
+                    (key: string, target: string, selectors: string) => {
+                        if (target === "style") {
 
-                        if (preparedCSSProperty === "border") {
-                            //dimension border styles could be disabled
-                            if (this.$_border_style.length) {
-                                $(this.$_border_style).on("change", function() {
+                            if (key === "border") {
+                                //dimension border styles could be disabled
+                                if (this.$_border_style.length) {
+                                    $(this.$_border_style).on("change", function() {
+                                        triggerDimensionInputsChange();
+                                    });
+                                }
+                            }
+
+                            //apply styles on colorPicker change value
+                            if (this.$_colorpicker.length !== 0) {
+                                dhtOnChangeColorpicker(this.$_colorpicker, (_) => {
                                     triggerDimensionInputsChange();
                                 });
                             }
-                        }
+                            //dimension size - px, em... (dimension sizes could be disabled)
+                            if (this.$_units.length) {
+                                $(this.$_units).on("change", function() {
+                                    triggerDimensionInputsChange();
+                                });
+                            }
 
-                        //apply styles on colorPicker change value
-                        if (this.$_colorpicker.length !== 0) {
-                            dhtOnChangeColorpicker(this.$_colorpicker, (_) => {
-                                triggerDimensionInputsChange();
+                            onChangeDimensionInputs(key, selectors);
+                        }
+                    },
+                    //restore to defaults
+                    (key: string, target: string, selectors: string) => {
+                        if (target === "style") {
+                            const colorStyle = getColorpickerValue();
+                            const borderStyle = getBorderStylesDropdownValue();
+
+                            //get joined inputs values
+                            const dimensionValues = getDimensionInputsValues($(), getUnitsDropdownValue());
+
+                            dhtRestoreElementDefaultValues(this.$_dimension, () => {
+                                applyChangesHelper(selectors, key, dimensionValues, borderStyle, colorStyle);
                             });
                         }
-                        //dimension size - px, em... (dimension sizes could be disabled)
-                        if (this.$_units.length) {
-                            $(this.$_units).on("change", function() {
-                                triggerDimensionInputsChange();
-                            });
-                        }
+                    },
+                );
 
-                        onChangeDimensionInputs(preparedCSSProperty, selectors);
+                //helper function to apply the style changes
+                function applyChangesHelper(selectors: string, cssProperty: string, dimensionValues: string, borderStyle: string, colorStyle: string) {
+                    if (cssProperty === "border") {
+                        $(selectors).css({ "border-width": dimensionValues });
+                        $(selectors).css({ "border-style": borderStyle });
+                        $(selectors).css({ "border-color": colorStyle });
+                    } else {
+                        if (colorStyle.length > 0) {
+                            $(selectors).css({ [cssProperty]: dimensionValues + " " + colorStyle });
+                        } else {
+                            $(selectors).css({ [cssProperty]: dimensionValues });
+                        }
                     }
-                });
+                }
 
                 //helper function for dimension inputs on change event
                 function onChangeDimensionInputs(cssProperty: string, selectors: string) {
                     // Bind input change handler
-                    // dimensionInputs.forEach($inputClass => {
                     $thisClass.$_dimension.on("input change", ".dht-dimension", function(event) {
                         event.stopPropagation();
 
-                        // Get the value of the current input field
-                        const currentValue = String($(this).val());
-                        //get unit value
-                        const size = $thisClass.$_units.length > 0 ? (String($thisClass.$_units.val()) || "px") : "px";
-                        //get dimension color value
-                        const colorStyle = $thisClass.$_colorpicker.length > 0 ? (String($thisClass.$_colorpicker.val()) || "") : "";
+                        //get joined inputs values
+                        const dimensionValues = getDimensionInputsValues($(this), getUnitsDropdownValue());
 
-                        // Initialize an array with the current value (i.e., the one that triggered the change event)
-                        const dimensionInputsValues = dimensionInputs.map(input => {
-                            if ($(this).hasClass(input)) {
-                                // If this is the current input, use the value captured in the event
-                                return currentValue.length === 0 ? 0 : currentValue + size;
-                            } else {
-                                const inputElement = $thisClass.$_dimension.find(input);
-
-                                //check if input exist as it could be disabled
-                                if (inputElement.length > 0) {
-                                    const value = String(inputElement.val());
-                                    return value.length === 0 ? 0 : value + size;
-                                }
-                            }
-                        });
-
-                        // Join the dimension values to form the CSS value (top, right, bottom, left)
-                        const dimensionValues = dimensionInputsValues.join(" ");
-                        
-                        // $(selectors).css({ "border-radius": dimensionValues });
-                        if (cssProperty === "border") {
-                            //get dimension border style value
-                            const borderStyle = $thisClass.$_border_style.length > 0 ? (String($thisClass.$_border_style.val()) || "solid") : "solid";
-
-                            $(selectors).css({ "border-width": dimensionValues });
-                            $(selectors).css({ "border-style": borderStyle });
-                            $(selectors).css({ "border-color": colorStyle });
-                        } else {
-                            if (colorStyle.length > 0) {
-                                $(selectors).css({ [cssProperty]: dimensionValues + " " + colorStyle });
-                            } else {
-                                $(selectors).css({ [cssProperty]: dimensionValues });
-                            }
-                        }
+                        //apply the CSS styles
+                        applyChangesHelper(selectors, cssProperty, dimensionValues, getBorderStylesDropdownValue(), getColorpickerValue());
                     });
                 }
 
                 //helper function for dimension inputs to be triggered
                 function triggerDimensionInputsChange() {
                     $thisClass.$_dimension.find(".dht-dimension-input-size-1").trigger("change");
+                }
+
+                //get unit value
+                function getUnitsDropdownValue(): string {
+                    return $thisClass.$_units.length > 0 ? (String($thisClass.$_units.val()) || "px") : "px";
+                }
+
+                //get colorpicker input value
+                function getColorpickerValue(): string {
+                    return $thisClass.$_colorpicker.length > 0 ? (String($thisClass.$_colorpicker.val()) || "") : "";
+                }
+
+                //get border styles dropdown value
+                function getBorderStylesDropdownValue(): string {
+                    return $thisClass.$_border_style.length > 0 ? (String($thisClass.$_border_style.val()) || "solid") : "solid";
+                }
+
+                //get all dimension inputs values and join them
+                function getDimensionInputsValues($currentInput: JQuery<HTMLElement>, unit: string): string {
+                    // Initialize an array with the current value (i.e., the one that triggered the change event)
+                    // Join the dimension values to form the CSS value (top, right, bottom, left)
+                    return dimensionInputs.map(input => {
+                        if ($currentInput.hasClass(input)) {
+                            // Get the value of the current input field
+                            const currentValue = String($currentInput.val() ?? "");
+
+                            return currentValue.length === 0 ? 0 : currentValue + unit;
+                        } else {
+                            const inputElement = $thisClass.$_dimension.find(input);
+
+                            //check if input exist as it could be disabled
+                            if (inputElement.length > 0) {
+                                const value = String(inputElement.val());
+                                return value.length === 0 ? 0 : value + unit;
+                            }
+                        }
+                    }).join(" ");
                 }
             } catch (error) {
                 errorLoadingModule(error as string);

@@ -30,18 +30,34 @@ import { errorLoadingModule } from "@helpers/general";
             if (!(this.$_textarea.attr("data-live-selectors") ?? "").length) return;
 
             try {
-                const { dhtNotKeyedSelectorsHelper } = await import("@helpers/options/live-editing");
+                const {
+                    dhtApplyChangesForNotKeyedSelectors, dhtRestoreElementDefaultValues,
+                } = await import("@helpers/options/live-editing");
 
-                dhtNotKeyedSelectorsHelper(this.$_textarea, (target: string, selectors: string) => {
-                    this.$_textarea.on("input change", ".dht-textarea", function() {
-                        const value = String($(this).val());
+                dhtApplyChangesForNotKeyedSelectors(
+                    this.$_textarea,
+                    // Live change handler
+                    (target: string, selectors: string) => {
+                        this.$_textarea.on("input change", ".dht-textarea", function() {
+                            applyChangesHelper(target, selectors, String($(this).val()));
+                        });
+                    },
+                    //restore to defaults
+                    (target: string, selectors: string) => {
+                        const defaultValue = String(this.$_textarea.find(".dht-textarea").val());
 
-                        if (target === "content") {
-                            $(selectors).text(value);
-                        }
-                    });
-                });
+                        dhtRestoreElementDefaultValues(this.$_textarea, () => {
+                            applyChangesHelper(target, selectors, defaultValue);
+                        });
+                    },
+                );
 
+                //helper function to apply the content changes
+                function applyChangesHelper(target: string, selectors: string, value: string) {
+                    if (target === "content") {
+                        $(selectors).text(value);
+                    }
+                }
             } catch (error) {
                 errorLoadingModule(error as string);
             }

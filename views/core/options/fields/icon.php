@@ -18,6 +18,9 @@ $icons = [
 	/*"material" => 'Material Icons',*/
 	"bootstrap"   => 'Bootstrap'
 ];
+
+//saved icon class
+$icon_class = !empty( $field[ 'value' ] ) ? $field[ 'value' ][ 'icon-class' ] ?? "" : "";
 ?>
 <!-- field - icon -->
 
@@ -25,7 +28,7 @@ $icons = [
 
 <div
     class="dht-field-wrapper dht-field-wrapper-icons <?php echo isset( $field[ 'attr' ][ 'class' ] ) ? esc_attr( $field[ 'attr' ][ 'class' ] ) : ''; ?>"
-	<?php echo dht_parse_option_attributes( $field[ 'attr' ] ?? [] ); ?> <?php echo OptionsHelpers::liveOptionSelectors( $field[ 'live' ] ?? [] ); ?>>
+	<?php echo dht_parse_option_attributes( $field[ 'attr' ] ?? [] ); ?> <?php echo OptionsHelpers::liveOptionSelectors( $field[ 'live' ] ?? [], $icon_class ); ?>>
 	
 	<?php if( !empty( $field[ 'title' ] ) ): ?>
         <div class="dht-title"><?php echo esc_html( $field[ 'title' ] ); ?></div>

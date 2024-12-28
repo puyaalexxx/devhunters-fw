@@ -190,6 +190,7 @@ final class Typography extends BaseField {
 	private function _getTextDecorationValues() : array {
 		
 		return [
+			'none'         => _x( 'None', 'options', DHT_PREFIX ),
 			'underline'    => _x( 'Underline', 'options', DHT_PREFIX ),
 			'overline'     => _x( 'Overline', 'options', DHT_PREFIX ),
 			'line-through' => _x( 'Line Through', 'options', DHT_PREFIX )
@@ -205,6 +206,7 @@ final class Typography extends BaseField {
 	private function _getTextTransformValues() : array {
 		
 		return [
+			'none'       => _x( 'None', 'options', DHT_PREFIX ),
 			'capitalize' => _x( 'Capitalize', 'options', DHT_PREFIX ),
 			'uppercase'  => _x( 'Uppercase', 'options', DHT_PREFIX ),
 			'lowercase'  => _x( 'Lowercase', 'options', DHT_PREFIX ),

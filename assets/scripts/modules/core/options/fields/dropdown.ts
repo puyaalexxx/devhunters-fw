@@ -30,23 +30,40 @@ import { errorLoadingModule } from "@helpers/general";
             if (!(this.$_dropdown.attr("data-live-selectors") ?? "").length) return;
 
             try {
-                const { dhtKeyedSelectorsHelper } = await import("@helpers/options/live-editing");
+                const {
+                    dhtApplyChangesForKeyedSelectors, dhtRestoreElementDefaultValues,
+                } = await import("@helpers/options/live-editing");
 
-                dhtKeyedSelectorsHelper(this.$_dropdown, (key: string, target: string, selectors: string) => {
-                    this.$_dropdown.on("change", ".dht-dropdown", function() {
-                        const value = String($(this).val());
+                dhtApplyChangesForKeyedSelectors(
+                    this.$_dropdown,
+                    // Live change handler
+                    (key: string, target: string, selectors: string) => {
+                        this.$_dropdown.on("change", ".dht-dropdown", function() {
+                            applyChangesHelper(target, selectors, key, String($(this).val()));
+                        });
+                    },
+                    //restore to defaults
+                    (key: string, target: string, selectors: string) => {
+                        //on closing the modal (restore to defaults)
+                        const defaultValue = String(this.$_dropdown.find(".dht-dropdown").val());
+                        dhtRestoreElementDefaultValues(this.$_dropdown, () => {
+                            applyChangesHelper(target, selectors, key, defaultValue);
+                        });
+                    },
+                );
 
-                        if (target === "style") {
-                            $(selectors).css({ [key]: value });
-                        } else if (target === "display") {
-                            if (key == value) {
-                                $(selectors).show();
-                            } else {
-                                $(selectors).hide();
-                            }
+                //helper function to apply the style changes
+                function applyChangesHelper(target: string, selectors: string, key: string, value: string) {
+                    if (target === "style") {
+                        $(selectors).css({ [key]: value });
+                    } else if (target === "display") {
+                        if (key == value) {
+                            $(selectors).show();
+                        } else {
+                            $(selectors).hide();
                         }
-                    });
-                });
+                    }
+                }
             } catch (error) {
                 errorLoadingModule(error as string);
             }

@@ -53,7 +53,8 @@ $et_fonts = TypographyHelpers::getDiviFonts();
 ] = TypographyHelpers::getOptionValues( $field[ 'value' ] );
 
 //styles used for preview area
-$preview_styles = dht_get_typography_field_css_properties( $field[ 'value' ] );
+$preview_styles         = dht_get_typography_field_css_properties( $field[ 'value' ] );
+$default_css_properties = json_encode( dht_get_typography_field_css_properties( $field[ 'value' ], false ) );
 
 $font_type = TypographyHelpers::getFontType( $font_value, $google_fonts, $et_fonts );
 ?>
@@ -70,7 +71,7 @@ $font_type = TypographyHelpers::getFontType( $font_value, $google_fonts, $et_fon
 	<?php endif; ?>
 
     <div
-        class="dht-field-child-wrapper dht-field-child-typography" <?php echo OptionsHelpers::liveOptionSelectors( $field[ 'live' ] ?? [] ); ?>>
+        class="dht-field-child-wrapper dht-field-child-typography" <?php echo OptionsHelpers::liveOptionSelectors( $field[ 'live' ] ?? [], $default_css_properties ); ?>>
 		
 		<?php if( $field[ 'preview' ] ): ?>
             <p class="dht-field-child-typography-preview" style="<?php echo esc_attr( $preview_styles ); ?>">

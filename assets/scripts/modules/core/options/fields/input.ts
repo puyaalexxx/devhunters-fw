@@ -1,5 +1,5 @@
 import { errorLoadingModule } from "@helpers/general";
-import { dhtNotKeyedSelectorsHelper } from "@helpers/options/live-editing";
+import { dhtApplyChangesForNotKeyedSelectors } from "@helpers/options/live-editing";
 
 (function($: JQueryStatic): void {
     "use strict";
@@ -31,17 +31,34 @@ import { dhtNotKeyedSelectorsHelper } from "@helpers/options/live-editing";
             if (!(this.$_input.attr("data-live-selectors") ?? "").length) return;
 
             try {
-                const { dhtNotKeyedSelectorsHelper } = await import("@helpers/options/live-editing");
+                const {
+                    dhtApplyChangesForNotKeyedSelectors, dhtRestoreElementDefaultValues,
+                } = await import("@helpers/options/live-editing");
 
-                dhtNotKeyedSelectorsHelper(this.$_input, (target: string, selectors: string) => {
-                    this.$_input.on("input change", ".dht-input", function() {
-                        const value = String($(this).val());
+                dhtApplyChangesForNotKeyedSelectors(
+                    this.$_input,
+                    // Live change handler
+                    (target: string, selectors: string) => {
+                        this.$_input.on("input change", ".dht-input", function() {
+                            applyChangesHelper(target, selectors, String($(this).val()));
+                        });
+                    },
+                    //restore to defaults
+                    (target: string, selectors: string) => {
+                        const defaultValue = String(this.$_input.find(".dht-input").val());
 
-                        if (target === "content") {
-                            $(selectors).text(value);
-                        }
-                    });
-                });
+                        dhtRestoreElementDefaultValues(this.$_input, () => {
+                            applyChangesHelper(target, selectors, defaultValue);
+                        });
+                    },
+                );
+
+                //helper function to apply the content changes
+                function applyChangesHelper(target: string, selectors: string, value: string) {
+                    if (target === "content") {
+                        $(selectors).text(value);
+                    }
+                }
             } catch (error) {
                 errorLoadingModule(error as string);
             }

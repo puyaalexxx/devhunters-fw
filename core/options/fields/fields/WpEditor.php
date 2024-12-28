@@ -68,10 +68,7 @@ final class WpEditor extends BaseField {
 				// Replace the last character with an empty space
 				$id = substr( $id, 0, - 1 );
 			}
-			$field[ 'id' ] = str_replace( [
-				'[',
-				']'
-			], '-', $id );
+			$field[ 'id' ] = str_replace( [ '[', ']' ], '-', $id );
 		}
 		else {
 			

@@ -106,12 +106,36 @@ import { errorLoadingModule } from "@helpers/general";
          * @return Promise<void>
          */
         private async _liveEditing(values: number[]): Promise<void> {
+            const $thisClass = this;
             try {
-                const { dhtKeyedSelectorsHelper } = await import("@helpers/options/live-editing");
+                const {
+                    dhtApplyChangesForKeyedSelectors, dhtRestoreElementDefaultValues, dhtGetDefaultValue,
+                } = await import("@helpers/options/live-editing");
 
-                dhtKeyedSelectorsHelper(this.$_rangeSlider, (key: string, target: string, selectors: string) => {
+                dhtApplyChangesForKeyedSelectors(
+                    this.$_rangeSlider,
+                    // Live change handler
+                    (key: string, target: string, selectors: string) => {
+                        applyChangesHelper(target, selectors, key, values);
+                    },
+                    //restore to defaults
+                    (key: string, target: string, selectors: string) => {
+                        dhtRestoreElementDefaultValues(this.$_rangeSlider, () => {
+                            //values are saved as string, and it must be converted to array
+                            const defaultRangeValues = dhtGetDefaultValue(this.$_rangeSlider);
+                            const defaultRangeValuesArray = this.$_isRange === "yes"
+                                ? (defaultRangeValues ? defaultRangeValues.split(",") : [0])
+                                : (defaultRangeValues ? [defaultRangeValues] : [0]);
+
+                            applyChangesHelper(target, selectors, key, defaultRangeValuesArray.map(Number));
+                        });
+                    },
+                );
+
+                //helper function to apply the style changes
+                function applyChangesHelper(target: string, selectors: string, key: string, values: number[]) {
                     if (target === "style") {
-                        if (this.$_isRange === "yes") {
+                        if ($thisClass.$_isRange === "yes") {
                             const cssProperties = key.split(",");
 
                             //there should be always 2 CSS properties to apply the range values to them
@@ -124,7 +148,7 @@ import { errorLoadingModule } from "@helpers/general";
                             $(selectors).css({ [key]: values[0] + "px" });
                         }
                     }
-                });
+                }
             } catch (error) {
                 errorLoadingModule(error as string);
             }

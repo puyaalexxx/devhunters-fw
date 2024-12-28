@@ -59,17 +59,35 @@ import { dhtOnChangeColorpicker } from "@helpers/options/colorpicker-utilities";
             if (!(this.$_colorpicker.attr("data-live-selectors") ?? "").length) return;
 
             try {
-                const { dhtKeyedSelectorsHelper } = await import("@helpers/options/live-editing");
+                const {
+                    dhtApplyChangesForKeyedSelectors, dhtRestoreElementDefaultValues, dhtGetDefaultValue,
+                } = await import("@helpers/options/live-editing");
                 const { dhtOnChangeColorpicker } = await import("@helpers/options/colorpicker-utilities");
 
-                dhtKeyedSelectorsHelper(this.$_colorpicker, (key: string, target: string, selectors: string) => {
-                    //apply styles on colorPicker change value
-                    if (target === "style") {
-                        dhtOnChangeColorpicker($thisColorpicker, (color) => {
-                            $(selectors).css({ [key]: color });
-                        });
-                    }
-                });
+                dhtApplyChangesForKeyedSelectors(
+                    this.$_colorpicker,
+                    // Live change handler
+                    (key: string, target: string, selectors: string) => {
+                        if (target === "style") {
+                            dhtOnChangeColorpicker($thisColorpicker, (color) => {
+                                applyChangesHelper(key, selectors, color);
+                            });
+                        }
+                    },
+                    //restore to defaults
+                    (key: string, target: string, selectors: string) => {
+                        if (target === "style") {
+                            dhtRestoreElementDefaultValues(this.$_colorpicker, () => {
+                                applyChangesHelper(key, selectors, dhtGetDefaultValue(this.$_colorpicker));
+                            });
+                        }
+                    },
+                );
+
+                //helper function to apply the style changes
+                function applyChangesHelper(key: string, selectors: string, color: string) {
+                    $(selectors).css({ [key]: color });
+                }
             } catch (error) {
                 errorLoadingModule(error as string);
             }

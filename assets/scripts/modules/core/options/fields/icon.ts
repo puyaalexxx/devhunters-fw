@@ -54,7 +54,6 @@ import { errorLoadingModule } from "@helpers/general";
                 if (selected_input_val.length > 0) {
                     const selected_input_values = JSON.parse(selected_input_val);
                     icon_type = selected_input_values["icon-type"];
-                    // @ts-ignore
                     icon = selected_input_values["icon-class"];
                 }
 
@@ -251,6 +250,7 @@ import { errorLoadingModule } from "@helpers/general";
          * with the provided CSS selectors
          *
          * @param $thisIconsWrapper Icon wrapper area
+         *
          * @param iconClass         Icon class to apply on the selector
          *
          * @return Promise<void>
@@ -260,13 +260,30 @@ import { errorLoadingModule } from "@helpers/general";
             if (!($thisIconsWrapper.attr("data-live-selectors") ?? "").length) return;
 
             try {
-                const { dhtNotKeyedSelectorsHelper } = await import("@helpers/options/live-editing");
+                const {
+                    dhtApplyChangesForNotKeyedSelectors, dhtRestoreElementDefaultValues, dhtGetDefaultValue,
+                } = await import("@helpers/options/live-editing");
 
-                dhtNotKeyedSelectorsHelper($thisIconsWrapper, (target: string, selectors: string) => {
+                dhtApplyChangesForNotKeyedSelectors(
+                    $thisIconsWrapper,
+                    // Live change handler
+                    (target: string, selectors: string) => {
+                        applyChangesHelper(target, selectors, iconClass);
+                    },
+                    //restore to defaults
+                    (target: string, selectors: string) => {
+                        dhtRestoreElementDefaultValues($thisIconsWrapper, () => {
+                            applyChangesHelper(target, selectors, dhtGetDefaultValue($thisIconsWrapper));
+                        });
+                    },
+                );
+
+                //helper function to apply the style changes
+                function applyChangesHelper(target: string, selectors: string, iconClass: string) {
                     if (target === "class") {
                         $(selectors).attr("class", iconClass);
                     }
-                });
+                }
             } catch (error) {
                 errorLoadingModule(error as string);
             }

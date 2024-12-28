@@ -5,7 +5,7 @@ import { errorLoadingModule } from "@helpers/general";
 
     class Toggle {
         //toggle reference
-        private $_toggle: JQuery<HTMLElement>;
+        private readonly $_toggle: JQuery<HTMLElement>;
 
         constructor($toggle: JQuery<HTMLElement>) {
             //toggle reference
@@ -90,17 +90,36 @@ import { errorLoadingModule } from "@helpers/general";
             if (!(this.$_toggle.attr("data-live-selectors") ?? "").length) return;
 
             try {
-                const { dhtKeyedSelectorsHelper } = await import("@helpers/options/live-editing");
+                const {
+                    dhtApplyChangesForKeyedSelectors, dhtRestoreElementDefaultValues, dhtGetDefaultValue,
+                } = await import("@helpers/options/live-editing");
 
-                dhtKeyedSelectorsHelper(this.$_toggle, (key: string, target: string, selectors: string) => {
-                    if (target === "display") {
-                        if (key == displayToggleValue) {
-                            $(selectors).show();
-                        } else {
-                            $(selectors).hide();
+                dhtApplyChangesForKeyedSelectors(
+                    this.$_toggle,
+                    // Live change handler
+                    (key: string, target: string, selectors: string) => {
+                        if (target === "display") {
+                            applyChangesHelper(selectors, key, displayToggleValue);
                         }
+                    },
+                    //restore to defaults
+                    (key: string, target: string, selectors: string) => {
+                        if (target === "display") {
+                            dhtRestoreElementDefaultValues(this.$_toggle, () => {
+                                applyChangesHelper(selectors, key, dhtGetDefaultValue(this.$_toggle));
+                            });
+                        }
+                    },
+                );
+
+                //helper function to apply the changes
+                function applyChangesHelper(selectors: string, key: string, value: string) {
+                    if (key === value) {
+                        $(selectors).show();
+                    } else {
+                        $(selectors).hide();
                     }
-                });
+                }
             } catch (error) {
                 errorLoadingModule(error as string);
             }

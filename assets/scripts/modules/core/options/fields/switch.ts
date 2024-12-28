@@ -71,17 +71,36 @@ import { errorLoadingModule } from "@helpers/general";
             if (!(this.$_switch.attr("data-live-selectors") ?? "").length) return;
 
             try {
-                const { dhtKeyedSelectorsHelper } = await import("@helpers/options/live-editing");
+                const {
+                    dhtApplyChangesForKeyedSelectors, dhtRestoreElementDefaultValues, dhtGetDefaultValue,
+                } = await import("@helpers/options/live-editing");
 
-                dhtKeyedSelectorsHelper(this.$_switch, (key: string, target: string, selectors: string) => {
-                    if (target === "display") {
-                        if (key == displaySwitchValue) {
-                            $(selectors).show();
-                        } else {
-                            $(selectors).hide();
+                dhtApplyChangesForKeyedSelectors(
+                    this.$_switch,
+                    // Live change handler
+                    (key: string, target: string, selectors: string) => {
+                        if (target === "display") {
+                            applyChangesHelper(selectors, key, displaySwitchValue);
                         }
+                    },
+                    //restore to defaults
+                    (key: string, target: string, selectors: string) => {
+                        if (target === "display") {
+                            dhtRestoreElementDefaultValues(this.$_switch, () => {
+                                applyChangesHelper(selectors, key, dhtGetDefaultValue(this.$_switch));
+                            });
+                        }
+                    },
+                );
+
+                //helper function to apply the style changes
+                function applyChangesHelper(selectors: string, key: string, value: string) {
+                    if (key === value) {
+                        $(selectors).show();
+                    } else {
+                        $(selectors).hide();
                     }
-                });
+                }
             } catch (error) {
                 errorLoadingModule(error as string);
             }

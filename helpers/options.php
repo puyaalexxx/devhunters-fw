@@ -170,28 +170,41 @@ if( !function_exists( 'dht_get_typography_field_css_properties' ) ) {
 	/**
 	 * Construct typography field css properties from the saved values
 	 *
-	 * @param array $values
+	 * @param array $values Typography fields values
+	 * @param bool  $style  Return the result as CSS style or properties
 	 *
-	 * @return string
+	 * @return string|array
 	 * @since     1.0.0
 	 */
-	function dht_get_typography_field_css_properties( array $values ) : string {
+	function dht_get_typography_field_css_properties( array $values, bool $style = true ) : string|array {
 		
-		$preview_styles = '';
-		if( !empty( $values ) ) {
-			$preview_styles .= !empty( $values[ 'font-family' ] ) && !empty( $values[ 'font-family' ][ 'font' ] ) ? 'font-family:' . dht_remove_font_name_prefix( $values[ 'font-family' ][ 'font' ] ) . ', Arial, Helvetica, Lucida, sans-serif;' : '';
-			$preview_styles .= !empty( $values[ 'font-weight' ] ) ? 'font-weight:' . $values[ 'font-weight' ] . ';' : 'font-weight:400;';
-			$preview_styles .= !empty( $values[ 'font-style' ] ) ? 'font-style:' . $values[ 'font-style' ] . ';' : '';
-			$preview_styles .= !empty( $values[ 'text-transform' ] ) ? 'text-transform:' . $values[ 'text-transform' ] . ';' : '';
-			$preview_styles .= !empty( $values[ 'text-decoration' ] ) ? 'text-decoration:' . $values[ 'text-decoration' ] . ';' : '';
-			$preview_styles .= !empty( $values[ 'text-align' ] ) ? 'text-align:' . $values[ 'text-align' ] . ';' : '';
-			$preview_styles .= !empty( $values[ 'font-size' ] ) ? 'font-size:' . (int) $values[ 'font-size' ][ 'value' ] . $values[ 'font-size' ][ 'size' ] . ';' : '';
-			$preview_styles .= !empty( $values[ 'line-height' ] ) ? 'line-height:' . (int) $values[ 'line-height' ][ 'value' ] . $values[ 'line-height' ][ 'size' ] . ';' : '';
-			$preview_styles .= !empty( $values[ 'letter-spacing' ] ) ? 'letter-spacing:' . (int) $values[ 'letter-spacing' ][ 'value' ] . $values[ 'letter-spacing' ][ 'size' ] . ';' : '';
-			$preview_styles .= !empty( $values[ 'color' ] ) ? 'color:' . $values[ 'color' ] . ';' : '';
+		$css_properties = [
+			"font-family"     => !empty( $values[ 'font-family' ][ 'font' ] ) ? dht_remove_font_name_prefix( $values[ 'font-family' ][ 'font' ] ) . ', Arial, Helvetica, Lucida, sans-serif' : '',
+			"font-weight"     => !empty( $values[ 'font-weight' ] ) ? $values[ 'font-weight' ] : 400,
+			"font-style"      => !empty( $values[ 'font-style' ] ) ? $values[ 'font-style' ] : '',
+			"text-transform"  => !empty( $values[ 'text-transform' ] ) ? $values[ 'text-transform' ] : '',
+			"text-decoration" => !empty( $values[ 'text-decoration' ] ) ? $values[ 'text-decoration' ] : '',
+			"text-align"      => !empty( $values[ 'text-align' ] ) ? $values[ 'text-align' ] : '',
+			"font-size"       => !empty( $values[ 'font-size' ] ) ? (int) $values[ 'font-size' ][ 'value' ] . $values[ 'font-size' ][ 'size' ] : '',
+			"line-height"     => !empty( $values[ 'line-height' ] ) ? (int) $values[ 'line-height' ][ 'value' ] . $values[ 'line-height' ][ 'size' ] : '',
+			"letter-spacing"  => !empty( $values[ 'letter-spacing' ] ) ? (int) $values[ 'letter-spacing' ][ 'value' ] . $values[ 'letter-spacing' ][ 'size' ] : '',
+			"color"           => !empty( $values[ 'color' ] ) ? $values[ 'color' ] : '',
+		];
+		
+		// If the $style flag is true, create the CSS string
+		if( $style ) {
+			$preview_styles = '';
+			foreach ( $css_properties as $property => $value ) {
+				if( !empty( $value ) ) {
+					$preview_styles .= "$property:$value;";
+				}
+			}
+			
+			return $preview_styles;
 		}
 		
-		return $preview_styles;
+		// If $style is false, return the array
+		return $css_properties;
 	}
 }
 

@@ -311,6 +311,8 @@ function dhtVBModal(this: JQuery, options?: IVBModalData | keyof IVBModalMethods
 
         //close modal on click
         $(this).find(".dht-vb-modal-close").on("click", function() {
+            dhtBeforeClosingModal($moDialog);
+
             closeModal();
 
             //remove modal element
@@ -534,8 +536,9 @@ export function dhtCreateVBModal(moduleInfo: ModuleInfo) {
 function dhtAjaxLoadOptions(modal: JQuery<HTMLElement>): void {
     const $contentArea = modal.children(".dht-vb-modal-content");
     const $optionsArea = $contentArea.children(".dht-vb-modal-content-options");
-    const $spinner = $contentArea.children(".dht-preloader");
     const hiddenInputClass = modal.attr("data-module-input");
+    const $spinner = $contentArea.children(".dht-preloader");
+    const $formFooter = modal.children(".dht-vb-modal-footer");
 
     $.ajax({
         // @ts-ignore
@@ -555,8 +558,8 @@ function dhtAjaxLoadOptions(modal: JQuery<HTMLElement>): void {
         beforeSend: function() {
             //remove the modal content before load
             $optionsArea.empty();
-            //show loading spinner
-            $spinner.toggleClass("dht-hidden");
+
+            dhtDisableEnableModalElements($spinner, $formFooter);
         },
         success: function(response) {
             if (response.success) {
@@ -565,6 +568,8 @@ function dhtAjaxLoadOptions(modal: JQuery<HTMLElement>): void {
 
                 //add options to the modal
                 $optionsArea.append(response.data);
+
+                dhtDisableEnableModalElements($spinner, $formFooter);
 
                 // Initialize options so they could work as expected
                 setTimeout(function() {
@@ -586,10 +591,6 @@ function dhtAjaxLoadOptions(modal: JQuery<HTMLElement>): void {
             console.error("AJAX error: ", error);
         },
         complete: function() {
-            setTimeout(function() {
-                //hide loading spinner
-                $spinner.toggleClass("dht-hidden");
-            }, 500);
         },
     });
 }
@@ -607,9 +608,9 @@ function dhtAjaxLoadOptions(modal: JQuery<HTMLElement>): void {
  */
 function dhtAjaxSaveOptions(modal: JQuery<HTMLElement>, closeModal: () => void): void {
     const $form = modal.find("form");
+    const hiddenInputClass = modal.attr("data-module-input");
     const $formFooter = modal.children(".dht-vb-modal-footer");
     const $spinner = modal.find(".dht-preloader");
-    const hiddenInputClass = modal.attr("data-module-input");
 
     $.ajax({
         // @ts-ignore
@@ -627,18 +628,14 @@ function dhtAjaxSaveOptions(modal: JQuery<HTMLElement>, closeModal: () => void):
             },
         },
         beforeSend: function() {
-            //show loading spinner
-            $spinner.toggleClass("dht-hidden");
-            $formFooter.toggleClass("dht-vb-modal-footer-disabled");
+            dhtDisableEnableModalElements($spinner, $formFooter);
         },
         success: function(response) {
             if (response.success) {
                 //save form values to the input
                 modal.siblings("." + hiddenInputClass).val(response.data);
 
-                //hide loading spinner
-                $spinner.toggleClass("dht-hidden");
-                $formFooter.toggleClass("dht-vb-modal-footer-disabled");
+                dhtDisableEnableModalElements($spinner, $formFooter);
 
                 closeModal();
 
@@ -654,6 +651,35 @@ function dhtAjaxSaveOptions(modal: JQuery<HTMLElement>, closeModal: () => void):
         complete: function() {
         },
     });
+}
 
+/**
+ * Show-hide specific elements on the modal
+ *
+ * @param $spinner Spinner element
+ * @param $formFooter Footer Area (close , save buttons)
+ *
+ * @return void
+ */
+function dhtDisableEnableModalElements($spinner: JQuery<HTMLElement>, $formFooter: JQuery<HTMLElement>): void {
+    //hide loading spinner
+    $spinner.toggleClass("dht-hidden");
+    //hide modal footer area
+    $formFooter.toggleClass("dht-vb-modal-footer-disabled");
+}
 
+/**
+ * Thanks to do before closing the modal
+ *
+ * @param $moDialog Modal element
+ *
+ * @return void
+ */
+function dhtBeforeClosingModal($moDialog: JQuery<HTMLElement>): void {
+    //this will fix the Uncaught Error: cannot call methods on iris prior to initialization; attempted to call method 'toggle'
+    // the issue happens if you open the colorpicker and close the modal, it should be closed before the modal
+    const $colorpicker = $moDialog.find(".dht-colorpicker");
+    if ($colorpicker.length > 0) {
+        ($colorpicker as any).wpColorPicker("close");
+    }
 }

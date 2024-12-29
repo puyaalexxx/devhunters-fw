@@ -15,7 +15,7 @@ This is a framework that makes it easier to create WordPress plugins. It offers 
 5. dynamic sidebars feature
 6. registering custom sidebars via settings
 
-<h2 id="table-of-contents">Table of Contents</h2>
+<h2 id="table-of-contents" style="border-bottom:none;">Table of Contents</h2>
 ___
 
 1. [Installation](#installation)

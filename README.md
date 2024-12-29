@@ -127,7 +127,7 @@ There are 3 container types at the moment:
 - <p style="color: #3CB371;"><strong>Simple</strong></p>
 
 ```php
-  [
+[
     'id'      => 'general-side-menu-settings', // container id
     'type'    => 'simple', // container type
     'save'    => 'separately', //or group (group is default) - save options under one id (container id) or individually
@@ -139,6 +139,56 @@ There are 3 container types at the moment:
   ```
 
 - <p style="color: #3CB371;"><strong>SideMenu</strong></p>
+
+Each menu link will open the provided **page_link** via refresh
+
+```php
+[
+    'id' => 'side-menu-settings', // container id
+    'type' => 'sidemenu', // container type
+    'save'    => 'separately', //or group (group is default) - save options under one id (container id) or individually
+    'attr' => array( 'class' => 'custom-class', 'data-foo' => 'bar' ), // custom attributes added to the container
+    //pages match the registered dashboard menu items or any other links
+    'options' => [
+        [
+            'id' => 'general-settings',
+            'title' => 'General Settings',
+            'icon' => 'dashicons-before dashicons-admin-settings', // add a menu icon or image link
+            'page_link' => admin_url( 'admin.php?page=ppht-main-settings' ), //page link where it should go
+            'options' => [
+                // add here other option fields
+            ]
+        ],
+        [
+            'id' => 'modules',
+            'title' => 'Modules',
+            'icon' => 'dashicons-before dashicons-admin-page', // add a menu icon or image link
+            'page_link' => admin_url( 'admin.php?page=text-settings' ), // match the first page link from below pages
+            'pages' => [
+                [
+                    'id' => 'text-settings',
+                    'title' => 'Text Page',
+                    'page_link' => admin_url( 'admin.php?page=text-settings' ), //page link where it should go
+                ],
+                [
+                    'id' => 'contact-form-page',
+                    'title' => 'Contact Form Page',
+                    'page_link' => admin_url( 'admin.php?page=contact-settings' ), //page link where it should go
+                ],
+            ],
+        ],
+        [
+            'id' => 'tools-settings',
+            'title' => 'Tools Page',
+            'icon' => 'http://my-site.com/images/devhuntersmain-logo-dashmenu.png', // add a menu icon or image link
+            'page_link' => admin_url( 'admin.php?page=ppht-tools-settings' ), //page link where it should go
+        ],
+    ]
+]
+  ```
+
+[SideMenu Refresh](https://live.staticflickr.com/65535/54233811784_4433525db5_b.jpg)
+
 - <p style="color: #3CB371;"><strong>TabsMenu</strong></p>
 
 'save' => 'separately'

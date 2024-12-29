@@ -2,7 +2,7 @@
 
 **Version 1.0.0**
 
-## **Introduction**
+<h2 id="introduction">Introduction</h2>
 
 ___
 
@@ -15,12 +15,11 @@ This is a framework that makes it easier to create WordPress plugins. It offers 
 5. dynamic sidebars feature
 6. registering custom sidebars via settings
 
-## Table of Contents
-
+<h2 id="table-of-contents">Table of Contents</h2>
 ___
 
-1. [Installation](#Installation)
-2. [Features](#Features)
+1. [Installation](#installation)
+2. [Features](#features)
     - [Custom Fields](#custom-fields)
         - [Containers](#containers)
             - [Simple](#simple)
@@ -29,21 +28,21 @@ ___
         - [Groups](#groups)
         - [Toggles](#toggles)
         - [Fields](#fields)
-    - [Creating Dashboard Menus](#Dasboard-Menus)
-    - [Creating Custom Posts](#Custom-Posts)
-    - [Creating Custom Sidebars](#Custom-Sidebars)
-    - [Enabling Dynamic Sidebars](#Dynamic-Sidebars)
-    - [Visual Builder](#Visual-Builder)
-    - [CLI](#CLI)
-3. [Framework Utilities](#Framework-Utilities)
-    - [Manifest](#Manifest)
-    - [Functions](#Functions)
-    - [Custom Hooks](#Custom-Hooks)
-    - [Custom Filters](#Custom-Filters)
-4. [Licence](#License)
-5. [Authors](#Authors)
+    - [Creating Dashboard Menus](#dasboard-menus)
+    - [Creating Custom Posts](#custom-posts)
+    - [Creating Custom Sidebars](#custom-sidebars)
+    - [Enabling Dynamic Sidebars](#dynamic-sidebars)
+    - [Visual Builder](#visual-builder)
+    - [CLI](#cli)
+3. [Framework Utilities](#framework-utilities)
+    - [Manifest](#manifest)
+    - [Functions](#functions)
+    - [Custom Hooks](#custom-hooks)
+    - [Custom Filters](#custom-filters)
+4. [Licence](#license)
+5. [Authors](#authors)
 
-## **Installation**
+<h2 id="installation">Installation</h2>
 
 ___
 
@@ -102,7 +101,7 @@ devhunter-utils package
 - push to github in the devhunters plugin
 - npm update devhunters-utils
 
-## **Features**
+<h2 id="features">Features</h2>
 
 ---
 
@@ -313,21 +312,20 @@ want or class to the container div tag.
 
 ---
 
-## **Framework Utilities**
+<h2 id="framework-utilities">Framework Utilities</h2>
 
 ___
 
 All framework helpers that you can use in your plugin
 
-## **License**
+<h2 id="license">License</h2>
 
 ___
 
 The framework is released under the MIT License. See the **[LICENSE](https://opensource.org/license/MIT)** link
 for details.
 
-## **Authors**
-
+<h2 id="authors">Authors</h2>
 ___
 
 The framework was created by **[Alex](https://github.com/puyaalexxx)**.

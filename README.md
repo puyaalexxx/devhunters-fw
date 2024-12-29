@@ -4,8 +4,6 @@
 
 <h2 id="introduction">Introduction</h2>
 
-___
-
 This is a framework that makes it easier to create WordPress plugins. It offers many features, such as:
 
 1. custom fields
@@ -15,8 +13,7 @@ This is a framework that makes it easier to create WordPress plugins. It offers 
 5. dynamic sidebars feature
 6. registering custom sidebars via settings
 
-<h2 id="table-of-contents" style="border-bottom:none;">Table of Contents</h2>
-___
+<h2 id="table-of-contents">Table of Contents</h2>
 
 1. [Installation](#installation)
 2. [Features](#features)
@@ -26,12 +23,19 @@ ___
             - [SideMenu](#sidemenu)
             - [TabsMenu](#tabsmenu)
         - [Groups](#groups)
+            - [Group](#group)
+            - [Tabs](#tabs)
+            - [Panel](#panel)
+            - [Accordion](#accordion)
+            - [Addable Box](#addable-box)
         - [Toggles](#toggles)
+            - [Toggle](#toggle)
         - [Fields](#fields)
-    - [Creating Dashboard Menus](#dasboard-menus)
-    - [Creating Custom Posts](#custom-posts)
-    - [Creating Custom Sidebars](#custom-sidebars)
-    - [Enabling Dynamic Sidebars](#dynamic-sidebars)
+        - [Fields Settings Elaborations](#fields-settings-eleborations)
+    - [Dashboard Menus](#dasboard-menus)
+    - [Custom Posts](#custom-posts)
+    - [Custom Sidebars](#custom-sidebars)
+    - [Dynamic Sidebars](#dynamic-sidebars)
     - [Visual Builder](#visual-builder)
     - [CLI](#cli)
 3. [Framework Utilities](#framework-utilities)
@@ -43,8 +47,6 @@ ___
 5. [Authors](#authors)
 
 <h2 id="installation">Installation</h2>
-
-___
 
 You can install the framework in two ways:
 
@@ -103,13 +105,11 @@ devhunter-utils package
 
 <h2 id="features">Features</h2>
 
----
-
 All the framework features that you can use.
 
 <h3 id="custom-fields">Custom Fields</h3>
 
----
+===================================
 
 You have 4 types of custom fields:
 
@@ -151,7 +151,7 @@ Simple container is just a convenience to group the options
 
 - <span id="sidemenu">**SideMenu**</span>
 
-SideMenu via refresh links - each menu link will open the provided **page_link** via refresh
+SideMenu via refresh links - each menu link will open the provided **page_link** via refresh.
 
 ```php
 [
@@ -198,7 +198,7 @@ SideMenu via refresh links - each menu link will open the provided **page_link**
 ]
   ```
 
-SideMenu as tabs - `'subtype' => 'tabs'` - each menu item will be opened as a tab on the same page:
+SideMenu as tabs - `'subtype' => 'tabs'` - each menu item will be opened as a tab on the same page.
 
 ```php
 [
@@ -256,40 +256,236 @@ SideMenu as tabs - `'subtype' => 'tabs'` - each menu item will be opened as a ta
 
 ```php
 [
-	'id' => 'tabs-container-settings', // container id
-	'type' => 'tabsmenu', // container type
-	'save' => 'separately', //or group (group is default) - save options under one id or individually
-	'options' => [
-		[
-			'id' => 'general-settings',
-			'title' => 'General Settings',
-			'options' => [
-                            // add here other option fields
-                         ]
-		],
-		[
-			'id' => 'modules-settings',
-			'title' => 'Modules',
-			'options' => [
-                            // add here other option fields
-                         ]
-		],
-		[
-			'id' => 'tools-settings',
-			'title' => 'Tools',
-			'options' => [    
-                            // add here other option fields
-                         ]
-		],
-	]
-];
+    'id' => 'tabs-container-settings', // container id
+    'type' => 'tabsmenu', // container type
+    'save' => 'separately', //or group (group is default) - save options under one id or individually
+    'options' => [
+        [
+            'id' => 'general-settings',
+            'title' => 'General Settings',
+            'options' => [
+                // add here other option fields
+             ]
+        ],
+        [
+            'id' => 'modules-settings',
+            'title' => 'Modules',
+            'options' => [
+                // add here other option fields
+             ]
+        ],
+        [
+            'id' => 'tools-settings',
+            'title' => 'Tools',
+            'options' => [    
+                // add here other option fields
+             ]
+        ],
+    ]
+]
   ```
 
 ![TabsMenu Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735481674/tabsmenu_f6bq9a.png)
 
-**Some Explanations:**
+<h3 id="groups">Groups</h3>
 
-`'id'      => 'general-side-menu-settings'`- the fields is saved under this id, make sure that it is unique.
+===================================
+
+- <span id="group">**Group**</span>
+
+A simple group field to group other fields.
+
+```php
+ [
+     'id' => 'group', // container id
+     'type' => 'group', // container type
+     'title' => _x( 'Group Title', 'options', PREFIX ), // group title
+     'options' => [
+         // add here other option fields
+     ],
+     'attr' => array( 'class' => 'custom-class', 'data-foo' => 'bar' ), // custom attributes added to the group
+     'description' => _x( 'Group description', 'options', PREFIX ), // group description
+     'tooltip' => _x( 'More description in tooltip', 'options', PREFIX ), // // group tooltip
+     'divider' => true // add a border at the bottom
+ ]
+  ```
+
+![Group Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735494175/group-type_nswdhn.png)
+
+- <span id="tabs">**Tabs**</span>
+
+```php
+ [
+     'id' => 'tabs', // container id
+     'type' => 'tabs', // container type
+     'title' => _x( 'Tabs Title', 'options', PREFIX ), // group title
+     'fullwidth' => false, // if tabs should be fullwidth
+     'options' => [
+         //tab 1
+         [
+             'title' => _x( 'Tab 1', 'options', PREFIX ),
+             'options' => [
+                 // add here other option fields
+             ]
+         ],
+         //tab 2
+         [
+             'title' => _x( 'Tab 2', 'options', PREFIX ),
+             'options' => [
+                 // add here other option fields
+             ]
+         ]
+     ],
+     'attr' => array( 'class' => 'custom-class', 'data-foo' => 'bar' ), // custom attributes added to the group
+     'description' => _x( 'Tabs description', 'options', PREFIX ), // group description
+     'tooltip' => _x( 'More description in tooltip', 'options', PREFIX ), // group tooltip
+     'divider' => true // add a border at the bottom
+ ]
+  ```
+
+![Tabs Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735494178/tabs_j2x9by.png)
+
+**Fullwidth:**
+
+![Tabs Fullwidth Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735494177/tabs-fullwidth_sppbvu.png)
+
+- <span id="panel">**Panel**</span>
+
+```php
+ [
+     'id'          => 'panel', // container id
+     'type'        => 'panel', // container type
+     'title'       => _x( 'Panel Title', 'options', PREFIX ), // group title
+     'fullwidth' => true, // if panels should be fullwidth
+     'options'     => [
+         [
+             'panel_title' => _x( 'Panel 1', 'options', PREFIX ),
+             'options'     => [
+                // add here other option fields
+             ]
+         ],
+         [
+             'panel_title' => _x( 'Panel 2', 'options', PREFIX ),
+             'options'     => [
+                // add here other option fields
+             ]
+         ]
+     ],
+     'attr' => array( 'class' => 'custom-class', 'data-foo' => 'bar' ), // custom attributes added to the group
+     'description' => _x( 'Panel description', 'options', PREFIX ), // group description
+     'tooltip' => _x( 'More description in tooltip', 'options', PREFIX ), // group tooltip
+     'divider' => true // add a border at the bottom
+ ]
+  ```
+
+![Panel Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735494177/panel_rwakpc.png)
+
+**Fullwidth:**
+
+![Panel Fullwidth Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735494175/panel-fullwidth_n0lqhc.png)
+
+- <span id="accordion">**Accordion**</span>
+
+```php
+ [
+     'id' => 'accordion', // container id
+     'type' => 'accordion', // container type
+     'title' => _x( 'Accordion Title', 'options', PREFIX ), // group title
+     'options' => [
+         //group 1
+         [
+             'title' => _x( 'Group 1', 'options', PREFIX ),
+             'options' => [
+                 // add here other option fields
+             ]
+         ],
+         //group 2
+         [
+             'title' => _x( 'Group 2', 'options', PREFIX ),
+             'options' => [
+                 // add here other option fields
+             ]
+         ]
+     ],
+     'attr' => array( 'class' => 'custom-class', 'data-foo' => 'bar' ), // custom attributes added to the group
+     'description' => _x( 'Accordion description', 'options', PREFIX ), // group description
+     'tooltip' => _x( 'More description in tooltip', 'options', PREFIX ), // group tooltip
+     'divider' => true // add a border at the bottom
+ ]
+  ```
+
+![Accordion Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735494174/accordion_swx3zf.png)
+
+- <span id="addable-box">**Addable Box**</span>
+
+Addable boxes, that you can add dynamically. The fields inside are loaded via ajax.
+
+```php
+ [
+     'id' => 'addable', // container id
+     'type' => 'addable-box', // container type
+     'title' => _x( 'Addable Box Title', 'options', PREFIX ), // group title
+     'sortable' => true, // sort the boxes
+     'limit' => -1, // -1 for unlimited items - number of max items you can add
+     'box-title'   => _x( 'Box Title', 'options', PREFIX ), // Box title 
+     'options' => [
+         // add here other option fields
+     ],
+     'attr' => array( 'class' => 'custom-class', 'data-foo' => 'bar' ), // custom attributes added to the group
+     'description' => _x( 'Addable Box description', 'options', PREFIX ), // group description
+     'tooltip' => _x( 'More description in tooltip', 'options', PREFIX ), // group tooltip
+     'divider' => true // add a border at the bottom
+ ]
+  ```
+
+![Addable Box Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735494174/addable-box_rb49gb.png)
+
+<h3 id="toggles">Toggles</h3>
+
+- <span id="toggle">**Toggle**</span>
+
+A toggle field to show hide specific fields.
+
+```php
+ [
+     'id' => 'toggle', // container id
+     'type' => 'toggle', // container type
+     'title' => _x( 'Toogle Title', 'options', PREFIX ), // toggle title
+     "size"         => "small", //medium, large - button size
+     'value' => 'off', // default value
+     'left-choice' => array( 
+         'value' => 'on',
+         'label' => _x( 'Enable', 'options', PREFIX ), // toggle left label
+         'options' => [
+             // add here other option fields
+         ]
+     ),
+     'right-choice' => array(
+         'value' => 'off',
+         'label' => _x( 'Disable', 'options', PREFIX ), // toggle right label
+         'options' => [
+             // add here other option fields
+         ]
+     ),
+     
+     'attr' => array( 'class' => 'custom-class', 'data-foo' => 'bar' ), // custom attributes added to the toggle
+     'description' => _x( 'Toggle description', 'options', PREFIX ), // toggle description
+     'tooltip' => _x( 'More description in tooltip', 'options', PREFIX ), // toggle tooltip
+     'divider' => true // add a border at the bottom
+ ]
+  ```
+
+![Toggle Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735494179/toggle_etvbjh.png)
+
+===================================
+
+<h3 id="fields">Fields</h3>
+
+===================================
+
+<span id="fields-settings-eleborations">**Field Settings Elaborations:**</span>
+
+`'id' => 'general-side-menu-settings'`- the fields is saved under this id, make sure that it is unique.
 
 `'save' => 'separately'`- this setting will save each container individual field under its separate id,
 that you can retrieve
@@ -300,32 +496,28 @@ If the value is **group**, then all the options inside the container will be sav
 `'attr' => array( 'class' => 'custom-class', 'data-foo' => 'bar' )`- this will add any attributes that you
 want or class to the container div tag.
 
-<h3 id="groups">Groups</h3>
+`'value' => 'off'`- the field default value.
 
----
+`'sortable' => true`- make the fields sortable (this is supported by some fields only)
 
-<h3 id="toggles">Toggles</h3>
+`'fullwidth' => false`- make the field fullwidth instead of 3 columns view (this is supported by some fields only)
 
----
+`'limit' => -1`- max number of items that can be added dynamically. -1 means that there is no limit.
 
-<h3 id="fields">Fields</h3>
+`'tooltip' => _x( 'More description in tooltip', 'options', PREFIX )`- additional description in a tooltip (this can be
+removed)
 
----
+`'divider' => true`- this will add a border after the field
 
 <h2 id="framework-utilities">Framework Utilities</h2>
-
-___
 
 All framework helpers that you can use in your plugin
 
 <h2 id="license">License</h2>
 
-___
-
 The framework is released under the MIT License. See the **[LICENSE](https://opensource.org/license/MIT)** link
 for details.
 
 <h2 id="authors">Authors</h2>
-___
 
 The framework was created by **[Alex](https://github.com/puyaalexxx)**.

@@ -187,7 +187,7 @@ Each menu link will open the provided **page_link** via refresh
 ]
   ```
 
-[SideMenu Refresh](https://live.staticflickr.com/65535/54233811784_4433525db5_b.jpg)
+![SideMenu Refresh](https://live.staticflickr.com/65535/54233811784_4433525db5_b.jpg)
 
 - <p style="color: #3CB371;"><strong>TabsMenu</strong></p>
 

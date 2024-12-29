@@ -22,6 +22,13 @@ ___
 1. [Installation](#Installation)
 2. [Features](#Features)
     - [Custom Fields](#custom-fields)
+        - [Containers](#containers)
+            - [Simple](#simple)
+            - [SideMenu](#sidemenu)
+            - [TabsMenu](#tabsmenu)
+        - [Groups](#groups)
+        - [Toggles](#toggles)
+        - [Fields](#fields)
     - [Creating Dashboard Menus](#Dasboard-Menus)
     - [Creating Custom Posts](#Custom-Posts)
     - [Creating Custom Sidebars](#Custom-Sidebars)
@@ -97,20 +104,20 @@ devhunter-utils package
 
 ## **Features**
 
-___
+---
 
 All the framework features that you can use.
 
-<h3 id="custom-fields" style="text-align:center">Custom Fields</h3>
+<h3 id="custom-fields">Custom Fields</h3>
 
-<hr style="width: 75%; margin: 0 auto;"/>
+---
 
-You have 4 types or custom fields.
+You have 4 types of custom fields:
 
-- <p style="color: #3CB371;"><strong>Containers</strong></p>
-- <p style="color: #3CB371;"><strong>Groups</strong></p>
-- <p style="color: #3CB371;"><strong>Toggles</strong></p>
-- <p style="color: #3CB371;"><strong>Fields</strong></p>
+- **Containers**
+- **Groups**
+- **Toggles**
+- **Fields**
 
 You can use them from top to bottom. You can add fields inside toggles, toggles inside groups and groups
 inside containers, however you can't use them otherwise. You can't add containers inside fields, groups
@@ -118,13 +125,16 @@ inside fields or containers inside toggles.
 
 So it should be like this - **Containers > Groups > Toggles > Fields**
 
-<h3 style="text-align:center">Containers</h3>
-<hr style="width: 50%; margin: 0 auto; "/>
+<h3 id="containers">Containers</h3>
+
+---
 
 Containers are the top level custom fields that you can add to place other fields inside.
 There are 3 container types at the moment:
 
-- <p style="color: #3CB371;"><strong>Simple</strong></p>
+- <span id="simple">**Simple**</span>
+
+Simple container is just a convenience to group the options
 
 ```php
 [
@@ -138,9 +148,11 @@ There are 3 container types at the moment:
 ]
   ```
 
-- <p style="color: #3CB371;"><strong>SideMenu</strong></p>
+![Simple Container Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735481017/simple-container_sl6dly.png)
 
-Each menu link will open the provided **page_link** via refresh
+- <span id="sidemenu">**SideMenu**</span>
+
+SideMenu via refresh links - each menu link will open the provided **page_link** via refresh
 
 ```php
 [
@@ -187,11 +199,119 @@ Each menu link will open the provided **page_link** via refresh
 ]
   ```
 
-![SideMenu Refresh](https://live.staticflickr.com/65535/54233811784_4433525db5_b.jpg)
+SideMenu as tabs - `'subtype' => 'tabs'` - each menu item will be opened as a tab on the same page:
 
-- <p style="color: #3CB371;"><strong>TabsMenu</strong></p>
+```php
+[
+    'id' => 'side-menu-settings', // container id
+    'type' => 'sidemenu', // container type
+    'subtype' => 'tabs', //make it tabs
+    'save'    => 'separately', //or group (group is default) - save options under one id (container id) or individually
+    'attr' => array( 'class' => 'custom-class', 'data-foo' => 'bar' ), // custom attributes added to the container
+    //pages match the registered dashboard menu items or any other links
+    'options' => [
+        [
+            'id' => 'general-settings',
+            'title' => 'General Settings',
+            'icon' => 'dashicons-before dashicons-admin-settings', // add a menu icon or image link
+            'options' => [
+                // add here other option fields
+            ]
+        ],
+        [
+            'id' => 'modules',
+            'title' => 'Modules',
+            'icon' => 'dashicons-before dashicons-admin-page', // add a menu icon or image link
+            'pages' => [
+                [
+                    'id' => 'text-settings',
+                    'title' => 'Text Page',
+                    'options' => [
+                         // add here other option fields
+                     ]
+                ],
+                [
+                    'id' => 'contact-form-page',
+                    'title' => 'Contact Form Page',
+                    'options' => [
+                         // add here other option fields
+                     ]
+                ],
+            ],
+        ],
+        [
+            'id' => 'tools-settings',
+            'title' => 'Tools Page',
+            'icon' => 'http://my-site.com/images/devhuntersmain-logo-dashmenu.png', // add a menu icon or image link
+            'options' => [
+                // add here other option fields
+            ]
+        ],
+    ]
+]
+  ```
 
-'save' => 'separately'
+![SideMenu Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735478510/sidemenu-refresh_t7yyp6.png)
+
+- <span id="tabsmenu">**TabsMenu**</span>
+
+```php
+[
+	'id' => 'tabs-container-settings', // container id
+	'type' => 'tabsmenu', // container type
+	'save' => 'separately', //or group (group is default) - save options under one id or individually
+	'options' => [
+		[
+			'id' => 'general-settings',
+			'title' => 'General Settings',
+			'options' => [
+                            // add here other option fields
+                         ]
+		],
+		[
+			'id' => 'modules-settings',
+			'title' => 'Modules',
+			'options' => [
+                            // add here other option fields
+                         ]
+		],
+		[
+			'id' => 'tools-settings',
+			'title' => 'Tools',
+			'options' => [    
+                            // add here other option fields
+                         ]
+		],
+	]
+];
+  ```
+
+![TabsMenu Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735481674/tabsmenu_f6bq9a.png)
+
+**Some Explanations:**
+
+`'id'      => 'general-side-menu-settings'`- the fields is saved under this id, make sure that it is unique.
+
+`'save' => 'separately'`- this setting will save each container individual field under its separate id,
+that you can retrieve
+via the standard WordPess
+function [get_option("field id")](https://developer.wordpress.org/reference/functions/get_option/).
+If the value is **group**, then all the options inside the container will be saved under the container id.
+
+`'attr' => array( 'class' => 'custom-class', 'data-foo' => 'bar' )`- this will add any attributes that you
+want or class to the container div tag.
+
+<h3 id="groups">Groups</h3>
+
+---
+
+<h3 id="toggles">Toggles</h3>
+
+---
+
+<h3 id="fields">Fields</h3>
+
+---
 
 ## **Framework Utilities**
 

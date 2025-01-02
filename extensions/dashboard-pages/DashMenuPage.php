@@ -108,12 +108,12 @@ final class DashMenuPage implements IDashMenuPage {
 			'menu_title'      => $menu_title,
 			'capability'      => $capability,
 			'menu_slug'       => $menu_slug,
-			'callback'        => $callback,
 			'template_path'   => $template_path,
 			'additional_args' => $additional_args,
 		] = $menu_values;
 		
-		$callback_func = $callback ? $this->_mergeCallbackArguments( $callback, $template_path, $additional_args ) : '';
+		$type          = $menu_values[ 'type' ] ?? "default";
+		$callback_func = $type === "custom" ? "" : $this->_mergeCallbackArguments( $type, $template_path, $additional_args );
 		
 		// If it's a submenu, destructure the parent_slug
 		if( $is_submenu ) {

@@ -61,10 +61,15 @@ This is a framework that makes it easier to create WordPress plugins. It offers 
             - [Typography](#typography)
         - [Fields Settings Elaboration](#fields-settings-eleborations)
         - [Live Fields Editing](#live-fields)
-    - [Dashboard Menus](#dasboard-menus)
+        - [How To Use](#how-to-use-dashboard-menus)
+    - [Dashboard Menus](#dashboard-menus)
+        - [How To Use](#how-to-use-fields)
     - [Custom Posts](#custom-posts)
+        - [How To Use](#how-to-use-custom-posts)
     - [Custom Sidebars](#custom-sidebars)
+        - [How To Use](#how-to-use-custom-sidebars)
     - [Dynamic Sidebars](#dynamic-sidebars)
+        - [How To Use](#how-to-use-dynamic-sidebars)
     - [Visual Builder](#visual-builder)
     - [CLI](#cli)
 3. [Framework Utilities](#framework-utilities)
@@ -1240,6 +1245,577 @@ removed)
 <h3 id="live-fields">Live Fields Editing</h3>
 
 ===================================
+
+Some of the custom fields can be used to add live changes. When you change the field value, you can target another
+elements on your page like HTML attributes, styles or text.
+
+![Live Editing Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735645306/live-editing_w96lir.gif)
+
+![Live Editing 2 Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735645515/live-editing-2_k2vl1p.gif)
+
+**Fields that support live editing:**
+
+```php
+//input
+[
+    'id'          => 'input',
+    'type'        => 'input',
+    'title'       => _x( 'Title', 'options', PREFIX ),
+    'value'       => '',
+    'live'    => [
+        "revert"    => true,
+        "target"    => "content",
+        "selectors" => [ ".custom-class .title", ".custom-class .description" ]
+    ]
+]
+
+//textarea
+[
+    'id'      => 'textarea',
+    'type'    => 'textarea',
+    'title'   => _x( 'Title', 'options', PREFIX ),
+    'value'   => '',
+    'rows'    => 6,
+    'default' => '',
+    'live'    => [
+        "revert"    => true,
+        "target"    => "content",
+        "selectors" => [ ".custom-class .title", ".custom-class .description" ]
+    ]
+    'description' => _x( 'Textarea description', 'options', PREFIX ),
+]
+
+//wp editor
+[
+    'id'           => 'editor',
+    'type'         => 'wpeditor',
+    'title'        => _x( 'Title', 'options', PREFIX ),
+    'value'        => '',
+    'rows'         => 6,
+    'media_button' => true,
+    'live'    => [
+        "revert"    => true,
+        "target"    => "content",
+        "selectors" => [ ".custom-class .title", ".custom-class .description" ]
+    ]
+]
+
+//dropdown
+[
+    'id'          => 'dropdown',
+    'type'        => 'dropdown',
+    'title'       => _x( 'Title', 'options', PREFIX ),
+    'value'       => 'no-repeat',
+    'choices'     => [
+        'no-repeat' => _x( 'No Repeat', 'options', PREFIX ),
+        'repeat'    => _x( 'Repeat All', 'options', PREFIX ),
+        'repeat-x'  => _x( 'Repeat Horizontally', 'options', PREFIX ),
+    ],
+    //apply styles
+    'live'        => [
+        "revert"    => true,
+        "target"    => "style",
+        "selectors" => [
+            "background-repeat" => [ ".custom-class .custom-class-content" ],
+        ]
+    ],
+    //show hide elements
+    'live'        => [
+        "target"    => "display",
+        "selectors" => [
+            "revert"    => true,
+            //keys must match the choices keys
+            "show" => [ ".custom-class .icon" ],
+            "hide" => [ ".custom-class .img" ]
+        ]
+    ]
+]
+
+//dimension
+[
+    'id'            => 'dimensions',
+    'type'          => 'dimension',
+    'title'         => _x( 'Title', 'options', PREFIX ),
+    'value'         => [
+        'size-1'    => 8,
+        'size-2'  => 8,
+        'size-3' => 8,
+        'size-4'   => 8,
+        'unit'         => 'px',
+        'border-style' => 'solid',
+        'color'        => '#000000'
+    ],
+    "units-values"  => [ "%" => "%", "px" => "px", "em" => "em" ],
+    'size-2'        => true,
+    'size-3'        => true,
+    'size-4'        => true,
+    'units'         => true,
+    'border-styles' => true,
+    'color'         => true,
+    'input-icons'   => true,
+    'palettes'      => [],
+    'live'          => [
+        "revert"    => true,
+        "target"    => "style",
+        "selectors" => [
+            "border"        => [ ".custom-class .custom-class-content" ],
+            "border-radius" => [ ".custom-class .custom-class-content" ]
+        ]
+    ]
+]
+
+//range slider 
+[
+    'id'          => 'range-slider',
+    'type'        => 'range-slider',
+    'title'       => "",
+    'range'       => false,
+    'min'         => 0,
+    'max'         => 500,
+    'value'       => [48],
+    'live'        => [
+        "revert"    => true,
+        "target"    => "style",
+        "selectors" => [
+            "width" => [ ".custom-class .img" ],
+        ]
+    ]
+]
+
+//range slider - range true
+[
+    'id'          => 'range-slider',
+    'type'        => 'range-slider',
+    'title'       =>  _x( 'Title', 'options', PREFIX ),
+    'range'       => true,
+    'min'         => 0,
+    'max'         => 500,
+    'value'       => [ 48, 150 ],
+    'live'        => [
+        "revert"    => true,
+        "target"    => "style",
+        "selectors" => [
+            //always add 2 CSS properties here for 2 range slider inputs
+            "width,height" => [ ".custom-class .img" ]
+        ]
+    ]
+]
+
+//upload image
+[
+    'id'          => 'modal_image',
+    'type'        => 'upload-image',
+    'title'       => _x( 'Title', 'options', PREFIX ),
+    'value'       => [],
+    'live'        => [
+        "revert"    => true,
+        "target"    => "attr",
+        "selectors" => [
+            "src"      => [ ".custom-class .img" ],
+            "data-src" => [ ".custom-class .img" ],
+        ]
+    ],
+    //or
+    'live'        => [
+        "revert"    => true,
+        "target"    => "style",
+        "selectors" => [
+            "background-image" => [ ".custom-class .img" ],
+            "border-image"     => [ ".custom-class" ],
+            "background"       => [ ".custom-class" ],
+        ]
+    ]
+]
+
+//icon
+[
+    'id'          => 'icon',
+    'type'        => 'icon',
+    'title'       => _x( 'Title', 'options', PREFIX ),
+    'value'       => [],
+    //change icon class
+    'live'        => [
+        "revert"    => true,
+        "target"    => "class",
+        "selectors" => [ ".custom-class .icon i" ]
+    ],
+]
+
+//colorpicker
+[
+    'id'          => 'colorpicker',
+    'type'        => 'colorpicker',
+    'title'       => _x( 'Title', 'options', PREFIX ),
+    'subtype'     => 'rgba',
+    'palettes'    => [],
+    'value'       => 'rgba(229, 231, 235, 0.75)',
+    'live'        => [
+        "revert"    => true,
+        "target"    => "style",
+        "selectors" => [
+            "background-color" => [ ".custom-class" ],
+        ]
+    ]
+]
+
+//typography
+[
+    'id'             => 'typography',
+    'type'           => 'typography',
+    'title'          => _x( 'Title', 'options', PREFIX ),
+    'value'          => [
+        "font-family"    => [ "font" => "Gabarito" ],
+        "font-weight"    => 600,
+        "font-style"     => "normal",
+        "font-size"      => [ "value" => 16, "size" => "px" ],
+        "text-align"     => "left",
+        "line-height"    => [ "value" => 24, "size" => "px" ],
+        "letter-spacing" => [ "value" => "", "size" => "px" ],
+        "color"          => 'rgb(3, 7, 18)'
+    ],
+    'preview'        => false,
+    'upload'         => false,
+    'font-size'      => true,
+    'line-height'    => true,
+    'text-align'     => true,
+    'letter-spacing' => true,
+    'color'          => true,
+    'live'           => [
+        "revert"    => true,
+        "target"    => "style",
+        "selectors" => [ ".custom-class .title" ]
+    ]
+]
+
+//switch
+[
+    'id'           => 'switch',
+    'type'         => 'switch',
+    'title'        => _x( 'Title', 'options', PREFIX ),
+    'value'        => 'off',
+    'left-choice'  => array(
+        'value' => 'on',
+        'label' => _x( 'Enable', 'options', PREFIX ),
+    ),
+    'right-choice' => array(
+        'value' => 'off',
+        'label' => _x( 'Disable', 'options', PREFIX ),
+    ),
+    'live'         => [
+        "revert"    => true,
+        "target"    => "display",
+        "selectors" => [
+            //keys must match the right-choice/left-choice values
+            "on"  => [ ".custom-class .icon" ],
+            "off" => [ ".custom-class .img" ]
+        ]
+    ]
+]
+
+//toggle - show - hide options
+[
+    'id'           => 'toggle',
+    'type'         => 'toggle',
+    'title'        => _x( 'Title', 'options', PREFIX ),
+    "size"         => "small",
+    'value'        => 'off',
+    'left-choice'  => array(
+        'value'   => 'on',
+        'label'   => _x( 'Yes', 'options', PREFIX ),
+        'options' => [
+        ]
+    ),
+    'right-choice' => array(
+        'value'   => 'off',
+        'label'   => _x( 'No', 'options', PREFIX ),
+        'options' => [
+        ]
+    ),
+    'live'         => [
+        "revert"    => true,
+        "target"    => "display",
+        "selectors" => [
+            //keys must match the right-choice/left-choice values
+            "on"  => [ ".custom-class .icon" ],
+            "off" => [ ".custom-class .img" ]
+        ]
+    ]
+]
+```
+
+**Live Editing Elaboration:**
+
+- A field can contain only one live setting.
+- `revert`- is used for the VB modal, because if you change something there and then close the popup without saving it,
+  then the `revert => true`, will restore the previous saved values.
+- `target`- what exactly do you want to target on live editing. There are several available targets and each field
+  support one or several of them, but not all of them. See above what target each field supports.
+    - `target : content`        - change content / html content
+    - `target : class`          - change class attribute
+    - `target : style`          - change item styles
+    - `target : display`        - show / hide elements
+    - `target : attr`           - change element attribute, selectors has the attribute name and the selectors of this
+      attribute
+- `"selectors" => [ ".custom-class" ]` - an array of selectors that you want to target
+    - For VB modals, if you have several elements on the page and want to target that specific element when
+      opening its modal, then you can add {{module-id}} to your selectors area.
+      `"selectors" => [ "#{{module-id}}.ppht-box .pht-box-title" ]` - `{{module-id}}` will insert the module id. Each
+      module has a generated unique id, that match the modal id. This way it will know what element exactly to target.
+
+<h3 id="how-to-use-fields">How To Use:</h3>
+
+=============
+
+<h2 id="dashboard-menus">Dashboard Menus</h2>
+
+===================================
+
+You can easily create dashboard menus items by adding these settings to your plugin:
+
+For more info, check the [WordPress Docs](https://developer.wordpress.org/reference/functions/add_menu_page/).
+
+```php
+$main_menu_slug = 'main-settings'; // this is the parent menu item slug.
+$settings_slug  = 'general-settings'; // this is a submenu items slug
+
+$template_path = ''; // you can add your own PHP template here to display the content of the menu item, default is the views/main-view.php file
+
+$main_menu = [
+    'type'            => 'default', // menu type - you can remove it as it is default implicitly
+	'page_title'      => _x( 'Parent Page', 'menu', PREFIX ),
+	'menu_title'      => _x( 'Parent Page', 'menu', PREFIX ),
+	'capability'      => 'manage_options',
+	'menu_slug'       => $main_menu_slug, // menu item slug
+	'icon_url'        => 'images/menu-icon.png',
+	'position'        => 99,
+	'template_path'   => $template_path, // PHP template path to display the content of your menu item 
+	'additional_args' => [] // additional arguments to be passed to menu template
+];
+
+$submenu_items_values = [
+    'settings'        => [
+        'type'            => 'default', // menu type - you can remove it as it is default implicitly
+        'parent_slug'     => $main_menu_slug, // menu item slug
+        'page_title'      => _x( 'Settings', 'menu', PREFIX ),
+        'menu_title'      => _x( 'Settings', 'menu', PREFIX ),
+        'capability'      => 'manage_options',
+        'menu_slug'       => $settings_slug,
+        'template_path'   => $template_path, // PHP template path to display the content of your menu item 
+        'api_endpoint'    => $settings_slug,
+        'additional_args' => [], // additional arguments to be passed to menu template
+    ],
+    
+    //cpt - in case you want to add a menu item of your custom post under the parent page
+    'cpt'         => [
+        'type'            => 'custom', // menu type - custom is if you want to add custom links instead of stadard dashboard menu item
+        'parent_slug'     => $main_menu_slug, // menu item slug
+        'page_title'      => _x( 'Post Page', 'menu', PREFIX ),
+        'menu_title'      => _x( 'Custom Posts', 'menu', PREFIX ),
+        'capability'      => 'manage_options',
+        'menu_slug'       => 'edit.php?post_type=cpt', // link to your custom post
+        'template_path'   => '', // Here it is not needed because it will be redirected to your custom post
+        'additional_args' => [] // additional arguments to be passed to menu template
+    ]
+];
+
+return [
+    'main_menu' => $main_menu,
+    'submenus'  => $submenu_items_values
+];
+```
+
+<h3 id="how-to-use-dashboard-menus">How To Use:</h3>
+
+=============
+
+<h2 id="custom-posts">Custom Posts</h2>
+
+===================================
+
+You can create custom posts and terms via these settings in your plugin:
+
+For more info, check the [WordPress Docs](https://developer.wordpress.org/reference/functions/register_post_type/).
+
+```php
+$post_types = [
+    'cpt1' => [
+        'args' => [
+            'public'              => false,
+            'show_ui'             => true,
+            'publicly_queryable'  => false,
+            'exclude_from_search' => true,
+            'show_in_nav_menus'   => false,
+            'labels'              => [
+                'name'                     => _x( 'Posts', 'cpt', PREFIX ),
+                'singular_name'            => _x( 'Post', 'cpt', PREFIX ),
+                'add_new'                  => _x( 'Add New Post', 'cpt', PREFIX ),
+                'add_new_item'             => _x( 'Add New Post', 'cpt', PREFIX ),
+                'edit_item'                => _x( 'Edit Post', 'cpt', PREFIX ),
+                'new_item'                 => _x( 'New Post', 'cpt', PREFIX ),
+                'all_items'                => _x( 'All Posts', 'cpt', PREFIX ),
+                'view_item'                => _x( 'View Post', 'cpt', PREFIX ),
+                'view_items'               => _x( 'View Posts', 'cpt', PREFIX ),
+                'archives'                 => _x( 'Post Archives', 'cpt', PREFIX ),
+                'attributes'               => _x( 'Post Attributes', 'cpt', PREFIX ),
+                'insert_into_item'         => _x( 'Add into post', 'cpt', PREFIX ),
+                'uploaded_to_this_item'    => _x( 'Uploaded to this post', 'cpt', PREFIX ),
+                'featured_image'           => _x( 'Post Image', 'cpt', PREFIX ),
+                'set_featured_image'       => _x( 'Set post image', 'cpt', PREFIX ),
+                'remove_featured_image'    => _x( 'Remove post image', 'cpt', PREFIX ),
+                'use_featured_image'       => _x( 'Use as post image', 'cpt', PREFIX ),
+                'filter_items_list'        => _x( 'Filter posts list', 'cpt', PREFIX ),
+                'filter_by_date'           => _x( 'Filter by date', 'cpt', PREFIX ),
+                'items_list_navigation'    => _x( 'Posts list navigation', 'cpt', PP HT_PREFIX ),
+                'items_list'               => _x( 'Post list', 'cpt', PREFIX ),
+                'item_published'           => _x( 'Post published.', 'cpt', PREFIX ),
+                'item_published_privately' => _x( 'Post published privately.', 'cpt', PREFIX ),
+                'item_reverted_to_draft'   => _x( 'Post reverted to draft.', 'cpt', PREFIX ),
+                'item_scheduled'           => _x( 'Post scheduled.', 'cpt', PREFIX ),
+                'item_updated'             => _x( 'Post updated.', 'cpt', PREFIX ),
+                'item_link'                => _x( 'Post Link', 'cpt', PREFIX ),
+                'item_link_description'    => _x( 'A link to the post', 'cpt', PREFIX ),
+                'search_items'             => _x( 'Search Posts', 'cpt', PREFIX ),
+                'not_found'                => _x( 'No posts found', 'cpt', PREFIX ),
+                'not_found_in_trash'       => _x( 'No posts found in Trash', 'cpt', PREFIX ),
+                'menu_name'                => _x( 'Posts', 'cpt', PREFIX ),
+                'name_admin_bar'           => _x( 'Post', 'cpt', PREFIX ),
+                'parent_item_colon'        => _x( 'Parent Post', 'cpt', PREFIX )
+            ],
+            'description'         => _x( 'A post post type', 'cpt', PREFIX ),
+            'hierarchical'        => false,
+            'has_archive'         => false,
+            'can_export'          => true,
+            'taxonomies'          => array( "custom_term1", "custom_term2" ),
+            'menu_position'       => 80,
+            'show_in_menu'        => false,
+            'show_in_admin_bar'   => true,
+            'query_var'           => false,
+            'show_in_rest'        => false,
+            'template'            => true,
+            'template_lock'       => false,
+            'map_meta_cap'        => true,
+            'rewrite'             => array(
+                'slug'       => 'cpt1',
+                'with_front' => false,
+                'pages'      => true,
+                'feeds'      => true,
+                'ep_mask'    => EP_PERMALINK,
+            ),
+            'supports'            => [ 'title', ]
+        ],
+    ],
+    'cpt2' => [...]
+];
+
+$taxonomies = [
+    $post_type_name => [
+        "custom_term1" => [
+            'public'             => false,
+            'publicly_queryable' => false,
+            'hierarchical'       => true,
+            'labels'             => [
+                'name'                  => _x( 'Terms', 'cpt', PREFIX ),
+                'singular_name'         => _x( 'Term', 'cpt', PREFIX ),
+                'menu_name'             => _x( 'Terms', 'cpt', PREFIX ),
+                'name_admin_bar'        => _x( 'Term', 'cpt', PREFIX ),
+                'search_items'          => _x( 'Search Terms', 'cpt', PREFIX ),
+                'popular_items'         => _x( 'Popular Terms', 'cpt', PREFIX ),
+                'all_items'             => _x( 'All Terms', 'cpt', PREFIX ),
+                'edit_item'             => _x( 'Edit Term', 'cpt', PREFIX ),
+                'view_item'             => _x( 'View Term', 'cpt', PREFIX ),
+                'update_item'           => _x( 'Update Term', 'cpt', PREFIX ),
+                'add_new_item'          => _x( 'Add New Term', 'cpt', PREFIX ),
+                'new_item_name'         => _x( 'New Term Name', 'cpt', PREFIX ),
+                'not_found'             => _x( 'No terms found.', 'cpt', PREFIX ),
+                'no_terms'              => _x( 'No terms', 'cpt', PREFIX ),
+                'items_list_navigation' => _x( 'Terms list navigation', 'cpt', PREFIX ),
+                'items_list'            => _x( 'Terms list', 'cpt', PREFIX ),
+                'select_name'           => _x( 'Select Term', 'cpt', PREFIX ),
+                'parent_item'           => _x( 'Parent Term', 'cpt', PREFIX ),
+                'parent_item_colon'     => _x( 'Parent Term:', 'cpt', PREFIX )
+            ],
+            'query_var'          => false,
+            'show_in_rest'       => false,
+            'show_ui'            => true,
+            'show_in_menu'       => false,
+            'show_in_nav_menus'  => false,
+            'show_tagcloud'      => false,
+            'show_admin_column'  => true,
+            'rewrite'            => [
+                'slug'         => "custom_term1",
+                'with_front'   => false,
+                'hierarchical' => false,
+                'ep_mask'      => EP_NONE
+            ],
+        ],
+        "custom_term2" => [...]
+    ]
+];
+
+return [
+	'post_types' => $post_types,
+	'taxonomies' => $taxonomies
+];
+```
+
+<h3 id="how-to-use-custom-posts">How To Use:</h3>
+
+=============
+
+<h2 id="custom-sidebars">Custom Sidebars</h2>
+
+===================================
+
+You can create custom sidebars via these settings in your plugin:
+
+For more info, check the [WordPress Docs](https://developer.wordpress.org/themes/functionality/sidebars/).
+
+```php
+[
+    [
+        'name' => _x( 'First Sidebar', 'sidebar', PREFIX ),
+        'id' => 'first-sidebar',
+        'description' => _x( 'Add widgets here to appear in your First sidebar.', 'sidebar', PREFIX ),
+        'class' => '',
+        'before_widget' => '<section id="%1$s" class="widget %2$s">',
+        'after_widget' => '</section>',
+        'before_title' => '<h2 class="widget-title">',
+        'after_title' => '</h2>',
+        'before_sidebar' => '',
+        'after_sidebar' => '',
+        'show_in_rest' => false
+    ],
+    [
+        'name' => _x( 'Second Sidebar', 'sidebar', PREFIX ),
+        'id' => 'second-sidebar',
+        'description' => _x( 'Add widgets here to appear in your First sidebar.', 'sidebar', PREFIX ),
+        'class' => '',
+        'before_widget' => '<section id="%1$s" class="widget %2$s">',
+        'after_widget' => '</section>',
+        'before_title' => '<h2 class="widget-title">',
+        'after_title' => '</h2>',
+        'before_sidebar' => '',
+        'after_sidebar' => '',
+        'show_in_rest' => false
+    ]
+]
+```
+
+<h3 id="how-to-use-custom-sidebars">How To Use:</h3>
+
+=============
+
+<h2 id="dynamic-sidebars">Dynamic Sidebars</h2>
+
+===================================
+
+You can enable the dynamic sidebar creation form in the Widgets area to dynamically create and remove sidebars.
+
+![Dynamic sidebars Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735824902/dynamic_sidebars_ssmuhu.gif)
+
+<h3 id="how-to-use-dynamic-sidebars">How To Use:</h3>
+
+=============
 
 <h2 id="framework-utilities">Framework Utilities</h2>
 

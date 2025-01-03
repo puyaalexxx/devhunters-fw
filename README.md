@@ -21,7 +21,8 @@ This is a framework that makes it easier to create WordPress plugins. It offers 
 <h2 id="table-of-contents">Table of Contents</h2>
 
 1. [Installation](#installation)
-2. [Features](#features)
+2. [How To Use In a Plugin](#how-to-use-in-a-plugin)
+3. [Features](#features)
     - [Custom Fields](#custom-fields)
         - [Containers](#containers)
             - [Simple](#simple)
@@ -71,14 +72,14 @@ This is a framework that makes it easier to create WordPress plugins. It offers 
     - [Dynamic Sidebars](#dynamic-sidebars)
         - [How To Use](#how-to-use-dynamic-sidebars)
     - [Visual Builder](#visual-builder)
-    - [CLI](#cli)
-3. [Framework Utilities](#framework-utilities)
+4. [Framework Utilities](#framework-utilities)
     - [Manifest](#manifest)
+    - [MakeFile](#makefile)
     - [Functions](#functions)
     - [Custom Hooks](#custom-hooks)
     - [Custom Filters](#custom-filters)
-4. [Licence](#license)
-5. [Authors](#authors)
+5. [Licence](#license)
+6. [Authors](#authors)
 
 <h2 id="installation">Installation</h2>
 
@@ -136,6 +137,71 @@ devhunter-utils package
 - npm run build
 - push to github in the devhunters plugin
 - npm update devhunters-utils
+
+<h2 id="how-to-use-in-a-plugin">How To Use In a Plugin</h2>
+
+To use the framework functionality in your plugin and make it available, you need to activate your plugin code on the
+`after_setup_theme` hook.
+
+All the plugin settings that you want to pass are used by convention. You can remove some of them and leave the
+defaults, that are these:
+
+```php
+[
+    "paths"    => [
+        "plugin-settings-folder" => "", // folder where are all the settings located - default empty and without it, nothing will be enabled
+        "options"                => [
+            "dashboard-pages-options-folder" => "options/dashboard-pages/", // the folder where the dashboard menu options are located
+            "post-types-options-folder"      => "options/posts/",  // the folder where the posts and custom posts options are located
+            "terms-options-folder"           => "options/terms/",  // the folder where the terms and categories options are located
+            "vb-modal-options-folder"        => "options/vb/",  // the folder where the visual builder modals options are located
+        ],
+        "features"               => [
+            "dash-menus-settings-file" => "dashboard-pages.php", // the file where the dashboard menus settings are located
+            "cpts-settings-file"       => "cpts.php", // the file where custom posts creation settings are located
+            "sidebars-settings-file"   => "sidebars.php", // the file where custom sidebars creation settings are located
+        ],
+    ],
+    "features" => [
+        "vb-register-on-post-types" => [], // on what post types to enable the visual builder, default none
+        "enable-dynamic-sidebars"   => false, // enable the dynamic sidebars form creation, default no
+    ]
+]
+```
+
+**NOTE!!!**`plugin-settings-folder` - this path will be concatenated behind to all the options and features folders and
+files, so if
+`terms-options-folder` will be `options/terms/`, the end result will be `plugin-settings-folder` + `options/terms/`
+
+```php
+//initialize plugin functionality
+add_action( 'after_setup_theme', 'initPlugin', 99 );
+function initPlugin() : void {
+    //see if the framework is not active already
+    if( !defined( 'DHT_DIR' ) ) {
+        return;
+    }
+    
+    // Load the framework functionality
+    {
+        //include the framework file
+        require_once DHT_DIR . 'DHT.php';
+        
+        //init framework with the plugin settings
+        DHT::init( [
+            "paths"    => [
+                "plugin-settings-folder" => CONFIG_DIR_CONST . 'settings/' // folder where are all the settings located
+            ],
+            "features" => [
+                "vb-register-on-post-types" => [ 'cpt1', 'cpt2' ] // on what post types to enable the visual builder
+                //"enable-dynamic-sidebars"   => true - you can disable or remove some of the settings to take the defaults
+            ]
+        ] );
+    }
+}
+```
+
+**NOTE!!!** All these settings can be overridden via filters. See <a href="#custom-filters">Filters</a>.
 
 <h2 id="features">Features</h2>
 
@@ -1564,7 +1630,73 @@ elements on your page like HTML attributes, styles or text.
 
 <h3 id="how-to-use-fields">How To Use:</h3>
 
-=============
+============
+
+You can use the custom fields by adding them in your `settings/options` folder in `dashboard-pages`, `posts`,
+`terms` and `vb` folders, see <a href="#how-to-use-in-a-plugin">How to use in a Plugin</a> section.
+
+1. `"dashboard-pages-options-folder" => "options/dashboard-pages/"`- this is the default folder where it will look for
+   the settings, you can override it.
+
+   Inside this folder, you will create php files with the custom fields. The files should match the menu slug, used when
+   creating the dashboard menus:
+    - `"menu_slug" => "general-settings"` - will be `general-settings.php` file
+    - `"menu_slug" => "testing-settings"` - will be `testing-settings.php` file
+
+
+2. `"post-types-options-folder" => "options/posts/"`- this is the default folder where it will look for the settings,
+   you can override it.
+
+   Inside this folder, you will create php files with the custom fields. The files should match the post types names (
+   slugs):
+    - `"post"` - will be `post.php` file
+    - `"page"` - will be `page.php` file
+    - `"cpt-name"` - will be `cpt-name.php` file
+
+
+3. `"terms-options-folder" => "options/terms/"`- this is the default folder where it will look for the settings, you can
+   override it.
+
+   Inside this folder, you will create php files with the custom fields. The files should match the terms and category
+   names (slugs):
+    - `"category"` - will be `category.php` file
+    - `"custom-term-name"` - will be `custom-term-name.php` file
+
+
+4. `"vb-modal-options-folder" => "options/vb/"`- this is the default folder where it will look for the settings,
+   you can override it.
+
+   Inside this folder, you will create php files or folders with the custom fields. The folders should match the post
+   types where you enabled the VB from `"vb-register-on-post-types" => ["cpt1", "cpt2"]` setting. Inside these folders
+   you can add the modules files that will be available only inside that post type. You can add modules
+   PHP files inside the `vb` folder and these modules will be available across all post types where you enabled the VB.
+   The modules files can have any names.
+
+    - `"vb/cpt-name/my-module.php"` - **my-module module** will be available only inside the cpt-name post type
+    - `"vb/cpt-name/my-second-module.php"` - **my-second-module** module will also be available only inside the cpt-name
+      post type
+    - `"vb/my-other-module.php"` - **my-other-module** module will be available across all post types where VB is
+      present
+
+```php
+[
+    "paths" => [
+        "options" => [
+            "dashboard-pages-options-folder" => "options/dashboard-pages/", // the folder where the dashboard menu options are located
+            "post-types-options-folder"      => "options/posts/",  // the folder where the posts and custom posts options are located
+            "terms-options-folder"           => "options/terms/",  // the folder where the terms and categories options are located
+            "vb-modal-options-folder"        => "options/vb/",  // the folder where the visual builder modals options are located
+        ],
+    ],
+    "features" => [
+        ...
+    ]
+]
+```
+
+**Default Folders Structure Preview:**
+
+![Options Folder Structure Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735917446/settings-folder-strucutre_adiexw.png)
 
 <h2 id="dashboard-menus">Dashboard Menus</h2>
 
@@ -1626,7 +1758,27 @@ return [
 
 <h3 id="how-to-use-dashboard-menus">How To Use:</h3>
 
-=============
+============
+
+You can create custom dashboard menus by adding the above code in your `settings` folder in `dashboard-pages.php` file,
+see <a href="#how-to-use-in-a-plugin">How to use in a Plugin</a> section.
+
+`"dash-menus-settings-file" => "dashboard-pages.php"`- by default the file is `dashboard-pages.php`, but you can
+override it or add it
+to another folder like `my-menus/my-menus.php`
+
+```php
+[
+    "paths" => [
+        "features" => [
+             "dash-menus-settings-file" => "dashboard-pages.php", // the file where the dashboard menus settings are located
+        ],
+    ],
+    "features" => [
+        ...
+    ]
+]
+```
 
 <h2 id="custom-posts">Custom Posts</h2>
 
@@ -1760,7 +1912,26 @@ return [
 
 <h3 id="how-to-use-custom-posts">How To Use:</h3>
 
-=============
+============
+
+You can create custom posts by adding the above code in your `settings` folder in `cpts.php` file,
+see <a href="#how-to-use-in-a-plugin">How to use in a Plugin</a> section.
+
+`"cpts-settings-file" => "cpts.php"`- by default the file is `cpts.php`, but you can override it or add it
+to another folder like `my-cpts/my-cpts.php`
+
+```php
+[
+    "paths" => [
+        "features" => [
+             "cpts-settings-file" => "cpts.php" // the file where custom posts creation settings are located
+        ],
+    ],
+    "features" => [
+        ...
+    ]
+]
+```
 
 <h2 id="custom-sidebars">Custom Sidebars</h2>
 
@@ -1803,7 +1974,26 @@ For more info, check the [WordPress Docs](https://developer.wordpress.org/themes
 
 <h3 id="how-to-use-custom-sidebars">How To Use:</h3>
 
-=============
+============
+
+You can create custom sidebars by adding the above code in your `settings` folder in `sidebars.php` file,
+see <a href="#how-to-use-in-a-plugin">How to use in a Plugin</a> section.
+
+`"sidebars-settings-file"   => "sidebars.php"`- by default the file is `sidebars.php`, but you can override it or add it
+to another folder like `sidebars/my-sidebars.php`
+
+```php
+[
+    "paths" => [
+        "features" => [
+            "sidebars-settings-file" => "sidebars.php" // the file where custom sidebars creation settings are located
+        ],
+    ],
+    "features" => [
+        ...
+    ]
+]
+```
 
 <h2 id="dynamic-sidebars">Dynamic Sidebars</h2>
 
@@ -1815,11 +2005,47 @@ You can enable the dynamic sidebar creation form in the Widgets area to dynamica
 
 <h3 id="how-to-use-dynamic-sidebars">How To Use:</h3>
 
-=============
+============
+
+You can enable this form by adding this code on your plugin, see <a href="#how-to-use-in-a-plugin">How to use in a
+Plugin</a> section.
+
+`"enable-dynamic-sidebars"   => true` - default is false
+
+```php
+[
+    "paths"    => [
+        ...
+    ],
+    "features" => [
+        "enable-dynamic-sidebars"   => true, // enable the dynamic sidebars form creation, default no
+    ]
+]
+```
 
 <h2 id="framework-utilities">Framework Utilities</h2>
 
 All framework helpers that you can use in your plugin
+
+<h3 id="manifest">Manifest</h3>
+
+===================================
+
+<h3 id="makefile">MakeFile</h3>
+
+===================================
+
+<h3 id="functions">Functions</h3>
+
+===================================
+
+<h3 id="custom-hooks">Custom Hooks</h3>
+
+===================================
+
+<h3 id="custom-filters">Custom Filters</h3>
+
+===================================
 
 <h2 id="license">License</h2>
 

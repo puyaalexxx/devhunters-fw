@@ -13,6 +13,7 @@ use DHT\Extensions\Extensions;
 use DHT\Helpers\Classes\Environment;
 use DHT\Helpers\Classes\FWHelpers;
 use DHT\Helpers\Classes\Translations;
+use DHT\helpers\traits\DHTTrait;
 use DHT\Helpers\Traits\SingletonTrait;
 use function DHT\Helpers\dht_make_script_as_module_type;
 
@@ -23,15 +24,17 @@ use function DHT\Helpers\dht_make_script_as_module_type;
  */
 final class DHT {
 	
-	use SingletonTrait;
+	use SingletonTrait, DHTTrait;
 	
 	//framework version
 	public static string $version;
 	
 	/**
+	 * @param array $plugin_settings Plugin settings to register framework features
+	 *
 	 * @since     1.0.0
 	 */
-	private function __construct() {
+	private function __construct( array $plugin_settings = [] ) {
 		
 		do_action( 'dht:fw:before_fw_init' );
 		
@@ -52,7 +55,7 @@ final class DHT {
 		}
 		
 		//instantiate all framework features
-		$this->_registerFrameworkFeatures( Core::init(), Extensions::init() );
+		$this->_registerFrameworkFeatures( $plugin_settings );
 	}
 	
 	/**
@@ -95,31 +98,45 @@ final class DHT {
 	/**
 	 * register framework core features, extensions...
 	 *
-	 * @param Core       $core
-	 * @param Extensions $extensions
+	 * @param array $plugin_settings Plugin settings to register framework features
 	 *
 	 * @return void
 	 * @since     1.0.0
 	 */
-	private function _registerFrameworkFeatures( Core $core, Extensions $extensions ) : void {
+	private function _registerFrameworkFeatures( array $plugin_settings = [] ) : void {
 		
-		//get plugin settings folder path
-		$plugin_settings_folder_path = apply_filters( "dht:settings:plugin_settings_folder_path", '' );
+		$core       = Core::init();
+		$extensions = Extensions::init();
+		
+		[
+			"dashboard_pages_options_folder_path" => $dashboard_pages_options_folder_path,
+			"post_types_options_folder_path"      => $post_types_options_folder_path,
+			"terms_options_folder_path"           => $terms_options_folder_path,
+			"vb_modal_options_folder_path"        => $vb_modal_options_folder_path,
+			"dash_menus_settings_file"            => $dash_menus_settings_file,
+			"cpts_settings_file"                  => $cpts_settings_file,
+			"sidebars_settings_file"              => $sidebars_settings_file,
+			"vb_register_on_post_types"           => $vb_register_on_post_types,
+			"enable_dynamic_sidebars"             => $enable_dynamic_sidebars
+		] = $this->_getPreparedPluginSettings( $plugin_settings );
 		
 		//////////////////////////////////////////
 		//// register framework core features ////
 		//////////////////////////////////////////
 		
 		//enable the visual builder on these post types
-		$vb_post_types_enable = apply_filters( 'dht:vb:register_on_post_types', [] );
-		$core->vb( $vb_post_types_enable )?->enable();
+		$core->vb( $vb_register_on_post_types )?->enable();
 		
 		//register framework options
-		add_action( 'init', function() use ( $core, $plugin_settings_folder_path, $vb_post_types_enable ) {
-			$dashboardPagesOptions = Config::getDashboardPagesOptions( apply_filters( 'dht:options:dashboard_pages_options_folder_path', $plugin_settings_folder_path . "/options/dashboard-pages/" ) );
-			$postTypeOptions       = Config::getPostTypeOptions( apply_filters( 'dht:options:post_types_options_folder_path', $plugin_settings_folder_path . "/options/posts/" ) );
-			$termOptions           = Config::getTermsOptions( apply_filters( 'dht:options:terms_options_folder_path', $plugin_settings_folder_path . "/options/terms/" ) );
-			$vbOptions             = Config::getVbOptions( apply_filters( 'dht:options:vb_modal_options_folder_path', $plugin_settings_folder_path . "/options/vb/" ), $vb_post_types_enable );
+		add_action( 'init', function() use (
+			$core, $dashboard_pages_options_folder_path,
+			$post_types_options_folder_path, $terms_options_folder_path,
+			$vb_modal_options_folder_path, $vb_register_on_post_types
+		) {
+			$dashboardPagesOptions = Config::getDashboardPagesOptions( $dashboard_pages_options_folder_path );
+			$postTypeOptions       = Config::getPostTypeOptions( $post_types_options_folder_path );
+			$termOptions           = Config::getTermsOptions( $terms_options_folder_path );
+			$vbOptions             = Config::getVbOptions( $vb_modal_options_folder_path, $vb_register_on_post_types );
 			
 			$core->options( $dashboardPagesOptions, $postTypeOptions, $termOptions, $vbOptions )?->register();
 		} );
@@ -134,19 +151,16 @@ final class DHT {
 		////////////////////////////////////////
 		
 		//create dashboard menus with plugin configurations
-		$extensions->dashMenus( Config::getConfigurations( apply_filters( "dht:extensions:register_dash_menus", $plugin_settings_folder_path . '/dashboard-pages.php' ) ) )?->register();
+		$extensions->dashMenus( Config::getConfigurations( $dash_menus_settings_file ) )?->register();
 		
 		//create custom post types with plugin cpt configurations
-		$extensions->cpts( Config::getConfigurations( apply_filters( "dht:extensions:register_cpts", $plugin_settings_folder_path . '/cpts.php' ) ) )?->create();
-		
-		//register widgets with plugin configurations
-		$extensions->widgets( apply_filters( 'dht:extensions:register_widgets', [] ) )?->register();
+		$extensions->cpts( Config::getConfigurations( $cpts_settings_file ) )?->create();
 		
 		//register sidebars with plugin sidebar configurations
-		$extensions->sidebars( Config::getConfigurations( apply_filters( "dht:extensions:register_sidebars", $plugin_settings_folder_path . '/sidebars.php' ) ) )?->register();
+		$extensions->sidebars( Config::getConfigurations( $sidebars_settings_file ) )?->register();
 		
 		//enable dynamic sidebars form with plugin sidebar configurations
-		$extensions->dynamicSidebars( apply_filters( 'dht:extensions:register_dynamic_sidebars', false ) )?->enable();
+		$extensions->dynamicSidebars( $enable_dynamic_sidebars )?->enable();
 	}
 	
 	/**
@@ -163,6 +177,25 @@ final class DHT {
 		}
 		
 		return '';
+	}
+	
+	/**
+	 * This is the static method that controls the access to the singleton
+	 * instance.
+	 *
+	 * @param array $plugin_settings Plugin settings to register framework features
+	 *
+	 * @return self - current class
+	 * @since     1.0.0
+	 */
+	public static function init( array $plugin_settings = [] ) : self {
+		
+		$cls = static::class;
+		if( !isset( self::$_instances[ $cls ] ) ) {
+			self::$_instances[ $cls ] = new static( $plugin_settings );
+		}
+		
+		return self::$_instances[ $cls ];
 	}
 	
 }

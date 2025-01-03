@@ -60,21 +60,6 @@ final class Extensions {
 	}
 	
 	/**
-	 * get widgets extension class instance
-	 *
-	 * @param array $widgets_config
-	 *
-	 * @return ?IRegisterWidget - register widgets class instance
-	 * @since     1.0.0
-	 */
-	public function widgets( array $widgets_config ) : ?IRegisterWidget {
-		
-		if( empty( $widgets_config ) ) return NULL;
-		
-		return new RegisterWidget( $widgets_config );
-	}
-	
-	/**
 	 * get sidebars extension class instance
 	 *
 	 * @param array $sidebar_config

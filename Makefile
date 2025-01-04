@@ -62,7 +62,7 @@ help:
 	@echo "                          	  $(LYELLOW)@param$(END_COLOUR) $(LYELLOW)watch$(END_COLOUR) - enable watch mode."
 	@echo "                          	  $(LYELLOW)@param$(END_COLOUR) $(LYELLOW)main$(END_COLOUR)  - compile all files into one main.css and main.js file"
 	@echo "  		                  ( using dynamic module loading )"
-	@echo "  $(BRED) make clean $(END_COLOUR)        Clean up the generated files"
+	@echo "  $(BRED) make clean $(END_COLOUR)        Clean up the generated files" (js generated ones)
 	@echo "  		      ( if using tsc compiler, it will generate js files alongside ts files )"
 	@echo ""
 	@echo "  $(BWHITE)$(GREEN) make help $(END_COLOUR)$(END_COLOUR)         Show this help message"

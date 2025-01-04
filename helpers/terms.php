@@ -3,23 +3,24 @@ declare( strict_types = 1 );
 
 namespace DHT\Helpers;
 
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
 
-if ( ! function_exists( 'dht_is_term_editing_area' ) ) {
+if( !function_exists( 'dht_is_term_editing_area' ) ) {
 	/**
-	 * Check if it is a category/tag/term  editing area
+	 * Check if it is a category/tag/term admin editing area
 	 *
 	 * When editing the term you can use the $_GET or $_POST to get its id and grab the taxonomy
 	 * $_POST is used when we are updating the term area
 	 *
 	 * @return bool
+	 * @since     1.0.0
 	 */
 	function dht_is_term_editing_area() : bool {
 		
-		if ( ! is_admin() ) {
+		if( !is_admin() ) {
 			return false; // Exit if not in admin area
 		}
 		
@@ -28,7 +29,7 @@ if ( ! function_exists( 'dht_is_term_editing_area' ) ) {
 }
 
 
-if ( ! function_exists( 'dht_get_current_admin_taxonomy_from_url' ) ) {
+if( !function_exists( 'dht_get_current_admin_taxonomy_from_url' ) ) {
 	/**
 	 * Get taxonomy from admin editing category/tag/term areas
 	 *
@@ -36,10 +37,11 @@ if ( ! function_exists( 'dht_get_current_admin_taxonomy_from_url' ) ) {
 	 * $_POST is used when we are updating the term area
 	 *
 	 * @return string
+	 * @since     1.0.0
 	 */
 	function dht_get_current_admin_taxonomy_from_url() : string {
 		
-		if ( ! is_admin() ) {
+		if( !is_admin() ) {
 			return ''; // Exit if not in admin area
 		}
 		
@@ -49,22 +51,23 @@ if ( ! function_exists( 'dht_get_current_admin_taxonomy_from_url' ) ) {
 }
 
 
-if ( ! function_exists( 'dht_get_current_admin_taxonomy' ) ) {
+if( !function_exists( 'dht_get_current_admin_taxonomy' ) ) {
 	/**
 	 * Get current taxonomy from admin area
 	 *
 	 * @return string
+	 * @since     1.0.0
 	 */
 	function dht_get_current_admin_taxonomy() : string {
 		
-		if ( ! is_admin() ) {
+		if( !is_admin() ) {
 			return ''; // Exit if not in admin area
 		}
 		
 		$screen = get_current_screen();
 		
 		// Check if we are on a term edit screen
-		if ( $screen && $screen->base === 'edit-tags' && isset( $screen->taxonomy ) ) {
+		if( $screen && $screen->base === 'edit-tags' && isset( $screen->taxonomy ) ) {
 			return $screen->taxonomy;
 		}
 		

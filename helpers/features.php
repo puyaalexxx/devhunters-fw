@@ -3,14 +3,15 @@ declare( strict_types = 1 );
 
 namespace DHT\Helpers;
 
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
 
-if ( ! function_exists( 'dht_load_preloader' ) ) {
+if( !function_exists( 'dht_load_preloader' ) ) {
 	/**
 	 * load the preloader
+	 * You can use the framework preloader on any place
 	 *
 	 * @param int $delay - milliseconds delay
 	 *

@@ -47,9 +47,6 @@ $manifest[ 'extensions' ] = [
 	'sidebars'        => [
 		'description' => _x( 'Creating sidebars dynamically from option configurations also adding a dynamic form to wigets area to create sidebars on the fly', 'manifest', DHT_PREFIX )
 	],
-	'widgets'         => [
-		'description' => _x( 'Small extension to create widgets dynamically from an array of widget names', 'manifest', DHT_PREFIX )
-	],
 	'options'         => [
 		'description' => _x( 'An extension to create different option fields that can be used on dashboard pages, terms and post types', 'manifest', DHT_PREFIX )
 	],

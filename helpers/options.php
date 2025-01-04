@@ -10,10 +10,10 @@ if( !defined( 'DHT_MAIN' ) ) {
 
 if( !function_exists( 'dht_get_db_settings_option' ) ) {
 	/**
-	 * get option or options fields from db
+	 * get saved option or options fields from db
 	 *
-	 * @param string $option_id
-	 * @param array  $default_value
+	 * @param string $option_id     Option id to retrieve
+	 * @param array  $default_value Default value if nothing found
 	 *
 	 * @return mixed
 	 * @since     1.0.0
@@ -33,9 +33,9 @@ if( !function_exists( 'dht_set_db_settings_option' ) ) {
 	/**
 	 * save option field or fields in database
 	 *
-	 * @param string $option_id
-	 * @param mixed  $value     - value to be saved
-	 * @param string $array_key - save all options under this array key
+	 * @param string $option_id Option id to retrieve
+	 * @param mixed  $value     value to be saved
+	 * @param string $array_key save all options under this array key
 	 *
 	 * @return bool
 	 * @since     1.0.0
@@ -65,7 +65,7 @@ if( !function_exists( 'dht_parse_option_attributes' ) ) {
 	/**
 	 * parse option attributes to add them to the HTML field
 	 *
-	 * @param array $attr
+	 * @param array $attr Field attributes (used in field array as attr key)
 	 *
 	 * @return string
 	 * @since     1.0.0
@@ -95,9 +95,9 @@ if( !function_exists( 'dht_parse_option_attributes' ) ) {
 
 if( !function_exists( 'dht_sanitize_wpeditor_value' ) ) {
 	/**
-	 * add allowed HTML tags to the wp editor value
+	 *  remove not allowed HTML tags from wp editor value
 	 *
-	 * @param string $value
+	 * @param string $value Field value
 	 *
 	 * @return string
 	 * @since     1.0.0
@@ -121,7 +121,7 @@ if( !function_exists( 'dht_remove_font_name_prefix' ) ) {
 	 * remove dht prefix from the font name added because it conflicts with
 	 * Google font names
 	 *
-	 * @param string $font_name
+	 * @param string $font_name Font name
 	 *
 	 * @return string
 	 * @since     1.0.0
@@ -136,10 +136,10 @@ if( !function_exists( 'dht_get_dimension_field_css_properties' ) ) {
 	/**
 	 * Construct dimensions field css properties from the saved values
 	 *
-	 * @param array  $values
-	 * @param string $css_property
+	 * @param array  $values       Saved dimension field value
+	 * @param string $css_property If it is border, it will be constructed differently
 	 *
-	 * @return string
+	 * @return string - CSS properties
 	 * @since     1.0.0
 	 */
 	function dht_get_dimension_field_css_properties( array $values, string $css_property ) : string {
@@ -173,7 +173,7 @@ if( !function_exists( 'dht_get_typography_field_css_properties' ) ) {
 	 * @param array $values Typography fields values
 	 * @param bool  $style  Return the result as CSS style or properties
 	 *
-	 * @return string|array
+	 * @return string|array - return CSS properties or an array of prepared typography values
 	 * @since     1.0.0
 	 */
 	function dht_get_typography_field_css_properties( array $values, bool $style = true ) : string|array {
@@ -230,7 +230,7 @@ if( !function_exists( 'dht_get_background_field_css_properties' ) ) {
 	 * ];
 	 * </code>
 	 *
-	 * @param array $values
+	 * @param array $values Saved values
 	 *
 	 * @return string
 	 * @since     1.0.0
@@ -373,7 +373,7 @@ if( !function_exists( 'dht_build_custom_fonts_enqueue_styles' ) ) {
 	 *
 	 *  Expected fonts array (typography fields combined):
 	 *
-	 *  ```php
+	 * <code>
 	 * $array = [
 	 *  [
 	 *      'font-family' => [
@@ -393,7 +393,7 @@ if( !function_exists( 'dht_build_custom_fonts_enqueue_styles' ) ) {
 	 *      'font-subsets' => '',
 	 *  ],
 	 * ];
-	 *  ```
+	 * </code>
 	 *
 	 * @param array $fonts Array of fonts
 	 *
@@ -438,7 +438,7 @@ if( !function_exists( 'dht_get_icon_style_by_type' ) ) {
 	/**
 	 * Get icon style file link by its type
 	 *
-	 * @param string $icon_type Icon type to return style for
+	 * @param string $icon_type Icon type to return style for - all will return all of them
 	 *
 	 * @return array|string
 	 * @since     1.0.0

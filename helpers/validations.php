@@ -3,14 +3,13 @@ declare( strict_types = 1 );
 
 namespace DHT\Helpers;
 
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
 
-if ( ! function_exists( 'dht_array_key_exists' ) ) {
+if( !function_exists( 'dht_array_key_exists' ) ) {
 	/**
-	 *
 	 * check if array key exist and if it is empty
 	 *
 	 * @param array  $array     - array to be checked
@@ -21,7 +20,7 @@ if ( ! function_exists( 'dht_array_key_exists' ) ) {
 	 */
 	function dht_array_key_exists( array $array, string $array_key ) : bool {
 		
-		if ( array_key_exists( $array_key, $array ) && ! empty( $array[ $array_key ] ) ) {
+		if( array_key_exists( $array_key, $array ) && !empty( $array[ $array_key ] ) ) {
 			return false;
 		}
 		

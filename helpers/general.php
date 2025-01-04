@@ -12,6 +12,7 @@ use DHT\Helpers\Classes\Dumper;
 if( !function_exists( 'dht_print_r' ) ) {
 	/**
 	 * print_r alternative with styling
+	 * A nicer way to print values
 	 *
 	 * @param mixed $value the value to be printed
 	 *
@@ -125,9 +126,9 @@ if( !function_exists( 'dht_fix_path' ) ) {
 
 if( !function_exists( 'dht_load_view' ) ) {
 	/**
-	 * load file with arguments and display it or return its content
+	 * load file with passed arguments and display it or return its content
 	 *
-	 * @param string $path   - dir path]
+	 * @param string $path   - dir path
 	 * @param string $file   - file name
 	 * @param array  $args   - arguments to be passed into the view
 	 * @param bool   $return - return the file content or display it
@@ -166,7 +167,7 @@ if( !function_exists( 'dht_get_variables_from_file' ) ) {
 	 * Safe load variables from a file
 	 * Use this function to not include files directly and to not give access to current context variables (like $this)
 	 *
-	 * @param string $file_path
+	 * @param string $file_path        File path
 	 * @param string $extract_variable Extract these from file array('variable_name' => 'default_value')
 	 * @param array  $set_variables    Set these to be available in file (like variables in view)
 	 * @param bool   $return_array     return array or only the value
@@ -224,8 +225,8 @@ if( !function_exists( 'dht_parse_css_classes_into_array' ) ) {
 	/**
 	 * Parse CSS icons classes and content codes to a PHP array with key value pairs
 	 *
-	 * @param string $css
-	 * @param string $before_delimiter :before pseudo css delimiter
+	 * @param string $css              CSS code
+	 * @param string $before_delimiter :before pseudo css delimiter it could be : or ::
 	 *
 	 * @return array
 	 * @since     1.0.0
@@ -253,9 +254,9 @@ if( !function_exists( 'dht_parse_css_classes_into_array' ) ) {
 
 if( !function_exists( 'dht_get_font_weight_Label' ) ) {
 	/**
-	 * gent font weight label from its value (ex: 400, 500)
+	 * gent font weight label from its value (ex: 400, 500) - 200 == 'Extra Light'
 	 *
-	 * @param int $font_weight
+	 * @param int $font_weight Font weight number
 	 *
 	 * @return string
 	 * @since     1.0.0
@@ -280,7 +281,7 @@ if( !function_exists( 'dht_get_css_units' ) ) {
 	/**
 	 * get available sizes like px, em, rem
 	 *
-	 * @param array $disable_units
+	 * @param array $disable_units What values from the to disable - ["px"  => true]
 	 *
 	 * @return array
 	 * @since     1.0.0
@@ -334,29 +335,29 @@ if( !function_exists( 'dht_border_styles' ) ) {
 			"outset" => _x( 'Outset', 'options', DHT_PREFIX ),
 		] );
 	}
-	
-	if( !function_exists( 'dht_get_font_format_by_its_extension' ) ) {
-		/**
-		 * Get font format from the font link extensions
-		 * Used for format('truetype')
-		 *
-		 * @param string $font_url Font URL
-		 *
-		 * @return string
-		 * @since     1.0.0
-		 */
-		function dht_get_font_format_by_its_extension( string $font_url ) : string {
-			// Extract the file extension from the URL
-			$file_extension = pathinfo( $font_url, PATHINFO_EXTENSION );
-			
-			// Determine the font format based on the extension
-			return match ( $file_extension ) {
-				'otf' => 'opentype',
-				'ttf' => 'truetype',
-				'woff' => 'woff',
-				'woff2' => 'woff2',
-				default => 'truetype',
-			};
-		}
+}
+
+if( !function_exists( 'dht_get_font_format_by_its_extension' ) ) {
+	/**
+	 * Get font format from the font link extensions
+	 * Used for format('truetype')
+	 *
+	 * @param string $font_url Font URL
+	 *
+	 * @return string
+	 * @since     1.0.0
+	 */
+	function dht_get_font_format_by_its_extension( string $font_url ) : string {
+		// Extract the file extension from the URL
+		$file_extension = pathinfo( $font_url, PATHINFO_EXTENSION );
+		
+		// Determine the font format based on the extension
+		return match ( $file_extension ) {
+			'otf' => 'opentype',
+			'ttf' => 'truetype',
+			'woff' => 'woff',
+			'woff2' => 'woff2',
+			default => 'truetype',
+		};
 	}
 }

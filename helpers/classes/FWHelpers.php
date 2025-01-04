@@ -3,8 +3,6 @@ declare( strict_types = 1 );
 
 namespace DHT\Helpers\Classes;
 
-use DHT\Core\Manifest;
-
 if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
@@ -13,17 +11,6 @@ if( !defined( 'DHT_MAIN' ) ) {
  * Helper methods for framework use only
  */
 final class FWHelpers {
-	
-	/**
-	 * Get FW manifest settings
-	 *
-	 * @return bool The processed value to be saved.
-	 * @since     1.0.0
-	 */
-	public static function getFwManifestByKey( string $key ) : mixed {
-		
-		return Manifest::init()->get( $key );
-	}
 	
 	/**
 	 * Grab composer info to use in framework manifest

@@ -11,10 +11,10 @@ use DHT\Config\Config;
 use DHT\Core\Core;
 use DHT\Extensions\Extensions;
 use DHT\Helpers\Classes\Environment;
-use DHT\Helpers\Classes\FWHelpers;
 use DHT\Helpers\Classes\Translations;
 use DHT\helpers\traits\DHTTrait;
 use DHT\Helpers\Traits\SingletonTrait;
+use function DHT\Helpers\dht_fw_get_manifest_info_by_key;
 use function DHT\Helpers\dht_make_script_as_module_type;
 
 /**
@@ -40,7 +40,7 @@ final class DHT {
 		
 		{
 			//set plugin version
-			self::$version = FWHelpers::getFwManifestByKey( 'version' );
+			self::$version = dht_fw_get_manifest_info_by_key( 'version' );
 			
 			//load environment variables from the .env file
 			Environment::loadEnv( DHT_DIR );
@@ -199,3 +199,4 @@ final class DHT {
 	}
 	
 }
+

@@ -11,7 +11,6 @@ use DHT\Core\Cli\CLI;
 use DHT\Core\Options\IOptions;
 use DHT\Core\Options\Options;
 use DHT\Core\Vb\{IVB, VB};
-use DHT\Helpers\Exceptions\ConfigExceptions\EmptyVbPostTypesConfigurationsException;
 use DHT\Helpers\Traits\{SingletonTrait, ValidateConfigurationsTrait};
 
 /**

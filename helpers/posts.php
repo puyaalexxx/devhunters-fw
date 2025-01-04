@@ -10,12 +10,13 @@ if( !defined( 'DHT_MAIN' ) ) {
 
 if( !function_exists( 'dht_is_post_editing_area' ) ) {
 	/**
-	 * Check if it is a post/page/cpt editing area
+	 * Check if it is a post/page/cpt admin editing area
 	 *
 	 * When editing the post you can use the $_GET to get its id and grab the post type
-	 * On save_post hook, the $_GET is not available so you can use the $_PODt for this
+	 * On save_post hook, the $_GET is not available so you can use the $_POST for this
 	 *
 	 * @return bool
+	 * @since     1.0.0
 	 */
 	function dht_is_post_editing_area() : bool {
 		
@@ -34,9 +35,10 @@ if( !function_exists( 'dht_get_current_admin_post_type_from_url' ) ) {
 	 * Get post type from admin editing post/page/cpt areas
 	 *
 	 * When editing the post you can use the $_GET to get its id and grab the post type
-	 * On save_post hook, the $_GET is not available so you can use the $_POSt for this
+	 * On save_post hook, the $_GET is not available so you can use the $_POST for this
 	 *
 	 * @return string
+	 * @since     1.0.0
 	 */
 	function dht_get_current_admin_post_type_from_url() : string {
 		
@@ -76,6 +78,7 @@ if( !function_exists( 'dht_get_current_admin_post_type' ) ) {
 	 * Get current post type from admin area
 	 *
 	 * @return string
+	 * @since     1.0.0
 	 */
 	function dht_get_current_admin_post_type() : string {
 		

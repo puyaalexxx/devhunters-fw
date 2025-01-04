@@ -1,7 +1,7 @@
 {
   "name": "devhunters/devhunters-fw",
   "description": "Framework for DevHunters plugins",
-  "license": "GPL-2.0-or-later",
+  "license": "MIT License",
   "version": "1.0.0",
   "author": {
     "name": "DevHunters",
@@ -25,6 +25,7 @@
   "autoload": {
     "files": [
       "constants.php",
+      "helpers/fw.php",
       "helpers/general.php",
       "helpers/enqueue.php",
       "helpers/posts.php",

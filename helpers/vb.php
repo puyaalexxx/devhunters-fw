@@ -11,7 +11,7 @@ if( !defined( 'DHT_MAIN' ) ) {
 if( !function_exists( 'dht_enable_vb_editor_area' ) ) {
 	/**
 	 * Enable the Visual Builder editor area by adding this
-	 * method to an HTML tag. The attribute will do the rest
+	 * method to an HTML tag. The attributes added will do the rest
 	 *
 	 * @param string $module_name  Module Name to retrieve its options
 	 * @param string $module_id    Module id that should be unique on the page

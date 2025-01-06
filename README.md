@@ -62,9 +62,9 @@ This is a framework that makes it easier to create WordPress plugins. It offers 
             - [Typography](#typography)
         - [Fields Settings Elaboration](#fields-settings-eleborations)
         - [Live Fields Editing](#live-fields)
-        - [How To Use](#how-to-use-dashboard-menus)
-    - [Dashboard Menus](#dashboard-menus)
         - [How To Use](#how-to-use-fields)
+    - [Dashboard Menus](#dashboard-menus)
+        - [How To Use](#how-to-use-dashboard-menus)
     - [Custom Posts](#custom-posts)
         - [How To Use](#how-to-use-custom-posts)
     - [Custom Sidebars](#custom-sidebars)
@@ -138,6 +138,8 @@ devhunter-utils package
 - push to github in the devhunters plugin
 - npm update devhunters-utils
 
+<a href="#table-of-contents"><p align="right">Top ⬆️</p></a>
+
 <h2 id="how-to-use-in-a-plugin">How To Use In a Plugin</h2>
 
 To use the framework functionality in your plugin and make it available, you need to activate your plugin code on the
@@ -203,7 +205,7 @@ function initPlugin() : void {
 
 **NOTE!!!** All these settings can be overridden via filters. See <a href="#custom-filters">Filters</a>.
 
-<a align="right" href="#table-of-contents">Top ⬆️</a>
+<a href="#table-of-contents"><p align="right">Top ⬆️</p></a>
 
 <h2 id="features">Features</h2>
 
@@ -267,7 +269,7 @@ SideMenu via refresh links - each menu link will open the provided **page_link**
          'id' => 'general-settings',
          'title' => 'General Settings',
          'icon' => 'dashicons-before dashicons-admin-settings', // add a menu icon or image link
-         'page_link' => admin_url( 'admin.php?page=ppht-main-settings' ), //page link where it should go
+         'page_link' => admin_url( 'admin.php?page=main-settings' ), //page link where it should go
          'options' => [
              // add here other option fields
          ]
@@ -294,7 +296,7 @@ SideMenu via refresh links - each menu link will open the provided **page_link**
          'id' => 'tools-settings',
          'title' => 'Tools Page',
          'icon' => 'http://my-site.com/images/devhuntersmain-logo-dashmenu.png', // add a menu icon or image link
-         'page_link' => admin_url( 'admin.php?page=ppht-tools-settings' ), //page link where it should go
+         'page_link' => admin_url( 'admin.php?page=tools-settings' ), //page link where it should go
      ],
    ]
 ]
@@ -389,7 +391,7 @@ SideMenu as tabs - `'subtype' => 'tabs'` - each menu item will be opened as a ta
 
 ![TabsMenu Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735481674/tabsmenu_f6bq9a.png)
 
-<a align="right" href="#table-of-contents">Top ⬆️</a>
+<a href="#table-of-contents"><p align="right">Top ⬆️</p></a>
 
 <h3 id="groups">Groups</h3>
 
@@ -544,7 +546,7 @@ Addable boxes, that you can add dynamically. The fields inside are loaded via aj
 
 ![Addable Box Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735494174/addable-box_rb49gb.png)
 
-<a align="right" href="#table-of-contents">Top ⬆️</a>
+<a href="#table-of-contents"><p align="right">Top ⬆️</p></a>
 
 <h3 id="toggles">Toggles</h3>
 
@@ -585,7 +587,7 @@ A toggle field to show hide specific fields.
 
 ![Toggle Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735494179/toggle_etvbjh.png)
 
-<a align="right" href="#table-of-contents">Top ⬆️</a>
+<a href="#table-of-contents"><p align="right">Top ⬆️</p></a>
 
 <h3 id="fields">Fields</h3>
 
@@ -1315,7 +1317,7 @@ removed)
 
 ![Divider Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735565327/divider_hgy4pf.png)
 
-<a align="right" href="#table-of-contents">Top ⬆️</a>
+<a href="#table-of-contents"><p align="right">Top ⬆️</p></a>
 
 <h3 id="live-fields">Live Fields Editing</h3>
 
@@ -1637,7 +1639,7 @@ elements on your page like HTML attributes, styles or text.
       `"selectors" => [ "#{{module-id}}.ppht-box .pht-box-title" ]` - `{{module-id}}` will insert the module id. Each
       module has a generated unique id, that match the modal id. This way it will know what element exactly to target.
 
-<a align="right" href="#table-of-contents">Top ⬆️</a>
+<a href="#table-of-contents"><p align="right">Top ⬆️</p></a>
 
 <h3 id="how-to-use-fields">How To Use:</h3>
 
@@ -1730,7 +1732,7 @@ You can use the custom fields by adding them in your `settings/options` folder i
 
    Inside this folder, you will create php files or folders with the custom fields. The folders should match the post
    types where you enabled the VB from `"vb-register-on-post-types" => ["cpt1", "cpt2"]` setting. Inside these folders
-   you can add the modules files that will be available only inside that post type. You can add modules
+   you can add the modules files that will be available only inside that post type. You can also add modules
    PHP files inside the `vb` folder and these modules will be available across all post types where you enabled the VB.
    The modules files can have any names.
 
@@ -1760,7 +1762,7 @@ You can use the custom fields by adding them in your `settings/options` folder i
 
 ![Options Folder Structure Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735917446/settings-folder-strucutre_adiexw.png)
 
-<a align="right" href="#table-of-contents">Top ⬆️</a>
+<a href="#table-of-contents"><p align="right">Top ⬆️</p></a>
 
 <h2 id="dashboard-menus">Dashboard Menus</h2>
 
@@ -1844,7 +1846,7 @@ to another folder like `my-menus/my-menus.php`
 ]
 ```
 
-<a align="right" href="#table-of-contents">Top ⬆️</a>
+<a href="#table-of-contents"><p align="right">Top ⬆️</p></a>
 
 <h2 id="custom-posts">Custom Posts</h2>
 
@@ -1999,7 +2001,7 @@ to another folder like `my-cpts/my-cpts.php`
 ]
 ```
 
-<a align="right" href="#table-of-contents">Top ⬆️</a>
+<a href="#table-of-contents"><p align="right">Top ⬆️</p></a>
 
 <h2 id="custom-sidebars">Custom Sidebars</h2>
 
@@ -2063,7 +2065,7 @@ to another folder like `sidebars/my-sidebars.php`
 ]
 ```
 
-<a align="right" href="#table-of-contents">Top ⬆️</a>
+<a href="#table-of-contents"><p align="right">Top ⬆️</p></a>
 
 <h2 id="dynamic-sidebars">Dynamic Sidebars</h2>
 
@@ -2077,7 +2079,7 @@ You can enable the dynamic sidebar creation form in the Widgets area to dynamica
 
 ============
 
-You can enable this form by adding this code on your plugin, see <a href="#how-to-use-in-a-plugin">How to use in a
+You can enable this form by adding this code on your plugin. See <a href="#how-to-use-in-a-plugin">How to use in a
 Plugin</a> section.
 
 `"enable-dynamic-sidebars" => true` - default is false
@@ -2093,7 +2095,37 @@ Plugin</a> section.
 ]
 ```
 
-<a align="right" href="#table-of-contents">Top ⬆️</a>
+<a href="#table-of-contents"><p align="right">Top ⬆️</p></a>
+
+<h2 id="visual-builder">Visual Builder</h2>
+
+This is a small visual builder feature that allows users to edit page elements through a modal. Each modal can contain
+custom fields. See <a href="#how-to-use-fields">How To Use Custom Fields</a> section.
+
+![Visual Builder Modal Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1736179587/vb-preview_jurhyv.gif)
+
+In order to enable the VB on an element, you need to add this function on the div element:
+
+```php
+dht_enable_vb_editor_area( $module_name, $module_id, $settings );
+
+//you can add many elements on the page
+dht_enable_vb_editor_area( "module-name", "first-module-id", $settings );
+dht_enable_vb_editor_area( "module-name-2", "second-module-id", $settings );
+```
+
+This function will add several attributes to your element in order to enable the Settings icon and the surrounding
+borders. It will also add an id attribute with your provided module id in the function.
+
+`$module_name`- module name
+
+`$module_id`- module id. Each module should have an id. The ids should not be the same. If on the same page there will
+be two modules with the same id, they will not work.
+
+`$settings`- this feature is still in development. Currently, only the Settings icon is functional. In the future,
+additional icons for actions like remove, duplicate, and drag-and-drop may be added for the modules.
+
+<a href="#table-of-contents"><p align="right">Top ⬆️</p></a>
 
 <h2 id="framework-utilities">Framework Utilities</h2>
 
@@ -2117,7 +2149,7 @@ Print all its info to see what specific keys you can use:
 dht_fw_get_manifest_info()
 ```
 
-<a align="right" href="#table-of-contents">Top ⬆️</a>
+<a href="#table-of-contents"><p align="right">Top ⬆️</p></a>
 
 <h3 id="makefile">MakeFile</h3>
 
@@ -2148,7 +2180,7 @@ How it is displayed in terminal:
 
 ![Make File Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735997150/makefile_commands_cjddc3.png)
 
-<a align="right" href="#table-of-contents">Top ⬆️</a>
+<a href="#table-of-contents"><p align="right">Top ⬆️</p></a>
 
 <h3 id="functions">Functions</h3>
 
@@ -2552,7 +2584,7 @@ Global functions that you can use on your end:
  dht_enable_vb_editor_area( string $module_name, string $module_id, array $btn_settings = [] ) : void
 ```
 
-<a align="right" href="#table-of-contents">Top ⬆️</a>
+<a href="#table-of-contents"><p align="right">Top ⬆️</p></a>
 
 <h3 id="custom-hooks">Custom Hooks</h3>
 
@@ -2682,7 +2714,7 @@ dht:options:view:fields:wpeditor_before_area // before rendering the wpeditor fi
 dht:options:view:fields:wpeditor_after_area // after rendering the wpeditor field
 ```
 
-<a align="right" href="#table-of-contents">Top ⬆️</a>
+<a href="#table-of-contents"><p align="right">Top ⬆️</p></a>
 
 <h3 id="custom-filters">Custom Filters</h3>
 
@@ -2744,7 +2776,7 @@ dht:settings:plugin:vb_register_on_post_types // change the post types on which 
 dht:settings:plugin:enable_dynamic_sidebars // enable/disable the dynamic sidebars creation form
 ```
 
-<a align="right" href="#table-of-contents">Top ⬆️</a>
+<a href="#table-of-contents"><p align="right">Top ⬆️</p></a>
 
 <h2 id="license">License</h2>
 

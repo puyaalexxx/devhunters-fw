@@ -138,7 +138,9 @@ devhunter-utils package
 - push to github in the devhunters plugin
 - npm update devhunters-utils
 
-<a href="#table-of-contents"><p align="right">Top ⬆️</p></a>
+<p align="right">
+  <strong><a href="#table-of-contents">Top ⬆️</a></strong>  
+</p>
 
 <h2 id="how-to-use-in-a-plugin">How To Use In a Plugin</h2>
 
@@ -205,7 +207,9 @@ function initPlugin() : void {
 
 **NOTE!!!** All these settings can be overridden via filters. See <a href="#custom-filters">Filters</a>.
 
-<a href="#table-of-contents"><p align="right">Top ⬆️</p></a>
+<p align="right">
+  <strong><a href="#table-of-contents">Top ⬆️</a></strong>  
+</p>
 
 <h2 id="features">Features</h2>
 
@@ -391,7 +395,9 @@ SideMenu as tabs - `'subtype' => 'tabs'` - each menu item will be opened as a ta
 
 ![TabsMenu Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735481674/tabsmenu_f6bq9a.png)
 
-<a href="#table-of-contents"><p align="right">Top ⬆️</p></a>
+<p align="right">
+  <strong><a href="#table-of-contents">Top ⬆️</a></strong>  
+</p>
 
 <h3 id="groups">Groups</h3>
 
@@ -546,7 +552,9 @@ Addable boxes, that you can add dynamically. The fields inside are loaded via aj
 
 ![Addable Box Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735494174/addable-box_rb49gb.png)
 
-<a href="#table-of-contents"><p align="right">Top ⬆️</p></a>
+<p align="right">
+  <strong><a href="#table-of-contents">Top ⬆️</a></strong>  
+</p>
 
 <h3 id="toggles">Toggles</h3>
 
@@ -587,7 +595,9 @@ A toggle field to show hide specific fields.
 
 ![Toggle Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735494179/toggle_etvbjh.png)
 
-<a href="#table-of-contents"><p align="right">Top ⬆️</p></a>
+<p align="right">
+  <strong><a href="#table-of-contents">Top ⬆️</a></strong>  
+</p>
 
 <h3 id="fields">Fields</h3>
 
@@ -1317,7 +1327,9 @@ removed)
 
 ![Divider Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735565327/divider_hgy4pf.png)
 
-<a href="#table-of-contents"><p align="right">Top ⬆️</p></a>
+<p align="right">
+  <strong><a href="#table-of-contents">Top ⬆️</a></strong>  
+</p>
 
 <h3 id="live-fields">Live Fields Editing</h3>
 
@@ -1639,7 +1651,9 @@ elements on your page like HTML attributes, styles or text.
       `"selectors" => [ "#{{module-id}}.ppht-box .pht-box-title" ]` - `{{module-id}}` will insert the module id. Each
       module has a generated unique id, that match the modal id. This way it will know what element exactly to target.
 
-<a href="#table-of-contents"><p align="right">Top ⬆️</p></a>
+<p align="right">
+  <strong><a href="#table-of-contents">Top ⬆️</a></strong>  
+</p>
 
 <h3 id="how-to-use-fields">How To Use:</h3>
 
@@ -1762,7 +1776,9 @@ You can use the custom fields by adding them in your `settings/options` folder i
 
 ![Options Folder Structure Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735917446/settings-folder-strucutre_adiexw.png)
 
-<a href="#table-of-contents"><p align="right">Top ⬆️</p></a>
+<p align="right">
+  <strong><a href="#table-of-contents">Top ⬆️</a></strong>  
+</p>
 
 <h2 id="dashboard-menus">Dashboard Menus</h2>
 
@@ -1846,7 +1862,9 @@ to another folder like `my-menus/my-menus.php`
 ]
 ```
 
-<a href="#table-of-contents"><p align="right">Top ⬆️</p></a>
+<p align="right">
+  <strong><a href="#table-of-contents">Top ⬆️</a></strong>  
+</p>
 
 <h2 id="custom-posts">Custom Posts</h2>
 
@@ -2001,7 +2019,9 @@ to another folder like `my-cpts/my-cpts.php`
 ]
 ```
 
-<a href="#table-of-contents"><p align="right">Top ⬆️</p></a>
+<p align="right">
+  <strong><a href="#table-of-contents">Top ⬆️</a></strong>  
+</p>
 
 <h2 id="custom-sidebars">Custom Sidebars</h2>
 
@@ -2065,7 +2085,9 @@ to another folder like `sidebars/my-sidebars.php`
 ]
 ```
 
-<a href="#table-of-contents"><p align="right">Top ⬆️</p></a>
+<p align="right">
+  <strong><a href="#table-of-contents">Top ⬆️</a></strong>  
+</p>
 
 <h2 id="dynamic-sidebars">Dynamic Sidebars</h2>
 
@@ -2095,7 +2117,9 @@ Plugin</a> section.
 ]
 ```
 
-<a href="#table-of-contents"><p align="right">Top ⬆️</p></a>
+<p align="right">
+  <strong><a href="#table-of-contents">Top ⬆️</a></strong>  
+</p>
 
 <h2 id="visual-builder">Visual Builder</h2>
 
@@ -2125,7 +2149,9 @@ be two modules with the same id, they will not work.
 `$settings`- this feature is still in development. Currently, only the Settings icon is functional. In the future,
 additional icons for actions like remove, duplicate, and drag-and-drop may be added for the modules.
 
-<a href="#table-of-contents"><p align="right">Top ⬆️</p></a>
+<p align="right">
+  <strong><a href="#table-of-contents">Top ⬆️</a></strong>  
+</p>
 
 <h2 id="framework-utilities">Framework Utilities</h2>
 
@@ -2149,7 +2175,9 @@ Print all its info to see what specific keys you can use:
 dht_fw_get_manifest_info()
 ```
 
-<a href="#table-of-contents"><p align="right">Top ⬆️</p></a>
+<p align="right">
+  <strong><a href="#table-of-contents">Top ⬆️</a></strong>  
+</p>
 
 <h3 id="makefile">MakeFile</h3>
 
@@ -2180,7 +2208,9 @@ How it is displayed in terminal:
 
 ![Make File Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735997150/makefile_commands_cjddc3.png)
 
-<a href="#table-of-contents"><p align="right">Top ⬆️</p></a>
+<p align="right">
+  <strong><a href="#table-of-contents">Top ⬆️</a></strong>  
+</p>
 
 <h3 id="functions">Functions</h3>
 
@@ -2584,7 +2614,9 @@ Global functions that you can use on your end:
  dht_enable_vb_editor_area( string $module_name, string $module_id, array $btn_settings = [] ) : void
 ```
 
-<a href="#table-of-contents"><p align="right">Top ⬆️</p></a>
+<p align="right">
+  <strong><a href="#table-of-contents">Top ⬆️</a></strong>  
+</p>
 
 <h3 id="custom-hooks">Custom Hooks</h3>
 
@@ -2714,7 +2746,9 @@ dht:options:view:fields:wpeditor_before_area // before rendering the wpeditor fi
 dht:options:view:fields:wpeditor_after_area // after rendering the wpeditor field
 ```
 
-<a href="#table-of-contents"><p align="right">Top ⬆️</p></a>
+<p align="right">
+  <strong><a href="#table-of-contents">Top ⬆️</a></strong>  
+</p>
 
 <h3 id="custom-filters">Custom Filters</h3>
 

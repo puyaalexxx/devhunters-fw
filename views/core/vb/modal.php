@@ -5,7 +5,7 @@ if( !defined( 'DHT_MAIN' ) ) {
 
 $args = $args ?? [];
 ?>
-<div class="dht-wrapper <?php echo apply_filters( 'dht:vb:view:wrapper_classes', '' ); ?>">
+<div class="dht-wrapper <?php echo apply_filters( 'dht:vb:view:modal:wrapper_classes', '' ); ?>">
 
     <form action="" method="post" enctype="multipart/form-data">
 		
@@ -17,7 +17,7 @@ $args = $args ?? [];
 		
 		<?php else: ?>
 			
-			<?php echo apply_filters( 'dht:vb:view:no_options_found', _x( 'No options provided', 'options', DHT_PREFIX ) ); ?>
+			<?php echo apply_filters( 'dht:vb:view:modal:no_options_found', _x( 'No options provided', 'options', DHT_PREFIX ) ); ?>
 		
 		<?php endif; ?>
 		

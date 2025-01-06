@@ -58,22 +58,22 @@ trait DHTTrait {
 		] = $merged_settings;
 		
 		//get plugin settings folder path
-		$plugin_settings_folder_path = apply_filters( "dht:settings:plugin_settings_folder_path", $paths[ 'plugin-settings-folder' ] ?? "" );
+		$plugin_settings_folder_path = apply_filters( "dht:settings:plugin:settings_folder_path", $paths[ 'plugin-settings-folder' ] ?? "" );
 		
 		return [
 			//options
-			"dashboard_pages_options_folder_path" => apply_filters( 'dht:options:dashboard_pages_options_folder_path', $plugin_settings_folder_path . "/options/dashboard-pages/" ),
-			"post_types_options_folder_path"      => apply_filters( 'dht:options:post_types_options_folder_path', $plugin_settings_folder_path . "/options/posts/" ),
-			"terms_options_folder_path"           => apply_filters( 'dht:options:terms_options_folder_path', $plugin_settings_folder_path . "/options/terms/" ),
-			"vb_modal_options_folder_path"        => apply_filters( 'dht:options:vb_modal_options_folder_path', $plugin_settings_folder_path . "/options/vb/" ),
+			"dashboard_pages_options_folder_path" => apply_filters( 'dht:settings:plugin:dashboard_pages_options_folder_path', $plugin_settings_folder_path . "/options/dashboard-pages/" ),
+			"post_types_options_folder_path"      => apply_filters( 'dht:settings:plugin:post_types_options_folder_path', $plugin_settings_folder_path . "/options/posts/" ),
+			"terms_options_folder_path"           => apply_filters( 'dht:settings:plugin:terms_options_folder_path', $plugin_settings_folder_path . "/options/terms/" ),
+			"vb_modal_options_folder_path"        => apply_filters( 'dht:settings:plugin:vb_modal_options_folder_path', $plugin_settings_folder_path . "/options/vb/" ),
 			//features files
-			"dash_menus_settings_file"            => apply_filters( "dht:extensions:dash_menus_settings_file", $plugin_settings_folder_path . '/dashboard-pages.php' ),
-			"cpts_settings_file"                  => apply_filters( "dht:extensions:cpts_settings_file", $plugin_settings_folder_path . '/cpts.php' ),
-			"sidebars_settings_file"              => apply_filters( "dht:extensions:sidebars_settings_file", $plugin_settings_folder_path . '/sidebars.php' ),
+			"dash_menus_settings_file"            => apply_filters( "dht:settings:plugin:dash_menus_settings_file", $plugin_settings_folder_path . '/dashboard-pages.php' ),
+			"cpts_settings_file"                  => apply_filters( "dht:settings:plugin:cpts_settings_file", $plugin_settings_folder_path . '/cpts.php' ),
+			"sidebars_settings_file"              => apply_filters( "dht:settings:plugin:sidebars_settings_file", $plugin_settings_folder_path . '/sidebars.php' ),
 			
 			//features
-			"vb_register_on_post_types"           => apply_filters( 'dht:vb:register_on_post_types', $features[ 'vb-register-on-post-types' ] ?? [] ),
-			"enable_dynamic_sidebars"             => apply_filters( 'dht:extensions:enable_dynamic_sidebars', $features[ 'enable-dynamic-sidebars' ] ?? false )
+			"vb_register_on_post_types"           => apply_filters( 'dht:settings:plugin:vb_register_on_post_types', $features[ 'vb-register-on-post-types' ] ?? [] ),
+			"enable_dynamic_sidebars"             => apply_filters( 'dht:settings:plugin:enable_dynamic_sidebars', $features[ 'enable-dynamic-sidebars' ] ?? false )
 		];
 	}
 	

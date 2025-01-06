@@ -203,6 +203,8 @@ function initPlugin() : void {
 
 **NOTE!!!** All these settings can be overridden via filters. See <a href="#custom-filters">Filters</a>.
 
+<a align="right" href="#table-of-contents">Top ⬆️</a>
+
 <h2 id="features">Features</h2>
 
 All the framework features that you can use.
@@ -387,6 +389,8 @@ SideMenu as tabs - `'subtype' => 'tabs'` - each menu item will be opened as a ta
 
 ![TabsMenu Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735481674/tabsmenu_f6bq9a.png)
 
+<a align="right" href="#table-of-contents">Top ⬆️</a>
+
 <h3 id="groups">Groups</h3>
 
 ===================================
@@ -540,6 +544,8 @@ Addable boxes, that you can add dynamically. The fields inside are loaded via aj
 
 ![Addable Box Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735494174/addable-box_rb49gb.png)
 
+<a align="right" href="#table-of-contents">Top ⬆️</a>
+
 <h3 id="toggles">Toggles</h3>
 
 ===================================
@@ -578,6 +584,8 @@ A toggle field to show hide specific fields.
   ```
 
 ![Toggle Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735494179/toggle_etvbjh.png)
+
+<a align="right" href="#table-of-contents">Top ⬆️</a>
 
 <h3 id="fields">Fields</h3>
 
@@ -1307,6 +1315,8 @@ removed)
 
 ![Divider Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735565327/divider_hgy4pf.png)
 
+<a align="right" href="#table-of-contents">Top ⬆️</a>
+
 <h3 id="live-fields">Live Fields Editing</h3>
 
 ===================================
@@ -1627,6 +1637,8 @@ elements on your page like HTML attributes, styles or text.
       `"selectors" => [ "#{{module-id}}.ppht-box .pht-box-title" ]` - `{{module-id}}` will insert the module id. Each
       module has a generated unique id, that match the modal id. This way it will know what element exactly to target.
 
+<a align="right" href="#table-of-contents">Top ⬆️</a>
+
 <h3 id="how-to-use-fields">How To Use:</h3>
 
 ============
@@ -1748,6 +1760,8 @@ You can use the custom fields by adding them in your `settings/options` folder i
 
 ![Options Folder Structure Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735917446/settings-folder-strucutre_adiexw.png)
 
+<a align="right" href="#table-of-contents">Top ⬆️</a>
+
 <h2 id="dashboard-menus">Dashboard Menus</h2>
 
 ===================================
@@ -1829,6 +1843,8 @@ to another folder like `my-menus/my-menus.php`
     ]
 ]
 ```
+
+<a align="right" href="#table-of-contents">Top ⬆️</a>
 
 <h2 id="custom-posts">Custom Posts</h2>
 
@@ -1983,6 +1999,8 @@ to another folder like `my-cpts/my-cpts.php`
 ]
 ```
 
+<a align="right" href="#table-of-contents">Top ⬆️</a>
+
 <h2 id="custom-sidebars">Custom Sidebars</h2>
 
 ===================================
@@ -2045,6 +2063,8 @@ to another folder like `sidebars/my-sidebars.php`
 ]
 ```
 
+<a align="right" href="#table-of-contents">Top ⬆️</a>
+
 <h2 id="dynamic-sidebars">Dynamic Sidebars</h2>
 
 ===================================
@@ -2073,6 +2093,8 @@ Plugin</a> section.
 ]
 ```
 
+<a align="right" href="#table-of-contents">Top ⬆️</a>
+
 <h2 id="framework-utilities">Framework Utilities</h2>
 
 All framework helpers that you can use in your plugin
@@ -2094,6 +2116,8 @@ Print all its info to see what specific keys you can use:
 ```php
 dht_fw_get_manifest_info()
 ```
+
+<a align="right" href="#table-of-contents">Top ⬆️</a>
 
 <h3 id="makefile">MakeFile</h3>
 
@@ -2124,7 +2148,11 @@ How it is displayed in terminal:
 
 ![Make File Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735997150/makefile_commands_cjddc3.png)
 
+<a align="right" href="#table-of-contents">Top ⬆️</a>
+
 <h3 id="functions">Functions</h3>
+
+===================================
 
 Global functions that you can use on your end:
 
@@ -2524,7 +2552,7 @@ Global functions that you can use on your end:
  dht_enable_vb_editor_area( string $module_name, string $module_id, array $btn_settings = [] ) : void
 ```
 
-===================================
+<a align="right" href="#table-of-contents">Top ⬆️</a>
 
 <h3 id="custom-hooks">Custom Hooks</h3>
 
@@ -2535,10 +2563,10 @@ dht:fw:before_fw_init // before framework initialization
 dht:fw:before_core_init // before core features initialization (options, vb)
 dht:fw:before_extensions_init // before extensions initialization (dashboard menus, cpts, custom sidebars)
 
-//dashboard view file (main-view.php)
-dht:view:before_content // before dashboard menu view content (custom fields rendering)
-dht:view:after_content // after dashboard menu view content (custom fields rendering)
-dht:view:render_dashboard_page_content // render the dashboard menu view content on this hook (custom fields rendering)
+//main view file (main-view.php)
+dht:main:view:before_content // before dashboard menu view content (custom fields rendering)
+dht:main:view:after_content // after dashboard menu view content (custom fields rendering)
+dht:main:view:render_dashboard_page_content // render the dashboard menu view content on this hook (custom fields rendering)
 
 //posts view file (posts.php)
 dht:options:view:metabox_before_content // before metabox content (custom fields rendering)
@@ -2654,13 +2682,69 @@ dht:options:view:fields:wpeditor_before_area // before rendering the wpeditor fi
 dht:options:view:fields:wpeditor_after_area // after rendering the wpeditor field
 ```
 
+<a align="right" href="#table-of-contents">Top ⬆️</a>
+
 <h3 id="custom-filters">Custom Filters</h3>
 
 ===================================
 
 ```php
-////
+//main view file (main-view.php)
+dht:main:view:wrapper_classes // add custom classes to the main.php wrapper div area (custom fields rendering)
+dht:main:view:no_content_found // change no content message in main.php file when no content added 
+
+//posts view file (posts.php)
+dht:options:view:metabox_area // add custom classes to the metabox container area (custom fields rendering)
+
+//terms view file (terms.php)
+dht:options:view:terms_page_area // add custom classes to the terms container area (custom fields rendering)
+dht:options:view:term_template_container_title // changer the terms container title via this filter
+
+dht:options:view:wrapper_classes // add custom classes to the posts.php/terms.php wrapper div area (custom fields rendering)
+dht:options:view:no_options_found // change no options message in posts.php/terms.php/dashboard-page.php files when no options added 
+
+//vb
+dht:vb:view:modal:wrapper_classes // add custom classes to the modal.php wrapper div area (custom fields rendering)
+dht:vb:view:modal:no_options_found // change no options message in modal.php file when no options added 
+
+dht:vb:body_class_builder_enabled // it adds the dht-vb-enabled class to body area - it is used to enable the builder functionality. You can change it or add other classes via this filter
+dht:vb:save_modal_content // process and filter the saved modal form options
+
+//main options area
+dht:options:enqueue_dash_pages_option_scripts // change the options received by the enqueue method to add the specific field styles and scripts
+dht:options:enqueue_term_scripts // change the options received by the enqueue method to add the specific field styles and scripts
+dht:options:enqueue_post_types_scripts // change the options received by the enqueue method to add the specific field styles and scripts
+dht:options:enqueue_vb_scripts // change the options received by the enqueue method to add the specific field styles and scripts
+dht:options:template_file // change the specific options templates (default posts.php/terms.php/modal.php/dashboard-page.php) 
+dht:options:get_nonce_field // change nonce field used in template forms
+dht:options:view_html // change the returned options fields HTML code
+dht:options:set_saved_values // change the returned prepared options saved values
+
+//fields
+dht:options:fields:no_such_field_type // no such fields message if not matching option type used
+dht:options:fields:typography_google_fonts //change framework Google fonts array of values
+dht:options:fields:units_dropdown_values // change units dropdown values (used in typography and dimension fields)
+dht:options:fields:typography_enable_google_fonts // enable/disable google fonts in typography dropdown
+dht:options:fields:borders_styles_args //change standard border styles values
+dht:options:fields:icon_style_links // change standard icon CSS file links
+
+//extensions
+dht:extensions:sidebars:widgets_custom_args // change the sidebars options values (the HTML used by default as wrappers)
+
+//plugin settings
+dht:settings:plugin:settings_folder_path // change main plugin settings folder path
+dht:settings:plugin:dashboard_pages_options_folder_path // change plugin dashboard pages options folder path
+dht:settings:plugin:post_types_options_folder_path // change plugin post types options folder path
+dht:settings:plugin:terms_options_folder_path // change plugin terms options folder path
+dht:settings:plugin:vb_modal_options_folder_path // change plugin vb modal options folder path
+dht:settings:plugin:dash_menus_settings_file // change plugin dashboard pages settings file path
+dht:settings:plugin:cpts_settings_file // change plugin custom post types settings file path
+dht:settings:plugin:sidebars_settings_file // change plugin sidebars settings file path
+dht:settings:plugin:vb_register_on_post_types // change the post types on which the vb should be enabled
+dht:settings:plugin:enable_dynamic_sidebars // enable/disable the dynamic sidebars creation form
 ```
+
+<a align="right" href="#table-of-contents">Top ⬆️</a>
 
 <h2 id="license">License</h2>
 

@@ -323,7 +323,7 @@ if( !function_exists( 'dht_border_styles' ) ) {
 	 */
 	function dht_border_styles() : array {
 		
-		return apply_filters( 'dht:options:border:styles_args', [
+		return apply_filters( 'dht:options:fields:borders_styles_args', [
 			"none"   => _x( 'None', 'options', DHT_PREFIX ),
 			"solid"  => _x( 'Solid', 'options', DHT_PREFIX ),
 			"dashed" => _x( 'Dashed', 'options', DHT_PREFIX ),

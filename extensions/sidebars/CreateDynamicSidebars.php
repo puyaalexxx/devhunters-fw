@@ -6,7 +6,7 @@ namespace DHT\Extensions\Sidebars;
 use DHT\DHT;
 use DHT\Helpers\Classes\Environment;
 
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
@@ -38,7 +38,7 @@ final class CreateDynamicSidebars implements ICreateDynamicSidebars {
 		global $pagenow;
 		
 		// Check if we are on the Widgets page
-		if ( 'widgets.php' === $pagenow ) {
+		if( 'widgets.php' === $pagenow ) {
 			
 			add_action( 'widgets_init', [ $this, 'registerCustomWidgetAreas' ], 1000 );
 			
@@ -97,7 +97,7 @@ final class CreateDynamicSidebars implements ICreateDynamicSidebars {
 	 */
 	public function enqueueSidebarScripts( string $hook ) : void {
 		
-		if ( Environment::isDevelopment() ) {
+		if( Environment::isDevelopment() ) {
 			wp_register_style( DHT_PREFIX_CSS . '-create-sidebars', DHT_ASSETS_URI . 'dist/css/create-sidebars.css', array(), DHT::$version );
 			wp_enqueue_style( DHT_PREFIX_CSS . '-create-sidebars' );
 			
@@ -114,8 +114,8 @@ final class CreateDynamicSidebars implements ICreateDynamicSidebars {
 	 */
 	public function addWidgetArea() : array {
 		
-		if ( isset( $_POST ) && isset( $_POST[ 'dht_sidebar_name' ] ) && wp_verify_nonce( sanitize_key( wp_unslash( $_POST[ 'dht_create_sidebar_action' ] ) ), 'dht_create_sidebar_action' ) ) {
-			if ( ! empty( $_POST[ 'dht_sidebar_name' ] ) ) {
+		if( isset( $_POST ) && isset( $_POST[ 'dht_sidebar_name' ] ) && wp_verify_nonce( sanitize_key( wp_unslash( $_POST[ 'dht_create_sidebar_action' ] ) ), 'dht_create_sidebar_action' ) ) {
+			if( !empty( $_POST[ 'dht_sidebar_name' ] ) ) {
 				$this->_widget_areas = $this->_getWidgetAreas();
 				
 				$this->_widget_areas[] = $this->_checkWidgetAreaName( sanitize_text_field( wp_unslash( $_POST[ 'dht_sidebar_name' ] ) ) );
@@ -140,7 +140,7 @@ final class CreateDynamicSidebars implements ICreateDynamicSidebars {
 	public function registerCustomWidgetAreas() : void {
 		
 		// If the single instance hasn't been set, set it now.
-		if ( empty( $this->widget_areas ) ) {
+		if( empty( $this->widget_areas ) ) {
 			$this->widget_areas = $this->_getWidgetAreas();
 		}
 		
@@ -151,9 +151,9 @@ final class CreateDynamicSidebars implements ICreateDynamicSidebars {
 			'after_widget'  => '</div>',
 		);
 		
-		$options = apply_filters( 'dht:extensions:widgets_custom_args', $options );
+		$options = apply_filters( 'dht:extensions:sidebars:widgets_custom_args', $options );
 		
-		if ( is_array( $this->widget_areas ) ) {
+		if( is_array( $this->widget_areas ) ) {
 			foreach ( array_unique( $this->widget_areas ) as $widget_area ) {
 				$options[ 'class' ] = 'dht-custom';
 				$options[ 'name' ]  = $widget_area;
@@ -172,13 +172,13 @@ final class CreateDynamicSidebars implements ICreateDynamicSidebars {
 	 */
 	public function deleteWidgetArea() : void {
 		
-		if ( isset( $_POST[ 'action' ] ) && $_POST[ 'action' ] == 'deleteWidgetArea' ) {
-			if ( isset( $_POST[ 'data' ] ) && isset( $_POST[ 'data' ][ 'sidebar_id' ] ) ) {
+		if( isset( $_POST[ 'action' ] ) && $_POST[ 'action' ] == 'deleteWidgetArea' ) {
+			if( isset( $_POST[ 'data' ] ) && isset( $_POST[ 'data' ][ 'sidebar_id' ] ) ) {
 				
 				//get sidebar name
 				$sidebar_id = sanitize_text_field( wp_unslash( $_POST[ 'data' ][ 'sidebar_id' ] ) );
 				
-				if ( empty( $sidebar_id ) ) {
+				if( empty( $sidebar_id ) ) {
 					
 					wp_send_json_error( _x( 'No sidebar name provided', 'widgets', DHT_PREFIX ) );
 					
@@ -189,7 +189,7 @@ final class CreateDynamicSidebars implements ICreateDynamicSidebars {
 				
 				$key = array_search( $sidebar_id, $this->_widget_areas, true );
 				
-				if ( $key >= 0 ) {
+				if( $key >= 0 ) {
 					unset( $this->_widget_areas[ $key ] );
 					$this->_saveWidgetAreaNames();
 					
@@ -210,13 +210,13 @@ final class CreateDynamicSidebars implements ICreateDynamicSidebars {
 	private function _getWidgetAreas() : array {
 		
 		// If the single instance hasn't been set, set it now.
-		if ( ! empty( $this->_widget_areas ) ) {
+		if( !empty( $this->_widget_areas ) ) {
 			return $this->_widget_areas;
 		}
 		
 		$sidebars = get_theme_mod( 'dht-widget-areas' );
 		
-		if ( ! empty( $sidebars ) ) {
+		if( !empty( $sidebars ) ) {
 			$this->_widget_areas = array_unique( array_merge( $this->_widget_areas, $sidebars ) );
 		}
 		
@@ -246,7 +246,7 @@ final class CreateDynamicSidebars implements ICreateDynamicSidebars {
 		
 		$sidebars = wp_get_sidebars_widgets();
 		
-		if ( empty( $sidebars ) ) {
+		if( empty( $sidebars ) ) {
 			return $name;
 		}
 		
@@ -255,7 +255,7 @@ final class CreateDynamicSidebars implements ICreateDynamicSidebars {
 		//grab all sidebar ids
 		foreach ( $sidebars as $sidebar_id => $widget_area ) {
 			
-			if ( $sidebar_id != 'wp_inactive_widgets' ) {
+			if( $sidebar_id != 'wp_inactive_widgets' ) {
 				
 				$taken[] = $sidebar_id;
 			}
@@ -264,10 +264,10 @@ final class CreateDynamicSidebars implements ICreateDynamicSidebars {
 		$taken = array_merge( $taken, $this->_widget_areas );
 		
 		$sidebar_id = $name;
-		if ( in_array( $name, $taken, true ) ) {
+		if( in_array( $name, $taken, true ) ) {
 			$counter = substr( $name, - 1 );
 			
-			if ( ! is_numeric( $counter ) ) {
+			if( !is_numeric( $counter ) ) {
 				$new_name = $name . ' 1';
 			}
 			else {

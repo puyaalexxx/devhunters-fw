@@ -116,7 +116,7 @@ $input_icons  = $field[ 'input-icons' ] ?? true;
                             name="<?php echo esc_attr( $field[ 'id' ] ); ?>[unit]"
                             id="<?php echo esc_attr( $field[ 'id' ] ); ?>-units">
 						
-						<?php foreach ( apply_filters( 'dht:options:dimension:units_dropdown_values', $units_values ) as $key => $units ): ?>
+						<?php foreach ( apply_filters( 'dht:options:fields:units_dropdown_values', $units_values ) as $key => $units ): ?>
                             <option
                                 value="<?php echo esc_attr( $key ); ?>" <?php echo $units_value == $key ? 'selected' : ''; ?>><?php echo esc_html( $units ); ?></option>
 						<?php endforeach; ?>

@@ -2776,7 +2776,9 @@ dht:settings:plugin:vb_register_on_post_types // change the post types on which 
 dht:settings:plugin:enable_dynamic_sidebars // enable/disable the dynamic sidebars creation form
 ```
 
-<a href="#table-of-contents"><p align="right">Top ⬆️</p></a>
+<p align="right">
+  <strong><a href="#table-of-contents">Top ⬆️</a></strong>  
+</p>
 
 <h2 id="license">License</h2>
 

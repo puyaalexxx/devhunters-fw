@@ -132,12 +132,6 @@ You can install the framework in two ways:
       ```
     - To complete this after finishing the plugin...
 
-devhunter-utils package
-
-- npm run build
-- push to github in the devhunters plugin
-- npm update devhunters-utils
-
 <p align="right">
   <strong><a href="#table-of-contents">Top ⬆️</a></strong>  
 </p>

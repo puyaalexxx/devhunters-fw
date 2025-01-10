@@ -75,11 +75,11 @@ final class Modal {
 				wp_send_json_success( $content );
 			}
 			else {
-				wp_send_json_success( _x( 'Modal name or id not provided', 'vb', DHT_PREFIX ) );
+				wp_send_json_success( _x( 'Modal name or id not provided', 'vb', 'dht' ) );
 			}
 		}
 		else {
-			wp_send_json_success( _x( 'Something went wrong, please refresh the page', 'vb', DHT_PREFIX ) );
+			wp_send_json_success( _x( 'Something went wrong, please refresh the page', 'vb', 'dht' ) );
 		}
 		
 		die();
@@ -107,11 +107,11 @@ final class Modal {
 				wp_send_json_success( json_encode( $filteredFormData ) );
 			}
 			else {
-				wp_send_json_success( _x( 'Modal options data not ok', 'vb', DHT_PREFIX ) );
+				wp_send_json_success( _x( 'Modal options data not ok', 'vb', 'dht' ) );
 			}
 		}
 		else {
-			wp_send_json_success( _x( 'Something went wrong, please refresh the page', 'vb', DHT_PREFIX ) );
+			wp_send_json_success( _x( 'Something went wrong, please refresh the page', 'vb', 'dht' ) );
 		}
 		
 		die();

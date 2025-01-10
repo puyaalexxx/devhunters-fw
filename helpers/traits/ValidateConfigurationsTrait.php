@@ -27,7 +27,7 @@ trait ValidateConfigurationsTrait {
 				return $config;
 			}
 			else {
-				throw new $exception_class( sprintf( _x( '%s', 'exceptions', DHT_PREFIX ), $exception_message ) );
+				throw new $exception_class( sprintf( _x( '%s', 'exceptions', 'dht' ), $exception_message ) );
 			}
 		}
 		else {
@@ -35,7 +35,7 @@ trait ValidateConfigurationsTrait {
 				return $config[ $config_key ];
 			}
 			else {
-				throw new $exception_class( sprintf( _x( '%s', 'exceptions', DHT_PREFIX ), $exception_message ) );
+				throw new $exception_class( sprintf( _x( '%s', 'exceptions', 'dht' ), $exception_message ) );
 			}
 		}
 	}

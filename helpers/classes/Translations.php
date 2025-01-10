@@ -29,6 +29,8 @@ final class Translations {
 			// Composer package context
 			//load_textdomain( DHT_PREFIX, __DIR__ . '/lang/your-text-domain.mo' );
 		}
+		
+		load_plugin_textdomain( 'dht', false, DHT_LANG );
 	}
 	
 	/**
@@ -41,12 +43,12 @@ final class Translations {
 		
 		return [
 			'vb' => [
-				'icon_drag'           => _x( 'Move Item', "vb", DHT_PREFIX ),
-				'icon_settings'       => _x( 'Module Settings', "vb", DHT_PREFIX ),
-				'icon_duplicate'      => _x( 'Duplicate Module', "vb", DHT_PREFIX ),
-				'icon_delete'         => _x( 'Delete Module', "vb", DHT_PREFIX ),
-				'icon_other_settings' => _x( 'Other Settings', "vb", DHT_PREFIX ),
-				'modal_title'         => _x( 'Settings', "vb", DHT_PREFIX ),
+				'icon_drag'           => _x( 'Move Item', "vb", 'dht' ),
+				'icon_settings'       => _x( 'Module Settings', "vb", 'dht' ),
+				'icon_duplicate'      => _x( 'Duplicate Module', "vb", 'dht' ),
+				'icon_delete'         => _x( 'Delete Module', "vb", 'dht' ),
+				'icon_other_settings' => _x( 'Other Settings', "vb", 'dht' ),
+				'modal_title'         => _x( 'Settings', "vb", 'dht' ),
 			]
 		];
 	}

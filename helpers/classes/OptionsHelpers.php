@@ -190,7 +190,7 @@ final class OptionsHelpers {
             <div class="dht-divider"></div>
 
             <a href=""
-               class="button button-primary dht-btn-remove-box-item"><?php _ex( 'Remove Box', 'options', DHT_PREFIX ); ?></a>
+               class="button button-primary dht-btn-remove-box-item"><?php _ex( 'Remove Box', 'options', 'dht' ); ?></a>
         </div>
 		
 		<?php

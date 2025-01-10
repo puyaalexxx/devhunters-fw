@@ -30,7 +30,7 @@ $registered_options_classes = $args[ 'registered_options_classes' ] ?? [];
 
                         <li class="<?php echo $cnt == 1 ? 'active' : '' ?>">
                             <a href="#<?php echo esc_attr( $tabsmenu[ 'id' ] ); ?>-<?php echo esc_attr( $cnt ); ?>">
-								<?php echo !empty( $tabsmenu[ 'title' ] ) ? esc_html( $tabsmenu[ 'title' ] ) : sprintf( _x( 'Tab %d', 'options', DHT_PREFIX ), $cnt ); ?>
+								<?php echo !empty( $tabsmenu[ 'title' ] ) ? esc_html( $tabsmenu[ 'title' ] ) : sprintf( _x( 'Tab %d', 'options', 'dht' ), $cnt ); ?>
                             </a>
                         </li>
 					

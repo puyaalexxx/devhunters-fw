@@ -119,7 +119,7 @@ final class Icon extends BaseField {
 			}
 			else {
 				
-				$icon_templates = _x( 'No icons provided for this icon type', 'options', DHT_PREFIX );
+				$icon_templates = _x( 'No icons provided for this icon type', 'options', 'dht' );
 			}
 			
 			wp_send_json_success( $icon_templates );

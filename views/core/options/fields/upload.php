@@ -46,9 +46,9 @@ elseif( !empty( $field[ 'value' ][ 'item_id' ] ) ) {
                value="<?php echo !empty( $field[ 'value' ][ 'item_id' ] ) ? esc_attr( (int) $field[ 'value' ][ 'item_id' ] ) : ''; ?>" />
 
         <span class="dht-upload-item-button button"
-              data-media-text="<?php echo _x( 'Choose File', 'options', DHT_PREFIX ) ?>"
+              data-media-text="<?php echo _x( 'Choose File', 'options', 'dht' ) ?>"
               data-media-type="<?php echo !empty( $field[ 'file_type' ] ) ? esc_attr( $field[ 'file_type' ] ) : 'video'; ?>">
-            <?php echo _x( 'Upload', 'options', DHT_PREFIX ) ?>
+            <?php echo _x( 'Upload', 'options', 'dht' ) ?>
         </span>
 		
 		<?php if( !empty( $field[ 'description' ] ) ): ?>

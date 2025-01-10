@@ -51,7 +51,7 @@ final class DHT {
 			add_action( 'admin_enqueue_scripts', [ $this, '_enqueueFrameworkGeneralScripts' ] );
 			
 			// Load the text domain for localization
-			//add_action( 'plugins_loaded', [ Translations::class, 'loadTextdomain' ] );
+			Translations::loadTextdomain();
 		}
 		
 		//instantiate all framework features
@@ -168,8 +168,6 @@ final class DHT {
 	 * When using dht() the methods won't be exposed
 	 */
 	public function __call( $method, $arguments ) {
-		
-		//$this->_loadTextdomain();
 		
 		// You can control which methods are callable here
 		if( $method === '_enqueueFrameworkGeneralScripts' ) {

@@ -2612,6 +2612,16 @@ Global functions that you can use on your end:
  * @return void
  */
  dht_enable_vb_editor_area( string $module_name, string $module_id, array $btn_settings = [] ) : void
+
+/**
+ * Grab composer.json info values
+ *
+ * @param string $composer_path Composer file path
+ *
+ * @return array composer info
+ * @since     1.0.0
+ */
+ dht_get_composer_info( string $composer_path = DHT_DIR . 'composer.json' ) : array 
 ```
 
 <p align="right">

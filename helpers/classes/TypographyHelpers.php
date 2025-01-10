@@ -138,7 +138,7 @@ final class TypographyHelpers {
 						$font = Font::load( $font_path );
 					} catch( FontNotFoundException $e ) {
 						
-						echo _x( "Error: Font file not found or could not be loaded.\n", 'options', DHT_PREFIX );
+						echo _x( "Error: Font file not found or could not be loaded.\n", 'options', 'dht' );
 					}
 					//this is to get the font weight
 					$font->parse();

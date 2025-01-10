@@ -1,0 +1,566 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: DevHunters\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-01-10 09:51+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.6.14; wp-6.7.1\n"
+"X-Domain: dht"
+
+#: core/cli/CLI.php:46
+msgctxt "cli"
+msgid "WP_CLI class does not exist. Make sure you are running from CLI."
+msgstr ""
+
+#. Name of the plugin
+msgid "DevHunters"
+msgstr ""
+
+#: helpers/traits/ValidateConfigurationsTrait.php:30
+#: helpers/traits/ValidateConfigurationsTrait.php:38
+#, php-format
+msgctxt "exceptions"
+msgid "%s"
+msgstr ""
+
+#: manifest.php:51
+msgctxt "manifest"
+msgid ""
+"An extension to create different option fields that can be used on dashboard "
+"pages, terms and post types"
+msgstr ""
+
+#: manifest.php:42
+msgctxt "manifest"
+msgid "Creating custom post types dynamically from option configurations"
+msgstr ""
+
+#: manifest.php:36
+msgctxt "manifest"
+msgid "Creating custom wp cli commands"
+msgstr ""
+
+#: manifest.php:45
+msgctxt "manifest"
+msgid ""
+"Creating dashboard menu pages and subpages dynamically from option "
+"configurations"
+msgstr ""
+
+#: manifest.php:48
+msgctxt "manifest"
+msgid ""
+"Creating sidebars dynamically from option configurations also adding a "
+"dynamic form to wigets area to create sidebars on the fly"
+msgstr ""
+
+#: core/Manifest.php:43
+msgctxt "manifest"
+msgid "Value does not exist"
+msgstr ""
+
+#: views/core/options/groups/addable-box.php:69
+msgctxt "options"
+msgid "Add"
+msgstr ""
+
+#: views/core/options/fields/icon.php:47
+msgctxt "options"
+msgid "Add Icon"
+msgstr ""
+
+#: views/core/options/fields/multi-input.php:56
+msgctxt "options"
+msgid "Add More"
+msgstr ""
+
+#: core/options/fields/fields/Typography.php:165
+msgctxt "options"
+msgid "Bold"
+msgstr ""
+
+#: views/core/options/fields/dimension.php:132
+msgctxt "options"
+msgid "Border Style"
+msgstr ""
+
+#: views/core/options/groups/addable-box.php:74
+msgctxt "options"
+msgid "Can't add more than %d items"
+msgstr ""
+
+#: views/core/options/fields/multi-input.php:42
+msgctxt "options"
+msgid "Can't remove the only field"
+msgstr ""
+
+#: views/core/options/groups/addable-box.php:72
+msgctxt "options"
+msgid "Can't remove the only item"
+msgstr ""
+
+#: core/options/fields/fields/Typography.php:210
+msgctxt "options"
+msgid "Capitalize"
+msgstr ""
+
+#: core/options/fields/fields/Typography.php:227
+msgctxt "options"
+msgid "Center"
+msgstr ""
+
+#: views/core/options/fields/upload.php:49
+msgctxt "options"
+msgid "Choose File"
+msgstr ""
+
+#: views/core/options/fields/upload-image.php:57
+msgctxt "options"
+msgid "Choose Image"
+msgstr ""
+
+#: views/core/options/fields/upload-gallery.php:54
+msgctxt "options"
+msgid "Choose Images"
+msgstr ""
+
+#: views/core/options/terms.php:17
+msgctxt "options"
+msgid "Custom Fields"
+msgstr ""
+
+#: helpers/general.php:329
+msgctxt "options"
+msgid "Dashed"
+msgstr ""
+
+#: views/core/options/fields/typography.php:527
+#: views/core/options/fields/dimension.php:164
+#: views/core/options/fields/colorpicker.php:39
+msgctxt "options"
+msgid "Default"
+msgstr ""
+
+#: helpers/general.php:330
+msgctxt "options"
+msgid "Dotted"
+msgstr ""
+
+#: helpers/general.php:331
+msgctxt "options"
+msgid "Double"
+msgstr ""
+
+#: helpers/classes/TypographyHelpers.php:141
+msgctxt "options"
+msgid ""
+"Error: Font file not found or could not be loaded.\n"
+msgstr ""
+
+#: views/core/options/fields/typography.php:98
+msgctxt "options"
+msgid "Font Family"
+msgstr ""
+
+#: views/core/options/fields/typography.php:391
+msgctxt "options"
+msgid "Font Size"
+msgstr ""
+
+#: views/core/options/fields/typography.php:249
+#: views/core/options/fields/typography.php:254
+msgctxt "options"
+msgid "Font Style"
+msgstr ""
+
+#: views/core/options/fields/typography.php:275
+#: views/core/options/fields/typography.php:280
+msgctxt "options"
+msgid "Font Subsets"
+msgstr ""
+
+#: views/core/options/fields/typography.php:194
+#: views/core/options/fields/typography.php:199
+msgctxt "options"
+msgid "Font Weight"
+msgstr ""
+
+#: helpers/general.php:332
+msgctxt "options"
+msgid "Groove"
+msgstr ""
+
+#: core/options/fields/fields/Typography.php:226
+msgctxt "options"
+msgid "Inherit"
+msgstr ""
+
+#: core/options/fields/fields/Typography.php:231
+msgctxt "options"
+msgid "Initial"
+msgstr ""
+
+#: helpers/general.php:334
+msgctxt "options"
+msgid "Inset"
+msgstr ""
+
+#: core/options/fields/fields/Typography.php:180
+msgctxt "options"
+msgid "Italic"
+msgstr ""
+
+#: core/options/fields/fields/Typography.php:230
+msgctxt "options"
+msgid "Justify"
+msgstr ""
+
+#: core/options/fields/fields/Typography.php:228
+msgctxt "options"
+msgid "Left"
+msgstr ""
+
+#: views/core/options/fields/typography.php:471
+msgctxt "options"
+msgid "Letter Spacing"
+msgstr ""
+
+#: core/options/fields/fields/Typography.php:162
+msgctxt "options"
+msgid "Light"
+msgstr ""
+
+#: views/core/options/fields/typography.php:431
+msgctxt "options"
+msgid "Line Height"
+msgstr ""
+
+#: core/options/fields/fields/Typography.php:196
+msgctxt "options"
+msgid "Line Through"
+msgstr ""
+
+#: core/options/fields/fields/Typography.php:212
+msgctxt "options"
+msgid "Lowercase"
+msgstr ""
+
+#: views/main-view.php:22
+msgctxt "options"
+msgid "No Content found"
+msgstr ""
+
+#: core/options/fields/fields/Icon.php:122
+msgctxt "options"
+msgid "No icons provided for this icon type"
+msgstr ""
+
+#: core/options/groups/groups/AddableBox.php:94
+msgctxt "options"
+msgid "No options available"
+msgstr ""
+
+#: views/core/options/dashboard-page.php:30 views/core/options/terms.php:27
+#: views/core/options/posts.php:22 views/core/vb/modal.php:20
+msgctxt "options"
+msgid "No options provided"
+msgstr ""
+
+#: views/core/options/fields/no-option.php:13
+msgctxt "options"
+msgid "No such field type"
+msgstr ""
+
+#: helpers/general.php:327 core/options/fields/fields/Typography.php:193
+#: core/options/fields/fields/Typography.php:209
+msgctxt "options"
+msgid "None"
+msgstr ""
+
+#: core/options/fields/fields/Typography.php:179
+msgctxt "options"
+msgid "Normal"
+msgstr ""
+
+#: helpers/general.php:335
+msgctxt "options"
+msgid "Outset"
+msgstr ""
+
+#: core/options/fields/fields/Typography.php:195
+msgctxt "options"
+msgid "Overline"
+msgstr ""
+
+#: views/core/options/groups/panel.php:49
+msgctxt "options"
+msgid "Panel"
+msgstr ""
+
+#: views/core/options/groups/accordion.php:45
+msgctxt "options"
+msgid "Panel %d"
+msgstr ""
+
+#: core/options/fields/fields/Typography.php:163
+msgctxt "options"
+msgid "Regular"
+msgstr ""
+
+#: views/core/options/fields/multi-input.php:43
+msgctxt "options"
+msgid "Remove"
+msgstr ""
+
+#: helpers/classes/OptionsHelpers.php:193
+msgctxt "options"
+msgid "Remove Box"
+msgstr ""
+
+#: views/core/options/fields/icon.php:52
+msgctxt "options"
+msgid "Remove Icon"
+msgstr ""
+
+#: helpers/general.php:333
+msgctxt "options"
+msgid "Ridge"
+msgstr ""
+
+#: core/options/fields/fields/Typography.php:229
+msgctxt "options"
+msgid "Right"
+msgstr ""
+
+#: views/core/options/dashboard-page.php:12
+#: views/core/options/dashboard-page.php:41
+msgctxt "options"
+msgid "Save Changes"
+msgstr ""
+
+#: views/core/options/fields/icon.php:90
+msgctxt "options"
+msgid "Search Icon"
+msgstr ""
+
+#: core/options/fields/fields/Typography.php:164
+msgctxt "options"
+msgid "Semi Bold"
+msgstr ""
+
+#: views/core/options/fields/dimension.php:41
+msgctxt "options"
+msgid "Size 1"
+msgstr ""
+
+#: views/core/options/fields/dimension.php:58
+msgctxt "options"
+msgid "Size 2"
+msgstr ""
+
+#: views/core/options/fields/dimension.php:76
+msgctxt "options"
+msgid "Size 3"
+msgstr ""
+
+#: views/core/options/fields/dimension.php:94
+msgctxt "options"
+msgid "Size 4"
+msgstr ""
+
+#: core/options/fields/fields/Typography.php:213
+msgctxt "options"
+msgid "Small Caps"
+msgstr ""
+
+#: helpers/general.php:328
+msgctxt "options"
+msgid "Solid"
+msgstr ""
+
+#: core/options/groups/groups/AddableBox.php:103
+msgctxt "options"
+msgid "Something went wrong, please refresh the page"
+msgstr ""
+
+#: views/core/options/groups/tabs.php:48
+#: views/core/options/containers/tabsmenu.php:33
+msgctxt "options"
+msgid "Tab %d"
+msgstr ""
+
+#: views/core/options/fields/typography.php:362
+#: views/core/options/fields/typography.php:367
+msgctxt "options"
+msgid "Text Align"
+msgstr ""
+
+#: views/core/options/fields/typography.php:513
+msgctxt "options"
+msgid "Text Color"
+msgstr ""
+
+#: views/core/options/fields/typography.php:334
+#: views/core/options/fields/typography.php:339
+msgctxt "options"
+msgid "Text Decoration"
+msgstr ""
+
+#: views/core/options/fields/typography.php:307
+#: views/core/options/fields/typography.php:312
+msgctxt "options"
+msgid "Text Transform"
+msgstr ""
+
+#: views/core/options/fields/multi-options.php:34
+msgctxt "options"
+msgid "Type to search..."
+msgstr ""
+
+#: core/options/fields/fields/Typography.php:166
+msgctxt "options"
+msgid "Ultra Bold"
+msgstr ""
+
+#: core/options/fields/fields/Typography.php:194
+msgctxt "options"
+msgid "Underline"
+msgstr ""
+
+#: views/core/options/fields/dimension.php:113
+msgctxt "options"
+msgid "Units"
+msgstr ""
+
+#: views/core/options/fields/upload.php:51
+msgctxt "options"
+msgid "Upload"
+msgstr ""
+
+#: views/core/options/fields/upload-gallery.php:55
+msgctxt "options"
+msgid "Upload Gallery"
+msgstr ""
+
+#: views/core/options/fields/upload-image.php:57
+msgctxt "options"
+msgid "Upload Image"
+msgstr ""
+
+#: core/options/fields/fields/Typography.php:211
+msgctxt "options"
+msgid "Uppercase"
+msgstr ""
+
+#: views/core/options/fields/multi-input.php:54
+msgctxt "options"
+msgid "You can't add more than %d inputs "
+msgstr ""
+
+#. Description of the plugin
+msgid "Plugin version is used only for development"
+msgstr ""
+
+#: helpers/traits/SingletonTrait.php:55
+msgctxt "traits"
+msgid "Cannot unserialize singleton"
+msgstr ""
+
+#: helpers/classes/Translations.php:47
+msgctxt "vb"
+msgid "Delete Module"
+msgstr ""
+
+#: core/vb/components/DisableEnableBuilder.php:82
+msgctxt "vb"
+msgid "Disable Visual Editor"
+msgstr ""
+
+#: helpers/classes/Translations.php:46
+msgctxt "vb"
+msgid "Duplicate Module"
+msgstr ""
+
+#: core/vb/components/DisableEnableBuilder.php:81
+msgctxt "vb"
+msgid "Enable Visual Editor"
+msgstr ""
+
+#: core/vb/components/Modal.php:78
+msgctxt "vb"
+msgid "Modal name or id not provided"
+msgstr ""
+
+#: core/vb/components/Modal.php:110
+msgctxt "vb"
+msgid "Modal options data not ok"
+msgstr ""
+
+#: helpers/classes/Translations.php:45
+msgctxt "vb"
+msgid "Module Settings"
+msgstr ""
+
+#: helpers/classes/Translations.php:44
+msgctxt "vb"
+msgid "Move Item"
+msgstr ""
+
+#: helpers/classes/Translations.php:48
+msgctxt "vb"
+msgid "Other Settings"
+msgstr ""
+
+#: helpers/classes/Translations.php:49
+msgctxt "vb"
+msgid "Settings"
+msgstr ""
+
+#: core/vb/components/Modal.php:82 core/vb/components/Modal.php:114
+msgctxt "vb"
+msgid "Something went wrong, please refresh the page"
+msgstr ""
+
+#: extensions/sidebars/CreateDynamicSidebars.php:83
+msgctxt "widgets"
+msgid "Cancel"
+msgstr ""
+
+#: extensions/sidebars/CreateDynamicSidebars.php:81
+msgctxt "widgets"
+msgid "Confirm"
+msgstr ""
+
+#: extensions/sidebars/CreateDynamicSidebars.php:75
+msgctxt "widgets"
+msgid "Create"
+msgstr ""
+
+#: extensions/sidebars/CreateDynamicSidebars.php:71
+msgctxt "widgets"
+msgid "Create Widget Area"
+msgstr ""
+
+#: extensions/sidebars/CreateDynamicSidebars.php:85
+msgctxt "widgets"
+msgid "Delete"
+msgstr ""
+
+#: extensions/sidebars/CreateDynamicSidebars.php:183
+msgctxt "widgets"
+msgid "No sidebar name provided"
+msgstr ""
+
+#: extensions/sidebars/CreateDynamicSidebars.php:73
+msgctxt "widgets"
+msgid "Sidebar Name"
+msgstr ""

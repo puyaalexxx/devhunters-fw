@@ -68,21 +68,21 @@ final class CreateDynamicSidebars implements ICreateDynamicSidebars {
             <form method="post" action="<?php echo esc_url( admin_url( 'widgets.php' ) ); ?>">
 				<?php wp_nonce_field( 'dht_create_sidebar_action', 'dht_create_sidebar_action' ); ?>
 
-                <h3><?php _ex( 'Create Widget Area', 'widgets', DHT_PREFIX ); ?></h3>
+                <h3><?php _ex( 'Create Widget Area', 'widgets', 'dht' ); ?></h3>
                 <input type="text" id="dht_sidebar_name" name="dht_sidebar_name" required
-                       placeholder="<?php echo esc_attr_x( 'Sidebar Name', 'widgets', DHT_PREFIX ); ?>">
+                       placeholder="<?php echo esc_attr_x( 'Sidebar Name', 'widgets', 'dht' ); ?>">
                 <button type="submit" name="create_sidebar"
-                        class="button-primary"><?php _ex( 'Create', 'widgets', DHT_PREFIX ); ?></button>
+                        class="button-primary"><?php _ex( 'Create', 'widgets', 'dht' ); ?></button>
             </form>
         </div>
 
         <div class="dht-wrap-delete" style="display:none;">
             <a href="#" style="display:none;"
-               class="dht-widget-area-delete-confirm button-primary"><?php _ex( 'Confirm', 'widgets', DHT_PREFIX ); ?></a>
+               class="dht-widget-area-delete-confirm button-primary"><?php _ex( 'Confirm', 'widgets', 'dht' ); ?></a>
             <a href="#" style="display:none;"
-               class="dht-widget-area-delete-cancel button-secondary"><?php _ex( 'Cancel', 'widgets', DHT_PREFIX ); ?></a>
+               class="dht-widget-area-delete-cancel button-secondary"><?php _ex( 'Cancel', 'widgets', 'dht' ); ?></a>
             <a href="#" style=""
-               class="dht-widget-area-delete button-primary"><?php _ex( 'Delete', 'widgets', DHT_PREFIX ); ?></a>
+               class="dht-widget-area-delete button-primary"><?php _ex( 'Delete', 'widgets', 'dht' ); ?></a>
         </div>
 		<?php
 	}
@@ -180,7 +180,7 @@ final class CreateDynamicSidebars implements ICreateDynamicSidebars {
 				
 				if( empty( $sidebar_id ) ) {
 					
-					wp_send_json_error( _x( 'No sidebar name provided', 'widgets', DHT_PREFIX ) );
+					wp_send_json_error( _x( 'No sidebar name provided', 'widgets', 'dht' ) );
 					
 					die();
 				}

@@ -44,12 +44,12 @@ $icon_class = !empty( $field[ 'value' ] ) ? $field[ 'value' ][ 'icon-class' ] ??
 
         <!--button to trigger the icons popup-->
         <a href="#TB_inline?width=600&height=500&inlineId=<?php echo esc_attr( $field[ 'id' ] ); ?>"
-           class="button button-primary dht-thickbox thickbox"><?php echo _x( 'Add Icon', 'options', DHT_PREFIX ) ?></a>
+           class="button button-primary dht-thickbox thickbox"><?php echo _x( 'Add Icon', 'options', 'dht' ) ?></a>
 
         <!--remove selected icon-->
         <a href=""
            class="button button-primary dht-btn-remove <?php echo !empty( $field[ 'value' ] ) ? 'dht-btn-show' : ''; ?>">
-			<?php echo _x( 'Remove Icon', 'options', DHT_PREFIX ) ?>
+			<?php echo _x( 'Remove Icon', 'options', 'dht' ) ?>
         </a>
 
         <!--save icon in this input to pass via $_POST-->
@@ -87,7 +87,7 @@ $icon_class = !empty( $field[ 'value' ] ) ? $field[ 'value' ][ 'icon-class' ] ??
                     <input class="dht-input dht-field dht-search-for-icon"
                            type="text"
                            id="<?php echo esc_attr( $field[ 'id' ] ); ?>-search-icon"
-                           placeholder="<?php echo _x( 'Search Icon', 'options', DHT_PREFIX ) ?>" />
+                           placeholder="<?php echo _x( 'Search Icon', 'options', 'dht' ) ?>" />
 
                 </div>
 

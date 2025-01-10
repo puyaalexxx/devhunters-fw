@@ -19,7 +19,7 @@ $hook_name = 'dht:main:view:render_dashboard_page_content';
 		<?php else: ?>
 
             <div
-                class="dht-no-content-found"><?php echo apply_filters( 'dht:main:view:no_content_found', _x( 'No Content found', 'options', DHT_PREFIX ) ); ?></div>
+                class="dht-no-content-found"><?php echo apply_filters( 'dht:main:view:no_content_found', _x( 'No Content found', 'options', 'dht' ) ); ?></div>
 		
 		<?php endif; ?>
 		

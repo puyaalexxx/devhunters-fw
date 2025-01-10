@@ -66,12 +66,12 @@ $saved_values = !empty( $group[ 'value' ] ) ? $group[ 'value' ] : [];
                 </div>
 
                 <a href=""
-                   class="button button-primary dht-add-box-item"><?php echo _x( 'Add', 'options', DHT_PREFIX ); ?></a>
+                   class="button button-primary dht-add-box-item"><?php echo _x( 'Add', 'options', 'dht' ); ?></a>
                 <span class="spinner"></span>
                 <div
-                    class="dht-box-remove-text"><?php echo _x( 'Can\'t remove the only item', 'options', DHT_PREFIX ); ?></div>
+                    class="dht-box-remove-text"><?php echo _x( 'Can\'t remove the only item', 'options', 'dht' ); ?></div>
                 <div
-                    class="dht-max-box-items"><?php echo sprintf( _x( 'Can\'t add more than %d items', 'options', DHT_PREFIX ), (int) $group[ 'limit' ] ); ?></div>
+                    class="dht-max-box-items"><?php echo sprintf( _x( 'Can\'t add more than %d items', 'options', 'dht' ), (int) $group[ 'limit' ] ); ?></div>
 			
 			<?php endif; ?>
         </div>

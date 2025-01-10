@@ -10,7 +10,7 @@ if( !defined( 'DHT_MAIN' ) ) {
     <div class="dht-field-wrapper">
 
         <div class="dht-title">
-			<?php echo apply_filters( 'dht:options:fields:no_such_field_type', _x( 'No such field type', 'options', DHT_PREFIX ) ); ?>
+			<?php echo apply_filters( 'dht:options:fields:no_such_field_type', _x( 'No such field type', 'options', 'dht' ) ); ?>
         </div>
 
     </div>

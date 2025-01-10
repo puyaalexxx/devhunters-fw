@@ -8,7 +8,8 @@ use DHT\Helpers\Classes\TypographyHelpers;
 use function DHT\Helpers\{dht_get_css_units,
 	dht_get_typography_field_css_properties,
 	dht_parse_option_attributes,
-	dht_remove_font_name_prefix};
+	dht_remove_font_name_prefix
+};
 
 $args = $args ?? [];
 
@@ -94,7 +95,7 @@ $font_type = TypographyHelpers::getFontType( $font_value, $google_fonts, $et_fon
             <div class="dht-field-child-typography-dropdown">
 
                 <label
-                    for="<?php echo esc_attr( $field[ 'id' ] ); ?>-font-family"><?php echo _x( 'Font Family', 'options', DHT_PREFIX ) ?></label>
+                    for="<?php echo esc_attr( $field[ 'id' ] ); ?>-font-family"><?php echo _x( 'Font Family', 'options', 'dht' ) ?></label>
 
                 <!--font type-->
                 <input class="dht-typography-font-type-hidden" type="hidden"
@@ -190,12 +191,12 @@ $font_type = TypographyHelpers::getFontType( $font_value, $google_fonts, $et_fon
             <div class="dht-field-child-typography-dropdown">
 
                 <label
-                    for="<?php echo esc_attr( $field[ 'id' ] ); ?>-font-weight"><?php echo _x( 'Font Weight', 'options', DHT_PREFIX ) ?></label>
+                    for="<?php echo esc_attr( $field[ 'id' ] ); ?>-font-weight"><?php echo _x( 'Font Weight', 'options', 'dht' ) ?></label>
 
                 <select class="dht-typography-weight dht-field"
                         name="<?php echo esc_attr( $field[ 'id' ] ); ?>[font-weight]"
                         id="<?php echo esc_attr( $field[ 'id' ] ); ?>-font-weight"
-                        data-placeholder="<?php echo _x( 'Font Weight', 'options', DHT_PREFIX ) ?>"
+                        data-placeholder="<?php echo _x( 'Font Weight', 'options', 'dht' ) ?>"
                         data-standard-font-weights='<?php echo json_encode( $standard_font_weights ); ?>'>
 
                     <option></option>
@@ -245,12 +246,12 @@ $font_type = TypographyHelpers::getFontType( $font_value, $google_fonts, $et_fon
             <div class="dht-field-child-typography-dropdown">
 
                 <label
-                    for="<?php echo esc_attr( $field[ 'id' ] ); ?>-font-style"><?php echo _x( 'Font Style', 'options', DHT_PREFIX ) ?></label>
+                    for="<?php echo esc_attr( $field[ 'id' ] ); ?>-font-style"><?php echo _x( 'Font Style', 'options', 'dht' ) ?></label>
 
                 <select class="dht-typography-style dht-field"
                         name="<?php echo esc_attr( $field[ 'id' ] ); ?>[font-style]"
                         id="<?php echo esc_attr( $field[ 'id' ] ); ?>-font-style"
-                        data-placeholder="<?php echo _x( 'Font Style', 'options', DHT_PREFIX ) ?>">
+                        data-placeholder="<?php echo _x( 'Font Style', 'options', 'dht' ) ?>">
 
                     <option></option>
 					
@@ -271,12 +272,12 @@ $font_type = TypographyHelpers::getFontType( $font_value, $google_fonts, $et_fon
             <div class="dht-field-child-typography-dropdown">
 
                 <label
-                    for="<?php echo esc_attr( $field[ 'id' ] ); ?>-font-subsets"><?php echo _x( 'Font Subsets', 'options', DHT_PREFIX ) ?></label>
+                    for="<?php echo esc_attr( $field[ 'id' ] ); ?>-font-subsets"><?php echo _x( 'Font Subsets', 'options', 'dht' ) ?></label>
 
                 <select class="dht-typography-subsets dht-field"
                         name="<?php echo esc_attr( $field[ 'id' ] ); ?>[font-subsets]"
                         id="<?php echo esc_attr( $field[ 'id' ] ); ?>-font-subsets"
-                        data-placeholder="<?php echo _x( 'Font Subsets', 'options', DHT_PREFIX ) ?>">
+                        data-placeholder="<?php echo _x( 'Font Subsets', 'options', 'dht' ) ?>">
 
                     <option></option>
 
@@ -303,12 +304,12 @@ $font_type = TypographyHelpers::getFontType( $font_value, $google_fonts, $et_fon
             <div class="dht-field-child-typography-dropdown">
 
                 <label
-                    for="<?php echo esc_attr( $field[ 'id' ] ); ?>-text-transform"><?php echo _x( 'Text Transform', 'options', DHT_PREFIX ) ?></label>
+                    for="<?php echo esc_attr( $field[ 'id' ] ); ?>-text-transform"><?php echo _x( 'Text Transform', 'options', 'dht' ) ?></label>
 
                 <select class="dht-typography-transform dht-field"
                         name="<?php echo esc_attr( $field[ 'id' ] ); ?>[text-transform]"
                         id="<?php echo esc_attr( $field[ 'id' ] ); ?>-text-transform"
-                        data-placeholder="<?php echo _x( 'Text Transform', 'options', DHT_PREFIX ) ?>">
+                        data-placeholder="<?php echo _x( 'Text Transform', 'options', 'dht' ) ?>">
 
                     <option></option>
 					
@@ -330,12 +331,12 @@ $font_type = TypographyHelpers::getFontType( $font_value, $google_fonts, $et_fon
             <div class="dht-field-child-typography-dropdown">
 
                 <label
-                    for="<?php echo esc_attr( $field[ 'id' ] ); ?>-text-decoration"><?php echo _x( 'Text Decoration', 'options', DHT_PREFIX ) ?></label>
+                    for="<?php echo esc_attr( $field[ 'id' ] ); ?>-text-decoration"><?php echo _x( 'Text Decoration', 'options', 'dht' ) ?></label>
 
                 <select class="dht-typography-decoration dht-field"
                         name="<?php echo esc_attr( $field[ 'id' ] ); ?>[text-decoration]"
                         id="<?php echo esc_attr( $field[ 'id' ] ); ?>-text-decoration"
-                        data-placeholder="<?php echo _x( 'Text Decoration', 'options', DHT_PREFIX ) ?>">
+                        data-placeholder="<?php echo _x( 'Text Decoration', 'options', 'dht' ) ?>">
 
                     <option></option>
 					
@@ -358,12 +359,12 @@ $font_type = TypographyHelpers::getFontType( $font_value, $google_fonts, $et_fon
                 <div class="dht-field-child-typography-dropdown">
 
                     <label
-                        for="<?php echo esc_attr( $field[ 'id' ] ); ?>-text-align"><?php echo _x( 'Text Align', 'options', DHT_PREFIX ) ?></label>
+                        for="<?php echo esc_attr( $field[ 'id' ] ); ?>-text-align"><?php echo _x( 'Text Align', 'options', 'dht' ) ?></label>
 
                     <select class="dht-typography-align dht-field"
                             name="<?php echo esc_attr( $field[ 'id' ] ); ?>[text-align]"
                             id="<?php echo esc_attr( $field[ 'id' ] ); ?>-text-align"
-                            data-placeholder="<?php echo _x( 'Text Align', 'options', DHT_PREFIX ) ?>">
+                            data-placeholder="<?php echo _x( 'Text Align', 'options', 'dht' ) ?>">
 
                         <option></option>
 						
@@ -387,7 +388,7 @@ $font_type = TypographyHelpers::getFontType( $font_value, $google_fonts, $et_fon
                 <div class="dht-field-child-typography-dropdown">
 
                     <label
-                        for="<?php echo esc_attr( $field[ 'id' ] ); ?>-font-size-value"><?php echo _x( 'Font Size', 'options', DHT_PREFIX ) ?></label>
+                        for="<?php echo esc_attr( $field[ 'id' ] ); ?>-font-size-value"><?php echo _x( 'Font Size', 'options', 'dht' ) ?></label>
 
                     <div class="dht-field-child-typography-fields dht-typography-font-size">
 
@@ -427,7 +428,7 @@ $font_type = TypographyHelpers::getFontType( $font_value, $google_fonts, $et_fon
                 <div class="dht-field-child-typography-dropdown">
 
                     <label
-                        for="<?php echo esc_attr( $field[ 'id' ] ); ?>-line-height-value"><?php echo _x( 'Line Height', 'options', DHT_PREFIX ) ?></label>
+                        for="<?php echo esc_attr( $field[ 'id' ] ); ?>-line-height-value"><?php echo _x( 'Line Height', 'options', 'dht' ) ?></label>
 
                     <div class="dht-field-child-typography-fields dht-typography-line-height">
 
@@ -467,7 +468,7 @@ $font_type = TypographyHelpers::getFontType( $font_value, $google_fonts, $et_fon
                 <div class="dht-field-child-typography-dropdown">
 
                     <label
-                        for="<?php echo esc_attr( $field[ 'id' ] ); ?>-letter-spacing-value"><?php echo _x( 'Letter Spacing', 'options', DHT_PREFIX ) ?></label>
+                        for="<?php echo esc_attr( $field[ 'id' ] ); ?>-letter-spacing-value"><?php echo _x( 'Letter Spacing', 'options', 'dht' ) ?></label>
 
                     <div class="dht-field-child-typography-fields dht-typography-letter-spacing">
 
@@ -509,7 +510,7 @@ $font_type = TypographyHelpers::getFontType( $font_value, $google_fonts, $et_fon
             <div class="dht-field-child-typography-colorpicker">
 
                 <label
-                    for="<?php echo esc_attr( $field[ 'id' ] ); ?>-color"><?php echo _x( 'Text Color', 'options', DHT_PREFIX ) ?></label>
+                    for="<?php echo esc_attr( $field[ 'id' ] ); ?>-color"><?php echo _x( 'Text Color', 'options', 'dht' ) ?></label>
 
                 <input
                     class="dht-colorpicker dht-field"
@@ -523,7 +524,7 @@ $font_type = TypographyHelpers::getFontType( $font_value, $google_fonts, $et_fon
                 <input type="button" id="<?php echo esc_attr( $field[ 'id' ] ) . '-btn'; ?>"
                        class="dht-default-color-btn button button-small"
                        data-default-value="<?php echo esc_html( $text_color_value ); ?>"
-                       value="<?php echo _x( 'Default', 'options', DHT_PREFIX ) ?>">
+                       value="<?php echo _x( 'Default', 'options', 'dht' ) ?>">
 
             </div>
 		<?php endif; ?>

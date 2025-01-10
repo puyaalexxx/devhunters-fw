@@ -54,7 +54,7 @@ elseif( !empty( $field[ 'value' ][ 'image' ] ) ) {
                value="<?php echo !empty( $field[ 'value' ][ 'image_id' ] ) ? esc_attr( (int) $field[ 'value' ][ 'image_id' ] ) : ''; ?>" />
 
         <span class="dht-upload-image-button button"
-              data-media-text="<?php echo _x( 'Choose Image', 'options', DHT_PREFIX ) ?>"><?php echo _x( 'Upload Image', 'options', DHT_PREFIX ) ?></span>
+              data-media-text="<?php echo _x( 'Choose Image', 'options', 'dht' ) ?>"><?php echo _x( 'Upload Image', 'options', 'dht' ) ?></span>
 		
 		<?php if( !empty( $field[ 'description' ] ) ): ?>
             <div class="dht-description"><?php echo esc_html( $field[ 'description' ] ); ?></div>

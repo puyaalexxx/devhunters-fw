@@ -36,7 +36,7 @@ $field = $args[ 'field' ] ?? [];
         <input type="button" id="<?php echo esc_attr( $field[ 'id' ] ) . '-btn'; ?>"
                class="dht-default-color-btn button button-small"
                data-default-value="<?php echo esc_html( $field[ 'value' ] ); ?>"
-               value="<?php echo _x( 'Default', 'options', DHT_PREFIX ) ?>">
+               value="<?php echo _x( 'Default', 'options', 'dht' ) ?>">
 		
 		<?php if( !empty( $field[ 'description' ] ) ): ?>
             <div class="dht-description"><?php echo esc_html( $field[ 'description' ] ); ?></div>

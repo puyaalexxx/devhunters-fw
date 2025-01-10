@@ -40,7 +40,7 @@ final class Manifest {
 	 */
 	public function get( string $key ) : mixed {
 		
-		$no_value = _x( 'Value does not exist', 'manifest', DHT_PREFIX );
+		$no_value = _x( 'Value does not exist', 'manifest', 'dht' );
 		
 		if( empty( $this->_manifest ) ) {
 			return $no_value;

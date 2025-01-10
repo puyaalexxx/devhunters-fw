@@ -159,11 +159,11 @@ final class Typography extends BaseField {
 	private function _getStandardFontWeights() : array {
 		
 		return [
-			'300' => _x( 'Light', 'options', DHT_PREFIX ),
-			'400' => _x( 'Regular', 'options', DHT_PREFIX ),
-			'600' => _x( 'Semi Bold', 'options', DHT_PREFIX ),
-			'700' => _x( 'Bold', 'options', DHT_PREFIX ),
-			'800' => _x( 'Ultra Bold', 'options', DHT_PREFIX )
+			'300' => _x( 'Light', 'options', 'dht' ),
+			'400' => _x( 'Regular', 'options', 'dht' ),
+			'600' => _x( 'Semi Bold', 'options', 'dht' ),
+			'700' => _x( 'Bold', 'options', 'dht' ),
+			'800' => _x( 'Ultra Bold', 'options', 'dht' )
 		];
 	}
 	
@@ -176,8 +176,8 @@ final class Typography extends BaseField {
 	private function _getStandardFontStyles() : array {
 		
 		return [
-			'normal' => _x( 'Normal', 'options', DHT_PREFIX ),
-			'italic' => _x( 'Italic', 'options', DHT_PREFIX )
+			'normal' => _x( 'Normal', 'options', 'dht' ),
+			'italic' => _x( 'Italic', 'options', 'dht' )
 		];
 	}
 	
@@ -190,10 +190,10 @@ final class Typography extends BaseField {
 	private function _getTextDecorationValues() : array {
 		
 		return [
-			'none'         => _x( 'None', 'options', DHT_PREFIX ),
-			'underline'    => _x( 'Underline', 'options', DHT_PREFIX ),
-			'overline'     => _x( 'Overline', 'options', DHT_PREFIX ),
-			'line-through' => _x( 'Line Through', 'options', DHT_PREFIX )
+			'none'         => _x( 'None', 'options', 'dht' ),
+			'underline'    => _x( 'Underline', 'options', 'dht' ),
+			'overline'     => _x( 'Overline', 'options', 'dht' ),
+			'line-through' => _x( 'Line Through', 'options', 'dht' )
 		];
 	}
 	
@@ -206,11 +206,11 @@ final class Typography extends BaseField {
 	private function _getTextTransformValues() : array {
 		
 		return [
-			'none'       => _x( 'None', 'options', DHT_PREFIX ),
-			'capitalize' => _x( 'Capitalize', 'options', DHT_PREFIX ),
-			'uppercase'  => _x( 'Uppercase', 'options', DHT_PREFIX ),
-			'lowercase'  => _x( 'Lowercase', 'options', DHT_PREFIX ),
-			'small-caps' => _x( 'Small Caps', 'options', DHT_PREFIX )
+			'none'       => _x( 'None', 'options', 'dht' ),
+			'capitalize' => _x( 'Capitalize', 'options', 'dht' ),
+			'uppercase'  => _x( 'Uppercase', 'options', 'dht' ),
+			'lowercase'  => _x( 'Lowercase', 'options', 'dht' ),
+			'small-caps' => _x( 'Small Caps', 'options', 'dht' )
 		];
 	}
 	
@@ -223,12 +223,12 @@ final class Typography extends BaseField {
 	private function _getTextAlignValues() : array {
 		
 		return [
-			'inherit' => _x( 'Inherit', 'options', DHT_PREFIX ),
-			'center'  => _x( 'Center', 'options', DHT_PREFIX ),
-			'left'    => _x( 'Left', 'options', DHT_PREFIX ),
-			'right'   => _x( 'Right', 'options', DHT_PREFIX ),
-			'justify' => _x( 'Justify', 'options', DHT_PREFIX ),
-			'initial' => _x( 'Initial', 'options', DHT_PREFIX )
+			'inherit' => _x( 'Inherit', 'options', 'dht' ),
+			'center'  => _x( 'Center', 'options', 'dht' ),
+			'left'    => _x( 'Left', 'options', 'dht' ),
+			'right'   => _x( 'Right', 'options', 'dht' ),
+			'justify' => _x( 'Justify', 'options', 'dht' ),
+			'initial' => _x( 'Initial', 'options', 'dht' )
 		];
 	}
 	

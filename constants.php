@@ -3,7 +3,7 @@ declare( strict_types = 1 );
 
 namespace DHT;
 
-if ( ! defined( 'ABSPATH' ) ) {
+if( !defined( 'ABSPATH' ) ) {
 	die( 'Forbidden' );
 }
 
@@ -33,6 +33,8 @@ define( 'DHT_OPTIONS_DIR', DHT_CORE_DIR . 'options/' );
 define( 'DHT_EXTENSIONS_DIR', DHT_DIR . 'extensions/' );
 
 define( 'DHT_VIEWS_DIR', DHT_DIR . 'views/' );
+
+define( 'DHT_LANG', plugin_basename( dirname( __FILE__ ) ) . '/languages' );
 
 /*
  * URL PATHs

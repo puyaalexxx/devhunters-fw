@@ -1,5 +1,5 @@
 <?php
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
@@ -13,13 +13,13 @@ $args = $args ?? [];
 			
 			<?php wp_nonce_field( $args[ 'nonce' ][ 'action' ], $args[ 'nonce' ][ 'name' ] ); ?>
 			
-			<?php if ( ! empty( $args[ 'options' ] ) ): ?>
+			<?php if( !empty( $args[ 'options' ] ) ): ?>
 				
 				<?php echo do_shortcode( $args[ 'options' ] ); ?>
 			
 			<?php else: ?>
 				
-				<?php echo apply_filters( 'dht:options:view:no_options_found', _x( 'No options provided', 'options', DHT_PREFIX ) ); ?>
+				<?php echo apply_filters( 'dht:options:view:no_options_found', _x( 'No options provided', 'options', 'dht' ) ); ?>
 			
 			<?php endif; ?>
 			

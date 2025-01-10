@@ -62,7 +62,7 @@ final class DisableEnableBuilder {
 	 */
 	private function _addEnableDisableVbButtons( string $post_type ) : void {
 		
-		/*add_meta_box( 'dht-vb-buttons-builder-box', _x( 'Enable/Disable VB Buttons', 'vb', DHT_PREFIX ), [
+		/*add_meta_box( 'dht-vb-buttons-builder-box', _x( 'Enable/Disable VB Buttons', 'vb', 'dht' ), [
 			$this,
 			'view'
 		], $post_type, 'normal', 'high' );*/
@@ -78,8 +78,8 @@ final class DisableEnableBuilder {
 	 */
 	public function view( WP_Post $post ) : void { ?>
 
-        <a href="#" id="dht-vb-enable-builder-button"><?php _ex( 'Enable Visual Editor', 'vb', DHT_PREFIX ); ?></a>
-        <a href="#" id="dht-vb-disable-builder-button"><?php _ex( 'Disable Visual Editor', 'vb', DHT_PREFIX ); ?></a>
+        <a href="#" id="dht-vb-enable-builder-button"><?php _ex( 'Enable Visual Editor', 'vb', 'dht' ); ?></a>
+        <a href="#" id="dht-vb-disable-builder-button"><?php _ex( 'Disable Visual Editor', 'vb', 'dht' ); ?></a>
 		
 		<?php
 	}

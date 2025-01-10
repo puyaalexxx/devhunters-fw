@@ -45,7 +45,7 @@ $tabs_id = str_replace( [
 
                         <li class="<?php echo $cnt == 1 ? 'active' : '' ?>">
                             <a href="#<?php echo esc_attr( $tabs_id ); ?>-<?php echo esc_attr( $cnt ); ?>">
-								<?php echo !empty( $group_tabs[ 'title' ] ) ? esc_html( $group_tabs[ 'title' ] ) : sprintf( _x( 'Tab %d', 'options', DHT_PREFIX ), $cnt ); ?>
+								<?php echo !empty( $group_tabs[ 'title' ] ) ? esc_html( $group_tabs[ 'title' ] ) : sprintf( _x( 'Tab %d', 'options', 'dht' ), $cnt ); ?>
                             </a>
                         </li>
 					

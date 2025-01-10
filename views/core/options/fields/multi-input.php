@@ -39,8 +39,8 @@ $values = !empty( $field[ 'value' ] ) && is_array( $field[ 'value' ] ) ? $field[
 
                 <!--remove input button-->
                 <a href="javascript:void(0);" class="dht-multiinput-remove"
-                   data-remove-text="<?php echo _x( 'Can\'t remove the only field', 'options', DHT_PREFIX ) ?>">
-					<?php echo _x( 'Remove', 'options', DHT_PREFIX ) ?>
+                   data-remove-text="<?php echo _x( 'Can\'t remove the only field', 'options', 'dht' ) ?>">
+					<?php echo _x( 'Remove', 'options', 'dht' ) ?>
                 </a>
 
             </div>
@@ -51,9 +51,9 @@ $values = !empty( $field[ 'value' ] ) && is_array( $field[ 'value' ] ) ? $field[
         <a href="javascript:void(0);"
            class="dht-button dht-btn-small dht-multiinput-add"
            data-limit="<?php echo (int) esc_attr( $field[ 'limit' ] ); ?>"
-           data-add-text="<?php echo sprintf( _x( 'You can\'t add more than %d inputs ', 'options', DHT_PREFIX ), (int) esc_attr( $field[ 'limit' ] ) ); ?>"
+           data-add-text="<?php echo sprintf( _x( 'You can\'t add more than %d inputs ', 'options', 'dht' ), (int) esc_attr( $field[ 'limit' ] ) ); ?>"
         >
-			<?php echo _x( 'Add More', 'options', DHT_PREFIX ) ?>
+			<?php echo _x( 'Add More', 'options', 'dht' ) ?>
         </a>
 		
 		<?php if( !empty( $field[ 'description' ] ) ): ?>

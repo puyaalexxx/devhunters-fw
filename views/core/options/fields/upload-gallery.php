@@ -51,8 +51,8 @@ $field = $args[ 'field' ] ?? [];
                value="<?php echo !empty( $field[ 'value' ] ) ? implode( ',', $field[ 'value' ] ) : ''; ?>" />
 
         <span class="dht-upload-gallery-button button"
-              data-media-text="<?php echo _x( 'Choose Images', 'options', DHT_PREFIX ) ?>">
-            <?php echo _x( 'Upload Gallery', 'options', DHT_PREFIX ) ?>
+              data-media-text="<?php echo _x( 'Choose Images', 'options', 'dht' ) ?>">
+            <?php echo _x( 'Upload Gallery', 'options', 'dht' ) ?>
         </span>
 		
 		<?php if( !empty( $field[ 'description' ] ) ): ?>

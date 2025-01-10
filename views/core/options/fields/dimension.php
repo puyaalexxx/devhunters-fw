@@ -38,7 +38,7 @@ $input_icons  = $field[ 'input-icons' ] ?? true;
 
             <div class="dht-field-dimension-input">
                 <label
-                    for="<?php echo esc_attr( $field[ 'id' ] ); ?>-size-1"><?php echo _x( 'Size 1', 'options', DHT_PREFIX ) ?></label>
+                    for="<?php echo esc_attr( $field[ 'id' ] ); ?>-size-1"><?php echo _x( 'Size 1', 'options', 'dht' ) ?></label>
 				
 				<?php if( $input_icons ): ?>
                     <span class="dht-dimension-size-1"></span>
@@ -55,7 +55,7 @@ $input_icons  = $field[ 'input-icons' ] ?? true;
 			<?php if( $size2 ): ?>
                 <div class="dht-field-dimension-input">
                     <label
-                        for="<?php echo esc_attr( $field[ 'id' ] ); ?>-size-2"><?php echo _x( 'Size 2', 'options', DHT_PREFIX ) ?></label>
+                        for="<?php echo esc_attr( $field[ 'id' ] ); ?>-size-2"><?php echo _x( 'Size 2', 'options', 'dht' ) ?></label>
 					
 					<?php if( $input_icons ): ?>
                         <span class="dht-dimension-size-2"></span>
@@ -73,7 +73,7 @@ $input_icons  = $field[ 'input-icons' ] ?? true;
 			<?php if( $size3 ): ?>
                 <div class="dht-field-dimension-input">
                     <label
-                        for="<?php echo esc_attr( $field[ 'id' ] ); ?>-size-3"><?php echo _x( 'Size 3', 'options', DHT_PREFIX ) ?></label>
+                        for="<?php echo esc_attr( $field[ 'id' ] ); ?>-size-3"><?php echo _x( 'Size 3', 'options', 'dht' ) ?></label>
 					
 					<?php if( $input_icons ): ?>
                         <span class="dht-dimension-size-3"></span>
@@ -91,7 +91,7 @@ $input_icons  = $field[ 'input-icons' ] ?? true;
 			<?php if( $size4 ): ?>
                 <div class="dht-field-dimension-input">
                     <label
-                        for="<?php echo esc_attr( $field[ 'id' ] ); ?>-size-4"><?php echo _x( 'Size 4', 'options', DHT_PREFIX ) ?></label>
+                        for="<?php echo esc_attr( $field[ 'id' ] ); ?>-size-4"><?php echo _x( 'Size 4', 'options', 'dht' ) ?></label>
 					
 					<?php if( $input_icons ): ?>
                         <span class="dht-dimension-size-4"></span>
@@ -110,7 +110,7 @@ $input_icons  = $field[ 'input-icons' ] ?? true;
 				<?php $units_value = $field[ 'value' ][ 'unit' ] ?? ""; ?>
                 <div class="dht-field-dimension-input">
                     <label
-                        for="<?php echo esc_attr( $field[ 'id' ] ); ?>-units"><?php echo _x( 'Units', 'options', DHT_PREFIX ); ?></label>
+                        for="<?php echo esc_attr( $field[ 'id' ] ); ?>-units"><?php echo _x( 'Units', 'options', 'dht' ); ?></label>
 
                     <select class="dht-dimension-dropdown dht-dimension-unit dht-field"
                             name="<?php echo esc_attr( $field[ 'id' ] ); ?>[unit]"
@@ -129,7 +129,7 @@ $input_icons  = $field[ 'input-icons' ] ?? true;
 				<?php $border_style_value = $field[ 'value' ][ 'border-style' ] ?? ""; ?>
                 <div class="dht-field-dimension-input">
                     <label
-                        for="<?php echo esc_attr( $field[ 'id' ] ); ?>-border-style"><?php echo _x( 'Border Style', 'options', DHT_PREFIX ) ?></label>
+                        for="<?php echo esc_attr( $field[ 'id' ] ); ?>-border-style"><?php echo _x( 'Border Style', 'options', 'dht' ) ?></label>
 
                     <select class="dht-dimension-dropdown dht-dimension-border-style dht-field"
                             name="<?php echo esc_attr( $field[ 'id' ] ); ?>[border-style]"
@@ -161,7 +161,7 @@ $input_icons  = $field[ 'input-icons' ] ?? true;
                 <input type="button" id="<?php echo esc_attr( $field[ 'id' ] ) . '-btn'; ?>"
                        class="dht-default-color-btn button button-small"
                        data-default-value="<?php echo esc_html( $color_value ); ?>"
-                       value="<?php echo _x( 'Default', 'options', DHT_PREFIX ) ?>">
+                       value="<?php echo _x( 'Default', 'options', 'dht' ) ?>">
 
             </div>
 		<?php endif; ?>

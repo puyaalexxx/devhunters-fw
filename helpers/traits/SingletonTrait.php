@@ -3,7 +3,7 @@ declare( strict_types = 1 );
 
 namespace DHT\Helpers\Traits;
 
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
@@ -30,7 +30,7 @@ trait SingletonTrait {
 	public static function init() : self {
 		
 		$cls = static::class;
-		if ( ! isset( self::$_instances[ $cls ] ) ) {
+		if( !isset( self::$_instances[ $cls ] ) ) {
 			self::$_instances[ $cls ] = new static();
 		}
 		
@@ -52,7 +52,7 @@ trait SingletonTrait {
 	 */
 	public function __wakeup() {
 		
-		throw new Exception( _x( 'Cannot unserialize singleton', 'traits', DHT_PREFIX ) );
+		throw new Exception( _x( 'Cannot unserialize singleton', 'traits', 'dht' ) );
 	}
 	
 }

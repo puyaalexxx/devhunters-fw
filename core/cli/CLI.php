@@ -3,7 +3,7 @@ declare( strict_types = 1 );
 
 namespace DHT\Core\Cli;
 
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
@@ -31,17 +31,19 @@ final class CLI {
 	 */
 	public function registerCustomCliCommands( array $commands = [] ) : void {
 		
-		if ( class_exists( 'WP_CLI' ) ) {
-			if ( ! empty( $commands ) ) {
+		if( class_exists( 'WP_CLI' ) ) {
+			if( !empty( $commands ) ) {
 				foreach ( $commands as $command ) {
 					WP_CLI::add_command( $command[ 'name' ], $command[ 'class' ] );
 				}
-			} else {
+			}
+			else {
 				// Register framework commands
 				WP_CLI::add_command( 'dht', 'DHT\Core\Cli\Commands' );
 			}
-		} else {
-			WP_CLI::log( _x( 'WP_CLI class does not exist. Make sure you are running from CLI.', 'cli', DHT_PREFIX ) );
+		}
+		else {
+			WP_CLI::log( _x( 'WP_CLI class does not exist. Make sure you are running from CLI.', 'cli', 'dht' ) );
 		}
 	}
 	

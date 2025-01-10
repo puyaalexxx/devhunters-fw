@@ -91,7 +91,7 @@ final class AddableBox extends BaseGroup {
 				], $box_number );
 			}
 			else {
-				echo _x( 'No options available', 'options', DHT_PREFIX );
+				echo _x( 'No options available', 'options', 'dht' );
 			}
 			
 			$content = ob_get_clean();
@@ -100,7 +100,7 @@ final class AddableBox extends BaseGroup {
 			
 		}
 		else {
-			wp_send_json_success( _x( 'Something went wrong, please refresh the page', 'options', DHT_PREFIX ) );
+			wp_send_json_success( _x( 'Something went wrong, please refresh the page', 'options', 'dht' ) );
 		}
 		
 		die();

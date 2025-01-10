@@ -31,7 +31,7 @@ $field = $args[ 'field' ] ?? [];
 
                 data-values="<?php echo !empty( $field[ 'value' ] ) ? implode( ',', $field[ 'value' ] ) : ''; ?>"
                 data-ajax-enabled="<?php echo $field[ 'ajax' ] ? 'yes' : 'no'; ?>"
-                data-input-text="<?php echo _x( 'Type to search...', 'options', DHT_PREFIX ); ?>"
+                data-input-text="<?php echo _x( 'Type to search...', 'options', 'dht' ); ?>"
                 data-ajax-action="<?php echo isset( $field[ 'ajax-action' ] ) ? esc_attr( $field[ 'ajax-action' ] ) : ''; ?>"
                 data-minimumInputLength="<?php echo isset( $field[ 'minimumInputLength' ] ) ? esc_attr( (int) $field[ 'minimumInputLength' ] ) : 2; ?>">
 			

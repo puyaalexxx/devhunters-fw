@@ -46,7 +46,7 @@ $registered_options_classes = $args[ 'registered_options_classes' ] ?? [];
                             </div>
 
                             <span class="dht-panel-title-text">
-                                <?php echo !empty( $group_panel[ 'panel_title' ] ) ? esc_html( $group_panel[ 'panel_title' ] ) : _x( 'Panel', 'options', DHT_PREFIX ); ?>
+                                <?php echo !empty( $group_panel[ 'panel_title' ] ) ? esc_html( $group_panel[ 'panel_title' ] ) : _x( 'Panel', 'options', 'dht' ); ?>
                             </span>
 
                         </div>

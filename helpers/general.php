@@ -324,15 +324,15 @@ if( !function_exists( 'dht_border_styles' ) ) {
 	function dht_border_styles() : array {
 		
 		return apply_filters( 'dht:options:fields:borders_styles_args', [
-			"none"   => _x( 'None', 'options', DHT_PREFIX ),
-			"solid"  => _x( 'Solid', 'options', DHT_PREFIX ),
-			"dashed" => _x( 'Dashed', 'options', DHT_PREFIX ),
-			"dotted" => _x( 'Dotted', 'options', DHT_PREFIX ),
-			"double" => _x( 'Double', 'options', DHT_PREFIX ),
-			"groove" => _x( 'Groove', 'options', DHT_PREFIX ),
-			"ridge"  => _x( 'Ridge', 'options', DHT_PREFIX ),
-			"inset"  => _x( 'Inset', 'options', DHT_PREFIX ),
-			"outset" => _x( 'Outset', 'options', DHT_PREFIX ),
+			"none"   => _x( 'None', 'options', 'dht' ),
+			"solid"  => _x( 'Solid', 'options', 'dht' ),
+			"dashed" => _x( 'Dashed', 'options', 'dht' ),
+			"dotted" => _x( 'Dotted', 'options', 'dht' ),
+			"double" => _x( 'Double', 'options', 'dht' ),
+			"groove" => _x( 'Groove', 'options', 'dht' ),
+			"ridge"  => _x( 'Ridge', 'options', 'dht' ),
+			"inset"  => _x( 'Inset', 'options', 'dht' ),
+			"outset" => _x( 'Outset', 'options', 'dht' ),
 		] );
 	}
 }
@@ -359,5 +359,51 @@ if( !function_exists( 'dht_get_font_format_by_its_extension' ) ) {
 			'woff2' => 'woff2',
 			default => 'truetype',
 		};
+	}
+}
+
+if( !function_exists( 'dht_get_composer_info' ) ) {
+	/**
+	 * Grab composer.json info values
+	 *
+	 * @param string $composer_path Composer file path
+	 *
+	 * @return array composer info
+	 * @since     1.0.0
+	 */
+	function dht_get_composer_info( string $composer_path = DHT_DIR . 'composer.json' ) : array {
+		
+		$composer_info = [ "version" => "1.0.0" ];
+		if( file_exists( $composer_path ) ) {
+			$composer_data = file_get_contents( $composer_path );
+			$composer_json = json_decode( $composer_data, true );
+			
+			if( isset( $composer_json[ 'version' ] ) ) {
+				$composer_info[ 'version' ] = $composer_json[ 'version' ];
+			}
+			if( isset( $composer_json[ 'name' ] ) ) {
+				$composer_info[ 'package_name' ] = $composer_json[ 'name' ];
+			}
+			if( isset( $composer_json[ 'description' ] ) ) {
+				$composer_info[ 'description' ] = $composer_json[ 'description' ];
+			}
+			if( isset( $composer_json[ 'license' ] ) ) {
+				$composer_info[ 'license' ] = $composer_json[ 'license' ];
+			}
+			if( isset( $composer_json[ 'author' ] ) ) {
+				$composer_info[ 'author' ] = $composer_json[ 'author' ];
+			}
+			if( isset( $composer_json[ 'extra' ] ) ) {
+				$composer_info[ 'extra' ] = $composer_json[ 'extra' ];
+			}
+			if( isset( $composer_json[ 'support' ] ) ) {
+				$composer_info[ 'support' ] = $composer_json[ 'support' ];
+			}
+			if( isset( $composer_json[ 'require' ] ) ) {
+				$composer_info[ 'require' ] = $composer_json[ 'require' ];
+			}
+		}
+		
+		return $composer_info;
 	}
 }

@@ -10,10 +10,9 @@ import { errorLoadingModule } from "@helpers/general";
         //vb module elements (there could be many of them on the page)
         private readonly _vbModule: JQuery<HTMLElement>;
         //@ts-ignore - translation strings
-        private readonly _translationStrings: IVbTranslations = dht_framework_info.translations.vb;
+        private readonly _translationStrings: IVbTranslations = dht_framework_vb_info.translations.vb;
 
         constructor() {
-
             //get vb modules
             this._vbModule = this._getVBModules();
 

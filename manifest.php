@@ -32,9 +32,12 @@ $manifest[ 'require' ] = [
 ];
 
 $manifest[ 'core' ] = [
-	'cli' => [
-		'description' => _x( 'Creating custom wp cli commands', 'manifest', 'dht' )
-	]
+	'cli'     => [
+		'description' => _x( 'A core feature to create custom wp cli commands', 'manifest', 'dht' )
+	],
+	'options' => [
+		'description' => _x( 'A core feature to create different option fields that can be used on dashboard pages, terms and post types', 'manifest', 'dht' )
+	],
 ];
 
 $manifest[ 'extensions' ] = [
@@ -47,7 +50,7 @@ $manifest[ 'extensions' ] = [
 	'sidebars'        => [
 		'description' => _x( 'Creating sidebars dynamically from option configurations also adding a dynamic form to wigets area to create sidebars on the fly', 'manifest', 'dht' )
 	],
-	'options'         => [
-		'description' => _x( 'An extension to create different option fields that can be used on dashboard pages, terms and post types', 'manifest', 'dht' )
+	'vb'              => [
+		'description' => _x( 'An extension to create a small visual builder with a popup on specific elements on the page', 'manifest', 'dht' )
 	],
 ];

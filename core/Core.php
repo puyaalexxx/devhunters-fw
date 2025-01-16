@@ -10,8 +10,8 @@ if( !defined( 'DHT_MAIN' ) ) {
 use DHT\Core\Cli\CLI;
 use DHT\Core\Options\IOptions;
 use DHT\Core\Options\Options;
-use DHT\Core\Vb\{IVB, VB};
-use DHT\Helpers\Traits\{SingletonTrait, ValidateConfigurationsTrait};
+use DHT\Helpers\Traits\{ValidateConfigurationsTrait};
+use DHT\Helpers\Traits\Singletons\SingletonTraitNoParam;
 
 /**
  * Singleton Class that is used to include all the framework core features
@@ -19,7 +19,7 @@ use DHT\Helpers\Traits\{SingletonTrait, ValidateConfigurationsTrait};
 final class Core {
 	
 	use ValidateConfigurationsTrait;
-	use SingletonTrait;
+	use SingletonTraitNoParam;
 	
 	/**
 	 * @since     1.0.0
@@ -27,21 +27,6 @@ final class Core {
 	private function __construct() {
 		
 		do_action( 'dht:fw:before_core_init' );
-	}
-	
-	/**
-	 * get visual builder class instance
-	 *
-	 * @param array $custom_post_types - custom posts types
-	 *
-	 * @return ?IVB - vb instance
-	 * @since     1.0.0
-	 */
-	public function vb( array $custom_post_types ) : ?IVB {
-		
-		if( empty( $custom_post_types ) ) return NULL;
-		
-		return new VB( $custom_post_types );
 	}
 	
 	/**

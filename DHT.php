@@ -12,8 +12,8 @@ use DHT\Core\Core;
 use DHT\Extensions\Extensions;
 use DHT\Helpers\Classes\Environment;
 use DHT\Helpers\Classes\Translations;
-use DHT\helpers\traits\DHTTrait;
-use DHT\Helpers\Traits\SingletonTrait;
+use DHT\Helpers\Traits\DHTTrait;
+use DHT\Helpers\Traits\Singletons\SingletonTraitWithArrayParam;
 use function DHT\Helpers\dht_fw_get_manifest_info_by_key;
 use function DHT\Helpers\dht_make_script_as_module_type;
 
@@ -24,7 +24,7 @@ use function DHT\Helpers\dht_make_script_as_module_type;
  */
 final class DHT {
 	
-	use SingletonTrait, DHTTrait;
+	use SingletonTraitWithArrayParam, DHTTrait;
 	
 	//framework version
 	public static string $version;
@@ -48,7 +48,9 @@ final class DHT {
 		
 		{
 			//Enqueue framework general scripts and styles
-			add_action( 'admin_enqueue_scripts', [ $this, '_enqueueFrameworkGeneralScripts' ] );
+			add_action( 'admin_enqueue_scripts', function() {
+				$this->_enqueueFrameworkGeneralScripts();
+			} );
 			
 			// Load the text domain for localization
 			Translations::loadTextdomain();
@@ -66,31 +68,34 @@ final class DHT {
 	 */
 	private function _enqueueFrameworkGeneralScripts() : void {
 		
+		//script name to change it in one place only
+		$fw_script_name = "fw";
+		
 		//get localized data
-		$localized_data = array_merge( [ 'ajax_url' => admin_url( 'admin-ajax.php' ) ], [ 'translations' => Translations::getTranslationStrings() ] );
+		$localized_data = array_merge( [ 'ajax_url' => admin_url( 'admin-ajax.php' ) ]/*, [ 'translations' => Translations::getTranslationStrings() ]*/ );
 		
 		if( Environment::isDevelopment() ) {
-			wp_register_style( DHT_PREFIX_CSS . '-fw', DHT_ASSETS_URI . 'dist/css/fw.css', array(), DHT::$version );
-			wp_enqueue_style( DHT_PREFIX_CSS . '-fw' );
+			wp_register_style( DHT_PREFIX_CSS . '-' . $fw_script_name, DHT_ASSETS_URI . 'dist/css/' . $fw_script_name . '.css', array(), DHT::$version );
+			wp_enqueue_style( DHT_PREFIX_CSS . '-' . $fw_script_name );
 			
-			wp_enqueue_script( DHT_PREFIX_JS . '-fw', DHT_ASSETS_URI . 'dist/js/fw.js', array( 'jquery' ), DHT::$version );
-			wp_localize_script( DHT_PREFIX_JS . '-fw', 'dht_framework_info', $localized_data );
-			
+			wp_enqueue_script( DHT_PREFIX_JS . '-' . $fw_script_name, DHT_ASSETS_URI . 'dist/js/' . $fw_script_name . '.js', array( 'jquery' ), DHT::$version );
+			wp_localize_script( DHT_PREFIX_JS . '-' . $fw_script_name, 'dht_framework_info', $localized_data );
 		}
 		else {
 			wp_register_style( DHT_PREFIX_CSS . '-main-bundle', DHT_ASSETS_URI . 'dist/main.css', array(), DHT::$version );
 			wp_enqueue_style( DHT_PREFIX_CSS . '-main-bundle' );
 			
 			//this bundle is loading the modules dynamically
-			wp_enqueue_script( DHT_PREFIX_JS . '-main-bundle', DHT_ASSETS_URI . 'dist/main.js', array( 'jquery' ), DHT::$version, true );
-			wp_localize_script( DHT_PREFIX_JS . '-main-bundle', 'dht_framework_info', $localized_data );
+			wp_enqueue_script( DHT_MAIN_SCRIPT_HANDLE, DHT_ASSETS_URI . 'dist/main.js', array( 'jquery' ), DHT::$version, true );
+			wp_localize_script( DHT_MAIN_SCRIPT_HANDLE, 'dht_framework_info', $localized_data );
+			wp_localize_script( DHT_MAIN_SCRIPT_HANDLE, 'dht_framework_dynamic_modules_info', apply_filters( 'dht:enqueue:fw_dynamic_modules', [ $fw_script_name ] ) );
 		}
 		
-		//make main.js and fw.js as to load as a module
-		add_filter( 'script_loader_tag', function( string $tag, string $handle ) : string {
+		//make main.js and fw.js to load as modules
+		add_filter( 'script_loader_tag', function( string $tag, string $handle ) use ( $fw_script_name ) : string {
 			return dht_make_script_as_module_type( $tag, $handle, [
-				DHT_PREFIX_JS . '-main-bundle',
-				DHT_PREFIX_JS . '-fw'
+				DHT_MAIN_SCRIPT_HANDLE,
+				DHT_PREFIX_JS . '-' . $fw_script_name
 			] );
 		}, 10, 2 );
 	}
@@ -123,9 +128,6 @@ final class DHT {
 		//////////////////////////////////////////
 		//// register framework core features ////
 		//////////////////////////////////////////
-		
-		//enable the visual builder on these post types
-		$core->vb( $vb_register_on_post_types )?->enable();
 		
 		//register framework options
 		add_action( 'init', function() use (
@@ -161,39 +163,9 @@ final class DHT {
 		
 		//enable dynamic sidebars form with plugin sidebar configurations
 		$extensions->dynamicSidebars( $enable_dynamic_sidebars )?->enable();
-	}
-	
-	/**
-	 * Magic method to allow calls to certain methods without exposing them directly
-	 * When using dht() the methods won't be exposed
-	 */
-	public function __call( $method, $arguments ) {
 		
-		// You can control which methods are callable here
-		if( $method === '_enqueueFrameworkGeneralScripts' ) {
-			return call_user_func_array( [ $this, '_enqueueFrameworkGeneralScripts' ], $arguments );
-		}
-		
-		return '';
-	}
-	
-	/**
-	 * This is the static method that controls the access to the singleton
-	 * instance.
-	 *
-	 * @param array $plugin_settings Plugin settings to register framework features
-	 *
-	 * @return self - current class
-	 * @since     1.0.0
-	 */
-	public static function init( array $plugin_settings = [] ) : self {
-		
-		$cls = static::class;
-		if( !isset( self::$_instances[ $cls ] ) ) {
-			self::$_instances[ $cls ] = new static( $plugin_settings );
-		}
-		
-		return self::$_instances[ $cls ];
+		//enable the visual builder on these post types
+		$extensions->vb( $vb_register_on_post_types )?->enable();
 	}
 	
 }

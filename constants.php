@@ -16,6 +16,8 @@ define( 'DHT_PREFIX', 'dht' );
 define( 'DHT_PREFIX_JS', 'dht-script' );
 //used to add a prefix for enqueued css files
 define( 'DHT_PREFIX_CSS', 'dht-style' );
+//main js file handle
+define( 'DHT_MAIN_SCRIPT_HANDLE', DHT_PREFIX_JS . '-main-bundle' );
 
 //core folder
 define( 'DHT_DIR', plugin_dir_path( __FILE__ ) );
@@ -41,11 +43,6 @@ define( 'DHT_LANG', plugin_basename( dirname( __FILE__ ) ) . '/languages' );
  *
 */
 define( 'DHT_URI', plugin_dir_url( __FILE__ ) );
-
 define( 'DHT_ASSETS_URI', DHT_URI . 'assets/' );
 
-//extensions folder
-define( 'DHT_EXTENSIONS_URI', DHT_URI . 'extensions/' );
-define( 'DHT_OPTIONS_URI', DHT_EXTENSIONS_URI . 'options/' );
-
-define( 'DHT_REACT_APP_URI', DHT_URI . 'src/' );
+//define( 'DHT_REACT_APP_URI', DHT_URI . 'src/' );

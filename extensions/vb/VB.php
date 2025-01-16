@@ -1,13 +1,14 @@
 <?php
 declare( strict_types = 1 );
 
-namespace DHT\Core\Vb;
+namespace DHT\Extensions\VB;
 
-use DHT\Core\Vb\Components\ButtonsGroup;
-use DHT\Core\Vb\Components\DisableEnableBuilder;
-use DHT\Core\Vb\Components\Modal;
 use DHT\DHT;
+use DHT\Extensions\Vb\Components\ButtonsGroup;
+use DHT\Extensions\Vb\Components\DisableEnableBuilder;
+use DHT\Extensions\Vb\Components\Modal;
 use DHT\Helpers\Classes\Environment;
+use DHT\Helpers\Classes\Translations;
 use function DHT\Helpers\dht_get_current_admin_post_type_from_url;
 
 if( !defined( 'DHT_MAIN' ) ) {
@@ -20,6 +21,9 @@ if( !defined( 'DHT_MAIN' ) ) {
  * @since     1.0.0
  */
 final class VB implements IVB {
+	
+	//extension name
+	public string $ext_name = 'vb';
 	
 	private array $_custom_post_types;
 	
@@ -43,11 +47,23 @@ final class VB implements IVB {
 		
 		if( in_array( $current_post_type, $this->_custom_post_types, true ) ) {
 			
+			//script name to change it in one place only
+			$vb_script_name = "vb";
+			
 			//enqueue the vb scripts
-			add_action( 'admin_enqueue_scripts', [ $this, 'enqueueScripts' ] );
+			add_action( 'admin_enqueue_scripts', function() use ( $vb_script_name ) {
+				$this->_enqueueScripts( $vb_script_name );
+			} );
+			
+			// add vb modules for dynamic module loading
+			add_filter( 'dht:enqueue:fw_dynamic_modules', function( $all_modules ) use ( $vb_script_name ) {
+				return array_merge( $all_modules, [ $vb_script_name ] );
+			} );
 			
 			//enable the vb by adding the respective class to the body tag
-			add_filter( 'admin_body_class', [ $this, 'addVBEnabledBodyClass' ] );
+			add_filter( 'admin_body_class', function( $classes ) {
+				return $this->_addVBEnabledBodyClass( $classes );
+			} );
 			
 			//load all VB components
 			$this->_includeVBComponents( $current_post_type );
@@ -57,16 +73,22 @@ final class VB implements IVB {
 	/**
 	 * Enqueue vb scripts and styles
 	 *
+	 * @param string $vb_script_name Script name
+	 *
 	 * @return void
 	 * @since     1.0.0
 	 */
-	public function enqueueScripts() : void {
+	private function _enqueueScripts( string $vb_script_name ) : void {
 		
 		if( Environment::isDevelopment() ) {
-			wp_register_style( DHT_PREFIX_CSS . '-vb', DHT_ASSETS_URI . 'dist/css/vb.css', array(), DHT::$version );
-			wp_enqueue_style( DHT_PREFIX_CSS . '-vb' );
+			wp_register_style( DHT_PREFIX_CSS . '-' . $vb_script_name, DHT_ASSETS_URI . 'dist/css/' . $vb_script_name . '.css', array(), DHT::$version );
+			wp_enqueue_style( DHT_PREFIX_CSS . '-' . $vb_script_name );
 			
-			wp_enqueue_script_module( DHT_PREFIX_JS . '-vb', DHT_ASSETS_URI . 'dist/js/vb.js', array( 'jquery' ), DHT::$version, true );
+			wp_enqueue_script_module( DHT_PREFIX_JS . '-' . $vb_script_name, DHT_ASSETS_URI . 'dist/js/' . $vb_script_name . '.js', array( 'jquery' ), DHT::$version );
+			wp_localize_script( DHT_PREFIX_JS . '-' . $vb_script_name, 'dht_framework_vb_info', [ 'translations' => Translations::getVBTranslationStrings() ] );
+		}
+		else {
+			wp_localize_script( DHT_MAIN_SCRIPT_HANDLE, 'dht_framework_vb_info', [ 'translations' => Translations::getVBTranslationStrings() ] );
 		}
 	}
 	
@@ -97,7 +119,7 @@ final class VB implements IVB {
 	 * @return string
 	 * @since     1.0.0
 	 */
-	public function addVBEnabledBodyClass( string $classes ) : string {
+	private function _addVBEnabledBodyClass( string $classes ) : string {
 		
 		$classes .= apply_filters( 'dht:vb:body_class_builder_enabled', ' dht-vb-enabled' );
 		

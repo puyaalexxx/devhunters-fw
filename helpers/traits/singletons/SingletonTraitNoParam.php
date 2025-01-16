@@ -1,22 +1,15 @@
 <?php
 declare( strict_types = 1 );
 
-namespace DHT\Helpers\Traits;
+namespace DHT\Helpers\Traits\Singletons;
 
 if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
-use Exception;
-
-trait SingletonTrait {
+trait SingletonTraitNoParam {
 	
-	/**
-	 * Holds the single instance of the class.
-	 *
-	 * @var array
-	 */
-	private static array $_instances = [];
+	use SingletonBaseTrait;
 	
 	/**
 	 * This is the static method that controls the access to the singleton
@@ -35,24 +28,6 @@ trait SingletonTrait {
 		}
 		
 		return self::$_instances[ $cls ];
-	}
-	
-	/**
-	 * Prevents cloning of the instance.
-	 *
-	 * @since     1.0.0
-	 */
-	protected function __clone() : void {}
-	
-	/**
-	 * Prevents unserializing of the instance.
-	 *
-	 * @throws Exception
-	 * @since     1.0.0
-	 */
-	public function __wakeup() {
-		
-		throw new Exception( _x( 'Cannot unserialize singleton', 'traits', 'dht' ) );
 	}
 	
 }

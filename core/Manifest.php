@@ -3,7 +3,7 @@ declare( strict_types = 1 );
 
 namespace DHT\Core;
 
-use DHT\Helpers\Traits\SingletonTrait;
+use DHT\Helpers\Traits\Singletons\SingletonTraitNoParam;
 use function DHT\Helpers\dht_get_variables_from_file;
 
 if( !defined( 'DHT_MAIN' ) ) {
@@ -16,7 +16,7 @@ if( !defined( 'DHT_MAIN' ) ) {
 
 final class Manifest {
 	
-	use SingletonTrait;
+	use SingletonTraitNoParam;
 	
 	//manifest array values
 	private array $_manifest;

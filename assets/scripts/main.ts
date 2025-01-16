@@ -1,5 +1,17 @@
-import { getCurrentPageModules } from "@helpers/vite/current-page-ts-files";
 import { dhtuLoadModule } from "devhunters-utils/utils/dynamic-module-loading";
+
+/**
+ * get the current page existent modules from localized script
+ * and from the localized script area
+ *
+ * @return string[]
+ */
+export function getCurrentPageModules() {
+    // @ts-ignore
+    const optionsModules = dht_framework_dynamic_modules_info;
+
+    return optionsModules ?? [];
+}
 
 /**
  * This function is responsible for dynamic loading the js modules
@@ -16,13 +28,12 @@ async function initializeJSDynamicModulesLoading() {
     const allModules = import.meta.glob("@ts/modules/**/*.ts");
 
     //get existent current page modules
-    const pageModules = getCurrentPageModules(allModules);
+    const pageModules = getCurrentPageModules();
 
     //dynamically load every existent page module
     for (const fileName of pageModules) {
         await dhtuLoadModule(allModules, fileName);
     }
-
 }
 
 //initialize the dynamic module loading

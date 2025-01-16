@@ -77,37 +77,75 @@ final class Options implements IOptions {
 		//generate nonce field
 		$this->_nonce = $this->_generateNonce();
 		
-		//enqueue the options container scripts
-		add_action( 'admin_enqueue_scripts', [ $this, 'enqueueGeneralScripts' ] );
+		// enqueue area
+		{
+			$dash_page_script_name = "dashboard-page";
+			
+			//enqueue the options container scripts
+			add_action( 'admin_enqueue_scripts', function( string $hook ) use ( $dash_page_script_name ) {
+				$this->_enqueueGeneralScripts( $hook, $dash_page_script_name );
+			} );
+			
+			// add all available page options modules for dynamic module loading
+			add_filter( 'dht:enqueue:fw_dynamic_modules', function( $all_modules ) use ( $dash_page_script_name ) {
+				return $this->_getDynamicOptionsModules( array_merge( $all_modules, [ $dash_page_script_name ] ) );
+			} );
+		}
 		
-		//dashboard pages
-		$this->_renderDashBoardPagesOptions();
-		
-		//post types
-		$this->_renderPostTypesOptions();
-		
-		//terms
-		$this->_renderTermsOptions();
-		
-		//vb options
-		$this->_renderVBOptions();
+		//render options area
+		{
+			//dashboard pages
+			$this->_renderDashBoardPagesOptions();
+			
+			//post types
+			$this->_renderPostTypesOptions();
+			
+			//terms
+			$this->_renderTermsOptions();
+			
+			//vb options
+			$this->_renderVBOptions();
+		}
 	}
 	
 	/**
 	 * Enqueue main wrapper area styles and scripts
 	 *
 	 * @param string $hook
+	 * @param string $dash_page_script_name Script name
 	 *
 	 * @return void
 	 * @since     1.0.0
 	 */
-	public function enqueueGeneralScripts( string $hook ) : void {
+	private function _enqueueGeneralScripts( string $hook, string $dash_page_script_name ) : void {
 		
 		if( Environment::isDevelopment() ) {
-			wp_register_style( DHT_PREFIX_CSS . '-dashboard-page', DHT_ASSETS_URI . 'dist/css/dashboard-page.css', array(), DHT::$version );
-			wp_enqueue_style( DHT_PREFIX_CSS . '-dashboard-page' );
+			wp_register_style( DHT_PREFIX_CSS . '-' . $dash_page_script_name, DHT_ASSETS_URI . 'dist/css/' . $dash_page_script_name . '.css', array(), DHT::$version );
+			wp_enqueue_style( DHT_PREFIX_CSS . '-' . $dash_page_script_name );
 			
-			wp_enqueue_script( DHT_PREFIX_JS . '-dashboard-page', DHT_ASSETS_URI . 'dist/js/dashboard-page.js', array( 'jquery' ), DHT::$version, true );
+			wp_enqueue_script( DHT_PREFIX_JS . '-' . $dash_page_script_name, DHT_ASSETS_URI . 'dist/js/' . $dash_page_script_name . '.js', array( 'jquery' ), DHT::$version, true );
+		}
+	}
+	
+	/**
+	 * Get all option types used on the page and add them in a
+	 * localized script to use in the main.ts file to load
+	 * each one of them as js modules
+	 *
+	 * @param array $all_modules Modules already present in the filter
+	 *
+	 * @return array
+	 * @since     1.0.0
+	 */
+	private function _getDynamicOptionsModules( array $all_modules ) : array {
+		//check if the main.js script is already enqueued
+		if( wp_script_is( DHT_MAIN_SCRIPT_HANDLE ) ) {
+			$option_types = !empty( $this->_dashboardPagesOptions ) ? $this->_extractOptions( $this->_dashboardPagesOptions, true ) : [];
+			$option_types = array_merge( $option_types, !empty( $this->_termOptions ) ? $this->_extractOptions( $this->_termOptions, true ) : [] );
+			$option_types = array_merge( $option_types, !empty( $this->_postTypeOptions ) ? $this->_extractOptions( $this->_postTypeOptions, true ) : [] );
+			$option_types = array_merge( $option_types, !empty( $this->_vbOptions ) ? $this->_extractOptions( $this->_vbOptions, true ) : [] );
+			
+			return array_values( array_unique( array_merge( $all_modules, $option_types ) ) );
 		}
 	}
 	
@@ -115,7 +153,7 @@ final class Options implements IOptions {
 	 * create custom option types located outside the framework
 	 *
 	 * @param BaseField $optionClass
-	 * @param array     $option
+	 * @param array     $option Available page options
 	 *
 	 * @return void
 	 * @since     1.0.0
@@ -132,6 +170,8 @@ final class Options implements IOptions {
 	 * @since     1.0.0
 	 */
 	private function _renderDashBoardPagesOptions() : void {
+		
+		if( empty( $this->_dashboardPagesOptions ) ) return;
 		
 		//enqueue styles/scripts for each option received from the plugin
 		$this->_enqueueOptionsScripts( apply_filters( 'dht:options:enqueue_dash_pages_option_scripts', $this->_dashboardPagesOptions ) );
@@ -152,6 +192,8 @@ final class Options implements IOptions {
 	 * @since     1.0.0
 	 */
 	private function _renderTermsOptions() : void {
+		
+		if( empty( $this->_termOptions ) ) return;
 		
 		//enqueue styles/scripts for each option received from the plugin
 		$this->_enqueueOptionsScripts( apply_filters( 'dht:options:enqueue_term_scripts', $this->_termOptions ) );
@@ -178,6 +220,8 @@ final class Options implements IOptions {
 	 */
 	private function _renderPostTypesOptions() : void {
 		
+		if( empty( $this->_postTypeOptions ) ) return;
+		
 		//enqueue styles/scripts for each option received from the plugin
 		$this->_enqueueOptionsScripts( apply_filters( 'dht:options:enqueue_post_types_scripts', $this->_postTypeOptions ) );
 		
@@ -199,6 +243,8 @@ final class Options implements IOptions {
 	 * @since     1.0.0
 	 */
 	private function _renderVBOptions() : void {
+		
+		if( empty( $this->_vbOptions ) ) return;
 		
 		//enqueue styles/scripts for each modal options
 		foreach ( $this->_vbOptions as $vbOption ) {
@@ -291,7 +337,7 @@ final class Options implements IOptions {
 	 * @return void
 	 * @since     1.0.0
 	 */
-	public function _savePostTypeOptions( int $postID, WP_Post $post ) : void {
+	private function _savePostTypeOptions( int $postID, WP_Post $post ) : void {
 		
 		//check nonce field
 		if( $this->_isValidRequest() ) {

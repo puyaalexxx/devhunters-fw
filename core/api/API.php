@@ -4,9 +4,9 @@ declare( strict_types = 1 );
 namespace DHT\Core\Api;
 
 use DHT\Core\Api\Api\DashMenusAPI;
-use DHT\Helpers\Traits\SingletonTrait;
+use DHT\Helpers\Traits\Singletons\SingletonTraitNoParam;
 
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
@@ -15,7 +15,7 @@ if ( ! defined( 'DHT_MAIN' ) ) {
  */
 final class API {
 	
-	use SingletonTrait;
+	use SingletonTraitNoParam;
 	
 	//dashboard menus
 	public DashMenusAPI $dashmenus;

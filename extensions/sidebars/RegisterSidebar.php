@@ -3,7 +3,7 @@ declare( strict_types = 1 );
 
 namespace DHT\Extensions\Sidebars;
 
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
@@ -38,7 +38,7 @@ final class RegisterSidebar implements IRegisterSidebar {
 	public function register() : void {
 		
 		add_action( 'widgets_init', function() {
-			$this->registerSidebarsHook( $this->_sidebar_config );
+			$this->_registerSidebarsHook( $this->_sidebar_config );
 		} );
 	}
 	
@@ -50,7 +50,7 @@ final class RegisterSidebar implements IRegisterSidebar {
 	 * @return void
 	 * @since     1.0.0
 	 */
-	public function registerSidebarsHook( array $sidebar_config ) : void {
+	private function _registerSidebarsHook( array $sidebar_config ) : void {
 		
 		foreach ( $sidebar_config as $sidebar ) {
 			register_sidebar( $sidebar );

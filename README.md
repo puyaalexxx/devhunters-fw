@@ -4,7 +4,7 @@
 
 <h2 id="introduction">Introduction</h2>
 
-This is a framework that makes it easier to create WordPress plugins. It offers many features, such as:
+A framework that makes it easier to create WordPress plugins. It offers many features, such as:
 
 1. custom fields
 2. simple visual builder with modals
@@ -78,6 +78,7 @@ This is a framework that makes it easier to create WordPress plugins. It offers 
     - [Functions](#functions)
     - [Custom Hooks](#custom-hooks)
     - [Custom Filters](#custom-filters)
+    - [Constants](#fw-constants)
 5. [Licence](#license)
 6. [Authors](#authors)
 
@@ -2202,6 +2203,21 @@ How it is displayed in terminal:
 
 ![Make File Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735997150/makefile_commands_cjddc3.png)
 
+There is an `.env` file that has this constant defined `DHT_IS_DEV_ENVIRONMENT`. The bellow commands will behave
+differently if it is `true` or `false`.
+
+If `DHT_IS_DEV_ENVIRONMENT=true`:
+
+`make vite`- will compile all the ts and pcss files in separate js and css files, and they won't be minified.
+
+`make vite main`- will compile all the ts and pcss files in a main.js and main.css files, and they won't be minified.
+
+If `DHT_IS_DEV_ENVIRONMENT=false`:
+
+`make vite`- will compile all the ts and pcss files in separate js and css files, and they will be minified.
+
+`make vite main`- will compile all the ts and pcss files in a main.js and main.css files, and they will be minified.
+
 <p align="right">
   <strong><a href="#table-of-contents">Top ⬆️</a></strong>  
 </p>
@@ -2759,6 +2775,8 @@ dht:options:view:fields:wpeditor_after_area // after rendering the wpeditor fiel
 ===================================
 
 ```php
+dht:enqueue:fw_dynamic_modules // when using main.js, all the files are loaded dynamically, via this filter you can change the modules that should load dynamically on a page
+
 //main view file (main-view.php)
 dht:main:view:wrapper_classes // add custom classes to the main.php wrapper div area (custom fields rendering)
 dht:main:view:no_content_found // change no content message in main.php file when no content added 
@@ -2802,16 +2820,49 @@ dht:options:fields:icon_style_links // change standard icon CSS file links
 dht:extensions:sidebars:widgets_custom_args // change the sidebars options values (the HTML used by default as wrappers)
 
 //plugin settings
-dht:settings:plugin:settings_folder_path // change main plugin settings folder path
-dht:settings:plugin:dashboard_pages_options_folder_path // change plugin dashboard pages options folder path
-dht:settings:plugin:post_types_options_folder_path // change plugin post types options folder path
-dht:settings:plugin:terms_options_folder_path // change plugin terms options folder path
-dht:settings:plugin:vb_modal_options_folder_path // change plugin vb modal options folder path
-dht:settings:plugin:dash_menus_settings_file // change plugin dashboard pages settings file path
-dht:settings:plugin:cpts_settings_file // change plugin custom post types settings file path
-dht:settings:plugin:sidebars_settings_file // change plugin sidebars settings file path
-dht:settings:plugin:vb_register_on_post_types // change the post types on which the vb should be enabled
-dht:settings:plugin:enable_dynamic_sidebars // enable/disable the dynamic sidebars creation form
+dht:plugin:settings:settings_folder_path // change main plugin settings folder path
+dht:plugin:settings:dashboard_pages_options_folder_path // change plugin dashboard pages options folder path
+dht:plugin:settings:post_types_options_folder_path // change plugin post types options folder path
+dht:plugin:settings:terms_options_folder_path // change plugin terms options folder path
+dht:plugin:settings:vb_modal_options_folder_path // change plugin vb modal options folder path
+dht:plugin:settings:dash_menus_settings_file // change plugin dashboard pages settings file path
+dht:plugin:settings:cpts_settings_file // change plugin custom post types settings file path
+dht:plugin:settings:sidebars_settings_file // change plugin sidebars settings file path
+dht:plugin:settings:vb_register_on_post_types // change the post types on which the vb should be enabled
+dht:plugin:settings:enable_dynamic_sidebars // enable/disable the dynamic sidebars creation form
+```
+
+<p align="right">
+  <strong><a href="#table-of-contents">Top ⬆️</a></strong>  
+</p>
+
+<h3 id="fw-constants">Constants</h3>
+
+===================================
+
+You can find all the constants in the `constants.php` file.
+
+```php
+DHT_MAIN // main constant to check if the framework is enabled
+
+DHT_PREFIX // framework prefix
+
+DHT_PREFIX_JS // used to add a prefix for enqueued js files
+DHT_PREFIX_CSS // used to add a prefix for enqueued css files
+DHT_MAIN_SCRIPT_HANDLE // main js file handle name
+
+DHT_DIR // plugin dir path
+DHT_ASSETS_DIR // assets folder dir path
+DHT_CONFIG_DIR // config folder dir path
+DHT_HELPERS_DIR // helpers folder dir path
+DHT_CORE_DIR // core folder dir path
+DHT_OPTIONS_DIR // options folder dir path
+DHT_EXTENSIONS_DIR // extensions folder dir path
+DHT_VIEWS_DIR // views folder dir path
+DHT_LANG // lang folder path
+
+DHT_URI // plugin URL path
+DHT_ASSETS_URI // assets folder URL path
 ```
 
 <p align="right">

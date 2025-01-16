@@ -90,7 +90,7 @@
 
                 $.ajax({
                     //@ts-ignore
-                    url: dht_remove_sidebar_object.ajax_url,
+                    url: dht_framework_info.ajax_url,
                     type: "POST",
                     data: {
                         action: "deleteWidgetArea", // The name of your AJAX action

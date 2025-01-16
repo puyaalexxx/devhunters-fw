@@ -1,11 +1,11 @@
 <?php
 declare( strict_types = 1 );
 
-namespace DHT\Core\Vb\Components;
+namespace DHT\Extensions\Vb\Components;
 
 use DHT\DHT;
 use DHT\Helpers\Classes\Environment;
-use DHT\Helpers\Traits\SingletonTrait;
+use DHT\Helpers\Traits\Singletons\SingletonTraitNoParam;
 
 if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
@@ -18,7 +18,7 @@ if( !defined( 'DHT_MAIN' ) ) {
  */
 final class Modal {
 	
-	use SingletonTrait;
+	use SingletonTraitNoParam;
 	
 	/**
 	 * @since     1.0.0
@@ -26,13 +26,23 @@ final class Modal {
 	private function __construct() {
 		
 		//enqueue the options container scripts
-		add_action( 'admin_enqueue_scripts', [ $this, 'enqueueScripts' ] );
+		add_action( 'admin_enqueue_scripts', function() {
+			$this->_enqueueScripts();
+		} );
 		
-		add_action( 'wp_ajax_getModalOptions', [ $this, 'getModalOptions' ] );
-		add_action( 'wp_ajax_nopriv_getModalOptions', [ $this, 'getModalOptions' ] );
+		add_action( 'wp_ajax_getModalOptions', function() {
+			$this->_getModalOptions();
+		} );
+		add_action( 'wp_ajax_nopriv_getModalOptions', function() {
+			$this->_getModalOptions();
+		} );
 		
-		add_action( 'wp_ajax_saveModalOptions', [ $this, 'saveModalOptions' ] );
-		add_action( 'wp_ajax_nopriv_saveModalOptions', [ $this, 'saveModalOptions' ] );
+		add_action( 'wp_ajax_saveModalOptions', function() {
+			$this->_saveModalOptions();
+		} );
+		add_action( 'wp_ajax_nopriv_saveModalOptions', function() {
+			$this->_saveModalOptions();
+		} );
 	}
 	
 	/**
@@ -41,7 +51,7 @@ final class Modal {
 	 * @return void
 	 * @since     1.0.0
 	 */
-	public function enqueueScripts() : void {
+	private function _enqueueScripts() : void {
 		
 		if( Environment::isDevelopment() ) {
 			wp_register_style( DHT_PREFIX_CSS . '-modal', DHT_ASSETS_URI . 'dist/css/modal.css', array(), DHT::$version );
@@ -55,7 +65,7 @@ final class Modal {
 	 * @return void
 	 * @since     1.0.0
 	 */
-	public function getModalOptions() : void {
+	private function _getModalOptions() : void {
 		
 		if( isset( $_POST[ 'action' ] ) && $_POST[ 'action' ] == "getModalOptions" && isset( $_POST[ 'post_id' ] ) ) {
 			
@@ -91,7 +101,7 @@ final class Modal {
 	 * @return void
 	 * @since     1.0.0
 	 */
-	public function saveModalOptions() : void {
+	private function _saveModalOptions() : void {
 		
 		if( isset( $_POST[ 'action' ] ) && $_POST[ 'action' ] == "saveModalOptions" && isset( $_POST[ 'post_id' ] ) ) {
 			

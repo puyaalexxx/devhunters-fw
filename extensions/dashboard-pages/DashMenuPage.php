@@ -30,7 +30,7 @@ final class DashMenuPage implements IDashMenuPage {
 		
 		//add dashboard pages hook
 		add_action( 'admin_menu', function() use ( $dash_menus_config ) {
-			$this->registerMenuPagesAction( $dash_menus_config );
+			$this->_registerMenuPagesAction( $dash_menus_config );
 		}, 99 );
 	}
 	
@@ -52,7 +52,7 @@ final class DashMenuPage implements IDashMenuPage {
 	 * @return void
 	 * @since     1.0.0
 	 */
-	public function registerMenuPagesAction( array $dash_menus_config ) : void {
+	private function _registerMenuPagesAction( array $dash_menus_config ) : void {
 		
 		//create main dashboard page
 		if( !dht_array_key_exists( $dash_menus_config, 'main_menu' ) ) {

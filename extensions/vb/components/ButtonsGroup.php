@@ -1,13 +1,13 @@
 <?php
 declare( strict_types = 1 );
 
-namespace DHT\Core\Vb\Components;
+namespace DHT\Extensions\Vb\Components;
 
-use DHT\Helpers\Classes\Environment;
-use DHT\Helpers\Traits\SingletonTrait;
 use DHT\DHT;
+use DHT\Helpers\Classes\Environment;
+use DHT\Helpers\Traits\Singletons\SingletonTraitNoParam;
 
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
@@ -18,7 +18,7 @@ if ( ! defined( 'DHT_MAIN' ) ) {
  */
 final class ButtonsGroup {
 	
-	use SingletonTrait;
+	use SingletonTraitNoParam;
 	
 	/**
 	 * @since     1.0.0
@@ -26,7 +26,9 @@ final class ButtonsGroup {
 	private function __construct() {
 		
 		//enqueue scripts
-		add_action( 'admin_enqueue_scripts', [ $this, 'enqueueScripts' ] );
+		add_action( 'admin_enqueue_scripts', function() {
+			$this->_enqueueScripts();
+		} );
 	}
 	
 	/**
@@ -35,9 +37,9 @@ final class ButtonsGroup {
 	 * @return void
 	 * @since     1.0.0
 	 */
-	public function enqueueScripts() : void {
+	private function _enqueueScripts() : void {
 		
-		if ( Environment::isDevelopment() ) {
+		if( Environment::isDevelopment() ) {
 			wp_register_style( DHT_PREFIX_CSS . '-buttons-group', DHT_ASSETS_URI . 'dist/css/buttons-group.css', array(), DHT::$version );
 			wp_enqueue_style( DHT_PREFIX_CSS . '-buttons-group' );
 		}

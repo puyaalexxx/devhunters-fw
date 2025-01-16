@@ -10,15 +10,12 @@ trait EnqueueOptionsTrait {
 	/**
 	 * enqueue styles/scripts for each option received from the plugin
 	 *
-	 * @param array $options - options from the plugin configuration files
+	 * @param array $options options from the plugin configuration files
 	 *
 	 * @return void
 	 * @since     1.0.0
 	 */
 	private function _enqueueOptionsScripts( array $options ) : void {
-		
-		//enqueue the scripts for the container type
-		$this->_enqueueOptionScriptsHook( $options );
 		
 		//extract options in one array from the plugin option configurations
 		$option_fields = $this->_extractOptions( $options );
@@ -57,7 +54,7 @@ trait EnqueueOptionsTrait {
 	/**
 	 * pass the option array to the specific option enqueue script hook to enqueue its scripts
 	 *
-	 * @param array $option - specific option array
+	 * @param array $option specific option array
 	 *
 	 * @return void
 	 * @since     1.0.0
@@ -87,104 +84,138 @@ trait EnqueueOptionsTrait {
 	 * also if the groups have toggles, it will also traverse it and add to the array
 	 * if the groups or toggles have fields, it will travers them also
 	 * and add the fields to the array
-	 * ! if the same type is added to the array, it will not add it again
+	 * !if the same type is added to the array, it will not add it again
 	 *
-	 * @param array $options - options to retrieve from
+	 * @param array $options options to retrieve from
 	 *
 	 * @return mixed
 	 * @since     1.0.0
 	 */
-	private function _extractOptions( array $options ) : array {
+	private function _extractOptions( array $options, bool $extract_only_types = false ) : array {
 		
-		// This static array will keep track of processed types across recursive calls
+		// Static array will still track processed types across recursive calls, but without references.
 		static $processed_types = [];
-		$result = [];
 		
-		// Inner function to extract unique options recursively from container type
-		$extractUniqueOptionsFromContainer = function( array $options ) use ( &$extractUniqueOptions ) : array {
-			
+		$getOptions = function( array $options, $processed_types, $extract_only_types ) : array {
 			$result = [];
 			
-			// If the 'options' key exists, process nested settings
-			foreach ( $options[ 'options' ] as $page ) {
-				//if it is the sidemenu container
-				if( isset( $page[ 'options' ] ) && is_array( $page[ 'options' ] ) ) {
-					foreach ( $page[ 'options' ] as $option ) {
-						$result = array_merge( $result, $extractUniqueOptions( $option ) );
+			// If it is a container type, extract options recursively from the container
+			if( $this->_isContainerType( $options ) ) {
+				//add container
+				$result[] = $extract_only_types ? $options[ 'type' ] : array_merge( $options, [ 'options' => [] ] ); // without redundant options subarray
+				// add container fields
+				$result = array_merge( $result, $this->_extractUniqueOptionsFromContainer( $options, $processed_types, $extract_only_types ) );
+			}
+			else {
+				// Process the options directly
+				$options = $options[ 'options' ] ?? $options;
+				
+				// Process the options
+				foreach ( $options as $option ) {
+					list( $newResult, $processed_types ) = $this->_extractUniqueOptions( $option, $processed_types, $extract_only_types );
+					$result = array_merge( $result, $newResult );
+					
+					// If it's a container type, process it separately
+					if( $this->_isContainerType( $option ) ) {
+						$result = array_merge( $result, $this->_extractUniqueOptionsFromContainer( $option, $processed_types, $extract_only_types ) );
 					}
 				}
-				
-				//if it is the simple container
-				if( isset( $page[ 'type' ] ) ) {
-					$result = array_merge( $result, $extractUniqueOptions( $page ) );
-				}
-				
-				// Check for other potential nested arrays, such as 'pages' - sidemenu container
-				if( isset( $page[ 'pages' ] ) && is_array( $page[ 'pages' ] ) ) {
-					$result = array_merge( $result, $this->_extractOptions( $page[ 'pages' ] ) );
-				}
 			}
 			
 			return $result;
 		};
 		
-		// Inner function to extract unique options recursively
-		$extractUniqueOptions = function( array $option ) use ( &$extractUniqueOptions, &$processed_types ) : array {
-			
-			$result = [];
-			
-			if( isset( $option[ 'type' ] ) && !in_array( $option[ 'type' ], $processed_types ) || isset( $option[ 'subtype' ] ) && !in_array( $option[ 'subtype' ], $processed_types ) ) {
-				$result[]          = $option; // Add to the result array
-				$processed_types[] = $option[ 'type' ]; // Mark this type as processed
-			}
-			
-			// Recursively process nested options
-			if( isset( $option[ 'options' ] ) && is_array( $option[ 'options' ] ) ) {
-				foreach ( $option[ 'options' ] as $nestedOption ) {
-					$result = array_merge( $result, $extractUniqueOptions( $nestedOption ) );
-				}
-			}
-			
-			// Recursively process nested choices (left-choice, right-choice)
-			if( isset( $option[ 'left-choice' ][ 'options' ] ) && is_array( $option[ 'left-choice' ][ 'options' ] ) ) {
-				foreach ( $option[ 'left-choice' ][ 'options' ] as $nestedOption ) {
-					$result = array_merge( $result, $extractUniqueOptions( $nestedOption ) );
-				}
-			}
-			
-			if( isset( $option[ 'right-choice' ][ 'options' ] ) && is_array( $option[ 'right-choice' ][ 'options' ] ) ) {
-				foreach ( $option[ 'right-choice' ][ 'options' ] as $nestedOption ) {
-					$result = array_merge( $result, $extractUniqueOptions( $nestedOption ) );
-				}
-			}
-			
-			return $result;
-		};
+		return $getOptions( $options, $processed_types, $extract_only_types );
+	}
+	
+	/**
+	 * Helper function to extract unique options recursively from container type
+	 *
+	 * @param array $options            Options to retrieve from
+	 * @param array $processed_types    Already processed types to not repeat them
+	 * @param bool  $extract_only_types Extract only the option type instead of the entire option array
+	 *
+	 * @return mixed
+	 * @since     1.0.0
+	 */
+	private function _extractUniqueOptionsFromContainer( array $options, array $processed_types, bool $extract_only_types = false ) : array {
+		$result = [];
 		
-		//if it is a container type
-		if( $this->_isContainerType( $options ) ) {
-			
-			$result = array_merge( $result, $extractUniqueOptionsFromContainer( $options ) );
-			
-		} // other option types
-		else {
-			//extract the correct options
-			$options = $options[ 'options' ] ?? $options;
-			
-			// Process the options directly
-			foreach ( $options as $option ) {
-				
-				$result = array_merge( $result, $extractUniqueOptions( $option ) );
-				
-				if( $this->_isContainerType( $option ) ) {
-					
-					$result = array_merge( $result, $extractUniqueOptionsFromContainer( $option ) );
-					
+		// If the 'options' key exists, process nested settings
+		foreach ( $options[ 'options' ] as $page ) {
+			// If it is the sidemenu container
+			if( isset( $page[ 'options' ] ) && is_array( $page[ 'options' ] ) ) {
+				foreach ( $page[ 'options' ] as $option ) {
+					// Combine the results of recursively extracting unique options
+					list( $newResult, $processed_types ) = $this->_extractUniqueOptions( $option, $processed_types, $extract_only_types );
+					$result = array_merge( $result, $newResult );
 				}
+			}
+			
+			// If it is the simple container
+			if( isset( $page[ 'type' ] ) ) {
+				list( $newResult, $processed_types ) = $this->_extractUniqueOptions( $page, $processed_types, $extract_only_types );
+				$result = array_merge( $result, $newResult );
+			}
+			
+			// Check for other potential nested arrays, such as 'pages' (sidemenu container)
+			if( isset( $page[ 'pages' ] ) && is_array( $page[ 'pages' ] ) ) {
+				$result = array_merge( $result, $this->_extractOptions( $page[ 'pages' ], $extract_only_types ) );
 			}
 		}
 		
 		return $result;
+	}
+	
+	/**
+	 * Helper function to extract unique options recursively
+	 *
+	 * @param array $option             Options to retrieve from
+	 * @param array $processed_types    Already processed types to not repeat them
+	 * @param bool  $extract_only_types Extract only the option type instead of the entire option array
+	 *
+	 * @return mixed
+	 * @since     1.0.0
+	 */
+	private function _extractUniqueOptions( array $option, array $processed_types, bool $extract_only_types = false ) : array {
+		$result = [];
+		
+		if( $extract_only_types ) {
+			if( isset( $option[ 'type' ] ) && !in_array( $option[ 'type' ], $processed_types ) ) {
+				// Add only the type or subtype to the result
+				$result[] = $processed_types[] = $option[ 'type' ];  // Store only the type
+			}
+		}
+		else {
+			if( isset( $option[ 'type' ] ) && !in_array( $option[ 'type' ], $processed_types ) || isset( $option[ 'subtype' ] ) && !in_array( $option[ 'subtype' ], $processed_types ) ) {
+				$result[]          = isset( $option[ 'options' ] ) ? array_merge( $option, [ 'options' => [] ] ) : $option; // Add to the result array without redundant options subarray
+				$processed_types[] = $option[ 'subtype' ] ?? $option[ 'type' ]; // Mark this type as processed
+			}
+		}
+		
+		// Recursively process nested options
+		if( isset( $option[ 'options' ] ) && is_array( $option[ 'options' ] ) ) {
+			foreach ( $option[ 'options' ] as $nestedOption ) {
+				list( $newResult, $processed_types ) = $this->_extractUniqueOptions( $nestedOption, $processed_types, $extract_only_types );
+				$result = array_merge( $result, $newResult );
+			}
+		}
+		
+		// Recursively process nested choices (left-choice, right-choice)
+		if( isset( $option[ 'left-choice' ][ 'options' ] ) && is_array( $option[ 'left-choice' ][ 'options' ] ) ) {
+			foreach ( $option[ 'left-choice' ][ 'options' ] as $nestedOption ) {
+				list( $newResult, $processed_types ) = $this->_extractUniqueOptions( $nestedOption, $processed_types, $extract_only_types );
+				$result = array_merge( $result, $newResult );
+			}
+		}
+		if( isset( $option[ 'right-choice' ][ 'options' ] ) && is_array( $option[ 'right-choice' ][ 'options' ] ) ) {
+			foreach ( $option[ 'right-choice' ][ 'options' ] as $nestedOption ) {
+				list( $newResult, $processed_types ) = $this->_extractUniqueOptions( $nestedOption, $processed_types, $extract_only_types );
+				$result = array_merge( $result, $newResult );
+			}
+		}
+		
+		return [ $result, $processed_types ];
 	}
 	
 }

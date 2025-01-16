@@ -10,7 +10,9 @@ if( !defined( 'DHT_MAIN' ) ) {
 use DHT\Extensions\CPT\{CPT, ICPT};
 use DHT\Extensions\DashPages\{DashMenuPage, IDashMenuPage};
 use DHT\Extensions\Sidebars\{CreateDynamicSidebars, ICreateDynamicSidebars, IRegisterSidebar, RegisterSidebar};
-use DHT\Helpers\Traits\{SingletonTrait, ValidateConfigurationsTrait};
+use DHT\Extensions\Vb\{IVB, VB};
+use DHT\Helpers\Traits\{ValidateConfigurationsTrait};
+use DHT\Helpers\Traits\Singletons\SingletonTraitNoParam;
 
 /**
  * Singleton Class that is used to include all the framework extensions and initialise them
@@ -18,7 +20,7 @@ use DHT\Helpers\Traits\{SingletonTrait, ValidateConfigurationsTrait};
 final class Extensions {
 	
 	use ValidateConfigurationsTrait;
-	use SingletonTrait;
+	use SingletonTraitNoParam;
 	
 	/**
 	 * @since     1.0.0
@@ -86,6 +88,21 @@ final class Extensions {
 		if( !$dynamic_sidebars_config ) return NULL;
 		
 		return new CreateDynamicSidebars();
+	}
+	
+	/**
+	 * get visual builder class instance
+	 *
+	 * @param array $custom_post_types - custom posts types
+	 *
+	 * @return ?IVB - vb instance
+	 * @since     1.0.0
+	 */
+	public function vb( array $custom_post_types ) : ?IVB {
+		
+		if( empty( $custom_post_types ) ) return NULL;
+		
+		return new VB( $custom_post_types );
 	}
 	
 }

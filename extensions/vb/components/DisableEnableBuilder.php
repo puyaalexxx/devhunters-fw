@@ -1,11 +1,11 @@
 <?php
 declare( strict_types = 1 );
 
-namespace DHT\Core\Vb\Components;
+namespace DHT\Extensions\Vb\Components;
 
 use DHT\DHT;
 use DHT\Helpers\Classes\Environment;
-use DHT\Helpers\Traits\SingletonTrait;
+use DHT\Helpers\Traits\Singletons\SingletonTraitWithStringParam;
 use WP_Post;
 
 if( !defined( 'DHT_MAIN' ) ) {
@@ -19,7 +19,7 @@ if( !defined( 'DHT_MAIN' ) ) {
  */
 final class DisableEnableBuilder {
 	
-	use SingletonTrait;
+	use SingletonTraitWithStringParam;
 	
 	/**
 	 * @param string $post_type Post type where to add the metabox
@@ -30,12 +30,13 @@ final class DisableEnableBuilder {
 		
 		//add enable/disable visual builder buttons
 		add_action( 'add_meta_boxes', function() use ( $post_type ) {
-			
 			$this->_addEnableDisableVbButtons( $post_type );
 		} );
 		
 		//enqueue scripts
-		add_action( 'admin_enqueue_scripts', [ $this, 'enqueueScripts' ] );
+		add_action( 'admin_enqueue_scripts', function() {
+			$this->_enqueueScripts();
+		} );
 	}
 	
 	/**
@@ -44,7 +45,7 @@ final class DisableEnableBuilder {
 	 * @return void
 	 * @since     1.0.0
 	 */
-	public function enqueueScripts() : void {
+	private function _enqueueScripts() : void {
 		
 		if( Environment::isDevelopment() ) {
 			wp_register_style( DHT_PREFIX_CSS . '-disable-enable-vb', DHT_ASSETS_URI . 'dist/css/disable-enable-vb.css', array(), DHT::$version );
@@ -64,7 +65,7 @@ final class DisableEnableBuilder {
 		
 		/*add_meta_box( 'dht-vb-buttons-builder-box', _x( 'Enable/Disable VB Buttons', 'vb', 'dht' ), [
 			$this,
-			'view'
+			'_view' //need to change this to a callback
 		], $post_type, 'normal', 'high' );*/
 	}
 	
@@ -76,33 +77,12 @@ final class DisableEnableBuilder {
 	 * @return void
 	 * @since     1.0.0
 	 */
-	public function view( WP_Post $post ) : void { ?>
+	private function _view( WP_Post $post ) : void { ?>
 
         <a href="#" id="dht-vb-enable-builder-button"><?php _ex( 'Enable Visual Editor', 'vb', 'dht' ); ?></a>
         <a href="#" id="dht-vb-disable-builder-button"><?php _ex( 'Disable Visual Editor', 'vb', 'dht' ); ?></a>
 		
 		<?php
-	}
-	
-	/**
-	 * This is the static method that controls the access to the singleton
-	 * instance. On the first run, it creates a singleton object and places it
-	 * into the static field. On subsequent runs, it returns the existing
-	 * object stored in the static field.
-	 *
-	 * @param string $post_type Post type where to add the metabox
-	 *
-	 * @return self - current class
-	 * @since     1.0.0
-	 */
-	public static function init( string $post_type ) : self {
-		
-		$cls = static::class;
-		if( !isset( self::$_instances[ $cls ] ) ) {
-			self::$_instances[ $cls ] = new static( $post_type );
-		}
-		
-		return self::$_instances[ $cls ];
 	}
 	
 }

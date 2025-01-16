@@ -35,7 +35,6 @@ final class TypographyHelpers {
 		
 		$fonts_family = $font_weights = $font_subsets = [];
 		foreach ( $fonts[ 'items' ] as $font ) {
-			
 			$fonts_family[ $font[ 'family' ] ][ 'family' ] = $font[ 'family' ];
 			$font_weights[ $font[ 'family' ] ]             = $fonts_family[ $font[ 'family' ] ][ 'weights' ] = self::prepareFontWeights( $font[ 'variants' ] );
 			$font_subsets[ $font[ 'family' ] ]             = $fonts_family[ $font[ 'family' ] ][ 'subsets' ] = $font[ 'subsets' ];

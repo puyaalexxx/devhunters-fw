@@ -41,6 +41,22 @@ final class Translations {
 	 */
 	public static function getTranslationStrings() : array {
 		
+		//dummy settings
+		return [
+			'others' => [
+				'setting' => _x( 'Dummy settings', "vb", 'dht' ),
+			]
+		];
+	}
+	
+	/**
+	 * Get VB translation strings
+	 *
+	 * @return array
+	 * @since     1.0.0
+	 */
+	public static function getVBTranslationStrings() : array {
+		
 		return [
 			'vb' => [
 				'icon_drag'           => _x( 'Move Item', "vb", 'dht' ),

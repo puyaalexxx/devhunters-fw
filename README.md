@@ -1,4 +1,4 @@
-# DevHunters framework : A framework to easier create WordPress plugins
+# DevHunters Framework: A Framework to Make Creating WordPress Plugins Easier
 
 **Version 1.0.0**
 
@@ -88,6 +88,7 @@ You can install the framework in two ways:
 
 1. As a plugin
     - Clone the repository: **`git clone https://github.com/puyaalexxx/devhunters-fw.git`**
+    - Open the **`.env`** file and change **`DHT_IS_DEV_ENVIRONMENT`** to **`false`** to use the production mode.
     - Open the folder in a terminal and run **`make init`** - this will install all Composer and npm packages for
       production and generate minified main.js and main.css files. See <a href="#makefile">MakeFile</a> Section.
     - Install it as

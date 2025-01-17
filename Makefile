@@ -45,7 +45,9 @@ install-dev:
 	composer clear-cache && \
 	composer update && \
 	composer install && \
-	npm install
+	npm install && \
+	npm update devhunters-utils
+
 
 install-prod:
 	composer clear-cache && \

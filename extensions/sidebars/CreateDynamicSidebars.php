@@ -3,8 +3,8 @@ declare( strict_types = 1 );
 
 namespace DHT\Extensions\Sidebars;
 
-use DHT\DHT;
 use DHT\Helpers\Classes\Environment;
+use DHT\DHT;
 
 if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );

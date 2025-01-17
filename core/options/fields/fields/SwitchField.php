@@ -3,9 +3,9 @@ declare( strict_types = 1 );
 
 namespace DHT\Core\Options\Fields\Fields;
 
+use DHT\Helpers\Classes\Environment;
 use DHT\Core\Options\Fields\BaseField;
 use DHT\DHT;
-use DHT\Helpers\Classes\Environment;
 
 if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );

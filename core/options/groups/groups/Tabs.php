@@ -3,11 +3,11 @@ declare( strict_types = 1 );
 
 namespace DHT\Core\Options\Groups\Groups;
 
+use DHT\Helpers\Classes\Environment;
 use DHT\Core\Options\Groups\BaseGroup;
 use DHT\DHT;
-use DHT\Helpers\Classes\Environment;
 
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
@@ -40,7 +40,7 @@ final class Tabs extends BaseGroup {
 	 */
 	public function enqueueOptionScripts( array $group ) : void {
 		
-		if ( Environment::isDevelopment() ) {
+		if( Environment::isDevelopment() ) {
 			wp_register_style( DHT_PREFIX_CSS . '-tabs-group', DHT_ASSETS_URI . 'dist/css/tabs.css', array(), DHT::$version );
 			wp_enqueue_style( DHT_PREFIX_CSS . '-tabs-group' );
 			

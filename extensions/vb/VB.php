@@ -10,6 +10,7 @@ use DHT\Extensions\Vb\Components\Modal;
 use DHT\Helpers\Classes\Environment;
 use DHT\Helpers\Classes\Translations;
 use function DHT\Helpers\dht_get_current_admin_post_type_from_url;
+use function DHT\Helpers\dht_make_script_as_module_type;
 
 if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
@@ -84,8 +85,13 @@ final class VB implements IVB {
 			wp_register_style( DHT_PREFIX_CSS . '-' . $vb_script_name, DHT_ASSETS_URI . 'dist/css/' . $vb_script_name . '.css', array(), DHT::$version );
 			wp_enqueue_style( DHT_PREFIX_CSS . '-' . $vb_script_name );
 			
-			wp_enqueue_script_module( DHT_PREFIX_JS . '-' . $vb_script_name, DHT_ASSETS_URI . 'dist/js/' . $vb_script_name . '.js', array( 'jquery' ), DHT::$version );
+			wp_enqueue_script( DHT_PREFIX_JS . '-' . $vb_script_name, DHT_ASSETS_URI . 'dist/js/' . $vb_script_name . '.js', array( 'jquery' ), DHT::$version );
 			wp_localize_script( DHT_PREFIX_JS . '-' . $vb_script_name, 'dht_framework_vb_info', [ 'translations' => Translations::getVBTranslationStrings() ] );
+			
+			//make main.js and fw.js to load as modules
+			add_filter( 'script_loader_tag', function( string $tag, string $handle ) use ( $vb_script_name ) : string {
+				return dht_make_script_as_module_type( $tag, $handle, [ DHT_PREFIX_JS . '-' . $vb_script_name ] );
+			}, 10, 2 );
 		}
 		else {
 			wp_localize_script( DHT_MAIN_SCRIPT_HANDLE, 'dht_framework_vb_info', [ 'translations' => Translations::getVBTranslationStrings() ] );

@@ -3,11 +3,11 @@ declare( strict_types = 1 );
 
 namespace DHT\Core\Options\Fields\Fields;
 
+use DHT\Helpers\Classes\Environment;
 use DHT\Core\Options\Fields\BaseField;
 use DHT\DHT;
-use DHT\Helpers\Classes\Environment;
 
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
@@ -34,7 +34,7 @@ final class RadioImage extends BaseField {
 	 */
 	public function enqueueOptionScripts( array $field ) : void {
 		
-		if ( Environment::isDevelopment() ) {
+		if( Environment::isDevelopment() ) {
 			wp_register_style( DHT_PREFIX_CSS . '-radio-image-field', DHT_ASSETS_URI . 'dist/css/radio-image.css', array(), DHT::$version );
 			wp_enqueue_style( DHT_PREFIX_CSS . '-radio-image-field' );
 			

@@ -3,9 +3,9 @@ declare( strict_types = 1 );
 
 namespace DHT\Core\Options\Toggles\Toggles;
 
+use DHT\Helpers\Classes\Environment;
 use DHT\Core\Options\Toggles\BaseToggle;
 use DHT\DHT;
-use DHT\Helpers\Classes\Environment;
 use function DHT\Helpers\dht_load_view;
 
 if( !defined( 'DHT_MAIN' ) ) {

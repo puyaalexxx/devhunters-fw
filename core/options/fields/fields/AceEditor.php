@@ -4,10 +4,10 @@ declare( strict_types = 1 );
 namespace DHT\Core\Options\Fields\Fields;
 
 use DHT\Core\Options\Fields\BaseField;
-use DHT\DHT;
 use DHT\Helpers\Classes\Environment;
+use DHT\DHT;
 
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
@@ -34,7 +34,7 @@ final class AceEditor extends BaseField {
 	 */
 	public function enqueueOptionScripts( array $field ) : void {
 		
-		if ( Environment::isDevelopment() ) {
+		if( Environment::isDevelopment() ) {
 			wp_enqueue_script( DHT_PREFIX_JS . '-ace-editor-field', DHT_ASSETS_URI . 'dist/js/ace-editor.js', array( 'jquery' ), DHT::$version, true );
 			
 			wp_localize_script( DHT_PREFIX_JS . '-ace-editor-field', 'dht_ace_editor_path', array(
@@ -79,7 +79,7 @@ final class AceEditor extends BaseField {
 	 */
 	public function saveValue( array $field, mixed $field_post_value ) : mixed {
 		
-		if ( empty( $field_post_value ) ) {
+		if( empty( $field_post_value ) ) {
 			return $field[ 'value' ];
 		}
 		

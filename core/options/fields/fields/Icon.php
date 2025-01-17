@@ -4,8 +4,8 @@ declare( strict_types = 1 );
 namespace DHT\Core\Options\Fields\Fields;
 
 use DHT\Core\Options\Fields\BaseField;
-use DHT\DHT;
 use DHT\Helpers\Classes\Environment;
+use DHT\DHT;
 use function DHT\Helpers\dht_get_icon_style_by_type;
 use function DHT\Helpers\dht_get_variables_from_file;
 

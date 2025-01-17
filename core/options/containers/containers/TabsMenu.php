@@ -5,8 +5,8 @@ namespace DHT\Core\Options\Containers\Containers;
 
 use DHT\Core\Options\Containers\BaseContainer;
 use DHT\DHT;
-use DHT\Helpers\Classes\Environment;
 use DHT\Helpers\Traits\Options\ContainerTypeTrait;
+use DHT\Helpers\Classes\Environment;
 
 if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );

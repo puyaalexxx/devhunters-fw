@@ -14,15 +14,45 @@ GREEN=\033[38;5;28m
 RED=\033[0;31m
 END_COLOUR=\033[0m
 
-init: install vite
+include .env
 
+# Install dependencies and assets based on environment
+init:
+	@echo "Installing dependencies and generating the assets..."
+	@if [ "${DHT_IS_DEV_ENVIRONMENT}" = "true" ]; then \
+		make install-dev; \
+		npm run build; \
+	else \
+		make install-dev; \
+		npm run build:main; \
+		make install-prod; \
+	fi
+	@echo ""
+	@echo "$(LGREEN)Dependencies installed and assets generated!$(END_COLOUR)"
+
+# Install dependencies based on environment
 install:
-	composer clear-cache
-	composer update
-	composer install
-	npm install
+	@echo "Installing dependencies..."
+	@if [ "${DHT_IS_DEV_ENVIRONMENT}" = "true" ]; then \
+		make install-dev; \
+	else \
+		make install-prod; \
+	fi
 	@echo ""
 	@echo "$(LGREEN)Dependencies installed!$(END_COLOUR)"
+
+install-dev:
+	composer clear-cache && \
+	composer update && \
+	composer install && \
+	npm install
+
+install-prod:
+	composer clear-cache && \
+	composer update --no-dev && \
+	composer dump-autoload --optimize && \
+	composer install --no-dev && \
+	npm install --production
 
 vite:
 	@if [ "$(filter watch,$(MAKECMDGOALS))" ]; then \
@@ -43,13 +73,11 @@ vite:
 		echo "$(LGREEN)Assets generated for development!$(END_COLOUR)"; \
 	fi
 
-
 clean:
 	@echo "$(LGREEN)Cleaning up...$(END_COLOUR)"
 	node helpers/node/remove-js-generated-files.js
 	@echo ""
 	@echo "$(RED)Files Removed!$(END_COLOUR)"
-
 
 help:
 	@echo "$(BBLUE)  Available commands:                                                                      $(END_COLOUR)"

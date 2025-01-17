@@ -5,8 +5,8 @@ namespace DHT\Core\Options\Groups\Groups;
 
 use DHT\Core\Options\Groups\BaseGroup;
 use DHT\DHT;
-use DHT\Helpers\Classes\Environment;
 use DHT\Helpers\Traits\Options\GroupTypeTrait;
+use DHT\Helpers\Classes\Environment;
 
 if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );

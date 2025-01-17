@@ -3,8 +3,8 @@ declare( strict_types = 1 );
 
 namespace DHT\Extensions\Vb\Components;
 
-use DHT\DHT;
 use DHT\Helpers\Classes\Environment;
+use DHT\DHT;
 use DHT\Helpers\Traits\Singletons\SingletonTraitWithStringParam;
 use WP_Post;
 

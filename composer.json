@@ -42,11 +42,10 @@
       "DHT\\Config\\": "config/",
       "DHT\\Core\\": "core/",
       "DHT\\Core\\Cli\\": "core/cli/",
-      "DHT\\Core\\Vb\\": "core/vb/",
+      "DHT\\Core\\Vb\\": "extensions/vb/",
       "DHT\\Extensions\\": "extensions/",
       "DHT\\Extensions\\DashPages\\": "extensions/dashboard-pages/",
-      "DHT\\Extensions\\CPT\\": "extensions/cpt/",
-      "DHT\\Extensions\\Widgets\\": "extensions/widgets/"
+      "DHT\\Extensions\\CPT\\": "extensions/cpt/"
     }
   },
   "require-dev": {

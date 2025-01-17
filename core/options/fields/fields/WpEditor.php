@@ -4,8 +4,8 @@ declare( strict_types = 1 );
 namespace DHT\Core\Options\Fields\Fields;
 
 use DHT\Core\Options\Fields\BaseField;
-use DHT\DHT;
 use DHT\Helpers\Classes\Environment;
+use DHT\DHT;
 use function DHT\Helpers\dht_sanitize_wpeditor_value;
 
 if( !defined( 'DHT_MAIN' ) ) {

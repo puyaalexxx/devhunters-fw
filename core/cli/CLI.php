@@ -1,7 +1,7 @@
 <?php
 declare( strict_types = 1 );
 
-namespace DHT\Core\Cli;
+namespace DHT\Core\CLI;
 
 if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );

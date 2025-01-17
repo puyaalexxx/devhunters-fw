@@ -39,17 +39,35 @@
       "DHT\\": "",
       "DHT\\Helpers\\": "helpers/",
       "DHT\\Helpers\\Classes\\": "helpers/classes/",
+      "DHT\\Helpers\\Traits\\": "helpers/traits/",
+      "DHT\\Helpers\\Traits\\Options\\": "helpers/traits/options/",
+      "DHT\\Helpers\\Traits\\Singletons\\": "helpers/traits/singletons/",
       "DHT\\Config\\": "config/",
       "DHT\\Core\\": "core/",
-      "DHT\\Core\\Cli\\": "core/cli/",
-      "DHT\\Core\\Vb\\": "extensions/vb/",
+      "DHT\\Core\\API\\": "core/api/",
+      "DHT\\Core\\API\\API\\": "core/api/api/",
+      "DHT\\Core\\CLI\\": "core/cli/",
+      "DHT\\Core\\Options\\": "core/options/",
+      "DHT\\Core\\Options\\Containers\\": "core/options/containers/",
+      "DHT\\Core\\Options\\Containers\\Containers\\": "core/options/containers/containers/",
+      "DHT\\Core\\Options\\Groups\\": "core/options/groups/",
+      "DHT\\Core\\Options\\Groups\\Groups\\": "core/options/groups/groups/",
+      "DHT\\Core\\Options\\Toggles\\": "core/options/toggles/",
+      "DHT\\Core\\Options\\Toggles\\Toggles\\": "core/options/toggles/toggles/",
+      "DHT\\Core\\Options\\Fields\\": "core/options/fields/",
+      "DHT\\Core\\Options\\Fields\\Fields\\": "core/options/fields/fields/",
       "DHT\\Extensions\\": "extensions/",
+      "DHT\\Extensions\\CPT\\": "extensions/cpt/",
       "DHT\\Extensions\\DashPages\\": "extensions/dashboard-pages/",
-      "DHT\\Extensions\\CPT\\": "extensions/cpt/"
+      "DHT\\Extensions\\Sidebars\\": "extensions/sidebars/",
+      "DHT\\Extensions\\VB\\": "extensions/vb/",
+      "DHT\\Extensions\\VB\\Components\\": "extensions/vb/components/"
     }
   },
   "require-dev": {
     "php-stubs/wordpress-stubs": "^6.6",
     "php-stubs/wp-cli-stubs": "^2.10"
-  }
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true
 }

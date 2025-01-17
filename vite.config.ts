@@ -64,7 +64,7 @@ export default defineConfig(({ command }) => {
                 "@ts": path.resolve(__dirname, "assets/scripts"),
                 "@pcss": path.resolve(__dirname, "assets/styles"),
                 "@dist": path.resolve(__dirname, "assets/dist"),
-                "@helpers": path.resolve(__dirname, "helpers/node"),
+                "@helpers": path.resolve(__dirname, "assets/scripts/helpers"),
             },
         },
     };

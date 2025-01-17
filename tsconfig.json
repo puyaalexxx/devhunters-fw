@@ -42,15 +42,19 @@
         "assets/dist/*"
       ],
       "@helpers/*": [
-        "helpers/node/*"
+        "assets/scripts/helpers/*"
       ]
     }
   },
   "include": [
-    "assets/scripts/**/*",        // Include all scripts in the assets/scripts directory
-    "helpers/node/**/*",          // Include everything in the helpers/node directory
-    "helpers/node/types/**/*",    // Include all .ts files in types directory
-    "helpers/node/dts/**/*"       // Include all declaration files in dts directory
+    // Include all scripts in the assets/scripts directory
+    "assets/scripts/**/*",
+    // Include everything in the helpers/node directory
+    "assets/scripts/helpers/**/*",
+    // Include all .ts files in types directory
+    "assets/scripts/helpers/types/**/*",
+    // Include all declaration files in dts directory
+    "assets/scripts/helpers/dts/**/*"
   ],
   "exclude": [
     "node_modules"

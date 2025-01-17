@@ -1,10 +1,10 @@
 <?php
 declare( strict_types = 1 );
 
-namespace DHT\Extensions\Vb\Components;
+namespace DHT\Extensions\VB\Components;
 
-use DHT\Helpers\Classes\Environment;
 use DHT\DHT;
+use DHT\Helpers\Classes\Environment;
 use DHT\Helpers\Traits\Singletons\SingletonTraitWithStringParam;
 use WP_Post;
 

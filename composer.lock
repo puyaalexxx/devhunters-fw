@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0f318d9032588f2077610af886c71468",
+    "content-hash": "ba1ea54212b562fcfc4f738bc212412a",
     "packages": [
         {
             "name": "josegonzalez/dotenv",
@@ -268,7 +268,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": [],
-    "prefer-stable": false,
+    "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": ">=8.0"

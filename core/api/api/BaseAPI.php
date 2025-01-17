@@ -2,11 +2,11 @@
 
 declare( strict_types = 1 );
 
-namespace DHT\Core\Api\Api;
+namespace DHT\Core\API\API;
 
-use PPHT\helpers\traits\SingletonTrait;
+use PPHT\Helpers\Traits\SingletonTrait;
 
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 

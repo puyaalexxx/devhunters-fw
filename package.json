@@ -9,7 +9,7 @@
     "build:main": "cross-env VITE_SEPARATE=false vite build",
     "watch": "cross-env VITE_SEPARATE=true vite build --watch",
     "watch:main": "cross-env VITE_SEPARATE=false vite build --watch",
-    "clean": "node helpers/node/remove-js-generated-files.js",
+    "clean": "node assets/scripts/helpers/remove-js-generated-files.js",
     "test": "vitest",
     "check-types": "tsc --noEmit",
     "lint": "eslint --fix",

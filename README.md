@@ -88,6 +88,8 @@ You can install the framework in two ways:
 
 1. As a plugin
     - Clone the repository: **`git clone https://github.com/puyaalexxx/devhunters-fw.git`**
+    - Open the folder in a terminal and run **`make init`** - this will install all Composer and npm packages for
+      production and generate minified main.js and main.css files. See <a href="#makefile">MakeFile</a> Section.
     - Install it as
       a [WordPress Plugin](https://www.wpbeginner.com/beginners-guide/step-by-step-guide-to-install-a-wordpress-plugin-for-beginners/)
 2. As a composer package
@@ -176,16 +178,13 @@ files, so if
 //initialize plugin functionality
 add_action( 'after_setup_theme', 'initPlugin', 99 );
 function initPlugin() : void {
-    //see if the framework is not active already
+    //see if the framework is active to use it
     if( !defined( 'DHT_DIR' ) ) {
         return;
     }
     
     // Load the framework functionality
     {
-        //include the framework file
-        require_once DHT_DIR . 'DHT.php';
-        
         //init framework with the plugin settings
         DHT::init( [
             "paths"    => [
@@ -2181,8 +2180,7 @@ dht_fw_get_manifest_info()
 The makefile will help you to install the dependencies like composer and npm ones. See <a href="#installation">
 Installation</a> section.
 
-`make install`- is the command needed to install the packages. The rest of the commands are used only for development
-purposes.
+`make init`- is the command needed to install the packages and generate the assets when you first download the plugin.
 
 ```bash
 make init           Install dependencies (Composer and NPM) and generate JS and CSS files
@@ -2208,15 +2206,25 @@ differently if it is `true` or `false`.
 
 If `DHT_IS_DEV_ENVIRONMENT=true`:
 
-`make vite`- will compile all the ts and pcss files in separate js and css files, and they won't be minified.
+`make init`- this will install all Composer and npm packages and generate separate JS and CSS files that will not be
+minified.
 
-`make vite main`- will compile all the ts and pcss files in a main.js and main.css files, and they won't be minified.
+`make install`- this will install all Composer and npm packages.
+
+`make vite`- this will compile all the TS and PCSS files into separate JS and CSS files that will not be minified.
+
+`make vite main`- this will compile all the TS and PCSS files into main.js and main.css files that will not be minified.
 
 If `DHT_IS_DEV_ENVIRONMENT=false`:
 
-`make vite`- will compile all the ts and pcss files in separate js and css files, and they will be minified.
+`make init`- this will install all Composer and npm packages for production and generate minified main.js and main.css
+files.
 
-`make vite main`- will compile all the ts and pcss files in a main.js and main.css files, and they will be minified.
+`make install`- this will install all Composer and npm packages for production.
+
+`make vite`- this will compile all the TS and PCSS files into separate, minified JS and CSS files.
+
+`make vite main`- this will compile all the TS and PCSS files into minified main.js and main.css files.
 
 <p align="right">
   <strong><a href="#table-of-contents">Top ⬆️</a></strong>  

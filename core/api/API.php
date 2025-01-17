@@ -1,9 +1,9 @@
 <?php
 declare( strict_types = 1 );
 
-namespace DHT\Core\Api;
+namespace DHT\Core\API;
 
-use DHT\Core\Api\Api\DashMenusAPI;
+use DHT\Core\API\API\DashMenusAPI;
 use DHT\Helpers\Traits\Singletons\SingletonTraitNoParam;
 
 if( !defined( 'DHT_MAIN' ) ) {

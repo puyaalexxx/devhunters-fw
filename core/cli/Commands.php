@@ -1,9 +1,9 @@
 <?php
 declare( strict_types = 1 );
 
-namespace DHT\Core\Cli;
+namespace DHT\Core\CLI;
 
-if ( ! defined( 'DHT_MAIN' ) ) {
+if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
@@ -57,7 +57,7 @@ class Commands {
 			}
 			
 			// Check if the command was successful
-			if ( $return_var !== 0 ) {
+			if( $return_var !== 0 ) {
 				WP_CLI::error( WP_CLI::colorize( "%RError occurred while running: $command%n" ) );
 				
 				return; // Exit the method on error
@@ -77,17 +77,20 @@ class Commands {
 	 */
 	public function vite( array $args = [] ) : void {
 		
-		if ( in_array( 'watch', $args ) ) {
-			if ( in_array( 'main', $args ) ) {
+		if( in_array( 'watch', $args ) ) {
+			if( in_array( 'main', $args ) ) {
 				$command = 'script -q /dev/null npm run watch:main';
-			} else {
+			}
+			else {
 				$command = 'script -q /dev/null npm run watch';
 			}
 			$successMessage = "Assets generated in watch mode!";
-		} else {
-			if ( in_array( 'main', $args ) ) {
+		}
+		else {
+			if( in_array( 'main', $args ) ) {
 				$command = 'script -q /dev/null npm run build:main';
-			} else {
+			}
+			else {
 				$command = 'script -q /dev/null npm run build';
 			}
 			$successMessage = "Assets generated for development!";
@@ -95,7 +98,7 @@ class Commands {
 		
 		// Check if we're in watch mode
 		$return_var = "";
-		if ( in_array( 'watch', $args ) ) {
+		if( in_array( 'watch', $args ) ) {
 			// Use proc_open to handle real-time output for long-running watch mode
 			$descriptors = [
 				1 => [ 'pipe', 'w' ],  // stdout
@@ -105,11 +108,11 @@ class Commands {
 			// Open the process
 			$process = proc_open( $command, $descriptors, $pipes );
 			
-			if ( is_resource( $process ) ) {
+			if( is_resource( $process ) ) {
 				// Read stdout in real-time
-				while( ! feof( $pipes[ 1 ] ) ) {
+				while( !feof( $pipes[ 1 ] ) ) {
 					$output = fgets( $pipes[ 1 ] );
-					if ( $output !== false ) {
+					if( $output !== false ) {
 						echo $output;
 					}
 				}
@@ -118,7 +121,8 @@ class Commands {
 				fclose( $pipes[ 1 ] );
 				$return_var = proc_close( $process );
 			}
-		} else {
+		}
+		else {
 			// Execute the command and capture output
 			$output     = [];
 			$return_var = 0;
@@ -131,7 +135,7 @@ class Commands {
 		}
 		
 		// Check if the command was successful
-		if ( $return_var !== 0 ) {
+		if( $return_var !== 0 ) {
 			WP_CLI::error( WP_CLI::colorize( "%RError occurred while running: $command%n" ) );
 			
 			// After command execution, display success message
@@ -161,9 +165,10 @@ class Commands {
 		}
 		
 		// Check if the command was successful
-		if ( $return_var === 0 ) {
+		if( $return_var === 0 ) {
 			WP_CLI::success( WP_CLI::colorize( "%GFiles removed!%n" ) );
-		} else {
+		}
+		else {
 			WP_CLI::error( WP_CLI::colorize( "%RError occurred while cleaning files!%n" ) );
 		}
 	}

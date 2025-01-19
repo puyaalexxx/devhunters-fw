@@ -92,8 +92,6 @@ You can install the framework in two ways:
       it is **`true`**.
     - Open the folder in a terminal and run **`make init`** - this will install all Composer and npm packages for
       production and generate minified main.js and main.css files. See <a href="#makefile">MakeFile</a> Section.
-    - Or you can run **`make init DHT_IS_DEV_ENVIRONMENT=false`** to override the environment variable without changing
-      it in the
       **`.env`** file.
     - Install it as
       a [WordPress Plugin](https://www.wpbeginner.com/beginners-guide/step-by-step-guide-to-install-a-wordpress-plugin-for-beginners/)

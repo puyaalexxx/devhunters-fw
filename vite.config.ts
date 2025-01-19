@@ -16,7 +16,7 @@ const tsFiles = dhtuGetFileEntries(path, "assets/scripts/modules/**/*.ts", "ts",
 export default defineConfig(({ command }) => {
     const separate = process.env.VITE_SEPARATE === "true";
     const isDevelopmentEnv = process.env.DHT_IS_DEV_ENVIRONMENT === "true";
-
+    
     //get vite configs
     const {
         input,

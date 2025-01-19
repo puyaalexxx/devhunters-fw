@@ -88,9 +88,13 @@ You can install the framework in two ways:
 
 1. As a plugin
     - Clone the repository: **`git clone https://github.com/puyaalexxx/devhunters-fw.git`**
-    - Open the **`.env`** file and change **`DHT_IS_DEV_ENVIRONMENT`** to **`false`** to use the production mode.
+    - Open the **`.env`** file and change **`DHT_IS_DEV_ENVIRONMENT`** to **`false`** to use the production mode in case
+      it is **`true`**.
     - Open the folder in a terminal and run **`make init`** - this will install all Composer and npm packages for
       production and generate minified main.js and main.css files. See <a href="#makefile">MakeFile</a> Section.
+    - Or you can run **`make init DHT_IS_DEV_ENVIRONMENT=false`** to override the environment variable without changing
+      it in the
+      **`.env`** file.
     - Install it as
       a [WordPress Plugin](https://www.wpbeginner.com/beginners-guide/step-by-step-guide-to-install-a-wordpress-plugin-for-beginners/)
 2. As a composer package
@@ -2200,7 +2204,7 @@ make help           Show this help message
 
 How it is displayed in terminal:
 
-![Make File Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735997150/makefile_commands_cjddc3.png)
+![Make File Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1737302722/makefile_commands_hkdddg.png)
 
 There is an `.env` file that has this constant defined `DHT_IS_DEV_ENVIRONMENT`. The bellow commands will behave
 differently if it is `true` or `false`.

@@ -58,8 +58,8 @@ A framework that makes it easier to create WordPress plugins. It offers many fea
             - [Upload Gallery](#upload-gallery)
             - [Icon](#icon)
             - [Typography](#typography)
-        - [Fields Settings Elaboration](#fields-settings-eleborations)
-        - [Live Fields Editing](#live-fields)
+        - [Fields Settings Elaborations](#fields-settings-eleborations)
+        - [Live Fields Editing](#live-fields-editing)
         - [How To Use](#how-to-use-fields)
     - [Dashboard Menus](#dashboard-menus)
         - [How To Use](#how-to-use-dashboard-menus)
@@ -76,7 +76,7 @@ A framework that makes it easier to create WordPress plugins. It offers many fea
     - [Functions](#functions)
     - [Custom Hooks](#custom-hooks)
     - [Custom Filters](#custom-filters)
-    - [Constants](#framework-consts)
+    - [Constants](#constants)
 5. [Licence](#license)
 6. [Authors](#authors)
 
@@ -1650,7 +1650,7 @@ elements on your page like HTML attributes, styles or text.
   <strong><a href="#table-of-contents">Top ⬆️</a></strong>  
 </p>
 
-<h3 id="how-to-use-fields">How To Use:</h3>
+<h3 id="how-to-use-fields">How To Use Fields:</h3>
 
 ============
 
@@ -1833,7 +1833,7 @@ return [
 ];
 ```
 
-<h3 id="how-to-use-dashboard-menus">How To Use:</h3>
+<h3 id="how-to-use-dashboard-menus">How To Use Dashboard Menus:</h3>
 
 ============
 
@@ -1991,7 +1991,7 @@ return [
 ];
 ```
 
-<h3 id="how-to-use-custom-posts">How To Use:</h3>
+<h3 id="how-to-use-custom-posts">How To Use Custom Posts:</h3>
 
 ============
 
@@ -2057,7 +2057,7 @@ For more info, check the [WordPress Docs](https://developer.wordpress.org/themes
 ]
 ```
 
-<h3 id="how-to-use-custom-sidebars">How To Use:</h3>
+<h3 id="how-to-use-custom-sidebars">How To Use Sidebars:</h3>
 
 ============
 
@@ -2092,7 +2092,7 @@ You can enable the dynamic sidebar creation form in the Widgets area to dynamica
 
 ![Dynamic sidebars Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735824902/dynamic_sidebars_ssmuhu.gif)
 
-<h3 id="how-to-use-dynamic-sidebars">How To Use:</h3>
+<h3 id="how-to-use-dynamic-sidebars">How To Use Dynamic Sidebars:</h3>
 
 ============
 
@@ -2845,7 +2845,7 @@ dht:plugin:settings:enable_dynamic_sidebars // enable/disable the dynamic sideba
   <strong><a href="#table-of-contents">Top ⬆️</a></strong>  
 </p>
 
-<h3 id="framework-consts">Constants</h3>
+<h3 id="constants">Constants</h3>
 
 ===================================
 

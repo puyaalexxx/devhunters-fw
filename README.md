@@ -76,7 +76,7 @@ A framework that makes it easier to create WordPress plugins. It offers many fea
     - [Functions](#functions)
     - [Custom Hooks](#custom-hooks)
     - [Custom Filters](#custom-filters)
-    - [Constants](#fw-constants)
+    - [Constants](#framework-constants)
 5. [Licence](#license)
 6. [Authors](#authors)
 
@@ -2845,7 +2845,7 @@ dht:plugin:settings:enable_dynamic_sidebars // enable/disable the dynamic sideba
   <strong><a href="#table-of-contents">Top ⬆️</a></strong>  
 </p>
 
-<h3 id="fw-constants">Constants</h3>
+<h3 id="framework-constants">Constants</h3>
 
 ===================================
 

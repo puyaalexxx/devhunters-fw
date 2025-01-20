@@ -42,6 +42,10 @@ jobs:
       - name: Commit dist folder
         run: |
           # Ensure that dist/ folder exists after build
+
+          echo "Current directory: $(pwd)"
+          ls -l assets/
+          
           if [ -d "assets/dist" ]; then
             git config --global user.name "puyaalexxx"
             git config --global user.email "puyaalexxx@gmail.com"

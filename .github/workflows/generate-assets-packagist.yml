@@ -36,7 +36,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: dist-folder
-          path: assets/dist  # Upload the dist folder for the next job
+          path: assets/dist  # Upload the dist folder as an artifact
 
   commit-changes:
     runs-on: ubuntu-latest
@@ -49,6 +49,12 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: dist-folder  # Download the dist folder artifact
+
+      - name: Extract dist folder artifact
+        run: |
+          echo "Unzipping dist-folder artifact..."
+          unzip -q dist-folder.zip -d assets/  # Unzip the artifact into the assets directory
+
 
       - name: Commit dist folder
         run: |

@@ -234,7 +234,7 @@ So it should be like this - **Containers > Groups > Toggles > Fields**
 Containers are the top level custom fields that you can add to place other fields inside.
 There are 3 container types at the moment:
 
-- <strong id="simple">**Simple**</strong>
+- <a id="simple" style="text-decoration:none;">**Simple**</a>
 
 Simple container is just a convenience to group the options
 

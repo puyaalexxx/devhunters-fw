@@ -27,7 +27,7 @@ jobs:
       - name: Verify the contents of the repository and dist folder
         run: |
           echo "Contents of assets/dist folder:"
-          ls assets/dist/
+          ls -R assets/dist/
 
   commit-changes:
     runs-on: ubuntu-latest

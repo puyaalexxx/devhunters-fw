@@ -2,9 +2,9 @@ name: Build and Publish Plugin
 
 on:
   workflow_dispatch:  # Manual trigger from GitHub UI
-  #push:
-    #branches:
-      #- main  # Trigger on push to the main branch
+  push:
+    branches:
+      - main  # Trigger on push to the main branch
 
 jobs:
   generate-assets:
@@ -42,7 +42,7 @@ jobs:
           if [ -d "assets/dist" ]; then
             git config --global user.name "puyaalexxx"
             git config --global user.email "puyaalexxx@gmail.com"
-            git add -f assets/dist/  # Force add the dist folder even if it's ignored in .gitignore
+            git add -f assets/dist  # Force add the dist folder even if it's ignored in .gitignore
             git commit -m "Add dist folder for release" || echo "No changes to commit"
             git push origin HEAD:main  # Push the changes back to the main branch
           else

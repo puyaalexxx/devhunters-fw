@@ -1293,7 +1293,7 @@ A toggle field to show hide specific fields.
 
 ![Typography Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735564623/typography_j60akd.png)
 
-<h4 id="fields-settings-eleborations">Fields Settings Elaboration:</h4>
+<h4 id="fields-settings-eleborations">Fields Settings Elaborations:</h4>
 
 `'id' => 'general-side-menu-settings'`- the fields is saved under this id, make sure that it is unique.
 

@@ -17,6 +17,7 @@
     "name": "DevHunters Framework",
     "wordpress-version": "6.5"
   },
+  "type": "wordpress-plugin",
   "require": {
     "php": ">=8.0",
     "phenx/php-font-lib": "^1.0",

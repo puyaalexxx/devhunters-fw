@@ -1,0 +1,44 @@
+name: Build and Publish Plugin
+
+on:
+  workflow_dispatch:  # This allows manual triggering from the GitHub UI
+  push:
+      branches:
+        - main   # Or the branch you want to trigger it for, like 'main' or 'master'
+  #push:
+    # Trigger on pushing a tag (e.g., v1.0.0)
+    #tags:
+     # - 'v*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '22'  # Adjust to your required Node.js version
+
+    - name: Install dependencies and generate Assets
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y make  # Install make utility if it's not available by default
+        make init skip-composer  # Run your custom Makefile command
+
+    - name: Commit dist folder
+      run: |
+        git config --global user.name "puyaalexxx"
+        git config --global user.email "puyaalexxx@gmail.com"
+        git add dist/
+        git commit -m "Add dist folder for release" || echo "No changes to commit"
+        git push origin HEAD:main  # Push the changes back to the main branch
+
+    - name: Create release on Packagist
+      run: |
+        curl -u "${{ secrets.PACKAGIST_TOKEN }}" -X POST -d '{"repository": "https://github.com/puyaalexxx/devhunters-fw"}' https://packagist.org/api/submit
+      env:
+        PACKAGIST_TOKEN: ${{ secrets.PACKAGIST_TOKEN }}  # Access the secret from GitHub

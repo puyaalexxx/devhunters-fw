@@ -23,7 +23,7 @@ A framework that makes it easier to create WordPress plugins. It offers many fea
 3. [Features](#features)
     - [Custom Fields](#custom-fields)
         - [Containers](#containers)
-            - [Simple](#user-content-simple)
+            - [Simple](#simple)
             - [SideMenu](#sidemenu)
             - [TabsMenu](#tabsmenu)
         - [Groups](#groups)
@@ -234,7 +234,7 @@ So it should be like this - **Containers > Groups > Toggles > Fields**
 Containers are the top level custom fields that you can add to place other fields inside.
 There are 3 container types at the moment:
 
-- <span id="user-content-simple">**Simple**</span>
+- <a id="simple">**Simple**</a>
 
 Simple container is just a convenience to group the options
 

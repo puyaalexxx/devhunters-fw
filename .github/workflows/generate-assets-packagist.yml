@@ -6,6 +6,7 @@ on:
     branches:
       - main  # Trigger on push to the main branch
 
+#test
 jobs:
   generate-assets-and-commit-them:
     runs-on: ubuntu-latest

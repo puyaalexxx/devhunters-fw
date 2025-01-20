@@ -1,6 +1,6 @@
 {
   "name": "devhunters/devhunters-fw",
-  "description": "Framework for DevHunters plugins",
+  "description": "A Framework to Make Creating WordPress Plugins Easier",
   "license": "MIT",
   "version": "1.0.0",
   "author": {

@@ -1,7 +1,5 @@
 # DevHunters Framework: A Framework to Make Creating WordPress Plugins Easier
 
-**Version 1.0.0**
-
 <h2 id="introduction">Introduction</h2>
 
 A framework that makes it easier to create WordPress plugins. It offers many features, such as:

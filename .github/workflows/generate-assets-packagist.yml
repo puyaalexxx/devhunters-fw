@@ -28,9 +28,9 @@ jobs:
         run: |
           echo "Current directory: $(pwd)"
           echo "Contents of the repository:"
-          ls -l
+          ls -l assets/
           echo "Contents of assets/dist folder:"
-          ls -l assets/dist/
+          ls -lR assets/dist/
 
   commit-changes:
     runs-on: ubuntu-latest

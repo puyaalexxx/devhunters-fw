@@ -24,10 +24,13 @@ jobs:
           sudo apt-get install -y make  # Install make utility if it's not available by default
           make init skip-composer  # Run your custom Makefile command
 
-      - name: Verify the contents of the repository and dist folder
+      - name: Print current directory and list assets
         run: |
+          echo "Current directory: $(pwd)"
+          echo "Contents of the repository:"
+          ls -l
           echo "Contents of assets/dist folder:"
-          ls -R assets/dist/
+          ls -l assets/dist/
 
   commit-changes:
     runs-on: ubuntu-latest
@@ -47,6 +50,7 @@ jobs:
             git push origin HEAD:main  # Push the changes back to the main branch
           else
             echo "assets/dist/ folder not found after build, skipping commit."
+            exit 1  # Exit with error code to fail the job
           fi
 
   create-packagist-release:

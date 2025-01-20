@@ -29,17 +29,23 @@ jobs:
         sudo apt-get install -y make  # Install make utility if it's not available by default
         make init skip-composer  # Run your custom Makefile command
 
+    - name: Verify the contents of the repository and dist folder
+      run: |
+        ls -l
+        echo "Contents of assets/dist folder:"
+        ls assets/dist/
+
     - name: Commit dist folder
       run: |
         # Ensure that dist/ folder exists after build
-        if [ -d "dist" ]; then
+        if [ -d "assets/dist" ]; then
           git config --global user.name "puyaalexxx"
           git config --global user.email "puyaalexxx@gmail.com"
-          git add dist/
+          git add assets/dist/
           git commit -m "Add dist folder for release" || echo "No changes to commit"
           git push origin HEAD:main  # Push the changes back to the main branch
         else
-          echo "dist/ folder not found after build, skipping commit."
+          echo "assets/dist/ folder not found after build, skipping commit."
         fi
 
     - name: Create release on Packagist

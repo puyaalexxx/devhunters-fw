@@ -42,7 +42,7 @@ jobs:
             git config --global user.email "puyaalexxx@gmail.com"
             git add -f assets/dist  # Force add the dist folder even if it's ignored in .gitignore
             git status  # Check which files are staged
-            git commit -m "Add dist folder for release" || echo "No changes to commit"
+            git commit -m "Add dist folder for release - $(date '+%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
             git push origin HEAD:main  # Push the changes back to the main branch
           else
             echo "assets/dist/ folder not found after build, skipping commit."

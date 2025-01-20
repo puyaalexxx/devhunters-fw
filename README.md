@@ -234,7 +234,7 @@ So it should be like this - **Containers > Groups > Toggles > Fields**
 Containers are the top level custom fields that you can add to place other fields inside.
 There are 3 container types at the moment:
 
-- <h4 id="simple">**Simple**</h4>
+- <h4 id="simple">Simple</h4>
 
 Simple container is just a convenience to group the options
 
@@ -252,7 +252,7 @@ Simple container is just a convenience to group the options
 
 ![Simple Container Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735481017/simple-container_sl6dly.png)
 
-- <span id="sidemenu">**SideMenu**</span>
+- <h4 id="sidemenu">SideMenu</h4>
 
 SideMenu via refresh links - each menu link will open the provided **page_link** via refresh.
 

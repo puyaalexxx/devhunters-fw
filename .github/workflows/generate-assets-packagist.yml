@@ -31,11 +31,16 @@ jobs:
 
     - name: Commit dist folder
       run: |
-        git config --global user.name "puyaalexxx"
-        git config --global user.email "puyaalexxx@gmail.com"
-        git add dist/
-        git commit -m "Add dist folder for release" || echo "No changes to commit"
-        git push origin HEAD:main  # Push the changes back to the main branch
+        # Ensure that dist/ folder exists after build
+        if [ -d "dist" ]; then
+          git config --global user.name "puyaalexxx"
+          git config --global user.email "puyaalexxx@gmail.com"
+          git add dist/
+          git commit -m "Add dist folder for release" || echo "No changes to commit"
+          git push origin HEAD:main  # Push the changes back to the main branch
+        else
+          echo "dist/ folder not found after build, skipping commit."
+        fi
 
     - name: Create release on Packagist
       run: |

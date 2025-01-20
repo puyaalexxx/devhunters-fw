@@ -355,7 +355,7 @@ SideMenu as tabs - `'subtype' => 'tabs'` - each menu item will be opened as a ta
 
 ![SideMenu Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735478510/sidemenu-refresh_t7yyp6.png)
 
-- <span id="tabsmenu">**TabsMenu**</span>
+- <h4 id="tabsmenu">TabsMenu</h4>
 
 ```php
 [
@@ -398,7 +398,7 @@ SideMenu as tabs - `'subtype' => 'tabs'` - each menu item will be opened as a ta
 
 ===================================
 
-- <span id="group">**Group**</span>
+- <h4 id="group">Group</h4>
 
 A simple group field to group other fields.
 
@@ -419,7 +419,7 @@ A simple group field to group other fields.
 
 ![Group Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735494175/group-type_nswdhn.png)
 
-- <span id="tabs">**Tabs**</span>
+- <h4 id="tabs">Tabs</h4>
 
 ```php
 [
@@ -456,7 +456,7 @@ A simple group field to group other fields.
 
 ![Tabs Fullwidth Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735494177/tabs-fullwidth_sppbvu.png)
 
-- <span id="panel">**Panel**</span>
+- <h4 id="panel">Panel</h4>
 
 ```php
 [
@@ -491,7 +491,7 @@ A simple group field to group other fields.
 
 ![Panel Fullwidth Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735494175/panel-fullwidth_n0lqhc.png)
 
-- <span id="accordion">**Accordion**</span>
+- <h4 id="accordion">Accordion</h4>
 
 ```php
 [
@@ -523,7 +523,7 @@ A simple group field to group other fields.
 
 ![Accordion Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735494174/accordion_swx3zf.png)
 
-- <span id="addable-box">**Addable Box**</span>
+- <h4 id="addable-box">Addable Box</h4>
 
 Addable boxes, that you can add dynamically. The fields inside are loaded via ajax.
 
@@ -555,7 +555,7 @@ Addable boxes, that you can add dynamically. The fields inside are loaded via aj
 
 ===================================
 
-- <span id="toggle">**Toggle**</span>
+- <h4 id="toggle">Toggle</h4>
 
 A toggle field to show hide specific fields.
 
@@ -598,7 +598,7 @@ A toggle field to show hide specific fields.
 
 ===================================
 
-- <span id="input">**Input**</span>
+- <h4 id="input">Input</h4>
 
 ```php
 [
@@ -616,7 +616,7 @@ A toggle field to show hide specific fields.
 
 ![Input Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735564612/input_n8uxil.png)
 
-- <span id="textarea">**Textarea**</span>
+- <h4 id="textarea">Textarea</h4>
 
 ```php
 [
@@ -635,7 +635,7 @@ A toggle field to show hide specific fields.
 
 ![Textarea Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735564621/textarea_p6w1bg.png)
 
-- <span id="checkbox">**Checkbox**</span>
+- <h4 id="checkbox">Checkbox</h4>
 
 ```php
 [
@@ -664,7 +664,7 @@ A toggle field to show hide specific fields.
 
 ![Checkbox Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735564601/checkbox_b7m9oh.png)
 
-- <span id="radio">**Radio**</span>
+- <h4 id="radio">Radio</h4>
 
 ```php
 [
@@ -685,7 +685,7 @@ A toggle field to show hide specific fields.
 
 ![Radio Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735564616/radio_weytnk.png)
 
-- <span id="text">**Text**</span>
+- <h4 id="text">Text</h4>
 
 ```php
 [
@@ -701,7 +701,7 @@ A toggle field to show hide specific fields.
 
 ![Text Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735564620/text_r8tww5.png)
 
-- <span id="wpeditor">**WPEditor**</span>
+- <h4 id="wpeditor">WPEditor</h4>
 
 ```php
 [
@@ -720,7 +720,7 @@ A toggle field to show hide specific fields.
 
 ![WPEditor Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735564626/wpeditor_l1xsny.png)
 
-- <span id="switch">**Switch**</span>
+- <h4 id="switch">Switch</h4>
 
 ```php
 [
@@ -747,7 +747,7 @@ A toggle field to show hide specific fields.
 
 ![Switch Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735564619/switch_p5hguz.png)
 
-- <span id="dropdown">**Dropdown**</span>
+- <h4 id="dropdown">Dropdown</h4>
 
 ```php
 [
@@ -816,7 +816,7 @@ A toggle field to show hide specific fields.
 
 ![Dropdown Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735564609/dropdown_vypptd.png)
 
-- <span id="dropdown-multiple">**Dropdown Multiple**</span>
+- <h4 id="dropdown-multiple">Dropdown Multiple</h4>
 
 ```php
 [
@@ -871,7 +871,7 @@ A toggle field to show hide specific fields.
 
 ![Dropdown Multiple Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735564608/dropdown-multiple_djirt6.png)
 
-- <span id="multiinput">**MultiInput**</span>
+- <h4 id="multiinput">MultiInput</h4>
 
 ```php
 [
@@ -889,7 +889,7 @@ A toggle field to show hide specific fields.
 
 ![MultiInput Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735564613/multiinput_kg3jfw.png)
 
-- <span id="aceeditor">**AceEditor**</span>
+- <h4 id="aceeditor">AceEditor</h4>
 
 ```php
 // css
@@ -929,7 +929,7 @@ A toggle field to show hide specific fields.
 
 ![AceEditor JS Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735564601/aceeditor-js_hfciok.png)
 
-- <span id="colorpicker">**ColorPicker**</span>
+- <h4 id="colorpicker">ColorPicker</h4>
 
 ```php
 //default
@@ -973,7 +973,7 @@ A toggle field to show hide specific fields.
 
 ![ColorPicker RGBA Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735564603/colorpicker-rgba_jofvhy.png)
 
-- <span id="datepicker">**DatePicker**</span>
+- <h4 id="datepicker">DatePicker</h4>
 
 ```php
 [
@@ -991,7 +991,7 @@ A toggle field to show hide specific fields.
 
 ![DatePicker Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735564605/datepicker_ar8szn.png)
 
-- <span id="timepicker">**TimePicker**</span>
+- <h4 id="timepicker">TimePicker</h4>
 
 ```php
 [
@@ -1009,7 +1009,7 @@ A toggle field to show hide specific fields.
 
 ![TimePicker Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735564622/timepicker_uezbxi.png)
 
-- <span id="datetimepicker">**DateTimePicker**</span>
+- <h4 id="datetimepicker">DateTimePicker</h4>
 
 ```php
 [
@@ -1028,7 +1028,7 @@ A toggle field to show hide specific fields.
 
 ![DateTimePicker Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735564606/datetimepicker_o1kqa7.png)
 
-- <span id="range-slider">**Range Slider**</span>
+- <h4 id="range-slider">Range Slider</h4>
 
 ```php
 [
@@ -1067,7 +1067,7 @@ A toggle field to show hide specific fields.
 
 ![Range Slider Range Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735564617/range-slider-range_h4ae1a.png)
 
-- <span id="radio-image">**Radio Image**</span>
+- <h4 id="radio-image">Radio Image</h4>
 
 ```php
 [
@@ -1098,7 +1098,7 @@ A toggle field to show hide specific fields.
 
 ![Radio Image Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735564615/radio-image_zjbjbi.png)
 
-- <span id="multi-options">**Multi Options**</span>
+- <h4 id="multi-options">Multi Options</h4>
 
 ```php
 [
@@ -1136,7 +1136,7 @@ A toggle field to show hide specific fields.
 
 ![Multi Options Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735564614/multioptions_qzo2w7.png)
 
-- <span id="dimensions">**Dimensions**</span>
+- <h4 id="dimensions">Dimensions</h4>
 
 ```php
 [
@@ -1171,7 +1171,7 @@ A toggle field to show hide specific fields.
 
 ![Dimensions Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735565150/dimension_itt1ov.png)
 
-- <span id="upload">**Upload**</span>
+- <h4 id="upload">Upload</h4>
 
 ```php
 [
@@ -1198,7 +1198,7 @@ A toggle field to show hide specific fields.
 
 ![Upload Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735564624/upload_fymtap.png)
 
-- <span id="upload-image">**Upload Image**</span>
+- <h4 id="upload-image">Upload Image</h4>
 
 ```php
 [
@@ -1218,7 +1218,7 @@ A toggle field to show hide specific fields.
 
 ![Upload Image Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735564626/upoad-image_ayztnv.png)
 
-- <span id="upload-gallery">**Upload Gallery**</span>
+- <h4 id="upload-gallery">Upload Gallery</h4>
 
 ```php
 [
@@ -1235,7 +1235,7 @@ A toggle field to show hide specific fields.
 
 ![Upload Gallery Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735564624/upload-gallery_rdhcai.png)
 
-- <span id="icon">**Icon**</span>
+- <h4 id="icon">Icon</h4>
 
 ```php
 [
@@ -1258,7 +1258,7 @@ A toggle field to show hide specific fields.
 
 ![Icon Preview 2](https://res.cloudinary.com/dzuieskuw/image/upload/v1735564610/icon-preview_byfgch.png)
 
-- <span id="typography">**Typography**</span>
+- <h4 id="typography">Typography</h4>
 
 ```php
 [
@@ -1293,7 +1293,7 @@ A toggle field to show hide specific fields.
 
 ![Typography Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1735564623/typography_j60akd.png)
 
-<span id="fields-settings-eleborations">**Fields Settings Elaboration:**</span>
+<h4 id="fields-settings-eleborations">Fields Settings Elaboration:</h4>
 
 `'id' => 'general-side-menu-settings'`- the fields is saved under this id, make sure that it is unique.
 

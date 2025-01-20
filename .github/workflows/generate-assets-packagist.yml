@@ -7,7 +7,7 @@ on:
       - main  # Trigger on push to the main branch
 
 jobs:
-  generate-assets-commit-them:
+  generate-assets-and-commit-them:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -52,7 +52,7 @@ jobs:
 
   create-packagist-release:
     runs-on: ubuntu-latest
-    needs: commit-changes  # This job depends on the commit-changes job
+    needs: generate-assets-and-commit-them  # This job depends on the generate-assets-and-commit-them job
     steps:
       - name: Create release on Packagist
         run: |

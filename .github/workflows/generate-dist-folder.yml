@@ -81,6 +81,12 @@ jobs:
         env:
           PACKAGIST_TOKEN: ${{ secrets.PACKAGIST_TOKEN }}  # Access the secret from GitHub
 
+      - name: Print current directory and list assets
+        run: |
+          echo "Current directory: $(pwd)"
+          echo "Contents of the repository:"
+          ls -l assets/
+
       - name: Remove Dist Folder
         run: |
           git config --global user.name 'puyaalexxx'

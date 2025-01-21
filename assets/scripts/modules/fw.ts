@@ -5,6 +5,8 @@ import { dhtInitializePreloader } from "./features/preloader";
 
     /**
      * Class used to add general js settings for the framework
+     *
+     * some testing comments
      */
     class GeneralScript {
         constructor() {

@@ -44,13 +44,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: dist-folder
-          path: assets  # Upload the dist folder for the next job
-
-      - name: Print current directory and list assets
-        run: |
-          echo "Current directory: $(pwd)"
-          echo "Contents of the repository:"
-          ls -l assets/
+          path: assets/dist  # Upload the dist folder for the next job
 
 
   create-packagist-release:
@@ -64,6 +58,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: dist-folder
+          path: assets/dist  # Upload the dist folder for the next job
 
 
       - name: Print contents of dist folder

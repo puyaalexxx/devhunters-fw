@@ -1,14 +1,14 @@
 name: Build and Publish Plugin
 
+#on:
+#push:
+#branches:
+# - main  # This triggers the workflow on every push to the `main` branch
+
 on:
   push:
-    branches:
-      - main  # This triggers the workflow on every push to the `main` branch
-
-      #on:
-      #push:
-      #tags:
-      #- 'v*'  # This will trigger the workflow on tags like v1.0.1, v1.0.2, etc.
+    tags:
+      - 'v*.*.*' # Trigger for semantic version tags (e.g., v1.0.0)
 
 jobs:
   generate-assets-and-commit-them:
@@ -20,7 +20,7 @@ jobs:
           token: ${{ secrets.GITACTIONS_TOKEN }}  # Authenticate with the token
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: '22'  # Adjust to your required Node.js version
 
@@ -38,18 +38,19 @@ jobs:
           echo "Contents of assets/dist folder:"
           ls -lR assets/dist/
 
-      - name: Create tag after generating dist folder
-        run: |
-          # Create a version tag after the dist folder is created
-          VERSION_TAG="v$(date +%Y%m%d%H%M%S)"  # Use timestamp or your versioning method
-          git tag $VERSION_TAG
-          git push origin $VERSION_TAG
-
-      - name: Upload dist folder as artifact
-        uses: actions/upload-artifact@v4
+      # Create a GitHub Release with the assets folder included
+      - name: Create GitHub Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          name: dist-folder
-          path: assets/dist  # Upload the dist folder for the next job
+          tag_name: ${{ github.ref_name }}
+          release_name: ${{ github.ref_name }}
+          body: "Generated release for Packagist, including the assets folder with compiled files."
+          draft: false
+          prerelease: false
+          files: |
+            assets/dist/**/*
 
 
   create-packagist-release:
@@ -59,43 +60,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Download dist folder artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: dist-folder
-          path: assets/dist  # Upload the dist folder for the next job
 
-      - name: Print contents of dist folder
+      # Notify Packagist to update the package
+      - name: Notify Packagist
         run: |
-          echo "Contents of the assets folder:"
-          ls -l assets/  # Check if the dist folder is properly downloaded
-          echo "Contents of the dist folder:"
-          ls -l assets/dist  # Check if the dist folder is properly downloaded
-
-      - name: Create a release on Packagist
-        run: |
-          # Check if dist folder exists and contains files
-          if [ ! -d "assets/dist" ] || [ -z "$(ls -A assets/dist)" ]; then
-            echo "Error: dist folder is empty or not found."
-            exit 1
-          fi
-          
-          # Packagist API token
-          PACKAGIST_TOKEN="${{ secrets.PACKAGIST_TOKEN }}"  # Store your token in GitHub Secrets
-          
-          # Create a release tag from the Git tag name
-          RELEASE_TAG="${GITHUB_REF#refs/tags/}"
-          
-          # Print debug info before uploading to Packagist
-          echo "Uploading files to Packagist..."
-          
-          # Loop over all files in dist folder and upload them
-          for file in assets/dist/*; do
-          curl -u "${{ secrets.PACKAGIST_TOKEN }}:" -X POST -F "file=@$file" \
-          -F "package[version]=$RELEASE_TAG" \
-          -F "repository=https://github.com/puyaalexxx/devhunters-fw" \
-          https://packagist.org/api/submit
-          done
-        env:
-          PACKAGIST_TOKEN: ${{ secrets.PACKAGIST_TOKEN }}
-
+          curl -X POST https://packagist.org/api/update-package?username=puyaalexxx&apiToken=${{ secrets.PACKAGIST_TOKEN }} \
+            -d '{"repository":{"url":"https://github.com/puyaalexxx/devhunters-fw"}}'

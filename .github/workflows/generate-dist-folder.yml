@@ -63,13 +63,19 @@ jobs:
         id: date
         run: echo "date=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
 
+      - name: Determine next version
+        id: version
+        uses: PaulHatch/git-semver@v5.4.0
+        with:
+          tag_prefix: 'v'  # Prefix for the version tag
+
       - name: Create and push tag
         env:
           GITHUB_TOKEN: ${{ secrets.GITACTIONS_TOKEN }}
-        run: |
-          TAG_NAME="release-${{ env.date }}"
-          git tag $TAG_NAME
-          git push origin $TAG_NAME
+          run: |
+            NEW_TAG=${{ steps.version.outputs.version }}
+            git tag $NEW_TAG
+            git push origin $NEW_TAG
 
       - name: Create release on Packagist
         run: |
@@ -81,7 +87,7 @@ jobs:
         run: |
           git config --global user.name 'puyaalexxx'
           git config --global user.email 'puyaalexxx@gmail.com'
-          git rm -r --cached dist
-          rm -rf dist
+          git rm -r --cached assets/dist
+          rm -rf assets/dist
           git commit -m "Remove dist folder after releasing to Packagist"
           git push origin HEAD:main

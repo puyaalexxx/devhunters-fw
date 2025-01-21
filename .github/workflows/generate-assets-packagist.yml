@@ -10,6 +10,10 @@ on:
     tags:
       - 'v*.*.*' # Trigger for semantic version tags (e.g., v1.0.0)
 
+permissions:
+  contents: write  # Allow creating releases and uploading assets
+  id-token: write  # May be needed for some authentication steps (e.g., Packagist)
+
 jobs:
   generate-assets-and-commit-them:
     runs-on: ubuntu-latest
@@ -60,7 +64,6 @@ jobs:
           asset_path: ./assets/dist
           asset_name: dist.zip
           asset_content_type: application/zip
-
 
 
   create-packagist-release:

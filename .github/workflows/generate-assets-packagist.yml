@@ -10,18 +10,13 @@ on:
     tags:
       - 'v*.*.*' # Trigger for semantic version tags (e.g., v1.0.0)
 
-permissions:
-  contents: write  # Allow creating releases and uploading assets
-  id-token: write  # May be needed for some authentication steps (e.g., Packagist)
-
 jobs:
-  generate-assets-and-commit-them:
+  build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITACTIONS_TOKEN }}  # Authenticate with the token
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -42,40 +37,17 @@ jobs:
           echo "Contents of assets/dist folder:"
           ls -lR assets/dist/
 
-      # Create a GitHub Release with the assets folder included
-      - name: Create GitHub Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref_name }}
-          release_name: ${{ github.ref_name }}
-          body: "Generated release for Packagist, including the assets folder with compiled files."
-          draft: false
-          prerelease: false
-
-      - name: Upload Dist Folder to Release
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./assets/dist
-          asset_name: dist.zip
-          asset_content_type: application/zip
-
-
-  create-packagist-release:
-    runs-on: ubuntu-latest
-    needs: generate-assets-and-commit-them  # This job depends on the generate-assets-and-commit-them job
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-
-      # Notify Packagist to update the package
-      - name: Notify Packagist
+      - name: Create a release package
         run: |
-          curl -X POST https://packagist.org/api/update-package?username=puyaalexxx&apiToken=${{ secrets.PACKAGIST_TOKEN }} \
-            -d '{"repository":{"url":"https://github.com/puyaalexxx/devhunters-fw"}}'
+          mkdir release
+          cp -r assets/dist release/dist
+          # Add any other files needed for Packagist
+          cp composer.json release/
+          cd release
+          tar -czf ../release.tar.gz .
+
+      - name: Upload release to Packagist
+        run: |
+          curl -X POST -F "package=@release.tar.gz" https://packagist.org/api/package/create
+        env:
+          PACKAGIST_TOKEN: ${{ secrets.PACKAGIST_TOKEN }}

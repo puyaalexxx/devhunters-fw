@@ -37,17 +37,15 @@ jobs:
           echo "Contents of assets/dist folder:"
           ls -lR assets/dist/
 
-      - name: Create a release package
-        run: |
-          mkdir release
-          cp -r assets/dist release/dist
-          # Add any other files needed for Packagist
-          cp composer.json release/
-          cd release
-          tar -czf ../release.tar.gz .
-
       - name: Upload release to Packagist
         run: |
           curl -X POST -F "package=@release.tar.gz" https://packagist.org/api/package/create
         env:
           PACKAGIST_TOKEN: ${{ secrets.PACKAGIST_TOKEN }}
+
+      - name: Upload dist folder as release asset
+        uses: softprops/action-gh-release@v1
+        with:
+          files: 'assets/dist/**'  # Path to your dist folder
+        env:
+          GITACTIONS_TOKEN: ${{ secrets.GITACTIONS_TOKEN }}

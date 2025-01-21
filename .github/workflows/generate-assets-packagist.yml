@@ -3,15 +3,21 @@ name: Build and Publish Plugin
 on:
   workflow_dispatch:  # Manual trigger from GitHub UI
   push:
-    tags:
-      - 'v*'  # This will trigger the workflow on tags like v1.0.1, v1.0.2, etc.
+    branches:
+      - main  # Trigger on push to the main branch
+
+      #on:
+      #workflow_dispatch:  # Manual trigger from GitHub UI
+      #push:
+      #tags:
+      # - 'v*'  # This will trigger the workflow on tags like v1.0.1, v1.0.2, etc.
 
 jobs:
   generate-assets-and-commit-them:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITACTIONS_TOKEN }}  # Authenticate with the token
 
@@ -35,7 +41,7 @@ jobs:
           ls -lR assets/dist/
 
       - name: Upload dist folder as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: dist-folder
           path: assets/dist  # Upload the dist folder for the next job
@@ -46,41 +52,21 @@ jobs:
     needs: generate-assets-and-commit-them  # This job depends on the generate-assets-and-commit-them job
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Download dist folder artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: dist-folder
+        run: |
+          echo "Current directory from artifact: $(pwd)"
+          ls -l
+
 
       - name: Print contents of dist folder
         run: |
           echo "Current directory: $(pwd)"
           ls -l
           echo "Contents of the dist folder:"
-          ls -l assets/dist/  # Check if the dist folder is properly downloaded
+          ls -l assets/  # Check if the dist folder is properly downloaded
 
-      - name: Create a release on Packagist
-        run: |
-          # Packagist API token
-          PACKAGIST_TOKEN="${{ secrets.PACKAGIST_TOKEN }}"  # Store your token in GitHub Secrets
-          
-          # Create a release tag from the Git tag name
-          RELEASE_TAG="${GITHUB_REF#refs/tags/}"
-          
-          # Print debug info before uploading to Packagist
-          echo "Uploading files to Packagist..."
-
-          # Check if dist folder exists
-          if [ ! -d "assets/dist" ]; then
-            echo "Error: dist folder not found."
-            exit 1
-          fi
-
-          # Create a release version and associate it with the dist folder
-          curl -u "${PACKAGIST_TOKEN}:" -X POST -F "file=@assets/dist/*" \
-            -F "package[version]=$RELEASE_TAG" \
-            -F "repository=https://github.com/puyaalexxx/devhunters-fw" \
-            https://packagist.org/api/submit
-        env:
-          PACKAGIST_TOKEN: ${{ secrets.PACKAGIST_TOKEN }}  # Access the secret from GitHub

@@ -37,11 +37,11 @@ jobs:
           echo "Contents of assets/dist folder:"
           ls -lR assets/dist/
 
-      - name: Upload release to Packagist
+      - name: Create release on Packagist
         run: |
-          curl -X POST -F "package=@release.tar.gz" https://packagist.org/api/package/create
+          curl -u "${{ secrets.PACKAGIST_TOKEN }}" -X POST -d '{"repository": "https://github.com/puyaalexxx/devhunters-fw"}' https://packagist.org/api/submit
         env:
-          PACKAGIST_TOKEN: ${{ secrets.PACKAGIST_TOKEN }}
+          PACKAGIST_TOKEN: ${{ secrets.PACKAGIST_TOKEN }}  # Access the secret from GitHub
 
       - name: Upload dist folder as release asset
         uses: softprops/action-gh-release@v1

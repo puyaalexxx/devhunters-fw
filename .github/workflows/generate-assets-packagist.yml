@@ -65,6 +65,8 @@ jobs:
         run: |
           echo "Current directory: $(pwd)"
           ls -l
-          echo "Contents of the dist folder:"
+          echo "Contents of the assets folder:"
           ls -l assets/  # Check if the dist folder is properly downloaded
+          echo "Contents of the dist folder:"
+          ls -l assets/dist  # Check if the dist folder is properly downloaded
 

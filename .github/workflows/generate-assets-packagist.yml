@@ -56,6 +56,7 @@ jobs:
       - name: Print contents of dist folder
         run: |
           echo "Current directory: $(pwd)"
+          ls -l
           echo "Contents of the dist folder:"
           ls -l assets/dist/  # Check if the dist folder is properly downloaded
 

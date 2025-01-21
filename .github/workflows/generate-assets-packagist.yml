@@ -1,15 +1,14 @@
 name: Build and Publish Plugin
 
-#on:
-#workflow_dispatch:  # Manual trigger from GitHub UI
-#push:
-#branches:
-#- main  # Trigger on push to the main branch
-
 on:
   push:
-    tags:
-      - 'v*'  # This will trigger the workflow on tags like v1.0.1, v1.0.2, etc.
+    branches:
+      - main  # This triggers the workflow on every push to the `main` branch
+
+      #on:
+      #push:
+      #tags:
+      #- 'v*'  # This will trigger the workflow on tags like v1.0.1, v1.0.2, etc.
 
 jobs:
   generate-assets-and-commit-them:
@@ -38,6 +37,13 @@ jobs:
           ls -l assets/
           echo "Contents of assets/dist folder:"
           ls -lR assets/dist/
+
+      - name: Create tag after generating dist folder
+        run: |
+          # Create a version tag after the dist folder is created
+          VERSION_TAG="v$(date +%Y%m%d%H%M%S)"  # Use timestamp or your versioning method
+          git tag $VERSION_TAG
+          git push origin $VERSION_TAG
 
       - name: Upload dist folder as artifact
         uses: actions/upload-artifact@v4

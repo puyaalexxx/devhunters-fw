@@ -40,6 +40,7 @@ jobs:
 
       # Create a GitHub Release with the assets folder included
       - name: Create GitHub Release
+        id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -49,8 +50,17 @@ jobs:
           body: "Generated release for Packagist, including the assets folder with compiled files."
           draft: false
           prerelease: false
-          files: |
-            assets/dist/**/*
+
+      - name: Upload Dist Folder to Release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./assets/dist
+          asset_name: dist.zip
+          asset_content_type: application/zip
+
 
 
   create-packagist-release:

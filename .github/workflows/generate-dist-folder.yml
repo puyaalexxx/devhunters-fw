@@ -1,3 +1,10 @@
+name: Generate Dist folder for Composer
+
+on:
+  push:
+    branches:
+      - main
+
 jobs:
   generate-assets-and-commit-them:
     runs-on: ubuntu-latest

@@ -70,3 +70,28 @@ jobs:
           echo "Contents of the dist folder:"
           ls -l assets/dist  # Check if the dist folder is properly downloaded
 
+      - name: Create a release on Packagist
+        run: |
+          # Packagist API token
+          PACKAGIST_TOKEN="${{ secrets.PACKAGIST_TOKEN }}"  # Store your token in GitHub Secrets
+          
+          # Create a release tag from the Git tag name
+          RELEASE_TAG="${GITHUB_REF#refs/tags/}"
+          
+          # Print debug info before uploading to Packagist
+          echo "Uploading files to Packagist..."
+          
+          # Check if dist folder exists
+          if [ ! -d "assets/dist" ]; then
+            echo "Error: dist folder not found."
+            exit 1
+          fi
+          
+          # Create a release version and associate it with the dist folder
+          curl -u "${PACKAGIST_TOKEN}:" -X POST -F "file=@assets/dist/*" \
+            -F "package[version]=$RELEASE_TAG" \
+            -F "repository=https://github.com/puyaalexxx/devhunters-fw" \
+            https://packagist.org/api/submit
+        env:
+          PACKAGIST_TOKEN: ${{ secrets.PACKAGIST_TOKEN }}  # Access the secret from GitHub
+

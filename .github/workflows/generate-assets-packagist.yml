@@ -1,8 +1,8 @@
 name: Build and Publish Plugin
 
-  #on:
-  #workflow_dispatch:  # Manual trigger from GitHub UI
-  #push:
+#on:
+#workflow_dispatch:  # Manual trigger from GitHub UI
+#push:
 #branches:
 #- main  # Trigger on push to the main branch
 
@@ -68,6 +68,12 @@ jobs:
 
       - name: Create a release on Packagist
         run: |
+          # Check if dist folder exists and contains files
+          if [ ! -d "assets/dist" ] || [ -z "$(ls -A assets/dist)" ]; then
+            echo "Error: dist folder is empty or not found."
+            exit 1
+          fi
+          
           # Packagist API token
           PACKAGIST_TOKEN="${{ secrets.PACKAGIST_TOKEN }}"  # Store your token in GitHub Secrets
           
@@ -77,17 +83,13 @@ jobs:
           # Print debug info before uploading to Packagist
           echo "Uploading files to Packagist..."
           
-          # Check if dist folder exists
-          if [ ! -d "assets/dist" ]; then
-            echo "Error: dist folder not found."
-            exit 1
-          fi
-          
-          # Create a release version and associate it with the dist folder
-          curl -u "${PACKAGIST_TOKEN}:" -X POST -F "file=@assets/dist/*" \
-            -F "package[version]=$RELEASE_TAG" \
-            -F "repository=https://github.com/puyaalexxx/devhunters-fw" \
-            https://packagist.org/api/submit
+          # Loop over all files in dist folder and upload them
+          for file in assets/dist/*; do
+          curl -u "${{ secrets.PACKAGIST_TOKEN }}:" -X POST -F "file=@$file" \
+          -F "package[version]=$RELEASE_TAG" \
+          -F "repository=https://github.com/puyaalexxx/devhunters-fw" \
+          https://packagist.org/api/submit
+          done
         env:
-          PACKAGIST_TOKEN: ${{ secrets.PACKAGIST_TOKEN }}  # Access the secret from GitHub
+          PACKAGIST_TOKEN: ${{ secrets.PACKAGIST_TOKEN }}
 

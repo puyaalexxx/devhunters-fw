@@ -1,7 +1,6 @@
 <?php
 declare( strict_types = 1 );
 
-use DHT\Helpers\Classes\FWHelpers;
 use function DHT\Helpers\dht_get_composer_info;
 
 if( !defined( 'DHT_MAIN' ) ) {
@@ -18,6 +17,7 @@ $manifest[ 'description' ]  = $composer_info[ 'description' ] ?? '';
 $manifest[ 'version' ]      = $composer_info[ 'version' ];
 $manifest[ 'package_uri' ]  = $composer_info[ 'support' ][ 'url' ] ?? '';
 $manifest[ 'license' ]      = $composer_info[ 'license' ] ?? '';
+$manifest[ 'text-domain' ]  = $composer_info[ 'extra' ][ 'text-domain' ] ?? '';
 
 $manifest[ 'support' ][ 'email' ]  = $composer_info[ 'support' ][ 'email' ] ?? '';
 $manifest[ 'support' ][ 'issues' ] = $composer_info[ 'support' ][ 'issues' ] ?? '';

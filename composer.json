@@ -15,6 +15,7 @@
   },
   "extra": {
     "name": "DevHunters Framework",
+    "text-domain": "dht",
     "wordpress-version": "6.5"
   },
   "type": "wordpress-plugin",

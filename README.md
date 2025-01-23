@@ -77,64 +77,30 @@ A framework that makes it easier to create WordPress plugins. It offers many fea
     - [Custom Hooks](#custom-hooks)
     - [Custom Filters](#custom-filters)
     - [Constants](#constants)
-5. [Licence](#license)
-6. [Authors](#authors)
+5. [Translation](#translation)
+6. [Licence](#license)
+7. [Authors](#authors)
 
 <h2 id="installation">Installation</h2>
 
 You can install the framework in two ways:
 
-1. As a plugin
+1. As a plugin:
     - Clone the repository: **`git clone https://github.com/puyaalexxx/devhunters-fw.git`**
-    - Open the **`.env`** file and change **`DHT_IS_DEV_ENVIRONMENT`** to **`false`** to use the production mode in case
-      it is **`true`**.
-    - Open the folder in a terminal and run **`make init`** - this will install all Composer and npm packages for
-      production and generate minified main.js and main.css files. See <a href="#makefile">MakeFile</a> Section.
-      **`.env`** file.
     - Install it as
       a [WordPress Plugin](https://www.wpbeginner.com/beginners-guide/step-by-step-guide-to-install-a-wordpress-plugin-for-beginners/)
-2. As a composer package
-    - Add it as a dependency to your plugin in **`package.json`**
-    - Start the project: **`npm start`**
-    - Add this line in `composer.json` under the `psr-4` object from the plugin folder:
-      ```json
-      "DHT\\" : "devhunters-fw/"
-      ```
-    - Run `composer update` in the framework folder to include the vendor folder
-    - Add this line in the **_plugin folder > plugin.php_** file, somewhere at the top:
-      ```php
-      require_once(plugin_dir_path(__FILE__) . "devhunters-fw/vendor/autoload.php");
-      ```
-    - Use this code to add the package from Git inside the `composer.json` file:
+2. As a composer package:
+    - Add it as a dependency in your plugin's `composer.json` file. You can adjust the version as needed.
+
       ```json
       {
-        "repositories": [
-          {
-            "type": "vcs",
-            "url": "https://github.com/puyaalexxx/devhunters-fw"
-          }
-        ],
         "require": {
-          "devhunters/devhunters-fw": "dev-main"
-        },
-        "autoload": {
-          "files": [
-            "src/constants.php",
-            "src/helpers/general.php"
-          ],
-          "psr-4": {
-            "DHT\\": "vendor/devhunters/devhunters-fw/",
-            "RHT\\Src\\": "src/"
-          }
+           "devhunters/devhunters-fw": "^1.0.0"
         }
       }
-      ```
-    - Run `composer update` to load the package
-    - Comment this line from the **_plugin.php_** file if it exists:
-      ```php
-      require_once(plugin_dir_path(__FILE__) . "devhunters-fw/vendor/autoload.php");
-      ```
-    - To complete this after finishing the plugin...
+      ``` 
+    - Run `composer install` to install the package
+    - Or run `composer require devhunters/devhunters-fw` to install it.
 
 <p align="right">
   <strong><a href="#table-of-contents">Top ⬆️</a></strong>  
@@ -2877,6 +2843,21 @@ DHT_ASSETS_URI // assets folder URL path
 <p align="right">
   <strong><a href="#table-of-contents">Top ⬆️</a></strong>  
 </p>
+
+<h2 id="translation">Translation</h2>
+
+The framework is fully translatable. You can use the **[Loco Translate](https://wordpress.org/plugins/loco-translate/)**
+plugin to translate the strings.
+
+When installing it as a Composer package, you can integrate it into your plugin by following these steps:
+
+![Translation Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1737642822/translation-loco1_bjo5ho.png)
+![Translation 2 Preview](https://res.cloudinary.com/dzuieskuw/image/upload/v1737642733/translation-loco2_qqefp8.png)
+
+<p align="right">
+  <strong><a href="#table-of-contents">Top ⬆️</a></strong>  
+</p>
+
 
 <h2 id="license">License</h2>
 

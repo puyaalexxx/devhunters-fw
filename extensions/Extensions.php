@@ -10,7 +10,7 @@ if( !defined( 'DHT_MAIN' ) ) {
 use DHT\Extensions\CPT\{CPT, ICPT};
 use DHT\Extensions\DashPages\{DashMenuPage, IDashMenuPage};
 use DHT\Extensions\Sidebars\{CreateDynamicSidebars, ICreateDynamicSidebars, IRegisterSidebar, RegisterSidebar};
-use DHT\Extensions\Vb\{IVB, VB};
+use DHT\Extensions\VB\{IVB, VB};
 use DHT\Helpers\Traits\{ValidateConfigurationsTrait};
 use DHT\Helpers\Traits\Singletons\SingletonTraitNoParam;
 

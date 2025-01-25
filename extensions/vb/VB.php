@@ -4,9 +4,9 @@ declare( strict_types = 1 );
 namespace DHT\Extensions\VB;
 
 use DHT\DHT;
-use DHT\Extensions\Vb\Components\ButtonsGroup;
-use DHT\Extensions\Vb\Components\DisableEnableBuilder;
-use DHT\Extensions\Vb\Components\Modal;
+use DHT\Extensions\VB\Components\ButtonsGroup;
+use DHT\Extensions\VB\Components\DisableEnableBuilder;
+use DHT\Extensions\VB\Components\Modal;
 use DHT\Helpers\Classes\Environment;
 use DHT\Helpers\Classes\Translations;
 use function DHT\Helpers\dht_get_current_admin_post_type_from_url;

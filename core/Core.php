@@ -7,7 +7,7 @@ if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
 }
 
-use DHT\Core\Cli\CLI;
+use DHT\Core\CLI\CLI;
 use DHT\Core\Options\IOptions;
 use DHT\Core\Options\Options;
 use DHT\Helpers\Traits\{ValidateConfigurationsTrait};

@@ -39,7 +39,7 @@ final class CLI {
 			}
 			else {
 				// Register framework commands
-				WP_CLI::add_command( 'dht', 'DHT\Core\Cli\Commands' );
+				WP_CLI::add_command( 'dht', 'DHT\Core\CLI\Commands' );
 			}
 		}
 		else {

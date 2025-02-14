@@ -90,6 +90,7 @@ You can install the framework in two ways:
     - Install it as
       a [WordPress Plugin](https://www.wpbeginner.com/beginners-guide/step-by-step-guide-to-install-a-wordpress-plugin-for-beginners/)
 2. As a composer package:
+    - Composer Package Link: [devhunters-fw](https://packagist.org/packages/devhunters/devhunters-fw)
     - Add it as a dependency in your plugin's `composer.json` file. You can adjust the version as needed.
 
       ```json

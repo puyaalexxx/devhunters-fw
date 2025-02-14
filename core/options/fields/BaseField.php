@@ -70,7 +70,7 @@ abstract class BaseField {
 	 * @return string
 	 * @since     1.0.0
 	 */
-	public function render( array $field, mixed $saved_value, string $options_id, array $additional_args = [] ) : string {
+	public function render( array $field, $saved_value, string $options_id, array $additional_args = [] ) : string {
 		
 		//merge default values with saved ones to display the saved ones
 		$field = $this->mergeValues( $field, $saved_value );
@@ -115,7 +115,7 @@ abstract class BaseField {
 	 * @return mixed
 	 * @since     1.0.0
 	 */
-	public function mergeValues( array $field, mixed $saved_value ) : array {
+	public function mergeValues( array $field, $saved_value ) : array {
 		
 		$field[ 'value' ] = empty( $saved_value ) ? $field[ 'value' ] : $saved_value;
 		
@@ -135,7 +135,7 @@ abstract class BaseField {
 	 * @return mixed - changed field value
 	 * @since     1.0.0
 	 */
-	public function saveValue( array $field, mixed $field_post_value ) : mixed {
+	public function saveValue( array $field, $field_post_value ) {
 		
 		return empty( $field_post_value ) ? $field[ 'value' ] : $field_post_value;
 	}

@@ -4,8 +4,8 @@ declare( strict_types = 1 );
 namespace DHT\Core\Options\Fields\Fields;
 
 use DHT\Core\Options\Fields\BaseField;
-use DHT\Helpers\Classes\Environment;
 use DHT\DHT;
+use DHT\Helpers\Classes\Environment;
 
 if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
@@ -57,7 +57,7 @@ final class AceEditor extends BaseField {
 	 * @return mixed
 	 * @since     1.0.0
 	 */
-	public function mergeValues( array $field, mixed $saved_value ) : array {
+	public function mergeValues( array $field, $saved_value ) : array {
 		
 		$field[ 'value' ] = empty( $saved_value ) ? $field[ 'value' ] : stripslashes( $saved_value );
 		
@@ -77,7 +77,7 @@ final class AceEditor extends BaseField {
 	 * @return mixed - changed field value
 	 * @since     1.0.0
 	 */
-	public function saveValue( array $field, mixed $field_post_value ) : mixed {
+	public function saveValue( array $field, $field_post_value ) {
 		
 		if( empty( $field_post_value ) ) {
 			return $field[ 'value' ];

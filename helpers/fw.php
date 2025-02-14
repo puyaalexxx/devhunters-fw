@@ -19,7 +19,7 @@ if( !function_exists( 'dht_fw_get_manifest_info_by_key' ) ) {
 	 * @return mixed
 	 * @since     1.0.0
 	 */
-	function dht_fw_get_manifest_info_by_key( string $key ) : mixed {
+	function dht_fw_get_manifest_info_by_key( string $key ) {
 		
 		return Manifest::init()->get( $key );
 	}

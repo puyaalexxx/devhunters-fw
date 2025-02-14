@@ -25,7 +25,7 @@ final class OptionsHelpers {
 	 * @return string
 	 * @since     1.0.0
 	 */
-	public static function renderOptions( array $options, string $options_id, mixed $saved_values, array $registered_options_classes ) : string {
+	public static function renderOptions( array $options, string $options_id, $saved_values, array $registered_options_classes ) : string {
 		
 		ob_start();
 		
@@ -63,7 +63,7 @@ final class OptionsHelpers {
 	 * @return string
 	 * @since     1.0.0
 	 */
-	public static function renderGroup( string $group_id, array $group_option, mixed $saved_value, array $registered_options_classes ) : string {
+	public static function renderGroup( string $group_id, array $group_option, $saved_value, array $registered_options_classes ) : string {
 		
 		//render the respective option toggle class
 		if( array_key_exists( $group_option[ 'type' ], $registered_options_classes[ 'togglesClasses' ] ) ) {
@@ -85,7 +85,7 @@ final class OptionsHelpers {
 	 * @return string
 	 * @since     1.0.0
 	 */
-	public static function renderFieldIfExists( array $option, mixed $saved_value, string $options_id, array $registered_field_classes ) : string {
+	public static function renderFieldIfExists( array $option, $saved_value, string $options_id, array $registered_field_classes ) : string {
 		
 		if( isset( $option[ 'type' ] ) && array_key_exists( $option[ 'type' ], $registered_field_classes ) ) {
 			
@@ -110,7 +110,7 @@ final class OptionsHelpers {
 	 * @return string
 	 * @since     1.0.0
 	 */
-	public static function displayBoxItem( array $group, mixed $saved_values, array $registered_options_classes, int $cnt ) : string {
+	public static function displayBoxItem( array $group, $saved_values, array $registered_options_classes, int $cnt ) : string {
 		
 		ob_start();
 		?>
@@ -151,7 +151,7 @@ final class OptionsHelpers {
 	 * @return mixed
 	 * @since     1.0.0
 	 */
-	public static function renderBoxItemContent( array $group, mixed $saved_values, array $registered_options_classes, int $cnt ) : string {
+	public static function renderBoxItemContent( array $group, $saved_values, array $registered_options_classes, int $cnt ) : string {
 		
 		ob_start(); ?>
         <div class="dht-field-wrapper">
@@ -261,7 +261,7 @@ final class OptionsHelpers {
 	 * @return string The processed value to be saved.
 	 * @since     1.0.0
 	 */
-	public static function renderSidebarContent( array $ids, array $options, mixed $saved_values, array $registered_options_classes, int $count ) : string {
+	public static function renderSidebarContent( array $ids, array $options, $saved_values, array $registered_options_classes, int $count ) : string {
 		
 		$is_active_class = ( $count == 1 ) ? 'dht-cosidebar-active' : '';
 		

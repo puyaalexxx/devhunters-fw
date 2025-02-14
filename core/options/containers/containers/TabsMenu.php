@@ -5,8 +5,8 @@ namespace DHT\Core\Options\Containers\Containers;
 
 use DHT\Core\Options\Containers\BaseContainer;
 use DHT\DHT;
-use DHT\Helpers\Traits\Options\ContainerTypeTrait;
 use DHT\Helpers\Classes\Environment;
+use DHT\Helpers\Traits\Options\ContainerTypeTrait;
 
 if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
@@ -57,12 +57,12 @@ final class TabsMenu extends BaseContainer {
 	 *  In this case you should return default value from $container['value']
 	 *
 	 * @param array $container             - container field
-	 * @param mixed $container_post_values - container $_POST values passed on save
+	 * @param array $container_post_values - container $_POST values passed on save
 	 *
 	 * @return array - changed container value
 	 * @since     1.0.0
 	 */
-	public function saveValue( array $container, mixed $container_post_values ) : array {
+	public function saveValue( array $container, array $container_post_values ) : array {
 		
 		$values = [];
 		// Sanitize option values

@@ -4,8 +4,8 @@ declare( strict_types = 1 );
 namespace DHT\Core\Options\Fields\Fields;
 
 use DHT\Core\Options\Fields\BaseField;
-use DHT\Helpers\Classes\Environment;
 use DHT\DHT;
+use DHT\Helpers\Classes\Environment;
 use function DHT\Helpers\dht_get_icon_style_by_type;
 use function DHT\Helpers\dht_get_variables_from_file;
 
@@ -168,7 +168,7 @@ final class Icon extends BaseField {
 	 * mixed - changed field value
 	 * @since     1.0.0
 	 */
-	public function saveValue( array $field, mixed $field_post_value ) : mixed {
+	public function saveValue( array $field, $field_post_value ) {
 		
 		if( empty( $field_post_value ) ) {
 			return $field[ 'value' ];

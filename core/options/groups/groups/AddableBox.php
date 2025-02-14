@@ -5,8 +5,8 @@ namespace DHT\Core\Options\Groups\Groups;
 
 use DHT\Core\Options\Groups\BaseGroup;
 use DHT\DHT;
-use DHT\Helpers\Classes\OptionsHelpers;
 use DHT\Helpers\Classes\Environment;
+use DHT\Helpers\Classes\OptionsHelpers;
 
 if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
@@ -114,12 +114,12 @@ final class AddableBox extends BaseGroup {
 	 *  In this case you should return default value from $group['value']
 	 *
 	 * @param array $group             - group option
-	 * @param mixed $group_post_values - $_POST values passed on save
+	 * @param array $group_post_values - $_POST values passed on save
 	 *
-	 * @return mixed - sanitized group values
+	 * @return array - sanitized group values
 	 * @since     1.0.0
 	 */
-	public function saveValue( array $group, mixed $group_post_values ) : mixed {
+	public function saveValue( array $group, array $group_post_values ) : array {
 		
 		if( empty( $group[ 'options' ] ) ) {
 			return [];

@@ -23,7 +23,7 @@ trait SingletonBaseTrait {
 	 *
 	 * @since     1.0.0
 	 */
-	protected function __clone() : void {}
+	protected function __clone() {}
 	
 	/**
 	 * Prevents unserializing of the instance.

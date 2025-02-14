@@ -62,7 +62,7 @@ final class SideMenu extends BaseContainer {
 	 * @return array - changed container value
 	 * @since     1.0.0
 	 */
-	public function saveValue( array $container, mixed $container_post_values ) : array {
+	public function saveValue( array $container, array $container_post_values ) : array {
 		
 		$values = [];
 		// Sanitize option values

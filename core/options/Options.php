@@ -294,9 +294,10 @@ final class Options implements IOptions {
 			if( $post_values ) {
 				$this->_saveContainerOptions( $this->_dashboardPagesOptions, $post_values );
 			}
-			else {
+			//in case there will be a feature to save options that are not added to a container
+			/*else {
 				$this->_saveUngroupedOptions( $this->_dashboardPagesOptions );
-			}
+			}*/
 		}
 	}
 	

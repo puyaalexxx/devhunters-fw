@@ -151,9 +151,9 @@ trait SaveOptionsTrait {
 	 * @return void
 	 * @since     1.0.0
 	 */
-	private function _saveToDB( mixed $values, array $options, string $location = 'dashboard', int $id = 0 ) : void {
+	private function _saveToDB( array $values, array $options, string $location = 'dashboard', int $id = 0 ) : void {
 		
-		$saveData = function( mixed $values, string $option_id, string $location, int $id ) : void {
+		$saveData = function( $values, string $option_id, string $location, int $id ) : void {
 			//save post data
 			if( $location == 'post' || $location == 'vb' ) {
 				update_post_meta( $id, $option_id, $values );

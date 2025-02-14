@@ -12,14 +12,14 @@ trait GroupTypeTrait {
 	 *
 	 * @param array $option               - option array
 	 * @param array $group_post_values    - group post values
-	 * @param array $option_post_value    - group option post values (toggle or field)
+	 * @param mixed $option_post_value    - group option post values (toggle or field)
 	 * @param array $optionTogglesClasses - registered toggles classes
 	 * @param array $optionFieldsClasses  - registered field classes
 	 *
 	 * @return mixed  - sanitized group post values
 	 * @since     1.0.0
 	 */
-	private function _saveGroupHelper( array $option, array $group_post_values, mixed $option_post_value, array $optionTogglesClasses, array $optionFieldsClasses ) : array {
+	private function _saveGroupHelper( array $option, array $group_post_values, $option_post_value, array $optionTogglesClasses, array $optionFieldsClasses ) : array {
 		
 		//if it is a toogle option type
 		if( array_key_exists( $option[ 'type' ], $optionTogglesClasses ) ) {

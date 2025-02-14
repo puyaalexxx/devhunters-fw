@@ -4,8 +4,8 @@ declare( strict_types = 1 );
 namespace DHT\Core\Options\Fields\Fields;
 
 use DHT\Core\Options\Fields\BaseField;
-use DHT\Helpers\Classes\Environment;
 use DHT\DHT;
+use DHT\Helpers\Classes\Environment;
 
 if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
@@ -51,7 +51,7 @@ final class MultiInput extends BaseField {
 	 * @return mixed
 	 * @since     1.0.0
 	 */
-	public function mergeValues( array $field, mixed $saved_value ) : array {
+	public function mergeValues( array $field, $saved_value ) : array {
 		
 		if( !empty( $saved_value ) ) {
 			foreach ( $saved_value as $key => $value ) {
@@ -80,7 +80,7 @@ final class MultiInput extends BaseField {
 	 * @return array - changed field value
 	 * @since     1.0.0
 	 */
-	public function saveValue( array $field, mixed $field_post_value ) : array {
+	public function saveValue( array $field, $field_post_value ) : array {
 		
 		if( empty( $field_post_value ) ) {
 			return $field[ 'value' ];

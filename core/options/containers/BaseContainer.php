@@ -85,13 +85,13 @@ abstract class BaseContainer {
 	 * return container template
 	 *
 	 * @param array $container - container option array
-	 * @param mixed $saved_values
+	 * @param array $saved_values
 	 * @param array $additional_args
 	 *
 	 * @return string
 	 * @since     1.0.0
 	 */
-	public function render( array $container, mixed $saved_values, array $additional_args = [] ) : string {
+	public function render( array $container, array $saved_values, array $additional_args = [] ) : string {
 		
 		//merge default values with saved ones to display the saved ones
 		$container[ 'value' ] = $this->mergeValues( $containe[ "value" ] ?? [], $saved_values );
@@ -118,7 +118,7 @@ abstract class BaseContainer {
 	 * @return mixed
 	 * @since     1.0.0
 	 */
-	public function mergeValues( array $container_values, mixed $saved_values ) : array {
+	public function mergeValues( array $container_values, $saved_values ) : array {
 		return empty( $saved_values ) ? $container_values : $saved_values;
 	}
 	
@@ -130,12 +130,13 @@ abstract class BaseContainer {
 	 *  In this case you should return default value from $container['value']
 	 *
 	 * @param array $container             - container field
-	 * @param mixed $container_post_values - container $_POST values passed on save
+	 * @param array $container_post_values - container $_POST values passed on save
 	 *
 	 * @return array - changed container value
 	 * @since     1.0.0
 	 */
-	public function saveValue( array $container, mixed $container_post_values ) : array {
+	public function saveValue( array $container, array $container_post_values ) : array {
+		
 		return $this->_sanitizeValues( $container[ 'options' ], $container_post_values );
 	}
 	

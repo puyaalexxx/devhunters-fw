@@ -140,7 +140,10 @@ final class DHT {
 			$termOptions           = Config::getTermsOptions( $terms_options_folder_path );
 			$vbOptions             = Config::getVbOptions( $vb_modal_options_folder_path, $vb_register_on_post_types );
 			
-			$core->options( $dashboardPagesOptions, $postTypeOptions, $termOptions, $vbOptions )?->register();
+			$options = $core->options( $dashboardPagesOptions, $postTypeOptions, $termOptions, $vbOptions );
+			if( $options !== NULL ) {
+				$options->register();
+			}
 		} );
 		
 		//register framework cli commands
@@ -153,19 +156,34 @@ final class DHT {
 		////////////////////////////////////////
 		
 		//create dashboard menus with plugin configurations
-		$extensions->dashMenus( Config::getConfigurations( $dash_menus_settings_file ) )?->register();
+		$dashMenus = $extensions->dashMenus( Config::getConfigurations( $dash_menus_settings_file ) );
+		if( $dashMenus !== NULL ) {
+			$dashMenus->register();
+		}
 		
 		//create custom post types with plugin cpt configurations
-		$extensions->cpts( Config::getConfigurations( $cpts_settings_file ) )?->create();
+		$cpts = $extensions->cpts( Config::getConfigurations( $cpts_settings_file ) );
+		if( $cpts !== NULL ) {
+			$cpts->create();
+		}
 		
 		//register sidebars with plugin sidebar configurations
-		$extensions->sidebars( Config::getConfigurations( $sidebars_settings_file ) )?->register();
+		$sidebars = $extensions->sidebars( Config::getConfigurations( $sidebars_settings_file ) );
+		if( $sidebars !== NULL ) {
+			$sidebars->register();
+		}
 		
 		//enable dynamic sidebars form with plugin sidebar configurations
-		$extensions->dynamicSidebars( $enable_dynamic_sidebars )?->enable();
+		$dynamicSidebars = $extensions->dynamicSidebars( $enable_dynamic_sidebars );
+		if( $dynamicSidebars !== NULL ) {
+			$dynamicSidebars->enable();
+		}
 		
 		//enable the visual builder on these post types
-		$extensions->vb( $vb_register_on_post_types )?->enable();
+		$vb = $extensions->vb( $vb_register_on_post_types );
+		if( $vb !== NULL ) {
+			$vb->enable();
+		}
 	}
 	
 }

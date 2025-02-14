@@ -38,7 +38,7 @@ final class Manifest {
 	 * @return mixed
 	 * @since     1.0.0
 	 */
-	public function get( string $key ) : mixed {
+	public function get( string $key ) {
 		
 		$no_value = _x( 'Value does not exist', 'manifest', 'dht' );
 		

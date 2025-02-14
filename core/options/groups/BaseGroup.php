@@ -80,14 +80,14 @@ abstract class BaseGroup {
 	 * return group template
 	 *
 	 * @param array  $group
-	 * @param mixed  $saved_values
+	 * @param array  $saved_values
 	 * @param string $options_id
 	 * @param array  $additional_args
 	 *
 	 * @return string
 	 * @since     1.0.0
 	 */
-	public function render( array $group, mixed $saved_values, string $options_id, array $additional_args = [] ) : string {
+	public function render( array $group, array $saved_values, string $options_id, array $additional_args = [] ) : string {
 		
 		//merge default values with saved ones to display the saved ones
 		$group[ 'value' ] = $this->mergeValues( $group[ "value" ] ?? [], $saved_values );
@@ -130,12 +130,12 @@ abstract class BaseGroup {
 	 * merge the group value with the saved values if exists
 	 *
 	 * @param array $group_values - group values
-	 * @param mixed $saved_values - saved values
+	 * @param array $saved_values - saved values
 	 *
 	 * @return mixed
 	 * @since     1.0.0
 	 */
-	public function mergeValues( array $group_values, mixed $saved_values ) : array {
+	public function mergeValues( array $group_values, array $saved_values ) : array {
 		return empty( $saved_values ) ? $group_values : $saved_values;
 	}
 	
@@ -147,12 +147,12 @@ abstract class BaseGroup {
 	 *  In this case you should return default value from $group['value']
 	 *
 	 * @param array $group             - group option
-	 * @param mixed $group_post_values - $_POST values passed on save
+	 * @param array $group_post_values - $_POST values passed on save
 	 *
-	 * @return mixed - sanitized group values
+	 * @return array - sanitized group values
 	 * @since     1.0.0
 	 */
-	public function saveValue( array $group, mixed $group_post_values ) : mixed {
+	public function saveValue( array $group, array $group_post_values ) : array {
 		
 		//sanitize option values
 		foreach ( $group[ 'options' ] as $subgroup ) {

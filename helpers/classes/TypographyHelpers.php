@@ -57,7 +57,7 @@ final class TypographyHelpers {
 	 * @return array
 	 * @since     1.0.0
 	 */
-	public static function prepareFontWeights( int|array $font_weights ) : array {
+	public static function prepareFontWeights( $font_weights ) : array {
 		
 		if( is_array( $font_weights ) ) {
 			

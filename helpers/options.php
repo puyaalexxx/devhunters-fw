@@ -13,12 +13,14 @@ if( !function_exists( 'dht_get_db_settings_option' ) ) {
 	 * get saved option or options fields from db
 	 *
 	 * @param string $option_id     Option id to retrieve
-	 * @param array  $default_value Default value if nothing found
+	 * @param mixed  $default_value Default value if nothing found
 	 *
 	 * @return mixed
 	 * @since     1.0.0
 	 */
-	function dht_get_db_settings_option( string $option_id, mixed $default_value = [] ) : mixed {
+	function dht_get_db_settings_option( string $option_id, $default_value = NULL ) {
+		
+		$default_value = $default_value === NULL ? [] : $default_value;
 		
 		if( empty( $option_id ) ) {
 			return [];
@@ -40,7 +42,7 @@ if( !function_exists( 'dht_set_db_settings_option' ) ) {
 	 * @return bool
 	 * @since     1.0.0
 	 */
-	function dht_set_db_settings_option( string $option_id, mixed $value, string $array_key = '' ) : bool {
+	function dht_set_db_settings_option( string $option_id, $value, string $array_key = '' ) : bool {
 		
 		if( empty( $option_id ) /*|| empty( $value )*/ ) {
 			return false;
@@ -173,10 +175,10 @@ if( !function_exists( 'dht_get_typography_field_css_properties' ) ) {
 	 * @param array $values Typography fields values
 	 * @param bool  $style  Return the result as CSS style or properties
 	 *
-	 * @return string|array - return CSS properties or an array of prepared typography values
+	 * @return mixed - return CSS properties or an array of prepared typography values
 	 * @since     1.0.0
 	 */
-	function dht_get_typography_field_css_properties( array $values, bool $style = true ) : string|array {
+	function dht_get_typography_field_css_properties( array $values, bool $style = true ) {
 		
 		$css_properties = [
 			"font-family"     => !empty( $values[ 'font-family' ][ 'font' ] ) ? dht_remove_font_name_prefix( $values[ 'font-family' ][ 'font' ] ) . ', Arial, Helvetica, Lucida, sans-serif' : '',
@@ -440,10 +442,10 @@ if( !function_exists( 'dht_get_icon_style_by_type' ) ) {
 	 *
 	 * @param string $icon_type Icon type to return style for - all will return all of them
 	 *
-	 * @return array|string
+	 * @return mixed
 	 * @since     1.0.0
 	 */
-	function dht_get_icon_style_by_type( string $icon_type = "all" ) : array|string {
+	function dht_get_icon_style_by_type( string $icon_type = "all" ) {
 		
 		$icon_styles = apply_filters( 'dht:options:fields:icon_style_links', [
 			"fontawesome" => DHT_ASSETS_URI . 'styles/libraries/fontawesome-icons.min.css',

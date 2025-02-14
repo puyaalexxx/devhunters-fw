@@ -3,9 +3,9 @@ declare( strict_types = 1 );
 
 namespace DHT\Core\Options\Toggles\Toggles;
 
-use DHT\Helpers\Classes\Environment;
 use DHT\Core\Options\Toggles\BaseToggle;
 use DHT\DHT;
+use DHT\Helpers\Classes\Environment;
 use function DHT\Helpers\dht_load_view;
 
 if( !defined( 'DHT_MAIN' ) ) {
@@ -49,14 +49,14 @@ final class Toggle extends BaseToggle {
 	 * return toggle template
 	 *
 	 * @param array  $toggle
-	 * @param mixed  $saved_values
+	 * @param array  $saved_values
 	 * @param string $options_id
 	 * @param array  $additional_args
 	 *
 	 * @return string
 	 * @since     1.0.0
 	 */
-	public function render( array $toggle, mixed $saved_values, string $options_id, array $additional_args = [] ) : string {
+	public function render( array $toggle, array $saved_values, string $options_id, array $additional_args = [] ) : string {
 		
 		//merge default values with saved ones to display the saved ones
 		$toggle = $this->mergeValues( $toggle, $saved_values );
@@ -77,12 +77,12 @@ final class Toggle extends BaseToggle {
 	 * merge the toggle value with the saved values if exists
 	 *
 	 * @param array $toggle       - toggle field
-	 * @param mixed $saved_values - saved values
+	 * @param array $saved_values - saved values
 	 *
 	 * @return mixed
 	 * @since     1.0.0
 	 */
-	public function mergeValues( array $toggle, mixed $saved_values ) : array {
+	public function mergeValues( array $toggle, array $saved_values ) : array {
 		
 		$toggle[ 'value' ] = empty( $saved_values[ 'value' ] ) ? $toggle[ 'value' ] : $saved_values[ 'value' ];
 		
@@ -97,12 +97,12 @@ final class Toggle extends BaseToggle {
 	 *  In this case you should return default value from $toggle['value']
 	 *
 	 * @param array $toggle             - toggle field
-	 * @param mixed $toggle_post_values - $_POST values passed on save
+	 * @param array $toggle_post_values - $_POST values passed on save
 	 *
-	 * @return mixed - changed toggle value
+	 * @return array - changed toggle value
 	 * @since     1.0.0
 	 */
-	public function saveValue( array $toggle, mixed $toggle_post_values ) : mixed {
+	public function saveValue( array $toggle, array $toggle_post_values ) : array {
 		
 		if( empty( $toggle_post_values ) ) {
 			//return $toggle[ 'value' ];
@@ -127,7 +127,7 @@ final class Toggle extends BaseToggle {
 	 * sanitize toggle field values
 	 *
 	 * @param array  $toggle             - toggle field
-	 * @param string $choice             - choice setitng
+	 * @param string $choice             - choice setting
 	 * @param array  $toggle_post_values - $_POST values passed on save
 	 * @param array  $option_classes     - registered field classes
 	 *

@@ -19,7 +19,7 @@ if( !function_exists( 'dht_print_r' ) ) {
 	 * @return void
 	 * @since     1.0.0
 	 */
-	function dht_print_r( mixed $value ) : void {
+	function dht_print_r( $value ) : void {
 		
 		static $first_time = true;
 		
@@ -263,17 +263,28 @@ if( !function_exists( 'dht_get_font_weight_Label' ) ) {
 	 */
 	function dht_get_font_weight_Label( int $font_weight ) : string {
 		
-		return match ( $font_weight ) {
-			100 => 'Thin',
-			200 => 'Extra Light',
-			300 => 'Light',
-			400 => 'Regular',
-			500 => 'Medium',
-			600 => 'Semi Bold',
-			700 => 'Bold',
-			800 => 'Extra Bold',
-			900 => 'Black'
-		};
+		switch ( $font_weight ) {
+			case 100:
+				return 'Thin';
+			case 200:
+				return 'Extra Light';
+			case 300:
+				return 'Light';
+			case 400:
+				return 'Regular';
+			case 500:
+				return 'Medium';
+			case 600:
+				return 'Semi Bold';
+			case 700:
+				return 'Bold';
+			case 800:
+				return 'Extra Bold';
+			case 900:
+				return 'Black';
+			default:
+				return ''; // You can choose to return something default if needed
+		}
 	}
 }
 
@@ -352,13 +363,18 @@ if( !function_exists( 'dht_get_font_format_by_its_extension' ) ) {
 		$file_extension = pathinfo( $font_url, PATHINFO_EXTENSION );
 		
 		// Determine the font format based on the extension
-		return match ( $file_extension ) {
-			'otf' => 'opentype',
-			'ttf' => 'truetype',
-			'woff' => 'woff',
-			'woff2' => 'woff2',
-			default => 'truetype',
-		};
+		switch ( $file_extension ) {
+			case 'otf':
+				return 'opentype';
+			case 'ttf':
+				return 'truetype';
+			case 'woff':
+				return 'woff';
+			case 'woff2':
+				return 'woff2';
+			default:
+				return 'truetype'; // Default case
+		}
 	}
 }
 

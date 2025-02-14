@@ -13,7 +13,7 @@ A framework that makes it easier to create WordPress plugins. It offers many fea
 
 <h2 id="requirements">Requirements</h2>
 
-1. PHP 8 and above
+1. PHP 7.4 and above
 2. WordPress 6.7 and above
 
 <h2 id="table-of-contents">Table of Contents</h2>

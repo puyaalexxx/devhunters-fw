@@ -5,8 +5,8 @@ namespace DHT\Core\Options\Fields\Fields;
 
 use DHT\Core\Options\Fields\BaseField;
 use DHT\DHT;
-use DHT\Helpers\Traits\UploadFieldTrait;
 use DHT\Helpers\Classes\Environment;
+use DHT\Helpers\Traits\UploadFieldTrait;
 
 if( !defined( 'DHT_MAIN' ) ) {
 	die( 'Forbidden' );
@@ -64,7 +64,7 @@ final class UploadImage extends BaseField {
 	 * @return mixed - changed field value
 	 * @since     1.0.0
 	 */
-	public function saveValue( array $field, mixed $field_post_value ) : mixed {
+	public function saveValue( array $field, $field_post_value ) {
 		
 		if( empty( $field_post_value ) ) {
 			return $field[ 'value' ];

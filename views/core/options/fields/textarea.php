@@ -28,7 +28,7 @@ $field = $args[ 'field' ] ?? [];
             class="dht-textarea dht-field"
             id="<?php echo esc_attr( $field[ 'id' ] ); ?>"
             name="<?php echo esc_attr( $field[ 'id' ] ); ?>"
-            placeholder="<?php echo esc_attr( $field[ 'default' ] ); ?>"
+            <?php echo isset( $field[ 'default' ] ) ? 'placeholder="' . esc_attr( $field[ 'default' ] ) . '"' : ""; ?>
             rows="<?php echo !empty( $field[ 'row' ] ) ? esc_attr( $field[ 'row' ] ) : 6; ?>"><?php echo esc_html( $field[ 'value' ] ); ?></textarea>
 		
 		<?php if( !empty( $field[ 'description' ] ) ): ?>

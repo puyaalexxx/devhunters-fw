@@ -87,6 +87,7 @@ You can install the framework in two ways:
 
 1. As a plugin:
     - Clone the repository: **`git clone https://github.com/puyaalexxx/devhunters-fw.git`**
+    - Run `composer install` inside the folder to install all the required dependecies.
     - Install it as
       a [WordPress Plugin](https://www.wpbeginner.com/beginners-guide/step-by-step-guide-to-install-a-wordpress-plugin-for-beginners/)
 2. As a composer package:

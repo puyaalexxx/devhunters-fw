@@ -18,7 +18,7 @@ include .env
 
 # Install dependencies and assets based on environment
 init:
-	@echo "Installing dependencies and generating the assets..."
+	@printf "Installing dependencies and generating the assets...\n"
 	@if [ "$(filter skip-composer,$(MAKECMDGOALS))" ]; then \
 		if [ "${DHT_IS_DEV_ENVIRONMENT}" = "true" ]; then \
 			make install-dev skip-composer && \
@@ -38,20 +38,20 @@ init:
 			make install-prod; \
 		fi; \
 	fi
-	@echo ""
-	@echo "$(LGREEN)Dependencies installed and assets generated!$(END_COLOUR)"
+	@printf "\n"
+	@printf "$(LGREEN)Dependencies installed and assets generated!$(END_COLOUR)\n"
 
 
 # Install dependencies based on environment
 install:
-	@echo "Installing dependencies..."
+	@printf "Installing dependencies...\n"
 	@if [ "${DHT_IS_DEV_ENVIRONMENT}" = "true" ]; then \
 		make install-dev; \
 	else \
 		make install-prod; \
 	fi
-	@echo ""
-	@echo "$(LGREEN)Dependencies installed!$(END_COLOUR)"
+	@printf "\n"
+	@printf "$(LGREEN)Dependencies installed!$(END_COLOUR)\n"
 
 
 install-dev:
@@ -109,30 +109,30 @@ vite:
 
 
 clean:
-	@echo "$(LGREEN)Cleaning up...$(END_COLOUR)"
+	@printf "$(LGREEN)Cleaning up...$(END_COLOUR)\n"
 	node helpers/node/remove-js-generated-files.js
-	@echo ""
-	@echo "$(RED)Files Removed!$(END_COLOUR)"
+	@printf "\n"
+	@printf "$(RED)Files Removed!$(END_COLOUR)\n"
 
 
 help:
-	@echo "$(BBLUE)  Available commands:                                                                      $(END_COLOUR)"
-	@echo ""
-	@echo "  $(BGREEN) make init $(END_COLOUR)         Install dependencies (Composer and NPM) and generate JS and CSS files based on environment"
-	@echo "                                  $(LYELLOW)@param$(END_COLOUR) $(LYELLOW)skip-composer$(END_COLOUR) - this will install only the NPM packages and "
-	@echo "                                  skip the Composer packages."
-	@echo ""
-	@echo "  $(BBLUE) make install $(END_COLOUR)      Install dependencies (Composer and NPM) based on environment"
-	@echo ""
-	@echo "  $(BPURPLE) make vite [watch] $(END_COLOUR) Generate assets via the vite utility:"
-	@echo "                          	  $(LYELLOW)@param$(END_COLOUR) $(LYELLOW)watch$(END_COLOUR) - enable watch mode."
-	@echo "                          	  $(LYELLOW)@param$(END_COLOUR) $(LYELLOW)main$(END_COLOUR)  - compile all files into one main.css and main.js file"
-	@echo "                                  ( using dynamic module loading )"
-	@echo "  $(BRED) make clean $(END_COLOUR)        Clean up the generated files (js generated ones)"
-	@echo "  		      ( if using tsc compiler, it will generate js files alongside ts files )"
-	@echo ""
-	@echo "  $(BWHITE)$(GREEN) make help $(END_COLOUR)$(END_COLOUR)         Show this help message"
-	@echo ""
+	@printf "$(BBLUE)  Available commands:                                                                      $(END_COLOUR)\n"
+	@printf "\n"
+	@printf "  $(BGREEN) make init $(END_COLOUR)         Install dependencies (Composer and NPM) and generate JS and CSS files based on environment\n"
+	@printf "                                  $(LYELLOW)@param$(END_COLOUR) $(LYELLOW)skip-composer$(END_COLOUR) - this will install only the NPM packages and \n"
+	@printf "                                  skip the Composer packages.\n"
+	@printf "\n"
+	@printf "  $(BBLUE) make install $(END_COLOUR)      Install dependencies (Composer and NPM) based on environment\n"
+	@printf "\n"
+	@printf "  $(BPURPLE) make vite [watch] $(END_COLOUR) Generate assets via the vite utility:\n"
+	@printf "                          	  $(LYELLOW)@param$(END_COLOUR) $(LYELLOW)watch$(END_COLOUR) - enable watch mode.\n"
+	@printf "                          	  $(LYELLOW)@param$(END_COLOUR) $(LYELLOW)main$(END_COLOUR)  - compile all files into one main.css and main.js file\n"
+	@printf "                                  ( using dynamic module loading )\n"
+	@printf "  $(BRED) make clean $(END_COLOUR)        Clean up the generated files (js generated ones)\n"
+	@printf "  		      ( if using tsc compiler, it will generate js files alongside ts files )\n"
+	@printf "\n"
+	@printf "  $(BWHITE)$(GREEN) make help $(END_COLOUR)$(END_COLOUR)         Show this help message\n"
+	@printf "\n"
 
 
 #commands for parameters to not display any errors and do anything

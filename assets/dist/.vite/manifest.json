@@ -1,0 +1,404 @@
+{
+  "_addable-box.js": {
+    "file": "js/addable-box.js",
+    "name": "js/addable-box",
+    "isDynamicEntry": true,
+    "imports": [
+      "_general.js"
+    ],
+    "dynamicImports": [
+      "assets/scripts/helpers/options/ajax-options-reload.ts"
+    ]
+  },
+  "_general.js": {
+    "file": "js/general.js",
+    "name": "js/general"
+  },
+  "assets/scripts/helpers/options/ajax-options-reload.ts": {
+    "file": "js/ajax-options-reload.js",
+    "name": "js/ajax-options-reload",
+    "src": "assets/scripts/helpers/options/ajax-options-reload.ts",
+    "isDynamicEntry": true
+  },
+  "assets/scripts/helpers/options/colorpicker-utilities.ts": {
+    "file": "js/colorpicker-utilities.js",
+    "name": "js/colorpicker-utilities",
+    "src": "assets/scripts/helpers/options/colorpicker-utilities.ts",
+    "isDynamicEntry": true
+  },
+  "assets/scripts/helpers/options/live-editing.ts": {
+    "file": "js/live-editing.js",
+    "name": "js/live-editing",
+    "src": "assets/scripts/helpers/options/live-editing.ts",
+    "isDynamicEntry": true
+  },
+  "assets/scripts/main.ts": {
+    "file": "main.js",
+    "name": "main",
+    "src": "assets/scripts/main.ts",
+    "isEntry": true,
+    "imports": [
+      "_addable-box.js",
+      "_general.js"
+    ],
+    "dynamicImports": [
+      "assets/scripts/modules/core/options/containers/sidemenu.ts",
+      "assets/scripts/modules/core/options/containers/tabsmenu.ts",
+      "assets/scripts/modules/core/options/dashboard-page.ts",
+      "assets/scripts/modules/core/options/fields/ace-editor.ts",
+      "assets/scripts/modules/core/options/fields/colorpicker.ts",
+      "assets/scripts/modules/core/options/fields/datepicker.ts",
+      "assets/scripts/modules/core/options/fields/datetimepicker.ts",
+      "assets/scripts/modules/core/options/fields/dimension.ts",
+      "assets/scripts/modules/core/options/fields/dropdown.ts",
+      "assets/scripts/modules/core/options/fields/icon.ts",
+      "assets/scripts/modules/core/options/fields/input.ts",
+      "assets/scripts/modules/core/options/fields/multi-options.ts",
+      "assets/scripts/modules/core/options/fields/multiinput.ts",
+      "assets/scripts/modules/core/options/fields/radio-image.ts",
+      "assets/scripts/modules/core/options/fields/rangeslider.ts",
+      "assets/scripts/modules/core/options/fields/switch.ts",
+      "assets/scripts/modules/core/options/fields/textarea.ts",
+      "assets/scripts/modules/core/options/fields/timepicker.ts",
+      "assets/scripts/modules/core/options/fields/typography.ts",
+      "assets/scripts/modules/core/options/fields/upload-gallery.ts",
+      "assets/scripts/modules/core/options/fields/upload-image.ts",
+      "assets/scripts/modules/core/options/fields/upload.ts",
+      "assets/scripts/modules/core/options/fields/wpeditor.ts",
+      "assets/scripts/modules/core/options/groups/accordion.ts",
+      "_addable-box.js",
+      "assets/scripts/modules/core/options/groups/panel.ts",
+      "assets/scripts/modules/core/options/groups/tabs.ts",
+      "assets/scripts/modules/core/options/toggles/toggle.ts",
+      "assets/scripts/modules/extensions/sidebars/create-sidebars.ts",
+      "assets/scripts/modules/extensions/vb/components/buttons-group.ts",
+      "assets/scripts/modules/extensions/vb/components/disable-enable-vb.ts",
+      "assets/scripts/modules/extensions/vb/components/modal.ts",
+      "assets/scripts/modules/extensions/vb/vb.ts",
+      "assets/scripts/modules/features/preloader.ts",
+      "assets/scripts/modules/fw.ts"
+    ]
+  },
+  "assets/scripts/modules/core/options/containers/sidemenu.ts": {
+    "file": "js/sidemenu.js",
+    "name": "js/sidemenu",
+    "src": "assets/scripts/modules/core/options/containers/sidemenu.ts",
+    "isDynamicEntry": true
+  },
+  "assets/scripts/modules/core/options/containers/tabsmenu.ts": {
+    "file": "js/tabsmenu.js",
+    "name": "js/tabsmenu",
+    "src": "assets/scripts/modules/core/options/containers/tabsmenu.ts",
+    "isDynamicEntry": true
+  },
+  "assets/scripts/modules/core/options/dashboard-page.ts": {
+    "file": "js/dashboard-page.js",
+    "name": "js/dashboard-page",
+    "src": "assets/scripts/modules/core/options/dashboard-page.ts",
+    "isDynamicEntry": true
+  },
+  "assets/scripts/modules/core/options/fields/ace-editor.ts": {
+    "file": "js/ace-editor.js",
+    "name": "js/ace-editor",
+    "src": "assets/scripts/modules/core/options/fields/ace-editor.ts",
+    "isDynamicEntry": true
+  },
+  "assets/scripts/modules/core/options/fields/colorpicker.ts": {
+    "file": "js/colorpicker.js",
+    "name": "js/colorpicker",
+    "src": "assets/scripts/modules/core/options/fields/colorpicker.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "_addable-box.js",
+      "_general.js"
+    ],
+    "dynamicImports": [
+      "assets/scripts/helpers/options/colorpicker-utilities.ts",
+      "assets/scripts/helpers/options/live-editing.ts",
+      "assets/scripts/helpers/options/colorpicker-utilities.ts"
+    ]
+  },
+  "assets/scripts/modules/core/options/fields/datepicker.ts": {
+    "file": "js/datepicker.js",
+    "name": "js/datepicker",
+    "src": "assets/scripts/modules/core/options/fields/datepicker.ts",
+    "isDynamicEntry": true
+  },
+  "assets/scripts/modules/core/options/fields/datetimepicker.ts": {
+    "file": "js/datetimepicker.js",
+    "name": "js/datetimepicker",
+    "src": "assets/scripts/modules/core/options/fields/datetimepicker.ts",
+    "isDynamicEntry": true
+  },
+  "assets/scripts/modules/core/options/fields/dimension.ts": {
+    "file": "js/dimension.js",
+    "name": "js/dimension",
+    "src": "assets/scripts/modules/core/options/fields/dimension.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "_addable-box.js",
+      "_general.js"
+    ],
+    "dynamicImports": [
+      "assets/scripts/helpers/options/colorpicker-utilities.ts",
+      "assets/scripts/helpers/options/live-editing.ts",
+      "assets/scripts/helpers/options/colorpicker-utilities.ts"
+    ]
+  },
+  "assets/scripts/modules/core/options/fields/dropdown.ts": {
+    "file": "js/dropdown.js",
+    "name": "js/dropdown",
+    "src": "assets/scripts/modules/core/options/fields/dropdown.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "_addable-box.js",
+      "_general.js"
+    ],
+    "dynamicImports": [
+      "assets/scripts/helpers/options/live-editing.ts"
+    ]
+  },
+  "assets/scripts/modules/core/options/fields/icon.ts": {
+    "file": "js/icon.js",
+    "name": "js/icon",
+    "src": "assets/scripts/modules/core/options/fields/icon.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "_addable-box.js",
+      "_general.js"
+    ],
+    "dynamicImports": [
+      "assets/scripts/helpers/options/live-editing.ts"
+    ]
+  },
+  "assets/scripts/modules/core/options/fields/input.ts": {
+    "file": "js/input.js",
+    "name": "js/input",
+    "src": "assets/scripts/modules/core/options/fields/input.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "_addable-box.js",
+      "_general.js"
+    ],
+    "dynamicImports": [
+      "assets/scripts/helpers/options/live-editing.ts"
+    ]
+  },
+  "assets/scripts/modules/core/options/fields/multi-options.ts": {
+    "file": "js/multi-options.js",
+    "name": "js/multi-options",
+    "src": "assets/scripts/modules/core/options/fields/multi-options.ts",
+    "isDynamicEntry": true
+  },
+  "assets/scripts/modules/core/options/fields/multiinput.ts": {
+    "file": "js/multiinput.js",
+    "name": "js/multiinput",
+    "src": "assets/scripts/modules/core/options/fields/multiinput.ts",
+    "isDynamicEntry": true
+  },
+  "assets/scripts/modules/core/options/fields/radio-image.ts": {
+    "file": "js/radio-image.js",
+    "name": "js/radio-image",
+    "src": "assets/scripts/modules/core/options/fields/radio-image.ts",
+    "isDynamicEntry": true
+  },
+  "assets/scripts/modules/core/options/fields/rangeslider.ts": {
+    "file": "js/rangeslider.js",
+    "name": "js/rangeslider",
+    "src": "assets/scripts/modules/core/options/fields/rangeslider.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "_addable-box.js",
+      "_general.js"
+    ],
+    "dynamicImports": [
+      "assets/scripts/helpers/options/live-editing.ts"
+    ]
+  },
+  "assets/scripts/modules/core/options/fields/switch.ts": {
+    "file": "js/switch.js",
+    "name": "js/switch",
+    "src": "assets/scripts/modules/core/options/fields/switch.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "_addable-box.js",
+      "_general.js"
+    ],
+    "dynamicImports": [
+      "assets/scripts/helpers/options/live-editing.ts"
+    ]
+  },
+  "assets/scripts/modules/core/options/fields/textarea.ts": {
+    "file": "js/textarea.js",
+    "name": "js/textarea",
+    "src": "assets/scripts/modules/core/options/fields/textarea.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "_addable-box.js",
+      "_general.js"
+    ],
+    "dynamicImports": [
+      "assets/scripts/helpers/options/live-editing.ts"
+    ]
+  },
+  "assets/scripts/modules/core/options/fields/timepicker.ts": {
+    "file": "js/timepicker.js",
+    "name": "js/timepicker",
+    "src": "assets/scripts/modules/core/options/fields/timepicker.ts",
+    "isDynamicEntry": true
+  },
+  "assets/scripts/modules/core/options/fields/typography.ts": {
+    "file": "js/typography.js",
+    "name": "js/typography",
+    "src": "assets/scripts/modules/core/options/fields/typography.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "_addable-box.js",
+      "_general.js"
+    ],
+    "dynamicImports": [
+      "assets/scripts/helpers/options/colorpicker-utilities.ts",
+      "assets/scripts/helpers/options/live-editing.ts"
+    ]
+  },
+  "assets/scripts/modules/core/options/fields/upload-gallery.ts": {
+    "file": "js/upload-gallery.js",
+    "name": "js/upload-gallery",
+    "src": "assets/scripts/modules/core/options/fields/upload-gallery.ts",
+    "isDynamicEntry": true
+  },
+  "assets/scripts/modules/core/options/fields/upload-image.ts": {
+    "file": "js/upload-image.js",
+    "name": "js/upload-image",
+    "src": "assets/scripts/modules/core/options/fields/upload-image.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "_addable-box.js",
+      "_general.js"
+    ],
+    "dynamicImports": [
+      "assets/scripts/helpers/options/live-editing.ts"
+    ]
+  },
+  "assets/scripts/modules/core/options/fields/upload.ts": {
+    "file": "js/upload.js",
+    "name": "js/upload",
+    "src": "assets/scripts/modules/core/options/fields/upload.ts",
+    "isDynamicEntry": true
+  },
+  "assets/scripts/modules/core/options/fields/wpeditor.ts": {
+    "file": "js/wpeditor.js",
+    "name": "js/wpeditor",
+    "src": "assets/scripts/modules/core/options/fields/wpeditor.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "_addable-box.js",
+      "_general.js"
+    ],
+    "dynamicImports": [
+      "assets/scripts/helpers/options/live-editing.ts"
+    ]
+  },
+  "assets/scripts/modules/core/options/groups/accordion.ts": {
+    "file": "js/accordion.js",
+    "name": "js/accordion",
+    "src": "assets/scripts/modules/core/options/groups/accordion.ts",
+    "isDynamicEntry": true
+  },
+  "assets/scripts/modules/core/options/groups/panel.ts": {
+    "file": "js/panel.js",
+    "name": "js/panel",
+    "src": "assets/scripts/modules/core/options/groups/panel.ts",
+    "isDynamicEntry": true
+  },
+  "assets/scripts/modules/core/options/groups/tabs.ts": {
+    "file": "js/tabs.js",
+    "name": "js/tabs",
+    "src": "assets/scripts/modules/core/options/groups/tabs.ts",
+    "isDynamicEntry": true
+  },
+  "assets/scripts/modules/core/options/toggles/toggle.ts": {
+    "file": "js/toggle.js",
+    "name": "js/toggle",
+    "src": "assets/scripts/modules/core/options/toggles/toggle.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "_addable-box.js",
+      "_general.js"
+    ],
+    "dynamicImports": [
+      "assets/scripts/helpers/options/live-editing.ts"
+    ]
+  },
+  "assets/scripts/modules/extensions/sidebars/create-sidebars.ts": {
+    "file": "js/create-sidebars.js",
+    "name": "js/create-sidebars",
+    "src": "assets/scripts/modules/extensions/sidebars/create-sidebars.ts",
+    "isDynamicEntry": true
+  },
+  "assets/scripts/modules/extensions/vb/components/buttons-group.ts": {
+    "file": "js/buttons-group.js",
+    "name": "js/buttons-group",
+    "src": "assets/scripts/modules/extensions/vb/components/buttons-group.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "_addable-box.js",
+      "_general.js"
+    ],
+    "dynamicImports": [
+      "assets/scripts/modules/extensions/vb/components/modal.ts"
+    ]
+  },
+  "assets/scripts/modules/extensions/vb/components/disable-enable-vb.ts": {
+    "file": "js/disable-enable-vb.js",
+    "name": "js/disable-enable-vb",
+    "src": "assets/scripts/modules/extensions/vb/components/disable-enable-vb.ts",
+    "isDynamicEntry": true
+  },
+  "assets/scripts/modules/extensions/vb/components/modal.ts": {
+    "file": "js/modal.js",
+    "name": "js/modal",
+    "src": "assets/scripts/modules/extensions/vb/components/modal.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "_addable-box.js",
+      "_general.js"
+    ],
+    "dynamicImports": [
+      "assets/scripts/helpers/options/ajax-options-reload.ts"
+    ]
+  },
+  "assets/scripts/modules/extensions/vb/vb.ts": {
+    "file": "js/vb.js",
+    "name": "js/vb",
+    "src": "assets/scripts/modules/extensions/vb/vb.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "_addable-box.js",
+      "_general.js"
+    ],
+    "dynamicImports": [
+      "assets/scripts/modules/extensions/vb/components/disable-enable-vb.ts",
+      "assets/scripts/modules/extensions/vb/components/buttons-group.ts"
+    ]
+  },
+  "assets/scripts/modules/features/preloader.ts": {
+    "file": "js/preloader.js",
+    "name": "js/preloader",
+    "src": "assets/scripts/modules/features/preloader.ts",
+    "isDynamicEntry": true
+  },
+  "assets/scripts/modules/fw.ts": {
+    "file": "js/fw.js",
+    "name": "js/fw",
+    "src": "assets/scripts/modules/fw.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "assets/scripts/modules/features/preloader.ts"
+    ]
+  },
+  "style.css": {
+    "file": "main.css",
+    "src": "style.css"
+  }
+}
